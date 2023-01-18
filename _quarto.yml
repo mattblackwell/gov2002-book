@@ -2,6 +2,9 @@ project:
   type: book
   output-dir: _book
 
+execute:
+  freeze: auto
+  
 book:
   title: "Estimation, Inference, and Regression"
   author: "Matthew Blackwell"

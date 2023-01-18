@@ -263,7 +263,7 @@ But obviously if we had a different sample, it would have a different empirical 
 
 ```{r}
 my_samp2 <- rbinom(n = 10, size = 4, prob = 0.4)
-mean(my_samp2)
+mean(my_samp2) 
 ```
 
 The sampling distribution is the distribution of these sample means across repeated sampling.
