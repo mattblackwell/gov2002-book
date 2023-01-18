@@ -1,0 +1,27 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Estimation, Inference, and Regression"
+  author: "Matthew Blackwell"
+  reader-mode: true
+  date: "12/29/2022"
+  chapters:
+    - index.qmd
+    - 01_intro.qmd
+    - 02_estimation.qmd
+    - 03_asymptotics.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+        
+  pdf:
+    documentclass: scrreprt
+    include-in-header:
+      - _macros.tex
+
