@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Estimation, Inference, and Regression - References</title>
+<title>A User’s Guide to Statistical Inference and Regression - References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,7 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./03_asymptotics.html" rel="prev">
+<link href="./04_hypothesis_tests.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -101,7 +101,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Estimation, Inference, and Regression</a> 
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -140,6 +140,11 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link active">References</a>
   </div>
 </li>
@@ -152,6 +157,63 @@ div.csl-indent {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+$$
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\var}{\text{var}}
+\newcommand{\cov}{\text{cov}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\Bern}{\text{Bern}}
+\newcommand{\Bin}{\text{Bin}}
+\newcommand{\Pois}{\text{Pois}}
+\newcommand{\Unif}{\text{Unif}}
+\newcommand{\se}{\textsf{se}}
+\newcommand{\au}{\underline{a}}
+\newcommand{\du}{\underline{d}}
+\newcommand{\Au}{\underline{A}}
+\newcommand{\Du}{\underline{D}}
+\newcommand{\xu}{\underline{x}}
+\newcommand{\Xu}{\underline{X}}
+\newcommand{\Yu}{\underline{Y}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\boldsymbol}
+\newcommand{\U}{\mb{U}}
+\newcommand{\Xbar}{\overline{X}}
+\newcommand{\Ybar}{\overline{Y}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\bbL}{\mathbb{L}}
+\renewcommand{\u}{\mb{u}}
+\renewcommand{\v}{\mb{v}}
+\newcommand{\M}{\mb{M}}
+\newcommand{\X}{\mb{X}}
+\newcommand{\Xmat}{\mathbb{X}}
+\newcommand{\bfx}{\mb{x}}
+\newcommand{\y}{\mb{y}}
+\renewcommand{\b}{\mb{\beta}}
+\newcommand{\e}{\bs{\epsilon}}
+\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\XX}{\Xmat'\Xmat}
+\newcommand{\XXinv}{\left(\XX\right)^{-1}}
+\newcommand{\hatsig}{\hat{\sigma}^2}
+\newcommand{\red}[1]{\textcolor{red!60}{#1}}
+\newcommand{\indianred}[1]{\textcolor{indianred}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue!60}{#1}}
+\newcommand{\dblue}[1]{\textcolor{dodgerblue}{#1}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\inprob}{\overset{p}{\to}}
+\newcommand{\indist}{\overset{d}{\to}}
+\newcommand{\eframe}{\end{frame}}
+\newcommand{\bframe}{\begin{frame}}
+\newcommand{\R}{\textsf{\textbf{R}}}
+\newcommand{\Rst}{\textsf{\textbf{RStudio}}}
+\newcommand{\rfun}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\rpack}[1]{\textbf{#1}}
+\newcommand{\rexpr}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\filename}[1]{\texttt{\color{blue}{#1}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+$$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -170,8 +232,12 @@ div.csl-indent {
 
 </header>
 
-<div id="refs" role="doc-bibliography" style="display: none">
-
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Senn12" class="csl-entry" role="doc-biblioentry">
+Senn, Stephen. 2012. <span>“Tea for Three: Of Infusions and Inferences
+and Milk in First.”</span> <em>Significance</em> 9 (6): 30–33.
+https://doi.org/<a href="https://doi.org/10.1111/j.1740-9713.2012.00620.x">https://doi.org/10.1111/j.1740-9713.2012.00620.x</a>.
+</div>
 </div>
 
 
@@ -312,8 +378,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03_asymptotics.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span>
+      <a href="./04_hypothesis_tests.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

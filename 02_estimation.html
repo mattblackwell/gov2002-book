@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Estimation, Inference, and Regression - 2&nbsp; Estimation</title>
+<title>A User’s Guide to Statistical Inference and Regression - 2&nbsp; Estimation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Estimation, Inference, and Regression</a> 
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -182,6 +182,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -222,6 +227,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+$$
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\var}{\text{var}}
+\newcommand{\cov}{\text{cov}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\Bern}{\text{Bern}}
+\newcommand{\Bin}{\text{Bin}}
+\newcommand{\Pois}{\text{Pois}}
+\newcommand{\Unif}{\text{Unif}}
+\newcommand{\se}{\textsf{se}}
+\newcommand{\au}{\underline{a}}
+\newcommand{\du}{\underline{d}}
+\newcommand{\Au}{\underline{A}}
+\newcommand{\Du}{\underline{D}}
+\newcommand{\xu}{\underline{x}}
+\newcommand{\Xu}{\underline{X}}
+\newcommand{\Yu}{\underline{Y}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\boldsymbol}
+\newcommand{\U}{\mb{U}}
+\newcommand{\Xbar}{\overline{X}}
+\newcommand{\Ybar}{\overline{Y}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\bbL}{\mathbb{L}}
+\renewcommand{\u}{\mb{u}}
+\renewcommand{\v}{\mb{v}}
+\newcommand{\M}{\mb{M}}
+\newcommand{\X}{\mb{X}}
+\newcommand{\Xmat}{\mathbb{X}}
+\newcommand{\bfx}{\mb{x}}
+\newcommand{\y}{\mb{y}}
+\renewcommand{\b}{\mb{\beta}}
+\newcommand{\e}{\bs{\epsilon}}
+\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\XX}{\Xmat'\Xmat}
+\newcommand{\XXinv}{\left(\XX\right)^{-1}}
+\newcommand{\hatsig}{\hat{\sigma}^2}
+\newcommand{\red}[1]{\textcolor{red!60}{#1}}
+\newcommand{\indianred}[1]{\textcolor{indianred}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue!60}{#1}}
+\newcommand{\dblue}[1]{\textcolor{dodgerblue}{#1}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\inprob}{\overset{p}{\to}}
+\newcommand{\indist}{\overset{d}{\to}}
+\newcommand{\eframe}{\end{frame}}
+\newcommand{\bframe}{\begin{frame}}
+\newcommand{\R}{\textsf{\textbf{R}}}
+\newcommand{\Rst}{\textsf{\textbf{RStudio}}}
+\newcommand{\rfun}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\rpack}[1]{\textbf{#1}}
+\newcommand{\rexpr}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\filename}[1]{\texttt{\color{blue}{#1}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+$$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -246,9 +308,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Insert two-direction diagram</strong></p>
 <div id="exm-rct" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.1 (Randomized control trial) </strong></span>Suppose we are conducting a randomized experiment on framing effects. All respondents receive some factual information about recent levels of immigration, but the message for the treatment group (<span class="math inline">\(D_i = 1\)</span>) has an additional framing of the positive benefits of immigration and the control group (<span class="math inline">\(D_i = 0\)</span>) receives no additional framing. The outcome is a binary outcome on whether the respondent supports increasing legal immigration limits (<span class="math inline">\(Y_i = 1\)</span>) or not (<span class="math inline">\(Y_i = 0\)</span>). The observed data consists of <span class="math inline">\(n\)</span> pairs of random variables, the outcome and the treatment assignment: <span class="math inline">\(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\)</span>. Define the two sample means/proportions in each group as <span class="math display">\[
-\overline{Y}_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i,  \qquad\qquad \overline{Y}_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
+\Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i,  \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
 \]</span> where <span class="math inline">\(n_1 = \sum_{i=1}^n D_i\)</span> is the number of treated units and <span class="math inline">\(n_0 = n - n_1\)</span> is the number of control units.</p>
-<p>A common estimator for the treatment effect in a study like this would be the difference in means, <span class="math inline">\(\overline{Y}_1 - \overline{Y}_0\)</span>. But this is only one possible estimator. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This is commonly called a <strong>poststratification</strong> estimator, but it’s unclear at first glance which of these two estimators we should prefer.</p>
+<p>A common estimator for the treatment effect in a study like this would be the difference in means, <span class="math inline">\(\Ybar_1 - \Ybar_0\)</span>. But this is only one possible estimator. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This is commonly called a <strong>poststratification</strong> estimator, but it’s unclear at first glance which of these two estimators we should prefer.</p>
 </div>
 <p>What are the goals of studying estimators? In short, we prefer to use <strong>good</strong> estimators rather than <strong>bad</strong> estimators. But what makes an estimator good or bad? You probably have some intuitive sense that, say, an estimator that returns the value 3 is bad, but it will be helpful for us to formally define and explore some properties of estimators that will allow us to compare them and choose the good over the bad.</p>
 </section>
@@ -282,13 +344,13 @@ Note
 </div>
 </div>
 <div id="exm-prop" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.2 (Population mean) </strong></span>Suppose we wanted to know the proportion of US citizens who support increasing the level of legal immigration in the US, which we denote as <span class="math inline">\(Y_i = 1\)</span>. Then our quantity of interest is the mean of this random variable, <span class="math inline">\(\mu = \mathbb{E}[Y_i]\)</span>, which is also the probability of randomly drawing someone from the population that supports increasing legal immigration.</p>
+<p><span class="theorem-title"><strong>Example 2.2 (Population mean) </strong></span>Suppose we wanted to know the proportion of US citizens who support increasing the level of legal immigration in the US, which we denote as <span class="math inline">\(Y_i = 1\)</span>. Then our quantity of interest is the mean of this random variable, <span class="math inline">\(\mu = \E[Y_i]\)</span>, which is also the probability of randomly drawing someone from the population that supports increasing legal immigration.</p>
 </div>
 <div id="exm-var" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.3 (Population variance) </strong></span>Feeling thermometer scores are a very common way to assess how a survey respondent feels about a particular person or group of people. Respondents are asked how warmly they feel about a group from 0 to 100, which we will denote <span class="math inline">\(Y_i\)</span>. We might be interested in how polarized views are on a group in the population and one measure of polarization could the be variance, or spread, of the distribution of <span class="math inline">\(Y_i\)</span> around the mean. In this case, <span class="math inline">\(\sigma^2 = \mathbb{V}[Y_i]\)</span> would be our quantity of interest.</p>
+<p><span class="theorem-title"><strong>Example 2.3 (Population variance) </strong></span>Feeling thermometer scores are a very common way to assess how a survey respondent feels about a particular person or group of people. Respondents are asked how warmly they feel about a group from 0 to 100, which we will denote <span class="math inline">\(Y_i\)</span>. We might be interested in how polarized views are on a group in the population and one measure of polarization could the be variance, or spread, of the distribution of <span class="math inline">\(Y_i\)</span> around the mean. In this case, <span class="math inline">\(\sigma^2 = \V[Y_i]\)</span> would be our quantity of interest.</p>
 </div>
 <div id="exm-rct-ii" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.4 (RCT, continued) </strong></span>In <a href="#exm-rct">Example&nbsp;<span>2.1</span></a> we discussed a common estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional probabilities (or expectations): the average support for increasing legal immigration in the treatment group, <span class="math inline">\(\mu_1 = \mathbb{E}[Y_i \mid D_i = 1]\)</span>, and the same average in the control group, <span class="math inline">\(\mu_0 = \mathbb{E}[Y_i \mid D_i = 0]\)</span>. That is, we want to know about <span class="math inline">\(\mu_1 - \mu_0\)</span>, a function of unknown features of these two conditional distributions.</p>
+<p><span class="theorem-title"><strong>Example 2.4 (RCT, continued) </strong></span>In <a href="#exm-rct">Example&nbsp;<span>2.1</span></a> we discussed a common estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional probabilities (or expectations): the average support for increasing legal immigration in the treatment group, <span class="math inline">\(\mu_1 = \E[Y_i \mid D_i = 1]\)</span>, and the same average in the control group, <span class="math inline">\(\mu_0 = \E[Y_i \mid D_i = 0]\)</span>. That is, we want to know about <span class="math inline">\(\mu_1 - \mu_0\)</span>, a function of unknown features of these two conditional distributions.</p>
 </div>
 <p>Each of these is a function of the (possibly joint) distribution of the data, <span class="math inline">\(F\)</span>. In each of these, we are not necessarily interested in the entire distribution, just summaries of it (central tendency, spread). Of course there are situations where we are also interested in the complete distribution.</p>
 </section>
@@ -327,7 +389,7 @@ Note
 </div>
 </div>
 <div id="exm-mean-est" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.5 (Estimators for population mean) </strong></span>Suppose we would like to estimate the population mean of <span class="math inline">\(F\)</span>, which we will represent as <span class="math inline">\(\mu = \mathbb{E}[X_i]\)</span>. There are several estimators that we could choose from, all with different properties. <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 2.5 (Estimators for population mean) </strong></span>Suppose we would like to estimate the population mean of <span class="math inline">\(F\)</span>, which we will represent as <span class="math inline">\(\mu = \E[X_i]\)</span>. There are several estimators that we could choose from, all with different properties. <span class="math display">\[
 \widehat{\theta}_{n,1} = \frac{1}{n} \sum_{i=1}^n X_i, \quad \widehat{\theta}_{n,2} = X_1, \quad \widehat{\theta}_{n,3} = \text{max}(X_1,\ldots,X_n), \quad \widehat{\theta}_{n,4} = 3
 \]</span> The first is just the sample mean, which is an intuitive and natural estimator for the population mean. The second just uses the first observation. While this seems silly, this is a valid statistic (it’s a function of the data!). The third just takes the maximum value in the sample, and the fourth always returns 3 no matter what the data says.</p>
 </div>
@@ -341,7 +403,7 @@ Note
 <p>The first method for generating estimators is based on <strong>parametric models</strong>, where the researcher specifies the exact distribution (up to some unknown parameters) of the DGP. Let <span class="math inline">\(\theta\)</span> be the parameters of this distribution and we then write <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> are iid draws from <span class="math inline">\(F_{\theta}\)</span>. We should also formally state the set of possible values that the parameters can take, which we call the <strong>parameter space</strong> and usually denote as <span class="math inline">\(\Theta\)</span>. Because we’re assuming we know the distribution of the data, we can write the p.d.f. as <span class="math inline">\(f(X_i \mid \theta)\)</span> and define the likelihood function as the product of these p.d.f.s over the units as a function of the parameters: <span class="math display">\[
 L(\theta) = \prod_{i=1}^n f(X_i \mid \theta).
 \]</span> We can then define the <strong>maximum likelihood</strong> estimator (MLE) for <span class="math inline">\(\theta\)</span> as the values of the parameter that, well, maximize the likelihood: <span class="math display">\[
-\widehat{\theta}_{mle} = \mathop{\mathrm{arg\,max}}_{\theta \in \Theta} \; L(\theta)
+\widehat{\theta}_{mle} = \argmax_{\theta \in \Theta} \; L(\theta)
 \]</span> Sometimes we can use calculus to derive a closed-form expression for the MLE, but more often we will use iterative techniques that essentially search the parameter space for the maximum.</p>
 <p>Maximum likelihood estimators have very nice properties, especially in large samples. Unfortunately, it also requires the correct knowledge of the parametric model, which is often difficult to justify. Do we really know if a given event count variable should be modeling as Poisson or Negative Binomial? The nice properties of MLE are only as good as our ability to get these types of choices correct.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -360,26 +422,26 @@ No free lunch
 </section>
 <section id="plug-in-estimators" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="plug-in-estimators"><span class="header-section-number">2.4.2</span> Plug-in estimators</h3>
-<p>The second broad class of estimators are <strong>semiparametric</strong> in the sense that we will specify some finite-dimensional parameters of the DGP, but leave the rest of the distribution unspecified. For example, we might specify a population mean, <span class="math inline">\(\mu = \mathbb{E}[X_i]\)</span>, and a population variance, <span class="math inline">\(\sigma^2 = \mathbb{V}[X_i]\)</span> but leave unrestricted the shape of the distribution. This is really important because our estimators will not be as dependent on correctly specifying distributions that maybe have no business specifying.</p>
+<p>The second broad class of estimators are <strong>semiparametric</strong> in the sense that we will specify some finite-dimensional parameters of the DGP, but leave the rest of the distribution unspecified. For example, we might specify a population mean, <span class="math inline">\(\mu = \E[X_i]\)</span>, and a population variance, <span class="math inline">\(\sigma^2 = \V[X_i]\)</span> but leave unrestricted the shape of the distribution. This is really important because our estimators will not be as dependent on correctly specifying distributions that maybe have no business specifying.</p>
 <p>The basic method for constructing estimators in this setting is to use the <strong>plug-in estimator</strong>, or the estimator that replaces any population mean with a sample mean. Obviously in the case of estimating the population mean, <span class="math inline">\(\mu\)</span>, this means we will use the <strong>sample mean</strong> as its estimate: <span class="math display">\[
-\overline{X}_n = \frac{1}{n} \sum_{i=1}^n X_i \quad \text{estimates} \quad \mathbb{E}[X_i] = \int_{\mathcal{X}} x f(x)dx
+\Xbar_n = \frac{1}{n} \sum_{i=1}^n X_i \quad \text{estimates} \quad \E[X_i] = \int_{\mathcal{X}} x f(x)dx
 \]</span> What are we doing here? We are replacing the unknown population distribution <span class="math inline">\(f(x)\)</span> that’s in the population mean with a discrete uniform distribution over our data points, with <span class="math inline">\(1/n\)</span> probability assigned to each unit. Why do this? It encodes that if we have a random sample, our best guess about the population distribution of <span class="math inline">\(X_i\)</span> is the sample distribution in our actual data. If this intuition fails, it is also fine to hold onto an analog principle: sample means of random variables are natural estimators of population means.</p>
-<p>What about estimating something more complicated like a the expected value of a function of the data, <span class="math inline">\(\theta = \mathbb{E}[r(X_i)]\)</span>? The key is to see that <span class="math inline">\(f(X_i)\)</span> is also a random variable. Let’s call this random variable <span class="math inline">\(Y_i = f(X_i)\)</span> now we can see that <span class="math inline">\(\theta\)</span> is just the population expectation of this random variable and using the plug-in estimator, we get: <span class="math display">\[
+<p>What about estimating something more complicated like a the expected value of a function of the data, <span class="math inline">\(\theta = \E[r(X_i)]\)</span>? The key is to see that <span class="math inline">\(f(X_i)\)</span> is also a random variable. Let’s call this random variable <span class="math inline">\(Y_i = f(X_i)\)</span> now we can see that <span class="math inline">\(\theta\)</span> is just the population expectation of this random variable and using the plug-in estimator, we get: <span class="math display">\[
 \widehat{\theta} = \frac{1}{n} \sum_{i=1}^n Y_i = \frac{1}{n} \sum_{i=1}^n r(X_i).
 \]</span></p>
-<p>With these facts in hand, we can describe the more general plug-in estimator. When we want to estimate some quantity of interest that is a function of population means, we can generate a plug-in estimator by replacing any population mean with a sample mean. Formally, let <span class="math inline">\(\alpha = g\left(\mathbb{E}[r(X_i)]\right)\)</span> be a parameter that is defined as a function of the population mean of a (possibly vector-valued) function of the data. Then, we can estimate this parameter by plugging in the sample mean for the population mean to get the <strong>plug-in estimator</strong>, <span class="math display">\[
-\widehat{\alpha} = g\left( \frac{1}{n} \sum_{i=1}^n r(X_i) \right) \quad \text{estimates} \quad \alpha = g\left(\mathbb{E}[r(X_i)]\right)
+<p>With these facts in hand, we can describe the more general plug-in estimator. When we want to estimate some quantity of interest that is a function of population means, we can generate a plug-in estimator by replacing any population mean with a sample mean. Formally, let <span class="math inline">\(\alpha = g\left(\E[r(X_i)]\right)\)</span> be a parameter that is defined as a function of the population mean of a (possibly vector-valued) function of the data. Then, we can estimate this parameter by plugging in the sample mean for the population mean to get the <strong>plug-in estimator</strong>, <span class="math display">\[
+\widehat{\alpha} = g\left( \frac{1}{n} \sum_{i=1}^n r(X_i) \right) \quad \text{estimates} \quad \alpha = g\left(\E[r(X_i)]\right)
 \]</span> This approach to plug-in estimation with sample means is very general and will allow us to derive estimators in a large variety of settings.</p>
 <div id="exm-var-est" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.6 (Estimating population variance) </strong></span>The population variance of a random variable is <span class="math inline">\(\sigma^2 = \mathbb{E}[(X_i - \mathbb{E}[X_i])^2]\)</span>. To derive a plug-in estimator for this quantity, we replace the inner <span class="math inline">\(\mathbb{E}[X_i]\)</span> with <span class="math inline">\(\overline{X}_n\)</span> and the outer expectation with another sample mean: <span class="math display">\[
-\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \overline{X}_n)^2.
+<p><span class="theorem-title"><strong>Example 2.6 (Estimating population variance) </strong></span>The population variance of a random variable is <span class="math inline">\(\sigma^2 = \E[(X_i - \E[X_i])^2]\)</span>. To derive a plug-in estimator for this quantity, we replace the inner <span class="math inline">\(\E[X_i]\)</span> with <span class="math inline">\(\Xbar_n\)</span> and the outer expectation with another sample mean: <span class="math display">\[
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2.
 \]</span> Note that this plug-in estimator is not the same as the usual sample variance, which divides by <span class="math inline">\(n - 1\)</span> rather than <span class="math inline">\(n\)</span>, but this is a very minor difference that does not matter in moderate to large samples.</p>
 </div>
 <div id="exm-cov-est" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.7 (Estimating population covariance) </strong></span>Suppose we have two variables, <span class="math inline">\((X_i, Y_i)\)</span>. A natural quantity of interest here is the population covariance between these variables, <span class="math display">\[
-\sigma_{xy} = \text{Cov}[X_i,Y_i] = \mathbb{E}[(X_i - \mathbb{E}[X_i])(Y_i-\mathbb{E}[Y_i])],
+\sigma_{xy} = \text{Cov}[X_i,Y_i] = \E[(X_i - \E[X_i])(Y_i-\E[Y_i])],
 \]</span> which has the plug-in estimator, <span class="math display">\[
-\widehat{\sigma}_{xy} = \frac{1}{n} \sum_{i=1}^n (X_i - \overline{X}_n)(Y_i - \overline{Y}_n).
+\widehat{\sigma}_{xy} = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)(Y_i - \Ybar_n).
 \]</span></p>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -392,8 +454,8 @@ Notation alert
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Given the connection between the population mean and the sample mean, you will sometimes see the <span class="math inline">\(\mathbb{E}_n[\cdot]\)</span> operator used as a short hand for the sample average: <span class="math display">\[
-\mathbb{E}_n[r(X_i)] \equiv \frac{1}{n} \sum_{i=1}^n r(X_i).
+<p>Given the connection between the population mean and the sample mean, you will sometimes see the <span class="math inline">\(\E_n[\cdot]\)</span> operator used as a short hand for the sample average: <span class="math display">\[
+\E_n[r(X_i)] \equiv \frac{1}{n} \sum_{i=1}^n r(X_i).
 \]</span></p>
 </div>
 </div>
@@ -410,7 +472,7 @@ Notation alert
 <p>Separately from both of these is the <strong>sampling distribution of an estimator</strong>, which is the probability distribution of <span class="math inline">\(\widehat{\theta}_n\)</span>. It represents our uncertainty about what our estimate will be before we see the data. Remember that our estimator is itself a random variable because it is a function of random variables: the data itself. That is, we defined the estimator as <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
 <div id="exm-three-dist" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.8 (Likert resposes) </strong></span>Suppose <span class="math inline">\(X_i\)</span> is the answer to a question, “How much do you agree with the following statement: Immigrants are a net positive for the United States,” with a <span class="math inline">\(X_i = 0\)</span> being “strongly disagree,” <span class="math inline">\(X_i = 1\)</span> being “disgree”, <span class="math inline">\(X_i = 2\)</span> being “neither agree nor disagree”, <span class="math inline">\(X_i = 3\)</span> being “agree”, and <span class="math inline">\(X_i = 4\)</span> being “strongly agree.”</p>
-<p>The population distribution describes the probability of randomly selecting a person with each one of these values, <span class="math inline">\(\mathbb{P}(X_i = x)\)</span>. The empirical distribution would be the actual numeric values 0-4 in our data. And the sampling distribution of the sample mean, <span class="math inline">\(\overline{X}_n\)</span>, would be the distribution of the sample mean across repeated samples from the population.</p>
+<p>The population distribution describes the probability of randomly selecting a person with each one of these values, <span class="math inline">\(\P(X_i = x)\)</span>. The empirical distribution would be the actual numeric values 0-4 in our data. And the sampling distribution of the sample mean, <span class="math inline">\(\Xbar_n\)</span>, would be the distribution of the sample mean across repeated samples from the population.</p>
 <p>Suppose that the population distribution was binomial with 4 trials and probability of success <span class="math inline">\(p = 0.4\)</span>. We could generate one sample with <span class="math inline">\(n = 10\)</span> and thus one empirical distribution using <code>rbinom</code>:</p>
 <div class="cell">
 
@@ -428,7 +490,7 @@ Notation alert
 1 3 3 3 </code></pre>
 </div>
 </div>
-<p>And we can generate one draw from the sampling distribution of <span class="math inline">\(\overline{X}_n\)</span> by taking the mean of this sample:</p>
+<p>And we can generate one draw from the sampling distribution of <span class="math inline">\(\Xbar_n\)</span> by taking the mean of this sample:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(my_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -453,13 +515,13 @@ Notation alert
 <section id="bias" class="level3" data-number="2.6.1">
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="bias"><span class="header-section-number">2.6.1</span> Bias</h3>
 <p>The first property of the sampling distribution concerns its central tendency. In particular, we will define the <strong>bias</strong> (or <strong>estimation bias</strong>) of estimator <span class="math inline">\(\widehat{\theta}\)</span> for parameter <span class="math inline">\(\theta\)</span> as <span class="math display">\[
-\text{bias}[\widehat{\theta}] = \mathbb{E}[\widehat{\theta}] - \theta.
-\]</span> This is the difference between the mean of the estimator (across repeated samples) and the true parameter. All else equal, we would like estimation bias to be as small as possible. The smallest possible bias, obviously, is 0 and we define an <strong>unbiased estimator</strong> as one with with <span class="math inline">\(\text{bias}[\widehat{\theta}] = 0\)</span> or equivalently, <span class="math inline">\(\mathbb{E}[\widehat{\theta}] = \theta\)</span>.</p>
+\text{bias}[\widehat{\theta}] = \E[\widehat{\theta}] - \theta.
+\]</span> This is the difference between the mean of the estimator (across repeated samples) and the true parameter. All else equal, we would like estimation bias to be as small as possible. The smallest possible bias, obviously, is 0 and we define an <strong>unbiased estimator</strong> as one with with <span class="math inline">\(\text{bias}[\widehat{\theta}] = 0\)</span> or equivalently, <span class="math inline">\(\E[\widehat{\theta}] = \theta\)</span>.</p>
 <p>However, all else is not always equal and unbiasedness is not a property to become overly attached to. There are many biased estimators that have other attractive properties and many popular modern estimators are biaseed.</p>
 <div id="exm-mean-unbiased" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.9 (Unbiasedness of the sample mean) </strong></span>We can show that the sample mean is unbiased for the population mean when the data is iid and <span class="math inline">\(\mathbb{E}|X| &lt; \infty\)</span>. In particular, we simply apply the rules of expectations: <span class="math display">\[\begin{aligned}
-\mathbb{E}\left[ \overline{X}_n \right] &amp;= \mathbb{E}\left[\frac{1}{n} \sum_{i=1}^n X_i\right] &amp; (\text{definition of } \overline{X}_n) \\
-&amp;= \frac{1}{n} \sum_{i=1}^n \mathbb{E}[X_i] &amp; (\text{linearity of } \mathbb{E})\\
+<p><span class="theorem-title"><strong>Example 2.9 (Unbiasedness of the sample mean) </strong></span>We can show that the sample mean is unbiased for the population mean when the data is iid and <span class="math inline">\(\E|X| &lt; \infty\)</span>. In particular, we simply apply the rules of expectations: <span class="math display">\[\begin{aligned}
+\E\left[ \Xbar_n \right] &amp;= \E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] &amp; (\text{definition of } \Xbar_n) \\
+&amp;= \frac{1}{n} \sum_{i=1}^n \E[X_i] &amp; (\text{linearity of } \E)\\
 &amp;= \frac{1}{n} \sum_{i=1}^n \mu &amp; (X_i \text{ identically distributed})\\
 &amp;= \mu.
 \end{aligned}\]</span> Notice that we only used the “identically distributed” part of iid. Independence is not needed.</p>
@@ -480,27 +542,27 @@ Warning
 </section>
 <section id="estimation-variance-and-the-standard-error" class="level3" data-number="2.6.2">
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="estimation-variance-and-the-standard-error"><span class="header-section-number">2.6.2</span> Estimation variance and the standard error</h3>
-<p>If a “good” estimator tends to be close to the truth, then we should also care how spread out the sampling distribution is. In particular, we define the <strong>sampling variance</strong> as the variance of an estimator’s sampling distribution, <span class="math inline">\(\mathbb{V}[\widehat{\theta}]\)</span>. This measures how spread the estimator it is around its mean. For an unbiased estimator, smaller sampling variance implies the distribution of <span class="math inline">\(\widehat{\theta}\)</span> is more concentrated around the truth.</p>
+<p>If a “good” estimator tends to be close to the truth, then we should also care how spread out the sampling distribution is. In particular, we define the <strong>sampling variance</strong> as the variance of an estimator’s sampling distribution, <span class="math inline">\(\V[\widehat{\theta}]\)</span>. This measures how spread the estimator it is around its mean. For an unbiased estimator, smaller sampling variance implies the distribution of <span class="math inline">\(\widehat{\theta}\)</span> is more concentrated around the truth.</p>
 <div id="exm-mean-var" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.10 (Sampling variance of the sample mean:) </strong></span>We can establish the sampling variance of the sample mean of iid data for all <span class="math inline">\(F\)</span> such that <span class="math inline">\(\mathbb{V}[X_i]\)</span> is finite (more precisely, <span class="math inline">\(\mathbb{E}[X_i^2] &lt; \infty\)</span>)</p>
+<p><span class="theorem-title"><strong>Example 2.10 (Sampling variance of the sample mean:) </strong></span>We can establish the sampling variance of the sample mean of iid data for all <span class="math inline">\(F\)</span> such that <span class="math inline">\(\V[X_i]\)</span> is finite (more precisely, <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>)</p>
 <p><span class="math display">\[\begin{aligned}
-  \mathbb{V}\left[ \overline{X}_n \right] &amp;= \mathbb{V}\left[ \frac{1}{n} \sum_{i=1}^n X_i \right] &amp; (\text{definition of } \overline{X}_n) \\
-                           &amp;=\frac{1}{n^2} \mathbb{V}\left[ \sum_{i=1}^n X_i \right] &amp; (\text{property of } \mathbb{V})\\
-                           &amp;=\frac{1}{n^2} \sum_{i=1}^n \mathbb{V}[X_i] &amp; (\text{independence})\\
+  \V\left[ \Xbar_n \right] &amp;= \V\left[ \frac{1}{n} \sum_{i=1}^n X_i \right] &amp; (\text{definition of } \Xbar_n) \\
+                           &amp;=\frac{1}{n^2} \V\left[ \sum_{i=1}^n X_i \right] &amp; (\text{property of } \V)\\
+                           &amp;=\frac{1}{n^2} \sum_{i=1}^n \V[X_i] &amp; (\text{independence})\\
                            &amp;= \frac{1}{n^2}\sum_{i=1}^n \sigma^2 &amp; (X_i \text{ identically distributed})\\
                            &amp;= \frac{\sigma^2}{n}
 \end{aligned}\]</span></p>
 </div>
-<p>An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of <span class="math inline">\(\widehat{\theta}\)</span> the <strong>standand error</strong> of <span class="math inline">\(\widehat{\theta}\)</span>: <span class="math inline">\(\textsf{se}(\widehat{\theta}) = \sqrt{\mathbb{V}[\widehat{\theta}]}\)</span>.</p>
+<p>An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of <span class="math inline">\(\widehat{\theta}\)</span> the <strong>standand error</strong> of <span class="math inline">\(\widehat{\theta}\)</span>: <span class="math inline">\(\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}\)</span>.</p>
 <p>Given the above derivation the standard error of the sample mean under iid sampling is <span class="math inline">\(\sigma / \sqrt{n}\)</span></p>
 </section>
 <section id="mean-squared-error" class="level3" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="mean-squared-error"><span class="header-section-number">2.6.3</span> Mean squared error</h3>
 <p>Bias and sampling variance clearly got at two different aspects of being a “good” estimator. Ideally, we want the estimator to be as close as possible to the true value. One summary measure of the quality of an estimator is the <strong>mean squared error</strong> or <strong>MSE</strong> which is defined as. <span class="math display">\[
-\text{MSE} = \mathbb{E}[(\widehat{\theta}_n-\theta)^2]
+\text{MSE} = \E[(\widehat{\theta}_n-\theta)^2]
 \]</span> Ideally, we would have this be as small as possible!</p>
 <p>We can also relate the MSE to the bias and the sampling variance (provided it is finite) with the following decomposition result: <span class="math display">\[
-\text{MSE} = \text{bias}[\widehat{\theta}_n]^2 + \mathbb{V}[\widehat{\theta}_n]
+\text{MSE} = \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
 \]</span> This decomposition implies that, for unbiased estimators, MSE is the sampling variance. It also highlights why we might accept some bias for large reductions in variance for lower overall MSE.</p>
 <div class="cell">
 <div class="cell-output-display">

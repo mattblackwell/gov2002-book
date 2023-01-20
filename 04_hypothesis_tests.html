@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A User’s Guide to Statistical Inference and Regression - 4&nbsp; Hypothesis Tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./03_asymptotics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-lady-tasting-tea" id="toc-the-lady-tasting-tea" class="nav-link active" data-scroll-target="#the-lady-tasting-tea"><span class="toc-section-number">4.1</span>  The lady tasting tea</a></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="toc-section-number">4.2</span>  Hypotheses</a></li>
+  <li><a href="#the-procedure-of-hypothesis-testing" id="toc-the-procedure-of-hypothesis-testing" class="nav-link" data-scroll-target="#the-procedure-of-hypothesis-testing"><span class="toc-section-number">4.3</span>  The procedure of hypothesis testing</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+$$
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\var}{\text{var}}
+\newcommand{\cov}{\text{cov}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\Bern}{\text{Bern}}
+\newcommand{\Bin}{\text{Bin}}
+\newcommand{\Pois}{\text{Pois}}
+\newcommand{\Unif}{\text{Unif}}
+\newcommand{\se}{\textsf{se}}
+\newcommand{\au}{\underline{a}}
+\newcommand{\du}{\underline{d}}
+\newcommand{\Au}{\underline{A}}
+\newcommand{\Du}{\underline{D}}
+\newcommand{\xu}{\underline{x}}
+\newcommand{\Xu}{\underline{X}}
+\newcommand{\Yu}{\underline{Y}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\boldsymbol}
+\newcommand{\U}{\mb{U}}
+\newcommand{\Xbar}{\overline{X}}
+\newcommand{\Ybar}{\overline{Y}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\bbL}{\mathbb{L}}
+\renewcommand{\u}{\mb{u}}
+\renewcommand{\v}{\mb{v}}
+\newcommand{\M}{\mb{M}}
+\newcommand{\X}{\mb{X}}
+\newcommand{\Xmat}{\mathbb{X}}
+\newcommand{\bfx}{\mb{x}}
+\newcommand{\y}{\mb{y}}
+\renewcommand{\b}{\mb{\beta}}
+\newcommand{\e}{\bs{\epsilon}}
+\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\XX}{\Xmat'\Xmat}
+\newcommand{\XXinv}{\left(\XX\right)^{-1}}
+\newcommand{\hatsig}{\hat{\sigma}^2}
+\newcommand{\red}[1]{\textcolor{red!60}{#1}}
+\newcommand{\indianred}[1]{\textcolor{indianred}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue!60}{#1}}
+\newcommand{\dblue}[1]{\textcolor{dodgerblue}{#1}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\inprob}{\overset{p}{\to}}
+\newcommand{\indist}{\overset{d}{\to}}
+\newcommand{\eframe}{\end{frame}}
+\newcommand{\bframe}{\begin{frame}}
+\newcommand{\R}{\textsf{\textbf{R}}}
+\newcommand{\Rst}{\textsf{\textbf{RStudio}}}
+\newcommand{\rfun}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\rpack}[1]{\textbf{#1}}
+\newcommand{\rexpr}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\filename}[1]{\texttt{\color{blue}{#1}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+$$
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Up to now, we have discussed the properties of estimators that allow us to sometimes characterize their distributions in finite and large samples. These properties might allow us to say that, for example, our estimated difference in means is equal to a true average treatment effect on average across repeated samples or that it will converge to the true value in large samples. These properties, however, are properties of repeated samples whereas we as researchers will only have access to a single sample. <strong>Statistical inference</strong> is the process of using our single sample to learn about population parameters. There are several ways to do inference that are connected, but perhaps the most ubiquitous in the sciences is the hypothesis test, which is a kind of statistical thought experiment.</p>
+<section id="the-lady-tasting-tea" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-lady-tasting-tea"><span class="header-section-number">4.1</span> The lady tasting tea</h2>
+<p>The lady tasting tea is an example of the core ideas behind hypothesis testing due to R.A. Fisher.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Fisher had prepared a cup of tea for his colleague, the algologist Muriel Bristol. Knowing that she preferred milk in her tea, he poured milk into a tea cup and then poured the hot tea into the milk. Bristol rejected the cup, stating that she preferred the tea to be poured first, then milk. Fisher was apparently incredulous at the idea anyone could tell the difference between a cup poured milk-first or tea-first. So he and another colleague, William Roach, devised a test to see if Bristol had the ability to distinguish the two preparation methods.</p>
+<p>For this test, Fisher and Roach prepared 8 cups of tea, 4 prepared milk-first and 4 prepared tea-first. They then presented the cups to Bristol in a random order (though she knew there were 4 of each type), and she proceeded to identify all of the cups correctly. At a first glance, this seems like good evidence that she can tell the difference between the two types, but a skeptic like Fisher raised the question: “could she have just been randomly guessing and got lucky?” This led Fisher to a <strong>statistical thought experiment</strong>: what would the probability of guessing all cups correctly <em>if</em> she were guessing randomly?</p>
+<p>To calculate the probability of Bristol’s achievement, we can note that “randomly guessing” here would mean that she were selecting a group of 4 cups to be labeled milk-first from the 8 cups available. Using basic combinatorics, there are 70 ways to choose 4 cups among 8, but only 1 of those arrangements would be correct. Thus, if randomly guessing means choosing among those 70 options with equal chance, then the probability of guessing correctly is 1/70 or <span class="math inline">\(\approx 0.014\)</span>. This probability being so low implies that the hypothesis of random guessing may be implausible.</p>
+<p>The story of the lady tasting tea encapsulates many of the core elements of hypothesis testing. Hypothesis testing is about taking our observed estimate (Bristol guessing all the cups correctly) and seeing how likely that observed estimate would be under some assumption or hypothesis about the data generating process (Bristol was randomly guessing). When the observed estimate is very unlikely under the maintained hypothesis, we might view this as evidence against that hypothesis. Thus, hypothesis tests help us assess evidence for particular guesses about the DGP.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Notation alert
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the rest of this chapter, we’ll introduce the concepts following the notation in the past chapters. We’ll usually assume that we have a random (iid) sample of random variables <span class="math inline">\(X_1, \ldots, X_n\)</span> from a distribution, <span class="math inline">\(F\)</span>. We’ll focus on estimating some parameter, <span class="math inline">\(\theta\)</span> of this distribution (like the mean, median, variance, etc). We’ll refer to <span class="math inline">\(\Theta\)</span> as the set of possible values of <span class="math inline">\(\theta\)</span>, or the <strong>parameter space</strong>.</p>
+</div>
+</div>
+</section>
+<section id="hypotheses" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="hypotheses"><span class="header-section-number">4.2</span> Hypotheses</h2>
+<p>In the context of hypothesis testing, hypotheses are just statements about the population distribution. In particular, we will make statements that <span class="math inline">\(\theta = \theta_0\)</span> where <span class="math inline">\(\theta_0 \in \Theta\)</span> is the hypothesized value of <span class="math inline">\(\theta\)</span>. Hypotheses are ubiquitous in empirical work, but here are some examples to give you a flavor:</p>
+<ul>
+<li>The population proportion of US citizens that identify as Democrats is 0.33.</li>
+<li>The population difference in average voter turnout between households who received receiving get-out-the-vote mailers vs those who did not is 0.</li>
+<li>The difference in average incidence of human rights abuse in countries that signed a human rights treaty vs those countries that did not sign is 0.</li>
+</ul>
+<p>Each of these is a statement about the true DGP. The latter two are very common: when <span class="math inline">\(\theta\)</span> represents the difference in means between two groups, then <span class="math inline">\(\theta = 0\)</span> is the hypothesis of no true difference in population means, or no treatment effect (if the causal effect is identified).</p>
+<p>The goal of hypothesis testing is to adjudicate between two complementary hypotheses.</p>
+<div id="def-null" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.1 </strong></span>The two hypotheses in a hypothesis test are called the <strong>null hypothesis</strong> and the <strong>alternative hypothesis</strong>, denoted as <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span>, respectively.</p>
+</div>
+<p>These hypotheses are complementary, so that if the null hypothesis <span class="math inline">\(H_0: \theta \in \Theta_0\)</span>, then the alternative hypothesis is <span class="math inline">\(H_1: \theta \in \Theta_0^c\)</span>. The “null” in null hypothesis might seem odd until you realize that most hypotheses being tested are that there is no effect of some treatment or no difference in means. For example, suppose <span class="math inline">\(\theta\)</span> is the difference in mean support for expanding legal immigration between a treatment group that received a pro-immigrant message along with some facts about immigration and a control group that just received the factual information. Then, the typical null hypothesis would be no difference in means or <span class="math inline">\(H_0: \theta = 0\)</span> and the alternative would be <span class="math inline">\(H_1: \theta \neq 0\)</span>.</p>
+<p>There are two types of tests that differ by the form of their null and alternative hypotheses. A <strong>two-sided test</strong> is of the form <span class="math display">\[
+H_0: \theta = \theta_0 \quad\text{versus}\quad H_1: \theta \neq \theta_0,
+\]</span> where the “two-sided” part refers to how the alternative contains values of <span class="math inline">\(\theta\)</span> above and below the null value <span class="math inline">\(\theta_0\)</span>. A <strong>one-sided test</strong> has the form <span class="math display">\[
+H_0: \theta \leq \theta_0 \quad\text{versus}\quad H_1: \theta &gt; \theta_0,
+\]</span> or <span class="math display">\[
+H_0: \theta \geq \theta_0 \quad\text{versus}\quad H_1: \theta &lt; \theta_0.
+\]</span> Two-sided tests are much more common in the social science where we want to know if there is any evidence, positive or negative, against the presumption of no treatment effect or no relationship between two variables. One-sided tests are for situations where we only want evidence in one direction, which is rarely relevant to social science research. One-sided tests also have the downside of being misused to inflate the strength of evidence against the null and so should be avoided. Unfortunately, the math of two-sided tests are also more complicated.</p>
+</section>
+<section id="the-procedure-of-hypothesis-testing" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="the-procedure-of-hypothesis-testing"><span class="header-section-number">4.3</span> The procedure of hypothesis testing</h2>
+<p>At the most basic level, a <strong>hypothesis test</strong> is a rule that specifies values of the sample data for which we will decide to <strong>reject</strong> the null hypothesis. Let <span class="math inline">\(\mathcal{X}_n\)</span> be the range of the sample—that is, all possible vectors <span class="math inline">\((x_1, \ldots, x_n)\)</span> that have positive probability of occurring. Then, a hypothesis test describes a region of this space, <span class="math inline">\(R \subset \mathcal{X}_n\)</span>, called the <strong>rejection region</strong> where when <span class="math inline">\((X_1, \ldots, X_n) \in R\)</span> we will <strong>reject</strong> <span class="math inline">\(H_0\)</span> and when the data is outside this region, <span class="math inline">\((X_1, \ldots, X_n) \notin R\)</span> we <strong>retain</strong>, <strong>accept</strong>, or <strong>fail to reject</strong> the null hypothesis.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>How do we decide what the rejection region should be? Even though we define the rejection region in terms of the <strong>sample space</strong>, <span class="math inline">\(\mathcal{X}_n\)</span>, it’s unwieldy to work with the entire vector of data. Instead, we often formulate the rejection region in terms of a <strong>test statistic</strong>, <span class="math inline">\(T = T(X_1, \ldots, X_n)\)</span>, where the rejection region becomes <span class="math display">\[
+R = \left\{(x_1, \ldots, x_n) : T(x_1, \ldots, x_n) &gt; c\right\},
+\]</span> where <span class="math inline">\(c\)</span> is called the <strong>critical value</strong>. In words, this says that the rejection region are the parts of the sample space that make the test statistic sufficiently large. We reject null hypotheses when the observed data is incompatible with those hypotheses, where the test statistic should be a measure of this incompatibility. Note that the test statistic is a random variable and has a distribution—we will exploit this to understand the different properties of a hypothesis test.</p>
+<div id="exm-biden" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.1 </strong></span>Suppose that <span class="math inline">\((X_1, \ldots, X_n)\)</span> measure whether a sample of US citizens support the current US president (<span class="math inline">\(X_i = 1\)</span>) or not (<span class="math inline">\(X_i = 0\)</span>). We might be interested in the test of the null hypothesis that the president does not have the support of a majority of American citizens. Let <span class="math inline">\(\mu = \E[X_i] = \P(X_i = 1)\)</span>. Then, a one-sided test would compare the two hypotheses <span class="math display">\[
+H_0: \mu \leq 0.5 \quad\text{versus}\quad H_1: \mu &gt; 0.5.
+\]</span> In this case, we might use the sample mean as the test statistic, so that <span class="math inline">\(T(X_1, \ldots, X_n) = \Xbar_n\)</span> and we have to find some threshold above 0.5 such that we would reject the null, <span class="math display">\[
+R = \left\{(x_1, \ldots, x_n): \Xbar_n &gt; c\right\}.
+\]</span> In words, how much support should we see for the current president before we decide to reject the notion that they lack majority support. Below we are going to select the critical value, <span class="math inline">\(c\)</span>, to have nice statistical properties.</p>
+</div>
+<p>The structure of a reject region will depend on whether a test is one- or two-sided. One-sided tests will take the form <span class="math inline">\(T &gt; c\)</span>, whereas two-sided tests will take the form <span class="math inline">\(|T| &gt; c\)</span>, since we want to count deviations from either side of the null hypothesis as evidence against that null.</p>
+<div id="tbl-errors" class="anchored">
+<table class="table">
+<caption>Table&nbsp;4.1: Typology of testing errors</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(H_0\)</span> True</th>
+<th><span class="math inline">\(H_0\)</span> False</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Retain <span class="math inline">\(H_0\)</span></td>
+<td>Awesome</td>
+<td>Type II error</td>
+</tr>
+<tr class="even">
+<td>Reject <span class="math inline">\(H_0\)</span></td>
+<td>Type I error</td>
+<td>Great</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If we are making a decision about whether to reject a null hypothesis or not, it is possible that we will make the incorrect decision. In particular, there are two ways for us to make errors and two ways for us to be correct in this setting, as shown in <a href="#tbl-errors">Table&nbsp;<span>4.1</span></a>. The labels are confusing, but it’s helpful to remember that <strong>type I errors</strong> (said “type one”) are labelled so because they are the worse of the two types of errors. This is when we reject a null (say there is a true treatment effect or relationship) when in fact the null is true (there is no true treatment effect or relationship). Type I errors are what we see in the replication crisis: lots of “significant” effects that turn out later to be null. <strong>Type II errors</strong> (said “type two”) are considered less problematic: there is a true relationship, but we cannot detect it with our test (cannot reject the null).</p>
+<p>Ideally, we would minimize the chances that we make either a type I or type II error. Unfortunately, because the test statistic is a random variable, we cannot remove the probability of an error completely. Instead, we will try to derive tests that have some guaranteed performance in terms of minimizing the probability of type I error. To derive this, we can define the <strong>power function</strong> of a test, <span class="math display">\[
+\pi(\theta) = \P\left(  \text{Reject } H_0 \mid \theta \right) = \P\left( T \in R \mid \theta \right),
+\]</span> which is the probability of rejection as a function of the parameter of interest, <span class="math inline">\(\theta\)</span>. This tells us, for example, how likely we are to reject the null of no treatment effect as we vary the true size of the treatment effect.</p>
+<p>From the power function we can define the probability of type I error.</p>
+<div id="def-size" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.2 </strong></span>The <strong>size</strong> of a hypothesis test with the null hypothesis <span class="math inline">\(H_0: \theta = \theta_0\)</span> is <span class="math display">\[
+\pi(\theta_0) = \P\left( \text{Reject } H_0 \mid \theta_0 \right).
+\]</span></p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-size-power" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="04_hypothesis_tests_files/figure-html/fig-size-power-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4.1: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Senn12" class="csl-entry" role="doc-biblioentry">
+Senn, Stephen. 2012. <span>“Tea for Three: Of Infusions and Inferences and Milk in First.”</span> <em>Significance</em> 9 (6): 30–33. https://doi.org/<a href="https://doi.org/10.1111/j.1740-9713.2012.00620.x">https://doi.org/10.1111/j.1740-9713.2012.00620.x</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The analysis here largely comes from <span class="citation" data-cites="Senn12">Senn (<a href="references.html#ref-Senn12" role="doc-biblioref">2012</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Different people and different textbooks describe what to do when do not reject the null hypothesis in different ways. The terminology is not so important so long as you understand that rejecting the null does not mean the null is logically false and “accepting” the null does not mean the null is logically true. These are simply statements about the decision that needs to be made as part of the hypothesis test.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03_asymptotics.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

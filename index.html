@@ -7,9 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Matthew Blackwell">
-<meta name="dcterms.date" content="2022-12-29">
 
-<title>Estimation, Inference, and Regression</title>
+<title>A User’s Guide to Statistical Inference and Regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -62,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Estimation, Inference, and Regression</h1>
+      <h1 class="quarto-secondary-nav-title">A User’s Guide to Statistical Inference and Regression</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Estimation, Inference, and Regression</a> 
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -123,6 +123,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
@@ -141,10 +146,67 @@ ul.task-list li input[type="checkbox"] {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+$$
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\var}{\text{var}}
+\newcommand{\cov}{\text{cov}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\Bern}{\text{Bern}}
+\newcommand{\Bin}{\text{Bin}}
+\newcommand{\Pois}{\text{Pois}}
+\newcommand{\Unif}{\text{Unif}}
+\newcommand{\se}{\textsf{se}}
+\newcommand{\au}{\underline{a}}
+\newcommand{\du}{\underline{d}}
+\newcommand{\Au}{\underline{A}}
+\newcommand{\Du}{\underline{D}}
+\newcommand{\xu}{\underline{x}}
+\newcommand{\Xu}{\underline{X}}
+\newcommand{\Yu}{\underline{Y}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\boldsymbol}
+\newcommand{\U}{\mb{U}}
+\newcommand{\Xbar}{\overline{X}}
+\newcommand{\Ybar}{\overline{Y}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\bbL}{\mathbb{L}}
+\renewcommand{\u}{\mb{u}}
+\renewcommand{\v}{\mb{v}}
+\newcommand{\M}{\mb{M}}
+\newcommand{\X}{\mb{X}}
+\newcommand{\Xmat}{\mathbb{X}}
+\newcommand{\bfx}{\mb{x}}
+\newcommand{\y}{\mb{y}}
+\renewcommand{\b}{\mb{\beta}}
+\newcommand{\e}{\bs{\epsilon}}
+\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\XX}{\Xmat'\Xmat}
+\newcommand{\XXinv}{\left(\XX\right)^{-1}}
+\newcommand{\hatsig}{\hat{\sigma}^2}
+\newcommand{\red}[1]{\textcolor{red!60}{#1}}
+\newcommand{\indianred}[1]{\textcolor{indianred}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue!60}{#1}}
+\newcommand{\dblue}[1]{\textcolor{dodgerblue}{#1}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\inprob}{\overset{p}{\to}}
+\newcommand{\indist}{\overset{d}{\to}}
+\newcommand{\eframe}{\end{frame}}
+\newcommand{\bframe}{\begin{frame}}
+\newcommand{\R}{\textsf{\textbf{R}}}
+\newcommand{\Rst}{\textsf{\textbf{RStudio}}}
+\newcommand{\rfun}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\rpack}[1]{\textbf{#1}}
+\newcommand{\rexpr}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\filename}[1]{\texttt{\color{blue}{#1}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+$$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Estimation, Inference, and Regression</h1>
+<h1 class="title d-none d-lg-block">A User’s Guide to Statistical Inference and Regression</h1>
 </div>
 
 
@@ -158,12 +220,6 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 29, 2022</p>
-    </div>
-  </div>
   
     
   </div>
@@ -171,10 +227,19 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p><img src="assets/img/linear-approximation.png" class="img-fluid"></p>
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>This is a Quarto book.</p>
-<p>To learn more about Quarto books visit <a href="https://quarto.org/docs/books" class="uri">https://quarto.org/docs/books</a>.</p>
+<p>This is a set of notes for <a href="https://gov2002.mattblackwell.org">Government 2002: Quantitative Social Science Methods II</a> at Harvard University taught by <a href="https://www.mattblackwell.org">Matthew Blackwell</a>. The goal of this text is to provide a rigorous yet accessible introduction to the foundational topics in statistical inference with a special application to linear regression, a workhorse tool in the social sciences. The material is intended for first-year PhD students in political science, but it may be of interest more broadly. Much of the material has been adopted from various sources (far too many to recount now), but this book is especially indebted to the following texts:</p>
+<ul>
+<li>Hansen, Bruce. <a href="https://www.amazon.com/Probability-Statistics-Economists-Bruce-Hansen/dp/0691235945/"><em>Probability &amp; Statistics for Economists</em></a>. Princeton University Press.</li>
+<li>Hansen, Bruce. <a href="https://www.amazon.com/Econometrics-Bruce-Hansen/dp/0691235899/"><em>Econometrics</em></a>. Princeton University Press.</li>
+<li>Wasserman, Larry. <a href="https://link.springer.com/book/10.1007/978-0-387-21736-9"><em>All of Statistics: A Concise Course in Statistical Inference</em></a>. Springer.</li>
+<li>Wooldridge, Jeffrey. <a href="https://mitpress.mit.edu/9780262232586/econometric-analysis-of-cross-section-and-panel-data/"><em>Econometric Analysis of Cross Section and Panel Data</em></a></li>
+</ul>
+<p>You can find the source for this book at <a href="https://github.com/mattblackwell/gov2002-book" class="uri">https://github.com/mattblackwell/gov2002-book</a>. Any typos or errors can be reported at <a href="https://github.com/mattblackwell/gov2002-book/issues" class="uri">https://github.com/mattblackwell/gov2002-book/issues</a>. Thanks for reading.</p>
+<p>This is a Quarto book. To learn more about Quarto books visit <a href="https://quarto.org/docs/books" class="uri">https://quarto.org/docs/books</a>.</p>
+<p><span class="math inline">\(\,\)</span></p>
 
 
 </section>
