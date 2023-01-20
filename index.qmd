@@ -1,5 +1,17 @@
+![](assets/img/linear-approximation.png)
+
 # Preface {.unnumbered}
 
-This is a Quarto book.
+This is a set of notes for [Government 2002: Quantitative Social Science Methods II](https://gov2002.mattblackwell.org) at Harvard University taught by [Matthew Blackwell](https://www.mattblackwell.org). The goal of this text is to provide a rigorous yet accessible introduction to the foundational topics in statistical inference with a special application to linear regression, a workhorse tool in the social sciences. The material is intended for first-year PhD students in political science, but it may be of interest more broadly. Much of the material has been adopted from various sources (far too many to recount now), but this book is especially indebted to the following texts:
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+- Hansen, Bruce. [*Probability & Statistics for Economists*](https://www.amazon.com/Probability-Statistics-Economists-Bruce-Hansen/dp/0691235945/). Princeton University Press. 
+- Hansen, Bruce. [*Econometrics*](https://www.amazon.com/Econometrics-Bruce-Hansen/dp/0691235899/). Princeton University Press. 
+- Wasserman, Larry. [*All of Statistics: A Concise Course in Statistical Inference*](https://link.springer.com/book/10.1007/978-0-387-21736-9). Springer. 
+- Wooldridge, Jeffrey. [*Econometric Analysis of Cross Section and Panel Data*](https://mitpress.mit.edu/9780262232586/econometric-analysis-of-cross-section-and-panel-data/)
+
+You can find the source for this book at <https://github.com/mattblackwell/gov2002-book>. Any typos or errors can be reported at <https://github.com/mattblackwell/gov2002-book/issues>. Thanks for reading. 
+
+
+This is a Quarto book. To learn more about Quarto books visit <https://quarto.org/docs/books>. 
+
+$\,$

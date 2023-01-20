@@ -1,10 +1,5 @@
 # Asymptotics
 
-::: {.content-hidden}
-{{< include _dollars.tex >}}
-{{< include _macros.tex >}}
-{{< include _dollars.tex >}}
-:::
 
 ## Introduction
 

@@ -6,15 +6,16 @@ execute:
   freeze: auto
   
 book:
-  title: "Estimation, Inference, and Regression"
+  title: "A User's Guide to Statistical Inference and Regression"
   author: "Matthew Blackwell"
+  output-file: "users-guide"
   reader-mode: true
-  date: "12/29/2022"
   chapters:
     - index.qmd
     - 01_intro.qmd
     - 02_estimation.qmd
     - 03_asymptotics.qmd
+    - 04_hypothesis_tests.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -22,6 +23,10 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
+    include-before-body:
+      - _dollars.tex
+      - _macros.tex
+      - _dollars.tex
         
   pdf:
     documentclass: scrreprt
