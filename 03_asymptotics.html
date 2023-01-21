@@ -489,6 +489,13 @@ Notation alert
 </ol>
 </div>
 <p>The last 3 of these results are sometimes referred to as <strong>Slutsky’s theorem</strong>. These results are very commonly used when trying to determine the asymptotic distribution of an estimator.</p>
+<p>One important application of Slutsky’s theorem is when we replace the (unknown) popoulation variance in the CLT with an estimate. Recall the definition of the <strong>sample variance</strong> as <span class="math display">\[
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \Xbar_n)^2,
+\]</span> with the <strong>sample standard deviation</strong> defined as <span class="math inline">\(s = \sqrt{s^2}\)</span>. It’s easy to show that these are consistent estimators for their respective population parameters <span class="math display">\[
+s^2 \inprob \sigma^2 = \V[X_i], \qquad s \inprob \sigma,
+\]</span> which by Slutsky’s theorem implies that <span class="math display">\[
+\frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{s} \indist \N(0, 1)
+\]</span> Comparing this result to the statement of CLT, we see that replacing the population variance with a consistent estimate of the variance (or standard deviation) does not affect the asymptotic distribution.</p>
 <p>Like with the WLLN, the CLT holds for random vectors of sample means, where their centered and scaled versions converge to a multivariate normal distribution with a covariance matrix equal to covariance matrix of the underlying random vectors of data, <span class="math inline">\(\X_i\)</span>.</p>
 <div id="thm-multivariate-clt" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.9 </strong></span>If <span class="math inline">\(\mb{X}_i \in \mathbb{R}^k\)</span> are i.i.d. and <span class="math inline">\(\E\Vert \mb{X}_i \Vert^2 &lt; \infty\)</span>, then as <span class="math inline">\(n \to \infty\)</span>, <span class="math display">\[
