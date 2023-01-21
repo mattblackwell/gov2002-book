@@ -432,6 +432,20 @@ Let $X_n$ be a sequence of random variables $X_1,X_2,\ldots$ that converges in d
 
 The last 3 of these results are sometimes referred to as **Slutsky's theorem**. These results are very commonly used when trying to determine the asymptotic distribution of an estimator. 
 
+One important application of Slutsky's theorem is when we replace the (unknown) popoulation variance in the CLT with an estimate. Recall the definition of the **sample variance** as
+$$
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \Xbar_n)^2,
+$$
+with the **sample standard deviation** defined as $s = \sqrt{s^2}$. It's easy to show that these are consistent estimators for their respective population parameters
+$$ 
+s^2 \inprob \sigma^2 = \V[X_i], \qquad s \inprob \sigma,
+$$
+which by Slutsky's theorem implies that
+$$
+\frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{s} \indist \N(0, 1)
+$$
+Comparing this result to the statement of CLT, we see that replacing the population variance with a consistent estimate of the variance (or standard deviation) does not affect the asymptotic distribution. 
+
 
 Like with the WLLN, the CLT holds for random vectors of sample means, where their centered and scaled versions converge to a multivariate normal distribution with a covariance matrix equal to covariance matrix of the underlying random vectors of data, $\X_i$. 
 
