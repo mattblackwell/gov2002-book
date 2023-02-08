@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A User’s Guide to Statistical Inference and Regression - 5&nbsp; Confidence intervals</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./04_hypothesis_tests.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_confidence_intervals.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#deriving-confidence-intervals" id="toc-deriving-confidence-intervals" class="nav-link active" data-scroll-target="#deriving-confidence-intervals"><span class="toc-section-number">5.1</span>  Deriving confidence intervals</a></li>
+  <li><a href="#interpreting-confidence-intervals" id="toc-interpreting-confidence-intervals" class="nav-link" data-scroll-target="#interpreting-confidence-intervals"><span class="toc-section-number">5.2</span>  Interpreting confidence intervals</a></li>
+  <li><a href="#confidence-intervals-and-hypothesis-tests" id="toc-confidence-intervals-and-hypothesis-tests" class="nav-link" data-scroll-target="#confidence-intervals-and-hypothesis-tests"><span class="toc-section-number">5.3</span>  Confidence intervals and hypothesis tests</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+$$
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\var}{\text{var}}
+\newcommand{\cov}{\text{cov}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\Bern}{\text{Bern}}
+\newcommand{\Bin}{\text{Bin}}
+\newcommand{\Pois}{\text{Pois}}
+\newcommand{\Unif}{\text{Unif}}
+\newcommand{\se}{\textsf{se}}
+\newcommand{\au}{\underline{a}}
+\newcommand{\du}{\underline{d}}
+\newcommand{\Au}{\underline{A}}
+\newcommand{\Du}{\underline{D}}
+\newcommand{\xu}{\underline{x}}
+\newcommand{\Xu}{\underline{X}}
+\newcommand{\Yu}{\underline{Y}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\boldsymbol}
+\newcommand{\U}{\mb{U}}
+\newcommand{\Xbar}{\overline{X}}
+\newcommand{\Ybar}{\overline{Y}}
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\bbL}{\mathbb{L}}
+\renewcommand{\u}{\mb{u}}
+\renewcommand{\v}{\mb{v}}
+\newcommand{\M}{\mb{M}}
+\newcommand{\X}{\mb{X}}
+\newcommand{\Xmat}{\mathbb{X}}
+\newcommand{\bfx}{\mb{x}}
+\newcommand{\y}{\mb{y}}
+\renewcommand{\b}{\mb{\beta}}
+\newcommand{\e}{\bs{\epsilon}}
+\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\XX}{\Xmat'\Xmat}
+\newcommand{\XXinv}{\left(\XX\right)^{-1}}
+\newcommand{\hatsig}{\hat{\sigma}^2}
+\newcommand{\red}[1]{\textcolor{red!60}{#1}}
+\newcommand{\indianred}[1]{\textcolor{indianred}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue!60}{#1}}
+\newcommand{\dblue}[1]{\textcolor{dodgerblue}{#1}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\inprob}{\overset{p}{\to}}
+\newcommand{\indist}{\overset{d}{\to}}
+\newcommand{\eframe}{\end{frame}}
+\newcommand{\bframe}{\begin{frame}}
+\newcommand{\R}{\textsf{\textbf{R}}}
+\newcommand{\Rst}{\textsf{\textbf{RStudio}}}
+\newcommand{\rfun}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\rpack}[1]{\textbf{#1}}
+\newcommand{\rexpr}[1]{\texttt{\color{magenta}{#1}}}
+\newcommand{\filename}[1]{\texttt{\color{blue}{#1}}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+$$
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>You have run your experiment and presented your readers with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are <strong>plausible</strong> given the data we observe?</p>
+<p>A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. <strong>Confidence intervals</strong> make this kind of intuition more formal by instead estimating ranges of values with a fixed percentage of these ranges containing the true value of the parameter.</p>
+<p>We begin with the basic definition of a confidence interval.</p>
+<div id="def-coverage" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.1 </strong></span>A <span class="math inline">\(1-\alpha\)</span> <strong>confidence interval</strong> for a real-valued parameter <span class="math inline">\(\theta\)</span> is a pair of statistics <span class="math inline">\(L= L(X_1, \ldots, X_n)\)</span> and <span class="math inline">\(U = U(X_1, \ldots, X_n)\)</span> such that <span class="math inline">\(L &lt; U\)</span> for all values of the sample and such that <span class="math display">\[
+\P(L \leq \theta \leq U \mid \theta) \geq 1-\alpha, \quad \forall \theta \in \Theta.
+\]</span></p>
+</div>
+<p>We say that that a <span class="math inline">\(1-\alpha\)</span> confidence intervals covers (contains, captures, traps, etc) the true value at least <span class="math inline">\(100(1-\alpha)\%\)</span> of the time, and we refer to <span class="math inline">\(1-\alpha\)</span> as the <strong>coverage probability</strong> or simply <strong>coverage</strong>. Common confidence intervals include 95% percent (<span class="math inline">\(\alpha = 0.05\)</span>) and 90% (<span class="math inline">\(\alpha = 0.1\)</span>).</p>
+<p>So a confidence intervals is a random interval that has a particular guarantee about how often it will contain the true value. It’s important to remember what is random and what is fixed in this setup. The interval varies from sample to sample but the true value of the parameter stays fixed, and the coverage is how often we should expect the interval to contain that true value. The “repeating my sample over and over again” analogy can break down very quickly, so it’s sometimes helpful to interpret as giving guarantees across confidence intervals across different experiments. In particular, suppose that a journal publishes 100 quantitative articles per year and each produces a single 95% confidence interval for their quantity of interest. Then, if the confidence intervals are valid, then we should expect 5 of those confidence intervals to not contain their true quantity of interest.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s say you calculate a 95% confidence interval and it’s <span class="math inline">\([0.1, 0.4]\)</span>. It’s tempting to make a probability statement like <span class="math inline">\(\P(0.1 \leq \theta \leq 0.4 \mid \theta) = 0.95\)</span> or that there’s a 95% chance that the true parameter is in <span class="math inline">\([0.1, 0.4]\)</span>. But looking at the probability statement, everything on left-hand side of the conditioning bar is fixed, so the probability either has to be 0 (<span class="math inline">\(\theta\)</span> is outside the interval) or 1 (<span class="math inline">\(\theta\)</span> is in the interval). The coverage probability of a confidence interval refers to its status as a pair of random variables, <span class="math inline">\((L, U)\)</span>, not any particular realization of those variables like <span class="math inline">\((0.1, 0.4)\)</span>. As an analogy, considering if calculated the sample mean as <span class="math inline">\(0.25\)</span> and then tried to say that <span class="math inline">\(0.25\)</span> is unbiased for the population mean. This doesn’t make sense because unbiasedness refers to how the sample mean varies from sample to sample.</p>
+</div>
+</div>
+<p>In most cases, we will not be able to derive exact confidence intervals, but rather confidence intervals that are <strong>asymptotically valid</strong>, which means that if we write the interval as a function of the sample size, <span class="math inline">\((L_n, U_n)\)</span> they would have <strong>asymptotic coverage</strong> <span class="math display">\[
+\lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \leq 1-\alpha \quad\forall\theta\in\Theta.
+\]</span></p>
+<p>This will usually be the property that we can show for most confidence intervals, since we usually rely on large sample approximations based on the central limit theorem.</p>
+<section id="deriving-confidence-intervals" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="deriving-confidence-intervals"><span class="header-section-number">5.1</span> Deriving confidence intervals</h2>
+<p>If you have taken any statistics before, you probably have seen the standard formula for the 95% confidence interval of the sample mean, <span class="math display">\[
+\left[\Xbar_n - 1.96\frac{s}{\sqrt{n}},\; \Xbar_n + 1.96\frac{s}{\sqrt{n}}\right],
+\]</span> where you can recall that <span class="math inline">\(s\)</span> is the sample standard deviation and <span class="math inline">\(s/\sqrt{n}\)</span> is the estimate of the standard error of the sample mean. If this is a 95% confidence interval, then the probability that it contains the population mean <span class="math inline">\(\mu\)</span> should be 0.95, but how can derive this? It turns out that this will be justified by the central limit theorem and we will show the logic for a generic asymptotically normal estimator.</p>
+<p>Let’s say that we have an estimator, <span class="math inline">\(\widehat{\theta}_n\)</span> for the parameter <span class="math inline">\(\theta\)</span> with estimated standard error <span class="math inline">\(\widehat{\se}[\widehat{\theta}_n]\)</span>. If the estimator is asymptotically normal, then in large samples, we know that <span class="math display">\[
+\frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \sim \N(0, 1).
+\]</span> We can then use our knowledge of the standard normal and the empirical rule to find <span class="math display">\[
+\P\left( -1.96 \leq \frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \leq 1.96\right) = 0.95
+\]</span> and by multiplying each part of the inequality by <span class="math inline">\(\widehat{\se}[\widehat{\theta}_n]\)</span>, we get <span class="math display">\[
+\P\left( -1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \widehat{\theta}_n - \theta \leq 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
+\]</span> We then subtract all part by the estimator to get <span class="math display">\[
+\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
+\]</span> and finally we multiply all parts by <span class="math inline">\(-1\)</span> (and flipping the inequalities) to arrive at <span class="math display">\[
+\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
+\]</span> To connect back to the definition of the confidence interval, we have now shown that the random interval <span class="math inline">\([L, U]\)</span> where <span class="math display">\[
+\begin{aligned}
+  L = L(X_1, \ldots, X_n) &amp;= \widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \\
+  U = U(X_1, \ldots, X_n) &amp;= \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n],
+\end{aligned}
+\]</span> is an asymptotically valid estimator.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Replacing <span class="math inline">\(\Xbar_n\)</span> for <span class="math inline">\(\widehat{\theta}_n\)</span> and <span class="math inline">\(s/\sqrt{n}\)</span> for <span class="math inline">\(\widehat{\se}[\widehat{\theta}_n]\)</span> establishes how the standard 95% confidence interval for the sample mean above asymptotically valid.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-std-normal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05_confidence_intervals_files/figure-html/fig-std-normal-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.1: Critical values for the standard normal.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>How can we generalize this to <span class="math inline">\(1-\alpha\)</span> confidence intervals? For a standard normal rv, <span class="math inline">\(Z\)</span>, we know that <span class="math display">\[
+\P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1-\alpha
+\]</span> which implies that we can obtain a <span class="math inline">\(1-\alpha\)</span> asymptotic confidence intervals by using the interval <span class="math inline">\([L, U]\)</span>, where <span class="math display">\[
+L = \widehat{\theta}_{n} - z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}], \quad U = \widehat{\theta}_{n} + z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}].
+\]</span> This is sometimes shortened to <span class="math inline">\(\widehat{\theta}_n \pm z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]\)</span>. Remember that we can obtain the values of <span class="math inline">\(z_{\alpha/2}\)</span> easily from R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## alpha = 0.1 for 90% CI</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.1</span> <span class="sc">/</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.644854</code></pre>
+</div>
+</div>
+<p>As a concrete example, then, we could derive a 90% asymptotic confidence interval for the sample mean as <span class="math display">\[
+\left[\Xbar_{n} - 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}\right]
+\]</span></p>
+</section>
+<section id="interpreting-confidence-intervals" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="interpreting-confidence-intervals"><span class="header-section-number">5.2</span> Interpreting confidence intervals</h2>
+<p>Remember that the interpretation of cofidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this a bit.</p>
+<div id="exm-cis" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.1 </strong></span>Suppose that we are taking samples of size <span class="math inline">\(n=500\)</span> of random variables where <span class="math inline">\(X_i \sim \N(1, 10)\)</span>, and we want to estimate the population mean <span class="math inline">\(\E[X] = 1\)</span>. To do so, we repeat the following steps:</p>
+<ol type="1">
+<li>Draw a sample of <span class="math inline">\(n=500\)</span> from <span class="math inline">\(\N(1, 10)\)</span>.</li>
+<li>Calculate the 95% confidence interval sample mean <span class="math inline">\(\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}\)</span>.</li>
+<li>Plot the intervals along the x-axis and color them blue if they contain the truth (1) and red if they do not.</li>
+</ol>
+<p><a href="#fig-ci-sim">Figure&nbsp;<span>5.2</span></a> shows 100 iteraction of these steps. Here we see that, as expected, the large majority of calculated CIs conatain the true value. In fact, exactly 5 of the random samples produce intervals that fail to include 1, which is an exact coverage rate of 95%. Of course, this is just one simulation and a different set of 100 random samples might have produced a slightly different coverage rate. The gauarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples the long-run frequency of intervals covering the truth would approach 0.95.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ci-sim" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="05_confidence_intervals_files/figure-html/fig-ci-sim-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.2: 95% confidence intervals from 100 random samples. Intervals are blue if they contain the truth and red if they do not.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-intervals-and-hypothesis-tests" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="confidence-intervals-and-hypothesis-tests"><span class="header-section-number">5.3</span> Confidence intervals and hypothesis tests</h2>
+<p>At first glance, we may seem sloppy in using <span class="math inline">\(\alpha\)</span> in the derivation of a <span class="math inline">\(1 - \alpha\)</span> confidence interval in this chapter and in an <span class="math inline">\(\alpha\)</span>-level test in the last chapter. In reality, we were simply foreshadowing the deep connection between the two: every <span class="math inline">\(1-\alpha\)</span> confidence interval contains all null hypotheses that we <strong>would not reject</strong> with an <span class="math inline">\(\alpha\)</span>-level test.</p>
+<p>This connection is easiest to see with a asymptotically normal estimator, <span class="math inline">\(\widehat{\theta}_n\)</span>. Consider the hypothesis test of <span class="math display">\[
+H_0: \theta = \theta_0 \quad \text{vs.}\quad H_1: \theta \neq \theta_0,
+\]</span> using the test statistic, <span class="math display">\[
+T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}.
+\]</span> As we discussed in the last chapter, an <span class="math inline">\(\alpha = 0.05\)</span> test would reject this null when <span class="math inline">\(|T| &gt; 1.96\)</span>, or when <span class="math display">\[
+|\widehat{\theta}_{n} - \theta_{0}| &gt; 1.96 \widehat{\se}[\widehat{\theta}_{n}].
+\]</span> Notice that will be true when <span class="math display">\[
+\theta_{0} &lt; \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or  }\quad  \widehat{\theta}_{n} +  \widehat{\se}[\widehat{\theta}_{n}] &lt; \theta_{0}
+\]</span> or, equivalently, that null hypothesis is outside of the 95% confidence interval, <span class="math display">\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].\]</span> Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a <span class="math inline">\(\alpha = 0.05\)</span> level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject.</p>
+<p>This relationship holds more broadly. Any <span class="math inline">\(1-\alpha\)</span> confidence interval contains all possible parameter values that would not be rejected as the null hypothesis of an <span class="math inline">\(\alpha\)</span>-level hypothesis test. This can be really useful for two reasons:</p>
+<ol type="1">
+<li>We can quickly determine if a null hypothesis is rejected at some level by inspecting if it falls in a confidence interval.</li>
+<li>There are situations where determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine what null hypotheses would not be rejected at level <span class="math inline">\(\alpha\)</span> to formulate the <span class="math inline">\(1-\alpha\)</span> confidence interval. This process is called <strong>inverting a test</strong>. One important application of this method is for formulating confidence intervals for treatment effects based on randomization inference in the finite population analysis of experiments.</li>
+</ol>
+<!--# TODO: add example of inverting a test?-->
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Implicit in this analyis is that the estimate of the standard error is consistent.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./04_hypothesis_tests.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
