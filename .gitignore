@@ -3,3 +3,7 @@
 /_book/
 .auto/
 *_files/
+
+*.rel
+.Rhistory
+.DS_Store
