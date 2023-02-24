@@ -17,6 +17,7 @@ book:
     - 03_asymptotics.qmd
     - 04_hypothesis_tests.qmd
     - 05_confidence_intervals.qmd
+    - 06_linear_model.qmd
     - references.qmd
 
 bibliography: references.bib
