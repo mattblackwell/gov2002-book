@@ -179,12 +179,17 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#population-linear-regression" id="toc-population-linear-regression" class="nav-link" data-scroll-target="#population-linear-regression"><span class="toc-section-number">6.2</span>  Population linear regression</a>
   <ul class="collapse">
   <li><a href="#bivariate-linear-regression" id="toc-bivariate-linear-regression" class="nav-link" data-scroll-target="#bivariate-linear-regression"><span class="toc-section-number">6.2.1</span>  Bivariate linear regression</a></li>
-  <li><a href="#linear-prediction-with-multiple-covariates" id="toc-linear-prediction-with-multiple-covariates" class="nav-link" data-scroll-target="#linear-prediction-with-multiple-covariates"><span class="toc-section-number">6.2.2</span>  Linear prediction with multiple covariates</a></li>
-  <li><a href="#projection-error" id="toc-projection-error" class="nav-link" data-scroll-target="#projection-error"><span class="toc-section-number">6.2.3</span>  Projection error</a></li>
+  <li><a href="#beyond-linear-approximations" id="toc-beyond-linear-approximations" class="nav-link" data-scroll-target="#beyond-linear-approximations"><span class="toc-section-number">6.2.2</span>  Beyond linear approximations</a></li>
+  <li><a href="#linear-prediction-with-multiple-covariates" id="toc-linear-prediction-with-multiple-covariates" class="nav-link" data-scroll-target="#linear-prediction-with-multiple-covariates"><span class="toc-section-number">6.2.3</span>  Linear prediction with multiple covariates</a></li>
+  <li><a href="#projection-error" id="toc-projection-error" class="nav-link" data-scroll-target="#projection-error"><span class="toc-section-number">6.2.4</span>  Projection error</a></li>
   </ul></li>
   <li><a href="#linear-cefs-without-assumptions" id="toc-linear-cefs-without-assumptions" class="nav-link" data-scroll-target="#linear-cefs-without-assumptions"><span class="toc-section-number">6.3</span>  Linear CEFs without assumptions</a></li>
-  <li><a href="#interpretation-of-the-regression-coefficients" id="toc-interpretation-of-the-regression-coefficients" class="nav-link" data-scroll-target="#interpretation-of-the-regression-coefficients"><span class="toc-section-number">6.4</span>  Interpretation of the regression coefficients</a></li>
-  <li><a href="#multiple-regression-from-bivariate-regression" id="toc-multiple-regression-from-bivariate-regression" class="nav-link" data-scroll-target="#multiple-regression-from-bivariate-regression"><span class="toc-section-number">6.5</span>  Multiple regression from bivariate regression</a></li>
+  <li><a href="#interpretation-of-the-regression-coefficients" id="toc-interpretation-of-the-regression-coefficients" class="nav-link" data-scroll-target="#interpretation-of-the-regression-coefficients"><span class="toc-section-number">6.4</span>  Interpretation of the regression coefficients</a>
+  <ul class="collapse">
+  <li><a href="#polynomial-functions-of-the-covariates" id="toc-polynomial-functions-of-the-covariates" class="nav-link" data-scroll-target="#polynomial-functions-of-the-covariates"><span class="toc-section-number">6.4.1</span>  Polynomial functions of the covariates</a></li>
+  <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions"><span class="toc-section-number">6.4.2</span>  Interactions</a></li>
+  </ul></li>
+  <li><a href="#sec-fwl" id="toc-sec-fwl" class="nav-link" data-scroll-target="#sec-fwl"><span class="toc-section-number">6.5</span>  Multiple regression from bivariate regression</a></li>
   <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias"><span class="toc-section-number">6.6</span>  Omitted variable bias</a></li>
   <li><a href="#drawbacks-of-the-blp" id="toc-drawbacks-of-the-blp" class="nav-link" data-scroll-target="#drawbacks-of-the-blp"><span class="toc-section-number">6.7</span>  Drawbacks of the BLP</a></li>
   </ul>
@@ -353,9 +358,16 @@ m(x) = \beta_0 + \beta_1x = \E[Y_i] + \beta_1(x - \E[X_i]),
 </div>
 </div>
 </section>
-<section id="linear-prediction-with-multiple-covariates" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="linear-prediction-with-multiple-covariates"><span class="header-section-number">6.2.2</span> Linear prediction with multiple covariates</h3>
-<p>We now generalize the idea of a best linear predictor to a setting with multiple covariates. In this setting, remember that a linear function can be written as</p>
+<section id="beyond-linear-approximations" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="beyond-linear-approximations"><span class="header-section-number">6.2.2</span> Beyond linear approximations</h3>
+<p>The linearity of the best linear predictor is actually less restrictive than first glance. This is because we can easily modify the minimum MSE problem to find the best quadratic, cubic, or general polynomial function of <span class="math inline">\(X_i\)</span> that predicts <span class="math inline">\(Y_i\)</span>. For example, the quadratic function of <span class="math inline">\(X_i\)</span> that best predicts <span class="math inline">\(Y_i\)</span> would be <span class="math display">\[
+m(X_i, X_i^2) = \beta_0 + \beta_1X_i \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
+\]</span> This gives a quadratic function of the covariates, but it is still a linear function of the unknown parameters <span class="math inline">\((\beta_{0}, \beta_{1}, \beta_{2})\)</span> so we will call this a best linear predictor.</p>
+<p>Obviously, we could include higher order terms of <span class="math inline">\(X_i\)</span> in the same manner. Generally, as we include more polynomial terms, <span class="math inline">\(X_i^p\)</span>, the more flexible the function of <span class="math inline">\(X_i\)</span> we will capture with the BLP. When we actually estimate the BLP, however, we usually will pay for this flexibility in terms of overfitting and high variance in our estimates.</p>
+</section>
+<section id="linear-prediction-with-multiple-covariates" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="linear-prediction-with-multiple-covariates"><span class="header-section-number">6.2.3</span> Linear prediction with multiple covariates</h3>
+<p>We now generalize the idea of a best linear predictor to a setting with an arbitrary number of covariates. In this setting, remember that a linear function can be written as</p>
 <p><span class="math display">\[
 \bfx'\bfbeta = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + X_{k}\beta_{k}.
 \]</span> We will define the <strong>best linear predictor</strong> (BLP) to be <span class="math display">\[
@@ -419,8 +431,8 @@ Y_{i} = \beta_{0} + \X'\bfbeta + e_{i},
 m(\X_{i}) = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
 \]</span></p>
 </section>
-<section id="projection-error" class="level3" data-number="6.2.3">
-<h3 data-number="6.2.3" class="anchored" data-anchor-id="projection-error"><span class="header-section-number">6.2.3</span> Projection error</h3>
+<section id="projection-error" class="level3" data-number="6.2.4">
+<h3 data-number="6.2.4" class="anchored" data-anchor-id="projection-error"><span class="header-section-number">6.2.4</span> Projection error</h3>
 <p>The <strong>projection error</strong> is the difference between the actual value of <span class="math inline">\(Y_i\)</span> and the projection, <span class="math display">\[
 e_{i} = Y_{i} - m(\X_{i}) =  Y_i - \X_{i}'\bfbeta,
 \]</span> where it is hopefully clear that we have made no assumptions about this error yet. It is simply the prediction error if we used the linear projection to predict the outcome. Rewriting this definition, we can see that we can always write the outcome as the linear projection plus the projection error, <span class="math display">\[
@@ -523,9 +535,40 @@ m(x_{1} + 1, x_{2}) -  m(x_{1}, x_{2}) = \beta_1
 \]</span> Notice that nothing changes in this interpretation if we add more covariates to the vector, <span class="math display">\[
 m(x_{1} + 1, \bfx_{2}) -  m(x_{1}, \bfx_{2}) = \beta_1,
 \]</span> the coefficient on a particular variable is the change in predicted outcome for a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the “all else equal” change in predicted outcome for each covariate.</p>
+<section id="polynomial-functions-of-the-covariates" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="polynomial-functions-of-the-covariates"><span class="header-section-number">6.4.1</span> Polynomial functions of the covariates</h3>
+<p>The interpretation of the population regression coefficients becomes more complicated when we include nonlinear functions of the covariates. In that case, there are multiple coefficients that control how a change in a covariate will change the predicted value of <span class="math inline">\(Y_i\)</span>. Suppose that we have a quadratic function of <span class="math inline">\(X_{i1}\)</span>, <span class="math display">\[
+m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
+\]</span> and try to look at a one-unit change in <span class="math inline">\(x_1\)</span>, <span class="math display">\[
+\begin{aligned}
+  m(x_{1} + 1, (x_{1} + 1)^{2}, x_{2}) &amp; =  \beta_{0} + \beta_{1}(x_{1} + 1) +  \beta_{2}(x_{1} + 1)^{2}+ \beta_{3}x_{2} \\
+  m(x_{1}, x_{1}^{2}, x_{2}) &amp;= \beta_{0} + \beta_{1}x_{1} +  \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
+\end{aligned}
+\]</span> resulting in <span class="math inline">\(\beta_1 + \beta_2(2x_{1} + 1)\)</span>. This might be an interesting quantity, but we will more commonly use the derivative of <span class="math inline">\(m(\bfx)\)</span> with respect to <span class="math inline">\(x_1\)</span> as a measure of the marginal effect of <span class="math inline">\(X_{i1}\)</span> on the predicted value of <span class="math inline">\(Y_i\)</span> (holding all other variables constant), where “marginal” here means the change in prediction for a very small change in <span class="math inline">\(X_{i1}\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In the case of the quadratic covariate, we have <span class="math display">\[
+\frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1}
+\]</span> so the marginal effect on predction varies as a function of <span class="math inline">\(x_1\)</span>. From this, we can see that the individual interpretations of the coefficients are less interesting: <span class="math inline">\(\beta_1\)</span> is the marginal effect when <span class="math inline">\(X_{i1} = 0\)</span> and <span class="math inline">\(\beta_2 / 2\)</span> describes how a one-unit change in <span class="math inline">\(X_{i1}\)</span> changes the marginal effect. As is hopefully clear, it will often be more straightfoward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in <a href="#sec-fwl"><span>Section&nbsp;6.5</span></a>).</p>
 </section>
-<section id="multiple-regression-from-bivariate-regression" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="multiple-regression-from-bivariate-regression"><span class="header-section-number">6.5</span> Multiple regression from bivariate regression</h2>
+<section id="interactions" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="interactions"><span class="header-section-number">6.4.2</span> Interactions</h3>
+<p>Another common nonlinear function of the covariates is when we include <strong>interaction terms</strong> or covariates that are products of two other covariates, <span class="math display">\[
+m(x_{1}, x_{2}, x_{1}x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \beta_{3}x_{1}x_{2}.
+\]</span> In these situations, we can also use the derivative of the BLP as the measure of the marginal effect of one variable or the other on the predicted value of <span class="math inline">\(Y_i\)</span>. In particular, we have <span class="math display">\[
+\begin{aligned}
+  \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_1} &amp;= \beta_1 + \beta_3x_2, \\
+  \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_2} &amp;= \beta_2 + \beta_3x_2.
+\end{aligned}
+\]</span> Here, the coefficients are slightly more interpretable:</p>
+<ul>
+<li><span class="math inline">\(\beta_1\)</span>: the marginal effect of <span class="math inline">\(X_{i1}\)</span> on predicted <span class="math inline">\(Y_i\)</span> when <span class="math inline">\(X_{i2} = 0\)</span>.</li>
+<li><span class="math inline">\(\beta_2\)</span>: the marginal effect of <span class="math inline">\(X_{i2}\)</span> on predicted <span class="math inline">\(Y_i\)</span> when <span class="math inline">\(X_{i1} = 0\)</span>.</li>
+<li><span class="math inline">\(\beta_3\)</span>: the change in the marginal effect of <span class="math inline">\(X_{i1}\)</span> due to a one-unit change in <span class="math inline">\(X_{i2}\)</span> <strong>OR</strong> the change in the marginal effect of <span class="math inline">\(X_{i2}\)</span> due to a one-unit change in <span class="math inline">\(X_{i2}\)</span>.</li>
+</ul>
+<p>If we add more covariates to this BLP, these interpretations change to “holding all other covariates constant.”</p>
+<p>Interactions are a routine part of social science research because they allow us to assess how the relationship between the outcome and an independent variable varies by the values of another variable. In the context of our study of voter wait times, if <span class="math inline">\(X_{i1}\)</span> is income and <span class="math inline">\(X_{i2}\)</span> is the Black/non-Black voter indicator, then <span class="math inline">\(\beta_3\)</span> represents how the change in slope of the wait time-income relationship between Black and non-Black voters.</p>
+</section>
+</section>
+<section id="sec-fwl" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="sec-fwl"><span class="header-section-number">6.5</span> Multiple regression from bivariate regression</h2>
 <p>When we have a regression of an outcome on two covariates, it is useful to understand how the coefficients of one variables related to the other. For example, if we have the following best linear projection: <span id="eq-two-var-blp"><span class="math display">\[
 (\alpha, \beta, \gamma) = \argmin_{(a,b,c) \in \mathbb{R}^{3}} \; \E[(Y_{i} - (a + bX_{i} + cZ_{i}))^{2}]
 \tag{6.1}\]</span></span> Is there some way to understand the <span class="math inline">\(\beta\)</span> coefficient here in terms of simple linear regression? As it turns out, yes. From the above results, we know that the intercept has a simple form <span class="math display">\[
@@ -580,6 +623,12 @@ m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 </div>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Notice the choice of language here. The marginal effect is on the predicted value of <span class="math inline">\(Y_i\)</span> not on <span class="math inline">\(Y_i\)</span> itself. So these marginal effects are associational, not necessarily causal quantities.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
