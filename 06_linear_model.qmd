@@ -143,11 +143,20 @@ text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
 ```
 
 
+### Beyond linear approximations
+
+The linearity of the best linear predictor is actually less restrictive than first glance. This is because we can easily modify the minimum MSE problem to find the best quadratic, cubic, or general polynomial function of $X_i$ that predicts $Y_i$. For example, the quadratic function of $X_i$ that best predicts $Y_i$ would be
+$$ 
+m(X_i, X_i^2) = \beta_0 + \beta_1X_i \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
+$$
+This gives a quadratic function of the covariates, but it is still a linear function of the unknown parameters $(\beta_{0}, \beta_{1}, \beta_{2})$ so we will call this a best linear predictor. 
+
+Obviously, we could include higher order terms of $X_i$ in the same manner. Generally, as we include more polynomial terms, $X_i^p$, the more flexible the function of $X_i$ we will capture with the BLP. When we actually estimate the BLP, however, we usually will pay for this flexibility in terms of overfitting and high variance in our estimates. 
 
 
 ### Linear prediction with multiple covariates 
 
-We now generalize the idea of a best linear predictor to a setting with multiple covariates. In this setting, remember that a linear function can be written as
+We now generalize the idea of a best linear predictor to a setting with an arbitrary number of covariates. In this setting, remember that a linear function can be written as
 
 $$ 
 \bfx'\bfbeta = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + X_{k}\beta_{k}.
@@ -367,8 +376,55 @@ $$
 the coefficient on a particular variable is the change in predicted outcome for a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the "all else equal" change in predicted outcome for each covariate. 
 
 
+### Polynomial functions of the covariates
 
-## Multiple regression from bivariate regression
+
+
+The interpretation of the population regression coefficients becomes more complicated when we include nonlinear functions of the covariates. In that case, there are multiple coefficients that control how a change in a covariate will change the predicted value of $Y_i$. Suppose that we have a quadratic function of $X_{i1}$,
+$$ 
+m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
+$$
+and try to look at a one-unit change in $x_1$,
+$$ 
+\begin{aligned}
+  m(x_{1} + 1, (x_{1} + 1)^{2}, x_{2}) & =  \beta_{0} + \beta_{1}(x_{1} + 1) +  \beta_{2}(x_{1} + 1)^{2}+ \beta_{3}x_{2} \\
+  m(x_{1}, x_{1}^{2}, x_{2}) &= \beta_{0} + \beta_{1}x_{1} +  \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
+\end{aligned} 
+$$
+resulting in $\beta_1 + \beta_2(2x_{1} + 1)$. This might be an interesting quantity, but we will more commonly use the derivative of $m(\bfx)$ with respect to $x_1$ as a measure of the marginal effect of $X_{i1}$ on the predicted value of $Y_i$ (holding all other variables constant), where "marginal" here means the change in prediction for a very small change in $X_{i1}$.[^effect] In the case of the quadratic covariate, we have
+$$ 
+\frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1}
+$$
+so the marginal effect on predction varies as a function of $x_1$. From this, we can see that the individual interpretations of the coefficients are less interesting: $\beta_1$ is the marginal effect when $X_{i1} = 0$ and $\beta_2 / 2$ describes how a one-unit change in $X_{i1}$ changes the marginal effect. As is hopefully clear, it will often be more straightfoward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in @sec-fwl). 
+
+
+[^effect]: Notice the choice of language here. The marginal effect is on the predicted value of $Y_i$ not on $Y_i$ itself. So these marginal effects are associational, not necessarily causal quantities. 
+
+### Interactions
+
+Another common nonlinear function of the covariates is when we include **interaction terms** or covariates that are products of two other covariates,
+$$ 
+m(x_{1}, x_{2}, x_{1}x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \beta_{3}x_{1}x_{2}.
+$$
+In these situations, we can also use the derivative of the BLP as the measure of the marginal effect of one variable or the other on the predicted value of $Y_i$. In particular, we have
+$$ 
+\begin{aligned}
+  \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_1} &= \beta_1 + \beta_3x_2, \\
+  \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_2} &= \beta_2 + \beta_3x_2.
+\end{aligned}
+$$
+Here, the coefficients are slightly more interpretable:
+
+* $\beta_1$: the marginal effect of $X_{i1}$ on predicted $Y_i$ when $X_{i2} = 0$.
+* $\beta_2$: the marginal effect of $X_{i2}$ on predicted $Y_i$  when $X_{i1} = 0$.
+* $\beta_3$: the change in the marginal effect of $X_{i1}$ due to a one-unit change in $X_{i2}$ **OR** the change in the marginal effect of $X_{i2}$ due to a one-unit change in $X_{i2}$.
+
+If we add more covariates to this BLP, these interpretations change to "holding all other covariates constant."
+
+Interactions are a routine part of social science research because they allow us to assess how the relationship between the outcome and an independent variable varies by the values of another variable. In the context of our study of voter wait times, if $X_{i1}$ is income and $X_{i2}$ is the Black/non-Black voter indicator, then $\beta_3$ represents how the change in slope of the wait time-income relationship between Black and non-Black voters.  
+
+
+## Multiple regression from bivariate regression {#sec-fwl}
 
 When we have a regression of an outcome on two covariates, it is useful to understand how the coefficients of one variables related to the other. For example, if we have the following best linear projection:
 $$ 
