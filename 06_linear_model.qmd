@@ -86,15 +86,78 @@ To help clarify these issues, we will pursue a different approach: understanding
 
 ## Population linear regression
 
-Let's set aside the idea of the conditional expectation function and instead focus on finding the **linear** function of $\X_i$ that best predicts the outcome. Remember that a linear function can be written
+### Bivariate linear regression 
+
+
+Let's set aside the idea of the conditional expectation function and instead focus on finding the **linear** function of a single covariate $X_i$ that best predicts the outcome. Remember that a linear function can be written $a + bX_i$. The **best linear predictor** (BLP) or **population linear regression** of $Y_i$ on $X_i$ is defined as
 $$ 
-\bfx'\b = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + X_{k}\beta_{k}.
+m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}].
+$$
+That is, the best linear predictor is the line that results in the lowest mean-squared error predictions of the outcome given the covariates, averaging over the joint distribution of the data. This function is a feature of the joint distribution of the data---the DGP---and so represents something that we would like to learn about with our sample. It is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though we will see that they will sometimes be equal to each other. We call $(\beta_{0}, \beta_{1})$ the **population linear regression coefficients**. Notice that $m(x)$ here could be very different from the CEF $\mu(x)$ if the latter is nonlinear. 
+
+We can solve for the best linear predictor using standard calculus (taking the derivative with respect to each coefficient, setting those equations equal to 0, and solving the system of equations). The first-order conditions in this case are
+$$ 
+\begin{aligned}
+  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
+  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
+\end{aligned}  
+$$
+Given the linearity of expectations, it is easy to solve for $\beta_0$ in terms of $\beta_1$,
+$$ 
+\beta_{0} = \E[Y_{i}] - \beta_{1}\E[X_{i}].
+$$
+We can plug this into the first-order condition for $\beta_1$ to get
+$$ 
+\begin{aligned}
+  0 &= \E[Y_{i}X_{i}] - (\E[Y_{i}] - \beta_{1}\E[X_{i}])\E[X_{i}] - \beta_{1}\E[X_{i}^{2}] \\
+    &= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] - \beta_{1}(\E[X_{i}^{2}] - \E[X_{i}]^{2})  \\
+    &= \cov(X_{i},Y_{i}) - \beta_{1}\V[X_{i}]\\
+  \beta_{1} &= \frac{\cov(X_{i},Y_{i})}{\V[X_{i}]}
+\end{aligned}
+$$
+
+Thus the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. From this, we can immediately see that the sign of the slope will be determined by the covariance: positive covariances will lead to positive $\beta_1$ and negative covariances will lead to negative $\beta_1$. In addition, we can see if $Y_i$ and $X_i$ are independent, then $\beta_1 = 0$. The slope scaled this covariance by the variance of the covariate, so slopes are lower for more spread out covariates and higher for more spread out covariates. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
+$$
+\beta_1 = \rho_{YX}\sqrt{\frac{\V[Y_i]}{\V[X_i]}}.
+$$
+
+Collecting together our results, we can write the population linear regression as 
+$$
+m(x) = \beta_0 + \beta_1x = \E[Y_i] + \beta_1(x - \E[X_i]),
+$$
+which shows how we adjust our best guess about $Y_i$ from the mean of the outcome using the covariate. 
+
+It's important to remember that the BLP, $m(x)$, and the CEF, $\mu(x)$, are distinct entities. If the CEF is nonlinear, as in @fig-cef-blp, there will be difference between these functions and mean that the BLP might produce subpar predictions. Below, we will derive a formal connection between the BLP and the CEF.  
+
+
+```{r}
+#| label: fig-cef-blp
+#| echo: false
+#| fig.cap: "Comparison of the CEF and the best linear predictor"
+contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0.25), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
+axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
+curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
+text(x = -1.75, y = 70, "CEF", pos = 4, col = "indianred")
+abline(lm(y~x), col = "dodgerblue", lwd = 3)
+text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
+```
+
+
+
+
+### Linear prediction with multiple covariates 
+
+We now generalize the idea of a best linear predictor to a setting with multiple covariates. In this setting, remember that a linear function can be written as
+
+$$ 
+\bfx'\bfbeta = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + X_{k}\beta_{k}.
 $$
 We will define the **best linear predictor** (BLP) to be
 $$ 
-\bbL[Y_{i} \mid \X_{i}] =\X_{i}'\b, \quad \text{where}\quad \b = \argmin_{\mb{b} \in \real^k}\; \E\left[ \left( Y_{i} - \mb{X}_{i}'\b \right)^2 \right]
+m(\bfx) = \bfx'\bfbeta, \quad \text{where}\quad \bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\bfbeta \bigr)^2\bigr]
 $$
-The BLP function $\bbL[Y \mid \X]$ is the linear function of the covariates that minimizes the mean squared prediction errors, where we are averaging over the joint distribution of the data. If we have a single covariate, this would be the population line of best fit. Again, this function is a feature of the joint distribution of the data---the DGP---and so represents something that we would like to learn about with our sample. It is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though we will see that they will sometimes be equal to each other. 
+
+This BLP solves the same basic optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error averaging over the joint distribution of the data.  
 
 <!-- TODO: make this #assumption -->
 
@@ -108,7 +171,7 @@ Without some assumptions on the joint distribution of the data, The following "r
 3. $\mb{Q}_{\mb{XX}} = \E[\mb{XX}']$ is positive definite (columns of $\X$ are linearly independent)  
 :::
 
-Under these assumption, it is possible to derive a closed-form expression for the **population coefficients** $\b$ using matrix calculus. To set up the optimization problem, we will find the first order condition my taking the derivative of the expectation of the squared errors. First, let's take derivative of the squared prediction errors using the chain rule:
+Under these assumption, it is possible to derive a closed-form expression for the **population coefficients** $\bfbeta$ using matrix calculus. To set up the optimization problem, we will find the first order condition my taking the derivative of the expectation of the squared errors. First, let's take derivative of the squared prediction errors using the chain rule:
 $$ 
 \begin{aligned}
   \frac{\partial}{\partial \mb{b}^{'}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
@@ -117,59 +180,61 @@ $$
   &= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right)
 \end{aligned}
 $$
-We can now plug this into the expectation to get the first-order condition and solve for $\b$,
+We can now plug this into the expectation to get the first-order condition and solve for $\bfbeta$,
 $$ 
 \begin{aligned}
-  0 &= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}] \\
-  \E[\X_{i}\X_{i}'] \b &= \E[\X_{i}Y_{i}],
+  0 &= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ]  \\
+  \E[\X_{i}\X_{i}'] \bfbeta &= \E[\X_{i}Y_{i}],
 \end{aligned}
 $$
 which implies the population coefficients are
 $$ 
-\b = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
+\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
 $$
-We now have an expression for the coefficients for the population best linear predictor in terms of the joint distribution $(Y_{i}, \X_{i})$. There are a couple facts that might be useful for reasoning about this expression. Recall that $\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']$ is a $k\times k$ matrix and $\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]$ is a $k\times 1$ column vector, which implies that $\b$ is also a $k \times 1$ column vector. 
+We now have an expression for the coefficients for the population best linear predictor in terms of the joint distribution $(Y_{i}, \X_{i})$. There are a couple facts that might be useful for reasoning about this expression. Recall that $\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']$ is a $k\times k$ matrix and $\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]$ is a $k\times 1$ column vector, which implies that $\bfbeta$ is also a $k \times 1$ column vector. 
 
 ::: {.callout-note}
 
 Intuitively, what is happening in the expression for the population regression coefficients? It is helpful to separate out the intercept or constant term so that we have
 $$ 
-Y_{i} = \beta_{0} + \X'\b + e_{i},
+Y_{i} = \beta_{0} + \X'\bfbeta + e_{i},
 $$
-so $\b$ refers to just the coefficients on each of the covariates. In this case, we can write the coefficients in more interpretable way:
+so $\bfbeta$ refers to just the coefficients on each of the covariates. In this case, we can write the coefficients in more interpretable way:
 $$ 
-\b = \V[\X]^{-1}\text{Cov}(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\b
+\bfbeta = \V[\X]^{-1}\text{Cov}(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
 $$
 
-Thus, the population coefficients take the covariance between the outcome and the covariates and "divide" it by information about variances and covariances of the covariates. The intercept recenters the regression so that projection errors are mean zero. 
+Thus, the population coefficients take the covariance between the outcome and the covariates and "divide" it by information about variances and covariances of the covariates. The intercept recenters the regression so that projection errors are mean zero. Thus, we can see that the coeffiicients generalizes the bivariate formula to this multiple covariate context. 
 :::
 
 With an expression for the population linear regression coefficients, we can write the linear projection as 
 $$ 
-\bbL[Y_{i} \mid \X_{i}] = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
+m(\X_{i}) = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
 $$
+
+
 
 ### Projection error
 
 The **projection error** is the difference between the actual value of $Y_i$ and the projection,
 $$ 
-e_{i} = Y_{i} - \bbL[Y_{i} \mid \X_{i}] =  Y_i - \X_{i}'\b,
+e_{i} = Y_{i} - m(\X_{i}) =  Y_i - \X_{i}'\bfbeta,
 $$
 where it is hopefully clear that we have made no assumptions about this error yet. It is simply the prediction error if we used the linear projection to predict the outcome. Rewriting this definition, we can see that we can always write the outcome as the linear projection plus the projection error,
 $$ 
-Y_{i} = \X_{i}'\b + e_{i}.
+Y_{i} = \X_{i}'\bfbeta + e_{i}.
 $$
 Notice that this looks suspiciously like we have made a linearity assumption on the CEF or on the relationship between the outcome and the covariates. But we haven't, we have just used the definition of the projection error to write a statement that is tautological: 
 $$ 
-Y_{i} = \X_{i}'\b + e_{i} = \X_{i}'\b + Y_{i} - \X_{i}'\b = Y_{i}.
+Y_{i} = \X_{i}'\bfbeta + e_{i} = \X_{i}'\bfbeta + Y_{i} - \X_{i}'\bfbeta = Y_{i}.
 $$
 The key difference between this representation and the usual linear model assumption is what properties $e_{i}$ possesses. 
 
 One key property of the projection errors is that when the covariate vector includes an "intercept" or constant term, the projection errors are uncorrelated with the covariates. To see this, we first note that $\E[\X_{i}e_{i}] = 0$ since
 $$ 
 \begin{aligned}
-  \E[\X_{i}e_{i}] &= \E[\X_{{i}}(Y_{i} - \X_{i}'\b)] \\
-                  &= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\b \\
+  \E[\X_{i}e_{i}] &= \E[\X_{{i}}(Y_{i} - \X_{i}'\bfbeta)] \\
+                  &= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\bfbeta \\
                   &= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] \\
   &= \E[\X_{i}Y_{i}] - \E[\X_{i}Y_{i}] = 0
 \end{aligned}
@@ -178,15 +243,18 @@ Thus, for every $X_{ij}$ in $\X_{i}$, we have $\E[X_{ij}e_{i}] =0$. If one of th
 $$ 
 \cov(X_{ij}, e_{i}) = \E[X_{ij}e_{i}] - \E[X_{ij}]\E[e_{i}] = 0 - 0 = 0
 $$
-Notice that we still have made no assumptions about these projection errors except some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model $Y_i = \X_i'\b + e_i$ where $\b = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]$ and conclude that $\E[\X_{i}e_{i}] = 0$ by definition not by assumption. 
+Notice that we still have made no assumptions about these projection errors except some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model $Y_i = \X_i'\bfbeta + e_i$ where $\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]$ and conclude that $\E[\X_{i}e_{i}] = 0$ by definition not by assumption. 
 
 The projection error is uncorrelated with the covariates, so does this mean that the CEF is linear? Unfortunately, no because recall that while independence implies uncorrelated, the reverse does not hold. So when we look at the CEF, we have
 $$ 
-\E[Y_{i} \mid \X_{i}] = \X_{i}'\b + \E[e_{i} \mid \X_{i}],
+\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta + \E[e_{i} \mid \X_{i}],
 $$
-and the last term $\E[e_{i} \mid \X_{i}]$ would only be 0 if the errors were independent of the covariates so $\E[e_{i} \mid \X_{i}] = \E[e_{i}] = 0$. But nowhere in the linear projection model did we assume this. So while we can (almost) always write the outcome as $Y_i = \X_i'\b + e_i$ and have those projections error be uncorrelated with the covariates, it will require additional assumptions to ensure that the true CEF is in fact linear $\E[Y_{i} \mid \X_{i}] = \X_{i}'\b$.  
+and the last term $\E[e_{i} \mid \X_{i}]$ would only be 0 if the errors were independent of the covariates so $\E[e_{i} \mid \X_{i}] = \E[e_{i}] = 0$. But nowhere in the linear projection model did we assume this. So while we can (almost) always write the outcome as $Y_i = \X_i'\bfbeta + e_i$ and have those projections error be uncorrelated with the covariates, it will require additional assumptions to ensure that the true CEF is in fact linear $\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta$.  
 
-Let's take a step back. What have we shown here? In a nutshell, we have shown that under very general conditions, a population linear regression exists and we can write the coefficients of that population linear regression as a function of expectations of the joint distribution of the data. Why do we care about this? It turns out that the ordinary least squares estimator, the workhorse regression estimator, targets this quantity of interest in large samples, regardless of whether the true CEF is linear or not. This means that even when a linear CEF assumption is incorrect, OLS still targets a perfectly valid quantity of interest: the coefficients from this population linear projection.   
+Let's take a step back. What have we shown here? In a nutshell, we have shown that under very general conditions, a population linear regression exists and we can write the coefficients of that population linear regression as a function of expectations of the joint distribution of the data. We did not assume that the CEF was linear nor that the projection errors were normal.  
+
+
+Why do we care about this? It turns out that the ordinary least squares estimator, the workhorse regression estimator, targets this quantity of interest in large samples, regardless of whether the true CEF is linear or not. This means that even when a linear CEF assumption is incorrect, OLS still targets a perfectly valid quantity of interest: the coefficients from this population linear projection.   
 
 ## Linear CEFs without assumptions
 
@@ -195,10 +263,10 @@ $$
 \mu(\X) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - f(\X_{i}))^{2}\right],
 $$
 
-So we have established that the CEF is the best predictor and the population linear regression $\bbL[Y_{i}\mid \X_{i}]$ is the best linear predictor. These two facts allow us to connect the CEF and the population regression.
+So we have established that the CEF is the best predictor and the population linear regression $m(\X_{i})$ is the best linear predictor. These two facts allow us to connect the CEF and the population regression.
 
 ::: {#thm-cef-blp}
-If $\mu(\X_{i})$ is a linear function of $\X_i$, then $\mu(\X_{i}) = \bbL[Y_{i}\mid \X_{i}] = \X_i'\b$. 
+If $\mu(\X_{i})$ is a linear function of $\X_i$, then $\mu(\X_{i}) = m(\X_{i}) = \X_i'\bfbeta$. 
 
 :::
 
@@ -276,61 +344,112 @@ This result also generalizes to an arbitrary number of binary covariates. If we 
 
 We have established that when we have a set of categorical covariates, the true CEF will be linear and we have seen the various ways to represent that CEF. Notice that when we actually use, for example, ordinary least squares, we are free to choose how to include our variables. That means that we could run a regression of $Y_i$ on $X_{i1}$ and $X_{i2}$ without an interaction term. This model will only be correct if $\beta_3$ is actually equal to 0 and so the interaction term is irrelevant. Because of this ability to choose our models, it's helpful to have a language for models that capture the linear CEF appropriately. We call a model **saturated** if there as many coefficients as there are unique values of the CEF. A saturated model by its nature can always be written as a linear function without assumptions. The above examples show how to construct saturated models in various situations.
 
-## Partitioned regression
+## Interpretation of the regression coefficients
 
-When we have a regression with two groups of covariates, $\mb{V}_{i} = (\X_{i}, \mb{Z}_{i})$, we might want a formula for the coefficients on just $\X_i$. Given the matrix algebra involved in the definition of the population regression coefficients, it isn't clear how we might acheive this. It turns out we can obtain a formula for those coefficients from a set of two population regressions. 
+We have seen how to interpret population regression coefficients in situations where the CEF is linear without assumptions. How do we interpret the population coefficients $\bfbeta$ in other settings?  
 
-In particular, let $\mb{\delta}' = (\b', \gamma')$ be the coefficients the coefficients on the complete set of covariates, with $\b$ corresponding to $\X_i$ and $\mb{\gamma}$ corresponding to $\mb{Z}_i$. In other words, the linear projection in this case can be written as
-$$ 
-\bbL(Y_{i} \mid \mb{V}_{i})= \mb{V}_{i}'\mb{\delta} =  \X_{i}'\b + \mb{Z}_{i}'\mb{\gamma}.
-$$
-To obtain an expression for $\b$, we can first think of a population regression of the covariates of interest $\X_i$ on the other covariates $\mb{Z}_i$, $\bbL(\X_{i} \mid \mb{Z}_{i})$. This looks somewhat odd because we have a vector as the dependent variable, but it represents the idea of running a separate regression of each variable in $\X_i$ on $\mb{Z}_i$. So we end up with a matrix of coefficients instead of a vector (one column for each variable in $\X_i$), even though the expression for the linear projection does not change much:
-$$ 
-\bbL(\X_{i} \mid \mb{Z}_{i}) = \mb{Z}_{i}'\left(\E[\mb{Z}_{i}\mb{Z}_{i}']\right)^{{-1}} \E[\mb{Z}_{i}'\X_{i}].
-$$
-These represent the best linear guess about the covariates of interest given the other covariates. Let's define the prediction errors $\widetilde{\X}_i = \X_i - \bbL(\X_{i} \mid \mb{Z}_{i})$. Because these are linear projection errors, we know from the above results that they are uncorrelated with $\mb{Z}_i$, which geometrically means they are **orthogonal** to those covariates. Thus, we sometimes call the transformation $A - \bbL(A \mid B)$ **orthogonalizing** $A$ with respect to $B$. The vector $\widetilde{X}_i$ captures the variation in $\X_i$ that is not capture by a linear function of $\mb{Z}_i$. An amazing property of these errors is that when we project $Y_i$ onto just $\widetilde{\X}_i$, we obtain the coefficients on $\X_i$ from the projection of $Y_i$ on both $\X_i$ and $\mb{Z}_i$:
-$$ 
-\b = \left( \E[\widetilde{\X}_{i}\widetilde{\X}_{i}'] \right)^{-1}\E[\widetilde{\X}_{i}'Y_{i}].
-$$
-The same result applies if we orthogonalize $Y_i$ with respect to $\mb{Z}_i$ as well,   
-$$ 
-\b = \left( \E[\widetilde{\X}_{i}\widetilde{\X}_{i}'] \right)^{-1}\E[\widetilde{\X}_{i}'\widetilde{Y}_{i}],
-$$
-where $\widetilde{Y}_i = Y_i - \bbL(Y_{i} \mid \mb{Z}_{i})$. 
 
-Why do care about this ability to partition the regression coefficients? One reason is that it allows us to derive an interpretable expression for each coefficient in the BLP. Let's change our partition slightly so that $\X_i = (X_{{ik}}, \X_{i,-k})$, where $\X_{i,-k}$ is the vector of covariates omitting the $k$th entry (we assume that $\X_{i,-k}$ includes the constant term 1). Based on the above, we can define $\widetilde{X}_{ik} = X_{ik} - \bbL(X_{ik}\mid \X_{i,-k})$ as the  $k$th variable othorgonalized with respect to rest of the variables. Then the above partition results implies that
+Let's start with simplest case, where every entry in $\X_{i}$ represents a different covariate and no covariate is any function of another (we'll see why this caveat is important below). In this simple case, the $k$th coefficient, $\beta_{k}$ will represent the change in the  predicted outcome for a one-unit change in the $k$th covariate $X_{ik}$, holding all other covariates fixed. We can see this from 
+$$ 
+\begin{aligned}
+  m(x_{1} + 1, x_{2}) & =  \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
+  m(x_{1}, x_{2}) &= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2},
+\end{aligned} 
+$$
+so that the change in the predicted outcome for increasing $X_{i1}$ by one unit isn't
+$$
+ m(x_{1} + 1, x_{2}) -  m(x_{1}, x_{2}) = \beta_1
+$$
+Notice that nothing changes in this interpretation if we add more covariates to the vector,
+$$
+ m(x_{1} + 1, \bfx_{2}) -  m(x_{1}, \bfx_{2}) = \beta_1,
+$$
+the coefficient on a particular variable is the change in predicted outcome for a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the "all else equal" change in predicted outcome for each covariate. 
+
+
+
+## Multiple regression from bivariate regression
+
+When we have a regression of an outcome on two covariates, it is useful to understand how the coefficients of one variables related to the other. For example, if we have the following best linear projection:
+$$ 
+(\alpha, \beta, \gamma) = \argmin_{(a,b,c) \in \mathbb{R}^{3}} \; \E[(Y_{i} - (a + bX_{i} + cZ_{i}))^{2}]
+$$ {#eq-two-var-blp}
+Is there some way to understand the $\beta$ coefficient here in terms of simple linear regression? As it turns out, yes. From the above results, we know that the intercept has a simple form
+$$
+\alpha = \E[Y_i] - \beta\E[X_i] - \gamma\E[Z_i].
+$$
+Let's investigate the first order condition for $\beta$:
+$$ 
+\begin{aligned}
+  0 &= \E[Y_{i}X_{i}] - \alpha\E[X_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
+    &=  \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] + \beta\E[X_{i}]^{2} + \gamma\E[X_{i}]\E[Z_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
+  &= \cov(Y, X) - \beta\V[X_{i}] - \gamma \cov(X_{i}, Z_{i})
+\end{aligned}
+$$
+We can see from this that if $\cov(X_{i}, Z_{i}) = 0$, then the coefficient on $X_i$ will be the same as in the simple regression case, $\cov(Y_{i}, X_{i})/\V[X_{i}]$. In this case, when $X_i$ and $Z_i$ are uncorrelated, we sometimes call them **orthogonal**. 
+
+To write a simple formula for $\beta$ when the covariates are not orthogonal, we will **orthogonalize** $X_i$ by obtaining the prediction errors from a population linear regression of $X_i$ on $Z_i$:
+$$ 
+\widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0}  + d_{1}Z_{i}))^{2}]
+$$
+Given the properties of projection errors, we know that this orthogonalized version of $X_{i}$ will be uncorrelated with $Z_{i}$ since $\E[\widetilde{X}_{i}Z_{i}] = 0$. Remarkably, the coefficient on $X_i$ from the "long" BLP in @eq-two-var-blp is the same as the regression of $Y_i$ on this orthogonalized $\widetilde{X}_i$, 
+$$ 
+\beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
+$$
+
+We can expand this to idea to when there are several other covariates. Suppose now that we are interested in a regression of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-k}$ be the vector of covariates omitting the $k$th entry and let $m_k(\X_{i,-k})$ represent the BLP of $X_{ik}$ on these other covariates. We can define $\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})$ as the  $k$ th variable othorgonalized with respect to rest of the variables and we can write the coefficient on $X_{ik}$ as
 $$ 
 \beta_k = \frac{\cov(Y_i, \widetilde{X}_{ik})}{\V[\widetilde{X}_{ik}]}.
 $$ 
-Thus, the population regression coefficient in the BLP is the covariance of the outcome and the orthogonalized variable divided by the variance of the orthogonalized value. More generally, this implies that we could use a scatterplot of the outcome and the orthogonalized covariate to explore the conditional relationship between these two variable in a more flexible or exploratory manner.
+Thus, the population regression coefficient in the BLP is the same as from a bivariate regression of the outcome on the projection error for $X_{ik}$ being projected on all other covariates. One interpretation of coefficients in a population multiple regression is they represent the relationship between the outcome and the covariate, after removing the linear relationships of all other variables. 
 
 
 ## Omitted variable bias
 
 In many situations, we might need to choose to include a variable in a regression or not, so it can be helpful to understand how this choice might affect the population coefficients on the other variables in a the regression. In particular, suppose we are considering whether to include some variable $Z_i$ in our regression where $\X_i$ represents the other covariates. Then we are deciding between the two projections
 $$ 
-\bbL[Y_i \mid \X_i, Z_i] = \X_i'\b + Z_i\gamma, \qquad \bbL[Y \mid \X] = \X_i'\mb{\delta},
+m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 $$
-where we often refer to $\bbL[Y_i \mid \X_i, Z_i]$ as the long regression and $\bbL[Y_i \mid \X_i]$ as the short regression. 
+where we often refer to $m(\X_i, Z_i)$ as the long regression and $m(\X_i)$ as the short regression. 
 
-Can we relate the coefficients on $\X_i$ from these two regressions? It turns out that we can using two property that linear projections share with conditional expectations: the **law of iterated projections**,
-$$
-\bbL[Y_i \mid \X_i] = \bbL\left\{ \bbL[Y_i \mid \X_i, Z_i] \mid \X_i \right\},
-$$
-and that linear projection is linear, so that $\bbL[A + B \mid C] = \bbL[A\mid C] + \bbL[B \mid C]$. Together, these imply
-$$  
-\begin{aligned}
- \bbL[Y_i \mid \X_i] &= \bbL[\X_i'\b + Z_i\gamma \mid \X_i] \\
- &= \bbL[\X_i\mid \X_i]'\b + \bbL[Z_i \mid \X_i]\gamma \\
- &= \X'_i\b + \bbL[Z_i \mid \X_i]\gamma
- \end{aligned}
-$$
-We can write the regression/projection of $Z_i$ on $\X_i$ as $\bbL[Z_i \mid \X_i]= \X_i'\mb{\pi}$ and so
+We know from the defintion of the BLP that we can write the short coefficients as 
 $$ 
-\bbL[Y_i \mid \X_i] = \X_i'(\b + \mb{\pi}\gamma), 
+\bs{\delta} = \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}Y_{i}].
 $$
-which implies that the short coefficients can be written as $\mb{\delta} = \b + \mb{\pi}\gamma$. 
+Letting $e_i = Y_i - m(\X_{i}, Z_{i})$ be the projection errors from the long regression, we can write this as
+$$ 
+\begin{aligned}
+  \bs{\delta} &= \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}(\X_{i}'\bfbeta + Z_{i}\gamma + e_{i})] \\
+              &= \left(\E[\X_{i}\X_{i}']\right)^{-1}(\E[\X_{i}\X_{i}']\bfbeta + \E[\X_{i}Z_{i}]\gamma + \E[\X_{i}e_{i}]) \\
+  &=    \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
+\end{aligned}
+$$
+Notice that the vector in the second term is actually the linear projection coefficients of a population linear regression of $Z_i$ on the $\X_i$. If we call these coefficients $\bs{\pi}$, then th short coefficients are 
+$$ 
+\bs{\delta} = \bfbeta + \bs{\pi}\gamma. 
+$$
 
-We can easily rewrite this to show that the difference between the coefficients in these two projections is $\mb{\delta}  - \b= \mb{\pi}\gamma$ or the product of the coefficient on the "excluded" $Z_i$ and the coefficient of the included $\X_i$ on the excluded. This difference is usually referred to as the **omitted variable bias** of omitting $Z_i$ under the idea that $\b$ is the true target of inference. But the result is much broader than this since it just tells us how to relate the coefficients of two nested projection. 
+We can easily rewrite this to show that the difference between the coefficients in these two projections is $\bs{\delta}  - \bfbeta= \bs{\pi}\gamma$ or the product of the coefficient on the "excluded" $Z_i$ and the coefficient of the included $\X_i$ on the excluded. This difference is usually referred to as the **omitted variable bias** of omitting $Z_i$ under the idea that $\bfbeta$ is the true target of inference. But the result is much broader than this since it just tells us how to relate the coefficients of two nested projection. 
 
 
+The last two results (multiple regressions from bivariate and omitted variable bias) are sometimes presented as results for the ordinary least squares estimator that we will present in the next chapter. We introduce them here as features of a particular population quantity, the linear projection or population linear regression. 
+
+
+## Drawbacks of the BLP
+
+The best linear predictor is, of course, a *linear* approximation to the CEF and this approximation could be quite bad if the true CEF is highly nonlinear. A more subtle issue with the BLP is that it is sensitive to the marginal distribution of the covariates when the CEF is nonlinear. Let's return to our example of voter wait times and income. In @fig-blp-limits, we show the true CEF and the BLP when income is restricted below \$50,000 or above \$100,000. We can see that the BLP can vary quite dramatically here. This is an extremely example, but the basic point will still hold when the marginal distribution of $X_i$ is weighted toward one end of the spectrum versus the other. 
+
+
+```{r}
+#| label: fig-blp-limits
+#| echo: false
+#| fig.cap: "Linear projections for when income is truncated below $50k and above $100k"
+contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
+axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
+curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
+text(x = -1.75, y = 70, "CEF", pos = 4, col = "indianred")
+abline(lm(y~x, subset = x < 5), col = "dodgerblue", lwd = 3)
+abline(lm(y~x, subset = x > 10), col = "dodgerblue", lwd = 3)
+text(x = -2, y = 45, "BLP\nX < 50", col = "dodgerblue", pos = 4)
+text(x = -2, y = 5, "BLP\nX > 100k", col = "dodgerblue", pos = 4)
+```

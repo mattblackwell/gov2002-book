@@ -1,4 +1,4 @@
-# Hypothesis Tests
+# Hypothesis tests
 
 
 Up to now, we have discussed the properties of estimators that allow us to sometimes characterize their distributions in finite and large samples. These properties might allow us to say that, for example, our estimated difference in means is equal to a true average treatment effect on average across repeated samples or that it will converge to the true value in large samples. These properties, however, are properties of repeated samples whereas we as researchers will only have access to a single sample. **Statistical inference** is the process of using our single sample to learn about population parameters. There are several ways to do inference that are connected, but perhaps the most ubiquitous in the sciences is the hypothesis test, which is a kind of statistical thought experiment.  

@@ -13,11 +13,16 @@ book:
   chapters:
     - index.qmd
     - 01_intro.qmd
-    - 02_estimation.qmd
-    - 03_asymptotics.qmd
-    - 04_hypothesis_tests.qmd
-    - 05_confidence_intervals.qmd
-    - 06_linear_model.qmd
+    - part: "Stastisitcal Inference"
+      chapters:
+        - 02_estimation.qmd
+        - 03_asymptotics.qmd
+        - 04_hypothesis_tests.qmd
+        - 05_confidence_intervals.qmd
+    - part: "Regression"
+      chapters:
+        - 06_linear_model.qmd
+        - 07_least_squares.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -27,11 +32,12 @@ format:
     theme: cosmo
     include-before-body:
       - _dollars.tex
+      - _bold_html.tex
       - _macros.tex
       - _dollars.tex
         
   pdf:
     documentclass: scrreprt
     include-in-header:
-      - _macros.tex
-
+      - _bold.tex
+      - _macros_pdf.tex

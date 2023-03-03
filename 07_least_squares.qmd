@@ -1,0 +1,33 @@
+# The mechanics of least squares
+
+In this chapter we explore the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is due in part to its easy of interpretation, its computational simplicity, and its statistical efficiency. 
+
+Often, OLS is introduced along with an assumption of a linear model for the conditional expectation. This chapter purposefully avoids this to emphasize that OLS has a perfectly valid target of inference, the best linear projection, regardless of the linearity of the conditional expectation function. 
+
+
+## Deriving the OLS estimator
+
+In the last chapter on the linear model and the best linear projection, we operated purely in the population, not samples. We derived the population regression coefficients $\bfbeta$, which represented the coefficients on the line of best fit in the population. We now take these as our quantity of interest. 
+
+::: {.callout-note}
+## Assumption
+
+
+The variables $\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}$ are i.i.d. draws from a common distribution $F$.
+
+:::
+
+
+
+## Bivariate OLS
+
+
+
+## Model fit
+
+
+## Matrix form of OLS
+
+## Projection 
+
+## Outliers, leverage points, and influential observations
