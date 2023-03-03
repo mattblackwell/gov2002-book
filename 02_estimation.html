@@ -174,31 +174,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Stastisitcal Inference</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_estimation.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_confidence_intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Regression</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -238,6 +263,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- main -->
 <main class="content" id="quarto-document-content">
 $$
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\mathbf}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\V}{\mathbb{V}}
 \newcommand{\var}{\text{var}}
@@ -256,8 +283,6 @@ $$
 \newcommand{\Xu}{\underline{X}}
 \newcommand{\Yu}{\underline{Y}}
 \renewcommand{\P}{\mathbb{P}}
-\newcommand{\bs}{\boldsymbol}
-\newcommand{\mb}{\boldsymbol}
 \newcommand{\U}{\mb{U}}
 \newcommand{\Xbar}{\overline{X}}
 \newcommand{\Ybar}{\overline{Y}}
@@ -270,9 +295,9 @@ $$
 \newcommand{\Xmat}{\mathbb{X}}
 \newcommand{\bfx}{\mb{x}}
 \newcommand{\y}{\mb{y}}
-\renewcommand{\b}{\mb{\beta}}
+\renewcommand{\bfbeta}{\bs{\beta}}
 \newcommand{\e}{\bs{\epsilon}}
-\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\bhat}{\widehat{\bs{\beta}}}
 \newcommand{\XX}{\Xmat'\Xmat}
 \newcommand{\XXinv}{\left(\XX\right)^{-1}}
 \newcommand{\hatsig}{\hat{\sigma}^2}
@@ -314,32 +339,32 @@ $$
 
 <section id="introduction" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
-<p>When studying probability, we assumed that we knew the parameter of a distribution (the mean, the variance, etc), and we used probability to understand what kind of data we would observe. Now we will put this engine in reverse and try to learn about the data generating process or some feature of it using only the observed data that we have. There are two main goals here: <strong>estimation</strong> which is how we formulate our best guess about a parameter of the DGP, and <strong>inference</strong> which is how we formalize and express uncertainty about our estimates.</p>
-<p><strong>Insert two-direction diagram</strong></p>
+<p>When studying probability, we assumed that we knew the parameter of a distribution (the mean or the variance) and used probability theory to understand what kind of data we would observe. Estimation and inference put this engine in reverse and try to learn some aspect of the data-generating process using only our observed data. There are two main goals here: <strong>estimation</strong>, which is how we formulate our best guess about a parameter of the DGP, and <strong>inference</strong>, which is how we formalize and express uncertainty about our estimates.</p>
+<p><img src="assets/img/two-direction.png" class="img-fluid"></p>
 <div id="exm-rct" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.1 (Randomized control trial) </strong></span>Suppose we are conducting a randomized experiment on framing effects. All respondents receive some factual information about recent levels of immigration, but the message for the treatment group (<span class="math inline">\(D_i = 1\)</span>) has an additional framing of the positive benefits of immigration and the control group (<span class="math inline">\(D_i = 0\)</span>) receives no additional framing. The outcome is a binary outcome on whether the respondent supports increasing legal immigration limits (<span class="math inline">\(Y_i = 1\)</span>) or not (<span class="math inline">\(Y_i = 0\)</span>). The observed data consists of <span class="math inline">\(n\)</span> pairs of random variables, the outcome and the treatment assignment: <span class="math inline">\(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\)</span>. Define the two sample means/proportions in each group as <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 2.1 (Randomized control trial) </strong></span>Suppose we are conducting a randomized experiment on framing effects. All respondents receive some factual information about current levels of immigration. The message for the treatment group (<span class="math inline">\(D_i = 1\)</span>) has an additional framing of the positive benefits of immigration, while the control group (<span class="math inline">\(D_i = 0\)</span>) receives no additional framing. The outcome is a binary outcome on whether the respondent supports increasing legal immigration limits (<span class="math inline">\(Y_i = 1\)</span>) or not (<span class="math inline">\(Y_i = 0\)</span>). The observed data consists of <span class="math inline">\(n\)</span> pairs of random variables, the outcome, and the treatment assignment: <span class="math inline">\(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\)</span>. Define the two sample means/proportions in each group as <span class="math display">\[
 \Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i,  \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
 \]</span> where <span class="math inline">\(n_1 = \sum_{i=1}^n D_i\)</span> is the number of treated units and <span class="math inline">\(n_0 = n - n_1\)</span> is the number of control units.</p>
-<p>A common estimator for the treatment effect in a study like this would be the difference in means, <span class="math inline">\(\Ybar_1 - \Ybar_0\)</span>. But this is only one possible estimator. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This is commonly called a <strong>poststratification</strong> estimator, but it’s unclear at first glance which of these two estimators we should prefer.</p>
+<p>A standard estimator for the treatment effect in a study like this would be the difference in means, <span class="math inline">\(\Ybar_1 - \Ybar_0\)</span>. But this is only one possible estimator. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This estimator is commonly called a <strong>poststratification</strong> estimator, but it’s unclear at first glance which of these two estimators we should prefer.</p>
 </div>
-<p>What are the goals of studying estimators? In short, we prefer to use <strong>good</strong> estimators rather than <strong>bad</strong> estimators. But what makes an estimator good or bad? You probably have some intuitive sense that, say, an estimator that returns the value 3 is bad, but it will be helpful for us to formally define and explore some properties of estimators that will allow us to compare them and choose the good over the bad.</p>
+<p>What are the goals of studying estimators? In short, we prefer to use <strong>good</strong> estimators rather than <strong>bad</strong> estimators. But what makes an estimator good or bad? You probably have some intuitive sense that, for example, an estimator that always returns the value 3 is bad. Still, it will be helpful for us to formally define and explore some properties of estimators that will allow us to compare them and choose the good over the bad.</p>
 </section>
 <section id="samples-and-populations" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="samples-and-populations"><span class="header-section-number">2.2</span> Samples and populations</h2>
-<p>For most of this class, we’ll focus on a relatively simple setting where we have a random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> that are <strong>independent and identically distributed</strong> (iid) draws from a distribution with cumulative distribution function (cdf) <span class="math inline">\(F\)</span>. They are independent in the sense that the random vectors <span class="math inline">\(X_i\)</span> and <span class="math inline">\(X_j\)</span> are independent for all <span class="math inline">\(i \neq j\)</span>, and the they are identically distributed in the sense that each of the random variables <span class="math inline">\(X_i\)</span> have the same marginal distribution, <span class="math inline">\(F\)</span>.</p>
-<p>You can think of each of these vectors, <span class="math inline">\(X_i\)</span>, as the rows in your data frame. Note that we’re being purposely vague about this cdf—it just represents the unknown distribution of the data, otherwise known as the <strong>data generating process</strong> (DGP). Sometimes <span class="math inline">\(F\)</span> is also referred to as the <strong>population distribution</strong> or even just <strong>population</strong>, which has its roots in viewing the data as a random sample from some larger population. As a shorthand, we often say that the collection of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is a <strong>random sample</strong> from population <span class="math inline">\(F\)</span> if <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is iid with distribution <span class="math inline">\(F\)</span>. The <strong>sample size</strong> <span class="math inline">\(n\)</span> is the number of units in the sample.</p>
-<p>There are two metaphors that can help build intuition about the concept of viewing the data as an iid draw from <span class="math inline">\(F\)</span>:</p>
+<p>For most of this class, we’ll focus on a relatively simple setting where we have a set of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> that are <strong>independent and identically distributed</strong> (iid) draws from a distribution with cumulative distribution function (cdf) <span class="math inline">\(F\)</span>. They are independent in that the random vectors <span class="math inline">\(X_i\)</span> and <span class="math inline">\(X_j\)</span> are independent for all <span class="math inline">\(i \neq j\)</span>, and they are “identically distributed” in the sense that each of the random variables <span class="math inline">\(X_i\)</span> have the same marginal distribution, <span class="math inline">\(F\)</span>.</p>
+<p>You can think of each vector, <span class="math inline">\(X_i\)</span>, as the rows in your data frame. Note that we’re being purposely vague about this cdf—it simply represents the unknown distribution of the data, otherwise known as the <strong>data generating process</strong> (DGP). Sometimes <span class="math inline">\(F\)</span> is also referred to as the <strong>population distribution</strong> or even just <strong>population</strong>, which has its roots in viewing the data as a random sample from some larger population.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> As a shorthand, we often say that the collection of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is a <strong>random sample</strong> from population <span class="math inline">\(F\)</span> if <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is iid with distribution <span class="math inline">\(F\)</span>. The <strong>sample size</strong> <span class="math inline">\(n\)</span> is the number of units in the sample.</p>
+<p>Two metaphors can help build intuition about the concept of viewing the data as an iid draw from <span class="math inline">\(F\)</span>:</p>
 <ol type="1">
-<li><strong>Random sampling</strong>. Suppose we have a population of size <span class="math inline">\(N\)</span> which is much, much larger than our sample size <span class="math inline">\(n\)</span>, and we take a simple random sample of size <span class="math inline">\(n\)</span> from this population. Then the distribution of the data in the random sample will be iid draws from the population distribution of the variables we are sampling. For instance, suppose we take a random sample from a population of US citizens where the population proportion of Democratic party identifiers is 0.33. Then if we randomly sample <span class="math inline">\(n = 100\)</span> US citizens, each data point <span class="math inline">\(X_i\)</span> will be distributed Bernoulli with probability of success 0.33.</li>
-<li><strong>Groundhog Day</strong>. Random sampling does not always make sense as a justification for iid data, especially when the units are not really samples at all, but rather countries, states, or subnational units. In this case, we have to appeal to thought experiment, where <span class="math inline">\(F\)</span> represents the fundamental uncertainty about how the data was generated. The metaphor here is that if we could re-run history many times, like the 1993 American classic comedy <em>Groundhog Day</em>, data and outcomes would change slightly due to the inherently stochastic nature of the world. The iid assumption, then, is that each of the units in our data have the same DGP producing this data or the same distribution of outcomes under the <em>Groundhog Day</em> scenario.[1]</li>
+<li><strong>Random sampling</strong>. Suppose we have a population of size <span class="math inline">\(N\)</span> that is much larger than our sample size <span class="math inline">\(n\)</span>, and we take a random sample of size <span class="math inline">\(n\)</span> from this population with replacement. Then the distribution of the data in the random sample will be iid draws from the population distribution of the variables we are sampling. For instance, suppose we take a random sample from a population of US citizens where the population proportion of Democratic party identifiers is 0.33. Then if we randomly sample <span class="math inline">\(n = 100\)</span> US citizens, each data point <span class="math inline">\(X_i\)</span> will be distributed Bernoulli with probability of success 0.33.</li>
+<li><strong>Groundhog Day</strong>. Random sampling does not always make sense as a justification for iid data, especially when the units are not samples at all but rather countries, states, or subnational units. In this case, we have to appeal to a thought experiment where <span class="math inline">\(F\)</span> represents the fundamental uncertainty in the data-generating process. The metaphor here is that if we could re-run history many times, like the 1993 American classic comedy <em>Groundhog Day</em>, data and outcomes would change slightly due to the inherently stochastic nature of the world. The iid assumption, then, is that each of the units in our data has the same DGP producing this data or the same distribution of outcomes under the <em>Groundhog Day</em> scenario. The set of all these infinite possible draws from the DGP is sometimes referred to as the <strong>superpopulation</strong>.</li>
 </ol>
-<p>Note that there are many, many situations where the iid assumption does not make sense. We will cover some of those later in the semester. But much of the innovation and growth in statistics over the last, say, 50 years has been in figuring out how to do statistical inference when iid is violated and often the solutions are specific to the type of iid violation you have (spatial, time-series, network, clustered, etc). As a rule of thumb, though, if you suspect a violation of iid data, your statements of uncertainty will likely be overconfident (for example, confidence intervals, which we’ll cover later, are too small).</p>
+<p>Note that there are many situations where the iid assumption is not appropriate. We will cover some of those later in the semester. But much of the innovation and growth in statistics over the last 50 years has been figuring out how to perform statistical inference when iid does not hold. Often, the solutions are specific to the type of iid violation you have (spatial, time-series, network, or clustered). As a rule of thumb, though, if you suspect iid is incorrect, your uncertainty statements will likely be overconfident (for example, confidence intervals, which we’ll cover later, are too small).</p>
 </section>
 <section id="point-estimation" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">2.3</span> Point estimation</h2>
 <section id="quantities-of-interest" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="quantities-of-interest"><span class="header-section-number">2.3.1</span> Quantities of interest</h3>
-<p>Our goal is to learn about the data generating process, represented by the cdf, <span class="math inline">\(F\)</span>. We might be interested in estimating the cdf at a general level or we might only be interested in estimating some feature of the distribution, like a mean or conditional expectation function. We will almost always have a particular goal in mind, but it’s useful to introduce the idea of estimation in a general way since most of the concepts about estimation, so we’ll let <span class="math inline">\(\theta\)</span> represent the quantity of interest. <strong>Point estimation</strong> is the process of providing a single “best guess” about theta whatever quantity of interest we choose, <span class="math inline">\(\theta\)</span>.</p>
+<p>We aim to learn about the data-generating process, represented by the cdf, <span class="math inline">\(F\)</span>. We might be interested in estimating the cdf at a general level or only some feature of the distribution, like a mean or conditional expectation function. We will almost always have a particular quantity in mind, but we’ll introduce estimation at a general level. So we’ll let <span class="math inline">\(\theta\)</span> represent the quantity of interest. <strong>Point estimation</strong> describes how we obtain a single “best guess” about <span class="math inline">\(\theta\)</span>.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -350,23 +375,23 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Quantities of interest are also referred to as <strong>parameters</strong> or <strong>estimands</strong> (that is, the target of estimation).</p>
+<p>Some refer to quantities of interest as <strong>parameters</strong> or <strong>estimands</strong> (that is, the target of estimation).</p>
 </div>
 </div>
 <div id="exm-prop" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.2 (Population mean) </strong></span>Suppose we wanted to know the proportion of US citizens who support increasing the level of legal immigration in the US, which we denote as <span class="math inline">\(Y_i = 1\)</span>. Then our quantity of interest is the mean of this random variable, <span class="math inline">\(\mu = \E[Y_i]\)</span>, which is also the probability of randomly drawing someone from the population that supports increasing legal immigration.</p>
+<p><span class="theorem-title"><strong>Example 2.2 (Population mean) </strong></span>Suppose we wanted to know the proportion of US citizens who support increasing legal immigration in the US, which we denote as <span class="math inline">\(Y_i = 1\)</span>. Then our quantity of interest is the mean of this random variable, <span class="math inline">\(\mu = \E[Y_i]\)</span>, which is the probability of randomly drawing someone from the population supporting increased legal immigration.</p>
 </div>
 <div id="exm-var" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.3 (Population variance) </strong></span>Feeling thermometer scores are a very common way to assess how a survey respondent feels about a particular person or group of people. Respondents are asked how warmly they feel about a group from 0 to 100, which we will denote <span class="math inline">\(Y_i\)</span>. We might be interested in how polarized views are on a group in the population and one measure of polarization could the be variance, or spread, of the distribution of <span class="math inline">\(Y_i\)</span> around the mean. In this case, <span class="math inline">\(\sigma^2 = \V[Y_i]\)</span> would be our quantity of interest.</p>
+<p><span class="theorem-title"><strong>Example 2.3 (Population variance) </strong></span>Feeling thermometer scores are a prevalent way to assess how a survey respondent feels about a particular person or group. A survey asks respondents how warmly they feel about a group from 0 to 100, which we will denote <span class="math inline">\(Y_i\)</span>. We might be interested in how polarized views are on a group in the population, and one measure of polarization could be the variance, or spread, of the distribution of <span class="math inline">\(Y_i\)</span> around the mean. In this case, <span class="math inline">\(\sigma^2 = \V[Y_i]\)</span> would be our quantity of interest.</p>
 </div>
 <div id="exm-rct-ii" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.4 (RCT, continued) </strong></span>In <a href="#exm-rct">Example&nbsp;<span>2.1</span></a> we discussed a common estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional probabilities (or expectations): the average support for increasing legal immigration in the treatment group, <span class="math inline">\(\mu_1 = \E[Y_i \mid D_i = 1]\)</span>, and the same average in the control group, <span class="math inline">\(\mu_0 = \E[Y_i \mid D_i = 0]\)</span>. That is, we want to know about <span class="math inline">\(\mu_1 - \mu_0\)</span>, a function of unknown features of these two conditional distributions.</p>
+<p><span class="theorem-title"><strong>Example 2.4 (RCT continued) </strong></span>In <a href="#exm-rct">Example&nbsp;<span>2.1</span></a>, we discussed a typical estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional probabilities (or expectations): the average support for increasing legal immigration in the treatment group, <span class="math inline">\(\mu_1 = \E[Y_i \mid D_i = 1]\)</span>, and the same average in the control group, <span class="math inline">\(\mu_0 = \E[Y_i \mid D_i = 0]\)</span>. This difference, <span class="math inline">\(\mu_1 - \mu_0\)</span>, is a function of unknown features of these two conditional distributions.</p>
 </div>
-<p>Each of these is a function of the (possibly joint) distribution of the data, <span class="math inline">\(F\)</span>. In each of these, we are not necessarily interested in the entire distribution, just summaries of it (central tendency, spread). Of course there are situations where we are also interested in the complete distribution.</p>
+<p>Each of these is a function of the (possibly joint) distribution of the data, <span class="math inline">\(F\)</span>. In each of these, we are not necessarily interested in the entire distribution, just summaries of it (central tendency, spread). Of course, there are situations where we are also interested in the complete distribution.</p>
 </section>
 <section id="estimators" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="estimators"><span class="header-section-number">2.3.2</span> Estimators</h3>
-<p>When our sample size is more than a few observations, it makes no sense to work with the raw data, <span class="math inline">\(X_1, \ldots, X_n\)</span>, and we inevitably will need to <em>summarize</em> the data in some way. We can represent this summary as a function, <span class="math inline">\(g(x_1, \ldots, x_n)\)</span>, which might the formula for the sample mean or sample variance. This function is just a regular function that takes in <span class="math inline">\(n\)</span> numbers (or vectors) and returns a number (or vector). We can also define a random variable based on this function, <span class="math inline">\(Y = g(X_1, \ldots, X_n)\)</span>, which inherits its randomness from the randomness of the data: before we see the data, we don’t know what values of <span class="math inline">\(X_1, \ldots, X_n\)</span> we will see and so we don’t know what value of <span class="math inline">\(Y\)</span> we’ll see either. We call the random variable <span class="math inline">\(Y = g(X_1, \ldots, X_n)\)</span> a <strong>statistic</strong> (or sometimes sample statistics) and we refer to the probability distribution of a statistic <span class="math inline">\(Y\)</span> as the <strong>sampling distribution</strong> of <span class="math inline">\(Y\)</span>.</p>
+<p>When our sample size is more than a few observations, it makes no sense to work with the raw data, <span class="math inline">\(X_1, \ldots, X_n\)</span>, and we inevitably will need to <em>summarize</em> the data in some way. We can represent this summary as a function, <span class="math inline">\(g(x_1, \ldots, x_n)\)</span>, which might be the formula for the sample mean or sample variance. This function is just a regular function that takes in <span class="math inline">\(n\)</span> numbers (or vectors) and returns a number (or vector). We can also define a random variable based on this function, <span class="math inline">\(Y = g(X_1, \ldots, X_n)\)</span>, which inherits its randomness from the randomness of the data. Before we see the data, we don’t know what values of <span class="math inline">\(X_1, \ldots, X_n\)</span> we will see, so we don’t know what value of <span class="math inline">\(Y\)</span> we’ll see either. We call the random variable <span class="math inline">\(Y = g(X_1, \ldots, X_n)\)</span> a <strong>statistic</strong> (or sometimes sample statistics), and we refer to the probability distribution of a statistic <span class="math inline">\(Y\)</span> as the <strong>sampling distribution</strong> of <span class="math inline">\(Y\)</span>.</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -377,14 +402,14 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There is one potential confusion in how we talk about “statistics.” Just above we defined a statistic as a random variable, based on it being a function of random variables (ie, the data). But we also sometimes refer to the calculated value as a statistic as well, which is a specific number that you see in your R output. To be precise, we should call the latter the <strong>realized value</strong> of the statistic, but message discipline is difficult to enforce in this context. A simple example might help. Suppose that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are the result of a roll of two standard six-sided dice. Then the statistic <span class="math inline">\(Y = X_1 + X_2\)</span> is a random variable that has a distribution over the numbers from {2, , 12} that describes our uncertainty over what the sum will be <em>before we roll the dice</em>. Once, we roll the dice and observed the realized values <span class="math inline">\(X_1 = 3\)</span> and <span class="math inline">\(X_2 = 4\)</span>, we observed the realized value of the statistic, <span class="math inline">\(Y = 7\)</span>.</p>
+<p>There is one potential confusion in how we talk about “statistics.” Just above, we defined a statistic as a random variable based on it being a function of random variables (the data). But we sometimes refer to the calculated value as a statistic as well, which is a specific number that you see in your R output. To be precise, we should call the latter the <strong>realized value</strong> of the statistic, but message discipline is difficult to enforce in this context. A simple example might help. Suppose that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are the results of a roll of two standard six-sided dice. Then the statistic <span class="math inline">\(Y = X_1 + X_2\)</span> is a random variable that has a distribution over the numbers from {2, , 12} that describes our uncertainty over what the sum will be <em>before we roll the dice</em>. Once we have rolled the dice and observed the realized values <span class="math inline">\(X_1 = 3\)</span> and <span class="math inline">\(X_2 = 4\)</span>, we observed the realized value of the statistic, <span class="math inline">\(Y = 7\)</span>.</p>
 </div>
 </div>
-<p>At their most basic, statistics are just summaries of the data without aim or ambition. Estimators are statistics with a purpose: to provide an “educated guess” about some quantity of interest.</p>
+<p>At their most basic, statistics are just data summaries without aim or ambition. Estimators are statistics with a purpose: to provide an “educated guess” about some quantity of interest.</p>
 <div id="def-estimator" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 2.1 </strong></span>An <strong>estimator</strong> <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span> for some parameter <span class="math inline">\(\theta\)</span>, is a statistic intended as a guess about <span class="math inline">\(\theta\)</span>.</p>
 </div>
-<p>One important distinction of jargon is between an estimator and an estimate, similar to issues of statistic above. The estimator is a function of data, whereas the <strong>estimate</strong> is the <em>realized value</em> of the estimator once we see the data. An estimate is a single number, such as 0.38, whereas the estimator is a random variable that has uncertainty over what value it will take. Formally, the estimate is <span class="math inline">\(\theta(x_1, \ldots, x_n)\)</span> when the data is <span class="math inline">\(\{X_1, \ldots, X_n\} = \{x_1, \ldots, x_n\}\)</span>, whereas we represent the estimator as a function of random variables, <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
+<p>One important distinction of jargon is between an estimator and an estimate, similar to the issues with “statistic” described above. The estimator is a function of the data, whereas the <strong>estimate</strong> is the <em>realized value</em> of the estimator once we see the data. An estimate is a single number, such as 0.38, whereas the estimator is a random variable that has uncertainty over what value it will take. Formally, the estimate is <span class="math inline">\(\theta(x_1, \ldots, x_n)\)</span> when the data is <span class="math inline">\(\{X_1, \ldots, X_n\} = \{x_1, \ldots, x_n\}\)</span>, whereas we represent the estimator as a function of random variables, <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -395,13 +420,13 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It is very common, though not universal, to use the “hat” notation to define an estimator along with its estimand. For example, <span class="math inline">\(\widehat{\theta}\)</span> (or “theta hat”) indicates that this estimator is targeting the parameter <span class="math inline">\(\theta\)</span>.</p>
+<p>It is widespread, though not universal, to use the “hat” notation to define an estimator and its estimand. For example, <span class="math inline">\(\widehat{\theta}\)</span> (or “theta hat”) indicates that this estimator is targeting the parameter <span class="math inline">\(\theta\)</span>.</p>
 </div>
 </div>
 <div id="exm-mean-est" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.5 (Estimators for population mean) </strong></span>Suppose we would like to estimate the population mean of <span class="math inline">\(F\)</span>, which we will represent as <span class="math inline">\(\mu = \E[X_i]\)</span>. There are several estimators that we could choose from, all with different properties. <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 2.5 (Estimators for the population mean) </strong></span>Suppose we would like to estimate the population mean of <span class="math inline">\(F\)</span>, which we will represent as <span class="math inline">\(\mu = \E[X_i]\)</span>. We could choose from several estimators, all with different properties. <span class="math display">\[
 \widehat{\theta}_{n,1} = \frac{1}{n} \sum_{i=1}^n X_i, \quad \widehat{\theta}_{n,2} = X_1, \quad \widehat{\theta}_{n,3} = \text{max}(X_1,\ldots,X_n), \quad \widehat{\theta}_{n,4} = 3
-\]</span> The first is just the sample mean, which is an intuitive and natural estimator for the population mean. The second just uses the first observation. While this seems silly, this is a valid statistic (it’s a function of the data!). The third just takes the maximum value in the sample, and the fourth always returns 3 no matter what the data says.</p>
+\]</span> The first is just the sample mean, which is an intuitive and natural estimator for the population mean. The second just uses the first observation. While this seems silly, this is a valid statistic (it’s a function of the data!). The third takes the maximum value in the sample, and the fourth always returns three, regardless of the data.</p>
 </div>
 </section>
 </section>
@@ -410,12 +435,12 @@ Note
 <p>Where do estimators come from? There are a couple of different methods that I’ll cover briefly here before describing the ones that will form the bulk of this class.</p>
 <section id="parametric-models-and-maximum-likelihood" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="parametric-models-and-maximum-likelihood"><span class="header-section-number">2.4.1</span> Parametric models and maximum likelihood</h3>
-<p>The first method for generating estimators is based on <strong>parametric models</strong>, where the researcher specifies the exact distribution (up to some unknown parameters) of the DGP. Let <span class="math inline">\(\theta\)</span> be the parameters of this distribution and we then write <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> are iid draws from <span class="math inline">\(F_{\theta}\)</span>. We should also formally state the set of possible values that the parameters can take, which we call the <strong>parameter space</strong> and usually denote as <span class="math inline">\(\Theta\)</span>. Because we’re assuming we know the distribution of the data, we can write the p.d.f. as <span class="math inline">\(f(X_i \mid \theta)\)</span> and define the likelihood function as the product of these p.d.f.s over the units as a function of the parameters: <span class="math display">\[
+<p>The first method for generating estimators relies on <strong>parametric models</strong>, where the researcher specifies the exact distribution (up to some unknown parameters) of the DGP. Let <span class="math inline">\(\theta\)</span> be the parameters of this distribution and we then write <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> are iid draws from <span class="math inline">\(F_{\theta}\)</span>. We should also formally state the set of possible values the parameters can take, which we call the <strong>parameter space</strong> and usually denote as <span class="math inline">\(\Theta\)</span>. Because we’re assuming we know the distribution of the data, we can write the p.d.f. as <span class="math inline">\(f(X_i \mid \theta)\)</span> and define the likelihood function as the product of these p.d.f.s over the units as a function of the parameters: <span class="math display">\[
 L(\theta) = \prod_{i=1}^n f(X_i \mid \theta).
 \]</span> We can then define the <strong>maximum likelihood</strong> estimator (MLE) for <span class="math inline">\(\theta\)</span> as the values of the parameter that, well, maximize the likelihood: <span class="math display">\[
 \widehat{\theta}_{mle} = \argmax_{\theta \in \Theta} \; L(\theta)
-\]</span> Sometimes we can use calculus to derive a closed-form expression for the MLE, but more often we will use iterative techniques that essentially search the parameter space for the maximum.</p>
-<p>Maximum likelihood estimators have very nice properties, especially in large samples. Unfortunately, it also requires the correct knowledge of the parametric model, which is often difficult to justify. Do we really know if a given event count variable should be modeling as Poisson or Negative Binomial? The nice properties of MLE are only as good as our ability to get these types of choices correct.</p>
+\]</span> Sometimes we can use calculus to derive a closed-form expression for the MLE. Still, we often use iterative techniques that search the parameter space for the maximum.</p>
+<p>Maximum likelihood estimators have very nice properties, especially in large samples. Unfortunately, it also requires the correct knowledge of the parametric model, which is often difficult to justify. Do we really know if we should model a given event count variable as Poisson or Negative Binomial? The attractive properties of MLE are only as good as our ability to specify the parametric model.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -426,26 +451,26 @@ No free lunch
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>One really important intuition to build about statistics is the <strong>assumptions-precision tradeoff</strong>. You can usually get more precise estimates if you make stronger and potentially more fragile assumptions. Conversely, if you want to weaken your assumptions, you will almost always get less precise estimates.</p>
+<p>One essential intuition to build about statistics is the <strong>assumptions-precision tradeoff</strong>. You can usually get more precise estimates if you make stronger and potentially more fragile assumptions. Conversely, you will almost always get less accurate estimates if you weaken your assumptions.</p>
 </div>
 </div>
 </section>
 <section id="plug-in-estimators" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="plug-in-estimators"><span class="header-section-number">2.4.2</span> Plug-in estimators</h3>
-<p>The second broad class of estimators are <strong>semiparametric</strong> in the sense that we will specify some finite-dimensional parameters of the DGP, but leave the rest of the distribution unspecified. For example, we might specify a population mean, <span class="math inline">\(\mu = \E[X_i]\)</span>, and a population variance, <span class="math inline">\(\sigma^2 = \V[X_i]\)</span> but leave unrestricted the shape of the distribution. This is really important because our estimators will not be as dependent on correctly specifying distributions that maybe have no business specifying.</p>
-<p>The basic method for constructing estimators in this setting is to use the <strong>plug-in estimator</strong>, or the estimator that replaces any population mean with a sample mean. Obviously in the case of estimating the population mean, <span class="math inline">\(\mu\)</span>, this means we will use the <strong>sample mean</strong> as its estimate: <span class="math display">\[
+<p>The second broad class of estimators is <strong>semiparametric</strong> in that we will specify some finite-dimensional parameters of the DGP but leave the rest of the distribution unspecified. For example, we might define a population mean, <span class="math inline">\(\mu = \E[X_i]\)</span>, and a population variance, <span class="math inline">\(\sigma^2 = \V[X_i]\)</span> but leave unrestricted the shape of the distribution. This approach ensures that our estimators will be less dependent on correctly specifying distributions we have little intuition about.</p>
+<p>The primary method for constructing estimators in this setting is to use the <strong>plug-in estimator</strong>, or the estimator that replaces any population mean with a sample mean. Obviously, in the case of estimating the population mean, <span class="math inline">\(\mu\)</span>, this means we will use the <strong>sample mean</strong> as its estimate: <span class="math display">\[
 \Xbar_n = \frac{1}{n} \sum_{i=1}^n X_i \quad \text{estimates} \quad \E[X_i] = \int_{\mathcal{X}} x f(x)dx
-\]</span> What are we doing here? We are replacing the unknown population distribution <span class="math inline">\(f(x)\)</span> that’s in the population mean with a discrete uniform distribution over our data points, with <span class="math inline">\(1/n\)</span> probability assigned to each unit. Why do this? It encodes that if we have a random sample, our best guess about the population distribution of <span class="math inline">\(X_i\)</span> is the sample distribution in our actual data. If this intuition fails, it is also fine to hold onto an analog principle: sample means of random variables are natural estimators of population means.</p>
-<p>What about estimating something more complicated like a the expected value of a function of the data, <span class="math inline">\(\theta = \E[r(X_i)]\)</span>? The key is to see that <span class="math inline">\(f(X_i)\)</span> is also a random variable. Let’s call this random variable <span class="math inline">\(Y_i = f(X_i)\)</span> now we can see that <span class="math inline">\(\theta\)</span> is just the population expectation of this random variable and using the plug-in estimator, we get: <span class="math display">\[
+\]</span> What are we doing here? We are replacing the unknown population distribution <span class="math inline">\(f(x)\)</span> in the population mean with a discrete uniform distribution over our data points, with <span class="math inline">\(1/n\)</span> probability assigned to each unit. Why do this? It encodes that if we have a random sample, our best guess about the population distribution of <span class="math inline">\(X_i\)</span> is the sample distribution in our actual data. If this intuition fails, you can hold onto an analog principle: sample means of random variables are natural estimators of population means.</p>
+<p>What about estimating something more complicated, like the expected value of a function of the data, <span class="math inline">\(\theta = \E[r(X_i)]\)</span>? The key is to see that <span class="math inline">\(f(X_i)\)</span> is also a random variable. Let’s call this random variable <span class="math inline">\(Y_i = f(X_i)\)</span>. Now we can see that <span class="math inline">\(\theta\)</span> is just the population expectation of this random variable, and using the plug-in estimator, we get: <span class="math display">\[
 \widehat{\theta} = \frac{1}{n} \sum_{i=1}^n Y_i = \frac{1}{n} \sum_{i=1}^n r(X_i).
 \]</span></p>
 <p>With these facts in hand, we can describe the more general plug-in estimator. When we want to estimate some quantity of interest that is a function of population means, we can generate a plug-in estimator by replacing any population mean with a sample mean. Formally, let <span class="math inline">\(\alpha = g\left(\E[r(X_i)]\right)\)</span> be a parameter that is defined as a function of the population mean of a (possibly vector-valued) function of the data. Then, we can estimate this parameter by plugging in the sample mean for the population mean to get the <strong>plug-in estimator</strong>, <span class="math display">\[
 \widehat{\alpha} = g\left( \frac{1}{n} \sum_{i=1}^n r(X_i) \right) \quad \text{estimates} \quad \alpha = g\left(\E[r(X_i)]\right)
-\]</span> This approach to plug-in estimation with sample means is very general and will allow us to derive estimators in a large variety of settings.</p>
+\]</span> This approach to plug-in estimation with sample means is very general and will allow us to derive estimators in various settings.</p>
 <div id="exm-var-est" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.6 (Estimating population variance) </strong></span>The population variance of a random variable is <span class="math inline">\(\sigma^2 = \E[(X_i - \E[X_i])^2]\)</span>. To derive a plug-in estimator for this quantity, we replace the inner <span class="math inline">\(\E[X_i]\)</span> with <span class="math inline">\(\Xbar_n\)</span> and the outer expectation with another sample mean: <span class="math display">\[
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2.
-\]</span> Note that this plug-in estimator is not the same as the usual sample variance, which divides by <span class="math inline">\(n - 1\)</span> rather than <span class="math inline">\(n\)</span>, but this is a very minor difference that does not matter in moderate to large samples.</p>
+\]</span> This plug-in estimator differs from the standard sample variance, which divides by <span class="math inline">\(n - 1\)</span> rather than <span class="math inline">\(n\)</span>. This minor difference does not matter in moderate to large samples.</p>
 </div>
 <div id="exm-cov-est" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.7 (Estimating population covariance) </strong></span>Suppose we have two variables, <span class="math inline">\((X_i, Y_i)\)</span>. A natural quantity of interest here is the population covariance between these variables, <span class="math display">\[
@@ -464,26 +489,26 @@ Notation alert
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Given the connection between the population mean and the sample mean, you will sometimes see the <span class="math inline">\(\E_n[\cdot]\)</span> operator used as a short hand for the sample average: <span class="math display">\[
+<p>Given the connection between the population mean and the sample mean, you will sometimes see the <span class="math inline">\(\E_n[\cdot]\)</span> operator used as a shorthand for the sample average: <span class="math display">\[
 \E_n[r(X_i)] \equiv \frac{1}{n} \sum_{i=1}^n r(X_i).
 \]</span></p>
 </div>
 </div>
-<p>Finally, we are describing the plug-in estimator only considering replacing population means with sample means, but the idea of plug-in estimation is actually much more broad. We can derive estimators of the population quantiles like the median with sample versions of those quantities. What unifies all of these approaches is replacing the unknown population cdf, <span class="math inline">\(F\)</span>, with the empirical cdf, <span class="math display">\[
+<p>Finally, plug-in estimation goes beyond just replacing population means with sample means. We can derive estimators of the population quantiles like the median with sample versions of those quantities. What unifies all of these approaches is replacing the unknown population cdf, <span class="math inline">\(F\)</span>, with the empirical cdf, <span class="math display">\[
 \widehat{F}_n(x) = \frac{\sum_{i=1}^n \mathbb{I}(X_i \leq x)}{n}.
 \]</span> For a more complete and technical treatment of these ideas, see Wasserman (2004) Chapter 7.</p>
 </section>
 </section>
 <section id="the-three-distributions-population-empirical-and-sampling" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="the-three-distributions-population-empirical-and-sampling"><span class="header-section-number">2.5</span> The three distributions: population, empirical, and sampling</h2>
-<p>Once we start to wade into estimation, there are several distributions to keep track of and things can quickly become confusing. There are three distributions that are all related and easy to confuse but it’s important to keep them distinct.</p>
-<p>The <strong>population distribution</strong> is the distribution of the random variable, <span class="math inline">\(X_i\)</span>, which we have labeled <span class="math inline">\(F\)</span>. This is the distribution that we want to learn about. Then there is the <strong>empirical distribution</strong>, which is the distribution of the actual realizations of the random variables in our samples (that is, the numbers in our data frame), <span class="math inline">\(X_1, \ldots, X_n\)</span>. Because this is a random sample from the population distribution and can serve as estimator of <span class="math inline">\(F\)</span>, we sometimes call this <span class="math inline">\(\widehat{F}_n\)</span>.</p>
-<p><strong>Insert Sampling distribution figure here</strong></p>
-<p>Separately from both of these is the <strong>sampling distribution of an estimator</strong>, which is the probability distribution of <span class="math inline">\(\widehat{\theta}_n\)</span>. It represents our uncertainty about what our estimate will be before we see the data. Remember that our estimator is itself a random variable because it is a function of random variables: the data itself. That is, we defined the estimator as <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
+<p>Once we start to wade into estimation, there are several distributions to keep track of, and things can quickly become confusing. Three specific distributions are all related and easy to confuse, but keeping them distinct is crucial.</p>
+<p>The <strong>population distribution</strong> is the distribution of the random variable, <span class="math inline">\(X_i\)</span>, which we have labeled <span class="math inline">\(F\)</span> and is our target of inference. Then there is the <strong>empirical distribution</strong>, which is the distribution of the actual realizations of the random variables in our samples (that is, the numbers in our data frame), <span class="math inline">\(X_1, \ldots, X_n\)</span>. Because this is a random sample from the population distribution and can serve as an estimator of <span class="math inline">\(F\)</span>, we sometimes call this <span class="math inline">\(\widehat{F}_n\)</span>.</p>
+<p><!-- TODO: Insert Sampling distribution figure here --></p>
+<p>Separately from both is the <strong>sampling distribution of an estimator</strong>, which is the probability distribution of <span class="math inline">\(\widehat{\theta}_n\)</span>. It represents our uncertainty about our estimate before we see the data. Remember that our estimator is itself a random variable because it is a function of random variables: the data itself. That is, we defined the estimator as <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
 <div id="exm-three-dist" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.8 (Likert resposes) </strong></span>Suppose <span class="math inline">\(X_i\)</span> is the answer to a question, “How much do you agree with the following statement: Immigrants are a net positive for the United States,” with a <span class="math inline">\(X_i = 0\)</span> being “strongly disagree,” <span class="math inline">\(X_i = 1\)</span> being “disgree”, <span class="math inline">\(X_i = 2\)</span> being “neither agree nor disagree”, <span class="math inline">\(X_i = 3\)</span> being “agree”, and <span class="math inline">\(X_i = 4\)</span> being “strongly agree.”</p>
-<p>The population distribution describes the probability of randomly selecting a person with each one of these values, <span class="math inline">\(\P(X_i = x)\)</span>. The empirical distribution would be the actual numeric values 0-4 in our data. And the sampling distribution of the sample mean, <span class="math inline">\(\Xbar_n\)</span>, would be the distribution of the sample mean across repeated samples from the population.</p>
-<p>Suppose that the population distribution was binomial with 4 trials and probability of success <span class="math inline">\(p = 0.4\)</span>. We could generate one sample with <span class="math inline">\(n = 10\)</span> and thus one empirical distribution using <code>rbinom</code>:</p>
+<p><span class="theorem-title"><strong>Example 2.8 (Likert responses) </strong></span>Suppose <span class="math inline">\(X_i\)</span> is the answer to a question, “How much do you agree with the following statement: Immigrants are a net positive for the United States,” with a <span class="math inline">\(X_i = 0\)</span> being “strongly disagree,” <span class="math inline">\(X_i = 1\)</span> being “disagree,” <span class="math inline">\(X_i = 2\)</span> being “neither agree nor disagree,” <span class="math inline">\(X_i = 3\)</span> being “agree,” and <span class="math inline">\(X_i = 4\)</span> being “strongly agree.”</p>
+<p>The population distribution describes the probability of randomly selecting a person with each one of these values, <span class="math inline">\(\P(X_i = x)\)</span>. The empirical distribution would be the fraction of our data taking each value. And the sampling distribution of the sample mean, <span class="math inline">\(\Xbar_n\)</span>, would be the distribution of the sample mean across repeated samples from the population.</p>
+<p>Suppose the population distribution was binomial with four trials and probability of success <span class="math inline">\(p = 0.4\)</span>. We could generate one sample with <span class="math inline">\(n = 10\)</span> and thus one empirical distribution using <code>rbinom</code>:</p>
 <div class="cell">
 
 </div>
@@ -507,7 +532,7 @@ Notation alert
 <pre><code>[1] 1.8</code></pre>
 </div>
 </div>
-<p>But obviously if we had a different sample, it would have a different empirical distribution and thus give us a different estimate of the sample mean:</p>
+<p>But, if we had a different sample, it would have a different empirical distribution and thus give us a different estimate of the sample mean:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>my_samp2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(my_samp2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -520,14 +545,14 @@ Notation alert
 </section>
 <section id="finite-sample-properties-of-estimators" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="finite-sample-properties-of-estimators"><span class="header-section-number">2.6</span> Finite-sample properties of estimators</h2>
-<p>As we discussed when we introduced estimators, their usefulness is tied to how well they help us learn about the quantity of interest. If we get an estimate <span class="math inline">\(\widehat{\theta} = 1.6\)</span>, we would like to know that this is “close” to the true parameter <span class="math inline">\(\theta\)</span>. The key to understanding how the behavior of our estimators is the sampling distribution. Intuitively, we would like the sampling distribution of <span class="math inline">\(\widehat{\theta}_n\)</span> to be as tightly clustered around the true as <span class="math inline">\(\theta\)</span> as possible. Here, though, we run into a problem: the sampling distribution depends on the population distribution since it is about repeated samples of the data from that distribution filtered through the function <span class="math inline">\(\theta()\)</span>. Since <span class="math inline">\(F\)</span> is unknown, this implies that the sampling distribution will also usually be unknown.</p>
-<p>Even though we cannot precisely pin down the entire sampling distribution, we will be able to use assumptions to derive certain properties of the sampling distribution that will be useful in comparing estimators.</p>
+<p>As we discussed when we introduced estimators, their usefulness depends on how well they help us learn about the quantity of interest. If we get an estimate <span class="math inline">\(\widehat{\theta} = 1.6\)</span>, we would like to know that this is “close” to the true parameter <span class="math inline">\(\theta\)</span>. The sampling distribution is the key to answering these questions. Intuitively, we would like the sampling distribution of <span class="math inline">\(\widehat{\theta}_n\)</span> to be as tightly clustered around the true as <span class="math inline">\(\theta\)</span> as possible. Here, though, we run into a problem: the sampling distribution depends on the population distribution since it is about repeated samples of the data from that distribution filtered through the function <span class="math inline">\(\theta()\)</span>. Since <span class="math inline">\(F\)</span> is unknown, this implies that the sampling distribution will also usually be unknown.</p>
+<p>Even though we cannot precisely pin down the entire sampling distribution, we can use assumptions to derive specific properties of the sampling distribution that will be useful in comparing estimators.</p>
 <section id="bias" class="level3" data-number="2.6.1">
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="bias"><span class="header-section-number">2.6.1</span> Bias</h3>
 <p>The first property of the sampling distribution concerns its central tendency. In particular, we will define the <strong>bias</strong> (or <strong>estimation bias</strong>) of estimator <span class="math inline">\(\widehat{\theta}\)</span> for parameter <span class="math inline">\(\theta\)</span> as <span class="math display">\[
-\text{bias}[\widehat{\theta}] = \E[\widehat{\theta}] - \theta.
-\]</span> This is the difference between the mean of the estimator (across repeated samples) and the true parameter. All else equal, we would like estimation bias to be as small as possible. The smallest possible bias, obviously, is 0 and we define an <strong>unbiased estimator</strong> as one with with <span class="math inline">\(\text{bias}[\widehat{\theta}] = 0\)</span> or equivalently, <span class="math inline">\(\E[\widehat{\theta}] = \theta\)</span>.</p>
-<p>However, all else is not always equal and unbiasedness is not a property to become overly attached to. There are many biased estimators that have other attractive properties and many popular modern estimators are biaseed.</p>
+\text{bias}[\widehat{\theta}] = \E[\widehat{\theta}] - \theta,
+\]</span> which is the difference between the mean of the estimator (across repeated samples) and the true parameter. All else equal, we would like estimation bias to be as small as possible. The smallest possible bias, obviously, is 0, and we define an <strong>unbiased estimator</strong> as one with <span class="math inline">\(\text{bias}[\widehat{\theta}] = 0\)</span> or equivalently, <span class="math inline">\(\E[\widehat{\theta}] = \theta\)</span>.</p>
+<p>However, all else is not always equal, and unbiasedness is not a property to become overly attached to. Many biased estimators have other attractive properties, and many popular modern estimators are biased.</p>
 <div id="exm-mean-unbiased" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.9 (Unbiasedness of the sample mean) </strong></span>We can show that the sample mean is unbiased for the population mean when the data is iid and <span class="math inline">\(\E|X| &lt; \infty\)</span>. In particular, we simply apply the rules of expectations: <span class="math display">\[\begin{aligned}
 \E\left[ \Xbar_n \right] &amp;= \E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] &amp; (\text{definition of } \Xbar_n) \\
@@ -546,13 +571,13 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Properties like unbiasedness might only hold for a subset of DGPs. For example, we just showed that the sample mean is unbiased, but only when the population mean is finite. There are probability distribution like the Cauchy where the expected value diverges and is not finite. So we are dealing with a restricted class of DGPs that rules out such distributions. You may see this sometimes formalized by defining a class <span class="math inline">\(\mathcal{F}\)</span> of distributions and unbiasedness might hold in that class if it is unbiased for all <span class="math inline">\(F \in \mathcal{F}\)</span>.</p>
+<p>Properties like unbiasedness might only hold for a subset of DGPs. For example, we just showed that the sample mean is unbiased, but only when the population mean is finite. There are probability distributions like the Cauchy where the expected value diverges and is not finite. So we are dealing with a restricted class of DGPs that rules out such distributions. You may see this sometimes formalized by defining a class <span class="math inline">\(\mathcal{F}\)</span> of distributions, and unbiasedness might hold in that class if it is unbiased for all <span class="math inline">\(F \in \mathcal{F}\)</span>.</p>
 </div>
 </div>
 </section>
 <section id="estimation-variance-and-the-standard-error" class="level3" data-number="2.6.2">
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="estimation-variance-and-the-standard-error"><span class="header-section-number">2.6.2</span> Estimation variance and the standard error</h3>
-<p>If a “good” estimator tends to be close to the truth, then we should also care how spread out the sampling distribution is. In particular, we define the <strong>sampling variance</strong> as the variance of an estimator’s sampling distribution, <span class="math inline">\(\V[\widehat{\theta}]\)</span>. This measures how spread the estimator it is around its mean. For an unbiased estimator, smaller sampling variance implies the distribution of <span class="math inline">\(\widehat{\theta}\)</span> is more concentrated around the truth.</p>
+<p>If a “good” estimator tends to be close to the truth, we should also care about the spread of the sampling distribution. In particular, we define the <strong>sampling variance</strong> as the variance of an estimator’s sampling distribution, <span class="math inline">\(\V[\widehat{\theta}]\)</span>, which measures how spread out the estimator is around its mean. For an unbiased estimator, lower sampling variance implies the distribution of <span class="math inline">\(\widehat{\theta}\)</span> is more concentrated around the truth.</p>
 <div id="exm-mean-var" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.10 (Sampling variance of the sample mean:) </strong></span>We can establish the sampling variance of the sample mean of iid data for all <span class="math inline">\(F\)</span> such that <span class="math inline">\(\V[X_i]\)</span> is finite (more precisely, <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>)</p>
 <p><span class="math display">\[\begin{aligned}
@@ -564,16 +589,17 @@ Warning
 \end{aligned}\]</span></p>
 </div>
 <p>An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of <span class="math inline">\(\widehat{\theta}\)</span> the <strong>standand error</strong> of <span class="math inline">\(\widehat{\theta}\)</span>: <span class="math inline">\(\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}\)</span>.</p>
-<p>Given the above derivation the standard error of the sample mean under iid sampling is <span class="math inline">\(\sigma / \sqrt{n}\)</span></p>
+<p>Given the above derivation, the standard error of the sample mean under iid sampling is <span class="math inline">\(\sigma / \sqrt{n}\)</span></p>
 </section>
 <section id="mean-squared-error" class="level3" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="mean-squared-error"><span class="header-section-number">2.6.3</span> Mean squared error</h3>
-<p>Bias and sampling variance clearly got at two different aspects of being a “good” estimator. Ideally, we want the estimator to be as close as possible to the true value. One summary measure of the quality of an estimator is the <strong>mean squared error</strong> or <strong>MSE</strong> which is defined as. <span class="math display">\[
-\text{MSE} = \E[(\widehat{\theta}_n-\theta)^2]
+<p>Bias and sampling variance measure two different aspects of being a “good” estimator. Ideally, we want the estimator to be as close as possible to the true value. One summary measure of the quality of an estimator is the <strong>mean squared error</strong> or <strong>MSE</strong>, which is<br>
+<span class="math display">\[
+\text{MSE} = \E[(\widehat{\theta}_n-\theta)^2].
 \]</span> Ideally, we would have this be as small as possible!</p>
 <p>We can also relate the MSE to the bias and the sampling variance (provided it is finite) with the following decomposition result: <span class="math display">\[
 \text{MSE} = \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
-\]</span> This decomposition implies that, for unbiased estimators, MSE is the sampling variance. It also highlights why we might accept some bias for large reductions in variance for lower overall MSE.</p>
+\]</span> This decomposition implies that, for unbiased estimators, MSE is the sampling variance. It also highlights why we might accept some bias for significant reductions in variance for lower overall MSE.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -584,10 +610,16 @@ Warning
 </div>
 </div>
 </div>
-<p>In this figure, we show the sampling distributions of two estimators, <span class="math inline">\(\widehat{\theta}_a\)</span>, which is unbiased (centered on the true value <span class="math inline">\(\theta\)</span>) but with a high sampling variance, and <span class="math inline">\(\widehat{\theta}_b\)</span> which is slightly biased but with much lower sampling variance. Even though <span class="math inline">\(\widehat{\theta}_b\)</span> is biased, the probability of drawing a value close to the truth is higher than for <span class="math inline">\(\widehat{\theta}_a\)</span>. This type of balancing between bias and variance is exactly what the MSE helps capture and indeed, in this case, <span class="math inline">\(MSE[\widehat{\theta}_b] &lt; MSE[\widehat{\theta}_a]\)</span>.</p>
+<p>In this figure, we show the sampling distributions of two estimators, <span class="math inline">\(\widehat{\theta}_a\)</span>, which is unbiased (centered on the true value <span class="math inline">\(\theta\)</span>) but with a high sampling variance, and <span class="math inline">\(\widehat{\theta}_b\)</span> which is slightly biased but with much lower sampling variance. Even though <span class="math inline">\(\widehat{\theta}_b\)</span> is biased, the probability of drawing a value close to the truth is higher than for <span class="math inline">\(\widehat{\theta}_a\)</span>. This balancing between bias and variance is precisely what the MSE helps capture and, indeed, in this case, <span class="math inline">\(MSE[\widehat{\theta}_b] &lt; MSE[\widehat{\theta}_a]\)</span>.</p>
 
 
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This approach to inference is often called a <strong>model-based approach</strong> since we assuming a probability model in the cdf, <span class="math inline">\(F\)</span>. This is usually in contrast to a <strong>design-based approach</strong> to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

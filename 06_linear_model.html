@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./07_least_squares.html" rel="next">
 <link href="./05_confidence_intervals.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -111,31 +111,56 @@ ul.task-list li input[type="checkbox"] {
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Stastisitcal Inference</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_confidence_intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Regression</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -153,17 +178,23 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#why-do-we-need-models" id="toc-why-do-we-need-models" class="nav-link active" data-scroll-target="#why-do-we-need-models"><span class="toc-section-number">6.1</span>  Why do we need models?</a></li>
   <li><a href="#population-linear-regression" id="toc-population-linear-regression" class="nav-link" data-scroll-target="#population-linear-regression"><span class="toc-section-number">6.2</span>  Population linear regression</a>
   <ul class="collapse">
-  <li><a href="#projection-error" id="toc-projection-error" class="nav-link" data-scroll-target="#projection-error"><span class="toc-section-number">6.2.1</span>  Projection error</a></li>
+  <li><a href="#bivariate-linear-regression" id="toc-bivariate-linear-regression" class="nav-link" data-scroll-target="#bivariate-linear-regression"><span class="toc-section-number">6.2.1</span>  Bivariate linear regression</a></li>
+  <li><a href="#linear-prediction-with-multiple-covariates" id="toc-linear-prediction-with-multiple-covariates" class="nav-link" data-scroll-target="#linear-prediction-with-multiple-covariates"><span class="toc-section-number">6.2.2</span>  Linear prediction with multiple covariates</a></li>
+  <li><a href="#projection-error" id="toc-projection-error" class="nav-link" data-scroll-target="#projection-error"><span class="toc-section-number">6.2.3</span>  Projection error</a></li>
   </ul></li>
   <li><a href="#linear-cefs-without-assumptions" id="toc-linear-cefs-without-assumptions" class="nav-link" data-scroll-target="#linear-cefs-without-assumptions"><span class="toc-section-number">6.3</span>  Linear CEFs without assumptions</a></li>
-  <li><a href="#partitioned-regression" id="toc-partitioned-regression" class="nav-link" data-scroll-target="#partitioned-regression"><span class="toc-section-number">6.4</span>  Partitioned regression</a></li>
-  <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias"><span class="toc-section-number">6.5</span>  Omitted variable bias</a></li>
+  <li><a href="#interpretation-of-the-regression-coefficients" id="toc-interpretation-of-the-regression-coefficients" class="nav-link" data-scroll-target="#interpretation-of-the-regression-coefficients"><span class="toc-section-number">6.4</span>  Interpretation of the regression coefficients</a></li>
+  <li><a href="#multiple-regression-from-bivariate-regression" id="toc-multiple-regression-from-bivariate-regression" class="nav-link" data-scroll-target="#multiple-regression-from-bivariate-regression"><span class="toc-section-number">6.5</span>  Multiple regression from bivariate regression</a></li>
+  <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias"><span class="toc-section-number">6.6</span>  Omitted variable bias</a></li>
+  <li><a href="#drawbacks-of-the-blp" id="toc-drawbacks-of-the-blp" class="nav-link" data-scroll-target="#drawbacks-of-the-blp"><span class="toc-section-number">6.7</span>  Drawbacks of the BLP</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 $$
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\mathbf}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\V}{\mathbb{V}}
 \newcommand{\var}{\text{var}}
@@ -182,8 +213,6 @@ $$
 \newcommand{\Xu}{\underline{X}}
 \newcommand{\Yu}{\underline{Y}}
 \renewcommand{\P}{\mathbb{P}}
-\newcommand{\bs}{\boldsymbol}
-\newcommand{\mb}{\boldsymbol}
 \newcommand{\U}{\mb{U}}
 \newcommand{\Xbar}{\overline{X}}
 \newcommand{\Ybar}{\overline{Y}}
@@ -196,9 +225,9 @@ $$
 \newcommand{\Xmat}{\mathbb{X}}
 \newcommand{\bfx}{\mb{x}}
 \newcommand{\y}{\mb{y}}
-\renewcommand{\b}{\mb{\beta}}
+\renewcommand{\bfbeta}{\bs{\beta}}
 \newcommand{\e}{\bs{\epsilon}}
-\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\bhat}{\widehat{\bs{\beta}}}
 \newcommand{\XX}{\Xmat'\Xmat}
 \newcommand{\XXinv}{\left(\XX\right)^{-1}}
 \newcommand{\hatsig}{\hat{\sigma}^2}
@@ -286,11 +315,53 @@ $$
 </section>
 <section id="population-linear-regression" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="population-linear-regression"><span class="header-section-number">6.2</span> Population linear regression</h2>
-<p>Let’s set aside the idea of the conditional expectation function and instead focus on finding the <strong>linear</strong> function of <span class="math inline">\(\X_i\)</span> that best predicts the outcome. Remember that a linear function can be written <span class="math display">\[
-\bfx'\b = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + X_{k}\beta_{k}.
+<section id="bivariate-linear-regression" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="bivariate-linear-regression"><span class="header-section-number">6.2.1</span> Bivariate linear regression</h3>
+<p>Let’s set aside the idea of the conditional expectation function and instead focus on finding the <strong>linear</strong> function of a single covariate <span class="math inline">\(X_i\)</span> that best predicts the outcome. Remember that a linear function can be written <span class="math inline">\(a + bX_i\)</span>. The <strong>best linear predictor</strong> (BLP) or <strong>population linear regression</strong> of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(X_i\)</span> is defined as <span class="math display">\[
+m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}].
+\]</span> That is, the best linear predictor is the line that results in the lowest mean-squared error predictions of the outcome given the covariates, averaging over the joint distribution of the data. This function is a feature of the joint distribution of the data—the DGP—and so represents something that we would like to learn about with our sample. It is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though we will see that they will sometimes be equal to each other. We call <span class="math inline">\((\beta_{0}, \beta_{1})\)</span> the <strong>population linear regression coefficients</strong>. Notice that <span class="math inline">\(m(x)\)</span> here could be very different from the CEF <span class="math inline">\(\mu(x)\)</span> if the latter is nonlinear.</p>
+<p>We can solve for the best linear predictor using standard calculus (taking the derivative with respect to each coefficient, setting those equations equal to 0, and solving the system of equations). The first-order conditions in this case are <span class="math display">\[
+\begin{aligned}
+  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
+  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
+\end{aligned}  
+\]</span> Given the linearity of expectations, it is easy to solve for <span class="math inline">\(\beta_0\)</span> in terms of <span class="math inline">\(\beta_1\)</span>, <span class="math display">\[
+\beta_{0} = \E[Y_{i}] - \beta_{1}\E[X_{i}].
+\]</span> We can plug this into the first-order condition for <span class="math inline">\(\beta_1\)</span> to get <span class="math display">\[
+\begin{aligned}
+  0 &amp;= \E[Y_{i}X_{i}] - (\E[Y_{i}] - \beta_{1}\E[X_{i}])\E[X_{i}] - \beta_{1}\E[X_{i}^{2}] \\
+    &amp;= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] - \beta_{1}(\E[X_{i}^{2}] - \E[X_{i}]^{2})  \\
+    &amp;= \cov(X_{i},Y_{i}) - \beta_{1}\V[X_{i}]\\
+  \beta_{1} &amp;= \frac{\cov(X_{i},Y_{i})}{\V[X_{i}]}
+\end{aligned}
+\]</span></p>
+<p>Thus the slope on the population linear regression of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(X_i\)</span> is equal to the ratio of the covariance of the two variables divided by the variance of <span class="math inline">\(X_i\)</span>. From this, we can immediately see that the sign of the slope will be determined by the covariance: positive covariances will lead to positive <span class="math inline">\(\beta_1\)</span> and negative covariances will lead to negative <span class="math inline">\(\beta_1\)</span>. In addition, we can see if <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(X_i\)</span> are independent, then <span class="math inline">\(\beta_1 = 0\)</span>. The slope scaled this covariance by the variance of the covariate, so slopes are lower for more spread out covariates and higher for more spread out covariates. If we define the correlation between these variables as <span class="math inline">\(\rho_{YX}\)</span>, then we can relate the coefficient to this quantity as <span class="math display">\[
+\beta_1 = \rho_{YX}\sqrt{\frac{\V[Y_i]}{\V[X_i]}}.
+\]</span></p>
+<p>Collecting together our results, we can write the population linear regression as <span class="math display">\[
+m(x) = \beta_0 + \beta_1x = \E[Y_i] + \beta_1(x - \E[X_i]),
+\]</span> which shows how we adjust our best guess about <span class="math inline">\(Y_i\)</span> from the mean of the outcome using the covariate.</p>
+<p>It’s important to remember that the BLP, <span class="math inline">\(m(x)\)</span>, and the CEF, <span class="math inline">\(\mu(x)\)</span>, are distinct entities. If the CEF is nonlinear, as in <a href="#fig-cef-blp">Figure&nbsp;<span>6.2</span></a>, there will be difference between these functions and mean that the BLP might produce subpar predictions. Below, we will derive a formal connection between the BLP and the CEF.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cef-blp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06_linear_model_files/figure-html/fig-cef-blp-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.2: Comparison of the CEF and the best linear predictor</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-prediction-with-multiple-covariates" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="linear-prediction-with-multiple-covariates"><span class="header-section-number">6.2.2</span> Linear prediction with multiple covariates</h3>
+<p>We now generalize the idea of a best linear predictor to a setting with multiple covariates. In this setting, remember that a linear function can be written as</p>
+<p><span class="math display">\[
+\bfx'\bfbeta = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + X_{k}\beta_{k}.
 \]</span> We will define the <strong>best linear predictor</strong> (BLP) to be <span class="math display">\[
-\bbL[Y_{i} \mid \X_{i}] =\X_{i}'\b, \quad \text{where}\quad \b = \argmin_{\mb{b} \in \real^k}\; \E\left[ \left( Y_{i} - \mb{X}_{i}'\b \right)^2 \right]
-\]</span> The BLP function <span class="math inline">\(\bbL[Y \mid \X]\)</span> is the linear function of the covariates that minimizes the mean squared prediction errors, where we are averaging over the joint distribution of the data. If we have a single covariate, this would be the population line of best fit. Again, this function is a feature of the joint distribution of the data—the DGP—and so represents something that we would like to learn about with our sample. It is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though we will see that they will sometimes be equal to each other.</p>
+m(\bfx) = \bfx'\bfbeta, \quad \text{where}\quad \bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\bfbeta \bigr)^2\bigr]
+\]</span></p>
+<p>This BLP solves the same basic optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error averaging over the joint distribution of the data.</p>
 <!-- TODO: make this #assumption -->
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -311,21 +382,21 @@ Best linear projection assumptions
 </ol>
 </div>
 </div>
-<p>Under these assumption, it is possible to derive a closed-form expression for the <strong>population coefficients</strong> <span class="math inline">\(\b\)</span> using matrix calculus. To set up the optimization problem, we will find the first order condition my taking the derivative of the expectation of the squared errors. First, let’s take derivative of the squared prediction errors using the chain rule: <span class="math display">\[
+<p>Under these assumption, it is possible to derive a closed-form expression for the <strong>population coefficients</strong> <span class="math inline">\(\bfbeta\)</span> using matrix calculus. To set up the optimization problem, we will find the first order condition my taking the derivative of the expectation of the squared errors. First, let’s take derivative of the squared prediction errors using the chain rule: <span class="math display">\[
 \begin{aligned}
   \frac{\partial}{\partial \mb{b}^{'}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
   &amp;= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}'}(Y_{i} - \X_{i}'\mb{b})  \\
   &amp;= -2\left(Y_{i} - \X_{i}'\mb{b}\right)\X_{i} \\
   &amp;= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right)
 \end{aligned}
-\]</span> We can now plug this into the expectation to get the first-order condition and solve for <span class="math inline">\(\b\)</span>, <span class="math display">\[
+\]</span> We can now plug this into the expectation to get the first-order condition and solve for <span class="math inline">\(\bfbeta\)</span>, <span class="math display">\[
 \begin{aligned}
-  0 &amp;= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}] \\
-  \E[\X_{i}\X_{i}'] \b &amp;= \E[\X_{i}Y_{i}],
+  0 &amp;= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ]  \\
+  \E[\X_{i}\X_{i}'] \bfbeta &amp;= \E[\X_{i}Y_{i}],
 \end{aligned}
 \]</span> which implies the population coefficients are <span class="math display">\[
-\b = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
-\]</span> We now have an expression for the coefficients for the population best linear predictor in terms of the joint distribution <span class="math inline">\((Y_{i}, \X_{i})\)</span>. There are a couple facts that might be useful for reasoning about this expression. Recall that <span class="math inline">\(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\)</span> is a <span class="math inline">\(k\times k\)</span> matrix and <span class="math inline">\(\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]\)</span> is a <span class="math inline">\(k\times 1\)</span> column vector, which implies that <span class="math inline">\(\b\)</span> is also a <span class="math inline">\(k \times 1\)</span> column vector.</p>
+\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
+\]</span> We now have an expression for the coefficients for the population best linear predictor in terms of the joint distribution <span class="math inline">\((Y_{i}, \X_{i})\)</span>. There are a couple facts that might be useful for reasoning about this expression. Recall that <span class="math inline">\(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\)</span> is a <span class="math inline">\(k\times k\)</span> matrix and <span class="math inline">\(\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]\)</span> is a <span class="math inline">\(k\times 1\)</span> column vector, which implies that <span class="math inline">\(\bfbeta\)</span> is also a <span class="math inline">\(k \times 1\)</span> column vector.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -337,39 +408,41 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>Intuitively, what is happening in the expression for the population regression coefficients? It is helpful to separate out the intercept or constant term so that we have <span class="math display">\[
-Y_{i} = \beta_{0} + \X'\b + e_{i},
-\]</span> so <span class="math inline">\(\b\)</span> refers to just the coefficients on each of the covariates. In this case, we can write the coefficients in more interpretable way: <span class="math display">\[
-\b = \V[\X]^{-1}\text{Cov}(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\b
+Y_{i} = \beta_{0} + \X'\bfbeta + e_{i},
+\]</span> so <span class="math inline">\(\bfbeta\)</span> refers to just the coefficients on each of the covariates. In this case, we can write the coefficients in more interpretable way: <span class="math display">\[
+\bfbeta = \V[\X]^{-1}\text{Cov}(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
 \]</span></p>
-<p>Thus, the population coefficients take the covariance between the outcome and the covariates and “divide” it by information about variances and covariances of the covariates. The intercept recenters the regression so that projection errors are mean zero.</p>
+<p>Thus, the population coefficients take the covariance between the outcome and the covariates and “divide” it by information about variances and covariances of the covariates. The intercept recenters the regression so that projection errors are mean zero. Thus, we can see that the coeffiicients generalizes the bivariate formula to this multiple covariate context.</p>
 </div>
 </div>
 <p>With an expression for the population linear regression coefficients, we can write the linear projection as <span class="math display">\[
-\bbL[Y_{i} \mid \X_{i}] = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
+m(\X_{i}) = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
 \]</span></p>
-<section id="projection-error" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="projection-error"><span class="header-section-number">6.2.1</span> Projection error</h3>
+</section>
+<section id="projection-error" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="projection-error"><span class="header-section-number">6.2.3</span> Projection error</h3>
 <p>The <strong>projection error</strong> is the difference between the actual value of <span class="math inline">\(Y_i\)</span> and the projection, <span class="math display">\[
-e_{i} = Y_{i} - \bbL[Y_{i} \mid \X_{i}] =  Y_i - \X_{i}'\b,
+e_{i} = Y_{i} - m(\X_{i}) =  Y_i - \X_{i}'\bfbeta,
 \]</span> where it is hopefully clear that we have made no assumptions about this error yet. It is simply the prediction error if we used the linear projection to predict the outcome. Rewriting this definition, we can see that we can always write the outcome as the linear projection plus the projection error, <span class="math display">\[
-Y_{i} = \X_{i}'\b + e_{i}.
+Y_{i} = \X_{i}'\bfbeta + e_{i}.
 \]</span> Notice that this looks suspiciously like we have made a linearity assumption on the CEF or on the relationship between the outcome and the covariates. But we haven’t, we have just used the definition of the projection error to write a statement that is tautological: <span class="math display">\[
-Y_{i} = \X_{i}'\b + e_{i} = \X_{i}'\b + Y_{i} - \X_{i}'\b = Y_{i}.
+Y_{i} = \X_{i}'\bfbeta + e_{i} = \X_{i}'\bfbeta + Y_{i} - \X_{i}'\bfbeta = Y_{i}.
 \]</span> The key difference between this representation and the usual linear model assumption is what properties <span class="math inline">\(e_{i}\)</span> possesses.</p>
 <p>One key property of the projection errors is that when the covariate vector includes an “intercept” or constant term, the projection errors are uncorrelated with the covariates. To see this, we first note that <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span> since <span class="math display">\[
 \begin{aligned}
-  \E[\X_{i}e_{i}] &amp;= \E[\X_{{i}}(Y_{i} - \X_{i}'\b)] \\
-                  &amp;= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\b \\
+  \E[\X_{i}e_{i}] &amp;= \E[\X_{{i}}(Y_{i} - \X_{i}'\bfbeta)] \\
+                  &amp;= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\bfbeta \\
                   &amp;= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] \\
   &amp;= \E[\X_{i}Y_{i}] - \E[\X_{i}Y_{i}] = 0
 \end{aligned}
 \]</span> Thus, for every <span class="math inline">\(X_{ij}\)</span> in <span class="math inline">\(\X_{i}\)</span>, we have <span class="math inline">\(\E[X_{ij}e_{i}] =0\)</span>. If one of the entries in <span class="math inline">\(\X_i\)</span> is a constant 1, then this also implies that <span class="math inline">\(\E[e_{i}] =0\)</span>. Together, these facts imply that the projection error is uncorrelated with each <span class="math inline">\(X_{ij}\)</span>, since <span class="math display">\[
 \cov(X_{ij}, e_{i}) = \E[X_{ij}e_{i}] - \E[X_{ij}]\E[e_{i}] = 0 - 0 = 0
-\]</span> Notice that we still have made no assumptions about these projection errors except some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model <span class="math inline">\(Y_i = \X_i'\b + e_i\)</span> where <span class="math inline">\(\b = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]\)</span> and conclude that <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span> by definition not by assumption.</p>
+\]</span> Notice that we still have made no assumptions about these projection errors except some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model <span class="math inline">\(Y_i = \X_i'\bfbeta + e_i\)</span> where <span class="math inline">\(\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]\)</span> and conclude that <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span> by definition not by assumption.</p>
 <p>The projection error is uncorrelated with the covariates, so does this mean that the CEF is linear? Unfortunately, no because recall that while independence implies uncorrelated, the reverse does not hold. So when we look at the CEF, we have <span class="math display">\[
-\E[Y_{i} \mid \X_{i}] = \X_{i}'\b + \E[e_{i} \mid \X_{i}],
-\]</span> and the last term <span class="math inline">\(\E[e_{i} \mid \X_{i}]\)</span> would only be 0 if the errors were independent of the covariates so <span class="math inline">\(\E[e_{i} \mid \X_{i}] = \E[e_{i}] = 0\)</span>. But nowhere in the linear projection model did we assume this. So while we can (almost) always write the outcome as <span class="math inline">\(Y_i = \X_i'\b + e_i\)</span> and have those projections error be uncorrelated with the covariates, it will require additional assumptions to ensure that the true CEF is in fact linear <span class="math inline">\(\E[Y_{i} \mid \X_{i}] = \X_{i}'\b\)</span>.</p>
-<p>Let’s take a step back. What have we shown here? In a nutshell, we have shown that under very general conditions, a population linear regression exists and we can write the coefficients of that population linear regression as a function of expectations of the joint distribution of the data. Why do we care about this? It turns out that the ordinary least squares estimator, the workhorse regression estimator, targets this quantity of interest in large samples, regardless of whether the true CEF is linear or not. This means that even when a linear CEF assumption is incorrect, OLS still targets a perfectly valid quantity of interest: the coefficients from this population linear projection.</p>
+\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta + \E[e_{i} \mid \X_{i}],
+\]</span> and the last term <span class="math inline">\(\E[e_{i} \mid \X_{i}]\)</span> would only be 0 if the errors were independent of the covariates so <span class="math inline">\(\E[e_{i} \mid \X_{i}] = \E[e_{i}] = 0\)</span>. But nowhere in the linear projection model did we assume this. So while we can (almost) always write the outcome as <span class="math inline">\(Y_i = \X_i'\bfbeta + e_i\)</span> and have those projections error be uncorrelated with the covariates, it will require additional assumptions to ensure that the true CEF is in fact linear <span class="math inline">\(\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta\)</span>.</p>
+<p>Let’s take a step back. What have we shown here? In a nutshell, we have shown that under very general conditions, a population linear regression exists and we can write the coefficients of that population linear regression as a function of expectations of the joint distribution of the data. We did not assume that the CEF was linear nor that the projection errors were normal.</p>
+<p>Why do we care about this? It turns out that the ordinary least squares estimator, the workhorse regression estimator, targets this quantity of interest in large samples, regardless of whether the true CEF is linear or not. This means that even when a linear CEF assumption is incorrect, OLS still targets a perfectly valid quantity of interest: the coefficients from this population linear projection.</p>
 </section>
 </section>
 <section id="linear-cefs-without-assumptions" class="level2" data-number="6.3">
@@ -377,9 +450,9 @@ Y_{i} = \X_{i}'\b + e_{i} = \X_{i}'\b + Y_{i} - \X_{i}'\b = Y_{i}.
 <p>What is the relationship between the best linear predictor (which we just saw exists very generally) and the CEF? To draw the connection, remember a key property of the conditional expectation: it is the function of <span class="math inline">\(\X_i\)</span> that best predicts <span class="math inline">\(Y_{i}\)</span>. The population regression was the best <strong>linear</strong> predictor, but the CEF is the best predictor among all functions of <span class="math inline">\(\X_{i}\)</span>, linear or nonlinear, that are nicely behaved. In particular, if we label <span class="math inline">\(L_2\)</span> be the set of all functions of the covariates <span class="math inline">\(g()\)</span> such that they are finite squared expectation, <span class="math inline">\(\E[g(\X_{i})^{2}] &lt; \infty\)</span>, then we can show that the CEF has the lowest squared prediction error in this class of functions: <span class="math display">\[
 \mu(\X) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - f(\X_{i}))^{2}\right],
 \]</span></p>
-<p>So we have established that the CEF is the best predictor and the population linear regression <span class="math inline">\(\bbL[Y_{i}\mid \X_{i}]\)</span> is the best linear predictor. These two facts allow us to connect the CEF and the population regression.</p>
+<p>So we have established that the CEF is the best predictor and the population linear regression <span class="math inline">\(m(\X_{i})\)</span> is the best linear predictor. These two facts allow us to connect the CEF and the population regression.</p>
 <div id="thm-cef-blp" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 6.1 </strong></span>If <span class="math inline">\(\mu(\X_{i})\)</span> is a linear function of <span class="math inline">\(\X_i\)</span>, then <span class="math inline">\(\mu(\X_{i}) = \bbL[Y_{i}\mid \X_{i}] = \X_i'\b\)</span>.</p>
+<p><span class="theorem-title"><strong>Theorem 6.1 </strong></span>If <span class="math inline">\(\mu(\X_{i})\)</span> is a linear function of <span class="math inline">\(\X_i\)</span>, then <span class="math inline">\(\mu(\X_{i}) = m(\X_{i}) = \X_i'\bfbeta\)</span>.</p>
 </div>
 <p>This theorem says that if the true CEF is linear, then it is equal to the population regression. The proof of this is straightforward: the CEF is the best predictor, so if it is linear, it must also be the best linear predictor.</p>
 <p>In general, we are usually in the business of learning about the CEF so we are unlikely to know if it truly is linear or not. In some situations, however, we can show that the CEF is linear without any additional assumptions. These will be situations when the covariates take on a finite number of possible values. Suppose that we are interested in the CEF of poll wait times for Black (<span class="math inline">\(X_i = 1\)</span>) vs non-Black (<span class="math inline">\(X_i = 0\)</span>) voters. In this case, there are two possible values of the CEF, <span class="math inline">\(\mu(1) = \E[Y_{i}\mid X_{i}= 1]\)</span>, the average wait time for Black voters, and <span class="math inline">\(\mu(0) = \E[Y_{i}\mid X_{i} = 0]\)</span>, the average wait time for non-Black voters. Notice that we can write the CEF as <span class="math display">\[
@@ -437,40 +510,74 @@ X_{{i2}} &amp;= \begin{cases}
 <p>This result also generalizes to an arbitrary number of binary covariates. If we have <span class="math inline">\(p\)</span> binary covariates, then the CEF will be linear with all two-way interactions, <span class="math inline">\(x_1x_2\)</span>, all three-way interactions, <span class="math inline">\(x_1x_2x_3\)</span>, up to the <span class="math inline">\(p\)</span>-way interaction <span class="math inline">\(x_1\times\cdots\times x_p\)</span>. Furthermore, we can generalize to arbitrary numbers of categorical variables by expanding each categorical variable into a series of binary variables and then including all interactions between the resulting binary variables.</p>
 <p>We have established that when we have a set of categorical covariates, the true CEF will be linear and we have seen the various ways to represent that CEF. Notice that when we actually use, for example, ordinary least squares, we are free to choose how to include our variables. That means that we could run a regression of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(X_{i1}\)</span> and <span class="math inline">\(X_{i2}\)</span> without an interaction term. This model will only be correct if <span class="math inline">\(\beta_3\)</span> is actually equal to 0 and so the interaction term is irrelevant. Because of this ability to choose our models, it’s helpful to have a language for models that capture the linear CEF appropriately. We call a model <strong>saturated</strong> if there as many coefficients as there are unique values of the CEF. A saturated model by its nature can always be written as a linear function without assumptions. The above examples show how to construct saturated models in various situations.</p>
 </section>
-<section id="partitioned-regression" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="partitioned-regression"><span class="header-section-number">6.4</span> Partitioned regression</h2>
-<p>When we have a regression with two groups of covariates, <span class="math inline">\(\mb{V}_{i} = (\X_{i}, \mb{Z}_{i})\)</span>, we might want a formula for the coefficients on just <span class="math inline">\(\X_i\)</span>. Given the matrix algebra involved in the definition of the population regression coefficients, it isn’t clear how we might acheive this. It turns out we can obtain a formula for those coefficients from a set of two population regressions.</p>
-<p>In particular, let <span class="math inline">\(\mb{\delta}' = (\b', \gamma')\)</span> be the coefficients the coefficients on the complete set of covariates, with <span class="math inline">\(\b\)</span> corresponding to <span class="math inline">\(\X_i\)</span> and <span class="math inline">\(\mb{\gamma}\)</span> corresponding to <span class="math inline">\(\mb{Z}_i\)</span>. In other words, the linear projection in this case can be written as <span class="math display">\[
-\bbL(Y_{i} \mid \mb{V}_{i})= \mb{V}_{i}'\mb{\delta} =  \X_{i}'\b + \mb{Z}_{i}'\mb{\gamma}.
-\]</span> To obtain an expression for <span class="math inline">\(\b\)</span>, we can first think of a population regression of the covariates of interest <span class="math inline">\(\X_i\)</span> on the other covariates <span class="math inline">\(\mb{Z}_i\)</span>, <span class="math inline">\(\bbL(\X_{i} \mid \mb{Z}_{i})\)</span>. This looks somewhat odd because we have a vector as the dependent variable, but it represents the idea of running a separate regression of each variable in <span class="math inline">\(\X_i\)</span> on <span class="math inline">\(\mb{Z}_i\)</span>. So we end up with a matrix of coefficients instead of a vector (one column for each variable in <span class="math inline">\(\X_i\)</span>), even though the expression for the linear projection does not change much: <span class="math display">\[
-\bbL(\X_{i} \mid \mb{Z}_{i}) = \mb{Z}_{i}'\left(\E[\mb{Z}_{i}\mb{Z}_{i}']\right)^{{-1}} \E[\mb{Z}_{i}'\X_{i}].
-\]</span> These represent the best linear guess about the covariates of interest given the other covariates. Let’s define the prediction errors <span class="math inline">\(\widetilde{\X}_i = \X_i - \bbL(\X_{i} \mid \mb{Z}_{i})\)</span>. Because these are linear projection errors, we know from the above results that they are uncorrelated with <span class="math inline">\(\mb{Z}_i\)</span>, which geometrically means they are <strong>orthogonal</strong> to those covariates. Thus, we sometimes call the transformation <span class="math inline">\(A - \bbL(A \mid B)\)</span> <strong>orthogonalizing</strong> <span class="math inline">\(A\)</span> with respect to <span class="math inline">\(B\)</span>. The vector <span class="math inline">\(\widetilde{X}_i\)</span> captures the variation in <span class="math inline">\(\X_i\)</span> that is not capture by a linear function of <span class="math inline">\(\mb{Z}_i\)</span>. An amazing property of these errors is that when we project <span class="math inline">\(Y_i\)</span> onto just <span class="math inline">\(\widetilde{\X}_i\)</span>, we obtain the coefficients on <span class="math inline">\(\X_i\)</span> from the projection of <span class="math inline">\(Y_i\)</span> on both <span class="math inline">\(\X_i\)</span> and <span class="math inline">\(\mb{Z}_i\)</span>: <span class="math display">\[
-\b = \left( \E[\widetilde{\X}_{i}\widetilde{\X}_{i}'] \right)^{-1}\E[\widetilde{\X}_{i}'Y_{i}].
-\]</span> The same result applies if we orthogonalize <span class="math inline">\(Y_i\)</span> with respect to <span class="math inline">\(\mb{Z}_i\)</span> as well,<br>
-<span class="math display">\[
-\b = \left( \E[\widetilde{\X}_{i}\widetilde{\X}_{i}'] \right)^{-1}\E[\widetilde{\X}_{i}'\widetilde{Y}_{i}],
-\]</span> where <span class="math inline">\(\widetilde{Y}_i = Y_i - \bbL(Y_{i} \mid \mb{Z}_{i})\)</span>.</p>
-<p>Why do care about this ability to partition the regression coefficients? One reason is that it allows us to derive an interpretable expression for each coefficient in the BLP. Let’s change our partition slightly so that <span class="math inline">\(\X_i = (X_{{ik}}, \X_{i,-k})\)</span>, where <span class="math inline">\(\X_{i,-k}\)</span> is the vector of covariates omitting the <span class="math inline">\(k\)</span>th entry (we assume that <span class="math inline">\(\X_{i,-k}\)</span> includes the constant term 1). Based on the above, we can define <span class="math inline">\(\widetilde{X}_{ik} = X_{ik} - \bbL(X_{ik}\mid \X_{i,-k})\)</span> as the <span class="math inline">\(k\)</span>th variable othorgonalized with respect to rest of the variables. Then the above partition results implies that <span class="math display">\[
-\beta_k = \frac{\cov(Y_i, \widetilde{X}_{ik})}{\V[\widetilde{X}_{ik}]}.
-\]</span> Thus, the population regression coefficient in the BLP is the covariance of the outcome and the orthogonalized variable divided by the variance of the orthogonalized value. More generally, this implies that we could use a scatterplot of the outcome and the orthogonalized covariate to explore the conditional relationship between these two variable in a more flexible or exploratory manner.</p>
-</section>
-<section id="omitted-variable-bias" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="omitted-variable-bias"><span class="header-section-number">6.5</span> Omitted variable bias</h2>
-<p>In many situations, we might need to choose to include a variable in a regression or not, so it can be helpful to understand how this choice might affect the population coefficients on the other variables in a the regression. In particular, suppose we are considering whether to include some variable <span class="math inline">\(Z_i\)</span> in our regression where <span class="math inline">\(\X_i\)</span> represents the other covariates. Then we are deciding between the two projections <span class="math display">\[
-\bbL[Y_i \mid \X_i, Z_i] = \X_i'\b + Z_i\gamma, \qquad \bbL[Y \mid \X] = \X_i'\mb{\delta},
-\]</span> where we often refer to <span class="math inline">\(\bbL[Y_i \mid \X_i, Z_i]\)</span> as the long regression and <span class="math inline">\(\bbL[Y_i \mid \X_i]\)</span> as the short regression.</p>
-<p>Can we relate the coefficients on <span class="math inline">\(\X_i\)</span> from these two regressions? It turns out that we can using two property that linear projections share with conditional expectations: the <strong>law of iterated projections</strong>, <span class="math display">\[
-\bbL[Y_i \mid \X_i] = \bbL\left\{ \bbL[Y_i \mid \X_i, Z_i] \mid \X_i \right\},
-\]</span> and that linear projection is linear, so that <span class="math inline">\(\bbL[A + B \mid C] = \bbL[A\mid C] + \bbL[B \mid C]\)</span>. Together, these imply <span class="math display">\[  
+<section id="interpretation-of-the-regression-coefficients" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="interpretation-of-the-regression-coefficients"><span class="header-section-number">6.4</span> Interpretation of the regression coefficients</h2>
+<p>We have seen how to interpret population regression coefficients in situations where the CEF is linear without assumptions. How do we interpret the population coefficients <span class="math inline">\(\bfbeta\)</span> in other settings?</p>
+<p>Let’s start with simplest case, where every entry in <span class="math inline">\(\X_{i}\)</span> represents a different covariate and no covariate is any function of another (we’ll see why this caveat is important below). In this simple case, the <span class="math inline">\(k\)</span>th coefficient, <span class="math inline">\(\beta_{k}\)</span> will represent the change in the predicted outcome for a one-unit change in the <span class="math inline">\(k\)</span>th covariate <span class="math inline">\(X_{ik}\)</span>, holding all other covariates fixed. We can see this from <span class="math display">\[
 \begin{aligned}
-\bbL[Y_i \mid \X_i] &amp;= \bbL[\X_i'\b + Z_i\gamma \mid \X_i] \\
-&amp;= \bbL[\X_i\mid \X_i]'\b + \bbL[Z_i \mid \X_i]\gamma \\
-&amp;= \X'_i\b + \bbL[Z_i \mid \X_i]\gamma
+  m(x_{1} + 1, x_{2}) &amp; =  \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
+  m(x_{1}, x_{2}) &amp;= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2},
 \end{aligned}
-\]</span> We can write the regression/projection of <span class="math inline">\(Z_i\)</span> on <span class="math inline">\(\X_i\)</span> as <span class="math inline">\(\bbL[Z_i \mid \X_i]= \X_i'\mb{\pi}\)</span> and so <span class="math display">\[
-\bbL[Y_i \mid \X_i] = \X_i'(\b + \mb{\pi}\gamma),
-\]</span> which implies that the short coefficients can be written as <span class="math inline">\(\mb{\delta} = \b + \mb{\pi}\gamma\)</span>.</p>
-<p>We can easily rewrite this to show that the difference between the coefficients in these two projections is <span class="math inline">\(\mb{\delta} - \b= \mb{\pi}\gamma\)</span> or the product of the coefficient on the “excluded” <span class="math inline">\(Z_i\)</span> and the coefficient of the included <span class="math inline">\(\X_i\)</span> on the excluded. This difference is usually referred to as the <strong>omitted variable bias</strong> of omitting <span class="math inline">\(Z_i\)</span> under the idea that <span class="math inline">\(\b\)</span> is the true target of inference. But the result is much broader than this since it just tells us how to relate the coefficients of two nested projection.</p>
+\]</span> so that the change in the predicted outcome for increasing <span class="math inline">\(X_{i1}\)</span> by one unit isn’t <span class="math display">\[
+m(x_{1} + 1, x_{2}) -  m(x_{1}, x_{2}) = \beta_1
+\]</span> Notice that nothing changes in this interpretation if we add more covariates to the vector, <span class="math display">\[
+m(x_{1} + 1, \bfx_{2}) -  m(x_{1}, \bfx_{2}) = \beta_1,
+\]</span> the coefficient on a particular variable is the change in predicted outcome for a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the “all else equal” change in predicted outcome for each covariate.</p>
+</section>
+<section id="multiple-regression-from-bivariate-regression" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="multiple-regression-from-bivariate-regression"><span class="header-section-number">6.5</span> Multiple regression from bivariate regression</h2>
+<p>When we have a regression of an outcome on two covariates, it is useful to understand how the coefficients of one variables related to the other. For example, if we have the following best linear projection: <span id="eq-two-var-blp"><span class="math display">\[
+(\alpha, \beta, \gamma) = \argmin_{(a,b,c) \in \mathbb{R}^{3}} \; \E[(Y_{i} - (a + bX_{i} + cZ_{i}))^{2}]
+\tag{6.1}\]</span></span> Is there some way to understand the <span class="math inline">\(\beta\)</span> coefficient here in terms of simple linear regression? As it turns out, yes. From the above results, we know that the intercept has a simple form <span class="math display">\[
+\alpha = \E[Y_i] - \beta\E[X_i] - \gamma\E[Z_i].
+\]</span> Let’s investigate the first order condition for <span class="math inline">\(\beta\)</span>: <span class="math display">\[
+\begin{aligned}
+  0 &amp;= \E[Y_{i}X_{i}] - \alpha\E[X_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
+    &amp;=  \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] + \beta\E[X_{i}]^{2} + \gamma\E[X_{i}]\E[Z_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
+  &amp;= \cov(Y, X) - \beta\V[X_{i}] - \gamma \cov(X_{i}, Z_{i})
+\end{aligned}
+\]</span> We can see from this that if <span class="math inline">\(\cov(X_{i}, Z_{i}) = 0\)</span>, then the coefficient on <span class="math inline">\(X_i\)</span> will be the same as in the simple regression case, <span class="math inline">\(\cov(Y_{i}, X_{i})/\V[X_{i}]\)</span>. In this case, when <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Z_i\)</span> are uncorrelated, we sometimes call them <strong>orthogonal</strong>.</p>
+<p>To write a simple formula for <span class="math inline">\(\beta\)</span> when the covariates are not orthogonal, we will <strong>orthogonalize</strong> <span class="math inline">\(X_i\)</span> by obtaining the prediction errors from a population linear regression of <span class="math inline">\(X_i\)</span> on <span class="math inline">\(Z_i\)</span>: <span class="math display">\[
+\widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0}  + d_{1}Z_{i}))^{2}]
+\]</span> Given the properties of projection errors, we know that this orthogonalized version of <span class="math inline">\(X_{i}\)</span> will be uncorrelated with <span class="math inline">\(Z_{i}\)</span> since <span class="math inline">\(\E[\widetilde{X}_{i}Z_{i}] = 0\)</span>. Remarkably, the coefficient on <span class="math inline">\(X_i\)</span> from the “long” BLP in <a href="#eq-two-var-blp">Equation&nbsp;<span>6.1</span></a> is the same as the regression of <span class="math inline">\(Y_i\)</span> on this orthogonalized <span class="math inline">\(\widetilde{X}_i\)</span>, <span class="math display">\[
+\beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
+\]</span></p>
+<p>We can expand this to idea to when there are several other covariates. Suppose now that we are interested in a regression of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(\X_i\)</span> and we are interested in the coefficient on the <span class="math inline">\(k\)</span>th covariate. Let <span class="math inline">\(\X_{i,-k}\)</span> be the vector of covariates omitting the <span class="math inline">\(k\)</span>th entry and let <span class="math inline">\(m_k(\X_{i,-k})\)</span> represent the BLP of <span class="math inline">\(X_{ik}\)</span> on these other covariates. We can define <span class="math inline">\(\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})\)</span> as the <span class="math inline">\(k\)</span> th variable othorgonalized with respect to rest of the variables and we can write the coefficient on <span class="math inline">\(X_{ik}\)</span> as <span class="math display">\[
+\beta_k = \frac{\cov(Y_i, \widetilde{X}_{ik})}{\V[\widetilde{X}_{ik}]}.
+\]</span> Thus, the population regression coefficient in the BLP is the same as from a bivariate regression of the outcome on the projection error for <span class="math inline">\(X_{ik}\)</span> being projected on all other covariates. One interpretation of coefficients in a population multiple regression is they represent the relationship between the outcome and the covariate, after removing the linear relationships of all other variables.</p>
+</section>
+<section id="omitted-variable-bias" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="omitted-variable-bias"><span class="header-section-number">6.6</span> Omitted variable bias</h2>
+<p>In many situations, we might need to choose to include a variable in a regression or not, so it can be helpful to understand how this choice might affect the population coefficients on the other variables in a the regression. In particular, suppose we are considering whether to include some variable <span class="math inline">\(Z_i\)</span> in our regression where <span class="math inline">\(\X_i\)</span> represents the other covariates. Then we are deciding between the two projections <span class="math display">\[
+m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
+\]</span> where we often refer to <span class="math inline">\(m(\X_i, Z_i)\)</span> as the long regression and <span class="math inline">\(m(\X_i)\)</span> as the short regression.</p>
+<p>We know from the defintion of the BLP that we can write the short coefficients as <span class="math display">\[
+\bs{\delta} = \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}Y_{i}].
+\]</span> Letting <span class="math inline">\(e_i = Y_i - m(\X_{i}, Z_{i})\)</span> be the projection errors from the long regression, we can write this as <span class="math display">\[
+\begin{aligned}
+  \bs{\delta} &amp;= \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}(\X_{i}'\bfbeta + Z_{i}\gamma + e_{i})] \\
+              &amp;= \left(\E[\X_{i}\X_{i}']\right)^{-1}(\E[\X_{i}\X_{i}']\bfbeta + \E[\X_{i}Z_{i}]\gamma + \E[\X_{i}e_{i}]) \\
+  &amp;=    \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
+\end{aligned}
+\]</span> Notice that the vector in the second term is actually the linear projection coefficients of a population linear regression of <span class="math inline">\(Z_i\)</span> on the <span class="math inline">\(\X_i\)</span>. If we call these coefficients <span class="math inline">\(\bs{\pi}\)</span>, then th short coefficients are <span class="math display">\[
+\bs{\delta} = \bfbeta + \bs{\pi}\gamma.
+\]</span></p>
+<p>We can easily rewrite this to show that the difference between the coefficients in these two projections is <span class="math inline">\(\bs{\delta} - \bfbeta= \bs{\pi}\gamma\)</span> or the product of the coefficient on the “excluded” <span class="math inline">\(Z_i\)</span> and the coefficient of the included <span class="math inline">\(\X_i\)</span> on the excluded. This difference is usually referred to as the <strong>omitted variable bias</strong> of omitting <span class="math inline">\(Z_i\)</span> under the idea that <span class="math inline">\(\bfbeta\)</span> is the true target of inference. But the result is much broader than this since it just tells us how to relate the coefficients of two nested projection.</p>
+<p>The last two results (multiple regressions from bivariate and omitted variable bias) are sometimes presented as results for the ordinary least squares estimator that we will present in the next chapter. We introduce them here as features of a particular population quantity, the linear projection or population linear regression.</p>
+</section>
+<section id="drawbacks-of-the-blp" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="drawbacks-of-the-blp"><span class="header-section-number">6.7</span> Drawbacks of the BLP</h2>
+<p>The best linear predictor is, of course, a <em>linear</em> approximation to the CEF and this approximation could be quite bad if the true CEF is highly nonlinear. A more subtle issue with the BLP is that it is sensitive to the marginal distribution of the covariates when the CEF is nonlinear. Let’s return to our example of voter wait times and income. In <a href="#fig-blp-limits">Figure&nbsp;<span>6.3</span></a>, we show the true CEF and the BLP when income is restricted below $50,000 or above $100,000. We can see that the BLP can vary quite dramatically here. This is an extremely example, but the basic point will still hold when the marginal distribution of <span class="math inline">\(X_i\)</span> is weighted toward one end of the spectrum versus the other.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-blp-limits" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06_linear_model_files/figure-html/fig-blp-limits-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.3: Linear projections for when income is truncated below $50k and above $100k</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -616,8 +723,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./07_least_squares.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

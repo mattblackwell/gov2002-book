@@ -111,31 +111,56 @@ ul.task-list li input[type="checkbox"] {
   <a href="./01_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Stastisitcal Inference</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_confidence_intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Regression</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -151,6 +176,8 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 $$
+\newcommand{\bs}{\boldsymbol}
+\newcommand{\mb}{\mathbf}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\V}{\mathbb{V}}
 \newcommand{\var}{\text{var}}
@@ -169,8 +196,6 @@ $$
 \newcommand{\Xu}{\underline{X}}
 \newcommand{\Yu}{\underline{Y}}
 \renewcommand{\P}{\mathbb{P}}
-\newcommand{\bs}{\boldsymbol}
-\newcommand{\mb}{\boldsymbol}
 \newcommand{\U}{\mb{U}}
 \newcommand{\Xbar}{\overline{X}}
 \newcommand{\Ybar}{\overline{Y}}
@@ -183,9 +208,9 @@ $$
 \newcommand{\Xmat}{\mathbb{X}}
 \newcommand{\bfx}{\mb{x}}
 \newcommand{\y}{\mb{y}}
-\renewcommand{\b}{\mb{\beta}}
+\renewcommand{\bfbeta}{\bs{\beta}}
 \newcommand{\e}{\bs{\epsilon}}
-\newcommand{\bhat}{\widehat{\mb{\beta}}}
+\newcommand{\bhat}{\widehat{\bs{\beta}}}
 \newcommand{\XX}{\Xmat'\Xmat}
 \newcommand{\XXinv}{\left(\XX\right)^{-1}}
 \newcommand{\hatsig}{\hat{\sigma}^2}
@@ -226,6 +251,13 @@ $$
 </header>
 
 <p><span class="math inline">\(\,\)</span></p>
+<p>This book, like so many books before it, will try to teach you statistics. The field of statistics describes how we learn about the world from quantitative data. In the social sciences, the vast majority of empirical studies use statistical methods to provide evidence for their arguments. While it is possible to conduct quantitative research without understanding statistics, one must advise against it. Quantitative research involves a host of <em>choices</em> about what model to use, what variables to include, what tuning parameters to set, what assumptions to make, and so on. Without a deep understanding of statistics, you will find these choices bewildering and often yield to the default settings of your statistical software. The goal of this book is to give you the foundation to confidently make those choices for your specific application.</p>
+<p>We will focus on two key goals in this book.</p>
+<ol type="1">
+<li><p><strong>Understand the basic ways to assess estimators</strong> With quantitative data, we often want to make statistical inferences about some unknown feature of the world. We use estimators (which are just ways of summarizing our data) to estimate these features. One major goal of this book is to show the basics of this task at a general enough level to be applicable to almost any estimator that you are likely to encounter in research. The ideas of bias, sampling variance, consistency, and asymptotic normality are common to such a large swath of (frequentist) inference that you get a tremendous return on your investment of time in these topics. Understand these core ideas and you will have a language to analyze any fancy new estimator that pops up in the next few decades.</p></li>
+<li><p><strong>Apply these ideas to estimation of regressions</strong> This book will apply these ideas to one particular workhorse task in the social sciences: estimating regression functions. So many methods are either use regression estimators like ordinary least squares or extend it in some way. Understanding how these estimators work is vital for conducting research in the social sciences. Regression and regression estimators also provide an entry point for discussing parametric models explicitly as approximation and projections rather than as rigid assumptions about the truth of a given specification.</p></li>
+</ol>
+<p>Why write a book on statistics and regression when so many already exist? Aside from hubris, my goal in this book is to find a level of mathematical sophistication that will challenge and push political scientists to develop stronger foundations in the material. While some textbooks at this level exist in statistics and economics, they tend to focus on applications less relevant to political science. This book attempts to correct this.</p>
 
 
 
