@@ -163,7 +163,7 @@ $$
 $$
 We will define the **best linear predictor** (BLP) to be
 $$ 
-m(\bfx) = \bfx'\bfbeta, \quad \text{where}\quad \bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\bfbeta \bigr)^2\bigr]
+m(\bfx) = \bfx'\bfbeta, \quad \text{where}\quad \bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr]
 $$
 
 This BLP solves the same basic optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error averaging over the joint distribution of the data.  

@@ -28,7 +28,7 @@ Let's say you calculate a 95% confidence interval and it's $[0.1, 0.4]$. It's te
 
 In most cases, we will not be able to derive exact confidence intervals, but rather confidence intervals that are **asymptotically valid**, which means that if we write the interval as a function of the sample size, $(L_n, U_n)$ they would have **asymptotic coverage**
 $$
-\lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \leq 1-\alpha \quad\forall\theta\in\Theta.
+\lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \geq 1-\alpha \quad\forall\theta\in\Theta.
 $$
 
 This will usually be the property that we can show for most confidence intervals, since we usually rely on large sample approximations based on the central limit theorem. 

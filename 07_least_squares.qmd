@@ -5,7 +5,7 @@ In this chapter we explore the most widely used estimator for population linear 
 Often, OLS is introduced along with an assumption of a linear model for the conditional expectation. This chapter purposefully avoids this to emphasize that OLS has a perfectly valid target of inference, the best linear projection, regardless of the linearity of the conditional expectation function. 
 
 
-## Deriving the OLS estimator
+## Deriving the OLS estimator 
 
 In the last chapter on the linear model and the best linear projection, we operated purely in the population, not samples. We derived the population regression coefficients $\bfbeta$, which represented the coefficients on the line of best fit in the population. We now take these as our quantity of interest. 
 
@@ -17,6 +17,34 @@ The variables $\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}$ are i.i
 
 :::
 
+Recall the population linear coefficients (or best linear predictor coefficients) that we derived in the last chapter,
+$$ 
+\bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]
+$$
+
+We will consider two different ways to derive the OLS estimator for these coefficients, both of which are versions of the plug-in principle. The first approach is to use the closed form representation of the coefficients and replace any expectations with sample means,
+$$ 
+\bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right)
+$$
+
+In a simple bivariate linear projection model $m(X_{i}) = \beta_0 + \beta_1X_{i}$, we saw that the population slope was $\beta_1= \text{cov}(Y_{i},X_{i})/ \V[X_{i}]$ and this approach would have our estimator for the slope be the ratio of the sample covariance of $Y_i$ and $X_i$ to the sample variance of $X_i$, or
+$$ 
+\widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
+$$
+
+This plug-in approach is very widely applicable and tends to have nice properties in large samples under iid data. But this approach also hides some of the geometry of the setting. 
+
+The second approach is based on plugging in sample means not to the closed-form expression for the coefficients, but to the optimization problem itself. This approach is called the **least squares** estimator because it is defined as the coefficients that minimize the empirical (or sample) squared prediction error,
+$$ 
+\bhat = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2.
+$$
+To distinguish it from other, more complicated least squares estimators, this is often called the **ordinary least squares** estimator or OLS. 
+
+When dealing with actual data, we refer to the prediction errors $\widehat{e}_{i} = Y_i - \X_i'\bhat$ as the **residuals** and the predicted value itself, $\widehat{Y}_i = \X_{i}'\bhat$ is also called the **fitted value**. With the population linear regression, we saw that the projection errors $e_i = Y_i - \X_i'\bfbeta$ were mean zero and uncorrelated with the covariates $\E[\X_{i}e_{i}] = 0$. The residuals have a similar property with respect to the covariates in the sample:
+$$ 
+\sum_{i=1}^n \X_i\widehat{e}_i = 0.
+$$
+The residuals are *exactly* uncorrelated with the covariates (when the covariates include a constant/intercept term). This is mechanically true of the OLS estimator.  
 
 
 ## Bivariate OLS

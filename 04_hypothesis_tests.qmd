@@ -399,3 +399,34 @@ abline(v = qnorm(1 - 0.05), col = "grey30", lty = 2, lwd = 2)
 abline(v = qt(1 - 0.05, df = 5), col = "dodgerblue", lty = 2, lwd = 2)
 ```
 
+
+## Confidence intervals and hypothesis tests
+
+
+At first glance, we may seem sloppy in using $\alpha$ in the derivation of a $1 - \alpha$ confidence interval in the last chapter and in an $\alpha$-level test in this chapter. In reality, we were simply foreshadowing the deep connection between the two: every $1-\alpha$ confidence interval contains all null hypotheses that we **would not reject** with an $\alpha$-level test. 
+
+This connection is easiest to see with a asymptotically normal estimator, $\widehat{\theta}_n$. Consider the hypothesis test of 
+$$ 
+H_0: \theta = \theta_0 \quad \text{vs.}\quad H_1: \theta \neq \theta_0,
+$$
+using the test statistic,
+$$ 
+T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}. 
+$$
+As we discussed in the earlier, an $\alpha = 0.05$ test would reject this null when $|T| > 1.96$, or when 
+$$ 
+|\widehat{\theta}_{n} - \theta_{0}| > 1.96 \widehat{\se}[\widehat{\theta}_{n}]. 
+$$
+Notice that will be true when 
+$$ 
+\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or  }\quad  \widehat{\theta}_{n} +  \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+$$
+or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
+Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 
+
+This relationship holds more broadly. Any $1-\alpha$ confidence interval contains all possible parameter values that would not be rejected as the null hypothesis of an $\alpha$-level hypothesis test. This can be really useful for two reasons:
+
+1. We can quickly determine if a null hypothesis is rejected at some level by inspecting if it falls in a confidence interval. 
+2. There are situations where determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine what null hypotheses would not be rejected at level $\alpha$ to formulate the $1-\alpha$ confidence interval. This process is called **inverting a test**. One important application of this method is for formulating confidence intervals for treatment effects based on randomization inference in the finite population analysis of experiments. 
+
+<!--# TODO: add example of inverting a test?-->
