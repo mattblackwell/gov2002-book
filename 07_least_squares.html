@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A User’s Guide to Statistical Inference and Regression - 7&nbsp; The mechanics of least squares</title>
+<title>A User’s Guide to Statistical Inference and Regression - 6&nbsp; The mechanics of least squares</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -134,11 +134,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./05_confidence_intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -151,12 +146,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
+  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
+  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
   </div>
 </li>
       </ul>
@@ -175,12 +170,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#deriving-the-ols-estimator" id="toc-deriving-the-ols-estimator" class="nav-link active" data-scroll-target="#deriving-the-ols-estimator"><span class="toc-section-number">7.1</span>  Deriving the OLS estimator</a></li>
-  <li><a href="#bivariate-ols" id="toc-bivariate-ols" class="nav-link" data-scroll-target="#bivariate-ols"><span class="toc-section-number">7.2</span>  Bivariate OLS</a></li>
-  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="toc-section-number">7.3</span>  Model fit</a></li>
-  <li><a href="#matrix-form-of-ols" id="toc-matrix-form-of-ols" class="nav-link" data-scroll-target="#matrix-form-of-ols"><span class="toc-section-number">7.4</span>  Matrix form of OLS</a></li>
-  <li><a href="#projection" id="toc-projection" class="nav-link" data-scroll-target="#projection"><span class="toc-section-number">7.5</span>  Projection</a></li>
-  <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="toc-section-number">7.6</span>  Outliers, leverage points, and influential observations</a></li>
+  <li><a href="#deriving-the-ols-estimator" id="toc-deriving-the-ols-estimator" class="nav-link active" data-scroll-target="#deriving-the-ols-estimator"><span class="toc-section-number">6.1</span>  Deriving the OLS estimator</a></li>
+  <li><a href="#bivariate-ols" id="toc-bivariate-ols" class="nav-link" data-scroll-target="#bivariate-ols"><span class="toc-section-number">6.2</span>  Bivariate OLS</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="toc-section-number">6.3</span>  Model fit</a></li>
+  <li><a href="#matrix-form-of-ols" id="toc-matrix-form-of-ols" class="nav-link" data-scroll-target="#matrix-form-of-ols"><span class="toc-section-number">6.4</span>  Matrix form of OLS</a></li>
+  <li><a href="#projection" id="toc-projection" class="nav-link" data-scroll-target="#projection"><span class="toc-section-number">6.5</span>  Projection</a></li>
+  <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="toc-section-number">6.6</span>  Outliers, leverage points, and influential observations</a></li>
   </ul>
 </nav>
     </div>
@@ -246,7 +241,7 @@ $$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></h1>
 </div>
 
 
@@ -263,8 +258,8 @@ $$
 
 <p>In this chapter we explore the most widely used estimator for population linear regressions: <strong>ordinary least squares</strong> (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is due in part to its easy of interpretation, its computational simplicity, and its statistical efficiency.</p>
 <p>Often, OLS is introduced along with an assumption of a linear model for the conditional expectation. This chapter purposefully avoids this to emphasize that OLS has a perfectly valid target of inference, the best linear projection, regardless of the linearity of the conditional expectation function.</p>
-<section id="deriving-the-ols-estimator" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="deriving-the-ols-estimator"><span class="header-section-number">7.1</span> Deriving the OLS estimator</h2>
+<section id="deriving-the-ols-estimator" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="deriving-the-ols-estimator"><span class="header-section-number">6.1</span> Deriving the OLS estimator</h2>
 <p>In the last chapter on the linear model and the best linear projection, we operated purely in the population, not samples. We derived the population regression coefficients <span class="math inline">\(\bfbeta\)</span>, which represented the coefficients on the line of best fit in the population. We now take these as our quantity of interest.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -279,21 +274,37 @@ Assumption
 <p>The variables <span class="math inline">\(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\)</span> are i.i.d. draws from a common distribution <span class="math inline">\(F\)</span>.</p>
 </div>
 </div>
+<p>Recall the population linear coefficients (or best linear predictor coefficients) that we derived in the last chapter, <span class="math display">\[
+\bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]
+\]</span></p>
+<p>We will consider two different ways to derive the OLS estimator for these coefficients, both of which are versions of the plug-in principle. The first approach is to use the closed form representation of the coefficients and replace any expectations with sample means, <span class="math display">\[
+\bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right)
+\]</span></p>
+<p>In a simple bivariate linear projection model <span class="math inline">\(m(X_{i}) = \beta_0 + \beta_1X_{i}\)</span>, we saw that the population slope was <span class="math inline">\(\beta_1= \text{cov}(Y_{i},X_{i})/ \V[X_{i}]\)</span> and this approach would have our estimator for the slope be the ratio of the sample covariance of <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(X_i\)</span> to the sample variance of <span class="math inline">\(X_i\)</span>, or <span class="math display">\[
+\widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
+\]</span></p>
+<p>This plug-in approach is very widely applicable and tends to have nice properties in large samples under iid data. But this approach also hides some of the geometry of the setting.</p>
+<p>The second approach is based on plugging in sample means not to the closed-form expression for the coefficients, but to the optimization problem itself. This approach is called the <strong>least squares</strong> estimator because it is defined as the coefficients that minimize the empirical (or sample) squared prediction error, <span class="math display">\[
+\bhat = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2.
+\]</span> To distinguish it from other, more complicated least squares estimators, this is often called the <strong>ordinary least squares</strong> estimator or OLS.</p>
+<p>When dealing with actual data, we refer to the prediction errors <span class="math inline">\(\widehat{e}_{i} = Y_i - \X_i'\bhat\)</span> as the <strong>residuals</strong> and the predicted value itself, <span class="math inline">\(\widehat{Y}_i = \X_{i}'\bhat\)</span> is also called the <strong>fitted value</strong>. With the population linear regression, we saw that the projection errors <span class="math inline">\(e_i = Y_i - \X_i'\bfbeta\)</span> were mean zero and uncorrelated with the covariates <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span>. The residuals have a similar property with respect to the covariates in the sample: <span class="math display">\[
+\sum_{i=1}^n \X_i\widehat{e}_i = 0.
+\]</span> The residuals are <em>exactly</em> uncorrelated with the covariates (when the covariates include a constant/intercept term). This is mechanically true of the OLS estimator.</p>
 </section>
-<section id="bivariate-ols" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="bivariate-ols"><span class="header-section-number">7.2</span> Bivariate OLS</h2>
+<section id="bivariate-ols" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="bivariate-ols"><span class="header-section-number">6.2</span> Bivariate OLS</h2>
 </section>
-<section id="model-fit" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">7.3</span> Model fit</h2>
+<section id="model-fit" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">6.3</span> Model fit</h2>
 </section>
-<section id="matrix-form-of-ols" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="matrix-form-of-ols"><span class="header-section-number">7.4</span> Matrix form of OLS</h2>
+<section id="matrix-form-of-ols" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="matrix-form-of-ols"><span class="header-section-number">6.4</span> Matrix form of OLS</h2>
 </section>
-<section id="projection" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="projection"><span class="header-section-number">7.5</span> Projection</h2>
+<section id="projection" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="projection"><span class="header-section-number">6.5</span> Projection</h2>
 </section>
-<section id="outliers-leverage-points-and-influential-observations" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="outliers-leverage-points-and-influential-observations"><span class="header-section-number">7.6</span> Outliers, leverage points, and influential observations</h2>
+<section id="outliers-leverage-points-and-influential-observations" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="outliers-leverage-points-and-influential-observations"><span class="header-section-number">6.6</span> Outliers, leverage points, and influential observations</h2>
 
 
 </section>
@@ -435,7 +446,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./06_linear_model.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

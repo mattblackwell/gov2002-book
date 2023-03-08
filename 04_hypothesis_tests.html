@@ -112,7 +112,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05_confidence_intervals.html" rel="next">
+<link href="./06_linear_model.html" rel="next">
 <link href="./03_asymptotics.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -216,11 +216,6 @@ div.csl-indent {
   <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./05_confidence_intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -233,12 +228,12 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
+  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
+  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
   </div>
 </li>
       </ul>
@@ -267,6 +262,7 @@ div.csl-indent {
   <li><a href="#p-values" id="toc-p-values" class="nav-link" data-scroll-target="#p-values"><span class="toc-section-number">4.8</span>  p-values</a></li>
   <li><a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis"><span class="toc-section-number">4.9</span>  Power analysis</a></li>
   <li><a href="#exact-tests-under-normal-data" id="toc-exact-tests-under-normal-data" class="nav-link" data-scroll-target="#exact-tests-under-normal-data"><span class="toc-section-number">4.10</span>  Exact tests under normal data</a></li>
+  <li><a href="#confidence-intervals-and-hypothesis-tests" id="toc-confidence-intervals-and-hypothesis-tests" class="nav-link" data-scroll-target="#confidence-intervals-and-hypothesis-tests"><span class="toc-section-number">4.11</span>  Confidence intervals and hypothesis tests</a></li>
   </ul>
 </nav>
     </div>
@@ -617,6 +613,25 @@ T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
 </div>
 </div>
 </div>
+</section>
+<section id="confidence-intervals-and-hypothesis-tests" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="confidence-intervals-and-hypothesis-tests"><span class="header-section-number">4.11</span> Confidence intervals and hypothesis tests</h2>
+<p>At first glance, we may seem sloppy in using <span class="math inline">\(\alpha\)</span> in the derivation of a <span class="math inline">\(1 - \alpha\)</span> confidence interval in the last chapter and in an <span class="math inline">\(\alpha\)</span>-level test in this chapter. In reality, we were simply foreshadowing the deep connection between the two: every <span class="math inline">\(1-\alpha\)</span> confidence interval contains all null hypotheses that we <strong>would not reject</strong> with an <span class="math inline">\(\alpha\)</span>-level test.</p>
+<p>This connection is easiest to see with a asymptotically normal estimator, <span class="math inline">\(\widehat{\theta}_n\)</span>. Consider the hypothesis test of <span class="math display">\[
+H_0: \theta = \theta_0 \quad \text{vs.}\quad H_1: \theta \neq \theta_0,
+\]</span> using the test statistic, <span class="math display">\[
+T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}.
+\]</span> As we discussed in the earlier, an <span class="math inline">\(\alpha = 0.05\)</span> test would reject this null when <span class="math inline">\(|T| &gt; 1.96\)</span>, or when <span class="math display">\[
+|\widehat{\theta}_{n} - \theta_{0}| &gt; 1.96 \widehat{\se}[\widehat{\theta}_{n}].
+\]</span> Notice that will be true when <span class="math display">\[
+\theta_{0} &lt; \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or  }\quad  \widehat{\theta}_{n} +  \widehat{\se}[\widehat{\theta}_{n}] &lt; \theta_{0}
+\]</span> or, equivalently, that null hypothesis is outside of the 95% confidence interval, <span class="math display">\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].\]</span> Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a <span class="math inline">\(\alpha = 0.05\)</span> level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject.</p>
+<p>This relationship holds more broadly. Any <span class="math inline">\(1-\alpha\)</span> confidence interval contains all possible parameter values that would not be rejected as the null hypothesis of an <span class="math inline">\(\alpha\)</span>-level hypothesis test. This can be really useful for two reasons:</p>
+<ol type="1">
+<li>We can quickly determine if a null hypothesis is rejected at some level by inspecting if it falls in a confidence interval.</li>
+<li>There are situations where determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine what null hypotheses would not be rejected at level <span class="math inline">\(\alpha\)</span> to formulate the <span class="math inline">\(1-\alpha\)</span> confidence interval. This process is called <strong>inverting a test</strong>. One important application of this method is for formulating confidence intervals for treatment effects based on randomization inference in the finite population analysis of experiments.</li>
+</ol>
+<!--# TODO: add example of inverting a test?-->
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
@@ -775,8 +790,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05_confidence_intervals.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06_linear_model.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

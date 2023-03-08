@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -134,11 +197,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./05_confidence_intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -151,12 +209,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
+  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
+  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
   </div>
 </li>
       </ul>
@@ -182,7 +240,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-law-of-large-numbers" id="toc-the-law-of-large-numbers" class="nav-link" data-scroll-target="#the-law-of-large-numbers"><span class="toc-section-number">3.5</span>  The law of large numbers</a></li>
   <li><a href="#consistency-of-estimators" id="toc-consistency-of-estimators" class="nav-link" data-scroll-target="#consistency-of-estimators"><span class="toc-section-number">3.6</span>  Consistency of estimators</a></li>
   <li><a href="#convergence-in-distribution-and-the-central-limit-theorem" id="toc-convergence-in-distribution-and-the-central-limit-theorem" class="nav-link" data-scroll-target="#convergence-in-distribution-and-the-central-limit-theorem"><span class="toc-section-number">3.7</span>  Convergence in distribution and the central limit theorem</a></li>
-  <li><a href="#delta-method" id="toc-delta-method" class="nav-link" data-scroll-target="#delta-method"><span class="toc-section-number">3.8</span>  Delta method</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="toc-section-number">3.8</span>  Confidence intervals</a>
+  <ul class="collapse">
+  <li><a href="#deriving-confidence-intervals" id="toc-deriving-confidence-intervals" class="nav-link" data-scroll-target="#deriving-confidence-intervals"><span class="toc-section-number">3.8.1</span>  Deriving confidence intervals</a></li>
+  <li><a href="#interpreting-confidence-intervals" id="toc-interpreting-confidence-intervals" class="nav-link" data-scroll-target="#interpreting-confidence-intervals"><span class="toc-section-number">3.8.2</span>  Interpreting confidence intervals</a></li>
+  </ul></li>
+  <li><a href="#delta-method" id="toc-delta-method" class="nav-link" data-scroll-target="#delta-method"><span class="toc-section-number">3.9</span>  Delta method</a></li>
   </ul>
 </nav>
     </div>
@@ -411,12 +474,12 @@ Notation alert
 </section>
 <section id="consistency-of-estimators" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="consistency-of-estimators"><span class="header-section-number">3.6</span> Consistency of estimators</h2>
-<p>The WLLN shows that the sample mean of iid draws is consistent for the population mean, which is a massive result given that so many estimators can be written as sample means. What about other estimators? The proof of the WLLN points to one way to determine if an estimator is consistent: if it is unbiased and the sampling variance shrinks as the sample size grows. The next theorem</p>
+<p>The WLLN shows that the sample mean of iid draws is consistent for the population mean, which is a massive result given that so many estimators can be written as sample means. What about other estimators? The proof of the WLLN points to one way to determine if an estimator is consistent: if it is unbiased and the sampling variance shrinks as the sample size grows.</p>
 <div id="thm-consis" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.5 </strong></span>For any estimator <span class="math inline">\(\widehat{\theta}_n\)</span>, if <span class="math inline">\(\text{bias}[\widehat{\theta}_n] \to 0\)</span> and <span class="math inline">\(\V[\widehat{\theta}_n] \rightarrow 0\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span>, then <span class="math inline">\(\widehat{\theta}_n\)</span> is consistent.</p>
+<p><span class="theorem-title"><strong>Theorem 3.5 </strong></span>For any estimator <span class="math inline">\(\widehat{\theta}_n\)</span>, if <span class="math inline">\(\text{bias}[\widehat{\theta}_n] = 0\)</span> and <span class="math inline">\(\V[\widehat{\theta}_n] \rightarrow 0\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span>, then <span class="math inline">\(\widehat{\theta}_n\)</span> is consistent.</p>
 </div>
-<p>Thus, if we can characterize the bias and sampling variance of an estimator, then we should be able to tell if it consistent or not. This is handy since working with the kinds of probability inequalities used for the WLLN can sometimes be quite confusing.</p>
-<p>What do we do if it is difficult or impossible to characterize the bias? Consider a plug-in estimator like <span class="math inline">\(\widehat{\alpha} = \log(\Xbar_n)\)</span> where <span class="math inline">\(X_1, \ldots, X_n\)</span> are iid from a population with mean <span class="math inline">\(\mu\)</span>. We know that for nonlinear functions like logarithms we have <span class="math inline">\(\log\left(\E[Z]\right) \neq \E[\log(Z)]\)</span>, so <span class="math inline">\(\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])\)</span> and the plug-in estimator will be biased for <span class="math inline">\(\log(\mu)\)</span>. It will also be difficult to obtain an expression for the bias in terms of <span class="math inline">\(n\)</span>. Is all hope lost here? Must we give up on consistency? No, and in fact, consistency will be much simpler to show in this setting.</p>
+<p>Thus, for unbiased estimators, if we can characterize its sampling variance, then we should be able to tell if it consistent or not. This is handy since working with the kinds of probability inequalities used for the WLLN can sometimes be quite confusing.</p>
+<p>What about biased estimators? Consider a plug-in estimator like <span class="math inline">\(\widehat{\alpha} = \log(\Xbar_n)\)</span> where <span class="math inline">\(X_1, \ldots, X_n\)</span> are iid from a population with mean <span class="math inline">\(\mu\)</span>. We know that for nonlinear functions like logarithms we have <span class="math inline">\(\log\left(\E[Z]\right) \neq \E[\log(Z)]\)</span>, so <span class="math inline">\(\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])\)</span> and the plug-in estimator will be biased for <span class="math inline">\(\log(\mu)\)</span>. It will also be difficult to obtain an expression for the bias in terms of <span class="math inline">\(n\)</span>. Is all hope lost here? Must we give up on consistency? No, and in fact, consistency will be much simpler to show in this setting.</p>
 <div id="thm-inprob-properties" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.6 (Properties of convergence in probability) </strong></span>Let <span class="math inline">\(X_n\)</span> and <span class="math inline">\(Z_n\)</span> be two sequences of random variables such that <span class="math inline">\(X_n \inprob a\)</span> and <span class="math inline">\(Z_n \inprob b\)</span>, and let <span class="math inline">\(g(\cdot)\)</span> be a continuous function. Then,</p>
 <ol type="1">
@@ -497,7 +560,7 @@ Notation alert
 \]</span> where we use <span class="math inline">\(\overset{a}{\sim}\)</span> to be “approximately distributed as in large samples.” This allow us to say things like: “in large samples, we should expect the sample mean to between within <span class="math inline">\(2\sigma/\sqrt{n}\)</span> of the true mean in 95% of repeated samples.” As you might guess, this will be very important for hypothesis tests and confidence intervals! Estimators so often follow the CLT that we have an expression for this property.</p>
 <div id="def-asymptotically-normal" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 3.5 </strong></span>An estimator <span class="math inline">\(\widehat{\theta}_n\)</span> is <strong>asymptotically normal</strong> if for some <span class="math inline">\(\theta\)</span> <span class="math display">\[
-\sqrt{n}\left( \widehat{\theta}_n - \theta \right) \indist N\left(0,\V[\widehat{\theta}_n]\right).
+\sqrt{n}\left( \widehat{\theta}_n - \theta \right) \indist N\left(0,\V_{\theta}\right).
 \]</span></p>
 </div>
 <div id="exm-bin-clt" class="theorem example">
@@ -525,11 +588,11 @@ Notation alert
 </div>
 <p>The last 3 of these results are sometimes referred to as <strong>Slutsky’s theorem</strong>. These results are very commonly used when trying to determine the asymptotic distribution of an estimator.</p>
 <p>One important application of Slutsky’s theorem is when we replace the (unknown) popoulation variance in the CLT with an estimate. Recall the definition of the <strong>sample variance</strong> as <span class="math display">\[
-s^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \Xbar_n)^2,
-\]</span> with the <strong>sample standard deviation</strong> defined as <span class="math inline">\(s = \sqrt{s^2}\)</span>. It’s easy to show that these are consistent estimators for their respective population parameters <span class="math display">\[
-s^2 \inprob \sigma^2 = \V[X_i], \qquad s \inprob \sigma,
+S_n^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \Xbar_n)^2,
+\]</span> with the <strong>sample standard deviation</strong> defined as <span class="math inline">\(S_{n} = \sqrt{S_{n}^2}\)</span>. It’s easy to show that these are consistent estimators for their respective population parameters <span class="math display">\[
+S_{n}^2 \inprob \sigma^2 = \V[X_i], \qquad S_{n} \inprob \sigma,
 \]</span> which by Slutsky’s theorem implies that <span class="math display">\[
-\frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{s} \indist \N(0, 1)
+\frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{S_n} \indist \N(0, 1)
 \]</span> Comparing this result to the statement of CLT, we see that replacing the population variance with a consistent estimate of the variance (or standard deviation) does not affect the asymptotic distribution.</p>
 <p>Like with the WLLN, the CLT holds for random vectors of sample means, where their centered and scaled versions converge to a multivariate normal distribution with a covariance matrix equal to covariance matrix of the underlying random vectors of data, <span class="math inline">\(\X_i\)</span>.</p>
 <div id="thm-multivariate-clt" class="theorem">
@@ -552,8 +615,109 @@ Note
 </div>
 </div>
 </section>
-<section id="delta-method" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="delta-method"><span class="header-section-number">3.8</span> Delta method</h2>
+<section id="confidence-intervals" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">3.8</span> Confidence intervals</h2>
+<p>We now turn to an important application of the central limit theorem: confidence intervals.</p>
+<p>You have run your experiment and presented your readers with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are <strong>plausible</strong> given the data we observe?</p>
+<p>A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. <strong>Confidence intervals</strong> make this kind of intuition more formal by instead estimating ranges of values with a fixed percentage of these ranges containing the true value of the parameter.</p>
+<p>We begin with the basic definition of a confidence interval.</p>
+<div id="def-coverage" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.6 </strong></span>A <span class="math inline">\(1-\alpha\)</span> <strong>confidence interval</strong> for a real-valued parameter <span class="math inline">\(\theta\)</span> is a pair of statistics <span class="math inline">\(L= L(X_1, \ldots, X_n)\)</span> and <span class="math inline">\(U = U(X_1, \ldots, X_n)\)</span> such that <span class="math inline">\(L &lt; U\)</span> for all values of the sample and such that <span class="math display">\[
+\P(L \leq \theta \leq U \mid \theta) \geq 1-\alpha, \quad \forall \theta \in \Theta.
+\]</span></p>
+</div>
+<p>We say that that a <span class="math inline">\(1-\alpha\)</span> confidence intervals covers (contains, captures, traps, etc) the true value at least <span class="math inline">\(100(1-\alpha)\%\)</span> of the time, and we refer to <span class="math inline">\(1-\alpha\)</span> as the <strong>coverage probability</strong> or simply <strong>coverage</strong>. Common confidence intervals include 95% percent (<span class="math inline">\(\alpha = 0.05\)</span>) and 90% (<span class="math inline">\(\alpha = 0.1\)</span>).</p>
+<p>So a confidence intervals is a random interval that has a particular guarantee about how often it will contain the true value. It’s important to remember what is random and what is fixed in this setup. The interval varies from sample to sample but the true value of the parameter stays fixed, and the coverage is how often we should expect the interval to contain that true value. The “repeating my sample over and over again” analogy can break down very quickly, so it’s sometimes helpful to interpret as giving guarantees across confidence intervals across different experiments. In particular, suppose that a journal publishes 100 quantitative articles per year and each produces a single 95% confidence interval for their quantity of interest. Then, if the confidence intervals are valid, then we should expect 5 of those confidence intervals to not contain their true quantity of interest.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s say you calculate a 95% confidence interval and it’s <span class="math inline">\([0.1, 0.4]\)</span>. It’s tempting to make a probability statement like <span class="math inline">\(\P(0.1 \leq \theta \leq 0.4 \mid \theta) = 0.95\)</span> or that there’s a 95% chance that the true parameter is in <span class="math inline">\([0.1, 0.4]\)</span>. But looking at the probability statement, everything on left-hand side of the conditioning bar is fixed, so the probability either has to be 0 (<span class="math inline">\(\theta\)</span> is outside the interval) or 1 (<span class="math inline">\(\theta\)</span> is in the interval). The coverage probability of a confidence interval refers to its status as a pair of random variables, <span class="math inline">\((L, U)\)</span>, not any particular realization of those variables like <span class="math inline">\((0.1, 0.4)\)</span>. As an analogy, considering if calculated the sample mean as <span class="math inline">\(0.25\)</span> and then tried to say that <span class="math inline">\(0.25\)</span> is unbiased for the population mean. This doesn’t make sense because unbiasedness refers to how the sample mean varies from sample to sample.</p>
+</div>
+</div>
+<p>In most cases, we will not be able to derive exact confidence intervals, but rather confidence intervals that are <strong>asymptotically valid</strong>, which means that if we write the interval as a function of the sample size, <span class="math inline">\((L_n, U_n)\)</span> they would have <strong>asymptotic coverage</strong> <span class="math display">\[
+\lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \geq 1-\alpha \quad\forall\theta\in\Theta.
+\]</span></p>
+<p>This will usually be the property that we can show for most confidence intervals, since we usually rely on large sample approximations based on the central limit theorem.</p>
+<section id="deriving-confidence-intervals" class="level3" data-number="3.8.1">
+<h3 data-number="3.8.1" class="anchored" data-anchor-id="deriving-confidence-intervals"><span class="header-section-number">3.8.1</span> Deriving confidence intervals</h3>
+<p>If you have taken any statistics before, you probably have seen the standard formula for the 95% confidence interval of the sample mean, <span class="math display">\[
+\left[\Xbar_n - 1.96\frac{s}{\sqrt{n}},\; \Xbar_n + 1.96\frac{s}{\sqrt{n}}\right],
+\]</span> where you can recall that <span class="math inline">\(s\)</span> is the sample standard deviation and <span class="math inline">\(s/\sqrt{n}\)</span> is the estimate of the standard error of the sample mean. If this is a 95% confidence interval, then the probability that it contains the population mean <span class="math inline">\(\mu\)</span> should be 0.95, but how can derive this? It turns out that this will be justified by the central limit theorem and we will show the logic for a generic asymptotically normal estimator.</p>
+<p>Let’s say that we have an estimator, <span class="math inline">\(\widehat{\theta}_n\)</span> for the parameter <span class="math inline">\(\theta\)</span> with estimated standard error <span class="math inline">\(\widehat{\se}[\widehat{\theta}_n]\)</span>. If the estimator is asymptotically normal, then in large samples, we know that <span class="math display">\[
+\frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \sim \N(0, 1).
+\]</span> We can then use our knowledge of the standard normal and the empirical rule to find <span class="math display">\[
+\P\left( -1.96 \leq \frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \leq 1.96\right) = 0.95
+\]</span> and by multiplying each part of the inequality by <span class="math inline">\(\widehat{\se}[\widehat{\theta}_n]\)</span>, we get <span class="math display">\[
+\P\left( -1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \widehat{\theta}_n - \theta \leq 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
+\]</span> We then subtract all part by the estimator to get <span class="math display">\[
+\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
+\]</span> and finally we multiply all parts by <span class="math inline">\(-1\)</span> (and flipping the inequalities) to arrive at <span class="math display">\[
+\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
+\]</span> To connect back to the definition of the confidence interval, we have now shown that the random interval <span class="math inline">\([L, U]\)</span> where <span class="math display">\[
+\begin{aligned}
+  L = L(X_1, \ldots, X_n) &amp;= \widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \\
+  U = U(X_1, \ldots, X_n) &amp;= \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n],
+\end{aligned}
+\]</span> is an asymptotically valid estimator.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Replacing <span class="math inline">\(\Xbar_n\)</span> for <span class="math inline">\(\widehat{\theta}_n\)</span> and <span class="math inline">\(s/\sqrt{n}\)</span> for <span class="math inline">\(\widehat{\se}[\widehat{\theta}_n]\)</span> establishes how the standard 95% confidence interval for the sample mean above asymptotically valid.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-std-normal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_asymptotics_files/figure-html/fig-std-normal-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.3: Critical values for the standard normal.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>How can we generalize this to <span class="math inline">\(1-\alpha\)</span> confidence intervals? For a standard normal rv, <span class="math inline">\(Z\)</span>, we know that <span class="math display">\[
+\P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1-\alpha
+\]</span> which implies that we can obtain a <span class="math inline">\(1-\alpha\)</span> asymptotic confidence intervals by using the interval <span class="math inline">\([L, U]\)</span>, where <span class="math display">\[
+L = \widehat{\theta}_{n} - z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}], \quad U = \widehat{\theta}_{n} + z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}].
+\]</span> This is sometimes shortened to <span class="math inline">\(\widehat{\theta}_n \pm z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]\)</span>. Remember that we can obtain the values of <span class="math inline">\(z_{\alpha/2}\)</span> easily from R:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## alpha = 0.1 for 90% CI</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.1</span> <span class="sc">/</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.644854</code></pre>
+</div>
+</div>
+<p>As a concrete example, then, we could derive a 90% asymptotic confidence interval for the sample mean as <span class="math display">\[
+\left[\Xbar_{n} - 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}\right]
+\]</span></p>
+</section>
+<section id="interpreting-confidence-intervals" class="level3" data-number="3.8.2">
+<h3 data-number="3.8.2" class="anchored" data-anchor-id="interpreting-confidence-intervals"><span class="header-section-number">3.8.2</span> Interpreting confidence intervals</h3>
+<p>Remember that the interpretation of cofidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this a bit.</p>
+<div id="exm-cis" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.5 </strong></span>Suppose that we are taking samples of size <span class="math inline">\(n=500\)</span> of random variables where <span class="math inline">\(X_i \sim \N(1, 10)\)</span>, and we want to estimate the population mean <span class="math inline">\(\E[X] = 1\)</span>. To do so, we repeat the following steps:</p>
+<ol type="1">
+<li>Draw a sample of <span class="math inline">\(n=500\)</span> from <span class="math inline">\(\N(1, 10)\)</span>.</li>
+<li>Calculate the 95% confidence interval sample mean <span class="math inline">\(\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}\)</span>.</li>
+<li>Plot the intervals along the x-axis and color them blue if they contain the truth (1) and red if they do not.</li>
+</ol>
+<p><a href="#fig-ci-sim">Figure&nbsp;<span>3.4</span></a> shows 100 iteraction of these steps. Here we see that, as expected, the large majority of calculated CIs conatain the true value. In fact, exactly 5 of the random samples produce intervals that fail to include 1, which is an exact coverage rate of 95%. Of course, this is just one simulation and a different set of 100 random samples might have produced a slightly different coverage rate. The gauarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples the long-run frequency of intervals covering the truth would approach 0.95.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ci-sim" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_asymptotics_files/figure-html/fig-ci-sim-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.4: 95% confidence intervals from 100 random samples. Intervals are blue if they contain the truth and red if they do not.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="delta-method" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="delta-method"><span class="header-section-number">3.9</span> Delta method</h2>
 <p>Suppose that we know that an estimator follows the CLT and so we have <span class="math display">\[
 \sqrt{n}\left(\widehat{\theta}_n - \theta  \right) \indist \N(0, V),
 \]</span> but we actually want to estimate <span class="math inline">\(h(\theta)\)</span> so we use the plug-in estimator, <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. It seems like we should be able to apply part 1 of <a href="#thm-indist-properties">Theorem&nbsp;<span>3.8</span></a>, the CLT established the large-sample distribution of the centered and scaled random sequence, <span class="math inline">\(\sqrt{n}(\widehat{\theta}_n - \theta)\)</span>, not to the original estimator itself like we would need to investigate the asymptotic distribution of <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. We can use a little bit of calculus to get an approximation to the distribution we need.</p>
@@ -562,7 +726,7 @@ Note
 \sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta)  \right) \indist \N(0, (h'(\theta))^2 V).
 \]</span></p>
 </div>
-<p>It’s useful to understand what’s happening here since it might help give intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, <span class="math inline">\(h()\)</span>? These are functions that can be well-approximated with a line in a neighborhood around a given point like <span class="math inline">\(\theta\)</span>. In <a href="#fig-delta">Figure&nbsp;<span>3.3</span></a>, we show this where the tangent line at <span class="math inline">\(\theta_0\)</span>, which has slope <span class="math inline">\(h'(\theta_0)\)</span>, is very similar to <span class="math inline">\(h(\theta)\)</span> for values close to <span class="math inline">\(\theta_0\)</span>. Because of this, we can approximate the difference between <span class="math inline">\(h(\widehat{\theta}_n)\)</span> and <span class="math inline">\(h(\theta_0)\)</span> with the what this tangent line would give us: <span class="math display">\[
+<p>It’s useful to understand what’s happening here since it might help give intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, <span class="math inline">\(h()\)</span>? These are functions that can be well-approximated with a line in a neighborhood around a given point like <span class="math inline">\(\theta\)</span>. In <a href="#fig-delta">Figure&nbsp;<span>3.5</span></a>, we show this where the tangent line at <span class="math inline">\(\theta_0\)</span>, which has slope <span class="math inline">\(h'(\theta_0)\)</span>, is very similar to <span class="math inline">\(h(\theta)\)</span> for values close to <span class="math inline">\(\theta_0\)</span>. Because of this, we can approximate the difference between <span class="math inline">\(h(\widehat{\theta}_n)\)</span> and <span class="math inline">\(h(\theta_0)\)</span> with the what this tangent line would give us: <span class="math display">\[
 \underbrace{\left(h(\widehat{\theta_n}) - h(\theta_0)\right)}_{\text{change in } y} \approx \underbrace{h'(\theta_0)}_{\text{slope}} \underbrace{\left(\widehat{\theta}_n - \theta_0\right)}_{\text{change in } x},
 \]</span> and then multiplying both sides by the <span class="math inline">\(\sqrt{n}\)</span> gives <span class="math display">\[
 \sqrt{n}\left(h(\widehat{\theta_n}) - h(\theta_0)\right) \approx h'(\theta_0)\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right).
@@ -574,23 +738,23 @@ Note
 <div id="fig-delta" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03_asymptotics_files/figure-html/fig-delta-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.3: Linear approximation to nonlinear functions</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.5: Linear approximation to nonlinear functions</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <div id="exm-log" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.5 </strong></span>Let’s return to the iid sample <span class="math inline">\(X_1, \ldots, X_n\)</span> with mean <span class="math inline">\(\mu = \E[X_i]\)</span> and variance <span class="math inline">\(\sigma^2 = \V[X_i]\)</span>. From the CLT, we know that <span class="math inline">\(\sqrt{n}(\Xbar_n - \mu) \indist \N(0, \sigma^2)\)</span>. Suppose that we want to estimate <span class="math inline">\(\log(\mu)\)</span> so we use the plug-in estimator <span class="math inline">\(\log(\Xbar_n)\)</span> (assuming that <span class="math inline">\(X_i &gt; 0\)</span> for all <span class="math inline">\(i\)</span> so that we can actually take the log). What is the asymptotic distribution of this estimator? This is a situation where <span class="math inline">\(\widehat{\theta}_n = \Xbar_n\)</span> and <span class="math inline">\(h(\mu) = \log(\mu)\)</span>. From basic calculus we know that <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 3.6 </strong></span>Let’s return to the iid sample <span class="math inline">\(X_1, \ldots, X_n\)</span> with mean <span class="math inline">\(\mu = \E[X_i]\)</span> and variance <span class="math inline">\(\sigma^2 = \V[X_i]\)</span>. From the CLT, we know that <span class="math inline">\(\sqrt{n}(\Xbar_n - \mu) \indist \N(0, \sigma^2)\)</span>. Suppose that we want to estimate <span class="math inline">\(\log(\mu)\)</span> so we use the plug-in estimator <span class="math inline">\(\log(\Xbar_n)\)</span> (assuming that <span class="math inline">\(X_i &gt; 0\)</span> for all <span class="math inline">\(i\)</span> so that we can actually take the log). What is the asymptotic distribution of this estimator? This is a situation where <span class="math inline">\(\widehat{\theta}_n = \Xbar_n\)</span> and <span class="math inline">\(h(\mu) = \log(\mu)\)</span>. From basic calculus we know that <span class="math display">\[
 h'(\mu) = \frac{\partial \log(\mu)}{\partial \mu} = \frac{1}{\mu},
 \]</span> so applying the delta method, we can determine that <span class="math display">\[
 \sqrt{n}\left(\log(\Xbar_n) - \log(\mu)\right) \indist \N\left(0,\frac{\sigma^2}{\mu^2} \right).
 \]</span></p>
 </div>
 <div id="exm-exp" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.6 </strong></span>What about if we want to estimate the <span class="math inline">\(\exp(\mu)\)</span> with <span class="math inline">\(\exp(\Xbar_n)\)</span>? Recall that <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 3.7 </strong></span>What about if we want to estimate the <span class="math inline">\(\exp(\mu)\)</span> with <span class="math inline">\(\exp(\Xbar_n)\)</span>? Recall that <span class="math display">\[
 h'(\mu) = \frac{\partial \exp(\mu)}{\partial \mu} = \exp(\mu)
 \]</span> so applying the delta method, we have <span class="math display">\[
-\sqrt{n}\left(\exp(\Xbar_n) - \exp(\mu)\right) \indist \N(0, \exp(2mu)\sigma^2),
+\sqrt{n}\left(\exp(\Xbar_n) - \exp(\mu)\right) \indist \N(0, \exp(2\mu)\sigma^2),
 \]</span> since <span class="math inline">\(\exp(\mu)^2 = \exp(2\mu)\)</span>.</p>
 </div>
 <p>Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. This is because we often will take two different estimators (or two different estimated parameters) and combine them to estimate another quantity. We now let <span class="math inline">\(\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))\)</span> map from <span class="math inline">\(\mathbb{R}^k \to \mathbb{R}^m\)</span> and be continuously differentiable (we make the function bold since it ). It will help us use more compact matrix notation if we introduce a <span class="math inline">\(m \times k\)</span> Jacobian matrix of all partial derivatives <span class="math display">\[
@@ -618,6 +782,7 @@ h'(\mu) = \frac{\partial \exp(\mu)}{\partial \mu} = \exp(\mu)
 <ol>
 <li id="fn1"><p>Due to Wasserman (2004), Chapter 5.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Technically, a sequence can also convergence in probability to another random variable, but the use case of converging to a single number is much more commonly used in evaluating estimators.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Implicit in this analyis is that the estimate of the standard error is consistent.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
