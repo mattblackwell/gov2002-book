@@ -171,11 +171,14 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#deriving-the-ols-estimator" id="toc-deriving-the-ols-estimator" class="nav-link active" data-scroll-target="#deriving-the-ols-estimator"><span class="toc-section-number">6.1</span>  Deriving the OLS estimator</a></li>
-  <li><a href="#bivariate-ols" id="toc-bivariate-ols" class="nav-link" data-scroll-target="#bivariate-ols"><span class="toc-section-number">6.2</span>  Bivariate OLS</a></li>
-  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="toc-section-number">6.3</span>  Model fit</a></li>
-  <li><a href="#matrix-form-of-ols" id="toc-matrix-form-of-ols" class="nav-link" data-scroll-target="#matrix-form-of-ols"><span class="toc-section-number">6.4</span>  Matrix form of OLS</a></li>
-  <li><a href="#projection" id="toc-projection" class="nav-link" data-scroll-target="#projection"><span class="toc-section-number">6.5</span>  Projection</a></li>
-  <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="toc-section-number">6.6</span>  Outliers, leverage points, and influential observations</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="toc-section-number">6.2</span>  Model fit</a></li>
+  <li><a href="#matrix-form-of-ols" id="toc-matrix-form-of-ols" class="nav-link" data-scroll-target="#matrix-form-of-ols"><span class="toc-section-number">6.3</span>  Matrix form of OLS</a></li>
+  <li><a href="#sec-rank" id="toc-sec-rank" class="nav-link" data-scroll-target="#sec-rank"><span class="toc-section-number">6.4</span>  Rank, linear independence, and multicollinearity</a></li>
+  <li><a href="#ols-coefficients-for-binary-and-categorical-regressors" id="toc-ols-coefficients-for-binary-and-categorical-regressors" class="nav-link" data-scroll-target="#ols-coefficients-for-binary-and-categorical-regressors"><span class="toc-section-number">6.5</span>  OLS coefficients for binary and categorical regressors</a></li>
+  <li><a href="#projection-and-geometry-of-least-squares" id="toc-projection-and-geometry-of-least-squares" class="nav-link" data-scroll-target="#projection-and-geometry-of-least-squares"><span class="toc-section-number">6.6</span>  Projection and geometry of least squares</a></li>
+  <li><a href="#projection-and-annihilator-matrices" id="toc-projection-and-annihilator-matrices" class="nav-link" data-scroll-target="#projection-and-annihilator-matrices"><span class="toc-section-number">6.7</span>  Projection and annihilator matrices</a></li>
+  <li><a href="#residual-regression" id="toc-residual-regression" class="nav-link" data-scroll-target="#residual-regression"><span class="toc-section-number">6.8</span>  Residual regression</a></li>
+  <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="toc-section-number">6.9</span>  Outliers, leverage points, and influential observations</a></li>
   </ul>
 </nav>
     </div>
@@ -258,6 +261,16 @@ $$
 
 <p>In this chapter we explore the most widely used estimator for population linear regressions: <strong>ordinary least squares</strong> (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is due in part to its easy of interpretation, its computational simplicity, and its statistical efficiency.</p>
 <p>Often, OLS is introduced along with an assumption of a linear model for the conditional expectation. This chapter purposefully avoids this to emphasize that OLS has a perfectly valid target of inference, the best linear projection, regardless of the linearity of the conditional expectation function.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ajr-scatter" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07_least_squares_files/figure-html/fig-ajr-scatter-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.1: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <section id="deriving-the-ols-estimator" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="deriving-the-ols-estimator"><span class="header-section-number">6.1</span> Deriving the OLS estimator</h2>
 <p>In the last chapter on the linear model and the best linear projection, we operated purely in the population, not samples. We derived the population regression coefficients <span class="math inline">\(\bfbeta\)</span>, which represented the coefficients on the line of best fit in the population. We now take these as our quantity of interest.</p>
@@ -278,33 +291,260 @@ Assumption
 \bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]
 \]</span></p>
 <p>We will consider two different ways to derive the OLS estimator for these coefficients, both of which are versions of the plug-in principle. The first approach is to use the closed form representation of the coefficients and replace any expectations with sample means, <span class="math display">\[
-\bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right)
-\]</span></p>
+\bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right),
+\]</span> which exists if <span class="math inline">\(\sum_{i=1}^n \X_i\X_i'\)</span> is <strong>positive definite</strong> and thus invertible. We will return to this assumption below.</p>
 <p>In a simple bivariate linear projection model <span class="math inline">\(m(X_{i}) = \beta_0 + \beta_1X_{i}\)</span>, we saw that the population slope was <span class="math inline">\(\beta_1= \text{cov}(Y_{i},X_{i})/ \V[X_{i}]\)</span> and this approach would have our estimator for the slope be the ratio of the sample covariance of <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(X_i\)</span> to the sample variance of <span class="math inline">\(X_i\)</span>, or <span class="math display">\[
 \widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
 \]</span></p>
 <p>This plug-in approach is very widely applicable and tends to have nice properties in large samples under iid data. But this approach also hides some of the geometry of the setting.</p>
 <p>The second approach is based on plugging in sample means not to the closed-form expression for the coefficients, but to the optimization problem itself. This approach is called the <strong>least squares</strong> estimator because it is defined as the coefficients that minimize the empirical (or sample) squared prediction error, <span class="math display">\[
-\bhat = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2.
-\]</span> To distinguish it from other, more complicated least squares estimators, this is often called the <strong>ordinary least squares</strong> estimator or OLS.</p>
+\bhat  = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
+\]</span> where, <span class="math display">\[
+SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
+\]</span> is the sum of the squared residuals. To distinguish it from other, more complicated least squares estimators, this is often called the <strong>ordinary least squares</strong> estimator or OLS. Notice that</p>
+<p>Let’s solve this minimization problem! We can write down the first-order conditions as <span class="math display">\[
+0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = 2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) - 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
+\]</span> We can rearrange this system of equations to <span class="math display">\[
+\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat = \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right).
+\]</span> To obtain the solution for <span class="math inline">\(\bhat\)</span>, notice that <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is a <span class="math inline">\((k+1) \times (k+1)\)</span> matrix and <span class="math inline">\(\bhat\)</span> and <span class="math inline">\(\sum_{i=1}^{n} \X_{i}Y_{i}\)</span> are both <span class="math inline">\(k+1\)</span> length column vectors. If <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is invertible, then we can multiply both sides of this equation by that inverse to arrive at <span class="math display">\[
+\bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right),
+\]</span> which is the same expression as the plug-in estimator (after canceling the <span class="math inline">\(1/n\)</span> terms). To confirm that we have found a minimum, we also need to check the second-order condition, <span class="math display">\[
+\frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right) &gt; 0.
+\]</span> What does it mean for a matrix to be “positive”? In matrix algebra, this condition means that the matrix <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is <strong>positive definite</strong>, a condition that we discuss in <a href="#sec-rank"><span>Section&nbsp;6.4</span></a>.</p>
+<p>Using either the plug-in approach or the least squares approach, we arrive at the same estimator for the coefficients of the best linear predictor/population linear regression.</p>
+<div id="thm-ols" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6.1 </strong></span>If the <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is positive definite, then the ordinary least squares estimator is <span class="math display">\[
+\bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right).
+\]</span></p>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Formula for the OLS slopes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Almost all regression will contain an intercept term which is usually represented as a constant 1 in the covariate vector. It is also possible to separate out the intercept to arrive at the set of coefficients on the “real” covariates: <span class="math display">\[
+Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}
+\]</span> Defined this way, we can write the OLS estimator for the “slopes” on <span class="math inline">\(\X_i\)</span> as the OLS estimator with all variables demeaned <span class="math display">\[
+\bhat = \left(\frac{1}{n} \sum_{i=1}^{n} (\X_{i} - \overline{\X})(\X_{i} - \overline{\X})'\right) \left(\frac{1}{n} \sum_{i=1}^{n}(\X_{i} - \overline{\X})(Y_{i} - \overline{Y})\right)
+\]</span> which is the inverse of the sample covariance matrix of <span class="math inline">\(\X_i\)</span> times the sample covariance of <span class="math inline">\(\X_i\)</span> and <span class="math inline">\(Y_i\)</span>. The intercept is <span class="math display">\[
+\widehat{\alpha} = \overline{Y} - \overline{\X}'\bhat.
+\]</span></p>
+</div>
+</div>
 <p>When dealing with actual data, we refer to the prediction errors <span class="math inline">\(\widehat{e}_{i} = Y_i - \X_i'\bhat\)</span> as the <strong>residuals</strong> and the predicted value itself, <span class="math inline">\(\widehat{Y}_i = \X_{i}'\bhat\)</span> is also called the <strong>fitted value</strong>. With the population linear regression, we saw that the projection errors <span class="math inline">\(e_i = Y_i - \X_i'\bfbeta\)</span> were mean zero and uncorrelated with the covariates <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span>. The residuals have a similar property with respect to the covariates in the sample: <span class="math display">\[
 \sum_{i=1}^n \X_i\widehat{e}_i = 0.
 \]</span> The residuals are <em>exactly</em> uncorrelated with the covariates (when the covariates include a constant/intercept term). This is mechanically true of the OLS estimator.</p>
+<p><a href="#fig-ssr-comp">Figure&nbsp;<span>6.2</span></a> shows how OLS works in the bivariate case. Here we see three possible regression lines and the sum of the squared residuals for each of these lines. The goal of OLS is to find the line that minimizes the function on the right.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ssr-comp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07_least_squares_files/figure-html/fig-ssr-comp-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.2: Different possible lines and their corresponding sum of squared residuals.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="bivariate-ols" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="bivariate-ols"><span class="header-section-number">6.2</span> Bivariate OLS</h2>
+<section id="model-fit" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">6.2</span> Model fit</h2>
+<p>We have learned how to use OLS to obtain an estimate of the best linear predictor, but we may ask how good is that prediction? Does using <span class="math inline">\(\X_i\)</span> actually help us predict <span class="math inline">\(Y_i\)</span>? To investigate this, we can consider two different prediction errors: those using covariates and those that do not.</p>
+<p>We have already seen the prediction error when using the covariates, it is just the <strong>sum of the squared residuals</strong> <span class="math display">\[
+SSR = \sum_{i=1}^n (Y_i - \X_{i}'\bhat)^2.
+\]</span> Recall that the best predictor for <span class="math inline">\(Y_i\)</span> without any covariates is simply its sample mean, <span class="math inline">\(\overline{Y}\)</span> and so the prediction error without covariates is what we call the <strong>total sum of squares</strong>, <span class="math display">\[
+TSS = \sum_{i=1}^n (Y_i - \overline{Y})^2.
+\]</span> <a href="#fig-ssr-vs-tss">Figure&nbsp;<span>6.3</span></a> shows the difference between these two types of prediction errors.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ssr-vs-tss" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07_least_squares_files/figure-html/fig-ssr-vs-tss-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.3: Total sum of squares vs sum of squared residuals</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can determine how much adding covariates improves our prediction ability by looking at the <strong>proportion reduction in prediction error</strong> that see when using the covariates. This value, called the <strong>coefficient of determination</strong> or <span class="math inline">\(R^2\)</span> is simply <span class="math display">\[
+R^2 = \frac{TSS - SSR}{TSS} = 1-\frac{SSR}{TSS},
+\]</span> which is the reduction in error moving from <span class="math inline">\(\overline{Y}\)</span> to <span class="math inline">\(\X_i'\bhat\)</span> as the predictor relative to the prediction error using <span class="math inline">\(\overline{Y}\)</span>. We can think of this as the fraction of the total prediction error eliminated by using <span class="math inline">\(\X_i\)</span>. One thing to note is that OLS will <em>always</em> improve in-sample fit so that <span class="math inline">\(TSS \geq SSR\)</span> even if <span class="math inline">\(\X_i\)</span> is unrelated to <span class="math inline">\(Y_i\)</span>. This is because the whole point of OLS is minimize SSR and it will do that even it is just fitting to noise.</p>
+<p>Since regression always improves in-sample fit, <span class="math inline">\(R^2\)</span> will be bounded between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(\X_i\)</span> are perfectly orthogonal in the data (this is very unlikely to occur because there will likely be some very small relationship by random chance). A value of 1 indicates a perfect linear fit.</p>
 </section>
-<section id="model-fit" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">6.3</span> Model fit</h2>
+<section id="matrix-form-of-ols" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="matrix-form-of-ols"><span class="header-section-number">6.3</span> Matrix form of OLS</h2>
+<p>While we derived the OLS estimator above, there is a much more common representation of the estimator that relies on vectors and matrices. We usually write the linear model for a generic unit, <span class="math inline">\(Y_i = \X_i'\bfbeta + e_i\)</span>, but obviously there are <span class="math inline">\(n\)</span> of these equations, <span class="math display">\[
+\begin{aligned}
+  Y_1 &amp;= \X_1'\bfbeta + e_1 \\
+  Y_2 &amp;= \X_2'\bfbeta + e_2 \\
+  &amp;\vdots \\
+  Y_n &amp;= \X_n'\bfbeta + e_n \\
+\end{aligned}
+\]</span> We can write this system of equations in a more compact form using matrix algebra. In particular, let’s combine the variables here into random vectors/matrices: <span class="math display">\[
+\mb{Y} = \begin{pmatrix}
+Y_1 \\ Y_2 \\ \vdots \\ Y_n
+  \end{pmatrix}, \quad
+  \mathbb{X} =  \begin{pmatrix}
+\X'_1 \\
+\X'_2 \\
+\vdots \\
+\X'_n
+  \end{pmatrix} =
+  \begin{pmatrix}
+    1 &amp; X_{11} &amp; X_{12} &amp; \cdots &amp; X_{1k} \\
+    1 &amp; X_{21} &amp; X_{22} &amp; \cdots &amp; X_{2k} \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+    1 &amp; X_{n1} &amp; X_{n2} &amp; \cdots &amp; X_{nk} \\
+  \end{pmatrix},
+  \quad
+  \mb{e} = \begin{pmatrix}
+e_1 \\ e_2 \\ \vdots \\ e_n
+  \end{pmatrix}
+\]</span> Then we can write the above system of equations as <span class="math display">\[
+\mb{Y} = \mathbb{X}\bfbeta + \mb{e},
+\]</span> where notice now that <span class="math inline">\(\mathbb{X}\)</span> is a <span class="math inline">\(n \times (k+1)\)</span> matrix and <span class="math inline">\(\bfbeta\)</span> is a <span class="math inline">\(k+1\)</span> length column vector.</p>
+<p>A key link between the definition of OLS above to the matrix notation comes from representing sums in matrix form. In particular, we have <span class="math display">\[
+\begin{aligned}
+  \sum_{i=1}^n \X_i\X_i' &amp;= \Xmat'\Xmat \\
+  \sum_{i=1}^n \X_iY_i &amp;= \Xmat'\mb{Y},
+\end{aligned}
+\]</span> which means we can write the OLS estimator in the more recognizable form as <span class="math display">\[
+\bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1}  \mathbb{X}'\mb{Y}.
+\]</span></p>
+<p>Of course we can also define the vector of residuals, <span class="math display">\[
+\widehat{\mb{e}} = \mb{Y} - \mathbb{X}\bhat = \left[
+\begin{array}{c}
+    Y_1 \\
+    Y_2 \\
+    \vdots \\
+    Y_n
+    \end{array}
+\right]  -
+\left[
+\begin{array}{c}
+    1\widehat{\beta}_0  + X_{11}\widehat{\beta}_1 +  X_{12}\widehat{\beta}_2 + \dots + X_{1k} \widehat{\beta}_k \\
+    1\widehat{\beta}_0 + X_{21}\widehat{\beta}_1 + X_{22}\widehat{\beta}_2  + \dots + X_{2k}\widehat{\beta}_k \\
+   \vdots  \\
+   1\widehat{\beta}_0 + X_{n1}\widehat{\beta}_1 + X_{n2}\widehat{\beta}_2  + \dots + X_{nk}\widehat{\beta}_k
+\end{array}
+\right],
+\]</span> and so the sum of the squared residuals in this case becomes <span class="math display">\[
+SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} =  (\mb{Y} - \mathbb{X}\bfbeta)'(\mb{Y} - \mathbb{X}\bfbeta),
+\]</span> where the double vertical lines mean take the Euclidean norm of the argument, <span class="math inline">\(\Vert \mb{z} \Vert = \sqrt{\sum_{i=1}^n z_i^{2}}\)</span>. The OLS minimization problem then is <span class="math display">\[
+\bhat = \argmin_{\mb{b} \in \mathbb{R}^{(k+1)}}\; \Vert\mb{Y} - \mathbb{X}\mb{b}\Vert^{2}
+\]</span> Finally, we can write the orthogonality of the covariates and the residuals as <span class="math display">\[
+\mathbb{X}'\widehat{\mb{e}} = \sum_{i=1}^{n} \X_{i}\widehat{e}_{i} = 0.
+\]</span></p>
 </section>
-<section id="matrix-form-of-ols" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="matrix-form-of-ols"><span class="header-section-number">6.4</span> Matrix form of OLS</h2>
+<section id="sec-rank" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-rank"><span class="header-section-number">6.4</span> Rank, linear independence, and multicollinearity</h2>
+<p>When introducing the OLS esitmator, we noted that it will exist when <span class="math inline">\(\sum_{i=1}^n \X_i\X_i'\)</span> is positive definite. This assumption is often stated as “no multicollinearity” or that the matrix <span class="math inline">\(\mathbb{X}\)</span> is full column rank, meaning that <span class="math inline">\(\text{rank}(\mathbb{X}) = (k+1)\)</span>, where <span class="math inline">\(k+1\)</span> is the number of columns of <span class="math inline">\(\mathbb{X}\)</span>. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix and <strong>linear independence</strong> means that if <span class="math inline">\(\mathbb{X}\mb{b} = 0\)</span> if and only if <span class="math inline">\(\mb{b}\)</span> is a column vector of 0s. In other words, we have <span class="math display">\[
+b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0,  
+\]</span> where <span class="math inline">\(\mathbb{X}_j\)</span> is the <span class="math inline">\(j\)</span>th column of <span class="math inline">\(\mathbb{X}\)</span>. Thus, full column rank says that all of the columns are linearly independent or that there is no “multicollinearity.”</p>
+<p>How could this be violated? Suppose that we accidentally included a linear function of one variable so that <span class="math inline">\(\mathbb{X}_2 = 2\mathbb{X}_1\)</span>. Then we have, <span class="math display">\[
+\begin{aligned}
+  \mathbb{X}\mb{b} &amp;= b_{1}\mathbb{X}_{1} + b_{2}2\mathbb{X}_1+ b_{3}\mathbb{X}_{3}+ \cdots + b_{k+1}\mathbb{X}_{k+1} \\
+  &amp;= (b_{1} + 2b_{2})\mathbb{X}_{1} + b_{3}\mathbb{X}_{3} + \cdots + b_{k+1}\mathbb{X}_{k+1}
+\end{aligned}
+\]</span> In this case, we can have this expression equal to 0 when <span class="math inline">\(b_3 = b_4 = \cdots = b_{k+1} = 0\)</span> and <span class="math inline">\(b_1 = -2b_2\)</span>. Thus, the collection of columns is linearly dependent so we know that the rank of <span class="math inline">\(\mathbb{X}\)</span> must be less than full column rank (that is, less than <span class="math inline">\(k+1\)</span>). Hopefully it is also clear that if we removed the problematic column <span class="math inline">\(\mathbb{X}_2\)</span>, the resulting matrix would have <span class="math inline">\(k\)</span> linearly independent columns, implying that <span class="math inline">\(\mathbb{X}\)</span> is rank <span class="math inline">\(k\)</span>.</p>
+<p>Why does this rank condition matter for the OLS estimator? A key property of full column rank matrices is that <span class="math inline">\(\Xmat\)</span> if of full column rank if and only if <span class="math inline">\(\Xmat'\Xmat\)</span> is non-singular and a matrix is invertible if and only if it is non-singular. Thus, the columns of <span class="math inline">\(\Xmat\)</span> being linearly independent means that the inverse <span class="math inline">\((\Xmat'\Xmat)^{-1}\)</span> exists and so does <span class="math inline">\(\bhat\)</span>. Further, this full rank condition also implies that <span class="math inline">\(\Xmat'\Xmat = \sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is positive definite, implying that the estimator is truly finding the minimal sum of squared residuals.</p>
+<p>What are common situations that lead to violations of no multicollinearity? We have seen one above with one variable being a linear function of another. But this problem can come out in more sutble ways. Suppose that we have a set of dummy variables that correspond to a single categorical variable like region of the country. In the US, this might mean we have <span class="math inline">\(X_{i1} = 1\)</span> for units in the West (0 otherwise), <span class="math inline">\(X_{i2} = 1\)</span> for units in the Midwest (0 otherwise), <span class="math inline">\(X_{i3} = 1\)</span> for units in the South (0 otherwise), and <span class="math inline">\(X_{i4} = 1\)</span> for units in the Northeast (0 otherwise). Each unit has to be in one of these 4 regions, so there is a linear dependence between these variables, <span class="math display">\[
+X_{i4} = 1 - X_{i1} - X_{i2} - X_{i3}.
+\]</span> That is, if I know that you are not in the West, Midwest, or South regions, I know for a fact that you are in the Northeast. If we tried to include all of these variables into our regression with an intercept, we would get a linear dependence. (Note the 1 in the relationship between <span class="math inline">\(X_{i4}\)</span> and the other variables, that’s why there will be linear dependence when the constant is included.) Thus, we usually omit one dummy variable from each categorical variable. In that case, the coefficients on the remaining dummies are differences in mean between that category and the omitted one (perhaps conditional on other variables included, if they are included). So if we omitted <span class="math inline">\(X_{i4}\)</span>, then the coefficient on <span class="math inline">\(X_{i1}\)</span> would be the difference in mean outcomes between units in the West and Northeast regions.</p>
+<p>Another way collinearity can occur is if you include both an intercept term and a variable that does not vary. This can often occur if we mistakenly subset our data to, say, the West region but still include the West dummy variable in the regression.</p>
+<p>Finally, note that most statistical software packages will “solve” the multicollinearity by arbitrarily removing as many linearly dependent covariates as is necessary to achieve to full rank. In those cases, R will show the estimated coefficients as <code>NA</code>.</p>
 </section>
-<section id="projection" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="projection"><span class="header-section-number">6.5</span> Projection</h2>
+<section id="ols-coefficients-for-binary-and-categorical-regressors" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="ols-coefficients-for-binary-and-categorical-regressors"><span class="header-section-number">6.5</span> OLS coefficients for binary and categorical regressors</h2>
+<p>Suppose that the covariates include just the intercept and a single binary variable, <span class="math inline">\(\X_i = (1\; X_{i})'\)</span>, where <span class="math inline">\(X_i \in \{0,1\}\)</span>. In this case, the OLS coefficient on <span class="math inline">\(X_i\)</span>, <span class="math inline">\(\widehat{\beta_{1}}\)</span>, is exactly equal to the difference in sample means of <span class="math inline">\(Y_i\)</span> in the <span class="math inline">\(X_i = 1\)</span> group and the <span class="math inline">\(X_i = 0\)</span> group: <span class="math display">\[
+\widehat{\beta}_{1} = \frac{\sum_{i=1}^{n} X_{i}Y_{i}}{\sum_{i=1}^{n} X_{i}} - \frac{\sum_{i=1}^{n} (1 - X_{i})Y_{i}}{\sum_{i=1}^{n} 1- X_{i}} = \overline{Y}_{X =1} - \overline{Y}_{X=0}
+\]</span> This is not an approximation. It holds exactly for any sample size.</p>
+<p>We can generalize this ideal to discrete variables more broadly. Suppose we have our regions variables from the last section and include in our covariates a constant and the dummies for the West, Midwest, and South regions. Then coefficient on the West dummy will be exactly <span class="math display">\[
+\widehat{\beta}_{\text{west}} = \overline{Y}_{\text{west}} - \overline{Y}_{\text{northeast}},
+\]</span> which is exactly the difference in sample means of <span class="math inline">\(Y_i\)</span> between the West region and units in the “omitted region,” the Northeast.</p>
+<p>Note that these interpretations only hold when the regression consists solely of the binary variable or the set of categorical dummy variables. When other covariates are added to the model, these exact relationships fail to hold.</p>
 </section>
-<section id="outliers-leverage-points-and-influential-observations" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="outliers-leverage-points-and-influential-observations"><span class="header-section-number">6.6</span> Outliers, leverage points, and influential observations</h2>
+<section id="projection-and-geometry-of-least-squares" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="projection-and-geometry-of-least-squares"><span class="header-section-number">6.6</span> Projection and geometry of least squares</h2>
+<p>OLS has a very nice geometric interpretation that can add a lot of intuition for various aspects of the method. In this geometric approach, we view <span class="math inline">\(\mb{Y}\)</span> as an <span class="math inline">\(n\)</span>-dimesnional vector in <span class="math inline">\(\mathbb{R}^n\)</span>. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix <span class="math inline">\(\Xmat\)</span> that is closest to this vector in terms of the Euclidean distance (which is just the sum of squares).</p>
+<p>Let <span class="math inline">\(\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^2\}\)</span> be the <strong>column space</strong> of the matrix <span class="math inline">\(\Xmat\)</span>. This is the set of all linear combinations of the columns of <span class="math inline">\(\Xmat\)</span>, or the set of all possible linear predictions we could obtain from <span class="math inline">\(\Xmat\)</span>. Notice that the OLS fitted values, <span class="math inline">\(\Xmat\bhat\)</span>, is in this column space. If, as we assume, <span class="math inline">\(\Xmat\)</span> has full column rank of <span class="math inline">\(k+1\)</span>, then the column space <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> will be a <span class="math inline">\(k+1\)</span>-dimensional surface inside of the larger <span class="math inline">\(n\)</span>-dimensional space. If <span class="math inline">\(\Xmat\)</span> has 2 columns, then the column space will be a plane.</p>
+<p>Another interpretation of the OLS estimator is that it finds the linear predictor that is closest point in the column space of <span class="math inline">\(\Xmat\)</span> to the outcome vector <span class="math inline">\(\mb{Y}\)</span>. This is called the <strong>projection</strong> of <span class="math inline">\(\mb{Y}\)</span> onto <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>. <a href="#fig-projection">Figure&nbsp;<span>6.4</span></a> shows this projection for a case with <span class="math inline">\(n=3\)</span> and 2 columns in <span class="math inline">\(\Xmat\)</span>. The shaded blue region represents the plane of the column space of <span class="math inline">\(\Xmat\)</span> and we can see that <span class="math inline">\(\Xmat\bhat\)</span> is the closest point to <span class="math inline">\(\mb{Y}\)</span> in that space. That’s the whole ideal of the OLS estimator: find the linear combination of the columns of <span class="math inline">\(\Xmat\)</span> (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).</p>
+<div id="fig-projection" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="assets/img/projection-drawing.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.4: Projection of Y on the column space of the covariates</figcaption><p></p>
+</figure>
+</div>
+<p>From this figure we can also see that the residual vector, which is the difference between the <span class="math inline">\(\mb{Y}\)</span> vector and the projection <span class="math inline">\(\Xmat\bhat\)</span> is perpendicular or orthogonal to the column space of <span class="math inline">\(\Xmat\)</span>. This is a consequence of the residuals being orthogonal to all the columns of <span class="math inline">\(\Xmat\)</span>, <span class="math display">\[
+\Xmat'\mb{e} = 0,
+\]</span> as we established above. Being orthogonal to all the columns means it will be orthogonal to all linear combinations of the columns as well.</p>
+</section>
+<section id="projection-and-annihilator-matrices" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="projection-and-annihilator-matrices"><span class="header-section-number">6.7</span> Projection and annihilator matrices</h2>
+<p>Now that we have the idea of projection to the column space of <span class="math inline">\(\Xmat\)</span>, we can define a way to project any vector into that space. The <span class="math inline">\(n\times n\)</span> <strong>projection matrix</strong> <span class="math display">\[
+\mb{P}_{\Xmat} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat',
+\]</span> projects a vector into <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>. In particular, we can see that this gives us the fitted values for <span class="math inline">\(\mb{Y}\)</span>: <span class="math display">\[
+\mb{P}_{\Xmat}\mb{Y} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\mb{Y} = \Xmat\bhat.
+\]</span> Because we sometimes write the linear predictor as <span class="math inline">\(\widehat{\mb{Y}} = \Xmat\bhat\)</span>, the projection matrix is sometimes called the <strong>hat matrix</strong>. With either name, <span class="math inline">\(\mb{P}_{\Xmat}\)</span> gives the best linear predictor of whatever it is multiplied by in terms of the covariates. Intuitively, any vector that is already a linear combination of the columns of <span class="math inline">\(\Xmat\)</span> (so is in <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>) should be unaffected by this projection: the closest point in <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> to a point already in <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> it itself. We can also see this algebraically for any linear combination <span class="math inline">\(\Xmat\mb{c}\)</span> <span class="math display">\[
+\mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{c} = \Xmat\mb{c}
+\]</span> because <span class="math inline">\((\Xmat'\Xmat)^{-1} \Xmat'\Xmat\)</span> simplifies to the identity matrix. In particular, the projection of <span class="math inline">\(\Xmat\)</span> onto itself is just itself: <span class="math inline">\(\mb{P}_{\Xmat}\Xmat = \Xmat\)</span>.</p>
+<p>The second matrix related to projection is the <strong>annihilator matrix</strong>, <span class="math display">\[
+\mb{M}_{\Xmat} = \mb{I}_{n} - \mb{P}_{\Xmat},
+\]</span> which projects any vector into the orthogonal complement to the column space of <span class="math inline">\(\Xmat\)</span>, <span class="math display">\[
+\mathcal{C}^{\perp}(\Xmat) = \{\mb{c} \in \mathbb{R}^n\;:\; \Xmat\mb{c} = 0 \},
+\]</span> This is called the annihilator matrix because if you apply it to any linear combination of <span class="math inline">\(\Xmat\)</span>, you get 0: <span class="math display">\[
+\mb{M}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \Xmat\mb{c} = 0,
+\]</span> and in particular, <span class="math inline">\(\mb{M}_{\Xmat}\Xmat = 0\)</span>. Why should we care about this matrix? Perhaps a more evocative name might be the <strong>residual maker</strong> since it makes residuals when applied to <span class="math inline">\(\mb{Y}\)</span>, <span class="math display">\[
+\mb{M}_{\Xmat}\mb{Y} = (\mb{I}_{n} - \mb{P}_{\Xmat})\mb{Y} = \mb{Y} - \mb{P}_{\Xmat}\mb{Y} = \mb{Y} - \Xmat\bhat = \widehat{\mb{e}}.
+\]</span></p>
+<p>There are a number of key property properties of the projection matrix that are useful:</p>
+<ul>
+<li><p><span class="math inline">\(\mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}\)</span> are <strong>idempotent</strong>, which just means that when applied to itself it simply returns itself: <span class="math inline">\(\mb{P}_{\Xmat}\mb{P}_{\Xmat} = \mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}\mb{M}_{\Xmat} = \mb{M}_{\Xmat}\)</span>.</p></li>
+<li><p><span class="math inline">\(\mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}\)</span> are symmetric <span class="math inline">\(n \times n\)</span> matrices so that <span class="math inline">\(\mb{P}_{\Xmat}' = \mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}' = \mb{M}_{\Xmat}\)</span>.</p></li>
+<li><p>The rank of <span class="math inline">\(\mb{P}_{\Xmat}\)</span> is <span class="math inline">\(k+1\)</span> (the number of columns of <span class="math inline">\(\Xmat\)</span>) and the rank of <span class="math inline">\(\mb{M}_{\Xmat}\)</span> is <span class="math inline">\(n - k - 1\)</span>.</p></li>
+</ul>
+<p>We can use the projection and annihilator matrices to arrive at an orthogonal decomposition of the outcome vector: <span class="math display">\[
+\mb{Y} = \Xmat\bhat + \widehat{\mb{e}} = \mb{P}_{\Xmat}\mb{Y} + \mb{M}_{\Xmat}\mb{Y}.
+\]</span></p>
+</section>
+<section id="residual-regression" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="residual-regression"><span class="header-section-number">6.8</span> Residual regression</h2>
+<p>There are many situations where we can partition the covariates into two groups and we might wonder if it is possible to how to express or calculate the OLS coefficients for just one set of covariates. In particular, let the columns of <span class="math inline">\(\Xmat\)</span> be partitioned into <span class="math inline">\([\Xmat_{1} \Xmat_{2}]\)</span>, so that linear prediction we are estimating is <span class="math display">\[
+\mb{Y} = \Xmat_{1}\bfbeta_{1} + \Xmat_{2}\bfbeta_{2} + \mb{e},
+\]</span> with estimated coefficients and residuals <span class="math display">\[
+\mb{Y} = \Xmat_{1}\bhat_{1} + \Xmat_{2}\bhat_{2} + \widehat{\mb{e}}.
+\]</span></p>
+<p>We now document another way to obtain the estimator <span class="math inline">\(\bhat_1\)</span> from this regression using a technique called <strong>residual regression </strong>, <strong>partitioned regression</strong>, or the <strong>Frisch-Waugh-Lovell theorem</strong>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Residual regression approach
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The residual regression approach is:</p>
+<ol type="1">
+<li>Use OLS to regress <span class="math inline">\(\mb{Y}\)</span> on <span class="math inline">\(\Xmat_2\)</span> and obtain residuals <span class="math inline">\(\widetilde{\mb{e}}_2\)</span>.</li>
+<li>Use OLS to regress each column of <span class="math inline">\(\Xmat_1\)</span> on <span class="math inline">\(\Xmat_2\)</span> and obtain residuals <span class="math inline">\(\widetilde{\Xmat}_1\)</span>.</li>
+<li>Use OLS to regression <span class="math inline">\(\widetilde{\mb{e}}_{2}\)</span> on <span class="math inline">\(\widetilde{\Xmat}_1\)</span>.</li>
+</ol>
+</div>
+</div>
+<div id="thm-fwl" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6.2 (Frisch-Waugh-Lovell) </strong></span>The OLS coefficients from a regression of <span class="math inline">\(\widetilde{\mb{e}}_{2}\)</span> on <span class="math inline">\(\widetilde{\Xmat}_1\)</span> are equivalent to the coefficients on <span class="math inline">\(\Xmat_{1}\)</span> from the regression of <span class="math inline">\(\mb{Y}\)</span> on both <span class="math inline">\(\Xmat_{1}\)</span> and <span class="math inline">\(\Xmat_2\)</span>.</p>
+</div>
+<p>One implication of this theorem is the regression coefficient for a given variable captures the relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation that is orthogonal to those other covariates.</p>
+<p>While perhaps unexpected, this result might not appear particularly useful. We can just run the long regression right? This trick can be very useful in situations where <span class="math inline">\(\Xmat_2\)</span> consists of dummy variables (or “fixed effects”) for a categorical variable with a large number of categories. For example, if <span class="math inline">\(\Xmat_2\)</span> consists of indicators for the county of residence for a respondent, then that will have over 3,000 columns, meaning that direct calculation of the <span class="math inline">\(\bhat = (\bhat_{1}, \bhat_{2})\)</span> will require inverting a matrix that is bigger than <span class="math inline">\(3,000 \times 3,000\)</span>. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable is just the sample mean within each level of the variable. Thus, in this case, the residuals <span class="math inline">\(\widetilde{\mb{e}}_2\)</span> and <span class="math inline">\(\Xmat_1\)</span> can be computed by demeaning the outcome and <span class="math inline">\(\Xmat_1\)</span> within levels of the dummies in <span class="math inline">\(\Xmat_2\)</span>, which can be considerably faster computationally.</p>
+<p>Finally, there are data visualization reasons to use residual regression. It is often difficult to see if the linear functional form for some covariate is appropriate once you begin to control for other variables. One can check the relationship using this approach with a scatterplot of <span class="math inline">\(\widetilde{\mb{e}}_2\)</span> on <span class="math inline">\(\Xmat_1\)</span> (when it is a single column).</p>
+</section>
+<section id="outliers-leverage-points-and-influential-observations" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="outliers-leverage-points-and-influential-observations"><span class="header-section-number">6.9</span> Outliers, leverage points, and influential observations</h2>
 
 
 </section>
