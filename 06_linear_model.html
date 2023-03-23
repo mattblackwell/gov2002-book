@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -63,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -154,6 +155,11 @@ ul.task-list li input[type="checkbox"] {
   <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_ols_properties.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -171,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#why-do-we-need-models" id="toc-why-do-we-need-models" class="nav-link active" data-scroll-target="#why-do-we-need-models"><span class="toc-section-number">5.1</span>  Why do we need models?</a></li>
-  <li><a href="#population-linear-regression" id="toc-population-linear-regression" class="nav-link" data-scroll-target="#population-linear-regression"><span class="toc-section-number">5.2</span>  Population linear regression</a>
+  <li><a href="#sec-linear-projection" id="toc-sec-linear-projection" class="nav-link" data-scroll-target="#sec-linear-projection"><span class="toc-section-number">5.2</span>  Population linear regression</a>
   <ul class="collapse">
   <li><a href="#bivariate-linear-regression" id="toc-bivariate-linear-regression" class="nav-link" data-scroll-target="#bivariate-linear-regression"><span class="toc-section-number">5.2.1</span>  Bivariate linear regression</a></li>
   <li><a href="#beyond-linear-approximations" id="toc-beyond-linear-approximations" class="nav-link" data-scroll-target="#beyond-linear-approximations"><span class="toc-section-number">5.2.2</span>  Beyond linear approximations</a></li>
@@ -252,7 +258,7 @@ $$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></h1>
+<h1 class="title"><span id="sec-regression" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></h1>
 </div>
 
 
@@ -313,8 +319,8 @@ $$
 <p>We call the binning and linear assumptions on <span class="math inline">\(\mu(x)\)</span> <strong>functional form</strong> assumptions because restrict the class of functions that <span class="math inline">\(\mu(x)\)</span> can take. While powerful, these types of assumptions can muddy the roles of defining the quantity of interest and estimation. If our estimator <span class="math inline">\(\widehat{\mu}(x)\)</span> performs poorly, it will be difficult to tell if this is because the estimator is flawed in some way or because our functional form assumptions are incorrect.</p>
 <p>To help clarify these issues, we will pursue a different approach: understanding what linear regression can estimate well under minimal assumptions and then investigating how well this estimand approximates the true CEF.</p>
 </section>
-<section id="population-linear-regression" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="population-linear-regression"><span class="header-section-number">5.2</span> Population linear regression</h2>
+<section id="sec-linear-projection" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-linear-projection"><span class="header-section-number">5.2</span> Population linear regression</h2>
 <section id="bivariate-linear-regression" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="bivariate-linear-regression"><span class="header-section-number">5.2.1</span> Bivariate linear regression</h3>
 <p>Let’s set aside the idea of the conditional expectation function and instead focus on finding the <strong>linear</strong> function of a single covariate <span class="math inline">\(X_i\)</span> that best predicts the outcome. Remember that a linear function can be written <span class="math inline">\(a + bX_i\)</span>. The <strong>best linear predictor</strong> (BLP) or <strong>population linear regression</strong> of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(X_i\)</span> is defined as <span class="math display">\[

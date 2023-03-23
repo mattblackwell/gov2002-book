@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -126,6 +126,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -217,6 +218,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_ols_properties.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -245,7 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#deriving-confidence-intervals" id="toc-deriving-confidence-intervals" class="nav-link" data-scroll-target="#deriving-confidence-intervals"><span class="toc-section-number">3.8.1</span>  Deriving confidence intervals</a></li>
   <li><a href="#interpreting-confidence-intervals" id="toc-interpreting-confidence-intervals" class="nav-link" data-scroll-target="#interpreting-confidence-intervals"><span class="toc-section-number">3.8.2</span>  Interpreting confidence intervals</a></li>
   </ul></li>
-  <li><a href="#delta-method" id="toc-delta-method" class="nav-link" data-scroll-target="#delta-method"><span class="toc-section-number">3.9</span>  Delta method</a></li>
+  <li><a href="#sec-delta-method" id="toc-sec-delta-method" class="nav-link" data-scroll-target="#sec-delta-method"><span class="toc-section-number">3.9</span>  Delta method</a></li>
   </ul>
 </nav>
     </div>
@@ -716,8 +722,8 @@ L = \widehat{\theta}_{n} - z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}], \qu
 </div>
 </section>
 </section>
-<section id="delta-method" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="delta-method"><span class="header-section-number">3.9</span> Delta method</h2>
+<section id="sec-delta-method" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="sec-delta-method"><span class="header-section-number">3.9</span> Delta method</h2>
 <p>Suppose that we know that an estimator follows the CLT and so we have <span class="math display">\[
 \sqrt{n}\left(\widehat{\theta}_n - \theta  \right) \indist \N(0, V),
 \]</span> but we actually want to estimate <span class="math inline">\(h(\theta)\)</span> so we use the plug-in estimator, <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. It seems like we should be able to apply part 1 of <a href="#thm-indist-properties">Theorem&nbsp;<span>3.8</span></a>, the CLT established the large-sample distribution of the centered and scaled random sequence, <span class="math inline">\(\sqrt{n}(\widehat{\theta}_n - \theta)\)</span>, not to the original estimator itself like we would need to investigate the asymptotic distribution of <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. We can use a little bit of calculus to get an approximation to the distribution we need.</p>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./08_ols_properties.html" rel="next">
 <link href="./06_linear_model.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -63,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -154,6 +155,11 @@ ul.task-list li input[type="checkbox"] {
   <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_ols_properties.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -178,7 +184,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#projection-and-geometry-of-least-squares" id="toc-projection-and-geometry-of-least-squares" class="nav-link" data-scroll-target="#projection-and-geometry-of-least-squares"><span class="toc-section-number">6.6</span>  Projection and geometry of least squares</a></li>
   <li><a href="#projection-and-annihilator-matrices" id="toc-projection-and-annihilator-matrices" class="nav-link" data-scroll-target="#projection-and-annihilator-matrices"><span class="toc-section-number">6.7</span>  Projection and annihilator matrices</a></li>
   <li><a href="#residual-regression" id="toc-residual-regression" class="nav-link" data-scroll-target="#residual-regression"><span class="toc-section-number">6.8</span>  Residual regression</a></li>
-  <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="toc-section-number">6.9</span>  Outliers, leverage points, and influential observations</a></li>
+  <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="toc-section-number">6.9</span>  Outliers, leverage points, and influential observations</a>
+  <ul class="collapse">
+  <li><a href="#sec-leverage" id="toc-sec-leverage" class="nav-link" data-scroll-target="#sec-leverage"><span class="toc-section-number">6.9.1</span>  Leverage points</a></li>
+  <li><a href="#outliers-and-leave-one-out-regression" id="toc-outliers-and-leave-one-out-regression" class="nav-link" data-scroll-target="#outliers-and-leave-one-out-regression"><span class="toc-section-number">6.9.2</span>  Outliers and leave-one-out regression</a></li>
+  <li><a href="#influence-points" id="toc-influence-points" class="nav-link" data-scroll-target="#influence-points"><span class="toc-section-number">6.9.3</span>  Influence points</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -260,7 +271,7 @@ $$
 </header>
 
 <p>In this chapter we explore the most widely used estimator for population linear regressions: <strong>ordinary least squares</strong> (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is due in part to its easy of interpretation, its computational simplicity, and its statistical efficiency.</p>
-<p>Often, OLS is introduced along with an assumption of a linear model for the conditional expectation. This chapter purposefully avoids this to emphasize that OLS has a perfectly valid target of inference, the best linear projection, regardless of the linearity of the conditional expectation function.</p>
+<p>In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Often, OLS is introduced along with an assumption of a linear model for the conditional expectation, but this is unnecessary if we view the target of inference to be the best linear predictor. We discuss this point more fully in the next chapter.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-ajr-scatter" class="quarto-figure quarto-figure-center anchored">
@@ -545,8 +556,76 @@ Residual regression approach
 </section>
 <section id="outliers-leverage-points-and-influential-observations" class="level2" data-number="6.9">
 <h2 data-number="6.9" class="anchored" data-anchor-id="outliers-leverage-points-and-influential-observations"><span class="header-section-number">6.9</span> Outliers, leverage points, and influential observations</h2>
+<p>Given that OLS finds the coefficients that minimize the sum of the squared residuals, it is useful to ask how much impact each residual has on that solution. Let <span class="math inline">\(\bhat_{(-i)}\)</span> be the OLS estimates if were to omit unit <span class="math inline">\(i\)</span>. Intuitively, <strong>influential observations</strong> should be observations that have a large impact on the estimated coefficients so that <span class="math inline">\(\bhat_{(-i)} - \bhat\)</span> is large in absolute value.</p>
+<p>Under what conditions will we have influential observations? OLS obviously tries to minimize the sum of <strong>squared</strong> residuals, so it will move more to shrink larger residuals than smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will go through the means of the outcome and the covariates: <span class="math inline">\(\overline{Y} = \overline{\X}\bhat\)</span>. Thus, by definition, This means that when an observation is close to to the average of the covariates, <span class="math inline">\(\overline{\X}\)</span>, it cannot have that much influence because OLS forces the regression line to go through <span class="math inline">\(\overline{Y}\)</span>. Thus, we should look for influential points that have two properties:</p>
+<ol type="1">
+<li>Have high <strong>leverage</strong>, where leverage roughly measures how far <span class="math inline">\(\X_i\)</span> is from <span class="math inline">\(\overline{\X}\)</span>, and</li>
+<li>Be an <strong>outlier</strong> in the sense of having a large residual (if left out of the regression).</li>
+</ol>
+<p>We’ll take each of these in turn.</p>
+<section id="sec-leverage" class="level3" data-number="6.9.1">
+<h3 data-number="6.9.1" class="anchored" data-anchor-id="sec-leverage"><span class="header-section-number">6.9.1</span> Leverage points</h3>
+<p>We can define the <strong>leverage</strong> of an observation by <span class="math display">\[
+h_{ii} = \X_{i}'\left(\Xmat'\Xmat\right)^{-1}\X_{i},
+\]</span> which is the <span class="math inline">\(i\)</span>th diagonal entry of the projection matrix, <span class="math inline">\(\mb{P}_{\Xmat}\)</span>. Notice that <span class="math display">\[
+\widehat{\mb{Y}} = \mb{P}\mb{Y} \qquad \implies \qquad \widehat{Y}_i = \sum_{j=1}^n h_{ij}Y_j,
+\]</span> so that <span class="math inline">\(h_{ij}\)</span> is the importance of observation <span class="math inline">\(j\)</span> for the fitted value for observation <span class="math inline">\(i\)</span>. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of <span class="math inline">\(\X_{i}\)</span>. Roughly speaking, these values are the weighted distance <span class="math inline">\(\X_i\)</span> is from <span class="math inline">\(\overline{\X}\)</span>, where the weights normalize to the empirical variance/covariance structure of the covariates (so that the scale of each covariate is roughly the same). We can see this most clearly when we fit a simple linear regression (with 1 covariate and an intercept) with OLS, when the leverage is <span class="math display">\[
+h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overline{X})^2}
+\]</span></p>
+<p>Leverage values have three key properties:</p>
+<ol type="1">
+<li><span class="math inline">\(0 \leq h_{ii} \leq 1\)</span></li>
+<li><span class="math inline">\(h_{ii} \geq 1/n\)</span> if the model contains an intercept</li>
+<li><span class="math inline">\(\sum_{i=1}^{n} h_{ii} = k + 1\)</span></li>
+</ol>
+</section>
+<section id="outliers-and-leave-one-out-regression" class="level3" data-number="6.9.2">
+<h3 data-number="6.9.2" class="anchored" data-anchor-id="outliers-and-leave-one-out-regression"><span class="header-section-number">6.9.2</span> Outliers and leave-one-out regression</h3>
+<p>In the context of OLS, an <strong>outlier</strong> is an observation with a large prediction error for a particular OLS specification. <a href="#fig-outlier">Figure&nbsp;<span>6.5</span></a> shows an example of an outlier.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-outlier" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07_least_squares_files/figure-html/fig-outlier-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.5: An example of an outlier</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Intuitively, it seems as though we could use the residual <span class="math inline">\(\widehat{e}_i\)</span> to assess the prediction error for a given unit. But the residuals are not valid predictions because the OLS estimator is designed to make those as small as possible (in machine learning parlance, these were in the training set). In particular, if an outlier is influential, we already noted that it might “pull” the regression line toward it and the resulting residual might be quite small.</p>
+<p>To assess prediction errors more cleanly, we can use <strong>leave-one-out regression</strong> (LOO), which regresses<span class="math inline">\(\mb{Y}_{(-i)}\)</span> on <span class="math inline">\(\Xmat_{(-i)}\)</span>, where these omit unit <span class="math inline">\(i\)</span>: <span class="math display">\[
+\bhat_{(-i)} = \left(\Xmat'_{(-i)}\Xmat_{(-i)}\right)^{-1}\Xmat_{(-i)}\mb{Y}_{(-i)}.
+\]</span> We can then calculate LOO prediction errors as <span class="math display">\[
+\widetilde{e}_{i} = Y_{i} - \X_{i}'\bhat_{(-i)}.
+\]</span> Calculating these LOO prediction errors for each unit appears to be computationally costly because it seems as though we have to fit OLS <span class="math inline">\(n\)</span> times. Fortunately, there is a closed-form expression for the LOO coefficients and prediction errors in terms of the original regression, <span id="eq-loo-coefs"><span class="math display">\[
+\bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i \qquad \widetilde{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
+\tag{6.1}\]</span></span> We can see from this that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage will be close to <span class="math inline">\(\overline{\X}\)</span>, where the outcome values has relatively little impact on the OLS fit (because the regression line must go through <span class="math inline">\(\overline{Y}\)</span>).</p>
+</section>
+<section id="influence-points" class="level3" data-number="6.9.3">
+<h3 data-number="6.9.3" class="anchored" data-anchor-id="influence-points"><span class="header-section-number">6.9.3</span> Influence points</h3>
+<p>An influence point is an observation that has the power to change the coefficients and fitted values for a particular OLS specification. <a href="#fig-influence">Figure&nbsp;<span>6.6</span></a> shows an example of such a influence point.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-influence" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07_least_squares_files/figure-html/fig-influence-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.6: An example of an influence point</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One measure of influence is called DFBETA<span class="math inline">\(_i\)</span> measures how much <span class="math inline">\(i\)</span> changes the estimated coefficient vector <span class="math display">\[
+\bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
+\]</span> so there is one value for each observation-covariate pair. When divided by the standard error of the estimated coefficients, this is called DFBETA<strong>S</strong> (where the “S” is for standardized). These are helpful if we have a focus on a particular coefficient.</p>
+<p>When we want to summarize how much an observation matters for the fit, we can use a compact measure of the influence of an observation by comparing the fitted value from the full sample to the fitted value from the leave-one-out regression. Using the DFBETA above, we have <span class="math display">\[
+\widehat{Y}_i - \X_{i}\bhat_{(-1)} = \X_{i}'(\bhat -\bhat_{(-1)}) = \X_{i}'\left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i = h_{ii}\widetilde{e}_i,
+\]</span> so the influence of an observation is its leverage times how much of an outlier it is. This is sometimes called DFFIT (difference in fit). One transformation of this quantity, <strong>Cook’s distance</strong>, standardizes this by sum of the squared residuals: <span class="math display">\[
+D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\widetilde{e}_{i}^{2}}{\widehat{\mb{e}}'\widehat{\mb{e}}}.
+\]</span> Various rules exist for establishing cutoffs for identifying an observation as “influential” based on these metrics, but they tend to be rather ad hoc. In any case, it’s better to focus on the holistic question of “how much does this observation matter for my substantive interpretation” rather than the narrow question of a particular threshold.</p>
+<p>It’s all well and good to find influential points, but what should you do about it? The first thing to check is that the data is not corrupted in some way. Sometimes influence points occur because of a coding or data entry error. If you have control over that coding, you should obviously fix those errors. If the error appears to be in the data acquired from another source, you may considering removing the observation, but you should be extremely clear about this choice when writing up your analyses. Another approach is to consider a transformation of the dependent or independent variables like the natural logarithm that might dampen the effects of outliers. Finally, you might consider using methods that are robust to outliers.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -690,8 +769,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./08_ols_properties.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
