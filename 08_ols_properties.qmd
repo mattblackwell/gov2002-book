@@ -225,7 +225,7 @@ Why transform the data in this way? @fig-wald shows the contour plot of a hypoth
 ```{r}
 #| label: fig-wald
 #| echo: false
-
+#| fig.cap: "Hypothetical joint distribution of two slope coefficients. The circle is closer to the center of the distribution by the standard Euclidean distance, but the triangle is closer once you consider the joint distribution."
 mu <- c(1,2)
 sig <- matrix(c(1, 1.5, 1.5, 4), 2)
 bvnorm_contour <- function(val, mu, sigma) {
