@@ -1,4 +1,4 @@
-# Linear regression
+# Linear regression {#sec-regression}
 
 
 Regression refers to a collection of tools for assessing the relationship between a **outcome variable**, $Y_i$, and a set of **covariates**, $\X_i$. In particular, these tools focus on showing how the conditional mean of $Y_i$ varies as a function $\X_i$. For example, we may want to know how wait voting poll wait times vary as a function of some socioeconomic features of the precinct like income and racial composition. This is usually accomplished by estimating the **regression function** or **conditional expectation function** (CEF) of the outcome given the covariates, 
@@ -84,7 +84,7 @@ We call the binning and linear assumptions on $\mu(x)$ **functional form** assum
 
 To help clarify these issues, we will pursue a different approach: understanding what linear regression can estimate well under minimal assumptions and then investigating how well this estimand approximates the true CEF. 
 
-## Population linear regression
+## Population linear regression {#sec-linear-projection}
 
 ### Bivariate linear regression 
 

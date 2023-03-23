@@ -2,7 +2,7 @@
 
 In this chapter we explore the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is due in part to its easy of interpretation, its computational simplicity, and its statistical efficiency. 
 
-Often, OLS is introduced along with an assumption of a linear model for the conditional expectation. This chapter purposefully avoids this to emphasize that OLS has a perfectly valid target of inference, the best linear projection, regardless of the linearity of the conditional expectation function. 
+In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Often, OLS is introduced along with an assumption of a linear model for the conditional expectation, but this is unnecessary if we view the target of inference to be the best linear predictor. We discuss this point more fully in the next chapter. 
 
 
 ```{r}
@@ -453,3 +453,115 @@ Finally, there are data visualization reasons to use residual regression. It is 
 
 ## Outliers, leverage points, and influential observations
 
+Given that OLS finds the coefficients that minimize the sum of the squared residuals, it is useful to ask how much impact each residual has on that solution. Let $\bhat_{(-i)}$ be the OLS estimates if were to omit unit $i$. Intuitively,  **influential observations** should be observations that have a large impact on the estimated coefficients so that $\bhat_{(-i)} - \bhat$ is large in absolute value. 
+
+Under what conditions will we have influential observations? OLS obviously tries to minimize the sum of **squared** residuals, so it will move more to shrink larger residuals than smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will go through the means of the outcome and the covariates: $\overline{Y} = \overline{\X}\bhat$. Thus, by definition, This means that when an observation is close to to the average of the covariates, $\overline{\X}$, it cannot have that much influence because OLS forces the regression line to go through $\overline{Y}$. Thus, we should look for influential points that have two properties:
+
+1. Have high **leverage**, where leverage roughly measures how far $\X_i$ is from $\overline{\X}$, and
+2. Be an **outlier** in the sense of having a large residual (if left out of the regression).
+
+We'll take each of these in turn. 
+
+### Leverage points {#sec-leverage}
+
+We can define the **leverage** of an observation by
+$$ 
+h_{ii} = \X_{i}'\left(\Xmat'\Xmat\right)^{-1}\X_{i},
+$$
+which is the $i$th diagonal entry of the projection matrix, $\mb{P}_{\Xmat}$. Notice that 
+$$ 
+\widehat{\mb{Y}} = \mb{P}\mb{Y} \qquad \implies \qquad \widehat{Y}_i = \sum_{j=1}^n h_{ij}Y_j,
+$$
+so that $h_{ij}$ is the importance of observation $j$ for the fitted value for observation $i$. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of $\X_{i}$.  Roughly speaking, these values are the weighted distance $\X_i$ is from $\overline{\X}$, where the weights normalize to the empirical variance/covariance structure of the covariates (so that the scale of each covariate is roughly the same). We can see this most clearly when we fit a simple linear regression (with 1 covariate and an intercept) with OLS, when the leverage is
+$$ 
+h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overline{X})^2}
+$$
+
+Leverage values have three key properties:
+
+1. $0 \leq h_{ii} \leq 1$
+2. $h_{ii} \geq 1/n$ if the model contains an intercept
+2. $\sum_{i=1}^{n} h_{ii} = k + 1$
+
+### Outliers and leave-one-out regression
+
+In the context of OLS, an **outlier** is an observation with a large prediction error for a particular OLS specification. @fig-outlier shows an example of an outlier. 
+
+```{r}
+#| label: fig-outlier
+#| echo: false
+#| fig.cap: An example of an outlier
+
+set.seed(02138)
+x <- rnorm(100, 0, 1)
+y <- 0.2 * x + rnorm(100, 0, 1)
+x <- c(x, 1)
+y <- c(y, 7)
+par(mar = c(2.1, 2.1, 0.1, 0.1))
+plot(x,y, pch = 19, col = ifelse(1:101 != 101, "grey50", "indianred"),xlab="",ylab="",
+     cex = ifelse(1:101 != 101, 1, 1.5), bty = "n", las = 1, xlim = c(-4.5, 4.5))
+abline(lm(y~x), col = "dodgerblue", lwd = 3)
+abline(lm(y[1:100] ~ x[1:100]), col = "indianred", lwd = 3)
+text(3.5, -0.35, "Without outlier", col = "indianred")
+text(3.5, 1.25, "Full sample", col = "dodgerblue")
+text(1, 7, "Outlier", pos = 2, col = "indianred")
+```
+
+Intuitively, it seems as though we could use the residual $\widehat{e}_i$ to assess the prediction error for a given unit. But the residuals are not valid predictions because the OLS estimator is designed to make those as small as possible (in machine learning parlance, these were in the training set). In particular, if an outlier is influential, we already noted that it might "pull" the regression line toward it and the resulting residual might be quite small. 
+
+To assess prediction errors more cleanly, we can use **leave-one-out regression** (LOO), which regresses$\mb{Y}_{(-i)}$ on $\Xmat_{(-i)}$, where these omit unit $i$:
+$$ 
+\bhat_{(-i)} = \left(\Xmat'_{(-i)}\Xmat_{(-i)}\right)^{-1}\Xmat_{(-i)}\mb{Y}_{(-i)}.
+$$
+We can then calculate LOO prediction errors as
+$$ 
+\widetilde{e}_{i} = Y_{i} - \X_{i}'\bhat_{(-i)}.
+$$
+Calculating these LOO prediction errors for each unit appears to be computationally costly because it seems as though we have to fit OLS $n$ times. Fortunately, there is a closed-form expression for the LOO coefficients and prediction errors in terms of the original regression, 
+$$ 
+\bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i \qquad \widetilde{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
+$$ {#eq-loo-coefs}
+We can see from this that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage will be close to $\overline{\X}$, where the outcome values has relatively little impact on the OLS fit (because the regression line must go through $\overline{Y}$). 
+
+### Influence points
+
+An influence point is an observation that has the power to change the coefficients and fitted values for a particular OLS specification. @fig-influence shows an example of such a influence point. 
+
+```{r}
+#| label: fig-influence
+#| echo: false
+#| fig.cap: An example of an influence point
+set.seed(02138)
+x <- rnorm(100, 0, 1)
+y <- 0.2 * x + rnorm(100, 0, 1)
+x <- c(x, 7)
+y <- c(y, 7)
+par(mar = c(2.1, 2.1, 0.1, 0.1))
+plot(x,y, pch = 19, col = ifelse(1:101 != 101, "grey50", "indianred"),
+     cex = ifelse(1:101 != 101, 1, 1.5), bty = "n", las = 1, xlim = c(-4,8))
+abline(lm(y~x), col = "dodgerblue", lwd = 3)
+abline(lm(y[1:100] ~ x[1:100]), col = "indianred", lwd = 3)
+text(4, -0.1, "Without influence point", pos = 4, col = "indianred")
+text(5, 2, "Full sample", pos = 2, col = "dodgerblue")
+text(7, 7, "Influence Point", pos = 1, col = "indianred")
+```
+
+One measure of influence is called DFBETA$_i$ measures how much $i$ changes the estimated coefficient vector
+$$ 
+\bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
+$$
+so there is one value for each observation-covariate pair. When divided by the standard error of the estimated coefficients, this is called DFBETA**S** (where the "S" is for standardized). These are helpful if we have a focus on a particular coefficient.  
+
+
+When we want to summarize how much an observation matters for the fit, we can use a compact measure of the influence of an observation by comparing the fitted value from the full sample to the fitted value from the leave-one-out regression. Using the DFBETA above, we have
+$$ 
+\widehat{Y}_i - \X_{i}\bhat_{(-1)} = \X_{i}'(\bhat -\bhat_{(-1)}) = \X_{i}'\left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i = h_{ii}\widetilde{e}_i,
+$$
+so the influence of an observation is its leverage times how much of an outlier it is. This is sometimes called DFFIT (difference in fit). One transformation of this quantity, **Cook's distance**, standardizes this by sum of the squared residuals:
+$$ 
+D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\widetilde{e}_{i}^{2}}{\widehat{\mb{e}}'\widehat{\mb{e}}}.
+$$
+Various rules exist for establishing cutoffs for identifying an observation as "influential" based on these metrics, but they tend to be rather ad hoc. In any case, it's better to focus on the holistic question of "how much does this observation matter for my substantive interpretation" rather than the narrow question of a particular threshold. 
+
+
+It's all well and good to find influential points, but what should you do about it? The first thing to check is that the data is not corrupted in some way. Sometimes influence points occur because of a coding or data entry error. If you have control over that coding, you should obviously fix those errors. If the error appears to be in the data acquired from another source, you may considering removing the observation, but you should be extremely clear about this choice when writing up your analyses. Another approach is to consider a transformation of the dependent or independent variables like the natural logarithm that might dampen the effects of outliers. Finally, you might consider using methods that are robust to outliers.  

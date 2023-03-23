@@ -631,7 +631,7 @@ segments(x0 = 1:100, y0 = low.bound[1:100], y1 = up.bound[1:100],
 :::
 
 
-## Delta method
+## Delta method {#sec-delta-method}
 
 Suppose that we know that an estimator follows the CLT and so we have 
 $$

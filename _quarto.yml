@@ -22,6 +22,7 @@ book:
       chapters:
         - 06_linear_model.qmd
         - 07_least_squares.qmd
+        - 08_ols_properties.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -29,6 +30,7 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
+    css: style.css
     include-before-body:
       - _dollars.tex
       - _bold_html.tex
