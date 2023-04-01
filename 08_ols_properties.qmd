@@ -566,3 +566,4 @@ Almost no one believes any errors are normally distributed, so why even present 
 - As $n\to\infty$, the $t_{n-k-1}$ will converge to a standard normal distribution, so the *ad hoc* adjustment will not matter much for medium to large samples. 
 
 This isn't a very convincing argument since it's not clear that the $t$ approximation will be any better than the normal in finite samples. But it's the best we can do to console ourselves as we go find more data. 
+
