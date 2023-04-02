@@ -10,6 +10,9 @@ book:
   author: "Matthew Blackwell"
   output-file: "users-guide"
   reader-mode: true
+  public-url: https://mattblackwell.github.io/gov2002-book/
+  repo-url: https://github.com/mattblackwell/gov2002-book/
+  repo-actions: [edit, issue]
   chapters:
     - index.qmd
     - 01_intro.qmd
