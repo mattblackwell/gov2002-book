@@ -1,8 +1,8 @@
-# The mechanics of least squares
+# The mechanics of least squares {#sec-ols-mechanics}
 
-In this chapter we explore the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is due in part to its easy of interpretation, its computational simplicity, and its statistical efficiency. 
+This chapter explores the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency. 
 
-In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Often, OLS is introduced along with an assumption of a linear model for the conditional expectation, but this is unnecessary if we view the target of inference to be the best linear predictor. We discuss this point more fully in the next chapter. 
+In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS  under an assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter. 
 
 
 ```{r}
@@ -25,7 +25,7 @@ abline(mod, lwd = 3, col = "indianred")
 
 ## Deriving the OLS estimator 
 
-In the last chapter on the linear model and the best linear projection, we operated purely in the population, not samples. We derived the population regression coefficients $\bfbeta$, which represented the coefficients on the line of best fit in the population. We now take these as our quantity of interest. 
+In the last chapter on the linear model and the best linear projection, we operated purely in the population, not samples. We derived the population regression coefficients $\bfbeta$, representing the coefficients on the line of best fit in the population. We now take these as our quantity of interest. 
 
 ::: {.callout-note}
 ## Assumption
@@ -40,7 +40,7 @@ $$
 \bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]
 $$
 
-We will consider two different ways to derive the OLS estimator for these coefficients, both of which are versions of the plug-in principle. The first approach is to use the closed form representation of the coefficients and replace any expectations with sample means,
+We will consider two different ways to derive the OLS estimator for these coefficients, both of which are versions of the plug-in principle. The first approach is to use the closed-form representation of the coefficients and replace any expectations with sample means,
 $$ 
 \bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right),
 $$
@@ -52,9 +52,9 @@ $$
 \widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
 $$
 
-This plug-in approach is very widely applicable and tends to have nice properties in large samples under iid data. But this approach also hides some of the geometry of the setting. 
+This plug-in approach is widely applicable and tends to have excellent properties in large samples under iid data. But this approach also hides some of the geometry of the setting. 
 
-The second approach is based on plugging in sample means not to the closed-form expression for the coefficients, but to the optimization problem itself. This approach is called the **least squares** estimator because it is defined as the coefficients that minimize the empirical (or sample) squared prediction error,
+The second approach applies the plug-in principle not to the closed-form expression for the coefficients but to the optimization problem itself. We call this the **least squares** estimator because it minimizes the empirical (or sample) squared prediction error,
 $$ 
 \bhat  = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
 $$
@@ -62,8 +62,7 @@ where,
 $$ 
 SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
 $$
-is the sum of the squared residuals. 
-To distinguish it from other, more complicated least squares estimators, this is often called the **ordinary least squares** estimator or OLS. Notice that 
+is the sum of the squared residuals. To distinguish it from other, more complicated least squares estimators, we call this the **ordinary least squares** estimator or OLS. 
 
 Let's solve this minimization problem! We can write down the first-order conditions as
 $$ 
@@ -84,7 +83,7 @@ $$
 What does it mean for a matrix to be "positive"? In matrix algebra, this condition means that the matrix $\sum_{i=1}^{n}\X_{i}\X_{i}'$ is **positive definite**, a condition that we discuss in @sec-rank. 
 
 
-Using either the plug-in approach or the least squares approach, we arrive at the same estimator for the coefficients of the best linear predictor/population linear regression.
+Using the plug-in or least squares approaches, we arrive at the same estimator for the best linear predictor/population linear regression coefficients.
 
 ::: {#thm-ols}
 
@@ -100,7 +99,7 @@ $$
 
 ## Formula for the OLS slopes
 
-Almost all regression will contain an intercept term which is usually represented as a constant 1 in the covariate vector. It is also possible to separate out the intercept to arrive at the set of coefficients on the "real" covariates:
+Almost all regression will contain an intercept term usually represented as a constant 1 in the covariate vector. It is also possible to separate the intercept to arrive at the set of coefficients on the "real" covariates:
 $$ 
 Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}
 $$
@@ -119,10 +118,10 @@ When dealing with actual data, we refer to the prediction errors $\widehat{e}_{i
 $$ 
 \sum_{i=1}^n \X_i\widehat{e}_i = 0.
 $$
-The residuals are *exactly* uncorrelated with the covariates (when the covariates include a constant/intercept term). This is mechanically true of the OLS estimator.  
+The residuals are *exactly* uncorrelated with the covariates (when the covariates include a constant/intercept term), which is mechanically true of the OLS estimator.  
 
 
-@fig-ssr-comp shows how OLS works in the bivariate case. Here we see three possible regression lines and the sum of the squared residuals for each of these lines. The goal of OLS is to find the line that minimizes the function on the right.  
+@fig-ssr-comp shows how OLS works in the bivariate case. Here we see three possible regression lines and the sum of the squared residuals for each line. OLS aims to find the line that minimizes the function on the right.  
 
 ```{r}
 #| label: fig-ssr-comp
@@ -162,9 +161,9 @@ for (i in seq_along(slopes)) {
 
 ## Model fit
 
-We have learned how to use OLS to obtain an estimate of the best linear predictor, but we may ask how good is that prediction? Does using $\X_i$ actually help us predict $Y_i$? To investigate this, we can consider two different prediction errors: those using covariates and those that do not. 
+We have learned how to use OLS to obtain an estimate of the best linear predictor, but we may ask how good that prediction is. Does using $\X_i$ help us predict $Y_i$? To investigate this, we can consider two different prediction errors: those using covariates and those that do not. 
 
-We have already seen the prediction error when using the covariates, it is just the **sum of the squared residuals** 
+We have already seen the prediction error when using the covariates; it is just the **sum of the squared residuals** 
 $$ 
 SSR = \sum_{i=1}^n (Y_i - \X_{i}'\bhat)^2.
 $$
@@ -178,7 +177,7 @@ $$
 ```{r}
 #| label: fig-ssr-vs-tss
 #| echo: false
-#| fig.cap: Total sum of squares vs sum of squared residuals
+#| fig.cap: Total sum of squares vs. the sum of squared residuals
 par(mfrow = c(1, 2), mar = c(4,4, 2, 0.1))
 ajr.mod <- lm(logpgp95 ~ avexpr, data = ajr)
 ajr.dat <- model.frame(ajr.mod, data =ajr)
@@ -192,17 +191,17 @@ segments(x0=ajr.dat$avexpr, y0 = ajr.dat$logpgp95, y1 = ajr.mod$fitted, col = "i
 text(x = 3, y = 6.25, expression(widehat(Y)[i]), col = "indianred", pos = 3, cex = 1.2)
 ```
 
-We can determine how much adding covariates improves our prediction ability by looking at the **proportion reduction in prediction error** that see when using the covariates. This value, called the **coefficient of determination** or $R^2$ is simply
+We can use the **proportion reduction in prediction error** from adding those covariates to measure how much those covariates improve the regression's predictive ability. This value, called the **coefficient of determination** or $R^2$ is simply
 $$
 R^2 = \frac{TSS - SSR}{TSS} = 1-\frac{SSR}{TSS},
 $$
-which is the reduction in error moving from $\overline{Y}$ to $\X_i'\bhat$ as the predictor relative to the prediction error using $\overline{Y}$. We can think of this as the fraction of the total prediction error eliminated by using $\X_i$. One thing to note is that OLS will *always* improve in-sample fit so that $TSS \geq SSR$ even if $\X_i$ is unrelated to $Y_i$. This is because the whole point of OLS is minimize SSR and it will do that even it is just fitting to noise. 
+which is the reduction in error moving from $\overline{Y}$ to $\X_i'\bhat$ as the predictor relative to the prediction error using $\overline{Y}$. We can think of this as the fraction of the total prediction error eliminated by using $\X_i$ to predict $Y_i$. One thing to note is that OLS will *always* improve in-sample fit so that $TSS \geq SSR$ even if $\X_i$ is unrelated to $Y_i$. This phantom improvement occurs because the whole point of OLS is to minimize the SSR, and it will do that even if it is just chasing noise. 
 
-Since regression always improves in-sample fit,  $R^2$ will be bounded between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ and $\X_i$ are perfectly orthogonal in the data (this is very unlikely to occur because there will likely be some very small relationship by random chance). A value of 1 indicates a perfect linear fit.  
+Since regression always improves in-sample fit,  $R^2$ will fall between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ and $\X_i$ are perfectly orthogonal in the data (this is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance). A value of 1 indicates a perfect linear fit.  
 
 ## Matrix form of OLS
 
-While we derived the OLS estimator above, there is a much more common representation of the estimator that relies on vectors and matrices. We usually write the linear model for a generic unit, $Y_i = \X_i'\bfbeta + e_i$, but obviously there are $n$ of these equations,
+While we derived the OLS estimator above, there is a much more common representation of the estimator that relies on vectors and matrices. We usually write the linear model for a generic unit, $Y_i = \X_i'\bfbeta + e_i$, but obviously, there are $n$ of these equations,
 $$ 
 \begin{aligned}
   Y_1 &= \X_1'\bfbeta + e_1 \\
@@ -239,7 +238,7 @@ $$
 $$
 where notice now that $\mathbb{X}$ is a $n \times (k+1)$ matrix and $\bfbeta$ is a $k+1$ length column vector. 
 
-A key link between the definition of OLS above to the matrix notation comes from representing sums in matrix form. In particular, we have
+A critical link between the definition of OLS above to the matrix notation comes from representing sums in matrix form. In particular, we have
 $$
 \begin{aligned}
   \sum_{i=1}^n \X_i\X_i' &= \Xmat'\Xmat \\
@@ -251,7 +250,7 @@ $$
 \bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1}  \mathbb{X}'\mb{Y}.
 $$
 
-Of course we can also define the vector of residuals,
+Of course, we can also define the vector of residuals,
 $$ 
  \widehat{\mb{e}} = \mb{Y} - \mathbb{X}\bhat = \left[
 \begin{array}{c}
@@ -270,11 +269,11 @@ $$
 \end{array}
 \right],
 $$
-and so the sum of the squared residuals in this case becomes
+and so the sum of the squared residuals, in this case, becomes
 $$ 
 SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} =  (\mb{Y} - \mathbb{X}\bfbeta)'(\mb{Y} - \mathbb{X}\bfbeta),
 $$
-where the double vertical lines mean take the Euclidean norm of the argument, $\Vert \mb{z} \Vert = \sqrt{\sum_{i=1}^n z_i^{2}}$. The OLS minimization problem then is 
+where the double vertical lines mean the Euclidean norm of the argument, $\Vert \mb{z} \Vert = \sqrt{\sum_{i=1}^n z_i^{2}}$. The OLS minimization problem, then, is 
 $$ 
 \bhat = \argmin_{\mb{b} \in \mathbb{R}^{(k+1)}}\; \Vert\mb{Y} - \mathbb{X}\mb{b}\Vert^{2}
 $$
@@ -285,32 +284,32 @@ $$
 
 ## Rank, linear independence, and multicollinearity {#sec-rank}
 
-When introducing the OLS esitmator, we noted that it will exist when $\sum_{i=1}^n \X_i\X_i'$ is positive definite. This assumption is often stated as "no multicollinearity" or that the matrix $\mathbb{X}$ is full column rank, meaning that $\text{rank}(\mathbb{X}) = (k+1)$, where $k+1$ is the number of columns of $\mathbb{X}$. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix and **linear independence** means that if $\mathbb{X}\mb{b} = 0$ if and only if $\mb{b}$ is a column vector of 0s. In other words, we have
+When introducing the OLS estimator, we noted that it would exist when $\sum_{i=1}^n \X_i\X_i'$ is positive definite or that there is "no multicollinearity." This assumption is equivalent to saying the matrix $\mathbb{X}$ is full column rank, meaning that $\text{rank}(\mathbb{X}) = (k+1)$, where $k+1$ is the number of columns of $\mathbb{X}$. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix, and **linear independence** means that if $\mathbb{X}\mb{b} = 0$ if and only if $\mb{b}$ is a column vector of 0s. In other words, we have
 $$ 
 b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0,  
 $$
-where $\mathbb{X}_j$ is the $j$th column of $\mathbb{X}$. Thus, full column rank says that all of the columns are linearly independent or that there is no "multicollinearity."
+where $\mathbb{X}_j$ is the $j$th column of $\mathbb{X}$. Thus, full column rank says that all the columns are linearly independent or that there is no "multicollinearity."
 
-How could this be violated? Suppose that we accidentally included a linear function of one variable so that $\mathbb{X}_2 = 2\mathbb{X}_1$. Then we have,
+How could this be violated? Suppose we accidentally included a linear function of one variable so that $\mathbb{X}_2 = 2\mathbb{X}_1$. Then we have,
 $$ 
 \begin{aligned}
   \mathbb{X}\mb{b} &= b_{1}\mathbb{X}_{1} + b_{2}2\mathbb{X}_1+ b_{3}\mathbb{X}_{3}+ \cdots + b_{k+1}\mathbb{X}_{k+1} \\
   &= (b_{1} + 2b_{2})\mathbb{X}_{1} + b_{3}\mathbb{X}_{3} + \cdots + b_{k+1}\mathbb{X}_{k+1}
 \end{aligned}
 $$
-In this case, we can have this expression equal to 0 when $b_3 = b_4 = \cdots = b_{k+1} = 0$ and $b_1 = -2b_2$. Thus, the collection of columns is linearly dependent so we know that the rank of $\mathbb{X}$ must be less than full column rank (that is, less than $k+1$). Hopefully it is also clear that if we removed the problematic column $\mathbb{X}_2$, the resulting matrix would have $k$ linearly independent columns, implying that $\mathbb{X}$ is rank $k$. 
+In this case, this expression equals 0 when $b_3 = b_4 = \cdots = b_{k+1} = 0$ and $b_1 = -2b_2$. Thus, the collection of columns is linearly dependent, so we know that the rank of $\mathbb{X}$ must be less than full column rank (that is, less than $k+1$). Hopefully, it is also clear that if we removed the problematic column $\mathbb{X}_2$, the resulting matrix would have $k$ linearly independent columns, implying that $\mathbb{X}$ is rank $k$. 
 
 Why does this rank condition matter for the OLS estimator? A key property of full column rank matrices is that $\Xmat$ if of full column rank if and only if $\Xmat'\Xmat$ is non-singular and a matrix is invertible if and only if it is non-singular. Thus, the columns of $\Xmat$ being linearly independent means that the inverse $(\Xmat'\Xmat)^{-1}$ exists and so does $\bhat$. Further, this full rank condition also implies that $\Xmat'\Xmat = \sum_{i=1}^{n}\X_{i}\X_{i}'$ is positive definite, implying that the estimator is truly finding the minimal sum of squared residuals.
 
-What are common situations that lead to violations of no multicollinearity? We have seen one above with one variable being a linear function of another. But this problem can come out in more sutble ways. Suppose that we have a set of dummy variables that correspond to a single categorical variable like region of the country. In the US, this might mean we have $X_{i1} = 1$ for units in the West (0 otherwise), $X_{i2} = 1$ for units in the Midwest (0 otherwise), $X_{i3} = 1$ for units in the South (0 otherwise), and $X_{i4} = 1$ for units in the Northeast (0 otherwise). Each unit has to be in one of these 4 regions, so there is a linear dependence between these variables, 
+What are common situations that lead to violations of no multicollinearity? We have seen one above, with one variable being a linear function of another. But this problem can come out in more subtle ways. Suppose that we have a set of dummy variables corresponding to a single categorical variable, like the region of the country. In the US, this might mean we have $X_{i1} = 1$ for units in the West (0 otherwise), $X_{i2} = 1$ for units in the Midwest (0 otherwise), $X_{i3} = 1$ for units in the South (0 otherwise), and $X_{i4} = 1$ for units in the Northeast (0 otherwise). Each unit has to be in one of these four regions, so there is a linear dependence between these variables, 
 $$ 
 X_{i4} = 1 - X_{i1} - X_{i2} - X_{i3}.
 $$
-That is, if I know that you are not in the West, Midwest, or South regions, I know for a fact that you are in the Northeast. If we tried to include all of these variables into our regression with an intercept, we would get a linear dependence. (Note the 1 in the relationship between $X_{i4}$ and the other variables, that's why there will be linear dependence when the constant is included.) Thus, we usually omit one dummy variable from each categorical variable. In that case, the coefficients on the remaining dummies are differences in mean between that category and the omitted one (perhaps conditional on other variables included, if they are included). So if we omitted $X_{i4}$, then the coefficient on $X_{i1}$ would be the difference in mean outcomes between units in the West and Northeast regions. 
+That is, if I know that you are not in the West, Midwest, or South regions, I know that you are in the Northeast. We would get a linear dependence if we tried to include all of these variables in our regression with an intercept. (Note the 1 in the relationship between $X_{i4}$ and the other variables, that's why there will be linear dependence when including a constant.) Thus, we usually omit one dummy variable from each categorical variable. In that case, the coefficients on the remaining dummies are differences in means between that category and the omitted one (perhaps conditional on other variables included, if included). So if we omitted $X_{i4}$, then the coefficient on $X_{i1}$ would be the difference in mean outcomes between units in the West and Northeast regions. 
 
-Another way collinearity can occur is if you include both an intercept term and a variable that does not vary. This can often occur if we mistakenly subset our data to, say, the West region but still include the West dummy variable in the regression. 
+Another way collinearity can occur is if you include both an intercept term and a variable that does not vary. This issue can often happen if we mistakenly subset our data to, say, the West region but still include the West dummy variable in the regression. 
 
-Finally, note that most statistical software packages will "solve" the multicollinearity by arbitrarily removing as many linearly dependent covariates as is necessary to achieve to full rank. In those cases, R will show the estimated coefficients as `NA`.    
+Finally, note that most statistical software packages will "solve" the multicollinearity by arbitrarily removing as many linearly dependent covariates as is necessary to achieve full rank. R will show the estimated coefficients as `NA` in those cases.    
 
 ## OLS coefficients for binary and categorical regressors
 
@@ -318,33 +317,33 @@ Suppose that the covariates include just the intercept and a single binary varia
 $$ 
 \widehat{\beta}_{1} = \frac{\sum_{i=1}^{n} X_{i}Y_{i}}{\sum_{i=1}^{n} X_{i}} - \frac{\sum_{i=1}^{n} (1 - X_{i})Y_{i}}{\sum_{i=1}^{n} 1- X_{i}} = \overline{Y}_{X =1} - \overline{Y}_{X=0}
 $$
-This is not an approximation. It holds exactly for any sample size. 
+This result is not an approximation. It holds exactly for any sample size. 
 
-We can generalize this ideal to discrete variables more broadly. Suppose we have our regions variables from the last section and include in our covariates a constant and the dummies for the West, Midwest, and South regions. Then coefficient on the West dummy will be exactly
+We can generalize this idea to discrete variables more broadly. Suppose we have our region variables from the last section and include in our covariates a constant and the dummies for the West, Midwest, and South regions. Then coefficient on the West dummy will be
 $$ 
 \widehat{\beta}_{\text{west}} = \overline{Y}_{\text{west}} - \overline{Y}_{\text{northeast}},
 $$
 which is exactly the difference in sample means of $Y_i$ between the West region and units in the "omitted region," the Northeast. 
 
-Note that these interpretations only hold when the regression consists solely of the binary variable or the set of categorical dummy variables. When other covariates are added to the model, these exact relationships fail to hold. 
+Note that these interpretations only hold when the regression consists solely of the binary variable or the set of categorical dummy variables. These exact relationships fail when other covariates are added to the model. 
 
 
 
 ## Projection and geometry of least squares
 
-OLS has a very nice geometric interpretation that can add a lot of intuition for various aspects of the method. In this geometric approach, we view $\mb{Y}$ as an $n$-dimesnional vector in $\mathbb{R}^n$. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix $\Xmat$ that is closest to this vector in terms of the Euclidean distance (which is just the sum of squares). 
+OLS has a very nice geometric interpretation that can add a lot of intuition for various aspects of the method. In this geometric approach, we view $\mb{Y}$ as an $n$-dimesnional vector in $\mathbb{R}^n$. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix $\Xmat$ closest to this vector in terms of the Euclidean distance (which is just the sum of squares). 
 
-Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^2\}$ be the **column space** of the matrix $\Xmat$. This is the set of all linear combinations of the columns of $\Xmat$, or the set of all possible linear predictions we could obtain from $\Xmat$. Notice that the OLS fitted values, $\Xmat\bhat$, is in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has 2 columns, then the column space will be a plane.   
+Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^2\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Notice that the OLS fitted values, $\Xmat\bhat$, is in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
 
-Another interpretation of the OLS estimator is that it finds the linear predictor that is closest point in the column space of $\Xmat$ to the outcome vector $\mb{Y}$. This is called the **projection** of $\mb{Y}$ onto $\mathcal{C}(\Xmat)$. @fig-projection shows this projection for a case with $n=3$ and 2 columns in $\Xmat$. The shaded blue region represents the plane of the column space of $\Xmat$ and we can see that $\Xmat\bhat$ is the closest point to $\mb{Y}$ in that space. That's the whole ideal of the OLS estimator: find the linear combination of the columns of $\Xmat$ (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).
+Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of $\Xmat$ to the outcome vector $\mb{Y}$. This is called the **projection** of $\mb{Y}$ onto $\mathcal{C}(\Xmat)$. @fig-projection shows this projection for a case with $n=3$ and 2 columns in $\Xmat$. The shaded blue region represents the plane of the column space of $\Xmat$, and we can see that $\Xmat\bhat$ is the closest point to $\mb{Y}$ in that space. That's the whole idea of the OLS estimator: find the linear combination of the columns of $\Xmat$ (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).
 
 ![Projection of Y on the column space of the covariates](assets/img/projection-drawing.png){#fig-projection}
 
-From this figure we can also see that the residual vector, which is the difference between the $\mb{Y}$ vector and the projection $\Xmat\bhat$ is perpendicular or orthogonal to the column space of $\Xmat$. This is a consequence of the residuals being orthogonal to all the columns of $\Xmat$,
+This figure shows that the residual vector, which is the difference between the $\mb{Y}$ vector and the projection $\Xmat\bhat$ is perpendicular or orthogonal to the column space of $\Xmat$. This orthogonality is a consequence of the residuals being orthogonal to all the columns of $\Xmat$,
 $$ 
 \Xmat'\mb{e} = 0,
 $$
-as we established above. Being orthogonal to all the columns means it will be orthogonal to all linear combinations of the columns as well. 
+as we established above. Being orthogonal to all the columns means it will also be orthogonal to all linear combinations of the columns. 
 
 ## Projection and annihilator matrices
 
@@ -356,7 +355,7 @@ projects a vector into $\mathcal{C}(\Xmat)$. In particular, we can see that this
 $$ 
 \mb{P}_{\Xmat}\mb{Y} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\mb{Y} = \Xmat\bhat.
 $$
-Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is sometimes called the **hat matrix**. With either name, $\mb{P}_{\Xmat}$ gives the best linear predictor of whatever it is multiplied by in terms of the covariates. Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ it itself. We can also see this algebraically for any linear combination $\Xmat\mb{c}$
+Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is also called the **hat matrix**. With either name, multiplying a vector by $\mb{P}_{\Xmat}$ gives the best linear predictor of that vector as a function of $\Xmat$.  Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ is itself. We can also see this algebraically for any linear combination $\Xmat\mb{c}$
 $$
 \mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{c} = \Xmat\mb{c}
 $$
@@ -370,7 +369,7 @@ which projects any vector into the orthogonal complement to the column space of 
 $$
 \mathcal{C}^{\perp}(\Xmat) = \{\mb{c} \in \mathbb{R}^n\;:\; \Xmat\mb{c} = 0 \},
 $$
-This is called the annihilator matrix because if you apply it to any linear combination of $\Xmat$, you get 0:
+This matrix is called the annihilator matrix because if you apply it to any linear combination of $\Xmat$, you get 0:
 $$ 
 \mb{M}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \Xmat\mb{c} = 0,
 $$
@@ -381,9 +380,9 @@ $$
 
 
 
-There are a number of key property properties of the projection matrix that are useful: 
+There are several fundamental property properties of the projection matrix that are useful: 
 
-- $\mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}$ are **idempotent**, which just means that when applied to itself it simply returns itself: $\mb{P}_{\Xmat}\mb{P}_{\Xmat} = \mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}\mb{M}_{\Xmat} = \mb{M}_{\Xmat}$. 
+- $\mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}$ are **idempotent**, which means that when applied to itself, it simply returns itself: $\mb{P}_{\Xmat}\mb{P}_{\Xmat} = \mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}\mb{M}_{\Xmat} = \mb{M}_{\Xmat}$. 
 
 - $\mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}$ are symmetric $n \times n$ matrices so that $\mb{P}_{\Xmat}' = \mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}' = \mb{M}_{\Xmat}$.
 
@@ -413,7 +412,7 @@ so, for example, $\text{trace}(\mb{I}_{n}) = n$. A couple of key properties of t
 
 ## Residual regression
 
-There are many situations where we can partition the covariates into two groups and we might wonder if it is possible to how to express or calculate the OLS coefficients for just one set of covariates. In particular, let the columns of $\Xmat$ be partitioned into $[\Xmat_{1} \Xmat_{2}]$, so that linear prediction we are estimating is 
+There are many situations where we can partition the covariates into two groups, and we might wonder if it is possible how to express or calculate the OLS coefficients for just one set of covariates. In particular, let the columns of $\Xmat$ be partitioned into $[\Xmat_{1} \Xmat_{2}]$, so that linear prediction we are estimating is 
 $$ 
 \mb{Y} = \Xmat_{1}\bfbeta_{1} + \Xmat_{2}\bfbeta_{2} + \mb{e}, 
 $$
@@ -444,18 +443,18 @@ The OLS coefficients from a regression of $\widetilde{\mb{e}}_{2}$ on $\widetild
 
 :::
 
-One implication of this theorem is the regression coefficient for a given variable captures the  relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation that is orthogonal to those other covariates.    
+One implication of this theorem is the regression coefficient for a given variable captures the relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation orthogonal to those other covariates.    
 
-While perhaps unexpected, this result might not appear particularly useful. We can just run the long regression right? This trick can be very useful in situations where $\Xmat_2$ consists of dummy variables (or "fixed effects") for a categorical variable with a large number of categories. For example, if $\Xmat_2$ consists of indicators for the county of residence for a respondent, then that will have over 3,000 columns, meaning that direct calculation of the $\bhat = (\bhat_{1}, \bhat_{2})$ will require inverting a matrix that is bigger than $3,000 \times 3,000$. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable is just the sample mean within each level of the variable. Thus, in this case, the residuals $\widetilde{\mb{e}}_2$ and $\Xmat_1$ can be computed by demeaning the outcome and $\Xmat_1$ within levels of the dummies in $\Xmat_2$, which can be considerably faster computationally. 
+While perhaps unexpected, this result may not appear particularly useful. We can just run the long regression, right? This trick can be handy when $\Xmat_2$ consists of dummy variables (or "fixed effects") for a categorical variable with many categories. For example, suppose $\Xmat_2$ consists of indicators for the county of residence for a respondent. In that case, that will have over 3,000 columns, meaning that direct calculation of the $\bhat = (\bhat_{1}, \bhat_{2})$ will require inverting a matrix that is bigger than $3,000 \times 3,000$. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable are just the sample mean within each level of the variable. Thus, in this case, the residuals $\widetilde{\mb{e}}_2$ and $\Xmat_1$ can be computed by demeaning the outcome and $\Xmat_1$ within levels of the dummies in $\Xmat_2$, which can be considerably faster computationally. 
 
 Finally, there are data visualization reasons to use residual regression. It is often difficult to see if the linear functional form for some covariate is appropriate once you begin to control for other variables. One can check the relationship using this approach with a scatterplot of $\widetilde{\mb{e}}_2$ on $\Xmat_1$ (when it is a single column). 
 
 
 ## Outliers, leverage points, and influential observations
 
-Given that OLS finds the coefficients that minimize the sum of the squared residuals, it is useful to ask how much impact each residual has on that solution. Let $\bhat_{(-i)}$ be the OLS estimates if were to omit unit $i$. Intuitively,  **influential observations** should be observations that have a large impact on the estimated coefficients so that $\bhat_{(-i)} - \bhat$ is large in absolute value. 
+Given that OLS finds the coefficients that minimize the sum of the squared residuals, it is helpful to ask how much impact each residual has on that solution. Let $\bhat_{(-i)}$ be the OLS estimates if we omit unit $i$. Intuitively,  **influential observations** should significantly impact the estimated coefficients so that $\bhat_{(-i)} - \bhat$ is large in absolute value. 
 
-Under what conditions will we have influential observations? OLS obviously tries to minimize the sum of **squared** residuals, so it will move more to shrink larger residuals than smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will go through the means of the outcome and the covariates: $\overline{Y} = \overline{\X}\bhat$. Thus, by definition, This means that when an observation is close to to the average of the covariates, $\overline{\X}$, it cannot have that much influence because OLS forces the regression line to go through $\overline{Y}$. Thus, we should look for influential points that have two properties:
+Under what conditions will we have influential observations? OLS tries to minimize the sum of **squared** residuals, so it will move more to shrink larger residuals than smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will go through the means of the outcome and the covariates: $\overline{Y} = \overline{\X}\bhat$. Thus, by definition, This means that when an observation is close to the average of the covariates, $\overline{\X}$, it cannot have that much influence because OLS forces the regression line to go through $\overline{Y}$. Thus, we should look for influential points that have two properties:
 
 1. Have high **leverage**, where leverage roughly measures how far $\X_i$ is from $\overline{\X}$, and
 2. Be an **outlier** in the sense of having a large residual (if left out of the regression).
@@ -472,7 +471,7 @@ which is the $i$th diagonal entry of the projection matrix, $\mb{P}_{\Xmat}$. No
 $$ 
 \widehat{\mb{Y}} = \mb{P}\mb{Y} \qquad \implies \qquad \widehat{Y}_i = \sum_{j=1}^n h_{ij}Y_j,
 $$
-so that $h_{ij}$ is the importance of observation $j$ for the fitted value for observation $i$. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of $\X_{i}$.  Roughly speaking, these values are the weighted distance $\X_i$ is from $\overline{\X}$, where the weights normalize to the empirical variance/covariance structure of the covariates (so that the scale of each covariate is roughly the same). We can see this most clearly when we fit a simple linear regression (with 1 covariate and an intercept) with OLS, when the leverage is
+so that $h_{ij}$ is the importance of observation $j$ for the fitted value for observation $i$. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of $\X_{i}$. Roughly speaking, these values are the weighted distance $\X_i$ is from $\overline{\X}$, where the weights normalize to the empirical variance/covariance structure of the covariates (so that the scale of each covariate is roughly the same). We can see this most clearly when we fit a simple linear regression (with one covariate and an intercept) with OLS when the leverage is
 $$ 
 h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overline{X})^2}
 $$
@@ -507,7 +506,7 @@ text(3.5, 1.25, "Full sample", col = "dodgerblue")
 text(1, 7, "Outlier", pos = 2, col = "indianred")
 ```
 
-Intuitively, it seems as though we could use the residual $\widehat{e}_i$ to assess the prediction error for a given unit. But the residuals are not valid predictions because the OLS estimator is designed to make those as small as possible (in machine learning parlance, these were in the training set). In particular, if an outlier is influential, we already noted that it might "pull" the regression line toward it and the resulting residual might be quite small. 
+Intuitively, it seems as though we could use the residual $\widehat{e}_i$ to assess the prediction error for a given unit. But the residuals are not valid predictions because the OLS estimator is designed to make those as small as possible (in machine learning parlance, these were in the training set). In particular, if an outlier is influential, we already noted that it might "pull" the regression line toward it, and the resulting residual might be pretty small. 
 
 To assess prediction errors more cleanly, we can use **leave-one-out regression** (LOO), which regresses$\mb{Y}_{(-i)}$ on $\Xmat_{(-i)}$, where these omit unit $i$:
 $$ 
@@ -521,11 +520,11 @@ Calculating these LOO prediction errors for each unit appears to be computationa
 $$ 
 \bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i \qquad \widetilde{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
 $$ {#eq-loo-coefs}
-We can see from this that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage will be close to $\overline{\X}$, where the outcome values has relatively little impact on the OLS fit (because the regression line must go through $\overline{Y}$). 
+We can see from this that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage would be close to $\overline{\X}$, where the outcome values have relatively little impact on the OLS fit (because the regression line must go through $\overline{Y}$). 
 
 ### Influence points
 
-An influence point is an observation that has the power to change the coefficients and fitted values for a particular OLS specification. @fig-influence shows an example of such a influence point. 
+An influence point is an observation that has the power to change the coefficients and fitted values for a particular OLS specification. @fig-influence shows an example of such an influence point. 
 
 ```{r}
 #| label: fig-influence
@@ -550,18 +549,18 @@ One measure of influence is called DFBETA$_i$ measures how much $i$ changes the 
 $$ 
 \bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
 $$
-so there is one value for each observation-covariate pair. When divided by the standard error of the estimated coefficients, this is called DFBETA**S** (where the "S" is for standardized). These are helpful if we have a focus on a particular coefficient.  
+so there is one value for each observation-covariate pair. When divided by the standard error of the estimated coefficients, this is called DFBETA**S** (where the "S" is for standardized). These are helpful if we focus on a particular coefficient.  
 
 
-When we want to summarize how much an observation matters for the fit, we can use a compact measure of the influence of an observation by comparing the fitted value from the full sample to the fitted value from the leave-one-out regression. Using the DFBETA above, we have
+When we want to summarize how much an observation matters for the fit, we can use a compact measure of the influence of an observation by comparing the fitted value from the entire sample to the fitted value from the leave-one-out regression. Using the DFBETA above, we have
 $$ 
 \widehat{Y}_i - \X_{i}\bhat_{(-1)} = \X_{i}'(\bhat -\bhat_{(-1)}) = \X_{i}'\left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i = h_{ii}\widetilde{e}_i,
 $$
-so the influence of an observation is its leverage times how much of an outlier it is. This is sometimes called DFFIT (difference in fit). One transformation of this quantity, **Cook's distance**, standardizes this by sum of the squared residuals:
+so the influence of an observation is its leverage times how much of an outlier it is. This value is sometimes called DFFIT (difference in fit). One transformation of this quantity, **Cook's distance**, standardizes this by the sum of the squared residuals:
 $$ 
 D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\widetilde{e}_{i}^{2}}{\widehat{\mb{e}}'\widehat{\mb{e}}}.
 $$
-Various rules exist for establishing cutoffs for identifying an observation as "influential" based on these metrics, but they tend to be rather ad hoc. In any case, it's better to focus on the holistic question of "how much does this observation matter for my substantive interpretation" rather than the narrow question of a particular threshold. 
+Various rules exist for establishing cutoffs for identifying an observation as "influential" based on these metrics, but they tend to be ad hoc. In any case, it's better to focus on the holistic question of "how much does this observation matter for my substantive interpretation" rather than the narrow question of a particular threshold. 
 
 
-It's all well and good to find influential points, but what should you do about it? The first thing to check is that the data is not corrupted in some way. Sometimes influence points occur because of a coding or data entry error. If you have control over that coding, you should obviously fix those errors. If the error appears to be in the data acquired from another source, you may considering removing the observation, but you should be extremely clear about this choice when writing up your analyses. Another approach is to consider a transformation of the dependent or independent variables like the natural logarithm that might dampen the effects of outliers. Finally, you might consider using methods that are robust to outliers.  
+It's all well and good to find influential points, but what should you do about it? The first thing to check is that the data is not corrupted somehow. Sometimes influence points occur because of a coding or data entry error. If you have control over that coding, you should fix those errors. You may consider removing the observation if the error appears in the data acquired from another source. Still, when writing up your analyses, you should be extremely clear about this choice. Another approach is to consider a transformation of the dependent or independent variables, like the natural logarithm, that might dampen the effects of outliers. Finally, consider using methods that are robust to outliers.  
