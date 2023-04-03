@@ -410,7 +410,7 @@ In these situations, we can also use the derivative of the BLP to measure the ma
 $$ 
 \begin{aligned}
   \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_1} &= \beta_1 + \beta_3x_2, \\
-  \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_2} &= \beta_2 + \beta_3x_2.
+  \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_2} &= \beta_2 + \beta_3x_1.
 \end{aligned}
 $$
 Here, the coefficients are slightly more interpretable:
