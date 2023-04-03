@@ -16,7 +16,7 @@ book:
   chapters:
     - index.qmd
     - 01_intro.qmd
-    - part: "Stastisitcal Inference"
+    - part: "Statistical Inference"
       chapters:
         - 02_estimation.qmd
         - 03_asymptotics.qmd
