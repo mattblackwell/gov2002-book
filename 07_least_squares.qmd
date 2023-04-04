@@ -8,7 +8,7 @@ In this chapter, we focus on motivating the estimator and the mechanical or alge
 ```{r}
 #| label: fig-ajr-scatter
 #| echo: false
-#| fig.cap: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001)
+#| fig.cap: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001).
 ajr <- foreign::read.dta("assets/data/ajr.dta") 
 
 mod <- lm(logpgp95 ~ avexpr, data = ajr)
@@ -337,7 +337,7 @@ Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^2\}$ be the **co
 
 Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of $\Xmat$ to the outcome vector $\mb{Y}$. This is called the **projection** of $\mb{Y}$ onto $\mathcal{C}(\Xmat)$. @fig-projection shows this projection for a case with $n=3$ and 2 columns in $\Xmat$. The shaded blue region represents the plane of the column space of $\Xmat$, and we can see that $\Xmat\bhat$ is the closest point to $\mb{Y}$ in that space. That's the whole idea of the OLS estimator: find the linear combination of the columns of $\Xmat$ (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).
 
-![Projection of Y on the column space of the covariates](assets/img/projection-drawing.png){#fig-projection}
+![Projection of Y on the column space of the covariates.](assets/img/projection-drawing.png){#fig-projection}
 
 This figure shows that the residual vector, which is the difference between the $\mb{Y}$ vector and the projection $\Xmat\bhat$ is perpendicular or orthogonal to the column space of $\Xmat$. This orthogonality is a consequence of the residuals being orthogonal to all the columns of $\Xmat$,
 $$ 
@@ -489,7 +489,7 @@ In the context of OLS, an **outlier** is an observation with a large prediction 
 ```{r}
 #| label: fig-outlier
 #| echo: false
-#| fig.cap: An example of an outlier
+#| fig.cap: An example of an outlier.
 
 set.seed(02138)
 x <- rnorm(100, 0, 1)

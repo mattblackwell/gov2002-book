@@ -81,7 +81,7 @@ $$
 
 ::: {.proof}
 
-Notice that we can let $Y = |X|/\delta$ and rewrite the statement as $\P(Y \geq 1) \leq \E[Y]$ (since $E[|X|]/\delta = \E[|X|/\delta]$ by the properties of expectation), which is what we will show. But notice that
+Notice that we can let $Y = |X|/\delta$ and rewrite the statement as $\P(Y \geq 1) \leq \E[Y]$ (since $\E[|X|]/\delta = \E[|X|/\delta]$ by the properties of expectation), which is what we will show. But notice that
 $$
 \mathbb{1}(Y \geq 1) \leq Y.
 $$
@@ -156,7 +156,7 @@ It can be helpful to see how the distribution of the sample mean changes as a fu
 #| label: "fig-lln-sim"
 #| echo: false
 #| fig-cap: "Sampling distribution of the sample mean as a function of
-#| sample size"
+#| sample size."
 nsims <- 10000
 holder <- matrix(NA, nrow = nsims, ncol = 6)
 for (i in 1:nsims) {
@@ -666,7 +666,7 @@ by the properties of variances.
 ```{r}
 #| label: "fig-delta"
 #| echo: false
-#| fig-cap: "Linear approximation to nonlinear functions"
+#| fig-cap: "Linear approximation to nonlinear functions."
 
 curve(x ^ 2, from = -3, to = 3, lwd = 2, bty = "l", ylim = c(0, 10),
       xaxt = "n", yaxt = "n", xlab = expression(theta), ylab = expression(h(theta)))

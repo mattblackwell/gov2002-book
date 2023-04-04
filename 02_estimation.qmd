@@ -238,7 +238,7 @@ Suppose $X_i$ is the answer to a question, "How much do you agree with the follo
 
 The population distribution describes the probability of randomly selecting a person with each one of these values, $\P(X_i = x)$. The empirical distribution would be the fraction of our data taking each value. And the sampling distribution of the sample mean, $\Xbar_n$, would be the distribution of the sample mean across repeated samples from the population. 
 
-Suppose the population distribution was binomial with four trials and probability of success $p = 0.4$. We could generate one sample with $n = 10$ and thus one empirical distribution using `rbinom`:
+Suppose the population distribution was binomial with four trials and probability of success $p = 0.4$. We could generate one sample with $n = 10$ and thus one empirical distribution using `rbinom()`:
 
 ```{r}
 #| echo: false
