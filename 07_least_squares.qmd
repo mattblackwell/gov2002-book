@@ -331,7 +331,7 @@ Note that these interpretations only hold when the regression consists solely of
 
 ## Projection and geometry of least squares
 
-OLS has a very nice geometric interpretation that can add a lot of intuition for various aspects of the method. In this geometric approach, we view $\mb{Y}$ as an $n$-dimesnional vector in $\mathbb{R}^n$. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix $\Xmat$ closest to this vector in terms of the Euclidean distance (which is just the sum of squares). 
+OLS has a very nice geometric interpretation that can add a lot of intuition for various aspects of the method. In this geometric approach, we view $\mb{Y}$ as an $n$-dimensional vector in $\mathbb{R}^n$. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix $\Xmat$ closest to this vector in terms of the Euclidean distance (which is just the sum of squares). 
 
 Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^2\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Notice that the OLS fitted values, $\Xmat\bhat$, is in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
 
