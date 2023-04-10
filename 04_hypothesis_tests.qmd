@@ -124,7 +124,7 @@ $$
 
 You can think of the size of a test as the rate of false positives (or false discoveries) produced by the test. @fig-size-power shows an example of rejection regions, size, and power for a one-sided test. In the left panel, we have the distribution of the test statistic under the null, with $H_0: \theta = \theta_0$, and the rejection region is defined by values $T > c$. The shaded grey region is the probability of rejection under this null hypothesis or the size of the test. Sometimes, we will get extreme samples by random chance, even under the null, leading to false discoveries.[^3]
 
-[^3]: Eagle-eyed readers will notice that the null tested here is a point, while we previously defined the null in a one-sided test as a region $H_0: \theta \leq \theta_0$. Technically, the size of the test will vary based on which of these nulls we pick. In this example, notice that any null to the left of $\theta_0$ will result in a lower size. And so, the null at the boundary, $\theta_0$, will maximize the size of the test, making it the most "conservative" null to investigate. Technically, we should define the size of a test as $\alpha = \sup_{\theta \in \Theta_0} \pi(\theta)$, 
+[^3]: Eagle-eyed readers will notice that the null tested here is a point, while we previously defined the null in a one-sided test as a region $H_0: \theta \leq \theta_0$. Technically, the size of the test will vary based on which of these nulls we pick. In this example, notice that any null to the left of $\theta_0$ will result in a lower size. And so, the null at the boundary, $\theta_0$, will maximize the size of the test, making it the most "conservative" null to investigate. Technically, we should define the size of a test as $\alpha = \sup_{\theta \in \Theta_0} \pi(\theta)$. 
 
 In the right panel, we overlay the distribution of the test statistic under one particular alternative, $\theta = \theta_1 > \theta_0$. The red-shaded region is the probability of rejecting the null when this alternative is true or the power---it's the probability of correctly rejecting the null when it is false. Intuitively, we can see that alternatives that produce test statistics closer to the rejection region will have higher power. This makes sense: detecting big deviations from the null should be easier than detecting minor ones. 
 
@@ -133,7 +133,7 @@ In the right panel, we overlay the distribution of the test statistic under one 
 ```{r}
 #| label: fig-size-power
 #| echo: false
-#| fig-cap: "Size of a test and power against an alternative"
+#| fig-cap: "Size of a test and power against an alternative."
 par(mfrow = c(1,2), mar = c(5.1, 0, 4.1, 3.1))
 curve(dnorm(x), from = -4, to = 4, ylim = c(0, 0.6), bty = "n", las = 1, xlab = "T under the null hypothesis", ylab = "", xaxt = "n", yaxt = "n", col = "black", lwd = 2, main = "Size")
 axis(side = 1, at = c(-10, 0, 2.32, 10), labels = c("b", expression(theta[0]), expression(c), "d"),
@@ -384,14 +384,14 @@ The Wald test above relies on large sample approximations. In finite samples, th
 $$ 
 T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
 $$
-where $t_{n-1} is the $**Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For one-sided test $c = G^{-1}_0(1 - \alpha)$ but now $G_0$ is $t$ with $n-1$ df and so we use  `qt()` instead of `qnorm()` to calculate these critical values. 
+where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For one-sided test $c = G^{-1}_0(1 - \alpha)$ but now $G_0$ is $t$ with $n-1$ df and so we use  `qt()` instead of `qnorm()` to calculate these critical values. 
 
 The critical values for the $t$ distribution are always larger than the normal because the t has fatter tails, as shown in @fig-shape-of-t. As $n\to\infty$, however, the $t$ converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Oddly, most software packages calculate p-values and rejection regions based on the $t$ to exploit this conservativeness. 
 
 ```{r}
 #| label: fig-shape-of-t
 #| echo: false
-#| fig-cap: "Normal versus t distribution"
+#| fig-cap: "Normal versus t distribution."
 curve(dnorm(x), from = -5, to = 5, lwd = 2, bty = "n", ylab = "f(x)", las = 1)
 curve(dt(x, df = 5), from = -5, to = 5, add = TRUE, lwd = 2, col = "dodgerblue")
 legend(x = -4, y = 0.3, legend = c("Normal", "t (df = 5)"), lwd = 2, col = c("black", "dodgerblue"), bty = "n")

@@ -499,7 +499,7 @@ The best linear predictor is, of course, a *linear* approximation to the CEF, an
 ```{r}
 #| label: fig-blp-limits
 #| echo: false
-#| fig.cap: "Linear projections for when truncating income distribution below $50k and above $100k"
+#| fig.cap: "Linear projections for when truncating income distribution below $50k and above $100k."
 contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
 axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
 curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
