@@ -325,12 +325,12 @@ $$
 <section id="bivariate-linear-regression" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="bivariate-linear-regression"><span class="header-section-number">5.2.1</span> Bivariate linear regression</h3>
 <p>Let’s set aside the idea of the conditional expectation function and instead focus on finding the <strong>linear</strong> function of a single covariate <span class="math inline">\(X_i\)</span> that best predicts the outcome. Remember that linear functions have the form <span class="math inline">\(a + bX_i\)</span>. The <strong>best linear predictor</strong> (BLP) or <strong>population linear regression</strong> of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(X_i\)</span> is defined as <span class="math display">\[
-m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}].
+m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}].
 \]</span> That is, the best linear predictor is the line that results in the lowest mean-squared error predictions of the outcome given the covariates, averaging over the joint distribution of the data. This function is a feature of the joint distribution of the data—the DGP—and so represents something that we would like to learn about with our sample. It is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though we will see that they will sometimes be equal. We call <span class="math inline">\((\beta_{0}, \beta_{1})\)</span> the <strong>population linear regression coefficients</strong>. Notice that <span class="math inline">\(m(x)\)</span> could differ greatly from the CEF <span class="math inline">\(\mu(x)\)</span> if the latter is nonlinear.</p>
 <p>We can solve for the best linear predictor using standard calculus (taking the derivative with respect to each coefficient, setting those equations equal to 0, and solving the system of equations). The first-order conditions, in this case, are <span class="math display">\[
 \begin{aligned}
-  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
-  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
+  \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
+  \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
 \end{aligned}  
 \]</span> Given the linearity of expectations, it is easy to solve for <span class="math inline">\(\beta_0\)</span> in terms of <span class="math inline">\(\beta_1\)</span>, <span class="math display">\[
 \beta_{0} = \E[Y_{i}] - \beta_{1}\E[X_{i}].
@@ -398,12 +398,13 @@ Best linear projection assumptions
 </div>
 <p>Under these assumptions, it is possible to derive a closed-form expression for the <strong>population coefficients</strong> <span class="math inline">\(\bfbeta\)</span> using matrix calculus. To set up the optimization problem, we will find the first-order condition by taking the derivative of the expectation of the squared errors. First, let’s take the derivative of the squared prediction errors using the chain rule: <span class="math display">\[
 \begin{aligned}
-  \frac{\partial}{\partial \mb{b}^{'}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
-  &amp;= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}'}(Y_{i} - \X_{i}'\mb{b})  \\
+  \frac{\partial}{\partial \mb{b}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
+  &amp;= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}}(Y_{i} - \X_{i}'\mb{b})  \\
   &amp;= -2\left(Y_{i} - \X_{i}'\mb{b}\right)\X_{i} \\
-  &amp;= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right)
+    &amp;= -2\X_{i}\left(Y_{i} - \X_{i}'\mb{b}\right) \\
+  &amp;= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right),
 \end{aligned}
-\]</span> We can now plug this into the expectation to get the first-order condition and solve for <span class="math inline">\(\bfbeta\)</span>, <span class="math display">\[
+\]</span> where the third equality comes from the fact that <span class="math inline">\((Y_{i} - \X_{i}'\bfbeta)\)</span> is a scalar. We can now plug this into the expectation to get the first-order condition and solve for <span class="math inline">\(\bfbeta\)</span>, <span class="math display">\[
 \begin{aligned}
   0 &amp;= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ]  \\
   \E[\X_{i}\X_{i}'] \bfbeta &amp;= \E[\X_{i}Y_{i}],
@@ -618,7 +619,7 @@ m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 <div id="fig-blp-limits" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="06_linear_model_files/figure-html/fig-blp-limits-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;5.3: Linear projections for when truncating income distribution below $50k and above $100k</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.3: Linear projections for when truncating income distribution below $50k and above $100k.</figcaption><p></p>
 </figure>
 </div>
 </div>

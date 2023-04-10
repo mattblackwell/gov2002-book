@@ -451,7 +451,7 @@ R = \left\{(x_1, \ldots, x_n): \Xbar_n &gt; c\right\}.
 <div id="fig-size-power" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="04_hypothesis_tests_files/figure-html/fig-size-power-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.1: Size of a test and power against an alternative</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4.1: Size of a test and power against an alternative.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -608,14 +608,14 @@ Warning
 <h2 data-number="4.10" class="anchored" data-anchor-id="exact-tests-under-normal-data"><span class="header-section-number">4.10</span> Exact tests under normal data</h2>
 <p>The Wald test above relies on large sample approximations. In finite samples, these approximations may not be valid. Can we get <strong>exact</strong> inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a <strong>parametric model</strong> for the data where <span class="math inline">\(X_1,\ldots,X_n\)</span> are i.i.d. samples from <span class="math inline">\(N(\mu,\sigma^2)\)</span>. Under null of <span class="math inline">\(H_0: \mu = \mu_0\)</span>, we can show that <span class="math display">\[
 T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
-\]</span> where $t_{n-1} is the $<strong>Student’s t-distribution</strong> with <span class="math inline">\(n-1\)</span> degrees of freedom. This result implies the null distribution is <span class="math inline">\(t\)</span>, so we use quantiles of <span class="math inline">\(t\)</span> for critical values. For one-sided test <span class="math inline">\(c = G^{-1}_0(1 - \alpha)\)</span> but now <span class="math inline">\(G_0\)</span> is <span class="math inline">\(t\)</span> with <span class="math inline">\(n-1\)</span> df and so we use <code>qt()</code> instead of <code>qnorm()</code> to calculate these critical values.</p>
+\]</span> where <span class="math inline">\(t_{n-1}\)</span> is the <strong>Student’s t-distribution</strong> with <span class="math inline">\(n-1\)</span> degrees of freedom. This result implies the null distribution is <span class="math inline">\(t\)</span>, so we use quantiles of <span class="math inline">\(t\)</span> for critical values. For one-sided test <span class="math inline">\(c = G^{-1}_0(1 - \alpha)\)</span> but now <span class="math inline">\(G_0\)</span> is <span class="math inline">\(t\)</span> with <span class="math inline">\(n-1\)</span> df and so we use <code>qt()</code> instead of <code>qnorm()</code> to calculate these critical values.</p>
 <p>The critical values for the <span class="math inline">\(t\)</span> distribution are always larger than the normal because the t has fatter tails, as shown in <a href="#fig-shape-of-t">Figure&nbsp;<span>4.3</span></a>. As <span class="math inline">\(n\to\infty\)</span>, however, the <span class="math inline">\(t\)</span> converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Oddly, most software packages calculate p-values and rejection regions based on the <span class="math inline">\(t\)</span> to exploit this conservativeness.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-shape-of-t" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="04_hypothesis_tests_files/figure-html/fig-shape-of-t-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4.3: Normal versus t distribution</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4.3: Normal versus t distribution.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -652,7 +652,7 @@ Senn, Stephen. 2012. <span>“Tea for Three: Of Infusions and Inferences and Mil
 <ol>
 <li id="fn1"><p>The analysis here largely comes from <span class="citation" data-cites="Senn12">Senn (<a href="references.html#ref-Senn12" role="doc-biblioref">2012</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Different people and different textbooks describe what to do when do not reject the null hypothesis in different ways. The terminology is not so important so long as you understand that rejecting the null does not mean the null is logically false, and “accepting” the null does not mean the null is logically true.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Eagle-eyed readers will notice that the null tested here is a point, while we previously defined the null in a one-sided test as a region <span class="math inline">\(H_0: \theta \leq \theta_0\)</span>. Technically, the size of the test will vary based on which of these nulls we pick. In this example, notice that any null to the left of <span class="math inline">\(\theta_0\)</span> will result in a lower size. And so, the null at the boundary, <span class="math inline">\(\theta_0\)</span>, will maximize the size of the test, making it the most “conservative” null to investigate. Technically, we should define the size of a test as <span class="math inline">\(\alpha = \sup_{\theta \in \Theta_0} \pi(\theta)\)</span>,<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Eagle-eyed readers will notice that the null tested here is a point, while we previously defined the null in a one-sided test as a region <span class="math inline">\(H_0: \theta \leq \theta_0\)</span>. Technically, the size of the test will vary based on which of these nulls we pick. In this example, notice that any null to the left of <span class="math inline">\(\theta_0\)</span> will result in a lower size. And so, the null at the boundary, <span class="math inline">\(\theta_0\)</span>, will maximize the size of the test, making it the most “conservative” null to investigate. Technically, we should define the size of a test as <span class="math inline">\(\alpha = \sup_{\theta \in \Theta_0} \pi(\theta)\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
