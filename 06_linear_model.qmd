@@ -91,15 +91,15 @@ To help clarify these issues, we will pursue a different approach: understanding
 
 Let's set aside the idea of the conditional expectation function and instead focus on finding the **linear** function of a single covariate $X_i$ that best predicts the outcome. Remember that linear functions have the form $a + bX_i$. The **best linear predictor** (BLP) or **population linear regression** of $Y_i$ on $X_i$ is defined as
 $$ 
-m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}].
+m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}].
 $$
 That is, the best linear predictor is the line that results in the lowest mean-squared error predictions of the outcome given the covariates, averaging over the joint distribution of the data. This function is a feature of the joint distribution of the data---the DGP---and so represents something that we would like to learn about with our sample. It is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though we will see that they will sometimes be equal. We call $(\beta_{0}, \beta_{1})$ the **population linear regression coefficients**. Notice that $m(x)$ could differ greatly from the CEF $\mu(x)$ if the latter is nonlinear. 
 
 We can solve for the best linear predictor using standard calculus (taking the derivative with respect to each coefficient, setting those equations equal to 0, and solving the system of equations). The first-order conditions, in this case, are
 $$ 
 \begin{aligned}
-  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
-  \frac{\partial \E[(Y_{i} - b_{0} + b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
+  \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
+  \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
 \end{aligned}  
 $$
 Given the linearity of expectations, it is easy to solve for $\beta_0$ in terms of $\beta_1$,
@@ -183,13 +183,14 @@ Without some assumptions on the joint distribution of the data, The following "r
 Under these assumptions, it is possible to derive a closed-form expression for the **population coefficients** $\bfbeta$ using matrix calculus. To set up the optimization problem, we will find the first-order condition by taking the derivative of the expectation of the squared errors. First, let's take the derivative of the squared prediction errors using the chain rule:
 $$ 
 \begin{aligned}
-  \frac{\partial}{\partial \mb{b}^{'}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
-  &= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}'}(Y_{i} - \X_{i}'\mb{b})  \\
+  \frac{\partial}{\partial \mb{b}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
+  &= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}}(Y_{i} - \X_{i}'\mb{b})  \\
   &= -2\left(Y_{i} - \X_{i}'\mb{b}\right)\X_{i} \\
-  &= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right)
+    &= -2\X_{i}\left(Y_{i} - \X_{i}'\mb{b}\right) \\
+  &= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right),
 \end{aligned}
 $$
-We can now plug this into the expectation to get the first-order condition and solve for $\bfbeta$,
+where the third equality comes from the fact that $(Y_{i} - \X_{i}'\bfbeta)$ is a scalar. We can now plug this into the expectation to get the first-order condition and solve for $\bfbeta$,
 $$ 
 \begin{aligned}
   0 &= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ]  \\
