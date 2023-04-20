@@ -6,6 +6,7 @@ In this chapter, we will focus first on the asymptotic properties of OLS because
 
 ## Large-sample properties of OLS
 
+As we saw in @sec-asymptotics, we need two key ingredients to conduct statistical inference with the OLS estimator: a consistent estimate of the variance of $\bhat$ and the approximate distribution of $\bhat$ in large samples. Remember that since $\bhat$ is a vector, then the variance of that estimator will actually be a variance-covariance matrix. To obtain these two ingredients, we will first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which will include its variance. 
 
 
 We begin by setting out the assumptions we will need for establishing the large-sample properties of OLS, which are the same as the assumptions needed to ensure that the best linear predictor, $\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]$, is well-defined and unique. 
@@ -124,7 +125,7 @@ $$
 $$
 where $\sigma^2$ is the variance of the residuals (since $\E[e_{i}] = 0$). Homoskedasticity simplifies the asymptotic variance of the stabilized estimator, $\sqrt{n}(\bhat - \bfbeta)$, to
 $$ 
-\mb{V}^{\texttt{lm}}_{\bhat} = \mb{Q}_{\X\X}^{-1}\sigma^{2}\mb{Q}_{\X\X}\mb{Q}_{\X\X}^{-1} = \sigma^2\mb{Q}_{\X\X}^{-1}.
+\mb{V}^{\texttt{lm}}_{\bfbeta} = \mb{Q}_{\X\X}^{-1}\sigma^{2}\mb{Q}_{\X\X}\mb{Q}_{\X\X}^{-1} = \sigma^2\mb{Q}_{\X\X}^{-1}.
 $$
 We already have an estimator for $\mb{Q}_{\X\X}$, but we need one for $\sigma^2$. We can easily use the SSR,
 $$ 
@@ -181,7 +182,7 @@ t = \frac{\widehat{\beta}_{j} - b_{0}}{\widehat{\se}(\widehat{\beta}_{j})},
 $$
 and we usually take the absolute value, $|t|$, as our measure of how far our estimate is from the null. But notice that we could also use the square of the $t$ statistic, which is
 $$ 
-t^{2} = \frac{\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{\V[\widehat{\beta}_{j}]} = \frac{n\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{[\mb{V}_{\bfbeta}]_[jj]} 
+t^{2} = \frac{\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{\V[\widehat{\beta}_{j}]} = \frac{n\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{[\mb{V}_{\bfbeta}]_{[jj]}} 
 $$ {#eq-squared-t}
 
 So here's another way to differentiate the null from the alternative: the squared distance between them divided by the variance of the estimate. 
