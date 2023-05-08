@@ -168,7 +168,7 @@ For reasons we will discuss below, standard software typically relies on the $t$
 
 With multiple coefficients, we might have hypotheses that involve more than one coefficient. As an example, let's focus on a regression with an interaction between two covariates, 
 $$
-Y_i = \beta_0 + X_i\beta_2 + Z_i\beta_2 + X_iZ_i\beta_3 + e_i.
+Y_i = \beta_0 + X_i\beta_1 + Z_i\beta_2 + X_iZ_i\beta_3 + e_i.
 $$
 Suppose we wanted to test the hypothesis that $X_i$ does not affect the best linear predictor for $Y_i$. That would be
 $$ 
