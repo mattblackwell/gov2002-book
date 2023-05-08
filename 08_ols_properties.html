@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.475">
+<meta name="generator" content="quarto-1.3.340">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,9 +17,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -46,48 +47,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +73,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -143,6 +114,7 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="style.css">
@@ -152,11 +124,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./08_ols_properties.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -164,13 +141,13 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -178,95 +155,107 @@ div.csl-indent {
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Statistical Inference</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a>
+  <a href="./02_estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a>
+  <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a>
+  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Regression</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a>
+  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a>
+  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_ols_properties.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a>
+  <a href="./08_ols_properties.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#large-sample-properties-of-ols" id="toc-large-sample-properties-of-ols" class="nav-link active" data-scroll-target="#large-sample-properties-of-ols"><span class="toc-section-number">7.1</span>  Large-sample properties of OLS</a></li>
-  <li><a href="#variance-estimation-for-ols" id="toc-variance-estimation-for-ols" class="nav-link" data-scroll-target="#variance-estimation-for-ols"><span class="toc-section-number">7.2</span>  Variance estimation for OLS</a></li>
-  <li><a href="#inference-for-multiple-parameters" id="toc-inference-for-multiple-parameters" class="nav-link" data-scroll-target="#inference-for-multiple-parameters"><span class="toc-section-number">7.3</span>  Inference for multiple parameters</a></li>
-  <li><a href="#finite-sample-properties-with-a-linear-cef" id="toc-finite-sample-properties-with-a-linear-cef" class="nav-link" data-scroll-target="#finite-sample-properties-with-a-linear-cef"><span class="toc-section-number">7.4</span>  Finite-sample properties with a linear CEF</a>
+  <li><a href="#large-sample-properties-of-ols" id="toc-large-sample-properties-of-ols" class="nav-link active" data-scroll-target="#large-sample-properties-of-ols"><span class="header-section-number">7.1</span> Large-sample properties of OLS</a></li>
+  <li><a href="#variance-estimation-for-ols" id="toc-variance-estimation-for-ols" class="nav-link" data-scroll-target="#variance-estimation-for-ols"><span class="header-section-number">7.2</span> Variance estimation for OLS</a></li>
+  <li><a href="#inference-for-multiple-parameters" id="toc-inference-for-multiple-parameters" class="nav-link" data-scroll-target="#inference-for-multiple-parameters"><span class="header-section-number">7.3</span> Inference for multiple parameters</a></li>
+  <li><a href="#finite-sample-properties-with-a-linear-cef" id="toc-finite-sample-properties-with-a-linear-cef" class="nav-link" data-scroll-target="#finite-sample-properties-with-a-linear-cef"><span class="header-section-number">7.4</span> Finite-sample properties with a linear CEF</a>
   <ul class="collapse">
-  <li><a href="#linear-cef-model-under-homoskedasticity" id="toc-linear-cef-model-under-homoskedasticity" class="nav-link" data-scroll-target="#linear-cef-model-under-homoskedasticity"><span class="toc-section-number">7.4.1</span>  Linear CEF model under homoskedasticity</a></li>
+  <li><a href="#linear-cef-model-under-homoskedasticity" id="toc-linear-cef-model-under-homoskedasticity" class="nav-link" data-scroll-target="#linear-cef-model-under-homoskedasticity"><span class="header-section-number">7.4.1</span> Linear CEF model under homoskedasticity</a></li>
   </ul></li>
-  <li><a href="#the-normal-linear-model" id="toc-the-normal-linear-model" class="nav-link" data-scroll-target="#the-normal-linear-model"><span class="toc-section-number">7.5</span>  The normal linear model</a></li>
+  <li><a href="#the-normal-linear-model" id="toc-the-normal-linear-model" class="nav-link" data-scroll-target="#the-normal-linear-model"><span class="header-section-number">7.5</span> The normal linear model</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mattblackwell/gov2002-book/edit/main/08_ols_properties.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -332,7 +321,7 @@ $$
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></h1>
 </div>
 
 
@@ -353,12 +342,12 @@ $$
 <h2 data-number="7.1" class="anchored" data-anchor-id="large-sample-properties-of-ols"><span class="header-section-number">7.1</span> Large-sample properties of OLS</h2>
 <p>As we saw in <a href="03_asymptotics.html"><span>Chapter&nbsp;3</span></a>, we need two key ingredients to conduct statistical inference with the OLS estimator: a consistent estimate of the variance of <span class="math inline">\(\bhat\)</span> and the approximate distribution of <span class="math inline">\(\bhat\)</span> in large samples. Remember that since <span class="math inline">\(\bhat\)</span> is a vector, then the variance of that estimator will actually be a variance-covariance matrix. To obtain these two ingredients, we will first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which will include its variance.</p>
 <p>We begin by setting out the assumptions we will need for establishing the large-sample properties of OLS, which are the same as the assumptions needed to ensure that the best linear predictor, <span class="math inline">\(\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\)</span>, is well-defined and unique.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Linear projection assumptions
 </div>
 </div>
@@ -387,12 +376,12 @@ Linear projection assumptions
 <p>Thus, OLS should be close to the population linear regression in large samples under relatively mild conditions. Remember that this might not equal the conditional expectation if the CEF is nonlinear. We can say here that OLS converges to the best <em>linear</em> approximation to the CEF. Of course, this also means that if the CEF is linear, then OLS will consistently estimate the coefficients of the CEF.</p>
 <p>To emphasize here: the only assumption we made about the dependent variable is that it has finite variance and is iid. Under this assumption, the outcome could be continuous, categorical, binary, or event count.</p>
 <p>Next, we would like to establish an asymptotic normality result for the OLS coefficients. We first review some key ideas about the central limit theorem.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 CLT reminder
 </div>
 </div>
@@ -458,7 +447,7 @@ t = \frac{\widehat{\beta}_{j}}{\widehat{\se}(\widehat{\beta}_{j})},
 <section id="inference-for-multiple-parameters" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="inference-for-multiple-parameters"><span class="header-section-number">7.3</span> Inference for multiple parameters</h2>
 <p>With multiple coefficients, we might have hypotheses that involve more than one coefficient. As an example, let’s focus on a regression with an interaction between two covariates, <span class="math display">\[
-Y_i = \beta_0 + X_i\beta_2 + Z_i\beta_2 + X_iZ_i\beta_3 + e_i.
+Y_i = \beta_0 + X_i\beta_1 + Z_i\beta_2 + X_iZ_i\beta_3 + e_i.
 \]</span> Suppose we wanted to test the hypothesis that <span class="math inline">\(X_i\)</span> does not affect the best linear predictor for <span class="math inline">\(Y_i\)</span>. That would be <span class="math display">\[
 H_{0}: \beta_{1} = 0 \text{ and } \beta_{3} = 0\quad\text{vs}\quad H_{1}: \beta_{1} \neq 0 \text{ or } \beta_{3} \neq 0,
 \]</span> where we usually write the null more compactly as <span class="math inline">\(H_0: \beta_1 = \beta_3 = 0\)</span>.</p>
@@ -494,7 +483,7 @@ W = n(\mb{L}\bhat - \mb{c})'(\mb{L}'\mb{V}_{\bfbeta}\mb{L})^{-1}(\mb{L}\bhat - \
 <div id="fig-wald" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="08_ols_properties_files/figure-html/fig-wald-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7.1: Hypothetical joint distribution of two slope coefficients. The circle is closer to the center of the distribution by the standard Euclidean distance, but the triangle is closer once you consider the joint distribution.</figcaption><p></p>
+<figcaption class="figure-caption">Figure&nbsp;7.1: Hypothetical joint distribution of two slope coefficients. The circle is closer to the center of the distribution by the standard Euclidean distance, but the triangle is closer once you consider the joint distribution.</figcaption>
 </figure>
 </div>
 </div>
@@ -502,12 +491,12 @@ W = n(\mb{L}\bhat - \mb{c})'(\mb{L}'\mb{V}_{\bfbeta}\mb{L})^{-1}(\mb{L}\bhat - \
 <p>If <span class="math inline">\(\mb{L}\)</span> only has one row, our Wald statistic is the same as the squared <span class="math inline">\(t\)</span> statistic, <span class="math inline">\(W = t^2\)</span>. This fact will help us think about the asymptotic distribution of <span class="math inline">\(W\)</span>. Notice that as <span class="math inline">\(n\to\infty\)</span>, we know that by the asymptotic normality of <span class="math inline">\(\bhat\)</span>, <span class="math display">\[
 t = \frac{\widehat{\beta}_{j} - \beta_{j}}{\widehat{\se}[\widehat{\beta}_{j}]} \indist \N(0,1)
 \]</span> so <span class="math inline">\(t^2\)</span> will converge in distribution to a <span class="math inline">\(\chi^2_1\)</span> (since a <span class="math inline">\(\chi^2_1\)</span> is just one standard normal squared). After recentering ad rescaling by the covariance matrix, <span class="math inline">\(W\)</span> converges to the sum of <span class="math inline">\(q\)</span> squared independent normals, where <span class="math inline">\(q\)</span> is the number of rows of <span class="math inline">\(\mb{L}\)</span>, or equivalently, the number of restrictions implied by the null hypothesis. Thus, under the null hypothesis of <span class="math inline">\(\mb{L}\bhat = \mb{c}\)</span>, we have <span class="math inline">\(W \indist \chi^2_{q}\)</span>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Chi-squared critical values
 </div>
 </div>
@@ -537,12 +526,12 @@ F = \frac{W}{q},
 <section id="finite-sample-properties-with-a-linear-cef" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="finite-sample-properties-with-a-linear-cef"><span class="header-section-number">7.4</span> Finite-sample properties with a linear CEF</h2>
 <p>All the above results have been large-sample properties, and we have not addressed finite-sample properties like the sampling variance or unbiasedness. Under the linear projection assumption above, OLS is generally biased without stronger assumptions. This section introduces the stronger assumption that will allow us to establish stronger properties for OLS. As usual, however, remember that these stronger assumptions can be wrong.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Assumption: Linear Regression Model
 </div>
 </div>
@@ -597,12 +586,12 @@ Assumption: Linear Regression Model
 <section id="linear-cef-model-under-homoskedasticity" class="level3" data-number="7.4.1">
 <h3 data-number="7.4.1" class="anchored" data-anchor-id="linear-cef-model-under-homoskedasticity"><span class="header-section-number">7.4.1</span> Linear CEF model under homoskedasticity</h3>
 <p>If we are willing to make a homoskedasticity assumption on the errors, we can derive even stronger results for OLS. Stronger assumptions typically lead to stronger conclusions, but those conclusions may not be robust to assumption violations. But homoskedasticity is such a historically important assumption that statistical software implementations of OLS like <code>lm()</code> in R assume it.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Assumption: Homoskedasticity with a linear CEF
 </div>
 </div>
@@ -678,12 +667,12 @@ Assumption: Homoskedasticity with a linear CEF
 <section id="the-normal-linear-model" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="the-normal-linear-model"><span class="header-section-number">7.5</span> The normal linear model</h2>
 <p>Finally, we add the strongest and thus least loved of the classical linear regression assumption: (conditional) normality of the errors. The historical reason to use this assumption was that finite-sample inference hits a roadblock without some knowledge of the sampling distribution of <span class="math inline">\(\bhat\)</span>. Under the linear CEF model, we saw that it was unbiased, and under homoskedasticity, we could produce an unbiased estimator of the conditional variance. But to do hypothesis testing or generate confidence intervals, we need to be able to make probability statements about the estimator, and for that, we need to know its exact distribution. When the sample size is large, we can rely on the CLT and know it is approximately normal. But in small samples, what do we do? Historically, we decided to assume (conditional) normality of the errors to proceed with some knowledge that we were wrong but hopefully not too wrong.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 The normal linear regression model
 </div>
 </div>
@@ -716,8 +705,8 @@ e_i \mid \Xmat \sim \N(0, \sigma^2).
 <p>These arguments are not very convincing since it’s unclear whether the <span class="math inline">\(t\)</span> approximation will be any better than the normal in finite samples. But it’s the best we can do to console ourselves as we find more data.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-Hansen22" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Hansen22" class="csl-entry" role="listitem">
 Hansen, Bruce E. 2022. <span>“A <span>Modern Gauss</span>–<span>Markov Theorem</span>.”</span> <em>Econometrica</em> 90 (3): 1283–94. <a href="https://doi.org/10.3982/ECTA19255">https://doi.org/10.3982/ECTA19255</a>.
 </div>
 </div>
@@ -758,9 +747,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -825,6 +828,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
