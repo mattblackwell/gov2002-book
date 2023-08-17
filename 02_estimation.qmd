@@ -330,7 +330,7 @@ $$\begin{aligned}
 
 :::
 
-An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of $\widehat{\theta}$ the **standand error** of $\widehat{\theta}$: $\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}$. 
+An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of $\widehat{\theta}$ the **standard error** of $\widehat{\theta}$: $\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}$. 
 
 Given the above derivation, the standard error of the sample mean under iid sampling is $\sigma / \sqrt{n}$
 

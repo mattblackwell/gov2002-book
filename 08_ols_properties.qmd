@@ -19,7 +19,7 @@ The linear projection model makes the following assumptions:
 
 1. $\{(Y_{i}, \X_{i})\}_{i=1}^n$ are iid random vectors. 
 
-2. $\E[Y_{i^{2}}] < \infty$ (finite outcome variance)
+2. $\E[Y_{i}^{2}] < \infty$ (finite outcome variance)
 
 3. $\E[\Vert \X_{i}\Vert^{2}] < \infty$ (finite variances and covariances of covariates)
 
