@@ -18,7 +18,7 @@ When studying probability, we assumed that we knew the parameter of a distributi
 Suppose we are conducting a randomized experiment on framing effects. All respondents receive some factual information about current levels of immigration. The message for the treatment group ($D_i = 1$) has an additional framing of the positive benefits of immigration, while the control group ($D_i = 0$) receives no additional framing. The outcome is a binary outcome on whether the respondent supports increasing legal immigration limits ($Y_i = 1$)
 or not ($Y_i = 0$). The observed data consists of $n$ pairs of random variables, the outcome, and the treatment assignment: $\{(Y_1, D_1), \ldots, (Y_n, D_n)\}$. Define the two sample means/proportions in each group as 
 $$
-\Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i,  \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
+\Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i, \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
 $$
 where $n_1 = \sum_{i=1}^n D_i$ is the number of treated units and $n_0 = n - n_1$ is the number of control units. 
 
@@ -47,7 +47,7 @@ You can think of each vector, $X_i$, as the rows in your data frame. Note that w
 Two metaphors can help build intuition about the concept of viewing the data as an iid draw from $F$:
 
 1. **Random sampling**. Suppose we have a population of size $N$ that is much larger than our sample size $n$, and we take a random sample of size $n$ from this population with replacement. Then the distribution of the data in the random sample will be iid draws from the population distribution of the variables we are sampling. For instance, suppose we take a random sample from a population of US citizens where the population proportion of Democratic party identifiers is 0.33. Then if we randomly sample $n = 100$ US citizens, each data point $X_i$ will be distributed Bernoulli with probability of success 0.33. 
-2. **Groundhog Day**. Random sampling does not always make sense as a justification for iid data, especially when the units are not samples at all but rather countries, states, or subnational units. In this case, we have to appeal to a thought experiment where $F$ represents the fundamental uncertainty in the data-generating process. The metaphor here is that if we could re-run history many times, like the 1993 American classic comedy *Groundhog Day*, data and outcomes would change slightly due to the inherently stochastic nature of the world. The iid assumption, then, is that each of the units in our  data has the same DGP producing this data or the same distribution of outcomes under the *Groundhog Day* scenario. The set of all these infinite possible draws from the DGP is sometimes referred to as the **superpopulation**. 
+2. **Groundhog Day**. Random sampling does not always make sense as a justification for iid data, especially when the units are not samples at all but rather countries, states, or subnational units. In this case, we have to appeal to a thought experiment where $F$ represents the fundamental uncertainty in the data-generating process. The metaphor here is that if we could re-run history many times, like the 1993 American classic comedy *Groundhog Day*, data and outcomes would change slightly due to the inherently stochastic nature of the world. The iid assumption, then, is that each of the units in our data has the same DGP producing this data or the same distribution of outcomes under the *Groundhog Day* scenario. The set of all these infinite possible draws from the DGP is sometimes referred to as the **superpopulation**. 
 
 Note that there are many situations where the iid assumption is not appropriate. We will cover some of those later in the semester. But much of the innovation and growth in statistics over the last 50 years has been figuring out how to perform statistical inference when iid does not hold. Often, the solutions are specific to the type of iid violation you have (spatial, time-series, network, or clustered). As a rule of thumb, though, if you suspect iid is incorrect, your uncertainty statements will likely be overconfident (for example, confidence intervals, which we'll cover later, are too small). 
 
@@ -137,7 +137,7 @@ The first method for generating estimators relies on **parametric models**, wher
 $$
 L(\theta) = \prod_{i=1}^n f(X_i \mid \theta).
 $$
-We can then define the **maximum likelihood**  estimator (MLE) for $\theta$ as the values of the parameter that, well, maximize the likelihood:
+We can then define the **maximum likelihood** estimator (MLE) for $\theta$ as the values of the parameter that, well, maximize the likelihood:
 $$
 \widehat{\theta}_{mle} = \argmax_{\theta \in \Theta} \; L(\theta)
 $$
@@ -280,7 +280,7 @@ Even though we cannot precisely pin down the entire sampling distribution, we ca
 
 ### Bias
 
-The first property of the sampling distribution concerns its central tendency. In particular, we will define the  **bias** (or **estimation bias**) of estimator $\widehat{\theta}$ for parameter $\theta$ as
+The first property of the sampling distribution concerns its central tendency. In particular, we will define the **bias** (or **estimation bias**) of estimator $\widehat{\theta}$ for parameter $\theta$ as
 $$
 \text{bias}[\widehat{\theta}] = \E[\widehat{\theta}] - \theta,
 $$
@@ -322,15 +322,15 @@ We can establish the sampling variance of the sample mean of iid data for all $F
 
 $$\begin{aligned}
   \V\left[ \Xbar_n \right] &= \V\left[ \frac{1}{n} \sum_{i=1}^n X_i \right] & (\text{definition of } \Xbar_n) \\
-                           &=\frac{1}{n^2} \V\left[ \sum_{i=1}^n X_i \right] & (\text{property of } \V)\\
-                           &=\frac{1}{n^2} \sum_{i=1}^n \V[X_i] & (\text{independence})\\
-                           &= \frac{1}{n^2}\sum_{i=1}^n \sigma^2 & (X_i \text{ identically distributed})\\
+                           &= \frac{1}{n^2} \V\left[ \sum_{i=1}^n X_i \right] & (\text{property of } \V) \\
+                           &= \frac{1}{n^2} \sum_{i=1}^n \V[X_i] & (\text{independence}) \\
+                           &= \frac{1}{n^2} \sum_{i=1}^n \sigma^2 & (X_i \text{ identically distributed}) \\
                            &= \frac{\sigma^2}{n}
 \end{aligned}$$
 
 :::
 
-An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of $\widehat{\theta}$ the **standand error** of $\widehat{\theta}$:  $\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}$. 
+An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of $\widehat{\theta}$ the **standand error** of $\widehat{\theta}$: $\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}$. 
 
 Given the above derivation, the standard error of the sample mean under iid sampling is $\sigma / \sqrt{n}$
 
@@ -370,7 +370,7 @@ text(x = 0.5, y = dnorm(0.5, 0.2, 0.5), expression(hat(theta)[b]),
      cex = 1.5, pos = 4, col = "dodgerblue")
 ```
 
-In this figure, we show the sampling distributions of two estimators, $\widehat{\theta}_a$, which is unbiased (centered on the true value $\theta$) but with a high sampling variance,  and $\widehat{\theta}_b$ which is slightly biased but with much lower sampling variance. Even though $\widehat{\theta}_b$ is biased, the probability of drawing a value close to the truth is higher than for $\widehat{\theta}_a$. This balancing between bias and variance is precisely what the MSE helps capture and, indeed, in this case, $MSE[\widehat{\theta}_b] < MSE[\widehat{\theta}_a]$. 
+In this figure, we show the sampling distributions of two estimators, $\widehat{\theta}_a$, which is unbiased (centered on the true value $\theta$) but with a high sampling variance, and $\widehat{\theta}_b$ which is slightly biased but with much lower sampling variance. Even though $\widehat{\theta}_b$ is biased, the probability of drawing a value close to the truth is higher than for $\widehat{\theta}_a$. This balancing between bias and variance is precisely what the MSE helps capture and, indeed, in this case, $MSE[\widehat{\theta}_b] < MSE[\widehat{\theta}_a]$. 
 
 
 

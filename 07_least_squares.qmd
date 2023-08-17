@@ -2,7 +2,7 @@
 
 This chapter explores the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency. 
 
-In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS  under an assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter. 
+In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS under an assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter. 
 
 
 ```{r}
@@ -56,7 +56,7 @@ This plug-in approach is widely applicable and tends to have excellent propertie
 
 The second approach applies the plug-in principle not to the closed-form expression for the coefficients but to the optimization problem itself. We call this the **least squares** estimator because it minimizes the empirical (or sample) squared prediction error,
 $$ 
-\bhat  = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
+\bhat = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
 $$
 where,
 $$ 
@@ -76,7 +76,7 @@ To obtain the solution for $\bhat$, notice that $\sum_{i=1}^{n}\X_{i}\X_{i}'$ is
 $$ 
 \bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right),
 $$
-which is the same expression as the plug-in estimator (after canceling the $1/n$ terms). To confirm that we have found a  minimum, we also need to check the second-order condition, 
+which is the same expression as the plug-in estimator (after canceling the $1/n$ terms). To confirm that we have found a minimum, we also need to check the second-order condition, 
 $$ 
  \frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right) > 0.
 $$
@@ -177,7 +177,7 @@ $$
 ```{r}
 #| label: fig-ssr-vs-tss
 #| echo: false
-#| fig.cap: Total sum of squares vs. the sum of squared residuals
+#| fig.cap: Total sum of squares vs. the sum of squared residuals.
 par(mfrow = c(1, 2), mar = c(4,4, 2, 0.1))
 ajr.mod <- lm(logpgp95 ~ avexpr, data = ajr)
 ajr.dat <- model.frame(ajr.mod, data =ajr)
@@ -197,7 +197,7 @@ R^2 = \frac{TSS - SSR}{TSS} = 1-\frac{SSR}{TSS},
 $$
 which is the reduction in error moving from $\overline{Y}$ to $\X_i'\bhat$ as the predictor relative to the prediction error using $\overline{Y}$. We can think of this as the fraction of the total prediction error eliminated by using $\X_i$ to predict $Y_i$. One thing to note is that OLS will *always* improve in-sample fit so that $TSS \geq SSR$ even if $\X_i$ is unrelated to $Y_i$. This phantom improvement occurs because the whole point of OLS is to minimize the SSR, and it will do that even if it is just chasing noise. 
 
-Since regression always improves in-sample fit,  $R^2$ will fall between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ and $\X_i$ are perfectly orthogonal in the data (this is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance). A value of 1 indicates a perfect linear fit.  
+Since regression always improves in-sample fit, $R^2$ will fall between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ and $\X_i$ are perfectly orthogonal in the data (this is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance). A value of 1 indicates a perfect linear fit.  
 
 ## Matrix form of OLS
 
@@ -215,7 +215,7 @@ $$
 \mb{Y} = \begin{pmatrix}
 Y_1 \\ Y_2 \\ \vdots \\ Y_n
   \end{pmatrix}, \quad
-  \mathbb{X} =  \begin{pmatrix}
+  \mathbb{X} = \begin{pmatrix}
 \X'_1 \\
 \X'_2 \\
 \vdots \\
@@ -247,7 +247,7 @@ $$
 $$
 which means we can write the OLS estimator in the more recognizable form as 
 $$ 
-\bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1}  \mathbb{X}'\mb{Y}.
+\bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1} \mathbb{X}'\mb{Y}.
 $$
 
 Of course, we can also define the vector of residuals,
@@ -259,19 +259,19 @@ $$
     \vdots \\
     Y_n
     \end{array}
-\right]  - 
+\right] - 
 \left[
 \begin{array}{c}
-    1\widehat{\beta}_0  + X_{11}\widehat{\beta}_1 +  X_{12}\widehat{\beta}_2 + \dots + X_{1k} \widehat{\beta}_k \\
-    1\widehat{\beta}_0 + X_{21}\widehat{\beta}_1 + X_{22}\widehat{\beta}_2  + \dots + X_{2k}\widehat{\beta}_k \\
-   \vdots  \\
-   1\widehat{\beta}_0 + X_{n1}\widehat{\beta}_1 + X_{n2}\widehat{\beta}_2  + \dots + X_{nk}\widehat{\beta}_k
+   1\widehat{\beta}_0 + X_{11}\widehat{\beta}_1 + X_{12}\widehat{\beta}_2 + \dots + X_{1k}\widehat{\beta}_k \\
+   1\widehat{\beta}_0 + X_{21}\widehat{\beta}_1 + X_{22}\widehat{\beta}_2 + \dots + X_{2k}\widehat{\beta}_k \\
+   \vdots \\
+   1\widehat{\beta}_0 + X_{n1}\widehat{\beta}_1 + X_{n2}\widehat{\beta}_2 + \dots + X_{nk}\widehat{\beta}_k
 \end{array}
 \right],
 $$
 and so the sum of the squared residuals, in this case, becomes
 $$ 
-SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} =  (\mb{Y} - \mathbb{X}\bfbeta)'(\mb{Y} - \mathbb{X}\bfbeta),
+SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} = (\mb{Y} - \mathbb{X}\bfbeta)'(\mb{Y} - \mathbb{X}\bfbeta),
 $$
 where the double vertical lines mean the Euclidean norm of the argument, $\Vert \mb{z} \Vert = \sqrt{\sum_{i=1}^n z_i^{2}}$. The OLS minimization problem, then, is 
 $$ 
@@ -286,7 +286,7 @@ $$
 
 When introducing the OLS estimator, we noted that it would exist when $\sum_{i=1}^n \X_i\X_i'$ is positive definite or that there is "no multicollinearity." This assumption is equivalent to saying the matrix $\mathbb{X}$ is full column rank, meaning that $\text{rank}(\mathbb{X}) = (k+1)$, where $k+1$ is the number of columns of $\mathbb{X}$. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix, and **linear independence** means that if $\mathbb{X}\mb{b} = 0$ if and only if $\mb{b}$ is a column vector of 0s. In other words, we have
 $$ 
-b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0,  
+b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0, 
 $$
 where $\mathbb{X}_j$ is the $j$th column of $\mathbb{X}$. Thus, full column rank says that all the columns are linearly independent or that there is no "multicollinearity."
 
@@ -309,7 +309,7 @@ That is, if I know that you are not in the West, Midwest, or South regions, I kn
 
 Another way collinearity can occur is if you include both an intercept term and a variable that does not vary. This issue can often happen if we mistakenly subset our data to, say, the West region but still include the West dummy variable in the regression. 
 
-Finally, note that most statistical software packages will "solve" the multicollinearity by arbitrarily removing as many linearly dependent covariates as is necessary to achieve full rank. R will show the estimated coefficients as `NA` in those cases.    
+Finally, note that most statistical software packages will "solve" the multicollinearity by arbitrarily removing as many linearly dependent covariates as is necessary to achieve full rank. R will show the estimated coefficients as `NA` in those cases.  
 
 ## OLS coefficients for binary and categorical regressors
 
@@ -355,7 +355,7 @@ projects a vector into $\mathcal{C}(\Xmat)$. In particular, we can see that this
 $$ 
 \mb{P}_{\Xmat}\mb{Y} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\mb{Y} = \Xmat\bhat.
 $$
-Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is also called the **hat matrix**. With either name, multiplying a vector by $\mb{P}_{\Xmat}$ gives the best linear predictor of that vector as a function of $\Xmat$.  Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ is itself. We can also see this algebraically for any linear combination $\Xmat\mb{c}$
+Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is also called the **hat matrix**. With either name, multiplying a vector by $\mb{P}_{\Xmat}$ gives the best linear predictor of that vector as a function of $\Xmat$. Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ is itself. We can also see this algebraically for any linear combination $\Xmat\mb{c}$
 $$
 \mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{c} = \Xmat\mb{c}
 $$
@@ -405,7 +405,7 @@ $$
 $$
 so, for example, $\text{trace}(\mb{I}_{n}) = n$. A couple of key properties of the trace:
 
-- Trace is linear: $\text{trace}(k\mb{A}) = k\; \text{trace}(\mb{a})$ and  $\text{trace}(\mb{A} + \mb{B}) = \text{trace}(\mb{A}) + \text{trace}(\mb{B})$
+- Trace is linear: $\text{trace}(k\mb{A}) = k\; \text{trace}(\mb{a})$ and $\text{trace}(\mb{A} + \mb{B}) = \text{trace}(\mb{A}) + \text{trace}(\mb{B})$
 - Trace is invariant to multiplication direction: $\text{trace}(\mb{AB}) = \text{trace}(\mb{BA})$. 
 :::
 
@@ -421,7 +421,7 @@ $$
 \mb{Y} = \Xmat_{1}\bhat_{1} + \Xmat_{2}\bhat_{2} + \widehat{\mb{e}}.
 $$
 
-We now document another way to obtain the estimator $\bhat_1$ from this regression using a technique called **residual regression **, **partitioned regression**, or the **Frisch-Waugh-Lovell theorem**.
+We now document another way to obtain the estimator $\bhat_1$ from this regression using a technique called **residual regression**, **partitioned regression**, or the **Frisch-Waugh-Lovell theorem**.
  
 ::: {.callout-note}
 
@@ -443,7 +443,7 @@ The OLS coefficients from a regression of $\widetilde{\mb{e}}_{2}$ on $\widetild
 
 :::
 
-One implication of this theorem is the regression coefficient for a given variable captures the relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation orthogonal to those other covariates.    
+One implication of this theorem is the regression coefficient for a given variable captures the relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation orthogonal to those other covariates.  
 
 While perhaps unexpected, this result may not appear particularly useful. We can just run the long regression, right? This trick can be handy when $\Xmat_2$ consists of dummy variables (or "fixed effects") for a categorical variable with many categories. For example, suppose $\Xmat_2$ consists of indicators for the county of residence for a respondent. In that case, that will have over 3,000 columns, meaning that direct calculation of the $\bhat = (\bhat_{1}, \bhat_{2})$ will require inverting a matrix that is bigger than $3,000 \times 3,000$. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable are just the sample mean within each level of the variable. Thus, in this case, the residuals $\widetilde{\mb{e}}_2$ and $\Xmat_1$ can be computed by demeaning the outcome and $\Xmat_1$ within levels of the dummies in $\Xmat_2$, which can be considerably faster computationally. 
 
@@ -452,7 +452,7 @@ Finally, there are data visualization reasons to use residual regression. It is 
 
 ## Outliers, leverage points, and influential observations
 
-Given that OLS finds the coefficients that minimize the sum of the squared residuals, it is helpful to ask how much impact each residual has on that solution. Let $\bhat_{(-i)}$ be the OLS estimates if we omit unit $i$. Intuitively,  **influential observations** should significantly impact the estimated coefficients so that $\bhat_{(-i)} - \bhat$ is large in absolute value. 
+Given that OLS finds the coefficients that minimize the sum of the squared residuals, it is helpful to ask how much impact each residual has on that solution. Let $\bhat_{(-i)}$ be the OLS estimates if we omit unit $i$. Intuitively, **influential observations** should significantly impact the estimated coefficients so that $\bhat_{(-i)} - \bhat$ is large in absolute value. 
 
 Under what conditions will we have influential observations? OLS tries to minimize the sum of **squared** residuals, so it will move more to shrink larger residuals than smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will go through the means of the outcome and the covariates: $\overline{Y} = \overline{\X}\bhat$. Thus, by definition, This means that when an observation is close to the average of the covariates, $\overline{\X}$, it cannot have that much influence because OLS forces the regression line to go through $\overline{Y}$. Thus, we should look for influential points that have two properties:
 
@@ -529,7 +529,7 @@ An influence point is an observation that has the power to change the coefficien
 ```{r}
 #| label: fig-influence
 #| echo: false
-#| fig.cap: An example of an influence point
+#| fig.cap: An example of an influence point.
 set.seed(02138)
 x <- rnorm(100, 0, 1)
 y <- 0.2 * x + rnorm(100, 0, 1)

@@ -31,7 +31,7 @@ Recall that these are mild conditions on the joint distribution of $(Y_{i}, \X_{
 
 We can helpfully decompose the OLS estimator into the actual BLP coefficient plus estimation error as
 $$ 
-\bhat = \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_iY_i \right) = \bfbeta +  \underbrace{\left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_ie_i \right)}_{\text{estimation error}}.
+\bhat = \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_iY_i \right) = \bfbeta + \underbrace{\left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_ie_i \right)}_{\text{estimation error}}.
 $$ 
  
 This decomposition will help us quickly establish the consistency of $\bhat$. By the law of large numbers, we know that sample means will converge in probability to population expectations, so we have
@@ -40,7 +40,7 @@ $$
 $$
 which implies that 
 $$
-\bhat \inprob \beta +  \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \beta,
+\bhat \inprob \beta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \beta,
 $$
 by the continuous mapping theorem (the inverse is a continuous function). The linear projection assumptions ensure that LLN applies to these sample means and ensure that $\E[\X_{i}\X_{i}']$ is invertible. 
 
@@ -68,7 +68,7 @@ $$ {#eq-clt-mean-zero}
 
 We now manipulate our decomposition to arrive at the *stabilized* version of the estimator,
 $$ 
-\sqrt{n}\left( \bhat - \bfbeta\right) =  \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{\sqrt{n}} \sum_{i=1}^n \X_ie_i \right).
+\sqrt{n}\left( \bhat - \bfbeta\right) = \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{\sqrt{n}} \sum_{i=1}^n \X_ie_i \right).
 $$
 We have already established that the first term on the right-hand side will converge in probability to $\mb{Q}_{\X\X}^{-1}$. Notice that $\E[\X_{i}e_{i}] = 0$, so we can apply @eq-clt-mean-zero to the second term. The covariance matrix of $\X_ie_{i}$ is 
 $$ 
@@ -114,7 +114,7 @@ Under the assumptions of @thm-ols-asymptotic-normality, the LLN will imply that 
 $$ 
 \begin{aligned}
   \widehat{\mb{V}}_{\bfbeta} &= \widehat{\mb{Q}}_{\X\X}^{-1}\widehat{\mb{\Omega}}\widehat{\mb{Q}}_{\X\X}^{-1} \\
-  &= \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right)  \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
+  &= \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right) \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
 \end{aligned}
 $$
 which by the continuous mapping theorem is consistent, $\widehat{\mb{V}}_{\bfbeta} \inprob \mb{V}_{\bfbeta}$. 
@@ -150,7 +150,7 @@ $$
 $$
 where $[\widehat{\mb{V}}_{\bfbeta}]_{jj}$ is the $j$th diagonal entry of the HC variance estimator. Note that we divide by $\sqrt{n}$ here because $\widehat{\mb{V}}_{\bfbeta}$ is a consistent estimator of the stabilized estimator $\sqrt{n}(\bhat - \bfbeta)$ not the estimator itself. 
 
-Hypothesis tests and confidence intervals for individual coefficients are almost precisely the same as with the general case presented in Part I. For a two-sided test of $H_0: \beta_j = b$  versus $H_1: \beta_j \neq b$, we can build the t-statistic and conclude that, under the null,
+Hypothesis tests and confidence intervals for individual coefficients are almost precisely the same as with the general case presented in Part I. For a two-sided test of $H_0: \beta_j = b$ versus $H_1: \beta_j \neq b$, we can build the t-statistic and conclude that, under the null,
 $$
 \frac{\widehat{\beta}_j - b}{\widehat{\se}(\widehat{\beta}_{j})} \indist \N(0, 1).
 $$
@@ -398,7 +398,7 @@ $$
 $$
 In practice, these two derivations lead to basically the same variance estimator. Recall the heteroskedastic-consistent variance estimator is
 $$
-\widehat{\mb{V}}_{\bfbeta} = \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right)  \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
+\widehat{\mb{V}}_{\bfbeta} = \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right) \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
 $$
 is a valid plug-in estimator for the asymptotic variance and
 $$
@@ -469,7 +469,7 @@ This establishes $\E[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat} \mid \Xmat] = \mb{V}
 :::
 
 
-Thus, under the linear CEF model and homoskedasticity of the errors, we have an unbiased variance estimator that is a simple function of the sum of squared residuals and the design matrix. Most statistical software packages estimate standard errors using  $\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}$. 
+Thus, under the linear CEF model and homoskedasticity of the errors, we have an unbiased variance estimator that is a simple function of the sum of squared residuals and the design matrix. Most statistical software packages estimate standard errors using $\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}$. 
 
 
 The final result we can derive for the linear CEF under homoskedasticity is an optimality result. We might ask ourselves if there is another estimator for $\bfbeta$ that would outperform OLS in the sense of having a lower sampling variance. Perhaps surprisingly, no linear estimator for $\bfbeta$ has a lower conditional variance, meaning that OLS is the **best linear unbiased estimator**, often jovially shortened to BLUE. This result is famously known as the Gauss-Markov Theorem.
@@ -493,7 +493,7 @@ Rewrite the competitor as $\widetilde{\bfbeta} = \bhat + \mb{BY}$ where,
 $$ 
 \mb{B} = \mb{A} - \left(\Xmat'\Xmat\right)^{-1}\Xmat'.
 $$
-and note that $\mb{A}\Xmat = \mb{I}_n$  implies that $\mb{B}\Xmat = 0$. We now have
+and note that $\mb{A}\Xmat = \mb{I}_n$ implies that $\mb{B}\Xmat = 0$. We now have
 $$ 
 \begin{aligned}
   \widetilde{\bfbeta} &= \left( \left(\Xmat'\Xmat\right)^{-1}\Xmat' + \mb{B}\right)\mb{Y} \\

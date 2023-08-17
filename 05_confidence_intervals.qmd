@@ -58,11 +58,11 @@ $$
 $$
 We then subtract all part by the estimator to get
 $$ 
-\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
+\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
 $$
 and finally we multiply all parts by $-1$ (and flipping the inequalities) to arrive at
 $$ 
-\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
+\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
 $$
 To connect back to the definition of the confidence interval, we have now shown that the random interval $[L, U]$ where
 $$ 
@@ -123,7 +123,7 @@ Remember that the interpretation of cofidence is how the random interval perform
 
 ::: {#exm-cis}
 
-Suppose that we are taking samples of size $n=500$ of random variables where  $X_i \sim \N(1, 10)$, and we want to estimate the population mean $\E[X] = 1$. To do so, we repeat the following steps:
+Suppose that we are taking samples of size $n=500$ of random variables where $X_i \sim \N(1, 10)$, and we want to estimate the population mean $\E[X] = 1$. To do so, we repeat the following steps:
 
 1. Draw a sample of $n=500$ from $\N(1, 10)$. 
 2. Calculate the 95% confidence interval sample mean $\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}$. 
@@ -177,7 +177,7 @@ $$
 $$
 Notice that will be true when 
 $$ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or  }\quad  \widehat{\theta}_{n} +  \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 $$
 or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 

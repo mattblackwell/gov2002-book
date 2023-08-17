@@ -39,11 +39,11 @@ One solution to this problem is to use **subclassification**, turn the continuou
 $$
 \mu(x) = 
 \begin{cases}
-  \E[Y_{i} \mid 0 \leq X_{i} < 25,000]  &\text{if }  0 \leq x < 25,000 \\
-  \E[Y_{i} \mid 25,000 \leq X_{i} < 50,000]  &\text{if }  25,000 \leq x < 50,000\\
-  \E[Y_{i} \mid 50,000 \leq X_{i} < 100,000]  &\text{if }  50,000 \leq x < 100,000\\
+  \E[Y_{i} \mid 0 \leq X_{i} < 25,000] &\text{if } 0 \leq x < 25,000 \\
+  \E[Y_{i} \mid 25,000 \leq X_{i} < 50,000] &\text{if } 25,000 \leq x < 50,000\\
+  \E[Y_{i} \mid 50,000 \leq X_{i} < 100,000] &\text{if } 50,000 \leq x < 100,000\\
   \vdots \\
-  \E[Y_{i} \mid 200,000 \leq X_{i}]  &\text{if }  200,000 \leq x\\
+  \E[Y_{i} \mid 200,000 \leq X_{i}] &\text{if } 200,000 \leq x\\
 \end{cases}
 $$
 This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$ shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income. 
@@ -110,7 +110,7 @@ We can plug this into the first-order condition for $\beta_1$ to get
 $$ 
 \begin{aligned}
   0 &= \E[Y_{i}X_{i}] - (\E[Y_{i}] - \beta_{1}\E[X_{i}])\E[X_{i}] - \beta_{1}\E[X_{i}^{2}] \\
-    &= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] - \beta_{1}(\E[X_{i}^{2}] - \E[X_{i}]^{2})  \\
+    &= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] - \beta_{1}(\E[X_{i}^{2}] - \E[X_{i}]^{2}) \\
     &= \cov(X_{i},Y_{i}) - \beta_{1}\V[X_{i}]\\
   \beta_{1} &= \frac{\cov(X_{i},Y_{i})}{\V[X_{i}]}
 \end{aligned}
@@ -133,7 +133,7 @@ It's important to remember that the BLP, $m(x)$, and the CEF, $\mu(x)$, are dist
 ```{r}
 #| label: fig-cef-blp
 #| echo: false
-#| fig.cap: "Comparison of the CEF and the best linear predictor"
+#| fig.cap: "Comparison of the CEF and the best linear predictor."
 contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0.25), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
 axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
 curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
@@ -184,16 +184,16 @@ Under these assumptions, it is possible to derive a closed-form expression for t
 $$ 
 \begin{aligned}
   \frac{\partial}{\partial \mb{b}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
-  &= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}}(Y_{i} - \X_{i}'\mb{b})  \\
+  &= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}}(Y_{i} - \X_{i}'\mb{b}) \\
   &= -2\left(Y_{i} - \X_{i}'\mb{b}\right)\X_{i} \\
-    &= -2\X_{i}\left(Y_{i} - \X_{i}'\mb{b}\right) \\
+  &= -2\X_{i}\left(Y_{i} - \X_{i}'\mb{b}\right) \\
   &= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right),
 \end{aligned}
 $$
 where the third equality comes from the fact that $(Y_{i} - \X_{i}'\bfbeta)$ is a scalar. We can now plug this into the expectation to get the first-order condition and solve for $\bfbeta$,
 $$ 
 \begin{aligned}
-  0 &= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ]  \\
+  0 &= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ] \\
   \E[\X_{i}\X_{i}'] \bfbeta &= \E[\X_{i}Y_{i}],
 \end{aligned}
 $$
@@ -228,7 +228,7 @@ $$
 
 The **projection error** is the difference between the actual value of $Y_i$ and the projection,
 $$ 
-e_{i} = Y_{i} - m(\X_{i}) =  Y_i - \X_{i}'\bfbeta,
+e_{i} = Y_{i} - m(\X_{i}) = Y_i - \X_{i}'\bfbeta,
 $$
 where we have made no assumptions about this error yet. The projection error is simply the prediction error of the best linear prediction. Rewriting this definition, we can see that we can always write the outcome as the linear projection plus the projection error,
 $$ 
@@ -249,7 +249,7 @@ $$
   &= \E[\X_{i}Y_{i}] - \E[\X_{i}Y_{i}] = 0
 \end{aligned}
 $$
-Thus, for every $X_{ij}$ in $\X_{i}$, we have $\E[X_{ij}e_{i}] =0$. If one of the entries in $\X_i$ is a constant 1, then this also implies that $\E[e_{i}] =0$. Together, these facts imply that the projection error is uncorrelated with each $X_{ij}$, since
+Thus, for every $X_{ij}$ in $\X_{i}$, we have $\E[X_{ij}e_{i}] = 0$. If one of the entries in $\X_i$ is a constant 1, then this also implies that $\E[e_{i}] = 0$. Together, these facts imply that the projection error is uncorrelated with each $X_{ij}$, since
 $$ 
 \cov(X_{ij}, e_{i}) = \E[X_{ij}e_{i}] - \E[X_{ij}]\E[e_{i}] = 0 - 0 = 0
 $$
@@ -293,7 +293,7 @@ which is clearly a linear function of $x$. Based on this derivation, we can see 
 - $\beta_1 = \mu(1) - \mu(0)$: the difference in average wait times between Black and non-Black voters. 
 Notice that it matters how $X_{i}$ is defined here since the intercept will always be the average outcome when $X_i = 0$, and the slope will always be the difference in means between the $X_i = 1$ group and the $X_i = 0$ group. 
 
-What about a categorical covariate with more than two levels? For instance, we might be interested in wait times by party identification, where $X_i = 1$ indicates Democratic voters, $X_i = 2$ indicates Republican voters, and $X_i = 3$ indicates independent voters. How can we write the CEF of wait times as a linear function of this variable? That would assume that the difference between Democrats and Republicans is the same as for Independents and Republicans. With more than two levels, we can  represent a categorical variable as a vector of binary variables, $\X_i = (X_{i1}, X_{i2})$, where
+What about a categorical covariate with more than two levels? For instance, we might be interested in wait times by party identification, where $X_i = 1$ indicates Democratic voters, $X_i = 2$ indicates Republican voters, and $X_i = 3$ indicates independent voters. How can we write the CEF of wait times as a linear function of this variable? That would assume that the difference between Democrats and Republicans is the same as for Independents and Republicans. With more than two levels, we can represent a categorical variable as a vector of binary variables, $\X_i = (X_{i1}, X_{i2})$, where
 $$ 
 \begin{aligned}
   X_{{i1}} &= \begin{cases}
@@ -322,9 +322,9 @@ What have we shown? The CEF will be linear without additional assumptions when t
 $$ 
 \mu(x_1, x_2) = \begin{cases} 
  \mu_{00} & \text{if } x_1 = 0 \text{ and } x_2 = 0 \text{ (non-Black, rural)} \\
-  \mu_{10} & \text{if }  x_1 = 1 \text{ and } x_2 = 0 \text{ (Black, rural)}\\
-  \mu_{01} & \text{if }  x_1 = 0 \text{ and } x_2 = 1 \text{ (non-Black, urban)}\\
- \mu_{11} & \text{if }  x_1 = 1 \text{ and } x_2 = 1 \text{ (Black, urban)}
+ \mu_{10} & \text{if } x_1 = 1 \text{ and } x_2 = 0 \text{ (Black, rural)} \\
+ \mu_{01} & \text{if } x_1 = 0 \text{ and } x_2 = 1 \text{ (non-Black, urban)} \\
+ \mu_{11} & \text{if } x_1 = 1 \text{ and } x_2 = 1 \text{ (Black, urban)}
  \end{cases}
 $$
 We can write this as
@@ -362,17 +362,17 @@ We have seen how to interpret population regression coefficients when the CEF is
 Let's start with the simplest case, where every entry in $\X_{i}$ represents a different covariate, and no covariate is any function of another (we'll see why this caveat is necessary below). In this simple case, the $k$th coefficient, $\beta_{k}$ will represent the change in the predicted outcome for a one-unit change in the $k$th covariate $X_{ik}$, holding all other covariates fixed. We can see this from 
 $$ 
 \begin{aligned}
-  m(x_{1} + 1, x_{2}) & =  \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
+  m(x_{1} + 1, x_{2}) & = \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
   m(x_{1}, x_{2}) &= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2},
 \end{aligned} 
 $$
 so that the change in the predicted outcome for increasing $X_{i1}$ by one unit isn't
 $$
- m(x_{1} + 1, x_{2}) -  m(x_{1}, x_{2}) = \beta_1
+ m(x_{1} + 1, x_{2}) - m(x_{1}, x_{2}) = \beta_1
 $$
 Notice that nothing changes in this interpretation if we add more covariates to the vector,
 $$
- m(x_{1} + 1, \bfx_{2}) -  m(x_{1}, \bfx_{2}) = \beta_1,
+ m(x_{1} + 1, \bfx_{2}) - m(x_{1}, \bfx_{2}) = \beta_1,
 $$
 the coefficient on a particular variable is the change in the predicted outcome for a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the "all else equal" difference in the predicted outcome for each covariate. 
 
@@ -388,8 +388,8 @@ $$
 and try to look at a one-unit change in $x_1$,
 $$ 
 \begin{aligned}
-  m(x_{1} + 1, (x_{1} + 1)^{2}, x_{2}) & =  \beta_{0} + \beta_{1}(x_{1} + 1) +  \beta_{2}(x_{1} + 1)^{2}+ \beta_{3}x_{2} \\
-  m(x_{1}, x_{1}^{2}, x_{2}) &= \beta_{0} + \beta_{1}x_{1} +  \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
+  m(x_{1} + 1, (x_{1} + 1)^{2}, x_{2}) & = \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}(x_{1} + 1)^{2}+ \beta_{3}x_{2} \\
+  m(x_{1}, x_{1}^{2}, x_{2}) &= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
 \end{aligned} 
 $$
 resulting in $\beta_1 + \beta_2(2x_{1} + 1)$. This formula might be an interesting quantity, but we will more commonly use the derivative of $m(\bfx)$ with respect to $x_1$ as a measure of the marginal effect of $X_{i1}$ on the predicted value of $Y_i$ (holding all other variables constant), where "marginal" here means the change in prediction for a very small change in $X_{i1}$.[^effect] In the case of the quadratic covariate, we have
@@ -417,7 +417,7 @@ $$
 Here, the coefficients are slightly more interpretable:
 
 * $\beta_1$: the marginal effect of $X_{i1}$ on predicted $Y_i$ when $X_{i2} = 0$.
-* $\beta_2$: the marginal effect of $X_{i2}$ on predicted $Y_i$  when $X_{i1} = 0$.
+* $\beta_2$: the marginal effect of $X_{i2}$ on predicted $Y_i$ when $X_{i1} = 0$.
 * $\beta_3$: the change in the marginal effect of $X_{i1}$ due to a one-unit change in $X_{i2}$ **OR** the change in the marginal effect of $X_{i2}$ due to a one-unit change in $X_{i2}$.
 
 If we add more covariates to this BLP, these interpretations change to "holding all other covariates constant."
@@ -439,7 +439,7 @@ Let's investigate the first order condition for $\beta$:
 $$ 
 \begin{aligned}
   0 &= \E[Y_{i}X_{i}] - \alpha\E[X_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
-    &=  \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] + \beta\E[X_{i}]^{2} + \gamma\E[X_{i}]\E[Z_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
+    &= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] + \beta\E[X_{i}]^{2} + \gamma\E[X_{i}]\E[Z_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
   &= \cov(Y, X) - \beta\V[X_{i}] - \gamma \cov(X_{i}, Z_{i})
 \end{aligned}
 $$
@@ -447,14 +447,14 @@ We can see from this that if $\cov(X_{i}, Z_{i}) = 0$, then the coefficient on $
 
 To write a simple formula for $\beta$ when the covariates are not orthogonal, we will **orthogonalize** $X_i$ by obtaining the prediction errors from a population linear regression of $X_i$ on $Z_i$:
 $$ 
-\widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0}  + d_{1}Z_{i}))^{2}]
+\widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
 $$
 Given the properties of projection errors, we know that this orthogonalized version of $X_{i}$ will be uncorrelated with $Z_{i}$ since $\E[\widetilde{X}_{i}Z_{i}] = 0$. Remarkably, the coefficient on $X_i$ from the "long" BLP in @eq-two-var-blp is the same as the regression of $Y_i$ on this orthogonalized $\widetilde{X}_i$, 
 $$ 
 \beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
 $$
 
-We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-k}$ be the vector of covariates omitting the $k$th entry and let $m_k(\X_{i,-k})$ represent the BLP of $X_{ik}$ on these other covariates. We can define $\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})$ as the  $k$th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on $X_{ik}$ as
+We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-k}$ be the vector of covariates omitting the $k$th entry and let $m_k(\X_{i,-k})$ represent the BLP of $X_{ik}$ on these other covariates. We can define $\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})$ as the $k$th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on $X_{ik}$ as
 $$ 
 \beta_k = \frac{\cov(Y_i, \widetilde{X}_{ik})}{\V[\widetilde{X}_{ik}]}.
 $$ 
@@ -478,7 +478,7 @@ $$
 \begin{aligned}
   \bs{\delta} &= \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}(\X_{i}'\bfbeta + Z_{i}\gamma + e_{i})] \\
               &= \left(\E[\X_{i}\X_{i}']\right)^{-1}(\E[\X_{i}\X_{i}']\bfbeta + \E[\X_{i}Z_{i}]\gamma + \E[\X_{i}e_{i}]) \\
-  &=    \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
+              &= \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
 \end{aligned}
 $$
 Notice that the vector in the second term is the linear projection coefficients of a population linear regression of $Z_i$ on the $\X_i$. If we call these coefficients $\bs{\pi}$, then the short coefficients are 
@@ -486,7 +486,7 @@ $$
 \bs{\delta} = \bfbeta + \bs{\pi}\gamma. 
 $$
 
-We can rewrite this to show that the difference between the coefficients in these two projections is $\bs{\delta}  - \bfbeta= \bs{\pi}\gamma$ or the product of the coefficient on the "excluded" $Z_i$ and the coefficient of the included $\X_i$ on the excluded. Most textbooks refer to this difference as the **omitted variable bias** of omitting $Z_i$ under the idea that $\bfbeta$ is the true target of inference. But the result is much broader than this since it just tells us how to relate the coefficients of two nested projections. 
+We can rewrite this to show that the difference between the coefficients in these two projections is $\bs{\delta} - \bfbeta= \bs{\pi}\gamma$ or the product of the coefficient on the "excluded" $Z_i$ and the coefficient of the included $\X_i$ on the excluded. Most textbooks refer to this difference as the **omitted variable bias** of omitting $Z_i$ under the idea that $\bfbeta$ is the true target of inference. But the result is much broader than this since it just tells us how to relate the coefficients of two nested projections. 
 
 
 The last two results (multiple regressions from bivariate and omitted variable bias) are sometimes presented as results for the ordinary least squares estimator that we will show in the next chapter. We introduce them here as features of a particular population quantity, the linear projection or population linear regression. 

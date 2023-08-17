@@ -175,7 +175,7 @@ for (i in 1:nsims) {
   holder[i,6] <- mean(s10000)
 }
 par(las = 1, mar = c(3.1, 4.1, 0.1, 0.1))
-plot(density(holder[,2]), xlim = c(0,4), bty = "n", main = "", lwd = 2, xlab = "", ylim =  range(density(holder[,5])$y))
+plot(density(holder[,2]), xlim = c(0,4), bty = "n", main = "", lwd = 2, xlab = "", ylim = range(density(holder[,5])$y))
 abline(v=2, col = "grey50")
 lines(density(holder[,3]), col = "violet", lwd = 2)
 lines(density(holder[,4]), col = "dodgerblue", lwd = 2)
@@ -205,7 +205,7 @@ Since this is just a vector of sample means, each random variable in the random 
 If $\X_i \in \mathbb{R}^k$ are iid draws from a distribution with $\E[X_{ij}] < \infty$ for all $j=1,\ldots,k$ then as $n\rightarrow\infty$ 
 
 $$
-\overline{\mb{X}}_n \inprob \E[\X]  =
+\overline{\mb{X}}_n \inprob \E[\X] =
 \begin{pmatrix}
 \E[X_{i1}] \\ \E[X_{i2}] \\ \vdots \\ \E[X_{ik}]
 \end{pmatrix}.
@@ -244,14 +244,14 @@ For any estimator $\widehat{\theta}_n$, if $\text{bias}[\widehat{\theta}_n] = 0$
 
 Thus, for unbiased estimators, if we can characterize its sampling variance, we should be able to tell if it is consistent. This result is handy since working with the probability statements used for the WLLN can sometimes be quite confusing. 
 
-What about biased estimators? Consider a plug-in estimator like  $\widehat{\alpha} = \log(\Xbar_n)$ where $X_1, \ldots, X_n$ are iid from a population with mean $\mu$.  We know that for nonlinear functions like logarithms we have $\log\left(\E[Z]\right) \neq \E[\log(Z)]$, so $\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])$ and the plug-in estimator will be biased for $\log(\mu)$. It will also be difficult to obtain an expression for the bias in terms of $n$. Is all hope lost here? Must we give up on consistency? No, and in fact, consistency will be much simpler to show in this setting. 
+What about biased estimators? Consider a plug-in estimator like $\widehat{\alpha} = \log(\Xbar_n)$ where $X_1, \ldots, X_n$ are iid from a population with mean $\mu$. We know that for nonlinear functions like logarithms we have $\log\left(\E[Z]\right) \neq \E[\log(Z)]$, so $\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])$ and the plug-in estimator will be biased for $\log(\mu)$. It will also be difficult to obtain an expression for the bias in terms of $n$. Is all hope lost here? Must we give up on consistency? No, and in fact, consistency will be much simpler to show in this setting. 
 
 
 ::: {#thm-inprob-properties}
 
 ## Properties of convergence in probability
 
-Let $X_n$ and $Z_n$ be two sequences of random variables such that  $X_n \inprob a$ and $Z_n \inprob b$, and let $g(\cdot)$ be a continuous function. Then, 
+Let $X_n$ and $Z_n$ be two sequences of random variables such that $X_n \inprob a$ and $Z_n \inprob b$, and let $g(\cdot)$ be a continuous function. Then, 
 
 1. $g(X_n) \inprob g(a)$ (continuous mapping theorem)
 2. $X_n + Z_n \inprob a + b$
@@ -264,7 +264,7 @@ We can now see that many of the nasty problems with expectations and nonlinear f
 
 ::: {#exm-nonresponse}
 
-Suppose we implemented a survey by randomly selecting a sample from the population of size $n$, but not everyone responded to our survey. Let the data consist of pairs of random variables, $(Y_1, R_1), \ldots, (Y_n, R_n)$, where $Y_i$  is the question of interest and $R_i$ is a binary indicator for if the respondent answered the question ($R_i = 1$) or not ($R_i = 0$). Our goal is to estimate the mean of the question for responders: $\E[Y_i \mid R_i = 1]$. We can use the law of iterated expectation to obtain
+Suppose we implemented a survey by randomly selecting a sample from the population of size $n$, but not everyone responded to our survey. Let the data consist of pairs of random variables, $(Y_1, R_1), \ldots, (Y_n, R_n)$, where $Y_i$ is the question of interest and $R_i$ is a binary indicator for if the respondent answered the question ($R_i = 1$) or not ($R_i = 0$). Our goal is to estimate the mean of the question for responders: $\E[Y_i \mid R_i = 1]$. We can use the law of iterated expectation to obtain
 $$
 \begin{aligned}
 \E[Y_iR_i] &= \E[Y_i \mid R_i = 1]\P(R_i = 1) + \E[ 0 \mid R_i = 0]\P(R_i = 0) \\
@@ -290,7 +290,7 @@ so long as the probability of responding is greater than zero. This establishes 
 :::
 
 
-Keeping the difference between unbiased and consistent clear in your mind is essential. You can easily create ridiculous unbiased estimators that are inconsistent. Let's return to our iid sample, $X_1, \ldots, X_n$, from a population with $E[X_i] = \mu$. There is nothing in the rule book against defining an estimator $\widehat{\theta}_{first} = X_1$ that uses the first observation as the estimate. This estimator is silly,  but it is unbiased since $\E[\widehat{\theta}_{first}] = \E[X_1] = \mu$. It is inconsistent since the sampling variance of this estimator is just the variance of the population distribution, $\V[\widehat{\theta}_{first}] = \V[X_i] = \sigma^2$, which does not change as a function of the sample size. Generally speaking, we can regard "unbiased but inconsistent" estimators as silly and not worth our time (along with biased and inconsistent estimators). 
+Keeping the difference between unbiased and consistent clear in your mind is essential. You can easily create ridiculous unbiased estimators that are inconsistent. Let's return to our iid sample, $X_1, \ldots, X_n$, from a population with $E[X_i] = \mu$. There is nothing in the rule book against defining an estimator $\widehat{\theta}_{first} = X_1$ that uses the first observation as the estimate. This estimator is silly, but it is unbiased since $\E[\widehat{\theta}_{first}] = \E[X_1] = \mu$. It is inconsistent since the sampling variance of this estimator is just the variance of the population distribution, $\V[\widehat{\theta}_{first}] = \V[X_i] = \sigma^2$, which does not change as a function of the sample size. Generally speaking, we can regard "unbiased but inconsistent" estimators as silly and not worth our time (along with biased and inconsistent estimators). 
 
 Some estimators are biased but consistent that are often much more interesting. We already saw one such estimator in @exm-nonresponse, but there are many more. Maximum likelihood estimators, for example, are (under some regularity conditions) consistent for the parameters of a parametric model but are often biased. 
 
@@ -326,7 +326,7 @@ We need first to describe a weaker form of convergence to see how we will develo
 
 
 ::: {#def-indist}
-Let  $X_1,X_2,\ldots$, be a sequence of r.v.s, and for $n = 1,2, \ldots$ let $F_n(x)$ be the c.d.f. of $X_n$. Then it is said that $X_1, X_2, \ldots$ **converges in distribution** to r.v. $X$ with c.d.f. $F(x)$ if
+Let $X_1,X_2,\ldots$, be a sequence of r.v.s, and for $n = 1,2, \ldots$ let $F_n(x)$ be the c.d.f. of $X_n$. Then it is said that $X_1, X_2, \ldots$ **converges in distribution** to r.v. $X$ with c.d.f. $F(x)$ if
 $$
 \lim_{n\rightarrow \infty} F_n(x) = F(x),
 $$
@@ -530,11 +530,11 @@ $$
 $$
 We then subtract all parts by the estimator to get
 $$ 
-\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
+\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
 $$
 and finally we multiply all parts by $-1$ (and flipping the inequalities) to arrive at
 $$ 
-\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
+\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
 $$
 To connect back to the definition of the confidence interval, we have now shown that the random interval $[L, U]$ where
 $$ 
@@ -595,7 +595,7 @@ Remember that the interpretation of confidence is how the random interval perfor
 
 ::: {#exm-cis}
 
-Suppose we are taking samples of size $n=500$ of random variables where  $X_i \sim \N(1, 10)$, and we want to estimate the population mean $\E[X] = 1$. To do so, we repeat the following steps:
+Suppose we are taking samples of size $n=500$ of random variables where $X_i \sim \N(1, 10)$, and we want to estimate the population mean $\E[X] = 1$. To do so, we repeat the following steps:
 
 1. Draw a sample of $n=500$ from $\N(1, 10)$. 
 2. Calculate the 95% confidence interval sample mean $\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}$. 
@@ -635,7 +635,7 @@ segments(x0 = 1:100, y0 = low.bound[1:100], y1 = up.bound[1:100],
 
 Suppose that we know that an estimator follows the CLT, and so we have 
 $$
-\sqrt{n}\left(\widehat{\theta}_n - \theta  \right) \indist \N(0, V),
+\sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V),
 $$
 but we actually want to estimate $h(\theta)$ so we use the plug-in estimator, $h(\widehat{\theta}_n)$. It seems like we should be able to apply part 1 of @thm-indist-properties. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, $\sqrt{n}(\widehat{\theta}_n - \theta)$, not to the original estimator itself like we would need to investigate the asymptotic distribution of $h(\widehat{\theta}_n)$. We can use a little bit of calculus to get an approximation of the distribution we need. 
 
@@ -644,7 +644,7 @@ but we actually want to estimate $h(\theta)$ so we use the plug-in estimator, $h
 
 If $\sqrt{n}\left(\widehat{\theta}_n - \theta\right) \indist \N(0, V)$ and $h(u)$ is continuously differentiable in a neighborhood around $\theta$, then as $n\to\infty$,
 $$
-\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta)  \right) \indist \N(0, (h'(\theta))^2 V).
+\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta) \right) \indist \N(0, (h'(\theta))^2 V).
 $$
 
 :::
@@ -657,7 +657,7 @@ and then multiplying both sides by the $\sqrt{n}$ gives
 $$
 \sqrt{n}\left(h(\widehat{\theta_n}) - h(\theta_0)\right) \approx h'(\theta_0)\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right). 
 $$
-The right-hand side of this approximation converges to  $h'(\theta_0)Z$, where $Z$ is a random variable with $\N(0, V)$. The variance of this quantity will be
+The right-hand side of this approximation converges to $h'(\theta_0)Z$, where $Z$ is a random variable with $\N(0, V)$. The variance of this quantity will be
 $$
 \V[h'(\theta_0)Z] = (h'(\theta_0))^2\V[Z] = (h'(\theta_0))^2V,
 $$
@@ -731,7 +731,7 @@ We can use this fact to derive the multivariate delta method.
 
 ::: {#thm-multivariate-delta}
 
-Suppose that  $\sqrt{n}\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0 \right) \indist \N(0, \mb{\Sigma})$, then for any function $\mb{h}$ that is continuously differentiable in a neighborhood of $\mb{\theta}_0$, we have
+Suppose that $\sqrt{n}\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0 \right) \indist \N(0, \mb{\Sigma})$, then for any function $\mb{h}$ that is continuously differentiable in a neighborhood of $\mb{\theta}_0$, we have
 $$
 \sqrt{n}\left(\mb{h}(\widehat{\mb{\theta}}_n) - \mb{h}(\mb{\theta}_0) \right) \indist \N(0, \mb{H}\mb{\Sigma}\mb{H}'), 
 $$
