@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -57,7 +57,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -79,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./06_linear_model.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -93,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -315,11 +316,11 @@ $$
 <span class="math display">\[
 \mu(x) =
 \begin{cases}
-  \E[Y_{i} \mid 0 \leq X_{i} &lt; 25,000]  &amp;\text{if }  0 \leq x &lt; 25,000 \\
-  \E[Y_{i} \mid 25,000 \leq X_{i} &lt; 50,000]  &amp;\text{if }  25,000 \leq x &lt; 50,000\\
-  \E[Y_{i} \mid 50,000 \leq X_{i} &lt; 100,000]  &amp;\text{if }  50,000 \leq x &lt; 100,000\\
+  \E[Y_{i} \mid 0 \leq X_{i} &lt; 25,000] &amp;\text{if } 0 \leq x &lt; 25,000 \\
+  \E[Y_{i} \mid 25,000 \leq X_{i} &lt; 50,000] &amp;\text{if } 25,000 \leq x &lt; 50,000\\
+  \E[Y_{i} \mid 50,000 \leq X_{i} &lt; 100,000] &amp;\text{if } 50,000 \leq x &lt; 100,000\\
   \vdots \\
-  \E[Y_{i} \mid 200,000 \leq X_{i}]  &amp;\text{if }  200,000 \leq x\\
+  \E[Y_{i} \mid 200,000 \leq X_{i}] &amp;\text{if } 200,000 \leq x\\
 \end{cases}
 \]</span> This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. <a href="#fig-cef-binned">Figure&nbsp;<span>5.1</span></a> shows a hypothetical joint distribution between income and wait times with the true CEF, <span class="math inline">\(\mu(x)\)</span> shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income.</p>
 <div class="cell">
@@ -355,7 +356,7 @@ m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \ar
 \]</span> We can plug this into the first-order condition for <span class="math inline">\(\beta_1\)</span> to get <span class="math display">\[
 \begin{aligned}
   0 &amp;= \E[Y_{i}X_{i}] - (\E[Y_{i}] - \beta_{1}\E[X_{i}])\E[X_{i}] - \beta_{1}\E[X_{i}^{2}] \\
-    &amp;= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] - \beta_{1}(\E[X_{i}^{2}] - \E[X_{i}]^{2})  \\
+    &amp;= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] - \beta_{1}(\E[X_{i}^{2}] - \E[X_{i}]^{2}) \\
     &amp;= \cov(X_{i},Y_{i}) - \beta_{1}\V[X_{i}]\\
   \beta_{1} &amp;= \frac{\cov(X_{i},Y_{i})}{\V[X_{i}]}
 \end{aligned}
@@ -372,7 +373,7 @@ m(x) = \beta_0 + \beta_1x = \E[Y_i] + \beta_1(x - \E[X_i]),
 <div id="fig-cef-blp" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="06_linear_model_files/figure-html/fig-cef-blp-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.2: Comparison of the CEF and the best linear predictor</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;5.2: Comparison of the CEF and the best linear predictor.</figcaption>
 </figure>
 </div>
 </div>
@@ -417,14 +418,14 @@ Best linear projection assumptions
 <p>Under these assumptions, it is possible to derive a closed-form expression for the <strong>population coefficients</strong> <span class="math inline">\(\bfbeta\)</span> using matrix calculus. To set up the optimization problem, we will find the first-order condition by taking the derivative of the expectation of the squared errors. First, let’s take the derivative of the squared prediction errors using the chain rule: <span class="math display">\[
 \begin{aligned}
   \frac{\partial}{\partial \mb{b}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
-  &amp;= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}}(Y_{i} - \X_{i}'\mb{b})  \\
+  &amp;= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}}(Y_{i} - \X_{i}'\mb{b}) \\
   &amp;= -2\left(Y_{i} - \X_{i}'\mb{b}\right)\X_{i} \\
-    &amp;= -2\X_{i}\left(Y_{i} - \X_{i}'\mb{b}\right) \\
+  &amp;= -2\X_{i}\left(Y_{i} - \X_{i}'\mb{b}\right) \\
   &amp;= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right),
 \end{aligned}
 \]</span> where the third equality comes from the fact that <span class="math inline">\((Y_{i} - \X_{i}'\bfbeta)\)</span> is a scalar. We can now plug this into the expectation to get the first-order condition and solve for <span class="math inline">\(\bfbeta\)</span>, <span class="math display">\[
 \begin{aligned}
-  0 &amp;= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ]  \\
+  0 &amp;= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ] \\
   \E[\X_{i}\X_{i}'] \bfbeta &amp;= \E[\X_{i}Y_{i}],
 \end{aligned}
 \]</span> which implies the population coefficients are <span class="math display">\[
@@ -455,7 +456,7 @@ m(\X_{i}) = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\
 <section id="projection-error" class="level3" data-number="5.2.4">
 <h3 data-number="5.2.4" class="anchored" data-anchor-id="projection-error"><span class="header-section-number">5.2.4</span> Projection error</h3>
 <p>The <strong>projection error</strong> is the difference between the actual value of <span class="math inline">\(Y_i\)</span> and the projection, <span class="math display">\[
-e_{i} = Y_{i} - m(\X_{i}) =  Y_i - \X_{i}'\bfbeta,
+e_{i} = Y_{i} - m(\X_{i}) = Y_i - \X_{i}'\bfbeta,
 \]</span> where we have made no assumptions about this error yet. The projection error is simply the prediction error of the best linear prediction. Rewriting this definition, we can see that we can always write the outcome as the linear projection plus the projection error, <span class="math display">\[
 Y_{i} = \X_{i}'\bfbeta + e_{i}.
 \]</span> Notice that this looks suspiciously similar to a linearity assumption on the CEF, but we haven’t made any assumptions here. Instead, we have just used the definition of the projection error to write a tautological statement: <span class="math display">\[
@@ -468,7 +469,7 @@ Y_{i} = \X_{i}'\bfbeta + e_{i} = \X_{i}'\bfbeta + Y_{i} - \X_{i}'\bfbeta = Y_{i}
                   &amp;= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] \\
   &amp;= \E[\X_{i}Y_{i}] - \E[\X_{i}Y_{i}] = 0
 \end{aligned}
-\]</span> Thus, for every <span class="math inline">\(X_{ij}\)</span> in <span class="math inline">\(\X_{i}\)</span>, we have <span class="math inline">\(\E[X_{ij}e_{i}] =0\)</span>. If one of the entries in <span class="math inline">\(\X_i\)</span> is a constant 1, then this also implies that <span class="math inline">\(\E[e_{i}] =0\)</span>. Together, these facts imply that the projection error is uncorrelated with each <span class="math inline">\(X_{ij}\)</span>, since <span class="math display">\[
+\]</span> Thus, for every <span class="math inline">\(X_{ij}\)</span> in <span class="math inline">\(\X_{i}\)</span>, we have <span class="math inline">\(\E[X_{ij}e_{i}] = 0\)</span>. If one of the entries in <span class="math inline">\(\X_i\)</span> is a constant 1, then this also implies that <span class="math inline">\(\E[e_{i}] = 0\)</span>. Together, these facts imply that the projection error is uncorrelated with each <span class="math inline">\(X_{ij}\)</span>, since <span class="math display">\[
 \cov(X_{ij}, e_{i}) = \E[X_{ij}e_{i}] - \E[X_{ij}]\E[e_{i}] = 0 - 0 = 0
 \]</span> Notice that we still have made no assumptions about these projection errors except for some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model <span class="math inline">\(Y_i = \X_i'\bfbeta + e_i\)</span> where <span class="math inline">\(\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]\)</span> and conclude that <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span> by definition not by assumption.</p>
 <p>The projection error is uncorrelated with the covariates, so does this mean that the CEF is linear? Unfortunately, no. Recall that while independence implies uncorrelated, the reverse does not hold. So when we look at the CEF, we have <span class="math display">\[
@@ -518,9 +519,9 @@ X_{{i2}} &amp;= \begin{cases}
 <p>What have we shown? The CEF will be linear without additional assumptions when there is a categorical covariate. We can show that this continues to hold even when we have multiple categorical variables. We now have two binary covariates: <span class="math inline">\(X_{i1}=1\)</span> indicating a Black voter, and <span class="math inline">\(X_{i2} = 1\)</span> indicating an urban voter. With these two binary variables, there are four possible values of the CEF: <span class="math display">\[
 \mu(x_1, x_2) = \begin{cases}
 \mu_{00} &amp; \text{if } x_1 = 0 \text{ and } x_2 = 0 \text{ (non-Black, rural)} \\
-  \mu_{10} &amp; \text{if }  x_1 = 1 \text{ and } x_2 = 0 \text{ (Black, rural)}\\
-  \mu_{01} &amp; \text{if }  x_1 = 0 \text{ and } x_2 = 1 \text{ (non-Black, urban)}\\
-\mu_{11} &amp; \text{if }  x_1 = 1 \text{ and } x_2 = 1 \text{ (Black, urban)}
+\mu_{10} &amp; \text{if } x_1 = 1 \text{ and } x_2 = 0 \text{ (Black, rural)} \\
+\mu_{01} &amp; \text{if } x_1 = 0 \text{ and } x_2 = 1 \text{ (non-Black, urban)} \\
+\mu_{11} &amp; \text{if } x_1 = 1 \text{ and } x_2 = 1 \text{ (Black, urban)}
 \end{cases}
 \]</span> We can write this as <span class="math display">\[
 \mu(x_{1}, x_{2}) = (1 - x_{1})(1 - x_{2})\mu_{00} + x_{1}(1 -x_{2})\mu_{10} + (1-x_{1})x_{2}\mu_{01} + x_{1}x_{2}\mu_{11},
@@ -548,13 +549,13 @@ X_{{i2}} &amp;= \begin{cases}
 <p>We have seen how to interpret population regression coefficients when the CEF is linear without assumptions. How do we interpret the population coefficients <span class="math inline">\(\bfbeta\)</span> in other settings?</p>
 <p>Let’s start with the simplest case, where every entry in <span class="math inline">\(\X_{i}\)</span> represents a different covariate, and no covariate is any function of another (we’ll see why this caveat is necessary below). In this simple case, the <span class="math inline">\(k\)</span>th coefficient, <span class="math inline">\(\beta_{k}\)</span> will represent the change in the predicted outcome for a one-unit change in the <span class="math inline">\(k\)</span>th covariate <span class="math inline">\(X_{ik}\)</span>, holding all other covariates fixed. We can see this from <span class="math display">\[
 \begin{aligned}
-  m(x_{1} + 1, x_{2}) &amp; =  \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
+  m(x_{1} + 1, x_{2}) &amp; = \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
   m(x_{1}, x_{2}) &amp;= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2},
 \end{aligned}
 \]</span> so that the change in the predicted outcome for increasing <span class="math inline">\(X_{i1}\)</span> by one unit isn’t <span class="math display">\[
-m(x_{1} + 1, x_{2}) -  m(x_{1}, x_{2}) = \beta_1
+m(x_{1} + 1, x_{2}) - m(x_{1}, x_{2}) = \beta_1
 \]</span> Notice that nothing changes in this interpretation if we add more covariates to the vector, <span class="math display">\[
-m(x_{1} + 1, \bfx_{2}) -  m(x_{1}, \bfx_{2}) = \beta_1,
+m(x_{1} + 1, \bfx_{2}) - m(x_{1}, \bfx_{2}) = \beta_1,
 \]</span> the coefficient on a particular variable is the change in the predicted outcome for a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the “all else equal” difference in the predicted outcome for each covariate.</p>
 <section id="polynomial-functions-of-the-covariates" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="polynomial-functions-of-the-covariates"><span class="header-section-number">5.4.1</span> Polynomial functions of the covariates</h3>
@@ -562,8 +563,8 @@ m(x_{1} + 1, \bfx_{2}) -  m(x_{1}, \bfx_{2}) = \beta_1,
 m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
 \]</span> and try to look at a one-unit change in <span class="math inline">\(x_1\)</span>, <span class="math display">\[
 \begin{aligned}
-  m(x_{1} + 1, (x_{1} + 1)^{2}, x_{2}) &amp; =  \beta_{0} + \beta_{1}(x_{1} + 1) +  \beta_{2}(x_{1} + 1)^{2}+ \beta_{3}x_{2} \\
-  m(x_{1}, x_{1}^{2}, x_{2}) &amp;= \beta_{0} + \beta_{1}x_{1} +  \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
+  m(x_{1} + 1, (x_{1} + 1)^{2}, x_{2}) &amp; = \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}(x_{1} + 1)^{2}+ \beta_{3}x_{2} \\
+  m(x_{1}, x_{1}^{2}, x_{2}) &amp;= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
 \end{aligned}
 \]</span> resulting in <span class="math inline">\(\beta_1 + \beta_2(2x_{1} + 1)\)</span>. This formula might be an interesting quantity, but we will more commonly use the derivative of <span class="math inline">\(m(\bfx)\)</span> with respect to <span class="math inline">\(x_1\)</span> as a measure of the marginal effect of <span class="math inline">\(X_{i1}\)</span> on the predicted value of <span class="math inline">\(Y_i\)</span> (holding all other variables constant), where “marginal” here means the change in prediction for a very small change in <span class="math inline">\(X_{i1}\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In the case of the quadratic covariate, we have <span class="math display">\[
 \frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1}
@@ -597,12 +598,12 @@ m(x_{1}, x_{2}, x_{1}x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \bet
 \]</span> Let’s investigate the first order condition for <span class="math inline">\(\beta\)</span>: <span class="math display">\[
 \begin{aligned}
   0 &amp;= \E[Y_{i}X_{i}] - \alpha\E[X_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
-    &amp;=  \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] + \beta\E[X_{i}]^{2} + \gamma\E[X_{i}]\E[Z_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
+    &amp;= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] + \beta\E[X_{i}]^{2} + \gamma\E[X_{i}]\E[Z_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
   &amp;= \cov(Y, X) - \beta\V[X_{i}] - \gamma \cov(X_{i}, Z_{i})
 \end{aligned}
 \]</span> We can see from this that if <span class="math inline">\(\cov(X_{i}, Z_{i}) = 0\)</span>, then the coefficient on <span class="math inline">\(X_i\)</span> will be the same as in the simple regression case, <span class="math inline">\(\cov(Y_{i}, X_{i})/\V[X_{i}]\)</span>. When <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Z_i\)</span> are uncorrelated, we sometimes call them <strong>orthogonal</strong>.</p>
 <p>To write a simple formula for <span class="math inline">\(\beta\)</span> when the covariates are not orthogonal, we will <strong>orthogonalize</strong> <span class="math inline">\(X_i\)</span> by obtaining the prediction errors from a population linear regression of <span class="math inline">\(X_i\)</span> on <span class="math inline">\(Z_i\)</span>: <span class="math display">\[
-\widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0}  + d_{1}Z_{i}))^{2}]
+\widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
 \]</span> Given the properties of projection errors, we know that this orthogonalized version of <span class="math inline">\(X_{i}\)</span> will be uncorrelated with <span class="math inline">\(Z_{i}\)</span> since <span class="math inline">\(\E[\widetilde{X}_{i}Z_{i}] = 0\)</span>. Remarkably, the coefficient on <span class="math inline">\(X_i\)</span> from the “long” BLP in <a href="#eq-two-var-blp">Equation&nbsp;<span>5.1</span></a> is the same as the regression of <span class="math inline">\(Y_i\)</span> on this orthogonalized <span class="math inline">\(\widetilde{X}_i\)</span>, <span class="math display">\[
 \beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
 \]</span></p>
@@ -621,7 +622,7 @@ m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 \begin{aligned}
   \bs{\delta} &amp;= \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}(\X_{i}'\bfbeta + Z_{i}\gamma + e_{i})] \\
               &amp;= \left(\E[\X_{i}\X_{i}']\right)^{-1}(\E[\X_{i}\X_{i}']\bfbeta + \E[\X_{i}Z_{i}]\gamma + \E[\X_{i}e_{i}]) \\
-  &amp;=    \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
+              &amp;= \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
 \end{aligned}
 \]</span> Notice that the vector in the second term is the linear projection coefficients of a population linear regression of <span class="math inline">\(Z_i\)</span> on the <span class="math inline">\(\X_i\)</span>. If we call these coefficients <span class="math inline">\(\bs{\pi}\)</span>, then the short coefficients are <span class="math display">\[
 \bs{\delta} = \bfbeta + \bs{\pi}\gamma.

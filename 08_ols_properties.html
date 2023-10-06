@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -110,7 +110,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -132,7 +133,7 @@ div.csl-indent {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./08_ols_properties.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -146,7 +147,7 @@ div.csl-indent {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -355,7 +356,7 @@ Linear projection assumptions
 <p>The linear projection model makes the following assumptions:</p>
 <ol type="1">
 <li><p><span class="math inline">\(\{(Y_{i}, \X_{i})\}_{i=1}^n\)</span> are iid random vectors.</p></li>
-<li><p><span class="math inline">\(\E[Y_{i^{2}}] &lt; \infty\)</span> (finite outcome variance)</p></li>
+<li><p><span class="math inline">\(\E[Y_{i}^{2}] &lt; \infty\)</span> (finite outcome variance)</p></li>
 <li><p><span class="math inline">\(\E[\Vert \X_{i}\Vert^{2}] &lt; \infty\)</span> (finite variances and covariances of covariates)</p></li>
 <li><p><span class="math inline">\(\E[\X_{i}\X_{i}']\)</span> is positive definite (no linear dependence in the covariates)</p></li>
 </ol>
@@ -363,12 +364,12 @@ Linear projection assumptions
 </div>
 <p>Recall that these are mild conditions on the joint distribution of <span class="math inline">\((Y_{i}, \X_{i})\)</span> and in particular, we are <strong>not</strong> assuming linearity of the CEF, <span class="math inline">\(\E[Y_{i} \mid \X_{i}]\)</span>, nor are we assuming any specific distribution for the data.</p>
 <p>We can helpfully decompose the OLS estimator into the actual BLP coefficient plus estimation error as <span class="math display">\[
-\bhat = \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_iY_i \right) = \bfbeta +  \underbrace{\left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_ie_i \right)}_{\text{estimation error}}.
+\bhat = \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_iY_i \right) = \bfbeta + \underbrace{\left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n \X_ie_i \right)}_{\text{estimation error}}.
 \]</span></p>
 <p>This decomposition will help us quickly establish the consistency of <span class="math inline">\(\bhat\)</span>. By the law of large numbers, we know that sample means will converge in probability to population expectations, so we have <span class="math display">\[
 \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \inprob \E[\X_i\X_i'] \equiv \mb{Q}_{\X\X} \qquad \frac{1}{n} \sum_{i=1}^n \X_ie_i \inprob \E[\X_{i} e_{i}] = \mb{0},
 \]</span> which implies that <span class="math display">\[
-\bhat \inprob \beta +  \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \beta,
+\bhat \inprob \beta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \beta,
 \]</span> by the continuous mapping theorem (the inverse is a continuous function). The linear projection assumptions ensure that LLN applies to these sample means and ensure that <span class="math inline">\(\E[\X_{i}\X_{i}']\)</span> is invertible.</p>
 <div id="thm-ols-consistency" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 7.1 </strong></span>Under the above linear projection assumptions, the OLS estimator is consistent for the best linear projection coefficients, <span class="math inline">\(\bhat \inprob \bfbeta\)</span>.</p>
@@ -392,7 +393,7 @@ CLT reminder
 </div>
 </div>
 <p>We now manipulate our decomposition to arrive at the <em>stabilized</em> version of the estimator, <span class="math display">\[
-\sqrt{n}\left( \bhat - \bfbeta\right) =  \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{\sqrt{n}} \sum_{i=1}^n \X_ie_i \right).
+\sqrt{n}\left( \bhat - \bfbeta\right) = \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{\sqrt{n}} \sum_{i=1}^n \X_ie_i \right).
 \]</span> We have already established that the first term on the right-hand side will converge in probability to <span class="math inline">\(\mb{Q}_{\X\X}^{-1}\)</span>. Notice that <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span>, so we can apply <a href="#eq-clt-mean-zero">Equation&nbsp;<span>7.1</span></a> to the second term. The covariance matrix of <span class="math inline">\(\X_ie_{i}\)</span> is <span class="math display">\[
 \mb{\Omega} = \V[\X_{i}e_{i}] = \E[\X_{i}e_{i}(\X_{i}e_{i})'] = \E[e_{i}^{2}\X_{i}\X_{i}'].
 \]</span> The CLT will imply that <span class="math display">\[
@@ -419,7 +420,7 @@ CLT reminder
 \]</span> Under the assumptions of <a href="#thm-ols-asymptotic-normality">Theorem&nbsp;<span>7.2</span></a>, the LLN will imply that these are consistent for their targets, <span class="math inline">\(\widehat{\mb{Q}}_{\X\X} \inprob \mb{Q}_{\X\X}\)</span> and <span class="math inline">\(\widehat{\mb{\Omega}} \inprob \mb{\Omega}\)</span>. We can plug these into the variance formula to arrive at <span class="math display">\[
 \begin{aligned}
   \widehat{\mb{V}}_{\bfbeta} &amp;= \widehat{\mb{Q}}_{\X\X}^{-1}\widehat{\mb{\Omega}}\widehat{\mb{Q}}_{\X\X}^{-1} \\
-  &amp;= \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right)  \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
+  &amp;= \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right) \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
 \end{aligned}
 \]</span> which by the continuous mapping theorem is consistent, <span class="math inline">\(\widehat{\mb{V}}_{\bfbeta} \inprob \mb{V}_{\bfbeta}\)</span>.</p>
 <p>This estimator is sometimes called the <strong>robust variance estimator</strong> or, more accurately, the <strong>heteroskedasticity-consistent (HC) variance estimator</strong>. How is this robust? Consider the standard <strong>homoskedasticity</strong> assumption that most statistical software packages make when estimating OLS variances: the variance of the errors does not depend on the covariates: <span class="math inline">\(\V[e_{i}^{2} \mid \X_{i}] = \V[e_{i}^{2}]\)</span>. This assumption is stronger than we need, and we can rely on a weaker assumption that the squared errors are uncorrelated with a specific function of the covariates: <span class="math display">\[
@@ -579,7 +580,7 @@ Assumption: Linear Regression Model
 <span class="math display">\[
 \mb{V}_{\bhat} = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \approx \mb{V}_{\bfbeta} / n
 \]</span> In practice, these two derivations lead to basically the same variance estimator. Recall the heteroskedastic-consistent variance estimator is <span class="math display">\[
-\widehat{\mb{V}}_{\bfbeta} = \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right)  \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
+\widehat{\mb{V}}_{\bfbeta} = \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right) \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
 \]</span> is a valid plug-in estimator for the asymptotic variance and <span class="math display">\[
 \widehat{\mb{V}}_{\bhat} = n^{-1}\widehat{\mb{V}}_{\bfbeta}.
 \]</span> Thus, in practice, the asymptotic and finite-sample results under a linear CEF justify the same variance estimator.</p>

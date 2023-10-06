@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -110,7 +110,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -132,7 +133,7 @@ div.csl-indent {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_estimation.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./04_hypothesis_tests.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -146,7 +147,7 @@ div.csl-indent {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -425,7 +426,7 @@ R = \left\{(x_1, \ldots, x_n): \Xbar_n &gt; c\right\}.
 </table>
 </div>
 <p>Ideally, we would minimize the chances of making either a type I or type II error. Unfortunately, because the test statistic is a random variable, we cannot remove the probability of an error altogether. Instead, we will derive tests with some guaranteed performance to minimize the probability of type I error. To derive this, we can define the <strong>power function</strong> of a test, <span class="math display">\[
-\pi(\theta) = \P\left(  \text{Reject } H_0 \mid \theta \right) = \P\left( T \in R \mid \theta \right),
+\pi(\theta) = \P\left( \text{Reject } H_0 \mid \theta \right) = \P\left( T \in R \mid \theta \right),
 \]</span> which is the probability of rejection as a function of the parameter of interest, <span class="math inline">\(\theta\)</span>. The power function tells us, for example, how likely we are to reject the null of no treatment effect as we vary the actual size of the treatment effect.</p>
 <p>We can define the probability of type I error from the power function.</p>
 <div id="def-size" class="theorem definition">
@@ -524,7 +525,7 @@ Note
 <div id="exm-two-props" class="theorem example">
 <p><span class="theorem-title"><strong>Example 4.2 (Difference in proportions) </strong></span>In get-out-the-vote (GOTV) experiments, we might randomly assign a group of citizens to receive mailers encouraging them to vote, whereas a control group receives no message. We’ll define the turnout variables in the treatment group <span class="math inline">\(Y_{1}, Y_{2}, \ldots, Y_{n_t}\)</span> as iid draws from a Bernoulli distribution with success <span class="math inline">\(p_t\)</span>, which represents the population turnout rate among treated citizens. The outcomes in the control group <span class="math inline">\(X_{1}, X_{2}, \ldots, X_{n_c}\)</span> are iid draws from another Bernoulli distribution with success <span class="math inline">\(p_c\)</span>, which represents the population turnout rate among citizens not receiving a mailer.</p>
 <p>Our goal is to learn about the treatment effect of this treatment on whether or not the citizen votes, <span class="math inline">\(\tau = p_t - p_c\)</span>, and we will use the sample difference in means/proportions as our estimator, <span class="math inline">\(\widehat{\tau} = \Ybar - \Xbar\)</span>. To perform a Wald test, we need to know/estimate the standard error of this estimator. Notice that because these are independent samples, the variance is <span class="math display">\[
-\V[\widehat{\tau}_n] =  \V[\Ybar - \Xbar] = \V[\Ybar] + \V[\Xbar] = \frac{p_t(1-p_t)}{n_t} + \frac{p_c(1-p_c)}{n_c},
+\V[\widehat{\tau}_n] = \V[\Ybar - \Xbar] = \V[\Ybar] + \V[\Xbar] = \frac{p_t(1-p_t)}{n_t} + \frac{p_c(1-p_c)}{n_c},
 \]</span> where the third equality comes from the fact that the underlying outcome variables <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(X_j\)</span> are binary. Obviously, we do not know the true population proportions <span class="math inline">\(p_t\)</span> and <span class="math inline">\(p_c\)</span> (that’s why we’re doing the test!), but we can estimate the standard error by replacing them with their estimates <span class="math display">\[
 \widehat{\textsf{se}}[\widehat{\tau}] = \sqrt{\frac{\Ybar(1 -\Ybar)}{n_t} + \frac{\Xbar(1-\Xbar)}{n_c}}.
 \]</span></p>
@@ -544,9 +545,9 @@ T = \frac{\Ybar - \Xbar}{\sqrt{\frac{\Ybar(1 -\Ybar)}{n_t} + \frac{\Xbar(1-\Xbar
 <p><span class="theorem-title"><strong>Example 4.3 (Difference in means) </strong></span>Let’s take a similar setting to the last example with randomly assigned treatment and control groups, but now the treatment is an appeal for donations, and the outcomes are continuous measures of how much a person donated to the political campaign. Now the treatment data <span class="math inline">\(Y_1, \ldots, Y_{n_t}\)</span> are iid draws from a population with mean <span class="math inline">\(\mu_t = \E[Y_i]\)</span> and population variance <span class="math inline">\(\sigma^2_t = \V[Y_i]\)</span>. The control data <span class="math inline">\(X_1, \ldots, X_{n_c}\)</span> are iid draws (independent of the <span class="math inline">\(Y_i\)</span>) from a population with mean <span class="math inline">\(\mu_c = \E[X_i]\)</span> and population variance <span class="math inline">\(\sigma^2_c = \V[X_i]\)</span>. The parameter of interest is similar to before: the population difference in means, <span class="math inline">\(\tau = \mu_t - \mu_c\)</span>, and we’ll form the usual hypothesis test of <span class="math display">\[
 H_0: \tau = \mu_t - \mu_c = 0 \quad\text{versus}\quad H_1: \tau \neq 0.
 \]</span></p>
-<p>The only difference between this setting and the difference in proportions is the standard error here will be different because we cannot rely on the Bernoulli. Instead, we’ll use our knowledge of the sampling variance of the sample means and independence between the samples to derive <span class="math display">\[  
+<p>The only difference between this setting and the difference in proportions is the standard error here will be different because we cannot rely on the Bernoulli. Instead, we’ll use our knowledge of the sampling variance of the sample means and independence between the samples to derive <span class="math display">\[
 \V[\widehat{\tau}] = \V[\Ybar] + \V[\Xbar] = \frac{\sigma^2_t}{n_t} + \frac{\sigma^2_c}{n_c},
-\]</span> where we can come up with an estimate of the unknown population variance with sample variances <span class="math display">\[  
+\]</span> where we can come up with an estimate of the unknown population variance with sample variances <span class="math display">\[
 \widehat{\se}[\widehat{\tau}] = \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}.
 \]</span> We can use this estimator to derive the Wald test statistic of <span class="math display">\[
 T = \frac{\widehat{\tau} - 0}{\widehat{\se}[\widehat{\tau}]} = \frac{\Ybar - \Xbar}{\sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}},
@@ -620,7 +621,7 @@ T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]
 \]</span> As we discussed in the earlier, an <span class="math inline">\(\alpha = 0.05\)</span> test would reject this null when <span class="math inline">\(|T| &gt; 1.96\)</span>, or when <span class="math display">\[
 |\widehat{\theta}_{n} - \theta_{0}| &gt; 1.96 \widehat{\se}[\widehat{\theta}_{n}].
 \]</span> Notice that will be true when <span class="math display">\[
-\theta_{0} &lt; \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or  }\quad  \widehat{\theta}_{n} +  \widehat{\se}[\widehat{\theta}_{n}] &lt; \theta_{0}
+\theta_{0} &lt; \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + \widehat{\se}[\widehat{\theta}_{n}] &lt; \theta_{0}
 \]</span> or, equivalently, that null hypothesis is outside of the 95% confidence interval, <span class="math display">\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].\]</span> Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis outside the 95% confidence interval would be rejected by a <span class="math inline">\(\alpha = 0.05\)</span> level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject.</p>
 <p>This relationship holds more broadly. Any <span class="math inline">\(1-\alpha\)</span> confidence interval contains all possible parameter values that would not be rejected as the null hypothesis of an <span class="math inline">\(\alpha\)</span>-level hypothesis test. This connection can be handy for two reasons:</p>
 <ol type="1">

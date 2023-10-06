@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,7 +91,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_estimation.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./03_asymptotics.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -127,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -444,7 +445,7 @@ Note
 <div id="thm-vector-wlln" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.4 </strong></span>If <span class="math inline">\(\X_i \in \mathbb{R}^k\)</span> are iid draws from a distribution with <span class="math inline">\(\E[X_{ij}] &lt; \infty\)</span> for all <span class="math inline">\(j=1,\ldots,k\)</span> then as <span class="math inline">\(n\rightarrow\infty\)</span></p>
 <p><span class="math display">\[
-\overline{\mb{X}}_n \inprob \E[\X]  =
+\overline{\mb{X}}_n \inprob \E[\X] =
 \begin{pmatrix}
 \E[X_{i1}] \\ \E[X_{i2}] \\ \vdots \\ \E[X_{ik}]
 \end{pmatrix}.
@@ -653,9 +654,9 @@ Warning
 \]</span> and by multiplying each part of the inequality by <span class="math inline">\(\widehat{\se}[\widehat{\theta}_n]\)</span>, we get <span class="math display">\[
 \P\left( -1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \widehat{\theta}_n - \theta \leq 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
 \]</span> We then subtract all parts by the estimator to get <span class="math display">\[
-\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
+\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
 \]</span> and finally we multiply all parts by <span class="math inline">\(-1\)</span> (and flipping the inequalities) to arrive at <span class="math display">\[
-\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq  \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
+\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
 \]</span> To connect back to the definition of the confidence interval, we have now shown that the random interval <span class="math inline">\([L, U]\)</span> where <span class="math display">\[
 \begin{aligned}
   L = L(X_1, \ldots, X_n) &amp;= \widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \\
@@ -715,11 +716,11 @@ L = \widehat{\theta}_{n} - z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}], \qu
 <section id="sec-delta-method" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="sec-delta-method"><span class="header-section-number">3.9</span> Delta method</h2>
 <p>Suppose that we know that an estimator follows the CLT, and so we have <span class="math display">\[
-\sqrt{n}\left(\widehat{\theta}_n - \theta  \right) \indist \N(0, V),
+\sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V),
 \]</span> but we actually want to estimate <span class="math inline">\(h(\theta)\)</span> so we use the plug-in estimator, <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. It seems like we should be able to apply part 1 of <a href="#thm-indist-properties">Theorem&nbsp;<span>3.8</span></a>. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, <span class="math inline">\(\sqrt{n}(\widehat{\theta}_n - \theta)\)</span>, not to the original estimator itself like we would need to investigate the asymptotic distribution of <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. We can use a little bit of calculus to get an approximation of the distribution we need.</p>
 <div id="thm-delta-method" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.10 </strong></span>If <span class="math inline">\(\sqrt{n}\left(\widehat{\theta}_n - \theta\right) \indist \N(0, V)\)</span> and <span class="math inline">\(h(u)\)</span> is continuously differentiable in a neighborhood around <span class="math inline">\(\theta\)</span>, then as <span class="math inline">\(n\to\infty\)</span>, <span class="math display">\[
-\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta)  \right) \indist \N(0, (h'(\theta))^2 V).
+\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta) \right) \indist \N(0, (h'(\theta))^2 V).
 \]</span></p>
 </div>
 <p>Understanding what’s happening here is useful since it might help give intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, <span class="math inline">\(h()\)</span>? These functions can be well-approximated with a line in a neighborhood around a given point like <span class="math inline">\(\theta\)</span>. In <a href="#fig-delta">Figure&nbsp;<span>3.5</span></a>, we show this where the tangent line at <span class="math inline">\(\theta_0\)</span>, which has slope <span class="math inline">\(h'(\theta_0)\)</span>, is very similar to <span class="math inline">\(h(\theta)\)</span> for values close to <span class="math inline">\(\theta_0\)</span>. Because of this, we can approximate the difference between <span class="math inline">\(h(\widehat{\theta}_n)\)</span> and <span class="math inline">\(h(\theta_0)\)</span> with the what this tangent line would give us: <span class="math display">\[

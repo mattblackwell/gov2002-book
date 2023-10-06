@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -57,7 +57,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -79,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./07_least_squares.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -93,7 +94,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -328,7 +329,7 @@ Assumption
 \]</span></p>
 <p>This plug-in approach is widely applicable and tends to have excellent properties in large samples under iid data. But this approach also hides some of the geometry of the setting.</p>
 <p>The second approach applies the plug-in principle not to the closed-form expression for the coefficients but to the optimization problem itself. We call this the <strong>least squares</strong> estimator because it minimizes the empirical (or sample) squared prediction error, <span class="math display">\[
-\bhat  = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
+\bhat = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
 \]</span> where, <span class="math display">\[
 SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
 \]</span> is the sum of the squared residuals. To distinguish it from other, more complicated least squares estimators, we call this the <strong>ordinary least squares</strong> estimator or OLS.</p>
@@ -394,7 +395,7 @@ TSS = \sum_{i=1}^n (Y_i - \overline{Y})^2.
 <div id="fig-ssr-vs-tss" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07_least_squares_files/figure-html/fig-ssr-vs-tss-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.3: Total sum of squares vs.&nbsp;the sum of squared residuals</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.3: Total sum of squares vs.&nbsp;the sum of squared residuals.</figcaption>
 </figure>
 </div>
 </div>
@@ -417,7 +418,7 @@ R^2 = \frac{TSS - SSR}{TSS} = 1-\frac{SSR}{TSS},
 \mb{Y} = \begin{pmatrix}
 Y_1 \\ Y_2 \\ \vdots \\ Y_n
   \end{pmatrix}, \quad
-  \mathbb{X} =  \begin{pmatrix}
+  \mathbb{X} = \begin{pmatrix}
 \X'_1 \\
 \X'_2 \\
 \vdots \\
@@ -442,7 +443,7 @@ e_1 \\ e_2 \\ \vdots \\ e_n
   \sum_{i=1}^n \X_iY_i &amp;= \Xmat'\mb{Y},
 \end{aligned}
 \]</span> which means we can write the OLS estimator in the more recognizable form as <span class="math display">\[
-\bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1}  \mathbb{X}'\mb{Y}.
+\bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1} \mathbb{X}'\mb{Y}.
 \]</span></p>
 <p>Of course, we can also define the vector of residuals, <span class="math display">\[
 \widehat{\mb{e}} = \mb{Y} - \mathbb{X}\bhat = \left[
@@ -452,17 +453,17 @@ e_1 \\ e_2 \\ \vdots \\ e_n
     \vdots \\
     Y_n
     \end{array}
-\right]  -
+\right] -
 \left[
 \begin{array}{c}
-    1\widehat{\beta}_0  + X_{11}\widehat{\beta}_1 +  X_{12}\widehat{\beta}_2 + \dots + X_{1k} \widehat{\beta}_k \\
-    1\widehat{\beta}_0 + X_{21}\widehat{\beta}_1 + X_{22}\widehat{\beta}_2  + \dots + X_{2k}\widehat{\beta}_k \\
-   \vdots  \\
-   1\widehat{\beta}_0 + X_{n1}\widehat{\beta}_1 + X_{n2}\widehat{\beta}_2  + \dots + X_{nk}\widehat{\beta}_k
+   1\widehat{\beta}_0 + X_{11}\widehat{\beta}_1 + X_{12}\widehat{\beta}_2 + \dots + X_{1k}\widehat{\beta}_k \\
+   1\widehat{\beta}_0 + X_{21}\widehat{\beta}_1 + X_{22}\widehat{\beta}_2 + \dots + X_{2k}\widehat{\beta}_k \\
+   \vdots \\
+   1\widehat{\beta}_0 + X_{n1}\widehat{\beta}_1 + X_{n2}\widehat{\beta}_2 + \dots + X_{nk}\widehat{\beta}_k
 \end{array}
 \right],
 \]</span> and so the sum of the squared residuals, in this case, becomes <span class="math display">\[
-SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} =  (\mb{Y} - \mathbb{X}\bfbeta)'(\mb{Y} - \mathbb{X}\bfbeta),
+SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} = (\mb{Y} - \mathbb{X}\bfbeta)'(\mb{Y} - \mathbb{X}\bfbeta),
 \]</span> where the double vertical lines mean the Euclidean norm of the argument, <span class="math inline">\(\Vert \mb{z} \Vert = \sqrt{\sum_{i=1}^n z_i^{2}}\)</span>. The OLS minimization problem, then, is <span class="math display">\[
 \bhat = \argmin_{\mb{b} \in \mathbb{R}^{(k+1)}}\; \Vert\mb{Y} - \mathbb{X}\mb{b}\Vert^{2}
 \]</span> Finally, we can write the orthogonality of the covariates and the residuals as <span class="math display">\[
@@ -472,7 +473,7 @@ SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} =  (\mb{Y} - \mathbb{X}\
 <section id="sec-rank" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="sec-rank"><span class="header-section-number">6.4</span> Rank, linear independence, and multicollinearity</h2>
 <p>When introducing the OLS estimator, we noted that it would exist when <span class="math inline">\(\sum_{i=1}^n \X_i\X_i'\)</span> is positive definite or that there is “no multicollinearity.” This assumption is equivalent to saying the matrix <span class="math inline">\(\mathbb{X}\)</span> is full column rank, meaning that <span class="math inline">\(\text{rank}(\mathbb{X}) = (k+1)\)</span>, where <span class="math inline">\(k+1\)</span> is the number of columns of <span class="math inline">\(\mathbb{X}\)</span>. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix, and <strong>linear independence</strong> means that if <span class="math inline">\(\mathbb{X}\mb{b} = 0\)</span> if and only if <span class="math inline">\(\mb{b}\)</span> is a column vector of 0s. In other words, we have <span class="math display">\[
-b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0,  
+b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0,
 \]</span> where <span class="math inline">\(\mathbb{X}_j\)</span> is the <span class="math inline">\(j\)</span>th column of <span class="math inline">\(\mathbb{X}\)</span>. Thus, full column rank says that all the columns are linearly independent or that there is no “multicollinearity.”</p>
 <p>How could this be violated? Suppose we accidentally included a linear function of one variable so that <span class="math inline">\(\mathbb{X}_2 = 2\mathbb{X}_1\)</span>. Then we have, <span class="math display">\[
 \begin{aligned}
@@ -547,7 +548,7 @@ X_{i4} = 1 - X_{i1} - X_{i2} - X_{i3}.
 \]</span> with estimated coefficients and residuals <span class="math display">\[
 \mb{Y} = \Xmat_{1}\bhat_{1} + \Xmat_{2}\bhat_{2} + \widehat{\mb{e}}.
 \]</span></p>
-<p>We now document another way to obtain the estimator <span class="math inline">\(\bhat_1\)</span> from this regression using a technique called <strong>residual regression </strong>, <strong>partitioned regression</strong>, or the <strong>Frisch-Waugh-Lovell theorem</strong>.</p>
+<p>We now document another way to obtain the estimator <span class="math inline">\(\bhat_1\)</span> from this regression using a technique called <strong>residual regression</strong>, <strong>partitioned regression</strong>, or the <strong>Frisch-Waugh-Lovell theorem</strong>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -628,7 +629,7 @@ h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overli
 <div id="fig-influence" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07_least_squares_files/figure-html/fig-influence-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.6: An example of an influence point</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;6.6: An example of an influence point.</figcaption>
 </figure>
 </div>
 </div>

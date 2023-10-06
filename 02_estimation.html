@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.340">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,7 +91,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -113,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_estimation.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./02_estimation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -127,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -334,7 +335,7 @@ $$
 <p><img src="assets/img/two-direction.png" class="img-fluid"></p>
 <div id="exm-rct" class="theorem example">
 <p><span class="theorem-title"><strong>Example 2.1 (Randomized control trial) </strong></span>Suppose we are conducting a randomized experiment on framing effects. All respondents receive some factual information about current levels of immigration. The message for the treatment group (<span class="math inline">\(D_i = 1\)</span>) has an additional framing of the positive benefits of immigration, while the control group (<span class="math inline">\(D_i = 0\)</span>) receives no additional framing. The outcome is a binary outcome on whether the respondent supports increasing legal immigration limits (<span class="math inline">\(Y_i = 1\)</span>) or not (<span class="math inline">\(Y_i = 0\)</span>). The observed data consists of <span class="math inline">\(n\)</span> pairs of random variables, the outcome, and the treatment assignment: <span class="math inline">\(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\)</span>. Define the two sample means/proportions in each group as <span class="math display">\[
-\Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i,  \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
+\Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i, \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
 \]</span> where <span class="math inline">\(n_1 = \sum_{i=1}^n D_i\)</span> is the number of treated units and <span class="math inline">\(n_0 = n - n_1\)</span> is the number of control units.</p>
 <p>A standard estimator for the treatment effect in a study like this would be the difference in means, <span class="math inline">\(\Ybar_1 - \Ybar_0\)</span>. But this is only one possible estimator. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This estimator is commonly called a <strong>poststratification</strong> estimator, but it’s unclear at first glance which of these two estimators we should prefer.</p>
 </div>
@@ -342,7 +343,9 @@ $$
 </section>
 <section id="samples-and-populations" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="samples-and-populations"><span class="header-section-number">2.2</span> Samples and populations</h2>
-<p>For most of this class, we’ll focus on a relatively simple setting where we have a set of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> that are <strong>independent and identically distributed</strong> (iid) draws from a distribution with cumulative distribution function (cdf) <span class="math inline">\(F\)</span>. They are independent in that the random vectors <span class="math inline">\(X_i\)</span> and <span class="math inline">\(X_j\)</span> are independent for all <span class="math inline">\(i \neq j\)</span>, and they are “identically distributed” in the sense that each of the random variables <span class="math inline">\(X_i\)</span> have the same marginal distribution, <span class="math inline">\(F\)</span>.</p>
+<p>For most of this class, we’ll focus on a relatively simple setting where we have a set of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> that are <strong>independent and identically distributed</strong> (iid) draws from a distribution with cumulative distribution function (cdf) <span class="math inline">\(F\)</span>. They are independent in that information about any subset of random vectors is not informative about any other subset of random vectors, or, more formally, <span class="math display">\[
+F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n}) = F_{X_{1}}(x_{1})\cdots F_{X_{n}}(x_{n}),
+\]</span> where <span class="math inline">\(F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})\)</span> is the joint cdf of the random vectors and <span class="math inline">\(F_{X_{j}}(x_{j})\)</span> is the marginal cdf of the <span class="math inline">\(j\)</span>th random vector. They are “identically distributed” in the sense that each of the random variables <span class="math inline">\(X_i\)</span> have the same marginal distribution, <span class="math inline">\(F\)</span>.</p>
 <p>You can think of each vector, <span class="math inline">\(X_i\)</span>, as the rows in your data frame. Note that we’re being purposely vague about this cdf—it simply represents the unknown distribution of the data, otherwise known as the <strong>data generating process</strong> (DGP). Sometimes <span class="math inline">\(F\)</span> is also referred to as the <strong>population distribution</strong> or even just <strong>population</strong>, which has its roots in viewing the data as a random sample from some larger population.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> As a shorthand, we often say that the collection of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is a <strong>random sample</strong> from population <span class="math inline">\(F\)</span> if <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is iid with distribution <span class="math inline">\(F\)</span>. The <strong>sample size</strong> <span class="math inline">\(n\)</span> is the number of units in the sample.</p>
 <p>Two metaphors can help build intuition about the concept of viewing the data as an iid draw from <span class="math inline">\(F\)</span>:</p>
 <ol type="1">
@@ -393,7 +396,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There is one potential confusion in how we talk about “statistics.” Just above, we defined a statistic as a random variable based on it being a function of random variables (the data). But we sometimes refer to the calculated value as a statistic as well, which is a specific number that you see in your R output. To be precise, we should call the latter the <strong>realized value</strong> of the statistic, but message discipline is difficult to enforce in this context. A simple example might help. Suppose that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are the results of a roll of two standard six-sided dice. Then the statistic <span class="math inline">\(Y = X_1 + X_2\)</span> is a random variable that has a distribution over the numbers from {2, , 12} that describes our uncertainty over what the sum will be <em>before we roll the dice</em>. Once we have rolled the dice and observed the realized values <span class="math inline">\(X_1 = 3\)</span> and <span class="math inline">\(X_2 = 4\)</span>, we observed the realized value of the statistic, <span class="math inline">\(Y = 7\)</span>.</p>
+<p>There is one potential confusion in how we talk about “statistics.” Just above, we defined a statistic as a random variable based on it being a function of random variables (the data). But we sometimes refer to the calculated value as a statistic as well, which is a specific number that you see in your R output. To be precise, we should call the latter the <strong>realized value</strong> of the statistic, but message discipline is difficult to enforce in this context. A simple example might help. Suppose that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are the results of a roll of two standard six-sided dice. Then the statistic <span class="math inline">\(Y = X_1 + X_2\)</span> is a random variable that has a distribution over the numbers from <span class="math inline">\(\{2, \ldots, 12\}\)</span> that describes our uncertainty over what the sum will be <em>before we roll the dice</em>. Once we have rolled the dice and observed the realized values <span class="math inline">\(X_1 = 3\)</span> and <span class="math inline">\(X_2 = 4\)</span>, we observed the realized value of the statistic, <span class="math inline">\(Y = 7\)</span>.</p>
 </div>
 </div>
 <p>At their most basic, statistics are just data summaries without aim or ambition. Estimators are statistics with a purpose: to provide an “educated guess” about some quantity of interest.</p>
@@ -431,7 +434,7 @@ L(\theta) = \prod_{i=1}^n f(X_i \mid \theta).
 \]</span> We can then define the <strong>maximum likelihood</strong> estimator (MLE) for <span class="math inline">\(\theta\)</span> as the values of the parameter that, well, maximize the likelihood: <span class="math display">\[
 \widehat{\theta}_{mle} = \argmax_{\theta \in \Theta} \; L(\theta)
 \]</span> Sometimes we can use calculus to derive a closed-form expression for the MLE. Still, we often use iterative techniques that search the parameter space for the maximum.</p>
-<p>Maximum likelihood estimators have very nice properties, especially in large samples. Unfortunately, it also requires the correct knowledge of the parametric model, which is often difficult to justify. Do we really know if we should model a given event count variable as Poisson or Negative Binomial? The attractive properties of MLE are only as good as our ability to specify the parametric model.</p>
+<p>Maximum likelihood estimators have very nice properties, especially in large samples. Unfortunately, they also require the correct knowledge of the parametric model, which is often difficult to justify. Do we really know if we should model a given event count variable as Poisson or Negative Binomial? The attractive properties of MLE are only as good as our ability to specify the parametric model.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -501,31 +504,31 @@ Notation alert
 <p>The population distribution describes the probability of randomly selecting a person with each one of these values, <span class="math inline">\(\P(X_i = x)\)</span>. The empirical distribution would be the fraction of our data taking each value. And the sampling distribution of the sample mean, <span class="math inline">\(\Xbar_n\)</span>, would be the distribution of the sample mean across repeated samples from the population.</p>
 <p>Suppose the population distribution was binomial with four trials and probability of success <span class="math inline">\(p = 0.4\)</span>. We could generate one sample with <span class="math inline">\(n = 10\)</span> and thus one empirical distribution using <code>rbinom()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_samp <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_samp <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>my_samp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 2 1 3 3 0 2 3 2 1</code></pre>
+<pre><code> [1] 1 3 2 3 4 0 2 3 2 2</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(my_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>my_samp
-0 1 2 3 
-1 3 3 3 </code></pre>
+0 1 2 3 4 
+1 1 4 3 1 </code></pre>
 </div>
 </div>
 <p>And we can generate one draw from the sampling distribution of <span class="math inline">\(\Xbar_n\)</span> by taking the mean of this sample:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(my_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.8</code></pre>
+<pre><code>[1] 2.2</code></pre>
 </div>
 </div>
 <p>But, if we had a different sample, it would have a different empirical distribution and thus give us a different estimate of the sample mean:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>my_samp2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>my_samp2 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(my_samp2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.6</code></pre>
+<pre><code>[1] 2</code></pre>
 </div>
 </div>
 <p>The sampling distribution is the distribution of these sample means across repeated sampling.</p>
@@ -567,17 +570,17 @@ Warning
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="estimation-variance-and-the-standard-error"><span class="header-section-number">2.6.2</span> Estimation variance and the standard error</h3>
 <p>If a “good” estimator tends to be close to the truth, we should also care about the spread of the sampling distribution. In particular, we define the <strong>sampling variance</strong> as the variance of an estimator’s sampling distribution, <span class="math inline">\(\V[\widehat{\theta}]\)</span>, which measures how spread out the estimator is around its mean. For an unbiased estimator, lower sampling variance implies the distribution of <span class="math inline">\(\widehat{\theta}\)</span> is more concentrated around the truth.</p>
 <div id="exm-mean-var" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.10 (Sampling variance of the sample mean:) </strong></span>We can establish the sampling variance of the sample mean of iid data for all <span class="math inline">\(F\)</span> such that <span class="math inline">\(\V[X_i]\)</span> is finite (more precisely, <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>)</p>
+<p><span class="theorem-title"><strong>Example 2.10 (Sampling variance of the sample mean) </strong></span>We can establish the sampling variance of the sample mean of iid data for all <span class="math inline">\(F\)</span> such that <span class="math inline">\(\V[X_i]\)</span> is finite (more precisely, <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>)</p>
 <p><span class="math display">\[\begin{aligned}
   \V\left[ \Xbar_n \right] &amp;= \V\left[ \frac{1}{n} \sum_{i=1}^n X_i \right] &amp; (\text{definition of } \Xbar_n) \\
-                           &amp;=\frac{1}{n^2} \V\left[ \sum_{i=1}^n X_i \right] &amp; (\text{property of } \V)\\
-                           &amp;=\frac{1}{n^2} \sum_{i=1}^n \V[X_i] &amp; (\text{independence})\\
-                           &amp;= \frac{1}{n^2}\sum_{i=1}^n \sigma^2 &amp; (X_i \text{ identically distributed})\\
+                           &amp;= \frac{1}{n^2} \V\left[ \sum_{i=1}^n X_i \right] &amp; (\text{property of } \V) \\
+                           &amp;= \frac{1}{n^2} \sum_{i=1}^n \V[X_i] &amp; (\text{independence}) \\
+                           &amp;= \frac{1}{n^2} \sum_{i=1}^n \sigma^2 &amp; (X_i \text{ identically distributed}) \\
                            &amp;= \frac{\sigma^2}{n}
 \end{aligned}\]</span></p>
 </div>
-<p>An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of <span class="math inline">\(\widehat{\theta}\)</span> the <strong>standand error</strong> of <span class="math inline">\(\widehat{\theta}\)</span>: <span class="math inline">\(\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}\)</span>.</p>
-<p>Given the above derivation, the standard error of the sample mean under iid sampling is <span class="math inline">\(\sigma / \sqrt{n}\)</span></p>
+<p>An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of <span class="math inline">\(\widehat{\theta}\)</span> the <strong>standard error</strong> of <span class="math inline">\(\widehat{\theta}\)</span>: <span class="math inline">\(\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}\)</span>.</p>
+<p>Given the above derivation, the standard error of the sample mean under iid sampling is <span class="math inline">\(\sigma / \sqrt{n}\)</span>.</p>
 </section>
 <section id="mean-squared-error" class="level3" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="mean-squared-error"><span class="header-section-number">2.6.3</span> Mean squared error</h3>
@@ -606,7 +609,7 @@ Warning
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>This approach to inference is often called a <strong>model-based approach</strong> since we assuming a probability model in the cdf, <span class="math inline">\(F\)</span>. This is usually in contrast to a <strong>design-based approach</strong> to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>This approach to inference is often called a <strong>model-based approach</strong> since we are assuming a probability model in the cdf, <span class="math inline">\(F\)</span>. This is usually in contrast to a <strong>design-based approach</strong> to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
