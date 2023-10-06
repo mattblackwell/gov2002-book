@@ -35,9 +35,13 @@ What are the goals of studying estimators? In short, we prefer to use **good** e
 
 
 
-For most of this class, we'll focus on a relatively simple setting where we have a set of random vectors $\{X_1, \ldots, X_n\}$ that are **independent and identically distributed** (iid) draws from a distribution with cumulative distribution function (cdf) $F$. They are independent in that the random vectors $X_i$ and $X_j$ are independent for all $i \neq j$, and they are "identically distributed" in the sense that each of the random variables $X_i$ have the same marginal distribution, $F$.
+For most of this class, we'll focus on a relatively simple setting where we have a set of random vectors $\{X_1, \ldots, X_n\}$ that are **independent and identically distributed** (iid) draws from a distribution with cumulative distribution function (cdf) $F$. They are independent in that information about any subset of random vectors is not informative about any other subset of random vectors, or, more formally, 
+$$
+F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n}) = F_{X_{1}}(x_{1})\cdots F_{X_{n}}(x_{n}),
+$$
+where $F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})$ is the joint cdf of the random vectors and $F_{X_{j}}(x_{j})$ is the marginal cdf of the $j$th random vector.  They are "identically distributed" in the sense that each of the random variables $X_i$ have the same marginal distribution, $F$.
 
-[^model]: This approach to inference is often called a **model-based approach** since we assuming a probability model in the cdf, $F$. This is usually in contrast to a **design-based approach** to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.  
+[^model]: This approach to inference is often called a **model-based approach** since we are assuming a probability model in the cdf, $F$. This is usually in contrast to a **design-based approach** to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.  
 
 
 
@@ -98,7 +102,7 @@ When our sample size is more than a few observations, it makes no sense to work 
 
 ::: {.callout-warning}
 
-There is one potential confusion in how we talk about "statistics." Just above, we defined a statistic as a random variable based on it being a function of random variables (the data). But we sometimes refer to the calculated value as a statistic as well, which is a specific number that you see in your R output. To be precise, we should call the latter the **realized value** of the statistic, but message discipline is difficult to enforce in this context. A simple example might help. Suppose that $X_1$ and $X_2$ are the results of a roll of two standard six-sided dice. Then the statistic $Y = X_1 + X_2$ is a random variable that has a distribution over the numbers from \{2, \ldots, 12\} that describes our uncertainty over what the sum will be *before we roll the dice*. Once we have rolled the dice and observed the realized values $X_1 = 3$ and $X_2 = 4$, we observed the realized value of the statistic, $Y = 7$. 
+There is one potential confusion in how we talk about "statistics." Just above, we defined a statistic as a random variable based on it being a function of random variables (the data). But we sometimes refer to the calculated value as a statistic as well, which is a specific number that you see in your R output. To be precise, we should call the latter the **realized value** of the statistic, but message discipline is difficult to enforce in this context. A simple example might help. Suppose that $X_1$ and $X_2$ are the results of a roll of two standard six-sided dice. Then the statistic $Y = X_1 + X_2$ is a random variable that has a distribution over the numbers from $\{2, \ldots, 12\}$ that describes our uncertainty over what the sum will be *before we roll the dice*. Once we have rolled the dice and observed the realized values $X_1 = 3$ and $X_2 = 4$, we observed the realized value of the statistic, $Y = 7$. 
 
 :::
 
@@ -143,7 +147,7 @@ $$
 $$
 Sometimes we can use calculus to derive a closed-form expression for the MLE. Still, we often use iterative techniques that search the parameter space for the maximum. 
 
-Maximum likelihood estimators have very nice properties, especially in large samples. Unfortunately, it also requires the correct knowledge of the parametric model, which is often difficult to justify. Do we really know if we should model a given event count variable as Poisson or Negative Binomial? The attractive properties of MLE are only as good as our ability to specify the parametric model. 
+Maximum likelihood estimators have very nice properties, especially in large samples. Unfortunately, they also require the correct knowledge of the parametric model, which is often difficult to justify. Do we really know if we should model a given event count variable as Poisson or Negative Binomial? The attractive properties of MLE are only as good as our ability to specify the parametric model. 
 
 ::: {.callout-note}
 
@@ -247,7 +251,7 @@ set.seed(0123)
 
 
 ```{r}
-my_samp <- rbinom(n = 10, size = 4, prob = 0.4)
+my_samp <- rbinom(n = 10, size = 5, prob = 0.4)
 my_samp
 table(my_samp)
 ```
@@ -261,7 +265,7 @@ mean(my_samp)
 But, if we had a different sample, it would have a different empirical distribution and thus give us a different estimate of the sample mean:
 
 ```{r}
-my_samp2 <- rbinom(n = 10, size = 4, prob = 0.4)
+my_samp2 <- rbinom(n = 10, size = 5, prob = 0.4)
 mean(my_samp2) 
 ```
 
@@ -316,7 +320,7 @@ If a "good" estimator tends to be close to the truth, we should also care about 
 
 ::: {#exm-mean-var}
 
-## Sampling variance of the sample mean:
+## Sampling variance of the sample mean
 
 We can establish the sampling variance of the sample mean of iid data for all $F$ such that $\V[X_i]$ is finite (more precisely, $\E[X_i^2] < \infty$)
 
@@ -332,7 +336,7 @@ $$\begin{aligned}
 
 An alternative measure of spread for any distribution is the standard deviation, which is on the same scale as the original random variable. We call the standard deviation of the sampling distribution of $\widehat{\theta}$ the **standard error** of $\widehat{\theta}$: $\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}$. 
 
-Given the above derivation, the standard error of the sample mean under iid sampling is $\sigma / \sqrt{n}$
+Given the above derivation, the standard error of the sample mean under iid sampling is $\sigma / \sqrt{n}$. 
 
 
 ### Mean squared error

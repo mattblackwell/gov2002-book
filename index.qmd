@@ -7,7 +7,7 @@ This is a set of notes for [Government 2002: Quantitative Social Science Methods
 - Hansen, Bruce. [*Probability & Statistics for Economists*](https://www.amazon.com/Probability-Statistics-Economists-Bruce-Hansen/dp/0691235945/). Princeton University Press. 
 - Hansen, Bruce. [*Econometrics*](https://www.amazon.com/Econometrics-Bruce-Hansen/dp/0691235899/). Princeton University Press. 
 - Wasserman, Larry. [*All of Statistics: A Concise Course in Statistical Inference*](https://link.springer.com/book/10.1007/978-0-387-21736-9). Springer. 
-- Wooldridge, Jeffrey. [*Econometric Analysis of Cross Section and Panel Data*](https://mitpress.mit.edu/9780262232586/econometric-analysis-of-cross-section-and-panel-data/)
+- Wooldridge, Jeffrey. [*Econometric Analysis of Cross Section and Panel Data*](https://mitpress.mit.edu/9780262232586/econometric-analysis-of-cross-section-and-panel-data/). The MIT Press. 
 
 You can find the source for this book at <https://github.com/mattblackwell/gov2002-book>. Any typos or errors can be reported at <https://github.com/mattblackwell/gov2002-book/issues>. Thanks for reading. 
 
