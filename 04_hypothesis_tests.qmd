@@ -81,7 +81,7 @@ where $c$ is called the **critical value**. This expression says that the reject
 
 ::: {#exm-biden}
 
-Suppose that $(X_1, \ldots, X_n)$ represents a sample of US citizens where $X_i = 1$ indicates support for the current US president and  $X_i = 0$ means no support. We might be interested in the test of the null hypothesis that the president does not have the support of a majority of American citizens. Let $\mu = \E[X_i] = \P(X_i = 1)$. Then, a one-sided test would compare the two hypotheses:
+Suppose that $(X_1, \ldots, X_n)$ represents a sample of US citizens where $X_i = 1$ indicates support for the current US president and $X_i = 0$ means no support. We might be interested in the test of the null hypothesis that the president does not have the support of a majority of American citizens. Let $\mu = \E[X_i] = \P(X_i = 1)$. Then, a one-sided test would compare the two hypotheses:
 $$ 
 H_0: \mu \leq 0.5 \quad\text{versus}\quad H_1: \mu > 0.5.
 $$
@@ -107,9 +107,9 @@ Hypothesis tests end with a decision to reject the null hypothesis or not, but t
 : Typology of testing errors {#tbl-errors}
 
 
-Ideally, we would minimize the chances of making either a type I or type II error. Unfortunately, because the test statistic is a random variable,  we cannot remove the probability of an error altogether. Instead, we will derive tests with some guaranteed performance to minimize the probability of type I error. To derive this, we can define the **power function** of a test,
+Ideally, we would minimize the chances of making either a type I or type II error. Unfortunately, because the test statistic is a random variable, we cannot remove the probability of an error altogether. Instead, we will derive tests with some guaranteed performance to minimize the probability of type I error. To derive this, we can define the **power function** of a test,
 $$ 
-\pi(\theta) = \P\left(  \text{Reject } H_0 \mid \theta \right) = \P\left( T \in R \mid \theta \right),
+\pi(\theta) = \P\left( \text{Reject } H_0 \mid \theta \right) = \P\left( T \in R \mid \theta \right),
 $$
 which is the probability of rejection as a function of the parameter of interest, $\theta$. The power function tells us, for example, how likely we are to reject the null of no treatment effect as we vary the actual size of the treatment effect. 
 
@@ -278,7 +278,7 @@ In get-out-the-vote (GOTV) experiments, we might randomly assign a group of citi
 
 Our goal is to learn about the treatment effect of this treatment on whether or not the citizen votes, $\tau = p_t - p_c$, and we will use the sample difference in means/proportions as our estimator, $\widehat{\tau} = \Ybar - \Xbar$. To perform a Wald test, we need to know/estimate the standard error of this estimator. Notice that because these are independent samples, the variance is
 $$ 
-\V[\widehat{\tau}_n] =  \V[\Ybar - \Xbar] = \V[\Ybar] + \V[\Xbar] = \frac{p_t(1-p_t)}{n_t} + \frac{p_c(1-p_c)}{n_c},
+\V[\widehat{\tau}_n] = \V[\Ybar - \Xbar] = \V[\Ybar] + \V[\Xbar] = \frac{p_t(1-p_t)}{n_t} + \frac{p_c(1-p_c)}{n_c},
 $$
 where the third equality comes from the fact that the underlying outcome variables $Y_i$ and $X_j$ are binary. Obviously, we do not know the true population proportions $p_t$ and $p_c$ (that's why we're doing the test!), but we can estimate the standard error by replacing them with their estimates
 $$ 
@@ -312,11 +312,11 @@ H_0: \tau = \mu_t - \mu_c = 0 \quad\text{versus}\quad H_1: \tau \neq 0.
 $$
 
 The only difference between this setting and the difference in proportions is the standard error here will be different because we cannot rely on the Bernoulli. Instead, we'll use our knowledge of the sampling variance of the sample means and independence between the samples to derive 
-$$  
+$$
 \V[\widehat{\tau}] = \V[\Ybar] + \V[\Xbar] = \frac{\sigma^2_t}{n_t} + \frac{\sigma^2_c}{n_c},
 $$
 where we can come up with an estimate of the unknown population variance with sample variances
-$$  
+$$
 \widehat{\se}[\widehat{\tau}] = \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}.
 $$
 We can use this estimator to derive the Wald test statistic of 
@@ -380,11 +380,11 @@ $$
 
 ## Exact tests under normal data
 
-The Wald test above relies on large sample approximations. In finite samples, these approximations may not be valid. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where  $X_1,\ldots,X_n$ are i.i.d. samples from $N(\mu,\sigma^2)$. Under null of $H_0: \mu = \mu_0$, we can show that 
+The Wald test above relies on large sample approximations. In finite samples, these approximations may not be valid. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are i.i.d. samples from $N(\mu,\sigma^2)$. Under null of $H_0: \mu = \mu_0$, we can show that 
 $$ 
 T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
 $$
-where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For one-sided test $c = G^{-1}_0(1 - \alpha)$ but now $G_0$ is $t$ with $n-1$ df and so we use  `qt()` instead of `qnorm()` to calculate these critical values. 
+where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For one-sided test $c = G^{-1}_0(1 - \alpha)$ but now $G_0$ is $t$ with $n-1$ df and so we use `qt()` instead of `qnorm()` to calculate these critical values. 
 
 The critical values for the $t$ distribution are always larger than the normal because the t has fatter tails, as shown in @fig-shape-of-t. As $n\to\infty$, however, the $t$ converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Oddly, most software packages calculate p-values and rejection regions based on the $t$ to exploit this conservativeness. 
 
@@ -419,7 +419,7 @@ $$
 $$
 Notice that will be true when 
 $$ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or  }\quad  \widehat{\theta}_{n} +  \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 $$
 or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 
