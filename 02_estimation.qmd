@@ -216,9 +216,9 @@ $$
 
 Finally, plug-in estimation goes beyond just replacing population means with sample means. We can derive estimators of the population quantiles like the median with sample versions of those quantities. What unifies all of these approaches is replacing the unknown population cdf, $F$, with the empirical cdf, 
 $$
-\widehat{F}_n(x) = \frac{\sum_{i=1}^n \mathbb{I}(X_i \leq x)}{n}.
+\widehat{F}_n(x) = \frac{\sum_{i=1}^n \mathbb{I}(X_i \leq x)}{n},
 $$
-For a more complete and technical treatment of these ideas, see Wasserman (2004) Chapter 7.
+where $\mathbb{I}(A)$ is an *indicator function* that take the value 1 if the event $A$ occurs and 0 otherwise. For a more complete and technical treatment of these ideas, see Wasserman (2004) Chapter 7.
 
 
 

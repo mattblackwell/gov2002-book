@@ -12,7 +12,7 @@ In this chapter, we will take a different approach and see what happens to the s
 It's helpful to review the basic idea of convergence in deterministic sequences from calculus: 
 
 ::: {#def-limit}
-A sequence $\{a_n: n = 1, 2, \ldots\}$ has the **limit** $a$ written $a_n \rightarrow a$ as $n\rightarrow \infty$ of $\lim_{n\rightarrow \infty} a_n = a$ if for all $\epsilon > 0$ there is some $n_{\epsilon} < \infty$ such that for all $n \geq n_{\epsilon}$, $|a_n - a| \leq \epsilon$. 
+A sequence $\{a_n: n = 1, 2, \ldots\}$ has the **limit** $a$ written $a_n \rightarrow a$ as $n\rightarrow \infty$ or $\lim_{n\rightarrow \infty} a_n = a$ if for all $\epsilon > 0$ there is some $n_{\epsilon} < \infty$ such that for all $n \geq n_{\epsilon}$, $|a_n - a| \leq \epsilon$. 
 :::
 
 We say that $a_n$ **converges** to $a$ if $\lim_{n\rightarrow\infty} a_n = a$. Basically, a sequence converges to a number if the sequence gets closer and closer to that number as the sequence goes on. 
@@ -83,7 +83,7 @@ $$
 
 Notice that we can let $Y = |X|/\delta$ and rewrite the statement as $\P(Y \geq 1) \leq \E[Y]$ (since $\E[|X|]/\delta = \E[|X|/\delta]$ by the properties of expectation), which is what we will show. But notice that
 $$
-\mathbb{1}(Y \geq 1) \leq Y.
+\mathbb{I}(Y \geq 1) \leq Y.
 $$
 Why does this hold? We can investigate the two possible values of the indicator function to see. If $Y$ is less than 1, then the indicator function will be 0, but recall that $Y$ is nonnegative, so we know that it must be at least as big as 0 so that inequality holds. If $Y \geq 1$, then the indicator function will take the value one, but we just said that $Y \geq 1$, so the inequality holds. If we take the expectation of both sides of this inequality, we obtain the result (remember, the expectation of an indicator function is the probability of the event).
 
@@ -126,7 +126,7 @@ The most famous consistency result has a special name.
 ::: {#thm-lln}
 
 ## Weak Law of Large Numbers
-Let $X_1, \ldots, X_n$ be a an i.i.d. draws from a distribution with mean $\mu = \E[X_i]$ and variance $\sigma^2 = \V[X_i] < \infty$. Let $\Xbar_n = \frac{1}{n} \sum_{i =1}^n X_i$. Then, $\Xbar_n \inprob \mu$.
+Let $X_1, \ldots, X_n$ be i.i.d. draws from a distribution with mean $\mu = \E[X_i]$ and variance $\sigma^2 = \V[X_i] < \infty$. Let $\Xbar_n = \frac{1}{n} \sum_{i =1}^n X_i$. Then, $\Xbar_n \inprob \mu$.
 
 :::
 
@@ -294,6 +294,16 @@ Keeping the difference between unbiased and consistent clear in your mind is ess
 
 Some estimators are biased but consistent that are often much more interesting. We already saw one such estimator in @exm-nonresponse, but there are many more. Maximum likelihood estimators, for example, are (under some regularity conditions) consistent for the parameters of a parametric model but are often biased. 
 
+To study these estimator, we can broaden @thm-consis to the class of **asymptotically unbiased** estimators that have bias that vanishes as the sample size grows.  
+
+::: {#thm-consis-2}
+
+For any estimator $\widehat{\theta}_n$, if $\text{bias}[\widehat{\theta}_n] \to 0$ and $\V[\widehat{\theta}_n] \rightarrow 0$ as $n\rightarrow \infty$, then $\widehat{\theta}_n$ is consistent.
+
+:::
+
+
+
 ::: {#exm-plug-in-variance}
 
 ## Plug-in variance estimator
@@ -302,7 +312,7 @@ In the last chapter, we introduced the plug-in estimator for the population vari
 $$
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
 $$
-which we will now show is biased but consistent. To see the bias note that we can rewrite the sum of square deviations $$\sum_{i=1}^n (X_i - \Xbar_n)^2 = \sum_{i=1}^n X_i^2 - n\Xbar_n. $$
+which we will now show is biased but consistent. To see the bias note that we can rewrite the sum of square deviations $$\sum_{i=1}^n (X_i - \Xbar_n)^2 = \sum_{i=1}^n X_i^2 - n\Xbar_n^2. $$
 Then, the expectation of the plug-in estimator is
 $$
 \begin{aligned}
@@ -314,7 +324,7 @@ $$
 &= \frac{n-1}{n} \sigma^2 = \sigma^2 - \frac{1}{n}\sigma^2
 \end{aligned}. 
 $$
-Thus, we can see that the bias of the plug-in estimator is $-(1/n)\sigma^2$, so it slightly underestimates the variance. Nicely, though, the bias shrinks as a function of the sample size, so according to @thm-consis, it will be consistent so long as the sampling variance of $\widehat{\sigma}^2$ shrinks as a function of the sample size, which it does (though omit that proof here). Of course, simply multiplying this estimator by $n/(n-1)$ will give an unbiased and consistent estimator that is also the typical sample variance estimator. 
+Thus, we can see that the bias of the plug-in estimator is $-(1/n)\sigma^2$, so it slightly underestimates the variance. Nicely, though, the bias shrinks as a function of the sample size, so according to @thm-consis-2, it will be consistent so long as the sampling variance of $\widehat{\sigma}^2$ shrinks as a function of the sample size, which it does (though omit that proof here). Of course, simply multiplying this estimator by $n/(n-1)$ will give an unbiased and consistent estimator that is also the typical sample variance estimator. 
 
 :::
 
@@ -543,7 +553,7 @@ $$
   U = U(X_1, \ldots, X_n) &= \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n],
 \end{aligned}
 $$
-is an asymptotically valid estimator.[^1] Replacing $\Xbar_n$ for $\widehat{\theta}_n$ and $s/\sqrt{n}$ for $\widehat{\se}[\widehat{\theta}_n]$ establishes how the standard 95% confidence interval for the sample mean above asymptotically valid. 
+is an asymptotically valid estimator.[^1] Replacing $\Xbar_n$ for $\widehat{\theta}_n$ and $s/\sqrt{n}$ for $\widehat{\se}[\widehat{\theta}_n]$ establishes how the standard 95% confidence interval for the sample mean above is asymptotically valid. 
 
 [^1]: Implicit in this analysis is that the standard error estimate is consistent. 
 
@@ -714,7 +724,7 @@ since $\exp(\mu)^2 = \exp(2\mu)$.
 :::
 
 
-Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. We often will combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let $\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))$ map from $\mathbb{R}^k \to \mathbb{R}^m$ and be continuously differentiable (we make the function bold since it ). It will help us use more compact matrix notation if we introduce a $m \times k$ Jacobian matrix of all partial derivatives
+Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. We often will combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let $\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))$ map from $\mathbb{R}^k \to \mathbb{R}^m$ and be continuously differentiable (we make the function bold since it returns an $m$-dimensional vector). It will help us to use more compact matrix notation if we introduce a $m \times k$ Jacobian matrix of all partial derivatives
 $$
 \mb{H}(\mb{\theta}) = \mb{\nabla}_{\mb{\theta}}\mb{h}(\mb{\theta}) = \begin{pmatrix}
   \frac{\partial h_1(\mb{\theta})}{\partial \theta_1} & \frac{\partial h_1(\mb{\theta})}{\partial \theta_2} & \cdots & \frac{\partial h_1(\mb{\theta})}{\partial \theta_k} \\

@@ -15,3 +15,7 @@ You can find the source for this book at <https://github.com/mattblackwell/gov20
 This is a Quarto book. To learn more about Quarto books visit <https://quarto.org/docs/books>. 
 
 $\,$
+
+# Acknowledgements
+
+Much of how I approach this material comes from Adam Glynn, for whom I was a teaching fellow during graduate school.  Thanks to the students of Gov 2000 and Gov 2002 over years for helping me refine the material in this book. Also very special thanks to those who have provided valuable feedback including Zeki Akyol, Noah Dasanaike, and Jarell Cheong Tze Wen. 
