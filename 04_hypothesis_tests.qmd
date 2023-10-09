@@ -248,7 +248,7 @@ In many cases, our estimators will be asymptotically normal by a version of the 
 $$ 
 T = \frac{\widehat{\theta}_n - \theta_0}{\widehat{\textsf{se}}[\widehat{\theta}_n]} \indist \N(0, 1). 
 $$
-The **Wald test** rejects $H_0$ when $|T| > z_{\alpha/2}$, where $z_{\alpha/2}$ that puts $\alpha/2$ in the upper tail of the standard normal. That is, if $Z \sim \N(0, 1)$, then $z_{\alpha/2}$ satisfies $\P(Z \geq z_{\alpha/2}) = \alpha/2$. 
+The **Wald test** rejects $H_0$ when $|T| > z_{\alpha/2}$, with $z_{\alpha/2}$ that puts $\alpha/2$ in the upper tail of the standard normal. That is, if $Z \sim \N(0, 1)$, then $z_{\alpha/2}$ satisfies $\P(Z \geq z_{\alpha/2}) = \alpha/2$. 
 
 ::: {.callout-note}
 
@@ -350,7 +350,7 @@ $$
 
 In either case, the interpretation of the p-value is the same. It is the smallest size $\alpha$ at which a test would reject null. Presenting a p-value allows the reader to determine their own $\alpha$ level and determine quickly if the evidence would warrant rejecting $H_0$ in that case. Thus, the p-value is a more **continuous** measure of evidence against the null, where lower values are stronger evidence against the null because the observed result is less likely under the null. 
 
-There is a lot of controversy surrounding p-values but most of it focuses on arbitrary p-value cutoffs for determining statistical significance and sometimes publication decisions. These problems are not the fault of p-values but rather the hyper fixation on the reject/retain decision for arbitrary test levels like $\alpha = 0.05$. It might be best to view p-values as a transformation of the test statistic onto a common scale between 0 and 1. 
+There is a lot of controversy surrounding p-values but most of it focuses on arbitrary p-value cutoffs for determining statistical significance and sometimes publication decisions. These problems are not the fault of p-values but rather the hyperfixation on the reject/retain decision for arbitrary test levels like $\alpha = 0.05$. It might be best to view p-values as a transformation of the test statistic onto a common scale between 0 and 1. 
 
 ::: {.callout-warning}
 
@@ -380,11 +380,11 @@ $$
 
 ## Exact tests under normal data
 
-The Wald test above relies on large sample approximations. In finite samples, these approximations may not be valid. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are i.i.d. samples from $N(\mu,\sigma^2)$. Under null of $H_0: \mu = \mu_0$, we can show that 
+The Wald test above relies on large sample approximations. In finite samples, these approximations may not be valid. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are iid samples from $N(\mu,\sigma^2)$. Under a null of $H_0: \mu = \mu_0$, we can show that 
 $$ 
 T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
 $$
-where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For one-sided test $c = G^{-1}_0(1 - \alpha)$ but now $G_0$ is $t$ with $n-1$ df and so we use `qt()` instead of `qnorm()` to calculate these critical values. 
+where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For a one-sided test, $c = G^{-1}_0(1 - \alpha)$, but now $G_0$ is $t$ with $n-1$ df and so we use `qt()` instead of `qnorm()` to calculate these critical values. 
 
 The critical values for the $t$ distribution are always larger than the normal because the t has fatter tails, as shown in @fig-shape-of-t. As $n\to\infty$, however, the $t$ converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Oddly, most software packages calculate p-values and rejection regions based on the $t$ to exploit this conservativeness. 
 
@@ -413,13 +413,13 @@ using the test statistic,
 $$ 
 T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}. 
 $$
-As we discussed in the earlier, an $\alpha = 0.05$ test would reject this null when $|T| > 1.96$, or when 
+As we discussed earlier, an $\alpha = 0.05$ test would reject this null when $|T| > 1.96$, or when 
 $$ 
 |\widehat{\theta}_{n} - \theta_{0}| > 1.96 \widehat{\se}[\widehat{\theta}_{n}]. 
 $$
 Notice that will be true when 
 $$ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 $$
 or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 
