@@ -171,7 +171,7 @@ A test has **significance level** $\alpha$ if its size is less than or equal to 
 
 :::
 
-A test with a significance level of $\alpha = 0.05$ will have a false positive/type I error rate no larger than 0.05. This level is widespread in the social sciences, though you also will see $\alpha = 0.01$ or $\alpha = 0.1$. Frequentists justify this by saying this means that with $\alpha = 0.05$, there will only be 5% of studies that will produce false discoveries. 
+A test with a significance level of $\alpha = 0.05$ will have a false positive/type I error rate no larger than 0.05. This level is widespread in the social sciences, though you also will see $\alpha = 0.01$ or $\alpha = 0.1$. Frequentists justify this by saying this means that with $\alpha = 0.05$, there will only be at most 5% of studies that will produce false discoveries. 
 
 Our task is to construct the rejection region so that the **null distribution** of the test statistic $G_0(t) = \P(T \leq t \mid \theta_0)$ has less than $\alpha$ probability in that region. One-sided tests like in @fig-size-power are the easiest to show, even though we warned you not to use them. We want to choose $c$ that puts no more than $\alpha$ probability in the tail, or
 $$ 
@@ -323,7 +323,7 @@ We can use this estimator to derive the Wald test statistic of
 $$ 
 T = \frac{\widehat{\tau} - 0}{\widehat{\se}[\widehat{\tau}]} = \frac{\Ybar - \Xbar}{\sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}},
 $$
-and if we want an asymptotically level of 0.05, we can reject when $|T| > 1.96$.
+and if we want an asymptotic level of 0.05, we can reject when $|T| > 1.96$.
 :::
 
 
@@ -335,7 +335,7 @@ One alternative to reporting the reject/retain decision is to report a **p-value
 
 ::: {#def-p-value}
 
-The **p-value** of a test is the probability of observing a test statistic is at least as extreme as the observed test statistic in the direction of the alternative hypothesis. 
+The **p-value** of a test is the probability of observing a test statistic at least as extreme as the observed test statistic in the direction of the alternative hypothesis. 
 
 :::
 
@@ -356,7 +356,7 @@ There is a lot of controversy surrounding p-values but most of it focuses on arb
 
 People use many statistical shibboleths to purportedly identify people who don't understand statistics and usually hinge on seemingly subtle differences in interpretation that are easy to miss. If you know the core concepts, the statistical shibboleths tend to be overblown, but it would be malpractice not to flag them for you. 
 
-The shibboleth with p-values is that sometimes people interpret them as "the probability that the null hypothesis is true." Of course, this doesn't make sense from our definition because the p-values *conditions* on the null hypothesis---it cannot tell us anything about the probability of that null hypothesis. Instead, the metaphor you should always carry is that hypothesis tests are statistical thought experiments and that p-values answer the question: how likely would my data be if the null were true? 
+The shibboleth with p-values is that sometimes people interpret them as "the probability that the null hypothesis is true." Of course, this doesn't make sense from our definition because the p-value *conditions* on the null hypothesis---it cannot tell us anything about the probability of that null hypothesis. Instead, the metaphor you should always carry is that hypothesis tests are statistical thought experiments and that p-values answer the question: how likely would my data be if the null were true? 
 
 :::
 
