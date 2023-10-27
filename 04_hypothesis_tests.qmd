@@ -24,7 +24,7 @@ The story of the lady tasting tea encapsulates many of the core elements of hypo
 
 ## Notation alert
 
-For the rest of this chapter, we'll introduce the concepts following the notation in the past chapters. We'll usually assume that we have a random (iid) sample of random variables $X_1, \ldots, X_n$ from a distribution, $F$. We'll focus on estimating some parameter, $\theta$ of this distribution (like the mean, median, variance, etc.). We'll refer to $\Theta$ as the set of possible values of $\theta$ or the **parameter space**.
+For the rest of this chapter, we'll introduce the concepts following the notation in the past chapters. We'll usually assume that we have a random (iid) sample of random variables $X_1, \ldots, X_n$ from a distribution, $F$. We'll focus on estimating some parameter, $\theta$, of this distribution (like the mean, median, variance, etc.). We'll refer to $\Theta$ as the set of possible values of $\theta$ or the **parameter space**.
 
 :::
 
@@ -64,9 +64,9 @@ Two-sided tests are much more common in the social sciences, where we want to kn
 
 ## The procedure of hypothesis testing
 
-At the most basic level, a **hypothesis test** is a rule that specifies values of the sample data for which we will decide to **reject** the null hypothesis. Let $\mathcal{X}_n$ be the range of the sample---that is, all possible vectors $(x_1, \ldots, x_n)$ that have positive probability of occurring. Then, a hypothesis test describes a region of this space, $R \subset \mathcal{X}_n$, called the **rejection region** where when $(X_1, \ldots, X_n) \in R$ we will **reject** $H_0$ and when the data is outside this region, $(X_1, \ldots, X_n) \notin R$ we **retain**, **accept**, or **fail to reject** the null hypothesis.[^2]
+At the most basic level, a **hypothesis test** is a rule that specifies values of the sample data for which we will decide to **reject** the null hypothesis. Let $\mathcal{X}_n$ be the range of the sample---that is, all possible vectors $(x_1, \ldots, x_n)$ that have a positive probability of occurring. Then, a hypothesis test describes a region of this space, $R \subset \mathcal{X}_n$, called the **rejection region** where when $(X_1, \ldots, X_n) \in R$ we will **reject** $H_0$ and when the data is outside this region, $(X_1, \ldots, X_n) \notin R$ we **retain**, **accept**, or **fail to reject** the null hypothesis.[^2]
 
-[^2]: Different people and different textbooks describe what to do when do not reject the null hypothesis in different ways. The terminology is not so important so long as you understand that rejecting the null does not mean the null is logically false, and "accepting" the null does not mean the null is logically true. 
+[^2]: Different people and different textbooks describe what to do when we do not reject the null hypothesis in different ways. The terminology is not so important so long as you understand that rejecting the null does not mean the null is logically false, and "accepting" the null does not mean the null is logically true. 
 
 
 
@@ -126,7 +126,7 @@ You can think of the size of a test as the rate of false positives (or false dis
 
 [^3]: Eagle-eyed readers will notice that the null tested here is a point, while we previously defined the null in a one-sided test as a region $H_0: \theta \leq \theta_0$. Technically, the size of the test will vary based on which of these nulls we pick. In this example, notice that any null to the left of $\theta_0$ will result in a lower size. And so, the null at the boundary, $\theta_0$, will maximize the size of the test, making it the most "conservative" null to investigate. Technically, we should define the size of a test as $\alpha = \sup_{\theta \in \Theta_0} \pi(\theta)$. 
 
-In the right panel, we overlay the distribution of the test statistic under one particular alternative, $\theta = \theta_1 > \theta_0$. The red-shaded region is the probability of rejecting the null when this alternative is true or the power---it's the probability of correctly rejecting the null when it is false. Intuitively, we can see that alternatives that produce test statistics closer to the rejection region will have higher power. This makes sense: detecting big deviations from the null should be easier than detecting minor ones. 
+In the right panel, we overlay the distribution of the test statistic under one particular alternative, $\theta = \theta_1 > \theta_0$. The red-shaded region is the probability of rejecting the null when this alternative is true for the power---it's the probability of correctly rejecting the null when it is false. Intuitively, we can see that alternatives that produce test statistics closer to the rejection region will have higher power. This makes sense: detecting big deviations from the null should be easier than detecting minor ones. 
 
 
 
@@ -163,7 +163,7 @@ polygon(c(2.32,seq(2.32,4,0.01),4), c(0,dnorm(seq(2.32,4,0.01), mean = 1), 0), c
 ## Determining the rejection region
 
 
-If we cannot simultaneously optimize a test's size and power, how should we determine where the reject region is? That is, how should we decide what empirical evidence will be strong enough for us to reject the null? The standard approach to this problem in hypothesis testing is to control the size of a test (that is, control the rate of false positives) and try to maximize the power of the test subject to that constraint. So we say, "I'm willing to accept at most x%" of findings will be false positives and do whatever we can to maximize power subject to that constraint. 
+If we cannot simultaneously optimize a test's size and power, how should we determine where the rejection region is? That is, how should we decide what empirical evidence will be strong enough for us to reject the null? The standard approach to this problem in hypothesis testing is to control the size of a test (that is, control the rate of false positives) and try to maximize the power of the test subject to that constraint. So we say, "I'm willing to accept at most x%" of findings will be false positives and do whatever we can to maximize power subject to that constraint. 
 
 ::: {#def-level}
 
@@ -171,13 +171,13 @@ A test has **significance level** $\alpha$ if its size is less than or equal to 
 
 :::
 
-A test with a significance level of $\alpha = 0.05$ will have a false positive/type I error rate no larger than 0.05. This level is widespread in the social sciences, though you also will $\alpha = 0.01$ or $\alpha = 0.1$. Frequentists justify this by saying this means that with $\alpha = 0.05$, there will only be 5% of studies that will produce false discoveries. 
+A test with a significance level of $\alpha = 0.05$ will have a false positive/type I error rate no larger than 0.05. This level is widespread in the social sciences, though you also will see $\alpha = 0.01$ or $\alpha = 0.1$. Frequentists justify this by saying this means that with $\alpha = 0.05$, there will only be 5% of studies that will produce false discoveries. 
 
 Our task is to construct the rejection region so that the **null distribution** of the test statistic $G_0(t) = \P(T \leq t \mid \theta_0)$ has less than $\alpha$ probability in that region. One-sided tests like in @fig-size-power are the easiest to show, even though we warned you not to use them. We want to choose $c$ that puts no more than $\alpha$ probability in the tail, or
 $$ 
 \P(T > c \mid \theta_0) = 1 - G_0(c) \leq \alpha.
 $$
-Remembering that the smaller the value of $c$ we can use will maximize power, which implies that the critical value for the maximum power while maintaining the significance level is when $1 - G_0(c) = \alpha$. We can use the **quantile function** of the null distribution to find the exact value of $c$ we need,
+Remember that the smaller the value of $c$ we can use will maximize power, which implies that the critical value for the maximum power while maintaining the significance level is when $1 - G_0(c) = \alpha$. We can use the **quantile function** of the null distribution to find the exact value of $c$ we need,
 $$
 c = G^{-1}_0(1 - \alpha),
 $$
@@ -185,7 +185,7 @@ which is just fancy math to say, "the value at which $1-\alpha$ of the null dist
 
 The determination of the rejection region follows the same principles for two-sided tests, but it is slightly more complicated because we reject when the magnitude of the test statistic is large, $|T| > c$. @fig-two-sided shows that basic setup. Notice that because there are two (disjoint) regions, we can write the size (false positive rate) as
 $$ 
-\pi(\theta_0) = G_0(-c) + 1 - G_0(c)
+\pi(\theta_0) = G_0(-c) + 1 - G_0(c).
 $$
 In most cases that we will see, the null distribution for such a test will be symmetric around 0 (usually asymptotically standard normal, actually), which means that $G_0(-c) = 1 - G_0(c)$, which implies that the size is
 $$ 
@@ -248,7 +248,7 @@ In many cases, our estimators will be asymptotically normal by a version of the 
 $$ 
 T = \frac{\widehat{\theta}_n - \theta_0}{\widehat{\textsf{se}}[\widehat{\theta}_n]} \indist \N(0, 1). 
 $$
-The **Wald test** rejects $H_0$ when $|T| > z_{\alpha/2}$, where $z_{\alpha/2}$ that puts $\alpha/2$ in the upper tail of the standard normal. That is, if $Z \sim \N(0, 1)$, then $z_{\alpha/2}$ satisfies $\P(Z \geq z_{\alpha/2}) = \alpha/2$. 
+The **Wald test** rejects $H_0$ when $|T| > z_{\alpha/2}$, with $z_{\alpha/2}$ that puts $\alpha/2$ in the upper tail of the standard normal. That is, if $Z \sim \N(0, 1)$, then $z_{\alpha/2}$ satisfies $\P(Z \geq z_{\alpha/2}) = \alpha/2$. 
 
 ::: {.callout-note}
 
@@ -350,7 +350,7 @@ $$
 
 In either case, the interpretation of the p-value is the same. It is the smallest size $\alpha$ at which a test would reject null. Presenting a p-value allows the reader to determine their own $\alpha$ level and determine quickly if the evidence would warrant rejecting $H_0$ in that case. Thus, the p-value is a more **continuous** measure of evidence against the null, where lower values are stronger evidence against the null because the observed result is less likely under the null. 
 
-There is a lot of controversy surrounding p-values but most of it focuses on arbitrary p-value cutoffs for determining statistical significance and sometimes publication decisions. These problems are not the fault of p-values but rather the hyper fixation on the reject/retain decision for arbitrary test levels like $\alpha = 0.05$. It might be best to view p-values as a transformation of the test statistic onto a common scale between 0 and 1. 
+There is a lot of controversy surrounding p-values but most of it focuses on arbitrary p-value cutoffs for determining statistical significance and sometimes publication decisions. These problems are not the fault of p-values but rather the hyperfixation on the reject/retain decision for arbitrary test levels like $\alpha = 0.05$. It might be best to view p-values as a transformation of the test statistic onto a common scale between 0 and 1. 
 
 ::: {.callout-warning}
 
@@ -380,11 +380,11 @@ $$
 
 ## Exact tests under normal data
 
-The Wald test above relies on large sample approximations. In finite samples, these approximations may not be valid. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are i.i.d. samples from $N(\mu,\sigma^2)$. Under null of $H_0: \mu = \mu_0$, we can show that 
+The Wald test above relies on large sample approximations. In finite samples, these approximations may not be valid. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are iid samples from $N(\mu,\sigma^2)$. Under a null of $H_0: \mu = \mu_0$, we can show that 
 $$ 
 T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
 $$
-where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For one-sided test $c = G^{-1}_0(1 - \alpha)$ but now $G_0$ is $t$ with $n-1$ df and so we use `qt()` instead of `qnorm()` to calculate these critical values. 
+where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For a one-sided test, $c = G^{-1}_0(1 - \alpha)$, but now $G_0$ is $t$ with $n-1$ df and so we use `qt()` instead of `qnorm()` to calculate these critical values. 
 
 The critical values for the $t$ distribution are always larger than the normal because the t has fatter tails, as shown in @fig-shape-of-t. As $n\to\infty$, however, the $t$ converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Oddly, most software packages calculate p-values and rejection regions based on the $t$ to exploit this conservativeness. 
 
@@ -413,13 +413,13 @@ using the test statistic,
 $$ 
 T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}. 
 $$
-As we discussed in the earlier, an $\alpha = 0.05$ test would reject this null when $|T| > 1.96$, or when 
+As we discussed earlier, an $\alpha = 0.05$ test would reject this null when $|T| > 1.96$, or when 
 $$ 
 |\widehat{\theta}_{n} - \theta_{0}| > 1.96 \widehat{\se}[\widehat{\theta}_{n}]. 
 $$
 Notice that will be true when 
 $$ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 $$
 or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 
