@@ -342,7 +342,7 @@ where
 - $\beta_2 = \mu_{01} - \mu_{00}$: difference in means for urban non-Black vs. rural non-Black voters. 
 - $\beta_3 = (\mu_{11} - \mu_{01}) - (\mu_{10} - \mu_{00})$: difference in urban racial difference vs rural racial difference.
 
-Thus, we can write the CEF with two binary covariates as linear when the linear specification includes and multiplicative interaction between them ($x_1x_2$). This result holds for all pairs of binary covariates, and we can generalize the interpretation of the coefficients in the CEF as
+Thus, we can write the CEF with two binary covariates as linear when the linear specification includes a multiplicative interaction between them ($x_1x_2$). This result holds for all pairs of binary covariates, and we can generalize the interpretation of the coefficients in the CEF as
 
 - $\beta_0 = \mu_{00}$: average outcome when both variables are 0. 
 - $\beta_1 = \mu_{10} - \mu_{00}$: difference in average outcomes for the first covariate when the second covariate is 0. 
@@ -359,7 +359,7 @@ We have established that when we have a set of categorical covariates, the true 
 We have seen how to interpret population regression coefficients when the CEF is linear without assumptions. How do we interpret the population coefficients $\bfbeta$ in other settings?  
 
 
-Let's start with the simplest case, where every entry in $\X_{i}$ represents a different covariate, and no covariate is any function of another (we'll see why this caveat is necessary below). In this simple case, the $k$th coefficient, $\beta_{k}$ will represent the change in the predicted outcome for a one-unit change in the $k$th covariate $X_{ik}$, holding all other covariates fixed. We can see this from 
+Let's start with the simplest case, where every entry in $\X_{i}$ represents a different covariate and no covariate is any function of another (we'll see why this caveat is necessary below). In this simple case, the $k$th coefficient, $\beta_{k}$, will represent the change in the predicted outcome for a one-unit change in the $k$th covariate $X_{ik}$, holding all other covariates fixed. We can see this from 
 $$ 
 \begin{aligned}
   m(x_{1} + 1, x_{2}) & = \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
@@ -394,7 +394,7 @@ $$
 $$
 resulting in $\beta_1 + \beta_2(2x_{1} + 1)$. This formula might be an interesting quantity, but we will more commonly use the derivative of $m(\bfx)$ with respect to $x_1$ as a measure of the marginal effect of $X_{i1}$ on the predicted value of $Y_i$ (holding all other variables constant), where "marginal" here means the change in prediction for a very small change in $X_{i1}$.[^effect] In the case of the quadratic covariate, we have
 $$ 
-\frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1}
+\frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1},
 $$
 so the marginal effect on prediction varies as a function of $x_1$. From this, we can see that the individual interpretations of the coefficients are less interesting: $\beta_1$ is the marginal effect when $X_{i1} = 0$ and $\beta_2 / 2$ describes how a one-unit change in $X_{i1}$ changes the marginal effect. As is hopefully clear, it will often be more straightforward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in @sec-fwl). 
 
@@ -422,7 +422,7 @@ Here, the coefficients are slightly more interpretable:
 
 If we add more covariates to this BLP, these interpretations change to "holding all other covariates constant."
 
-Interactions are a routine part of social science research because they allow us to assess how the relationship between the outcome and an independent variable varies by the values of another variable. In the context of our study of voter wait times, if $X_{i1}$ is income and $X_{i2}$ is the Black/non-Black voter indicator, then $\beta_3$ represents how the change in slope of the wait time-income relationship between Black and non-Black voters.  
+Interactions are a routine part of social science research because they allow us to assess how the relationship between the outcome and an independent variable varies by the values of another variable. In the context of our study of voter wait times, if $X_{i1}$ is income and $X_{i2}$ is the Black/non-Black voter indicator, then $\beta_3$ represents the change in the slope of the wait time-income relationship between Black and non-Black voters.  
 
 
 ## Multiple regression from bivariate regression {#sec-fwl}
@@ -463,7 +463,7 @@ Thus, the population regression coefficient in the BLP is the same as from a biv
 
 ## Omitted variable bias
 
-In many situations, we might need to choose to include a variable in a regression or not, so it can be helpful to understand how this choice might affect the population coefficients on the other variables in the regression. Suppose we have a variable $Z_i$ that we may add to our regression which currently has $\X_i$ as the covariates. We can write this new projection as 
+In many situations, we might need to choose whether to include a variable in a regression or not, so it can be helpful to understand how this choice might affect the population coefficients on the other variables in the regression. Suppose we have a variable $Z_i$ that we may add to our regression which currently has $\X_i$ as the covariates. We can write this new projection as 
 $$ 
 m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 $$
