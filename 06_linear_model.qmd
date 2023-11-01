@@ -46,7 +46,7 @@ $$
   \E[Y_{i} \mid 200,000 \leq X_{i}] &\text{if } 200,000 \leq x\\
 \end{cases}
 $$
-This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$ shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income. 
+This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$, shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that the blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income. 
 
 ```{r}
 #| echo: false
@@ -116,7 +116,7 @@ $$
 \end{aligned}
 $$
 
-Thus the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. From this, we can immediately see that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$, and negative covariances will lead to negative $\beta_1$. In addition, we can see if $Y_i$ and $X_i$ are independent, then $\beta_1 = 0$. The slope scaled this covariance by the variance of the covariate, so slopes are lower for more spread-out covariates and higher for more spread-out covariates. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
+Thus the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. From this, we can immediately see that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$ and negative covariances will lead to negative $\beta_1$. In addition, we can see that if $Y_i$ and $X_i$ are independent, $\beta_1 = 0$. The slope scales this covariance by the variance of the covariate, so slopes are lower for more spread-out covariates and higher for more spread-out covariates. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
 $$
 \beta_1 = \rho_{YX}\sqrt{\frac{\V[Y_i]}{\V[X_i]}}.
 $$
@@ -147,7 +147,7 @@ text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
 
 The linear part of the best linear predictor is less restrictive than at first glance. We can easily modify the minimum MSE problem to find the best quadratic, cubic, or general polynomial function of $X_i$ that predicts $Y_i$. For example, the quadratic function of $X_i$ that best predicts $Y_i$ would be
 $$ 
-m(X_i, X_i^2) = \beta_0 + \beta_1X_i \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
+m(X_i, X_i^2) = \beta_0 + \beta_1X_i + \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
 $$
 This equation is now a quadratic function of the covariates, but it is still a linear function of the unknown parameters $(\beta_{0}, \beta_{1}, \beta_{2})$ so we will call this a best linear predictor. 
 
@@ -253,7 +253,7 @@ Thus, for every $X_{ij}$ in $\X_{i}$, we have $\E[X_{ij}e_{i}] = 0$. If one of t
 $$ 
 \cov(X_{ij}, e_{i}) = \E[X_{ij}e_{i}] - \E[X_{ij}]\E[e_{i}] = 0 - 0 = 0
 $$
-Notice that we still have made no assumptions about these projection errors except for some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model $Y_i = \X_i'\bfbeta + e_i$ where $\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]$ and conclude that $\E[\X_{i}e_{i}] = 0$ by definition not by assumption. 
+Notice that we still have made no assumptions about these projection errors except for some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model $Y_i = \X_i'\bfbeta + e_i$ where $\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]$ and conclude that $\E[\X_{i}e_{i}] = 0$ by definition, not by assumption. 
 
 The projection error is uncorrelated with the covariates, so does this mean that the CEF is linear? Unfortunately, no. Recall that while independence implies uncorrelated, the reverse does not hold. So when we look at the CEF, we have
 $$ 
