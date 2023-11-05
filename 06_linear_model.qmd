@@ -1,7 +1,7 @@
 # Linear regression {#sec-regression}
 
 
-Regression is a tool for assessing the relationship between an **outcome variable**, $Y_i$, and a set of **covariates**, $\X_i$. In particular, these tools show how the conditional mean of $Y_i$ varies as a function $\X_i$. For example, we may want to know how wait voting poll wait times vary as a function of some socioeconomic features of the precinct, like income and racial composition. We usually accomplish this task by estimating the **regression function** or **conditional expectation function** (CEF) of the outcome given the covariates, 
+Regression is a tool for assessing the relationship between an **outcome variable**, $Y_i$, and a set of **covariates**, $\X_i$. In particular, these tools show how the conditional mean of $Y_i$ varies as a function of $\X_i$. For example, we may want to know how voting poll wait times vary as a function of some socioeconomic features of the precinct, like income and racial composition. We usually accomplish this task by estimating the **regression function** or **conditional expectation function** (CEF) of the outcome given the covariates, 
 $$
 \mu(\bfx) = \E[Y_i \mid \X_i = \bfx].
 $$
@@ -10,7 +10,7 @@ Why are estimation and inference for this regression function special? Why can't
 In this chapter, we will explore two ways of "solving" the curse of dimensionality: assuming it away and changing the quantity of interest to something easier to estimate. 
 
 
-Regression is so ubiquitous in many scientific fields that it has a lot of acquired notational baggage. In particular, the labels of the $Y_i$ and $\X_i$ varies greatly:
+Regression is so ubiquitous in many scientific fields that it has a lot of acquired notational baggage. In particular, the labels of the $Y_i$ and $\X_i$ vary greatly:
 
 - The outcome can also be called: the response variable, the dependent variable, the labels (in machine learning), the left-hand side variable, or the regressand. 
 - The covariates are also called: the explanatory variables, the independent variables, the predictors, the regressors, inputs, or features.  
@@ -46,7 +46,7 @@ $$
   \E[Y_{i} \mid 200,000 \leq X_{i}] &\text{if } 200,000 \leq x\\
 \end{cases}
 $$
-This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$ shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income. 
+This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$, shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that the blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income. 
 
 ```{r}
 #| echo: false
@@ -116,7 +116,7 @@ $$
 \end{aligned}
 $$
 
-Thus the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. From this, we can immediately see that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$, and negative covariances will lead to negative $\beta_1$. In addition, we can see if $Y_i$ and $X_i$ are independent, then $\beta_1 = 0$. The slope scaled this covariance by the variance of the covariate, so slopes are lower for more spread-out covariates and higher for more spread-out covariates. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
+Thus the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. From this, we can immediately see that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$ and negative covariances will lead to negative $\beta_1$. In addition, we can see that if $Y_i$ and $X_i$ are independent, $\beta_1 = 0$. The slope scales this covariance by the variance of the covariate, so slopes are lower for more spread-out covariates and higher for more spread-out covariates. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
 $$
 \beta_1 = \rho_{YX}\sqrt{\frac{\V[Y_i]}{\V[X_i]}}.
 $$
@@ -147,7 +147,7 @@ text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
 
 The linear part of the best linear predictor is less restrictive than at first glance. We can easily modify the minimum MSE problem to find the best quadratic, cubic, or general polynomial function of $X_i$ that predicts $Y_i$. For example, the quadratic function of $X_i$ that best predicts $Y_i$ would be
 $$ 
-m(X_i, X_i^2) = \beta_0 + \beta_1X_i \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
+m(X_i, X_i^2) = \beta_0 + \beta_1X_i + \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
 $$
 This equation is now a quadratic function of the covariates, but it is still a linear function of the unknown parameters $(\beta_{0}, \beta_{1}, \beta_{2})$ so we will call this a best linear predictor. 
 
@@ -253,7 +253,7 @@ Thus, for every $X_{ij}$ in $\X_{i}$, we have $\E[X_{ij}e_{i}] = 0$. If one of t
 $$ 
 \cov(X_{ij}, e_{i}) = \E[X_{ij}e_{i}] - \E[X_{ij}]\E[e_{i}] = 0 - 0 = 0
 $$
-Notice that we still have made no assumptions about these projection errors except for some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model $Y_i = \X_i'\bfbeta + e_i$ where $\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]$ and conclude that $\E[\X_{i}e_{i}] = 0$ by definition not by assumption. 
+Notice that we still have made no assumptions about these projection errors except for some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model $Y_i = \X_i'\bfbeta + e_i$ where $\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]$ and conclude that $\E[\X_{i}e_{i}] = 0$ by definition, not by assumption. 
 
 The projection error is uncorrelated with the covariates, so does this mean that the CEF is linear? Unfortunately, no. Recall that while independence implies uncorrelated, the reverse does not hold. So when we look at the CEF, we have
 $$ 
@@ -342,7 +342,7 @@ where
 - $\beta_2 = \mu_{01} - \mu_{00}$: difference in means for urban non-Black vs. rural non-Black voters. 
 - $\beta_3 = (\mu_{11} - \mu_{01}) - (\mu_{10} - \mu_{00})$: difference in urban racial difference vs rural racial difference.
 
-Thus, we can write the CEF with two binary covariates as linear when the linear specification includes and multiplicative interaction between them ($x_1x_2$). This result holds for all pairs of binary covariates, and we can generalize the interpretation of the coefficients in the CEF as
+Thus, we can write the CEF with two binary covariates as linear when the linear specification includes a multiplicative interaction between them ($x_1x_2$). This result holds for all pairs of binary covariates, and we can generalize the interpretation of the coefficients in the CEF as
 
 - $\beta_0 = \mu_{00}$: average outcome when both variables are 0. 
 - $\beta_1 = \mu_{10} - \mu_{00}$: difference in average outcomes for the first covariate when the second covariate is 0. 
@@ -359,7 +359,7 @@ We have established that when we have a set of categorical covariates, the true 
 We have seen how to interpret population regression coefficients when the CEF is linear without assumptions. How do we interpret the population coefficients $\bfbeta$ in other settings?  
 
 
-Let's start with the simplest case, where every entry in $\X_{i}$ represents a different covariate, and no covariate is any function of another (we'll see why this caveat is necessary below). In this simple case, the $k$th coefficient, $\beta_{k}$ will represent the change in the predicted outcome for a one-unit change in the $k$th covariate $X_{ik}$, holding all other covariates fixed. We can see this from 
+Let's start with the simplest case, where every entry in $\X_{i}$ represents a different covariate and no covariate is any function of another (we'll see why this caveat is necessary below). In this simple case, the $k$th coefficient, $\beta_{k}$, will represent the change in the predicted outcome for a one-unit change in the $k$th covariate $X_{ik}$, holding all other covariates fixed. We can see this from 
 $$ 
 \begin{aligned}
   m(x_{1} + 1, x_{2}) & = \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
@@ -394,7 +394,7 @@ $$
 $$
 resulting in $\beta_1 + \beta_2(2x_{1} + 1)$. This formula might be an interesting quantity, but we will more commonly use the derivative of $m(\bfx)$ with respect to $x_1$ as a measure of the marginal effect of $X_{i1}$ on the predicted value of $Y_i$ (holding all other variables constant), where "marginal" here means the change in prediction for a very small change in $X_{i1}$.[^effect] In the case of the quadratic covariate, we have
 $$ 
-\frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1}
+\frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1},
 $$
 so the marginal effect on prediction varies as a function of $x_1$. From this, we can see that the individual interpretations of the coefficients are less interesting: $\beta_1$ is the marginal effect when $X_{i1} = 0$ and $\beta_2 / 2$ describes how a one-unit change in $X_{i1}$ changes the marginal effect. As is hopefully clear, it will often be more straightforward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in @sec-fwl). 
 
@@ -422,7 +422,7 @@ Here, the coefficients are slightly more interpretable:
 
 If we add more covariates to this BLP, these interpretations change to "holding all other covariates constant."
 
-Interactions are a routine part of social science research because they allow us to assess how the relationship between the outcome and an independent variable varies by the values of another variable. In the context of our study of voter wait times, if $X_{i1}$ is income and $X_{i2}$ is the Black/non-Black voter indicator, then $\beta_3$ represents how the change in slope of the wait time-income relationship between Black and non-Black voters.  
+Interactions are a routine part of social science research because they allow us to assess how the relationship between the outcome and an independent variable varies by the values of another variable. In the context of our study of voter wait times, if $X_{i1}$ is income and $X_{i2}$ is the Black/non-Black voter indicator, then $\beta_3$ represents the change in the slope of the wait time-income relationship between Black and non-Black voters.  
 
 
 ## Multiple regression from bivariate regression {#sec-fwl}
@@ -463,7 +463,7 @@ Thus, the population regression coefficient in the BLP is the same as from a biv
 
 ## Omitted variable bias
 
-In many situations, we might need to choose to include a variable in a regression or not, so it can be helpful to understand how this choice might affect the population coefficients on the other variables in the regression. Suppose we have a variable $Z_i$ that we may add to our regression which currently has $\X_i$ as the covariates. We can write this new projection as 
+In many situations, we might need to choose whether to include a variable in a regression or not, so it can be helpful to understand how this choice might affect the population coefficients on the other variables in the regression. Suppose we have a variable $Z_i$ that we may add to our regression which currently has $\X_i$ as the covariates. We can write this new projection as 
 $$ 
 m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 $$
