@@ -5,7 +5,7 @@ Regression is a tool for assessing the relationship between an **outcome variabl
 $$
 \mu(\bfx) = \E[Y_i \mid \X_i = \bfx].
 $$
-Why are estimation and inference for this regression function special? Why can't we just use the approaches we have seen for the mean, variance, covariance, and so on? The fundamental problem with the CEF is that there may be many, many values $\bfx$ that can occur and many different conditional expectations that we will need to estimate. If any variable in $\X_i$ is continuous, we must estimate an infinite number of possible values of $\bfx$. Because it worsens as we add covariates to $\X_i$, we refer to this problem as the **curse of dimensionality**. How can we resolve this with our measly finite data?
+Why are estimation and inference for this regression function special? Why can't we just use the approaches we have seen for the mean, variance, covariance, and so on? The fundamental problem with the CEF is that there may be many, many values $\bfx$ that can occur and many different conditional expectations that we will need to estimate. If any variable in $\X_i$ is continuous, we must estimate an infinite number of possible values of $\mu(\bfx)$. Because it worsens as we add covariates to $\X_i$, we refer to this problem as the **curse of dimensionality**. How can we resolve this with our measly finite data?
 
 In this chapter, we will explore two ways of "solving" the curse of dimensionality: assuming it away and changing the quantity of interest to something easier to estimate. 
 
@@ -159,7 +159,7 @@ We could include higher order terms of $X_i$ in the same manner, and as we inclu
 We now generalize the idea of a best linear predictor to a setting with an arbitrary number of covariates. In this setting, remember that the linear function will be
 
 $$ 
-\bfx'\bfbeta = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + X_{k}\beta_{k}.
+\bfx'\bfbeta = x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + x_{k}\beta_{k}.
 $$
 We will define the **best linear predictor** (BLP) to be
 $$ 
@@ -173,7 +173,7 @@ This BLP solves the same fundamental optimization problem as in the bivariate ca
 ::: {.callout-note}
 ## Best linear projection assumptions
 
-Without some assumptions on the joint distribution of the data, The following "regularity conditions" will ensure the existence of the BLP:
+Without some assumptions on the joint distribution of the data, the following "regularity conditions" will ensure the existence of the BLP:
 
 1. $\E[Y^2] < \infty$ (outcome has finite mean/variance)
 2. $\E\Vert \mb{X} \Vert^2 < \infty$ ($\mb{X}$ has finite means/variances/covariances)
@@ -268,9 +268,9 @@ Why do we care about this? The ordinary least squares estimator, the workhorse r
 
 ## Linear CEFs without assumptions
 
-What is the relationship between the best linear predictor (which we just saw generally exists) and the CEF? To draw the connection, remember a vital property of the conditional expectation: it is the function of $\X_i$ that best predicts $Y_{i}$. The population regression was the best **linear** predictor, but the CEF is the best predictor among all nicely behaved functions of $\X_{i}$, linear or nonlinear. In particular, if we label $L_2$ be the set of all functions of the covariates $g()$ that have finite squared expectation, $\E[g(\X_{i})^{2}] < \infty$, then we can show that the CEF has the lowest squared prediction error in this class of functions:
+What is the relationship between the best linear predictor (which we just saw generally exists) and the CEF? To draw the connection, remember a vital property of the conditional expectation: it is the function of $\X_i$ that best predicts $Y_{i}$. The population regression was the best **linear** predictor, but the CEF is the best predictor among all nicely behaved functions of $\X_{i}$, linear or nonlinear. In particular, if we label $L_2$ to be the set of all functions of the covariates $g()$ that have finite squared expectation, $\E[g(\X_{i})^{2}] < \infty$, then we can show that the CEF has the lowest squared prediction error in this class of functions:
 $$ 
-\mu(\X) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - f(\X_{i}))^{2}\right],
+\mu(\X) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - g(\X_{i}))^{2}\right],
 $$
 
 So we have established that the CEF is the best predictor and the population linear regression $m(\X_{i})$ is the best linear predictor. These two facts allow us to connect the CEF and the population regression.
@@ -366,7 +366,7 @@ $$
   m(x_{1}, x_{2}) &= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2},
 \end{aligned} 
 $$
-so that the change in the predicted outcome for increasing $X_{i1}$ by one unit isn't
+so that the change in the predicted outcome for increasing $X_{i1}$ by one unit is
 $$
  m(x_{1} + 1, x_{2}) - m(x_{1}, x_{2}) = \beta_1
 $$
