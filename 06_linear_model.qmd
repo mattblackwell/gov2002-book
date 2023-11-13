@@ -418,7 +418,7 @@ Here, the coefficients are slightly more interpretable:
 
 * $\beta_1$: the marginal effect of $X_{i1}$ on predicted $Y_i$ when $X_{i2} = 0$.
 * $\beta_2$: the marginal effect of $X_{i2}$ on predicted $Y_i$ when $X_{i1} = 0$.
-* $\beta_3$: the change in the marginal effect of $X_{i1}$ due to a one-unit change in $X_{i2}$ **OR** the change in the marginal effect of $X_{i2}$ due to a one-unit change in $X_{i2}$.
+* $\beta_3$: the change in the marginal effect of $X_{i1}$ due to a one-unit change in $X_{i2}$ **OR** the change in the marginal effect of $X_{i2}$ due to a one-unit change in $X_{i1}$.
 
 If we add more covariates to this BLP, these interpretations change to "holding all other covariates constant."
 
