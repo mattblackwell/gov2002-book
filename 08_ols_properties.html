@@ -341,7 +341,7 @@ $$
 <p>In this chapter, we will focus first on the asymptotic properties of OLS because those properties hold under the relatively mild conditions of the linear projection model introduced in <a href="06_linear_model.html#sec-linear-projection"><span>Section&nbsp;5.2</span></a>. We will see that OLS consistently estimates a coherent quantity of interest (the best linear predictor) regardless of whether the conditional expectation is linear. That is, for the asymptotic properties of the estimator, we will not need the commonly invoked linearity assumption. Later, when we investigate the finite-sample properties, we will show how linearity will help us establish unbiasedness and how normality of the errors can allow us to conduct exact, finite-sample inference. But these assumptions are very strong, so it’s vital to understand what we can say about OLS without making them.</p>
 <section id="large-sample-properties-of-ols" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="large-sample-properties-of-ols"><span class="header-section-number">7.1</span> Large-sample properties of OLS</h2>
-<p>As we saw in <a href="03_asymptotics.html"><span>Chapter&nbsp;3</span></a>, we need two key ingredients to conduct statistical inference with the OLS estimator: a consistent estimate of the variance of <span class="math inline">\(\bhat\)</span> and the approximate distribution of <span class="math inline">\(\bhat\)</span> in large samples. Remember that since <span class="math inline">\(\bhat\)</span> is a vector, then the variance of that estimator will actually be a variance-covariance matrix. To obtain these two ingredients, we will first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which will include its variance.</p>
+<p>As we saw in <a href="03_asymptotics.html"><span>Chapter&nbsp;3</span></a>, we need two key ingredients to conduct statistical inference with the OLS estimator: a consistent estimate of the variance of <span class="math inline">\(\bhat\)</span> and the approximate distribution of <span class="math inline">\(\bhat\)</span> in large samples. Remember that since <span class="math inline">\(\bhat\)</span> is a vector, the variance of that estimator will actually be a variance-covariance matrix. To obtain these two ingredients, we will first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which will include its variance.</p>
 <p>We begin by setting out the assumptions we will need for establishing the large-sample properties of OLS, which are the same as the assumptions needed to ensure that the best linear predictor, <span class="math inline">\(\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\)</span>, is well-defined and unique.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -355,8 +355,8 @@ Linear projection assumptions
 <div class="callout-body-container callout-body">
 <p>The linear projection model makes the following assumptions:</p>
 <ol type="1">
-<li><p><span class="math inline">\(\{(Y_{i}, \X_{i})\}_{i=1}^n\)</span> are iid random vectors.</p></li>
-<li><p><span class="math inline">\(\E[Y_{i}^{2}] &lt; \infty\)</span> (finite outcome variance)</p></li>
+<li><p><span class="math inline">\(\{(Y_{i}, \X_{i})\}_{i=1}^n\)</span> are iid random vectors</p></li>
+<li><p><span class="math inline">\(\E[Y^{2}_{i}] &lt; \infty\)</span> (finite outcome variance)</p></li>
 <li><p><span class="math inline">\(\E[\Vert \X_{i}\Vert^{2}] &lt; \infty\)</span> (finite variances and covariances of covariates)</p></li>
 <li><p><span class="math inline">\(\E[\X_{i}\X_{i}']\)</span> is positive definite (no linear dependence in the covariates)</p></li>
 </ol>
@@ -369,7 +369,7 @@ Linear projection assumptions
 <p>This decomposition will help us quickly establish the consistency of <span class="math inline">\(\bhat\)</span>. By the law of large numbers, we know that sample means will converge in probability to population expectations, so we have <span class="math display">\[
 \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \inprob \E[\X_i\X_i'] \equiv \mb{Q}_{\X\X} \qquad \frac{1}{n} \sum_{i=1}^n \X_ie_i \inprob \E[\X_{i} e_{i}] = \mb{0},
 \]</span> which implies that <span class="math display">\[
-\bhat \inprob \beta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \beta,
+\bhat \inprob \bfbeta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \bfbeta,
 \]</span> by the continuous mapping theorem (the inverse is a continuous function). The linear projection assumptions ensure that LLN applies to these sample means and ensure that <span class="math inline">\(\E[\X_{i}\X_{i}']\)</span> is invertible.</p>
 <div id="thm-ols-consistency" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 7.1 </strong></span>Under the above linear projection assumptions, the OLS estimator is consistent for the best linear projection coefficients, <span class="math inline">\(\bhat \inprob \bfbeta\)</span>.</p>
@@ -491,7 +491,7 @@ W = n(\mb{L}\bhat - \mb{c})'(\mb{L}'\mb{V}_{\bfbeta}\mb{L})^{-1}(\mb{L}\bhat - \
 </div>
 <p>If <span class="math inline">\(\mb{L}\)</span> only has one row, our Wald statistic is the same as the squared <span class="math inline">\(t\)</span> statistic, <span class="math inline">\(W = t^2\)</span>. This fact will help us think about the asymptotic distribution of <span class="math inline">\(W\)</span>. Notice that as <span class="math inline">\(n\to\infty\)</span>, we know that by the asymptotic normality of <span class="math inline">\(\bhat\)</span>, <span class="math display">\[
 t = \frac{\widehat{\beta}_{j} - \beta_{j}}{\widehat{\se}[\widehat{\beta}_{j}]} \indist \N(0,1)
-\]</span> so <span class="math inline">\(t^2\)</span> will converge in distribution to a <span class="math inline">\(\chi^2_1\)</span> (since a <span class="math inline">\(\chi^2_1\)</span> is just one standard normal squared). After recentering ad rescaling by the covariance matrix, <span class="math inline">\(W\)</span> converges to the sum of <span class="math inline">\(q\)</span> squared independent normals, where <span class="math inline">\(q\)</span> is the number of rows of <span class="math inline">\(\mb{L}\)</span>, or equivalently, the number of restrictions implied by the null hypothesis. Thus, under the null hypothesis of <span class="math inline">\(\mb{L}\bhat = \mb{c}\)</span>, we have <span class="math inline">\(W \indist \chi^2_{q}\)</span>.</p>
+\]</span> so <span class="math inline">\(t^2\)</span> will converge in distribution to a <span class="math inline">\(\chi^2_1\)</span> (since a <span class="math inline">\(\chi^2_1\)</span> is just one standard normal squared). After recentering and rescaling by the covariance matrix, <span class="math inline">\(W\)</span> converges to the sum of <span class="math inline">\(q\)</span> squared independent normals, where <span class="math inline">\(q\)</span> is the number of rows of <span class="math inline">\(\mb{L}\)</span>, or equivalently, the number of restrictions implied by the null hypothesis. Thus, under the null hypothesis of <span class="math inline">\(\mb{L}\bhat = \mb{c}\)</span>, we have <span class="math inline">\(W \indist \chi^2_{q}\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -514,7 +514,7 @@ Chi-squared critical values
 <p>We need to define the rejection region to use the Wald statistic in a test. Because we are squaring each distance in <span class="math inline">\(W \geq 0\)</span>, larger values of <span class="math inline">\(W\)</span> indicate more disagreement with the null in either direction. Thus, for an <span class="math inline">\(\alpha\)</span>-level test of the joint null, we only need a one-sided rejection region of the form <span class="math inline">\(\P(W &gt; w_{\alpha}) = \alpha\)</span>. Obtaining these values is straightforward (see the above callout tip). For <span class="math inline">\(q = 2\)</span> and a <span class="math inline">\(\alpha = 0.05\)</span>, the critical value is roughly 6.</p>
 <p>The Wald statistic is not a common test provided by standard statistical software functions like <code>lm()</code> in R, though it is fairly straightforward to implement “by hand.” Alternatively, packages like <a href="https://cran.r-project.org/web/packages/aod/index.html"><code>{aod}</code></a> or <a href="http://jepusto.github.io/clubSandwich/"><code>{clubSandwich}</code></a> have implementations of the test. What is reported by most software implementations of OLS (like <code>lm()</code> in R) is the F-statistic, which is <span class="math display">\[
 F = \frac{W}{q},
-\]</span> which also typically uses the the homoskedastic variance estimator <span class="math inline">\(\mb{V}^{\texttt{lm}}_{\bfbeta}\)</span> in <span class="math inline">\(W\)</span>. The p-values reported for such tests use the <span class="math inline">\(F_{q,n-k-1}\)</span> distribution because this is the exact distribution of the <span class="math inline">\(F\)</span> statistic when the errors are (a) homoskedastic and (b) normally distributed. When these assumptions do not hold, the <span class="math inline">\(F\)</span> distribution is not really statistically justified, it is slightly more conservative than the <span class="math inline">\(\chi^2_q\)</span> distribution, and the inference will converge as <span class="math inline">\(n\to\infty\)</span>. So it might be justified as an <em>ad hoc</em> small sample adjustment to the Wald test. For example, if we used the <span class="math inline">\(F_{q,n-k-1}\)</span> with the interaction example where <span class="math inline">\(q=2\)</span> and say we have a sample size of <span class="math inline">\(n = 100\)</span>. In that case, the critical value for the F test with <span class="math inline">\(\alpha = 0.05\)</span> is</p>
+\]</span> which also typically uses the homoskedastic variance estimator <span class="math inline">\(\mb{V}^{\texttt{lm}}_{\bfbeta}\)</span> in <span class="math inline">\(W\)</span>. The p-values reported for such tests use the <span class="math inline">\(F_{q,n-k-1}\)</span> distribution because this is the exact distribution of the <span class="math inline">\(F\)</span> statistic when the errors are (a) homoskedastic and (b) normally distributed. When these assumptions do not hold, the <span class="math inline">\(F\)</span> distribution is not really statistically justified, it is slightly more conservative than the <span class="math inline">\(\chi^2_q\)</span> distribution, and the inference will converge as <span class="math inline">\(n\to\infty\)</span>. So it might be justified as an <em>ad hoc</em> small sample adjustment to the Wald test. For example, if we used the <span class="math inline">\(F_{q,n-k-1}\)</span> with the interaction example where <span class="math inline">\(q=2\)</span> and say we have a sample size of <span class="math inline">\(n = 100\)</span>. In that case, the critical value for the F test with <span class="math inline">\(\alpha = 0.05\)</span> is</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -553,7 +553,7 @@ Assumption: Linear Regression Model
 <div id="thm-ols-unbiased" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 7.3 </strong></span>Under the linear regression model assumption, OLS is unbiased for the population regression coefficients, <span class="math display">\[
 \E[\bhat \mid \Xmat] = \bfbeta,
-\]</span> and its conditional sampling variance issue <span class="math display">\[
+\]</span> and its conditional sampling variance is <span class="math display">\[
 \mb{\V}_{\bhat} = \V[\bhat \mid \Xmat] = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1},
 \]</span> where <span class="math inline">\(\sigma^2_{i} = \E[e_{i}^{2} \mid \Xmat]\)</span>.</p>
 </div>
@@ -579,7 +579,7 @@ Assumption: Linear Regression Model
 \]</span> where <span class="math inline">\(\overset{a}{\sim}\)</span> means approximately asymptotically distributed as. Under the linear CEF, the conditional sampling variance of <span class="math inline">\(\bhat\)</span> has a similar form and will be similar to the<br>
 <span class="math display">\[
 \mb{V}_{\bhat} = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \approx \mb{V}_{\bfbeta} / n
-\]</span> In practice, these two derivations lead to basically the same variance estimator. Recall the heteroskedastic-consistent variance estimator is <span class="math display">\[
+\]</span> In practice, these two derivations lead to basically the same variance estimator. Recall the heteroskedastic-consistent variance estimator <span class="math display">\[
 \widehat{\mb{V}}_{\bfbeta} = \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right) \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
 \]</span> is a valid plug-in estimator for the asymptotic variance and <span class="math display">\[
 \widehat{\mb{V}}_{\bhat} = n^{-1}\widehat{\mb{V}}_{\bfbeta}.
@@ -610,7 +610,7 @@ Assumption: Homoskedasticity with a linear CEF
 \]</span> is unbiased, <span class="math inline">\(\E[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat} \mid \Xmat] = \mb{V}^{\texttt{lm}}_{\bhat}\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Under homoskedasticity <span class="math inline">\(\sigma^2_i = \sigma^2\)</span> for all <span class="math inline">\(i\)</span>. Recall that <span class="math inline">\(\sum_{i=1}^n \X_i\X_i' = \Xmat'\Xmat\)</span> Thus, the conditional sampling variance from <a href="#thm-ols-unbiased">Theorem&nbsp;<span>7.3</span></a>, <span class="math display">\[
+<p><span class="proof-title"><em>Proof</em>. </span>Under homoskedasticity <span class="math inline">\(\sigma^2_i = \sigma^2\)</span> for all <span class="math inline">\(i\)</span>. Recall that <span class="math inline">\(\sum_{i=1}^n \X_i\X_i' = \Xmat'\Xmat\)</span>. Thus, the conditional sampling variance from <a href="#thm-ols-unbiased">Theorem&nbsp;<span>7.3</span></a>, <span class="math display">\[
 \begin{aligned}
 \V[\bhat \mid \Xmat] &amp;= \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2 \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \\ &amp;= \sigma^2\left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \\&amp;= \sigma^2\left( \Xmat'\Xmat \right)^{-1}\left( \Xmat'\Xmat \right) \left( \Xmat'\Xmat \right)^{-1} \\&amp;= \sigma^2\left( \Xmat'\Xmat \right)^{-1} = \mb{V}^{\texttt{lm}}_{\bhat}.
 \end{aligned}
@@ -621,11 +621,11 @@ Assumption: Homoskedasticity with a linear CEF
 \V[\widehat{\mb{e}} \mid \Xmat] = \mb{M}_{\Xmat}\V[\mb{e} \mid \Xmat] = \mb{M}_{\Xmat}\sigma^2,
 \]</span> where the first equality is because <span class="math inline">\(\mb{M}_{\Xmat} = \mb{I}_{n} - \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\)</span> is constant conditional on <span class="math inline">\(\Xmat\)</span>. Notice that the diagonal entries of this matrix are the variances of particular residuals <span class="math inline">\(\widehat{e}_i\)</span> and that the diagonal entries of the annihilator matrix are <span class="math inline">\(1 - h_{ii}\)</span> (since the <span class="math inline">\(h_{ii}\)</span> are the diagonal entries of <span class="math inline">\(\mb{P}_{\Xmat}\)</span>). Thus, we have <span class="math display">\[
 \V[\widehat{e}_i \mid \Xmat] = \E[\widehat{e}_{i}^{2} \mid \Xmat] = (1 - h_{ii})\sigma^{2}.
-\]</span> In the last chapter, we established one property of these leverage values in <a href="07_least_squares.html#sec-leverage"><span>Section&nbsp;6.9.1</span></a> is that <span class="math inline">\(\sum_{i=1}^n h_{ii} = k+ 1\)</span>, so <span class="math inline">\(\sum_{i=1}^n 1- h_{ii} = n - k - 1\)</span> and we have <span class="math display">\[
+\]</span> In the last chapter, we established one property of these leverage values in <a href="07_least_squares.html#sec-leverage"><span>Section&nbsp;6.9.1</span></a>, namely <span class="math inline">\(\sum_{i=1}^n h_{ii} = k+ 1\)</span>, so <span class="math inline">\(\sum_{i=1}^n 1- h_{ii} = n - k - 1\)</span> and we have <span class="math display">\[
 \begin{aligned}
   \E[\widehat{\sigma}^{2} \mid \Xmat] &amp;= \frac{1}{n-k-1} \sum_{i=1}^{n} \E[\widehat{e}_{i}^{2} \mid \Xmat] \\
                                       &amp;= \frac{\sigma^{2}}{n-k-1} \sum_{i=1}^{n} 1 - h_{ii} \\
-                                      &amp;= \sigma^{2}
+                                      &amp;= \sigma^{2}.
 \end{aligned}
 \]</span> This establishes <span class="math inline">\(\E[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat} \mid \Xmat] = \mb{V}^{\texttt{lm}}_{\bhat}\)</span>.</p>
 </div>
