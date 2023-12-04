@@ -6,7 +6,7 @@ In this chapter, we will focus first on the asymptotic properties of OLS because
 
 ## Large-sample properties of OLS
 
-As we saw in @sec-asymptotics, we need two key ingredients to conduct statistical inference with the OLS estimator: a consistent estimate of the variance of $\bhat$ and the approximate distribution of $\bhat$ in large samples. Remember that since $\bhat$ is a vector, then the variance of that estimator will actually be a variance-covariance matrix. To obtain these two ingredients, we will first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which will include its variance. 
+As we saw in @sec-asymptotics, we need two key ingredients to conduct statistical inference with the OLS estimator: a consistent estimate of the variance of $\bhat$ and the approximate distribution of $\bhat$ in large samples. Remember that since $\bhat$ is a vector, the variance of that estimator will actually be a variance-covariance matrix. To obtain these two ingredients, we will first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which will include its variance. 
 
 
 We begin by setting out the assumptions we will need for establishing the large-sample properties of OLS, which are the same as the assumptions needed to ensure that the best linear predictor, $\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]$, is well-defined and unique. 
@@ -17,9 +17,9 @@ We begin by setting out the assumptions we will need for establishing the large-
 
 The linear projection model makes the following assumptions:
 
-1. $\{(Y_{i}, \X_{i})\}_{i=1}^n$ are iid random vectors. 
+1. $\{(Y_{i}, \X_{i})\}_{i=1}^n$ are iid random vectors
 
-2. $\E[Y_{i}^{2}] < \infty$ (finite outcome variance)
+2. $\E[Y^{2}_{i}] < \infty$ (finite outcome variance)
 
 3. $\E[\Vert \X_{i}\Vert^{2}] < \infty$ (finite variances and covariances of covariates)
 
@@ -40,7 +40,7 @@ $$
 $$
 which implies that 
 $$
-\bhat \inprob \beta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \beta,
+\bhat \inprob \bfbeta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \bfbeta,
 $$
 by the continuous mapping theorem (the inverse is a continuous function). The linear projection assumptions ensure that LLN applies to these sample means and ensure that $\E[\X_{i}\X_{i}']$ is invertible. 
 
@@ -281,7 +281,7 @@ If $\mb{L}$ only has one row, our Wald statistic is the same as the squared $t$ 
 $$ 
 t = \frac{\widehat{\beta}_{j} - \beta_{j}}{\widehat{\se}[\widehat{\beta}_{j}]} \indist \N(0,1)
 $$
-so $t^2$ will converge in distribution to a $\chi^2_1$ (since a $\chi^2_1$ is just one standard normal squared). After recentering ad rescaling by the covariance matrix, $W$ converges to the sum of $q$ squared independent normals, where $q$ is the number of rows of $\mb{L}$, or equivalently, the number of restrictions implied by the null hypothesis. Thus, under the null hypothesis of $\mb{L}\bhat = \mb{c}$, we have $W \indist \chi^2_{q}$. 
+so $t^2$ will converge in distribution to a $\chi^2_1$ (since a $\chi^2_1$ is just one standard normal squared). After recentering and rescaling by the covariance matrix, $W$ converges to the sum of $q$ squared independent normals, where $q$ is the number of rows of $\mb{L}$, or equivalently, the number of restrictions implied by the null hypothesis. Thus, under the null hypothesis of $\mb{L}\bhat = \mb{c}$, we have $W \indist \chi^2_{q}$. 
 
 
 ::: {.callout-note}
@@ -302,7 +302,7 @@ The Wald statistic is not a common test provided by standard statistical softwar
 $$ 
 F = \frac{W}{q},
 $$
-which also typically uses the the homoskedastic variance estimator $\mb{V}^{\texttt{lm}}_{\bfbeta}$ in $W$. The p-values reported for such tests use the $F_{q,n-k-1}$ distribution because this is the exact distribution of the $F$ statistic when the errors are (a) homoskedastic and (b) normally distributed. When these assumptions do not hold, the $F$ distribution is not really statistically justified, it is slightly more conservative than the $\chi^2_q$ distribution, and the inference will converge as $n\to\infty$. So it might be justified as an *ad hoc* small sample adjustment to the Wald test. For example, if we used the $F_{q,n-k-1}$ with the interaction example where $q=2$ and say we have a sample size of $n = 100$. In that case, the critical value for the F test with $\alpha = 0.05$ is
+which also typically uses the homoskedastic variance estimator $\mb{V}^{\texttt{lm}}_{\bfbeta}$ in $W$. The p-values reported for such tests use the $F_{q,n-k-1}$ distribution because this is the exact distribution of the $F$ statistic when the errors are (a) homoskedastic and (b) normally distributed. When these assumptions do not hold, the $F$ distribution is not really statistically justified, it is slightly more conservative than the $\chi^2_q$ distribution, and the inference will converge as $n\to\infty$. So it might be justified as an *ad hoc* small sample adjustment to the Wald test. For example, if we used the $F_{q,n-k-1}$ with the interaction example where $q=2$ and say we have a sample size of $n = 100$. In that case, the critical value for the F test with $\alpha = 0.05$ is
 
 ```{r}
 qf(0.95, df1 = 2, df2 = 100 - 4)
@@ -343,7 +343,7 @@ Under the linear regression model assumption, OLS is unbiased for the population
 $$
 \E[\bhat \mid \Xmat] = \bfbeta,
 $$
-and its conditional sampling variance issue
+and its conditional sampling variance is
 $$
 \mb{\V}_{\bhat} = \V[\bhat \mid \Xmat] = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1},
 $$
@@ -396,7 +396,7 @@ where $\overset{a}{\sim}$ means approximately asymptotically distributed as. Und
 $$
 \mb{V}_{\bhat} = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \approx \mb{V}_{\bfbeta} / n
 $$
-In practice, these two derivations lead to basically the same variance estimator. Recall the heteroskedastic-consistent variance estimator is
+In practice, these two derivations lead to basically the same variance estimator. Recall the heteroskedastic-consistent variance estimator
 $$
 \widehat{\mb{V}}_{\bfbeta} = \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right) \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
 $$
@@ -437,7 +437,7 @@ is unbiased, $\E[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat} \mid \Xmat] = \mb{V}^{\t
 ::: 
 
 ::: {.proof}
-Under homoskedasticity $\sigma^2_i = \sigma^2$ for all $i$. Recall that $\sum_{i=1}^n \X_i\X_i' = \Xmat'\Xmat$ Thus, the conditional sampling variance from @thm-ols-unbiased, 
+Under homoskedasticity $\sigma^2_i = \sigma^2$ for all $i$. Recall that $\sum_{i=1}^n \X_i\X_i' = \Xmat'\Xmat$. Thus, the conditional sampling variance from @thm-ols-unbiased, 
 $$ 
 \begin{aligned}
 \V[\bhat \mid \Xmat] &= \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2 \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \\ &= \sigma^2\left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \\&= \sigma^2\left( \Xmat'\Xmat \right)^{-1}\left( \Xmat'\Xmat \right) \left( \Xmat'\Xmat \right)^{-1} \\&= \sigma^2\left( \Xmat'\Xmat \right)^{-1} = \mb{V}^{\texttt{lm}}_{\bhat}.
@@ -456,12 +456,12 @@ where the first equality is because $\mb{M}_{\Xmat} = \mb{I}_{n} - \Xmat (\Xmat'
 $$ 
 \V[\widehat{e}_i \mid \Xmat] = \E[\widehat{e}_{i}^{2} \mid \Xmat] = (1 - h_{ii})\sigma^{2}.
 $$
-In the last chapter, we established one property of these leverage values in @sec-leverage is that $\sum_{i=1}^n h_{ii} = k+ 1$, so $\sum_{i=1}^n 1- h_{ii} = n - k - 1$ and we have
+In the last chapter, we established one property of these leverage values in @sec-leverage, namely $\sum_{i=1}^n h_{ii} = k+ 1$, so $\sum_{i=1}^n 1- h_{ii} = n - k - 1$ and we have
 $$ 
 \begin{aligned}
   \E[\widehat{\sigma}^{2} \mid \Xmat] &= \frac{1}{n-k-1} \sum_{i=1}^{n} \E[\widehat{e}_{i}^{2} \mid \Xmat] \\
                                       &= \frac{\sigma^{2}}{n-k-1} \sum_{i=1}^{n} 1 - h_{ii} \\
-                                      &= \sigma^{2}
+                                      &= \sigma^{2}. 
 \end{aligned}
 $$
 This establishes $\E[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat} \mid \Xmat] = \mb{V}^{\texttt{lm}}_{\bhat}$. 

@@ -284,7 +284,7 @@ $$
 
 ## Rank, linear independence, and multicollinearity {#sec-rank}
 
-When introducing the OLS estimator, we noted that it would exist when $\sum_{i=1}^n \X_i\X_i'$ is positive definite or that there is "no multicollinearity." This assumption is equivalent to saying that the matrix $\mathbb{X}$ is full column rank, meaning that $\text{rank}(\mathbb{X}) = (k+1)$, where $k+1$ is the number of columns of $\mathbb{X}$. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix, and **linear independence** means that if $\mathbb{X}\mb{b} = 0$ if and only if $\mb{b}$ is a column vector of 0s. In other words, we have
+When introducing the OLS estimator, we noted that it would exist when $\sum_{i=1}^n \X_i\X_i'$ is positive definite or that there is "no multicollinearity." This assumption is equivalent to saying that the matrix $\mathbb{X}$ is full column rank, meaning that $\text{rank}(\mathbb{X}) = (k+1)$, where $k+1$ is the number of columns of $\mathbb{X}$. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix, and **linear independence** means that $\mathbb{X}\mb{b} = 0$ if and only if $\mb{b}$ is a column vector of 0s. In other words, we have
 $$ 
 b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0, 
 $$
@@ -299,7 +299,7 @@ $$
 $$
 In this case, this expression equals 0 when $b_3 = b_4 = \cdots = b_{k+1} = 0$ and $b_1 = -2b_2$. Thus, the collection of columns is linearly dependent, so we know that the rank of $\mathbb{X}$ must be less than full column rank (that is, less than $k+1$). Hopefully, it is also clear that if we removed the problematic column $\mathbb{X}_2$, the resulting matrix would have $k$ linearly independent columns, implying that $\mathbb{X}$ is rank $k$. 
 
-Why does this rank condition matter for the OLS estimator? A key property of full column rank matrices is that $\Xmat$ if of full column rank if and only if $\Xmat'\Xmat$ is non-singular and a matrix is invertible if and only if it is non-singular. Thus, the columns of $\Xmat$ being linearly independent means that the inverse $(\Xmat'\Xmat)^{-1}$ exists and so does $\bhat$. Further, this full rank condition also implies that $\Xmat'\Xmat = \sum_{i=1}^{n}\X_{i}\X_{i}'$ is positive definite, implying that the estimator is truly finding the minimal sum of squared residuals.
+Why does this rank condition matter for the OLS estimator? A key property of full column rank matrices is that $\Xmat$ is of full column rank if and only if $\Xmat'\Xmat$ is non-singular and a matrix is invertible if and only if it is non-singular. Thus, the columns of $\Xmat$ being linearly independent means that the inverse $(\Xmat'\Xmat)^{-1}$ exists and so does $\bhat$. Further, this full rank condition also implies that $\Xmat'\Xmat = \sum_{i=1}^{n}\X_{i}\X_{i}'$ is positive definite, implying that the estimator is truly finding the minimal sum of squared residuals.
 
 What are common situations that lead to violations of no multicollinearity? We have seen one above, with one variable being a linear function of another. But this problem can come out in more subtle ways. Suppose that we have a set of dummy variables corresponding to a single categorical variable, like the region of the country. In the US, this might mean we have $X_{i1} = 1$ for units in the West (0 otherwise), $X_{i2} = 1$ for units in the Midwest (0 otherwise), $X_{i3} = 1$ for units in the South (0 otherwise), and $X_{i4} = 1$ for units in the Northeast (0 otherwise). Each unit has to be in one of these four regions, so there is a linear dependence between these variables, 
 $$ 
@@ -333,7 +333,7 @@ Note that these interpretations only hold when the regression consists solely of
 
 OLS has a very nice geometric interpretation that can add a lot of intuition for various aspects of the method. In this geometric approach, we view $\mb{Y}$ as an $n$-dimensional vector in $\mathbb{R}^n$. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix $\Xmat$ closest to this vector in terms of the Euclidean distance (which is just the sum of squares). 
 
-Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^2\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Notice that the OLS fitted values, $\Xmat\bhat$, are in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
+Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^(k+1)\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Notice that the OLS fitted values, $\Xmat\bhat$, are in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
 
 Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of $\Xmat$ to the outcome vector $\mb{Y}$. This is called the **projection** of $\mb{Y}$ onto $\mathcal{C}(\Xmat)$. @fig-projection shows this projection for a case with $n=3$ and 2 columns in $\Xmat$. The shaded blue region represents the plane of the column space of $\Xmat$, and we can see that $\Xmat\bhat$ is the closest point to $\mb{Y}$ in that space. That's the whole idea of the OLS estimator: find the linear combination of the columns of $\Xmat$ (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).
 
@@ -431,7 +431,7 @@ The residual regression approach is:
 
 1. Use OLS to regress $\mb{Y}$ on $\Xmat_2$ and obtain residuals $\widetilde{\mb{e}}_2$. 
 2. Use OLS to regress each column of $\Xmat_1$ on $\Xmat_2$ and obtain residuals $\widetilde{\Xmat}_1$.
-3. Use OLS to regression $\widetilde{\mb{e}}_{2}$ on $\widetilde{\Xmat}_1$. 
+3. Use OLS to regress $\widetilde{\mb{e}}_{2}$ on $\widetilde{\Xmat}_1$. 
 
 :::
 
@@ -469,7 +469,7 @@ h_{ii} = \X_{i}'\left(\Xmat'\Xmat\right)^{-1}\X_{i},
 $$
 which is the $i$th diagonal entry of the projection matrix, $\mb{P}_{\Xmat}$. Notice that 
 $$ 
-\widehat{\mb{Y}} = \mb{P}\mb{Y} \qquad \implies \qquad \widehat{Y}_i = \sum_{j=1}^n h_{ij}Y_j,
+\widehat{\mb{Y}} = \mb{P}_{\Xmat}\mb{Y} \qquad \implies \qquad \widehat{Y}_i = \sum_{j=1}^n h_{ij}Y_j,
 $$
 so that $h_{ij}$ is the importance of observation $j$ for the fitted value for observation $i$. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of $\X_{i}$. Roughly speaking, these values are the weighted distance $\X_i$ is from $\overline{\X}$, where the weights normalize to the empirical variance/covariance structure of the covariates (so that the scale of each covariate is roughly the same). We can see this most clearly when we fit a simple linear regression (with one covariate and an intercept) with OLS when the leverage is
 $$ 
@@ -545,7 +545,7 @@ text(5, 2, "Full sample", pos = 2, col = "dodgerblue")
 text(7, 7, "Influence Point", pos = 1, col = "indianred")
 ```
 
-One measure of influence is called DFBETA$_i$ measures how much $i$ changes the estimated coefficient vector
+One measure of influence, called DFBETA$_i$, measures how much $i$ changes the estimated coefficient vector
 $$ 
 \bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
 $$
