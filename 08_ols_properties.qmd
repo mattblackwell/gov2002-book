@@ -42,7 +42,7 @@ which implies that
 $$
 \bhat \inprob \bfbeta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \bfbeta,
 $$
-by the continuous mapping theorem (the inverse is a continuous function). The linear projection assumptions ensure that LLN applies to these sample means and ensure that $\E[\X_{i}\X_{i}']$ is invertible. 
+by the continuous mapping theorem (the inverse is a continuous function). The linear projection assumptions ensure that LLN applies to these sample means and that $\E[\X_{i}\X_{i}']$ is invertible. 
 
 
 ::: {#thm-ols-consistency}
@@ -182,7 +182,7 @@ t = \frac{\widehat{\beta}_{j} - b_{0}}{\widehat{\se}(\widehat{\beta}_{j})},
 $$
 and we usually take the absolute value, $|t|$, as our measure of how far our estimate is from the null. But notice that we could also use the square of the $t$ statistic, which is
 $$ 
-t^{2} = \frac{\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{\V[\widehat{\beta}_{j}]} = \frac{n\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{[\mb{V}_{\bfbeta}]_{[jj]}} 
+t^{2} = \frac{\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{\V[\widehat{\beta}_{j}]} = \frac{n\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{[\mb{V}_{\bfbeta}]_{[jj]}}. 
 $$ {#eq-squared-t}
 
 So here's another way to differentiate the null from the alternative: the squared distance between them divided by the variance of the estimate. 
@@ -394,7 +394,7 @@ $$
 $$
 where $\overset{a}{\sim}$ means approximately asymptotically distributed as. Under the linear CEF, the conditional sampling variance of $\bhat$ has a similar form and will be similar to the  
 $$
-\mb{V}_{\bhat} = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \approx \mb{V}_{\bfbeta} / n
+\mb{V}_{\bhat} = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \approx \mb{V}_{\bfbeta} / n.
 $$
 In practice, these two derivations lead to basically the same variance estimator. Recall the heteroskedastic-consistent variance estimator
 $$
