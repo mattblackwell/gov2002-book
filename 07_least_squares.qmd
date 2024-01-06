@@ -136,7 +136,7 @@ ey <- mean(mod$model$logpgp95)
 ssr <- function(x) ey2 - 2 * x * exy + x ^ 2 * ex2
 par(mfrow = c(1, 2))
 plot(ajr$avexpr, ajr$logpgp95,
-     xlab = "Average Protection Against Expropriation Risk",
+     xlab = "Average Protection Against\nExpropriation Risk",
      ylab = "Log GDP per capita", pch = 19, bty = "n", col = adjustcolor("grey60", alpha = 0.25 ), las = 1)
 slopes <- c(-0.5, coef(mod)[2], 1.5)
 cols <- brewer.pal(n = 3, "Dark2")
