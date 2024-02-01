@@ -3,7 +3,23 @@
 
 ## Introduction
 
-When studying probability, we assumed that we knew the parameter of a distribution (the mean or the variance) and used probability theory to understand what kind of data we would observe. Estimation and inference put this engine in reverse and try to learn some aspect of the data-generating process using only our observed data. There are two main goals here: **estimation**, which is how we formulate our best guess about a parameter of the DGP, and **inference**, which is how we formalize and express uncertainty about our estimates. 
+Suppose you have been tasked with determining what fraction of a population supports a policy of increasing legal immigration limits. You have a sample of data on whether or not some individual respondents support the policy. How should you use the information you know (the data) to make a best guess about the information you don't know (the fraction of the population)? This task is called estimation and it's the cornerstone of most quantitative work in the social sciences. 
+
+You might think to yourself: this seems simple, just use the fraction of the sample that supports the policy as the best guess about the fraction of the population. And, as we'll see, under certain conditions, this procedure is sound. The tricky part of statistics, though, is to understand what those "certain conditions" are and be able to determine if they hold in a given empirical setting. This line of thought may lead to uncomfortable questions such as, "where did this sample come from?"  
+
+We begin with perhaps the simplest and most sanguine of data origin stories: the **random sample**. The "sample" refers to the idea that our data is a subset of some larger **population**. The "random" modifier means that the subset was chosen by an uncertain process that did not favor one type of person versus another. Having a random sample from a population is an example of the "certain conditions" and our entry point into studying estimation in a rigorous manner. 
+
+Why focus on random samples so much even though many data sets are at least partially non-random or represent the entire population rather than a subset? Consider the famous story of a drunkard's search for a lost bill:
+
+> “I lost a \$2 bill down on Atlantic avenue,” said the man.
+> 
+> “What’s that?” asked the puzzled officer. “You lost a \$2 bill on Atlantic avenue? Then why are you hunting around here in Copley square?”
+> 
+> “Because,” said the man as he turned away and continued his hunt on his hands and knees, “the light’s better up here.”
+
+Like the poor Bostonian, we focus on searching an area (random samples) that are easier to search because there is more light or, more accurately, easier math. Unlike this apocryphal tale, our search will help us better understand the darkness of non-random samples, because the core ideas and intuitions from random sampling form the basis for the theoretical extensions into more exotic settings. 
+
+Probability is the mathematical study of uncertain events and is the basis of the mathematical study of estimation. In probability, we assume we know truth of the world (how many blue and red balls are in the urn) and calculate the chances of events (getting more than give red balls when drawing ten from the urn). Estimation works in reverse. Someone hands you ten balls, six red and four blue, and your task is to guess the contents of the urn from which they came. We have to use our observed data to make an **inference** about the data-generating process. 
 
 ![](assets/img/two-direction.png)
 
