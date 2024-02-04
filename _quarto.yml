@@ -13,6 +13,7 @@ book:
   public-url: https://mattblackwell.github.io/gov2002-book/
   repo-url: https://github.com/mattblackwell/gov2002-book/
   repo-actions: [edit, issue]
+  downloads: [pdf]
   chapters:
     - index.qmd
     - 01_intro.qmd
