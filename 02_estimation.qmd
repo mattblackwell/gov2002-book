@@ -188,7 +188,7 @@ One important distinction of jargon is between an estimator and an estimate. The
 
 ## How to find estimators
 
-Where do estimators come from? There are a couple of different methods that I'll cover briefly here before describing the ones that will form the bulk of this class. 
+Where do estimators come from? This may seem like a question reserved for statisticians or methodologists or others who are responsible for "developing new methods." But there is value in knowing how estimators are derived even if we never plan to do that ourselves. In particular, we can get a sense of the strengths and potential weaknesses of an estimator if know where it comes from. We will briefly introduce estimators based on parametric models, before turning to the main focus of this book, plug-in estimators. 
 
 ### Parametric models and maximum likelihood 
 
