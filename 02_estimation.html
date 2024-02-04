@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -98,6 +105,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -108,12 +142,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_estimation.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./02_estimation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_estimation.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./02_estimation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -123,12 +157,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./users-guide.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -223,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -250,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#mean-squared-error" id="toc-mean-squared-error" class="nav-link" data-scroll-target="#mean-squared-error"><span class="header-section-number">2.6.3</span> Mean squared error</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mattblackwell/gov2002-book/edit/main/02_estimation.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/02_estimation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -312,7 +347,7 @@ $$
 \DeclareMathOperator*{\argmin}{arg\,min}
 $$
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_estimation.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./02_estimation.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></h1>
 </div>
@@ -327,38 +362,77 @@ $$
   </div>
   
 
+
 </header>
+
 
 <section id="introduction" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
-<p>When studying probability, we assumed that we knew the parameter of a distribution (the mean or the variance) and used probability theory to understand what kind of data we would observe. Estimation and inference put this engine in reverse and try to learn some aspect of the data-generating process using only our observed data. There are two main goals here: <strong>estimation</strong>, which is how we formulate our best guess about a parameter of the DGP, and <strong>inference</strong>, which is how we formalize and express uncertainty about our estimates.</p>
+<p>Suppose you have been tasked with determining what fraction of a population supports a policy of increasing legal immigration limits. You have a sample of data on whether or not some individual respondents support the policy. How should you use the information you know (the data) to make a best guess about the information you don’t know (the fraction of the population)? This task is called estimation and it’s the cornerstone of most quantitative work in the social sciences.</p>
+<p>You might think to yourself: this seems simple, just use the fraction of the sample that supports the policy as the best guess about the fraction of the population. And, as we’ll see, under certain conditions, this procedure is sound. The tricky part of statistics, though, is to understand what those “certain conditions” are and be able to determine if they hold in a given empirical setting. This line of thought may lead to uncomfortable questions such as, “where did this sample come from?”</p>
+<p>We begin with perhaps the simplest and most sanguine of data origin stories: the <strong>random sample</strong>. The “sample” refers to the idea that our data is a subset of some larger <strong>population</strong>. The “random” modifier means that the subset was chosen by an uncertain process that did not favor one type of person versus another. Having a random sample from a population is an example of the “certain conditions” and our entry point into studying estimation in a rigorous manner.</p>
+<p>Why focus on random samples so much even though many data sets are at least partially non-random or represent the entire population rather than a subset? Consider the famous story of a drunkard’s search for a lost bill:<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<blockquote class="blockquote">
+<p>“I lost a $2 bill down on Atlantic avenue,” said the man.</p>
+<p>“What’s that?” asked the puzzled officer. “You lost a $2 bill on Atlantic avenue? Then why are you hunting around here in Copley square?”</p>
+<p>“Because,” said the man as he turned away and continued his hunt on his hands and knees, “the light’s better up here.”</p>
+</blockquote>
+<p>Like the poor Bostonian, we focus on searching an area (random samples) that are easier to search because there is more light or, more accurately, easier math. Unlike this apocryphal tale, our search will help us better understand the darkness of non-random samples, because the core ideas and intuitions from random sampling form the basis for the theoretical extensions into more exotic settings.</p>
+<p>Probability is the mathematical study of uncertain events and is the basis of the mathematical study of estimation. In probability, we assume we know truth of the world (how many blue and red balls are in the urn) and calculate the chances of events (getting more than give red balls when drawing ten from the urn). Estimation works in reverse. Someone hands you ten balls, six red and four blue, and your task is to guess the contents of the urn from which they came. We have to use our observed data to make an <strong>inference</strong> about the data-generating process.</p>
 <p><img src="assets/img/two-direction.png" class="img-fluid"></p>
+<p>An estimator is just a rule for converting our data into a best guess about some unknown quantity, like the fraction of the public that supports increasing legal immigration limits. What are the goals of studying estimators? In short, we prefer to use <strong>good</strong> estimators rather than <strong>bad</strong> estimators. But what makes an estimator good or bad? You probably have some intuitive sense that, for example, an estimator that always returns the value 3 is bad. Still, it will be helpful for us to formally define and explore some properties of estimators that will allow us to compare them and choose the good over the bad. We begin with an example that highlights two estimators that, at first glance, may seem similar.</p>
 <div id="exm-rct" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.1 (Randomized control trial) </strong></span>Suppose we are conducting a randomized experiment on framing effects. All respondents receive some factual information about current levels of immigration. The message for the treatment group (<span class="math inline">\(D_i = 1\)</span>) has an additional framing of the positive benefits of immigration, while the control group (<span class="math inline">\(D_i = 0\)</span>) receives no additional framing. The outcome is a binary outcome on whether the respondent supports increasing legal immigration limits (<span class="math inline">\(Y_i = 1\)</span>) or not (<span class="math inline">\(Y_i = 0\)</span>). The observed data consists of <span class="math inline">\(n\)</span> pairs of random variables, the outcome, and the treatment assignment: <span class="math inline">\(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\)</span>. Define the two sample means/proportions in each group as <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 2.1 (Randomized control trial)</strong></span> Suppose we are conducting a randomized experiment on framing effects. All respondents receive some factual information about current levels of immigration. The message for the treatment group (<span class="math inline">\(D_i = 1\)</span>) has an additional framing of the positive benefits of immigration, while the control group (<span class="math inline">\(D_i = 0\)</span>) receives no additional framing. The outcome is a binary outcome on whether the respondent supports increasing legal immigration limits (<span class="math inline">\(Y_i = 1\)</span>) or not (<span class="math inline">\(Y_i = 0\)</span>). The observed data consists of <span class="math inline">\(n\)</span> pairs of random variables, the outcome, and the treatment assignment: <span class="math inline">\(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\)</span>. Define the two sample means/proportions in each group as <span class="math display">\[
 \Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i, \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
 \]</span> where <span class="math inline">\(n_1 = \sum_{i=1}^n D_i\)</span> is the number of treated units and <span class="math inline">\(n_0 = n - n_1\)</span> is the number of control units.</p>
 <p>A standard estimator for the treatment effect in a study like this would be the difference in means, <span class="math inline">\(\Ybar_1 - \Ybar_0\)</span>. But this is only one possible estimator. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This estimator is commonly called a <strong>poststratification</strong> estimator, but it’s unclear at first glance which of these two estimators we should prefer.</p>
 </div>
-<p>What are the goals of studying estimators? In short, we prefer to use <strong>good</strong> estimators rather than <strong>bad</strong> estimators. But what makes an estimator good or bad? You probably have some intuitive sense that, for example, an estimator that always returns the value 3 is bad. Still, it will be helpful for us to formally define and explore some properties of estimators that will allow us to compare them and choose the good over the bad.</p>
+<p>We have two goals in this chapter. First, we will introduce the entire framework of estimation and estimators. We will discuss different ways to compare the quality of estimators. These are properties that will be important to any estimator that you will meet now or in the future. Second, we will establish these properties for a general class of estimators that can be written as a sample mean. These results are useful in their own right since these estimators are ubiquitous, but the derivations also provide examples of how we establish such results. Building comfort with these proofs will help us understand the arguments about novel estimators we will inevitably see over the course of our careers.</p>
 </section>
 <section id="samples-and-populations" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="samples-and-populations"><span class="header-section-number">2.2</span> Samples and populations</h2>
-<p>For most of this class, we’ll focus on a relatively simple setting where we have a set of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> that are <strong>independent and identically distributed</strong> (iid) draws from a distribution with cumulative distribution function (cdf) <span class="math inline">\(F\)</span>. They are independent in that information about any subset of random vectors is not informative about any other subset of random vectors, or, more formally, <span class="math display">\[
-F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n}) = F_{X_{1}}(x_{1})\cdots F_{X_{n}}(x_{n}),
-\]</span> where <span class="math inline">\(F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})\)</span> is the joint cdf of the random vectors and <span class="math inline">\(F_{X_{j}}(x_{j})\)</span> is the marginal cdf of the <span class="math inline">\(j\)</span>th random vector. They are “identically distributed” in the sense that each of the random variables <span class="math inline">\(X_i\)</span> have the same marginal distribution, <span class="math inline">\(F\)</span>.</p>
-<p>You can think of each vector, <span class="math inline">\(X_i\)</span>, as the rows in your data frame. Note that we’re being purposely vague about this cdf—it simply represents the unknown distribution of the data, otherwise known as the <strong>data generating process</strong> (DGP). Sometimes <span class="math inline">\(F\)</span> is also referred to as the <strong>population distribution</strong> or even just <strong>population</strong>, which has its roots in viewing the data as a random sample from some larger population.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> As a shorthand, we often say that the collection of random vectors <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is a <strong>random sample</strong> from population <span class="math inline">\(F\)</span> if <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is iid with distribution <span class="math inline">\(F\)</span>. The <strong>sample size</strong> <span class="math inline">\(n\)</span> is the number of units in the sample.</p>
+<p>Let’s begin by building a bare-bones probability model for how our data came to be. We might have a particular data set with a series of numbers representing the ages, political party affiliations, and opinions of some survey respondents. But we know that row 58 of our data could have produced a different set of number if a different respondent had been selected as row 58 or if that same respondent gave a different opinion about immigration because they happened to see a news story about it just before responding. To reason precisely about this type of uncertainty, we will write <span class="math inline">\(X_i\)</span> as the random variable representing the value that row <span class="math inline">\(i\)</span> of some variable will take, before we see the data. The distribution of this random variable would tell us what types of data we should expect to see.</p>
+<p>Why do represent the data with random variables when we already know the value of the data itself? The study of estimation from a frequentist perspective (which is the perspective of this book) focuses on the properties of estimators across <strong>repeated samples</strong>. The random variable <span class="math inline">\(X_i\)</span> represents our uncertainty about what value, say, age will take for respondent <span class="math inline">\(i\)</span> in any of these samples, and the set <span class="math inline">\(\{X_{1}, \ldots, X_{n}\}\)</span> represents our uncertainty about the entire column of ages for all <span class="math inline">\(n\)</span> respondents.</p>
+<p>For most of this book, we’ll focus on a relatively simple setting where we assume the data <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> are <strong>independent and identically distributed</strong> (iid) draws from a distribution with cumulative distribution function (cdf) <span class="math inline">\(F\)</span>. They are independent in that information about any subset of random variable is not informative about any other subset of random variables, or, more formally, <span class="math display">\[
+F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n}) = F_{X_{1}}(x_{1})\cdots F_{X_{n}}(x_{n}) = \prod_{i=1}^n F(x_i)
+\]</span> where <span class="math inline">\(F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})\)</span> is the joint cdf of the random variable and <span class="math inline">\(F_{X_{j}}(x_{j})\)</span> is the marginal cdf of the <span class="math inline">\(j\)</span>th random variable. They are “identically distributed” in the sense that each of the random variables <span class="math inline">\(X_i\)</span> have the same marginal distribution, <span class="math inline">\(F\)</span>.</p>
+<p>Note that we’re being purposely vague about this cdf—it simply represents the unknown distribution of the data, otherwise known as the <strong>data generating process</strong> (DGP). Sometimes <span class="math inline">\(F\)</span> is also referred to as the <strong>population distribution</strong> or even just <strong>population</strong>, which has its roots in viewing the data as a random sample from some larger population.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> As a shorthand, we often say that the collection of random variables <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is a <strong>random sample</strong> from population <span class="math inline">\(F\)</span> if <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> is iid with distribution <span class="math inline">\(F\)</span>. The <strong>sample size</strong> <span class="math inline">\(n\)</span> is the number of units in the sample.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You might wonder why we reference the distribution of <span class="math inline">\(X_i\)</span> with the cdf, <span class="math inline">\(F\)</span>. Mathematical statistics tends to do this to avoid having to deal with discrete and continuous random variables separately. Every random variable has a cdf and the cdf contains all information about the distribution of a random variable.</p>
+</div>
+</div>
 <p>Two metaphors can help build intuition about the concept of viewing the data as an iid draw from <span class="math inline">\(F\)</span>:</p>
 <ol type="1">
 <li><strong>Random sampling</strong>. Suppose we have a population of size <span class="math inline">\(N\)</span> that is much larger than our sample size <span class="math inline">\(n\)</span>, and we take a random sample of size <span class="math inline">\(n\)</span> from this population with replacement. Then the distribution of the data in the random sample will be iid draws from the population distribution of the variables we are sampling. For instance, suppose we take a random sample from a population of US citizens where the population proportion of Democratic party identifiers is 0.33. Then if we randomly sample <span class="math inline">\(n = 100\)</span> US citizens, each data point <span class="math inline">\(X_i\)</span> will be distributed Bernoulli with probability of success 0.33.</li>
 <li><strong>Groundhog Day</strong>. Random sampling does not always make sense as a justification for iid data, especially when the units are not samples at all but rather countries, states, or subnational units. In this case, we have to appeal to a thought experiment where <span class="math inline">\(F\)</span> represents the fundamental uncertainty in the data-generating process. The metaphor here is that if we could re-run history many times, like the 1993 American classic comedy <em>Groundhog Day</em>, data and outcomes would change slightly due to the inherently stochastic nature of the world. The iid assumption, then, is that each of the units in our data has the same DGP producing this data or the same distribution of outcomes under the <em>Groundhog Day</em> scenario. The set of all these infinite possible draws from the DGP is sometimes referred to as the <strong>superpopulation</strong>.</li>
 </ol>
 <p>Note that there are many situations where the iid assumption is not appropriate. We will cover some of those later in the semester. But much of the innovation and growth in statistics over the last 50 years has been figuring out how to perform statistical inference when iid does not hold. Often, the solutions are specific to the type of iid violation you have (spatial, time-series, network, or clustered). As a rule of thumb, though, if you suspect iid is incorrect, your uncertainty statements will likely be overconfident (for example, confidence intervals, which we’ll cover later, are too small).</p>
+<p>Finally, we have introduced the data as a scalar random variable, but often our data has multiple variables. In that case, we could easily modify <span class="math inline">\(X_i\)</span> to be a random vector (that is, a vector of random variables) and then <span class="math inline">\(F\)</span> becomes the joint distribution of that random vector. Nothing substantive changes about the above discussion.</p>
 </section>
 <section id="point-estimation" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">2.3</span> Point estimation</h2>
 <section id="quantities-of-interest" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="quantities-of-interest"><span class="header-section-number">2.3.1</span> Quantities of interest</h3>
-<p>We aim to learn about the data-generating process, represented by the cdf, <span class="math inline">\(F\)</span>. We might be interested in estimating the cdf at a general level or only some feature of the distribution, like a mean or conditional expectation function. We will almost always have a particular quantity in mind, but we’ll introduce estimation at a general level. So we’ll let <span class="math inline">\(\theta\)</span> represent the quantity of interest. <strong>Point estimation</strong> describes how we obtain a single “best guess” about <span class="math inline">\(\theta\)</span>.</p>
+<p>In statistical inference, our goal is to learn about the data-generating process. Each data point <span class="math inline">\(X_i\)</span> represents a draw from a distribution, captured by the cdf <span class="math inline">\(F\)</span>, and we would like to know more about this distribution. We might be interested in estimating the cdf at a general level or only some feature of the distribution, like a mean or conditional expectation function.</p>
+<div id="exm-prop" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.2 (Population mean)</strong></span> Suppose we wanted to know the proportion of US citizens who support increasing legal immigration in the US, which we denote as <span class="math inline">\(Y_i = 1\)</span>. Then our quantity of interest is the mean of this random variable, <span class="math inline">\(\mu = \E[Y_i] = \P(Y_{i} = 1)\)</span>, which is the probability of randomly drawing someone from the population supporting increased legal immigration.</p>
+</div>
+<div id="exm-var" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.3 (Population variance)</strong></span> Feeling thermometer scores are a prevalent way to assess how a survey respondent feels about a particular person or group. A survey asks respondents how warmly they feel about a group from 0 to 100, which we will denote <span class="math inline">\(Y_i\)</span>. We might be interested in how polarized views are on a group in the population, and one measure of polarization could be the variance, or spread, of the distribution of <span class="math inline">\(Y_i\)</span> around the mean. In this case, <span class="math inline">\(\sigma^2 = \V[Y_i]\)</span> would be our quantity of interest.</p>
+</div>
+<div id="exm-rct-ii" class="theorem example">
+<p><span class="theorem-title"><strong>Example 2.4 (RCT continued)</strong></span> In <a href="#exm-rct" class="quarto-xref">Example&nbsp;<span>2.1</span></a>, we discussed a typical estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional probabilities (or expectations): the average support for increasing legal immigration in the treatment group, <span class="math inline">\(\mu_1 = \E[Y_i \mid D_i = 1]\)</span>, and the same average in the control group, <span class="math inline">\(\mu_0 = \E[Y_i \mid D_i = 0]\)</span>. This difference, <span class="math inline">\(\mu_1 - \mu_0\)</span>, is a function of unknown features of these two conditional distributions.</p>
+</div>
+<p>Each of these is a function of the (possibly joint) distribution of the data, <span class="math inline">\(F\)</span>. In each of these, we are not necessarily interested in the entire distribution, just summaries of it (central tendency, spread). Of course, there are situations where we are also interested in the complete distribution. To be able to speak about estimation in general, we’ll let <span class="math inline">\(\theta\)</span> represent some generic quantity of interest. <strong>Point estimation</strong> describes how we obtain a single “best guess” about <span class="math inline">\(\theta\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -372,38 +446,17 @@ Note
 <p>Some refer to quantities of interest as <strong>parameters</strong> or <strong>estimands</strong> (that is, the target of estimation).</p>
 </div>
 </div>
-<div id="exm-prop" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.2 (Population mean) </strong></span>Suppose we wanted to know the proportion of US citizens who support increasing legal immigration in the US, which we denote as <span class="math inline">\(Y_i = 1\)</span>. Then our quantity of interest is the mean of this random variable, <span class="math inline">\(\mu = \E[Y_i]\)</span>, which is the probability of randomly drawing someone from the population supporting increased legal immigration.</p>
-</div>
-<div id="exm-var" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.3 (Population variance) </strong></span>Feeling thermometer scores are a prevalent way to assess how a survey respondent feels about a particular person or group. A survey asks respondents how warmly they feel about a group from 0 to 100, which we will denote <span class="math inline">\(Y_i\)</span>. We might be interested in how polarized views are on a group in the population, and one measure of polarization could be the variance, or spread, of the distribution of <span class="math inline">\(Y_i\)</span> around the mean. In this case, <span class="math inline">\(\sigma^2 = \V[Y_i]\)</span> would be our quantity of interest.</p>
-</div>
-<div id="exm-rct-ii" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.4 (RCT continued) </strong></span>In <a href="#exm-rct">Example&nbsp;<span>2.1</span></a>, we discussed a typical estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional probabilities (or expectations): the average support for increasing legal immigration in the treatment group, <span class="math inline">\(\mu_1 = \E[Y_i \mid D_i = 1]\)</span>, and the same average in the control group, <span class="math inline">\(\mu_0 = \E[Y_i \mid D_i = 0]\)</span>. This difference, <span class="math inline">\(\mu_1 - \mu_0\)</span>, is a function of unknown features of these two conditional distributions.</p>
-</div>
-<p>Each of these is a function of the (possibly joint) distribution of the data, <span class="math inline">\(F\)</span>. In each of these, we are not necessarily interested in the entire distribution, just summaries of it (central tendency, spread). Of course, there are situations where we are also interested in the complete distribution.</p>
 </section>
 <section id="estimators" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="estimators"><span class="header-section-number">2.3.2</span> Estimators</h3>
-<p>When our sample size is more than a few observations, it makes no sense to work with the raw data, <span class="math inline">\(X_1, \ldots, X_n\)</span>, and we inevitably will need to <em>summarize</em> the data in some way. We can represent this summary as a function, <span class="math inline">\(g(x_1, \ldots, x_n)\)</span>, which might be the formula for the sample mean or sample variance. This function is just a regular function that takes in <span class="math inline">\(n\)</span> numbers (or vectors) and returns a number (or vector). We can also define a random variable based on this function, <span class="math inline">\(Y = g(X_1, \ldots, X_n)\)</span>, which inherits its randomness from the randomness of the data. Before we see the data, we don’t know what values of <span class="math inline">\(X_1, \ldots, X_n\)</span> we will see, so we don’t know what value of <span class="math inline">\(Y\)</span> we’ll see either. We call the random variable <span class="math inline">\(Y = g(X_1, \ldots, X_n)\)</span> a <strong>statistic</strong> (or sometimes sample statistics), and we refer to the probability distribution of a statistic <span class="math inline">\(Y\)</span> as the <strong>sampling distribution</strong> of <span class="math inline">\(Y\)</span>.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>There is one potential confusion in how we talk about “statistics.” Just above, we defined a statistic as a random variable based on it being a function of random variables (the data). But we sometimes refer to the calculated value as a statistic as well, which is a specific number that you see in your R output. To be precise, we should call the latter the <strong>realized value</strong> of the statistic, but message discipline is difficult to enforce in this context. A simple example might help. Suppose that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are the results of a roll of two standard six-sided dice. Then the statistic <span class="math inline">\(Y = X_1 + X_2\)</span> is a random variable that has a distribution over the numbers from <span class="math inline">\(\{2, \ldots, 12\}\)</span> that describes our uncertainty over what the sum will be <em>before we roll the dice</em>. Once we have rolled the dice and observed the realized values <span class="math inline">\(X_1 = 3\)</span> and <span class="math inline">\(X_2 = 4\)</span>, we observed the realized value of the statistic, <span class="math inline">\(Y = 7\)</span>.</p>
-</div>
-</div>
-<p>At their most basic, statistics are just data summaries without aim or ambition. Estimators are statistics with a purpose: to provide an “educated guess” about some quantity of interest.</p>
+<p>Now that we have a target in mind, we can try to estimate it with our data. To do so, we first need a rule or algorithm or function that takes as inputs the data and returns a best guess about the quantity of interest. One of the most popular and useful algorithm would be to sum all the data points and divide by the number of points, which we can write mathematically as <span class="math display">\[
+\frac{X_1 + X_2 + \cdots + X_n}{n}.
+\]</span> This is the much celebrated sample mean, and it provides a rule for how to take your data and produce a single-number summary of the data. We might go one pedantic step further and define it as a function of the data more explicitly, <span class="math display">\[
+\textsf{mean}(X_1, X_2, \ldots, X_n) = \frac{X_1 + X_2 + \cdots + X_n}{n}.
+\]</span> We can use this model to provide a definition for an arbitrary estimator for an arbitrary quantity of interest.</p>
 <div id="def-estimator" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 2.1 </strong></span>An <strong>estimator</strong> <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span> for some parameter <span class="math inline">\(\theta\)</span>, is a statistic intended as a guess about <span class="math inline">\(\theta\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 2.1</strong></span> An <strong>estimator</strong> <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span> for some parameter <span class="math inline">\(\theta\)</span>, is a function of the data intended as a guess about <span class="math inline">\(\theta\)</span>.</p>
 </div>
-<p>One important distinction of jargon is between an estimator and an estimate, similar to the issues with “statistic” described above. The estimator is a function of the data, whereas the <strong>estimate</strong> is the <em>realized value</em> of the estimator once we see the data. An estimate is a single number, such as 0.38, whereas the estimator is a random variable that has uncertainty over what value it will take. Formally, the estimate is <span class="math inline">\(\theta(x_1, \ldots, x_n)\)</span> when the data is <span class="math inline">\(\{X_1, \ldots, X_n\} = \{x_1, \ldots, x_n\}\)</span>, whereas we represent the estimator as a function of random variables, <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -418,15 +471,31 @@ Note
 </div>
 </div>
 <div id="exm-mean-est" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.5 (Estimators for the population mean) </strong></span>Suppose we would like to estimate the population mean of <span class="math inline">\(F\)</span>, which we will represent as <span class="math inline">\(\mu = \E[X_i]\)</span>. We could choose from several estimators, all with different properties. <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 2.5 (Estimators for the population mean)</strong></span> Suppose we would like to estimate the population mean of <span class="math inline">\(F\)</span>, which we will represent as <span class="math inline">\(\mu = \E[X_i]\)</span>. We could choose from several estimators, all with different properties. <span class="math display">\[
 \widehat{\theta}_{n,1} = \frac{1}{n} \sum_{i=1}^n X_i, \quad \widehat{\theta}_{n,2} = X_1, \quad \widehat{\theta}_{n,3} = \text{max}(X_1,\ldots,X_n), \quad \widehat{\theta}_{n,4} = 3
 \]</span> The first is just the sample mean, which is an intuitive and natural estimator for the population mean. The second just uses the first observation. While this seems silly, this is a valid statistic (it’s a function of the data!). The third takes the maximum value in the sample, and the fourth always returns three, regardless of the data.</p>
+</div>
+<p>When we view the data <span class="math inline">\(\{X_{1}, \ldots, X_{n}\}\)</span> as a collection of random variables, then any function of them is also a random variable. Thus, we can view <span class="math inline">\(\widehat{\theta}_n\)</span> as a random variable that has a distribution that induced by the randomness of the sample. Drawing two different samples of respondents will lead to two different estimates. For example, here we illustrate two samples of size <span class="math inline">\(n =5\)</span> from the population distribution of a binary variable:</p>
+<p><img src="assets/img/sampling-distribution.png" class="img-fluid"></p>
+<p>We can see that the mean of the variable depends on what exact values end up in our sample. We refer to the distribution of <span class="math inline">\(\widehat{\theta}_n\)</span> across repeated samples as its <strong>sampling distribution</strong>. The sampling distribution of an estimator will be the basis for all of the formal statistical properties of an estimator.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One important distinction of jargon is between an estimator and an estimate. The estimator is a function of the data, whereas the <strong>estimate</strong> is the <em>realized value</em> of the estimator once we see the data. An estimate is a single number, such as 0.38, that we calculated in R with our data (our draw from <span class="math inline">\(F\)</span>). The estimator, on the other hand, is a random variable that has uncertainty over what value it will take. Formally, the estimate is <span class="math inline">\(\theta(x_1, \ldots, x_n)\)</span> when the data is <span class="math inline">\(\{X_1, \ldots, X_n\} = \{x_1, \ldots, x_n\}\)</span>, whereas we represent the estimator as a function of random variables, <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
+</div>
 </div>
 </section>
 </section>
 <section id="how-to-find-estimators" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="how-to-find-estimators"><span class="header-section-number">2.4</span> How to find estimators</h2>
-<p>Where do estimators come from? There are a couple of different methods that I’ll cover briefly here before describing the ones that will form the bulk of this class.</p>
+<p>Where do estimators come from? This may seem like a question reserved for statisticians or methodologists or others who are responsible for “developing new methods.” But there is value in knowing how estimators are derived even if we never plan to do that ourselves. In particular, we can get a sense of the strengths and potential weaknesses of an estimator if know where it comes from. We will briefly introduce estimators based on parametric models, before turning to the main focus of this book, plug-in estimators.</p>
 <section id="parametric-models-and-maximum-likelihood" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="parametric-models-and-maximum-likelihood"><span class="header-section-number">2.4.1</span> Parametric models and maximum likelihood</h3>
 <p>The first method for generating estimators relies on <strong>parametric models</strong>, where the researcher specifies the exact distribution (up to some unknown parameters) of the DGP. Let <span class="math inline">\(\theta\)</span> be the parameters of this distribution and we then write <span class="math inline">\(\{X_1, \ldots, X_n\}\)</span> are iid draws from <span class="math inline">\(F_{\theta}\)</span>. We should also formally state the set of possible values the parameters can take, which we call the <strong>parameter space</strong> and usually denote as <span class="math inline">\(\Theta\)</span>. Because we’re assuming we know the distribution of the data, we can write the p.d.f. as <span class="math inline">\(f(X_i \mid \theta)\)</span> and define the likelihood function as the product of these p.d.f.s over the units as a function of the parameters: <span class="math display">\[
@@ -462,12 +531,12 @@ No free lunch
 \widehat{\alpha} = g\left( \frac{1}{n} \sum_{i=1}^n r(X_i) \right) \quad \text{estimates} \quad \alpha = g\left(\E[r(X_i)]\right)
 \]</span> This approach to plug-in estimation with sample means is very general and will allow us to derive estimators in various settings.</p>
 <div id="exm-var-est" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.6 (Estimating population variance) </strong></span>The population variance of a random variable is <span class="math inline">\(\sigma^2 = \E[(X_i - \E[X_i])^2]\)</span>. To derive a plug-in estimator for this quantity, we replace the inner <span class="math inline">\(\E[X_i]\)</span> with <span class="math inline">\(\Xbar_n\)</span> and the outer expectation with another sample mean: <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 2.6 (Estimating population variance)</strong></span> The population variance of a random variable is <span class="math inline">\(\sigma^2 = \E[(X_i - \E[X_i])^2]\)</span>. To derive a plug-in estimator for this quantity, we replace the inner <span class="math inline">\(\E[X_i]\)</span> with <span class="math inline">\(\Xbar_n\)</span> and the outer expectation with another sample mean: <span class="math display">\[
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2.
 \]</span> This plug-in estimator differs from the standard sample variance, which divides by <span class="math inline">\(n - 1\)</span> rather than <span class="math inline">\(n\)</span>. This minor difference does not matter in moderate to large samples.</p>
 </div>
 <div id="exm-cov-est" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.7 (Estimating population covariance) </strong></span>Suppose we have two variables, <span class="math inline">\((X_i, Y_i)\)</span>. A natural quantity of interest here is the population covariance between these variables, <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 2.7 (Estimating population covariance)</strong></span> Suppose we have two variables, <span class="math inline">\((X_i, Y_i)\)</span>. A natural quantity of interest here is the population covariance between these variables, <span class="math display">\[
 \sigma_{xy} = \text{Cov}[X_i,Y_i] = \E[(X_i - \E[X_i])(Y_i-\E[Y_i])],
 \]</span> which has the plug-in estimator, <span class="math display">\[
 \widehat{\sigma}_{xy} = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)(Y_i - \Ybar_n).
@@ -500,7 +569,7 @@ Notation alert
 <p><!-- TODO: Insert Sampling distribution figure here --></p>
 <p>Separately from both is the <strong>sampling distribution of an estimator</strong>, which is the probability distribution of <span class="math inline">\(\widehat{\theta}_n\)</span>. It represents our uncertainty about our estimate before we see the data. Remember that our estimator is itself a random variable because it is a function of random variables: the data itself. That is, we defined the estimator as <span class="math inline">\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)</span>.</p>
 <div id="exm-three-dist" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.8 (Likert responses) </strong></span>Suppose <span class="math inline">\(X_i\)</span> is the answer to a question, “How much do you agree with the following statement: Immigrants are a net positive for the United States,” with a <span class="math inline">\(X_i = 0\)</span> being “strongly disagree,” <span class="math inline">\(X_i = 1\)</span> being “disagree,” <span class="math inline">\(X_i = 2\)</span> being “neither agree nor disagree,” <span class="math inline">\(X_i = 3\)</span> being “agree,” and <span class="math inline">\(X_i = 4\)</span> being “strongly agree.”</p>
+<p><span class="theorem-title"><strong>Example 2.8 (Likert responses)</strong></span> Suppose <span class="math inline">\(X_i\)</span> is the answer to a question, “How much do you agree with the following statement: Immigrants are a net positive for the United States,” with a <span class="math inline">\(X_i = 0\)</span> being “strongly disagree,” <span class="math inline">\(X_i = 1\)</span> being “disagree,” <span class="math inline">\(X_i = 2\)</span> being “neither agree nor disagree,” <span class="math inline">\(X_i = 3\)</span> being “agree,” and <span class="math inline">\(X_i = 4\)</span> being “strongly agree.”</p>
 <p>The population distribution describes the probability of randomly selecting a person with each one of these values, <span class="math inline">\(\P(X_i = x)\)</span>. The empirical distribution would be the fraction of our data taking each value. And the sampling distribution of the sample mean, <span class="math inline">\(\Xbar_n\)</span>, would be the distribution of the sample mean across repeated samples from the population.</p>
 <p>Suppose the population distribution was binomial with four trials and probability of success <span class="math inline">\(p = 0.4\)</span>. We could generate one sample with <span class="math inline">\(n = 10\)</span> and thus one empirical distribution using <code>rbinom()</code>:</p>
 <div class="cell">
@@ -545,7 +614,7 @@ Notation alert
 \]</span> which is the difference between the mean of the estimator (across repeated samples) and the true parameter. All else equal, we would like estimation bias to be as small as possible. The smallest possible bias, obviously, is 0, and we define an <strong>unbiased estimator</strong> as one with <span class="math inline">\(\text{bias}[\widehat{\theta}] = 0\)</span> or equivalently, <span class="math inline">\(\E[\widehat{\theta}] = \theta\)</span>.</p>
 <p>However, all else is not always equal, and unbiasedness is not a property to become overly attached to. Many biased estimators have other attractive properties, and many popular modern estimators are biased.</p>
 <div id="exm-mean-unbiased" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.9 (Unbiasedness of the sample mean) </strong></span>We can show that the sample mean is unbiased for the population mean when the data is iid and <span class="math inline">\(\E|X| &lt; \infty\)</span>. In particular, we simply apply the rules of expectations: <span class="math display">\[\begin{aligned}
+<p><span class="theorem-title"><strong>Example 2.9 (Unbiasedness of the sample mean)</strong></span> We can show that the sample mean is unbiased for the population mean when the data is iid and <span class="math inline">\(\E|X| &lt; \infty\)</span>. In particular, we simply apply the rules of expectations: <span class="math display">\[\begin{aligned}
 \E\left[ \Xbar_n \right] &amp;= \E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] &amp; (\text{definition of } \Xbar_n) \\
 &amp;= \frac{1}{n} \sum_{i=1}^n \E[X_i] &amp; (\text{linearity of } \E)\\
 &amp;= \frac{1}{n} \sum_{i=1}^n \mu &amp; (X_i \text{ identically distributed})\\
@@ -570,7 +639,7 @@ Warning
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="estimation-variance-and-the-standard-error"><span class="header-section-number">2.6.2</span> Estimation variance and the standard error</h3>
 <p>If a “good” estimator tends to be close to the truth, we should also care about the spread of the sampling distribution. In particular, we define the <strong>sampling variance</strong> as the variance of an estimator’s sampling distribution, <span class="math inline">\(\V[\widehat{\theta}]\)</span>, which measures how spread out the estimator is around its mean. For an unbiased estimator, lower sampling variance implies the distribution of <span class="math inline">\(\widehat{\theta}\)</span> is more concentrated around the truth.</p>
 <div id="exm-mean-var" class="theorem example">
-<p><span class="theorem-title"><strong>Example 2.10 (Sampling variance of the sample mean) </strong></span>We can establish the sampling variance of the sample mean of iid data for all <span class="math inline">\(F\)</span> such that <span class="math inline">\(\V[X_i]\)</span> is finite (more precisely, <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>)</p>
+<p><span class="theorem-title"><strong>Example 2.10 (Sampling variance of the sample mean)</strong></span> We can establish the sampling variance of the sample mean of iid data for all <span class="math inline">\(F\)</span> such that <span class="math inline">\(\V[X_i]\)</span> is finite (more precisely, <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>)</p>
 <p><span class="math display">\[\begin{aligned}
   \V\left[ \Xbar_n \right] &amp;= \V\left[ \frac{1}{n} \sum_{i=1}^n X_i \right] &amp; (\text{definition of } \Xbar_n) \\
                            &amp;= \frac{1}{n^2} \V\left[ \sum_{i=1}^n X_i \right] &amp; (\text{property of } \V) \\
@@ -596,7 +665,7 @@ Warning
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="02_estimation_files/figure-html/mse-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Two sampling distributions</figcaption>
+<figcaption>Two sampling distributions</figcaption>
 </figure>
 </div>
 </div>
@@ -609,7 +678,8 @@ Warning
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>This approach to inference is often called a <strong>model-based approach</strong> since we are assuming a probability model in the cdf, <span class="math inline">\(F\)</span>. This is usually in contrast to a <strong>design-based approach</strong> to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>1924 May 24, Boston Herald, Whiting’s Column: Tammany Has Learned That This Is No Time for Political Bosses, Quote Page 2, Column 1, Boston, Massachusetts. (GenealogyBank)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This approach to inference is often called a <strong>model-based approach</strong> since we are assuming a probability model in the cdf, <span class="math inline">\(F\)</span>. This is usually in contrast to a <strong>design-based approach</strong> to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -693,10 +763,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -706,8 +775,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -720,6 +798,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -763,6 +960,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -788,6 +986,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -849,12 +1073,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./01_intro.html" class="pagination-link">
+      <a href="./01_intro.html" class="pagination-link  aria-label=" &lt;span="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03_asymptotics.html" class="pagination-link">
+      <a href="./03_asymptotics.html" class="pagination-link" aria-label="<span class='chapter-number'>3</span>&nbsp; <span class='chapter-title'>Asymptotics</span>">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -863,4 +1087,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/02_estimation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

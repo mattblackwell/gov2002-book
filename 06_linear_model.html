@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -47,7 +47,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -56,6 +62,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -64,6 +71,33 @@ ul.task-list li input[type="checkbox"] {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -74,12 +108,12 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./06_linear_model.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./06_linear_model.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -89,12 +123,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./users-guide.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -189,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -214,7 +249,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias"><span class="header-section-number">5.6</span> Omitted variable bias</a></li>
   <li><a href="#drawbacks-of-the-blp" id="toc-drawbacks-of-the-blp" class="nav-link" data-scroll-target="#drawbacks-of-the-blp"><span class="header-section-number">5.7</span> Drawbacks of the BLP</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mattblackwell/gov2002-book/edit/main/06_linear_model.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/06_linear_model.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -276,7 +311,7 @@ $$
 \DeclareMathOperator*{\argmin}{arg\,min}
 $$
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./06_linear_model.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-regression" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></h1>
 </div>
@@ -291,7 +326,9 @@ $$
   </div>
   
 
+
 </header>
+
 
 <p>Regression is a tool for assessing the relationship between an <strong>outcome variable</strong>, <span class="math inline">\(Y_i\)</span>, and a set of <strong>covariates</strong>, <span class="math inline">\(\X_i\)</span>. In particular, these tools show how the conditional mean of <span class="math inline">\(Y_i\)</span> varies as a function of <span class="math inline">\(\X_i\)</span>. For example, we may want to know how voting poll wait times vary as a function of some socioeconomic features of the precinct, like income and racial composition. We usually accomplish this task by estimating the <strong>regression function</strong> or <strong>conditional expectation function</strong> (CEF) of the outcome given the covariates, <span class="math display">\[
 \mu(\bfx) = \E[Y_i \mid \X_i = \bfx].
@@ -322,13 +359,17 @@ $$
   \vdots \\
   \E[Y_{i} \mid 200,000 \leq X_{i}] &amp;\text{if } 200,000 \leq x\\
 \end{cases}
-\]</span> This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. <a href="#fig-cef-binned">Figure&nbsp;<span>5.1</span></a> shows a hypothetical joint distribution between income and wait times with the true CEF, <span class="math inline">\(\mu(x)\)</span>, shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that the blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income.</p>
+\]</span> This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. <a href="#fig-cef-binned" class="quarto-xref">Figure&nbsp;<span>5.1</span></a> shows a hypothetical joint distribution between income and wait times with the true CEF, <span class="math inline">\(\mu(x)\)</span>, shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. We can see that the blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-cef-binned" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="06_linear_model_files/figure-html/fig-cef-binned-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.1: Hypothetical joint distribution of income and poll wait times (contour plot), conditional expectation function (red), and the conditional expectation of the binned income (blue).</figcaption>
+<div id="fig-cef-binned" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cef-binned-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06_linear_model_files/figure-html/fig-cef-binned-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cef-binned-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Hypothetical joint distribution of income and poll wait times (contour plot), conditional expectation function (red), and the conditional expectation of the binned income (blue).
+</figcaption>
 </figure>
 </div>
 </div>
@@ -367,13 +408,17 @@ m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \ar
 <p>Collecting together our results, we can write the population linear regression as <span class="math display">\[
 m(x) = \beta_0 + \beta_1x = \E[Y_i] + \beta_1(x - \E[X_i]),
 \]</span> which shows how we adjust our best guess about <span class="math inline">\(Y_i\)</span> from the mean of the outcome using the covariate.</p>
-<p>It’s important to remember that the BLP, <span class="math inline">\(m(x)\)</span>, and the CEF, <span class="math inline">\(\mu(x)\)</span>, are distinct entities. If the CEF is nonlinear, as in <a href="#fig-cef-blp">Figure&nbsp;<span>5.2</span></a>, there will be a difference between these functions, meaning that the BLP might produce subpar predictions. Below, we will derive a formal connection between the BLP and the CEF.</p>
+<p>It’s important to remember that the BLP, <span class="math inline">\(m(x)\)</span>, and the CEF, <span class="math inline">\(\mu(x)\)</span>, are distinct entities. If the CEF is nonlinear, as in <a href="#fig-cef-blp" class="quarto-xref">Figure&nbsp;<span>5.2</span></a>, there will be a difference between these functions, meaning that the BLP might produce subpar predictions. Below, we will derive a formal connection between the BLP and the CEF.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-cef-blp" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="06_linear_model_files/figure-html/fig-cef-blp-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.2: Comparison of the CEF and the best linear predictor.</figcaption>
+<div id="fig-cef-blp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cef-blp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06_linear_model_files/figure-html/fig-cef-blp-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cef-blp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Comparison of the CEF and the best linear predictor.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -486,7 +531,7 @@ Y_{i} = \X_{i}'\bfbeta + e_{i} = \X_{i}'\bfbeta + Y_{i} - \X_{i}'\bfbeta = Y_{i}
 \]</span></p>
 <p>So we have established that the CEF is the best predictor and the population linear regression <span class="math inline">\(m(\X_{i})\)</span> is the best linear predictor. These two facts allow us to connect the CEF and the population regression.</p>
 <div id="thm-cef-blp" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 5.1 </strong></span>If <span class="math inline">\(\mu(\X_{i})\)</span> is a linear function of <span class="math inline">\(\X_i\)</span>, then <span class="math inline">\(\mu(\X_{i}) = m(\X_{i}) = \X_i'\bfbeta\)</span>.</p>
+<p><span class="theorem-title"><strong>Theorem 5.1</strong></span> If <span class="math inline">\(\mu(\X_{i})\)</span> is a linear function of <span class="math inline">\(\X_i\)</span>, then <span class="math inline">\(\mu(\X_{i}) = m(\X_{i}) = \X_i'\bfbeta\)</span>.</p>
 </div>
 <p>This theorem says that if the true CEF is linear, it equals the population linear regression. The proof of this is straightforward: the CEF is the best predictor, so if it is linear, it must also be the best linear predictor.</p>
 <p>In general, we are in the business of learning about the CEF, so we are unlikely to know if it genuinely is linear or not. In some situations, however, we can show that the CEF is linear without any additional assumptions. These will be situations when the covariates take on a finite number of possible values. Suppose we are interested in the CEF of poll wait times for Black (<span class="math inline">\(X_i = 1\)</span>) vs.&nbsp;non-Black (<span class="math inline">\(X_i = 0\)</span>) voters. In this case, there are two possible values of the CEF, <span class="math inline">\(\mu(1) = \E[Y_{i}\mid X_{i}= 1]\)</span>, the average wait time for Black voters, and <span class="math inline">\(\mu(0) = \E[Y_{i}\mid X_{i} = 0]\)</span>, the average wait time for non-Black voters. Notice that we can write the CEF as <span class="math display">\[
@@ -568,7 +613,7 @@ m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{
 \end{aligned}
 \]</span> resulting in <span class="math inline">\(\beta_1 + \beta_2(2x_{1} + 1)\)</span>. This formula might be an interesting quantity, but we will more commonly use the derivative of <span class="math inline">\(m(\bfx)\)</span> with respect to <span class="math inline">\(x_1\)</span> as a measure of the marginal effect of <span class="math inline">\(X_{i1}\)</span> on the predicted value of <span class="math inline">\(Y_i\)</span> (holding all other variables constant), where “marginal” here means the change in prediction for a very small change in <span class="math inline">\(X_{i1}\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In the case of the quadratic covariate, we have <span class="math display">\[
 \frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1},
-\]</span> so the marginal effect on prediction varies as a function of <span class="math inline">\(x_1\)</span>. From this, we can see that the individual interpretations of the coefficients are less interesting: <span class="math inline">\(\beta_1\)</span> is the marginal effect when <span class="math inline">\(X_{i1} = 0\)</span> and <span class="math inline">\(\beta_2 / 2\)</span> describes how a one-unit change in <span class="math inline">\(X_{i1}\)</span> changes the marginal effect. As is hopefully clear, it will often be more straightforward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in <a href="#sec-fwl"><span>Section&nbsp;5.5</span></a>).</p>
+\]</span> so the marginal effect on prediction varies as a function of <span class="math inline">\(x_1\)</span>. From this, we can see that the individual interpretations of the coefficients are less interesting: <span class="math inline">\(\beta_1\)</span> is the marginal effect when <span class="math inline">\(X_{i1} = 0\)</span> and <span class="math inline">\(\beta_2 / 2\)</span> describes how a one-unit change in <span class="math inline">\(X_{i1}\)</span> changes the marginal effect. As is hopefully clear, it will often be more straightforward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in <a href="#sec-fwl" class="quarto-xref"><span>Section 5.5</span></a>).</p>
 </section>
 <section id="interactions" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="interactions"><span class="header-section-number">5.4.2</span> Interactions</h3>
@@ -604,7 +649,7 @@ m(x_{1}, x_{2}, x_{1}x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \bet
 \]</span> We can see from this that if <span class="math inline">\(\cov(X_{i}, Z_{i}) = 0\)</span>, then the coefficient on <span class="math inline">\(X_i\)</span> will be the same as in the simple regression case, <span class="math inline">\(\cov(Y_{i}, X_{i})/\V[X_{i}]\)</span>. When <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Z_i\)</span> are uncorrelated, we sometimes call them <strong>orthogonal</strong>.</p>
 <p>To write a simple formula for <span class="math inline">\(\beta\)</span> when the covariates are not orthogonal, we will <strong>orthogonalize</strong> <span class="math inline">\(X_i\)</span> by obtaining the prediction errors from a population linear regression of <span class="math inline">\(X_i\)</span> on <span class="math inline">\(Z_i\)</span>: <span class="math display">\[
 \widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
-\]</span> Given the properties of projection errors, we know that this orthogonalized version of <span class="math inline">\(X_{i}\)</span> will be uncorrelated with <span class="math inline">\(Z_{i}\)</span> since <span class="math inline">\(\E[\widetilde{X}_{i}Z_{i}] = 0\)</span>. Remarkably, the coefficient on <span class="math inline">\(X_i\)</span> from the “long” BLP in <a href="#eq-two-var-blp">Equation&nbsp;<span>5.1</span></a> is the same as the regression of <span class="math inline">\(Y_i\)</span> on this orthogonalized <span class="math inline">\(\widetilde{X}_i\)</span>, <span class="math display">\[
+\]</span> Given the properties of projection errors, we know that this orthogonalized version of <span class="math inline">\(X_{i}\)</span> will be uncorrelated with <span class="math inline">\(Z_{i}\)</span> since <span class="math inline">\(\E[\widetilde{X}_{i}Z_{i}] = 0\)</span>. Remarkably, the coefficient on <span class="math inline">\(X_i\)</span> from the “long” BLP in <a href="#eq-two-var-blp" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> is the same as the regression of <span class="math inline">\(Y_i\)</span> on this orthogonalized <span class="math inline">\(\widetilde{X}_i\)</span>, <span class="math display">\[
 \beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
 \]</span></p>
 <p>We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(\X_i\)</span> and we are interested in the coefficient on the <span class="math inline">\(k\)</span>th covariate. Let <span class="math inline">\(\X_{i,-k}\)</span> be the vector of covariates omitting the <span class="math inline">\(k\)</span>th entry and let <span class="math inline">\(m_k(\X_{i,-k})\)</span> represent the BLP of <span class="math inline">\(X_{ik}\)</span> on these other covariates. We can define <span class="math inline">\(\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})\)</span> as the <span class="math inline">\(k\)</span>th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on <span class="math inline">\(X_{ik}\)</span> as <span class="math display">\[
@@ -632,13 +677,17 @@ m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 </section>
 <section id="drawbacks-of-the-blp" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="drawbacks-of-the-blp"><span class="header-section-number">5.7</span> Drawbacks of the BLP</h2>
-<p>The best linear predictor is, of course, a <em>linear</em> approximation to the CEF, and this approximation could be quite poor if the true CEF is highly nonlinear. A more subtle issue with the BLP is that it is sensitive to the marginal distribution of the covariates when the CEF is nonlinear. Let’s return to our example of voter wait times and income. In <a href="#fig-blp-limits">Figure&nbsp;<span>5.3</span></a>, we show the true CEF and the BLP when we restrict income below $50,000 or above $100,000. The BLP can vary quite dramatically here. This figure is an extreme example, but the essential point will still hold as the marginal distribution of <span class="math inline">\(X_i\)</span> changes.</p>
+<p>The best linear predictor is, of course, a <em>linear</em> approximation to the CEF, and this approximation could be quite poor if the true CEF is highly nonlinear. A more subtle issue with the BLP is that it is sensitive to the marginal distribution of the covariates when the CEF is nonlinear. Let’s return to our example of voter wait times and income. In <a href="#fig-blp-limits" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>, we show the true CEF and the BLP when we restrict income below $50,000 or above $100,000. The BLP can vary quite dramatically here. This figure is an extreme example, but the essential point will still hold as the marginal distribution of <span class="math inline">\(X_i\)</span> changes.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-blp-limits" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="06_linear_model_files/figure-html/fig-blp-limits-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5.3: Linear projections for when truncating income distribution below $50k and above $100k.</figcaption>
+<div id="fig-blp-limits" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-blp-limits-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06_linear_model_files/figure-html/fig-blp-limits-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-blp-limits-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Linear projections for when truncating income distribution below $50k and above $100k.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -733,10 +782,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -746,8 +794,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -760,6 +817,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -803,6 +979,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -828,6 +1005,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -889,12 +1092,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04_hypothesis_tests.html" class="pagination-link">
+      <a href="./04_hypothesis_tests.html" class="pagination-link  aria-label=" &lt;span="" tests&lt;="" span&gt;"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_least_squares.html" class="pagination-link">
+      <a href="./07_least_squares.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>The mechanics of least squares</span>">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -903,4 +1106,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/06_linear_model.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

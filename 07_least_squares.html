@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -47,7 +47,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -56,6 +62,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -64,6 +71,33 @@ ul.task-list li input[type="checkbox"] {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -74,12 +108,12 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./07_least_squares.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./07_least_squares.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -89,12 +123,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/mattblackwell/gov2002-book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./users-guide.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -189,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -211,7 +246,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#influence-points" id="toc-influence-points" class="nav-link" data-scroll-target="#influence-points"><span class="header-section-number">6.9.3</span> Influence points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/mattblackwell/gov2002-book/edit/main/07_least_squares.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/07_least_squares.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -273,7 +308,7 @@ $$
 \DeclareMathOperator*{\argmin}{arg\,min}
 $$
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./07_least_squares.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sec-ols-mechanics" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></h1>
 </div>
@@ -288,16 +323,22 @@ $$
   </div>
   
 
+
 </header>
+
 
 <p>This chapter explores the most widely used estimator for population linear regressions: <strong>ordinary least squares</strong> (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency.</p>
 <p>In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS under an assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ajr-scatter" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="07_least_squares_files/figure-html/fig-ajr-scatter-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.1: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001).</figcaption>
+<div id="fig-ajr-scatter" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ajr-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07_least_squares_files/figure-html/fig-ajr-scatter-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ajr-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001).
+</figcaption>
 </figure>
 </div>
 </div>
@@ -341,10 +382,10 @@ SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
 \bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right),
 \]</span> which is the same expression as the plug-in estimator (after canceling the <span class="math inline">\(1/n\)</span> terms). To confirm that we have found a minimum, we also need to check the second-order condition, <span class="math display">\[
 \frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right) &gt; 0.
-\]</span> What does it mean for a matrix to be “positive”? In matrix algebra, this condition means that the matrix <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is <strong>positive definite</strong>, a condition that we discuss in <a href="#sec-rank"><span>Section&nbsp;6.4</span></a>.</p>
+\]</span> What does it mean for a matrix to be “positive”? In matrix algebra, this condition means that the matrix <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is <strong>positive definite</strong>, a condition that we discuss in <a href="#sec-rank" class="quarto-xref"><span>Section 6.4</span></a>.</p>
 <p>Using the plug-in or least squares approaches, we arrive at the same estimator for the best linear predictor/population linear regression coefficients.</p>
 <div id="thm-ols" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 6.1 </strong></span>If the <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is positive definite, then the ordinary least squares estimator is <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 6.1</strong></span> If the <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is positive definite, then the ordinary least squares estimator is <span class="math display">\[
 \bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right).
 \]</span></p>
 </div>
@@ -370,13 +411,17 @@ Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}.
 <p>When dealing with actual data, we refer to the prediction errors <span class="math inline">\(\widehat{e}_{i} = Y_i - \X_i'\bhat\)</span> as the <strong>residuals</strong> and the predicted value itself, <span class="math inline">\(\widehat{Y}_i = \X_{i}'\bhat\)</span>, is also called the <strong>fitted value</strong>. With the population linear regression, we saw that the projection errors <span class="math inline">\(e_i = Y_i - \X_i'\bfbeta\)</span> were mean zero and uncorrelated with the covariates <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span>. The residuals have a similar property with respect to the covariates in the sample: <span class="math display">\[
 \sum_{i=1}^n \X_i\widehat{e}_i = 0.
 \]</span> The residuals are <em>exactly</em> uncorrelated with the covariates (when the covariates include a constant/intercept term), which is mechanically true of the OLS estimator.</p>
-<p><a href="#fig-ssr-comp">Figure&nbsp;<span>6.2</span></a> shows how OLS works in the bivariate case. Here we see three possible regression lines and the sum of the squared residuals for each line. OLS aims to find the line that minimizes the function on the right.</p>
+<p><a href="#fig-ssr-comp" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> shows how OLS works in the bivariate case. Here we see three possible regression lines and the sum of the squared residuals for each line. OLS aims to find the line that minimizes the function on the right.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ssr-comp" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="07_least_squares_files/figure-html/fig-ssr-comp-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.2: Different possible lines and their corresponding sum of squared residuals.</figcaption>
+<div id="fig-ssr-comp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ssr-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07_least_squares_files/figure-html/fig-ssr-comp-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ssr-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: Different possible lines and their corresponding sum of squared residuals.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -389,13 +434,17 @@ Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}.
 SSR = \sum_{i=1}^n (Y_i - \X_{i}'\bhat)^2.
 \]</span> Recall that the best predictor for <span class="math inline">\(Y_i\)</span> without any covariates is simply its sample mean <span class="math inline">\(\overline{Y}\)</span>, and so the prediction error without covariates is what we call the <strong>total sum of squares</strong>, <span class="math display">\[
 TSS = \sum_{i=1}^n (Y_i - \overline{Y})^2.
-\]</span> <a href="#fig-ssr-vs-tss">Figure&nbsp;<span>6.3</span></a> shows the difference between these two types of prediction errors.</p>
+\]</span> <a href="#fig-ssr-vs-tss" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> shows the difference between these two types of prediction errors.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ssr-vs-tss" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="07_least_squares_files/figure-html/fig-ssr-vs-tss-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.3: Total sum of squares vs.&nbsp;the sum of squared residuals.</figcaption>
+<div id="fig-ssr-vs-tss" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ssr-vs-tss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07_least_squares_files/figure-html/fig-ssr-vs-tss-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ssr-vs-tss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.3: Total sum of squares vs.&nbsp;the sum of squared residuals.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -502,11 +551,15 @@ X_{i4} = 1 - X_{i1} - X_{i2} - X_{i3}.
 <h2 data-number="6.6" class="anchored" data-anchor-id="projection-and-geometry-of-least-squares"><span class="header-section-number">6.6</span> Projection and geometry of least squares</h2>
 <p>OLS has a very nice geometric interpretation that can add a lot of intuition for various aspects of the method. In this geometric approach, we view <span class="math inline">\(\mb{Y}\)</span> as an <span class="math inline">\(n\)</span>-dimensional vector in <span class="math inline">\(\mathbb{R}^n\)</span>. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix <span class="math inline">\(\Xmat\)</span> closest to this vector in terms of the Euclidean distance (which is just the sum of squares).</p>
 <p>Let <span class="math inline">\(\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^(k+1)\}\)</span> be the <strong>column space</strong> of the matrix <span class="math inline">\(\Xmat\)</span>. This set is all linear combinations of the columns of <span class="math inline">\(\Xmat\)</span> or the set of all possible linear predictions we could obtain from <span class="math inline">\(\Xmat\)</span>. Notice that the OLS fitted values, <span class="math inline">\(\Xmat\bhat\)</span>, are in this column space. If, as we assume, <span class="math inline">\(\Xmat\)</span> has full column rank of <span class="math inline">\(k+1\)</span>, then the column space <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> will be a <span class="math inline">\(k+1\)</span>-dimensional surface inside of the larger <span class="math inline">\(n\)</span>-dimensional space. If <span class="math inline">\(\Xmat\)</span> has two columns, the column space will be a plane.</p>
-<p>Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of <span class="math inline">\(\Xmat\)</span> to the outcome vector <span class="math inline">\(\mb{Y}\)</span>. This is called the <strong>projection</strong> of <span class="math inline">\(\mb{Y}\)</span> onto <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>. <a href="#fig-projection">Figure&nbsp;<span>6.4</span></a> shows this projection for a case with <span class="math inline">\(n=3\)</span> and 2 columns in <span class="math inline">\(\Xmat\)</span>. The shaded blue region represents the plane of the column space of <span class="math inline">\(\Xmat\)</span>, and we can see that <span class="math inline">\(\Xmat\bhat\)</span> is the closest point to <span class="math inline">\(\mb{Y}\)</span> in that space. That’s the whole idea of the OLS estimator: find the linear combination of the columns of <span class="math inline">\(\Xmat\)</span> (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).</p>
-<div id="fig-projection" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="assets/img/projection-drawing.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.4: Projection of Y on the column space of the covariates.</figcaption>
+<p>Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of <span class="math inline">\(\Xmat\)</span> to the outcome vector <span class="math inline">\(\mb{Y}\)</span>. This is called the <strong>projection</strong> of <span class="math inline">\(\mb{Y}\)</span> onto <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>. <a href="#fig-projection" class="quarto-xref">Figure&nbsp;<span>6.4</span></a> shows this projection for a case with <span class="math inline">\(n=3\)</span> and 2 columns in <span class="math inline">\(\Xmat\)</span>. The shaded blue region represents the plane of the column space of <span class="math inline">\(\Xmat\)</span>, and we can see that <span class="math inline">\(\Xmat\bhat\)</span> is the closest point to <span class="math inline">\(\mb{Y}\)</span> in that space. That’s the whole idea of the OLS estimator: find the linear combination of the columns of <span class="math inline">\(\Xmat\)</span> (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).</p>
+<div id="fig-projection" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/img/projection-drawing.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.4: Projection of Y on the column space of the covariates.
+</figcaption>
 </figure>
 </div>
 <p>This figure shows that the residual vector, which is the difference between the <span class="math inline">\(\mb{Y}\)</span> vector and the projection <span class="math inline">\(\Xmat\bhat\)</span>, is perpendicular or orthogonal to the column space of <span class="math inline">\(\Xmat\)</span>. This orthogonality is a consequence of the residuals being orthogonal to all the columns of <span class="math inline">\(\Xmat\)</span>, <span class="math display">\[
@@ -568,7 +621,7 @@ Residual regression approach
 </div>
 </div>
 <div id="thm-fwl" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 6.2 (Frisch-Waugh-Lovell) </strong></span>The OLS coefficients from a regression of <span class="math inline">\(\widetilde{\mb{e}}_{2}\)</span> on <span class="math inline">\(\widetilde{\Xmat}_1\)</span> are equivalent to the coefficients on <span class="math inline">\(\Xmat_{1}\)</span> from the regression of <span class="math inline">\(\mb{Y}\)</span> on both <span class="math inline">\(\Xmat_{1}\)</span> and <span class="math inline">\(\Xmat_2\)</span>.</p>
+<p><span class="theorem-title"><strong>Theorem 6.2 (Frisch-Waugh-Lovell)</strong></span> The OLS coefficients from a regression of <span class="math inline">\(\widetilde{\mb{e}}_{2}\)</span> on <span class="math inline">\(\widetilde{\Xmat}_1\)</span> are equivalent to the coefficients on <span class="math inline">\(\Xmat_{1}\)</span> from the regression of <span class="math inline">\(\mb{Y}\)</span> on both <span class="math inline">\(\Xmat_{1}\)</span> and <span class="math inline">\(\Xmat_2\)</span>.</p>
 </div>
 <p>One implication of this theorem is that the regression coefficient for a given variable captures the relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation orthogonal to those other covariates.</p>
 <p>While perhaps unexpected, this result may not appear particularly useful. We can just run the long regression, right? This trick can be handy when <span class="math inline">\(\Xmat_2\)</span> consists of dummy variables (or “fixed effects”) for a categorical variable with many categories. For example, suppose <span class="math inline">\(\Xmat_2\)</span> consists of indicators for the county of residence for a respondent. In that case, that will have over 3,000 columns, meaning that direct calculation of the <span class="math inline">\(\bhat = (\bhat_{1}, \bhat_{2})\)</span> will require inverting a matrix that is bigger than <span class="math inline">\(3,000 \times 3,000\)</span>. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable are just the sample mean within each level of the variable. Thus, in this case, the residuals <span class="math inline">\(\widetilde{\mb{e}}_2\)</span> and <span class="math inline">\(\Xmat_1\)</span> can be computed by demeaning the outcome and <span class="math inline">\(\Xmat_1\)</span> within levels of the dummies in <span class="math inline">\(\Xmat_2\)</span>, which can be considerably faster computationally.</p>
@@ -601,13 +654,17 @@ h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overli
 </section>
 <section id="outliers-and-leave-one-out-regression" class="level3" data-number="6.9.2">
 <h3 data-number="6.9.2" class="anchored" data-anchor-id="outliers-and-leave-one-out-regression"><span class="header-section-number">6.9.2</span> Outliers and leave-one-out regression</h3>
-<p>In the context of OLS, an <strong>outlier</strong> is an observation with a large prediction error for a particular OLS specification. <a href="#fig-outlier">Figure&nbsp;<span>6.5</span></a> shows an example of an outlier.</p>
+<p>In the context of OLS, an <strong>outlier</strong> is an observation with a large prediction error for a particular OLS specification. <a href="#fig-outlier" class="quarto-xref">Figure&nbsp;<span>6.5</span></a> shows an example of an outlier.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-outlier" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="07_least_squares_files/figure-html/fig-outlier-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.5: An example of an outlier.</figcaption>
+<div id="fig-outlier" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07_least_squares_files/figure-html/fig-outlier-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.5: An example of an outlier.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -623,13 +680,17 @@ h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overli
 </section>
 <section id="influence-points" class="level3" data-number="6.9.3">
 <h3 data-number="6.9.3" class="anchored" data-anchor-id="influence-points"><span class="header-section-number">6.9.3</span> Influence points</h3>
-<p>An influence point is an observation that has the power to change the coefficients and fitted values for a particular OLS specification. <a href="#fig-influence">Figure&nbsp;<span>6.6</span></a> shows an example of such an influence point.</p>
+<p>An influence point is an observation that has the power to change the coefficients and fitted values for a particular OLS specification. <a href="#fig-influence" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> shows an example of such an influence point.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-influence" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="07_least_squares_files/figure-html/fig-influence-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6.6: An example of an influence point.</figcaption>
+<div id="fig-influence" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-influence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07_least_squares_files/figure-html/fig-influence-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-influence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.6: An example of an influence point.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -728,10 +789,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -741,8 +801,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -755,6 +824,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -798,6 +986,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -823,6 +1012,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -884,12 +1099,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./06_linear_model.html" class="pagination-link">
+      <a href="./06_linear_model.html" class="pagination-link  aria-label=" &lt;span="" regression&lt;="" span&gt;"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./08_ols_properties.html" class="pagination-link">
+      <a href="./08_ols_properties.html" class="pagination-link" aria-label="<span class='chapter-number'>7</span>&nbsp; <span class='chapter-title'>The statistics of least squares</span>">
         <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -898,4 +1113,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/07_least_squares.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
