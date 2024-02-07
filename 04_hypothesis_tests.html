@@ -122,6 +122,55 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      RR: "{\\bf R}",
+      bs: ["\\boldsymbol{#1}", 1],
+      mb: ["\\mathbf{#1}", 1],
+      E: "\\mathbb{E}",
+      V: "\\mathbb{V}",
+      P: "\\mathbb{P}",
+      var: "\\text{var}",
+      cov: "\\text{cov}",
+      N: "\\mathcal{N}",
+      Bern: "\\text{Bern}",
+      Bin: "\\text{Bin}",
+      Pois: "\\text{Pois}",
+      Unif: "\\text{Unif}",
+      se: "\\textsf{se}",
+      U: "\\mb{U}",
+      Xbar: "\\overline{X}",
+      Ybar: "\\overline{Y}",
+      real: "\\mathbb{R}",
+      bbL: "\\mathbb{L}",
+      u: "\\mb{u}",
+      v: "\\mb{v}",
+      M: "\\mb{M}",
+      X: "\\mb{X}",
+      Xmat: "\\mathbb{X}",
+      bfx: "\\mb{x}",
+      y: "\\mb{y}",
+      bfbeta: "\\bs{\\beta}",
+      e: "\\bs{\\epsilon}",
+      bhat: "\\widehat{\\bs{\\beta}}",
+      XX: "\\Xmat'\\Xmat",
+      XXinv: "\\left(\\Xmat'\\Xmat\\right)^{-1}",
+      hatsig: "\\widehat{\\sigma}^2",
+      red: ["\\textcolor{red!60}{#1}", 1],
+      indianred: ["\\textcolor{indianred}{#1}", 1],
+      blue: ["\\textcolor{blue!60}{#1}", 1],
+      dblue: ["\\textcolor{dodgerblue}{#1}", 1],
+      indep: "\\perp\\!\\!\\!\\perp",
+      inprob: "\\overset{p}{\\to}",
+      indist: "\\overset{d}{\\to}",
+      argmax: ["\\operatorname\{arg\,max\}"],
+      argmin: ["\\operatorname\{arg\,min\}"]      
+    }
+  }
+};
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -301,63 +350,6 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
-$$
-\newcommand{\bs}{\boldsymbol}
-\newcommand{\mb}{\mathbf}
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\V}{\mathbb{V}}
-\newcommand{\var}{\text{var}}
-\newcommand{\cov}{\text{cov}}
-\newcommand{\N}{\mathcal{N}}
-\newcommand{\Bern}{\text{Bern}}
-\newcommand{\Bin}{\text{Bin}}
-\newcommand{\Pois}{\text{Pois}}
-\newcommand{\Unif}{\text{Unif}}
-\newcommand{\se}{\textsf{se}}
-\newcommand{\au}{\underline{a}}
-\newcommand{\du}{\underline{d}}
-\newcommand{\Au}{\underline{A}}
-\newcommand{\Du}{\underline{D}}
-\newcommand{\xu}{\underline{x}}
-\newcommand{\Xu}{\underline{X}}
-\newcommand{\Yu}{\underline{Y}}
-\renewcommand{\P}{\mathbb{P}}
-\newcommand{\U}{\mb{U}}
-\newcommand{\Xbar}{\overline{X}}
-\newcommand{\Ybar}{\overline{Y}}
-\newcommand{\real}{\mathbb{R}}
-\newcommand{\bbL}{\mathbb{L}}
-\renewcommand{\u}{\mb{u}}
-\renewcommand{\v}{\mb{v}}
-\newcommand{\M}{\mb{M}}
-\newcommand{\X}{\mb{X}}
-\newcommand{\Xmat}{\mathbb{X}}
-\newcommand{\bfx}{\mb{x}}
-\newcommand{\y}{\mb{y}}
-\renewcommand{\bfbeta}{\bs{\beta}}
-\newcommand{\e}{\bs{\epsilon}}
-\newcommand{\bhat}{\widehat{\bs{\beta}}}
-\newcommand{\XX}{\Xmat'\Xmat}
-\newcommand{\XXinv}{\left(\XX\right)^{-1}}
-\newcommand{\hatsig}{\hat{\sigma}^2}
-\newcommand{\red}[1]{\textcolor{red!60}{#1}}
-\newcommand{\indianred}[1]{\textcolor{indianred}{#1}}
-\newcommand{\blue}[1]{\textcolor{blue!60}{#1}}
-\newcommand{\dblue}[1]{\textcolor{dodgerblue}{#1}}
-\newcommand{\indep}{\perp\!\!\!\perp}
-\newcommand{\inprob}{\overset{p}{\to}}
-\newcommand{\indist}{\overset{d}{\to}}
-\newcommand{\eframe}{\end{frame}}
-\newcommand{\bframe}{\begin{frame}}
-\newcommand{\R}{\textsf{\textbf{R}}}
-\newcommand{\Rst}{\textsf{\textbf{RStudio}}}
-\newcommand{\rfun}[1]{\texttt{\color{magenta}{#1}}}
-\newcommand{\rpack}[1]{\textbf{#1}}
-\newcommand{\rexpr}[1]{\texttt{\color{magenta}{#1}}}
-\newcommand{\filename}[1]{\texttt{\color{blue}{#1}}}
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
-$$
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_estimation.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./04_hypothesis_tests.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a></li></ol></nav>
 <div class="quarto-title">
