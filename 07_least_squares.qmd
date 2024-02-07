@@ -1,3 +1,5 @@
+
+
 # The mechanics of least squares {#sec-ols-mechanics}
 
 This chapter explores the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency. 

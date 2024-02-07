@@ -35,14 +35,18 @@ format:
   html:
     theme: cosmo
     css: style.css
-    include-before-body:
-      - _dollars.tex
-      - _bold_html.tex
-      - _macros.tex
-      - _dollars.tex
+    include-in-header:
+      - file: "macros.jax"
+    # include-before-body:
+    #   - _dollars.tex
+    #   - _bold_html.tex
+    #   - _macros.tex
+    #   - _dollars.tex
         
   pdf:
     documentclass: scrreprt
+    fontfamily: cochineal
+    keep-tex: true
     include-in-header:
       - _bold.tex
       - _macros_pdf.tex

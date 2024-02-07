@@ -1,3 +1,5 @@
+
+
 # The statistics of least squares
 
 In the last chapter, we derived the least squares estimator and investigated many of its mechanical properties. These properties are essential for the practical application of OLS. Still, we should also understand its statistical properties, such as the ones described in Part I: unbiasedness, sampling variance, consistency, and asymptotic normality. As we saw then, these properties fall into finite-sample (unbiasedness, sampling variance) and asymptotic (consistency, asymptotic normality). 
