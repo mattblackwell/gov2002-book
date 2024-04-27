@@ -396,7 +396,7 @@ We could conduct stratified sampling here by splitting our population into two s
 
 Another reason to conduct a stratified random sample is to guarantee a level of precision for a certain subgroup of the population. In the social sciences, we often conduct nationally representative surveys, but have a specific interest in obtain estimates for certain minority populations like African Americans, Latinos, LGBT people, and others. In modest sample sizes, the number of respondents in one of these groups might be too small to learn much about their opinions. Thus, we might sample a higher proportion of the group of interest to ensure we can make precise statements about that group. 
 
-No matter why we conduct a stratified random sample, this approach will lead members of the population to have different **inclusion probabilities**, which we denote $\pi_i = \P(Z_{i} = 1)$. In a simple random sample, we have $\pi_i = n/N$ for all $i$. In the above fellowship example, we were sampling 2 hobbits and 3 non-hobbits, so we have the following inclusion probabilities:
+Stratified random sampling is one example of a broad class of sampling methods that have unequal inclusion probabilities, which we denote $\pi_i = \P(Z_{i} = 1)$. In a simple random sample, we have $\pi_i = n/N$ for all $i$. In the above fellowship example, we were sampling 2 hobbits and 3 non-hobbits, so we have the following inclusion probabilities:
 
 
 | Unit ($i$)  | Race   | Inclusion probability ($\pi_i$) |
@@ -411,11 +411,18 @@ No matter why we conduct a stratified random sample, this approach will lead mem
 | 8 (Boromir) | Man    | 0.6                             |
 | 9 (Legolas) | Elf    | 0.6                             |
 
+There are additional ways that we might conduct a random sample with unequal inclusion probabilities. For example, suppose we were randomly sampling 5 cities to study from the United States. We might want to bias our sample toward larger cities to capture a larger number of citizens in the overall sample. In that case, if the number of inhabitants for city $i$ is $b_i$, then our inclusion probabilities for sampling with replacement[^pps] would be 
+$$
+\pi_i = \frac{b_i}{\sum_{i=1}^N b_i}.
+$$
+Here again, we are using information about the population in our sampling design, though this information is more continuous whereas the information in the stratified estimator is discrete. 
+
+[^pps]: This description is true for sampling with replacement. When we want to sample without replacement, we would need to adjust the probabilities to account for how being selected first means that a unit cannot be selected second. 
 
 
-In using a stratified sample, we have obviously changed our sampling design (question 3), but the population and estimands (questions 1 and 2) remain the same. We are still interested in estimating the population mean, $\overline{x}$. We now turn to our estimator (question 4), since we will need to use a new estimator that matches the design. 
+When using a sampling design with unequal inclusion probabilities, we have obviously changed our sampling design (question 3), but the population and estimands (questions 1 and 2) remain the same. We are still interested in estimating the population mean, $\overline{x}$. We now turn to our estimator (question 4), since we will need to use a new estimator that matches the design. 
 
-There are actually two estimators that are commonly used to estimate the population mean with a stratified sample. The first is called the **Horvitz-Thompson (HT) estimator** and has the form
+There are actually two estimators that are commonly used to estimate the population mean when sampling with unequal inclusion probabilities. The first is called the **Horvitz-Thompson (HT) estimator** and has the form
 $$ 
 \widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^{N} \frac{Z_{i}x_{i}}{\pi_{i}},
 $$
@@ -425,7 +432,7 @@ We can show that the HT estimator is unbiased for the population mean by noting 
 $$
 \E[\widetilde{X}_{HT}] = \frac{1}{N} \sum_{i=1}^N \frac{\E[Z_i]x_i}{\pi_i} = \frac{1}{N} \sum_{i=1}^N x_i = \overline{x}. 
 $$
-One downside of the HT estimator is that it can be unstable a unit with a very small inclusion probability is selected, since their weight $1/\pi_i$ will be very large. This instability is the cost of being unbiased for the stratified design. Of course, we can design the stratified sampling to avoid this type of problem, but we can also use a different estimators that is more stable, but is biased. We can write the formula for the sampling variance, but it is rather complicated and requires notation that is less important to the task at hand. 
+One downside of the HT estimator is that it can be unstable a unit with a very small inclusion probability is selected, since their weight $1/\pi_i$ will be very large. This instability is the cost of being unbiased for the stratified design. We can write the formula for the sampling variance, but it is rather complicated and requires notation that is less important to the task at hand. 
 
 The **Hájek estimator** normalizes the weights so they sum to $N$ and has the form
 $$ 
@@ -434,3 +441,27 @@ $$
 This estimator is **biased** for the population mean since there is a random quantity in the denominator. The Hajek estimator is often considered the better estimator in many situations, though, because it have lower sampling variance than the HT estimator. 
 
 
+### Sampling weights
+
+The HT and Hajek estimators are both functions of what are commonly called the **sampling weights**,
+$$w_i = \frac{1}{\pi_i}$$.
+We can write the HT estimator as
+$$
+\widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^N w_iZ_ix_i,
+$$
+and we can write the Hajek estimator as
+$$
+\widetilde{X}_{hj} = \frac{\sum_{i=1}^N w_iZ_{i}x_{i}}{\sum_{i=1}^{N} w_iZ_{i}}.
+$$
+These weights, $w_i$, are commonly distributed with surveys because they are the only piece of information from the sampling design that we need to use the above estimators. This allows researchers to analyze a randomly sampled survey without knowledge of the exact design.[^var]
+
+[^var]: If we want design-based estimators of the sampling variance, we would also need to know the joint inclusion probabilities, which are the probabilities of any two units being sampled together. 
+
+The sampling weights have a nice interpretation in terms of a pseudo-population. Each unit in the sample "represents" $w_i = 1/\pi_i$ units in the population, thus making the sample more representative of the population. 
+
+Finally, we note that statistical software often is a little confusing in terms of how it handles weights. It may not be obvious what estimator the R function `weighted.mean(x, w)` is using. In fact, looking at the source code, we find that it basically calls
+```{r}
+#| eval: false
+sum(x * w) / sum(w)
+```
+which is equivalent to the Hajek estimator above. 

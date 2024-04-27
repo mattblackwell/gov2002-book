@@ -255,11 +255,11 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -301,7 +301,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable, boxrule=0pt, interior hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, borderline west={3pt}{0pt}{shadecolor}, interior hidden, boxrule=0pt, breakable, frame hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -437,7 +437,7 @@ attempts to correct this.
 \chapter{Design-based Inference}\label{design-based-inference}}
 
 \hypertarget{introduction-1}{%
-\section{introduction}\label{introduction-1}}
+\section{Introduction}\label{introduction-1}}
 
 Quantitative analysis of social data has an alluring exactness. We can
 estimate the average minutes of YouTube videos watched down to the
@@ -666,7 +666,9 @@ indicators \(\mb{Z}\):
 
 A \textbf{sampling design} is a complete specification of how likely
 each of these samples is to be selected. That is, we need to determine a
-selection probability \(\pi_i\) for each sample \(\mathcal{S}_i\).
+selection probability \(\pi_j\) for each sample \(\mathcal{S}_j\). One
+of the most widely-studied designs is one that places equal probability
+on each of the possible samples of size \(n\).
 
 \begin{definition}[]\protect\hypertarget{def-srs}{}\label{def-srs}
 
@@ -682,122 +684,595 @@ a particular possible sampling, then, \[
 
 \end{definition}
 
-\begin{itemize}
-\item
-  \textbf{Assumption}: simple random sample (eg, with replacement) of
-  size \(n\) from this population
+In the case of sampling two hobbits, the srs would place
+\(1/{4\choose 2} = 1/6\) probability of each of the above samples
+\(\mathcal{S}_j\). Notice that the simple random sample gives zero
+probability to any sample does not have exactly \(n\) units in the
+sample.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    Number of possible samples: \(N \choose n\)
-  \item
-    Sampling inclusion indicators: \(I_1, I_2, \ldots, I_N\)
-  \item
-    These are random because of the random sampling (uppercase!)
-  \item
-    Total sample size is fixed: \(\sum_{i=1}^{N} I_{i} = n\)
-  \item
-    \textbf{Inclusion probabilities}: \(\pi = \P(I_{i} = 1) = n/N\)
-  \end{itemize}
-\item
-  Different \textbf{sampling designs} lead to different inclusion
-  probabilities and difference inferences.
-\end{itemize}
+Another common sampling design, called the \textbf{Bernoulli sampling}
+chooses each unit independently with the sample probability.
+
+\begin{definition}[]\protect\hypertarget{def-srs}{}\label{def-srs}
+
+\textbf{Bernoulli sampling} is a probability sampling design where
+independent Bernoulli trials with probability of success \(q\) determine
+whether each unit in the population will be included in the sample. More
+specifically, let \(\mb{z} = (z_{1}, \ldots, z_{N})\) be a particular
+possible sampling. Then, Bernoulli sampling is \[
+\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q_i^{Z_i}(1 - q_i)^{1-Z_i}
+\]
+
+\end{definition}
+
+Bernoulli sampling is simple and the independence of inclusion across
+units simplifies many calculation. However, the ``coin flipping''
+approach means that the sample size, \(N_s = \sum_{i=1}^N Z_i\) will be
+itself a random variable because it is the result of how many of the
+coin flips land on ``heads.''
 
 \hypertarget{question-4-estimator}{%
 \section{Question 4: Estimator}\label{question-4-estimator}}
 
-\begin{itemize}
-\item
-  Estimator: sample mean
-  \(\overline{X}_n = \frac{1}{n} \sum_{i=1}^{N}I_ix_i\)
+Now that we have a sampling design and a quantity of interest, we can
+consider how we might learn about the quantity of interest from our
+sample. An \textbf{estimator} is a function of the sample measurements
+inteded as a best guess about our quantity of interest.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    This estimator is random because the sample is random.
-  \end{itemize}
+If the most common estimand is the population mean, the most popular
+estimator is the \textbf{sample mean}, \[
+\overline{X}_n = \frac{1}{n} \sum_{i=1}^{N}Z_ix_i
+\]
+
+The sample mean is a \textbf{random} quantity since it varies from
+sample to sample and those samples are chosen probabilistically. For
+example, say we have the following measurements of heights from our very
+small population of hobbits.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Unit (\(i\)) & Height in cm (\(x_i\)) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 (Frodo) & 124 \\
+2 (Sam) & 127 \\
+3 (Pip) & 123 \\
+4 (Merry) & 127 \\
+\end{longtable}
+
+If we consider a simple random sample of size \(n=2\) from this
+population, we can list out the probability of all possible sample means
+associated with this sampling design.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2466}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3151}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4384}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sample (\(j\))
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Probability (\(\pi_j\))
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sample mean (\(\overline{X}_n\))
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 (Frodo, Sam) & 1/6 & (124 + 127) / 2 = 125.5 \\
+2 (Frodo, Pip) & 1/6 & (124 + 123) / 2 = 123.5 \\
+3 (Frodo, Merry) & 1/6 & (124 + 127) / 2 = 125.5 \\
+4 (Sam, Pip) & 1/6 & (127 + 123) / 2 = 125 \\
+5 (Sam, Merry) & 1/6 & (127 + 127) / 2 = 127 \\
+6 (Pip, Merry) & 1/6 & (123 + 127) / 2 = 125 \\
+\end{longtable}
+
+We can simplify this a bit to find the sampling distribution of the
+sample mean of hobbit height under a simple random sample of size 2:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Sample mean & Probability \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+123.5 & 1/6 \\
+125 & 1/3 \\
+125.5 & 1/3 \\
+127 & 1/6 \\
+\end{longtable}
+
+Thus, the sampling distribution combines the population with a sampling
+design to tell us what values of an estimator are more or less likely.
+
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
+
+Notice that the sampling distribution of an estimator will depend on the
+sampling design. Here, we used the simple random sample, but Bernoulli
+sampling would have produced a different distribution. For example,
+under Bernoulli sampling, we could end up with a sample of just Frodo,
+in which case the sample mean would be 124, a value that was not
+possible with simple random sampling of size \(n=2\).
+
+\end{tcolorbox}
+
+\hypertarget{properties-of-the-sampling-distribution-of-an-estimator}{%
+\subsection{Properties of the sampling distribution of an
+estimator}\label{properties-of-the-sampling-distribution-of-an-estimator}}
+
+Generally speaking, we want ``good'' estimators, but what makes a
+``good'' estimator? The best estimator would be right all of the time
+(\(\Xbar_n = \overline{x}\) with probability 1), but this is only
+possible if we conduct a census (sample everyone in the population) or
+the population does not vary, neither of which are typical situations
+for the working researcher.
+
+We instead focus on properties of the sampling distribution of an
+estimator. We might ask the following types of questions:
+
+\begin{itemize}
+\tightlist
 \item
-  \textbf{Design-based inference}: randomness comes from sampling alone
-  and depends on sampling design.
+  Is the variation in the realizations of the estimator centered on the
+  true value of the quantity of interest? (unbiasedness)
 \item
-  Unbiasedness proof is illustrative: \[ 
-  \E[\Xbar_{n}] = \E\left[\frac{1}{n} \sum_{i=1}^{N} I_{i}x_{i}\right] = \frac{1}{n} \sum_{i=1}^{N} \E[I_{i}]x_{i} = \frac{1}{n} \sum_{i=1}^{N} \frac{n}{N}x_{i} = \frac{1}{N} \sum_{i=1}^{N}x_{i} = \overline{x} 
-  \]
+  Is there a lot or a little variation in the realizations of the
+  estimator across different samples from the population? (sample
+  variance)
 \item
-  Remember: unbiased across repeated samples from the sampling design.
+  On average, how close to the truth is the estimator? (mean square
+  error)
 \end{itemize}
 
-\hypertarget{question-5}{%
-\section{Question 5:}\label{question-5}}
+The answers to these questions will depend on (a) the estimator and (b)
+the sampling design.
 
-\hypertarget{variance-of-the-sample-mean}{%
-\section{Variance of the sample
-mean}\label{variance-of-the-sample-mean}}
+The sampling distribution shows us all the possible values of an
+estimator across different samples from the population. If we want to
+summarize this distribution with a single number, we would focus on its
+expectation, which is a measure of central tendency of the distribution.
+Roughly speaking, we would like the center of the distribution to be
+close to and, ideally, equal to the true quantity of interest. If this
+isn't the case, it means the estimator systematically over- or
+under-estimates the truth. We call this difference the \textbf{bias} of
+an estimator, and we write it mathematically as \[
+\textsf{bias}[\Xbar_{n}] = \E[\Xbar_{n}] - \overline{x}.
+\] Any estimator that has bias equal to zero is call an
+\textbf{unbiased} estimator.
 
-\begin{itemize}
-\item
-  Variance of \(\Xbar_n\) across repeated samples: \[ 
-  \V[\Xbar_{n}] = \underbrace{\left(1 - \frac{n}{N}\right)}_{\text{finite pop. correction}} \frac{s^{2}}{n}
-  \]
-\item
-  \(s^{2}\) is the \textbf{population variance} of \(x_i\) (a fixed
-  quantity!!): \[ 
-  s^{2}= \frac{1}{N-1} \sum_{i=1}^{N} (x_{i} - \overline{x})^{2} 
-  \]
-\item
-  We can still apply the plug-in principle and use the \textbf{sample
-  variance} \(S^2\) \[ 
-  \widehat{\V}[\Xbar_{n}] = \left(1 - \frac{n}{N}\right)\frac{S^{2}}{n} \quad\quad S^{2} = \frac{1}{n-1}\sum_{i=1}^{N} I_{i}(x_{i} - \Xbar_{n})^{2}
-  \]
-\item
-  We can show that this is unbiased so that
-  \(\E[\widehat{\V}[\Xbar_{n}]] = \V[\Xbar_{n}]\)
-\end{itemize}
+We can calculate the bias of our hobbit srs by first calculating the
+expected value of the estimator, \[
+\E[\Xbar_{n}] = \frac{1}{6}\cdot 123.5 + \frac{1}{3} \cdot 125 + \frac{1}{3} \cdot 125.5 + \frac{1}{6} \cdot 127 = 125.25,
+\] and compare this to the population mean, \[
+\overline{x} = \frac{1}{4}\left(124 + 127 + 123 + 127\right) = 125.25.
+\] Thus, the sample mean in this simple random sample is unbiased.
 
-\hypertarget{inverse-probability-weighting}{%
-\subsection{Inverse probability
-weighting}\label{inverse-probability-weighting}}
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
-\begin{itemize}
-\item
-  More often, we have unequal sampling probabilities:
-  \(\pi_i = \P(I_{i} = 1)\) for each \(i\)
+We often use the word ``bias'' to refer to other ways that our research
+could be systematically incorrect. For example, we might complain that a
+survey question is biased if it presents a question in leading or
+misleading manner or if it mismeasures the concept of interest. For
+example, suppose we wanted to estimate what proportion of a population
+regularly donates money to a political campaign, but \(x_i\) actually
+measures whether or not they donated on the day of the survey. In this
+case, \(\overline{x}\) would be quite a bit lower than the quantity of
+interest that we actually want to measure. Textbooks often refer to this
+gap---between the measures we obtain and the measures we want---as
+\textbf{measurement bias}. This is distinct from the bias of the sample
+mean. If we took a srs from the population, \(\Xbar_{n}\) would still be
+an unbiased for \(\overline{x}\), even if that is the wrong quantity of
+interest.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    Typically to oversample groups that are difficult to reach
-  \item
-    Or to ensure sufficient sample sizes for smaller minority groups
-  \end{itemize}
-\item
-  \textbf{Horvitz-Thompson estimator}: \[ 
-  \widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^{N} \frac{I_{i}x_{i}}{\pi_{i}}
-  \]
+\end{tcolorbox}
 
-  \begin{itemize}
-  \tightlist
-  \item
-    The HT estimator is unbiased:
-    \(\E[\widetilde{X}_{HT}] = \overline{x}\)
-  \item
-    But be very unstable and high variance if a low \(\pi_i\) actually
-    gets sampled
-  \end{itemize}
-\item
-  Alternative: \textbf{Hajek estimator} (also known as the IPW
-  estimator) \[ 
-  \widetilde{X}_{ipw} = \frac{\sum_{i=1}^N I_{i}x_{i} / \pi_{i}}{\sum_{i=1}^{N} I_{i}/\pi_{i}}
-  \]
+Is the unbiasedness of our hobbit sampling unique? Thankfully, no. We
+can actually prove that the sample mean will be unbiased for the
+population mean under a simple random sample. Simply plugging in the
+definition of the sample mean, we obtain. \[ 
+\E[\Xbar_{n}] = \E\left[\frac{1}{n} \sum_{i=1}^{N} Z_{i}x_{i}\right] = \frac{1}{n} \sum_{i=1}^{N} \E[Z_{i}]x_{i} = \frac{1}{n} \sum_{i=1}^{N} \frac{n}{N}x_{i} = \frac{1}{N} \sum_{i=1}^{N}x_{i} = \overline{x} 
+\] The second equality is the key, where we use \(\E[Z_i] = n/N\) for
+the simple random sample. Intuitively, the probability of being included
+in the sample is just the fraction of the sample being selected,
+\(n/N\).
 
-  \begin{itemize}
-  \tightlist
-  \item
-    Normalizes by the sum of weights.
-  \end{itemize}
-\end{itemize}
+The second salient feature of an estimator's sampling distribution is
+how spread out it is. Generally speaking, we would prefer an estimator
+whose estimates are very similar from sample to sample, rather than an
+estimator whose estimates vary wildly from one sample to the next. We
+quantify this spread with the \textbf{sampling variance} which is just
+the variance of the sampling distribution of the estimator, or \[
+\V[\Xbar_n] = \E[(\Xbar_n - \E[\Xbar_n])^2].
+\] An alternative measure of spread is the \textbf{standard error} of an
+estimator, which is just the square root of the sampling variance, \[
+\se[\Xbar_n] = \sqrt{\V[\Xbar_n]}.
+\] The standard error is often more interpretable because it is on the
+same scale as the original variable. So, if we were measuring income in
+the United States, the standard error would be measured in dollars,
+whereas the sampling variance would be measured in dollars squared.
+
+The final feature of interest is the \textbf{mean squared error} or
+\textbf{MSE}, which (as its name implies) measures the average of the
+squared error, \[
+\text{MSE} = \E[(\Xbar_n-\overline{x})^2].
+\] The keen-eyed reader might find this quantity redundant, because we
+showed above that the sample mean is unbiased so
+\(\E[\Xbar_n] = \overline{x}\), which would mean that the sampling
+variance of the sample mean is just the mean squared error. However,
+circumstances will often conspire to have us use biased estimators and
+so these two quantities will be different. In fact, if we have an
+estimator \(\widehat{\theta}\) for some population quantity \(\theta\),
+\[ 
+\begin{aligned}
+\text{MSE}[\widehat{\theta}] &= \E[(\widehat{\theta} - \theta)^2] \\
+&= \E[(\widehat{\theta} - \E[\widehat{\theta}] + \E[\widehat{\theta}] - \theta)^2] \\
+&= \E[(\widehat{\theta} - \E[\widehat{\theta}])^2] + \left(\E[\widehat{\theta}] - \theta\right) ^ 2 + 2\E[(\widehat{\theta} - \E[\widehat{\theta}])]\left(\E[\widehat{\theta}] - \theta\right) \\
+&= \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
+\end{aligned}
+\] We can see, then, that the MSE is low when bias and variance are low.
+
+One way to conceptualize all of these concepts is to connect them to
+notions of precision and accuracy. In particular, estimators with low
+sampling variance are \textbf{precise}, whereas estimators with low MSE
+are \textbf{accurate}. We might have an estimator that is very precise,
+but inaccurate because it is biased.
+
+\hypertarget{question-5-uncertainty}{%
+\section{Question 5: Uncertainty}\label{question-5-uncertainty}}
+
+We have a population, a quantity of interest, a sampling design, an
+estimator, and, with data, an actual estimate. But if we have sampled,
+say, Sam and Merry from our hobbit population and obtained a sample mean
+height of 127, we might worry about all of the other samples and sample
+means we could have drawn. Is our estimate of 127 inches close to the
+true population mean? We cannot truly know without conducting a complete
+census, which would render our sampling pointless. Can we instead figure
+out how far we might be from the truth? The sampling variance actually
+answers this exact question, but it depends on the sampling distribution
+and we only have a single draw from this distribution: our estimate of
+127.
+
+If we have a specific estimator and sampling design, we can usually
+derive an analytical expression for the sampling variance (and, thus,
+the standard error). This will help us understand what factors will
+influence the sampling variance. To help us in this endeavor, we need to
+define an additional feature of the population distribution, the
+\textbf{population variance}, \[
+s^{2}= \frac{1}{N-1} \sum_{i=1}^{N} (x_{i} - \overline{x})^{2}.
+\] The population variance is a fixed quantity, measuring the spread of
+the \(x_i\) values in the population.
+
+We can now write the sampling variance of \(\Xbar_n\) under simple
+random sampling as \[
+\V[\Xbar_{n}] = \left(1 - \frac{n}{N}\right) \frac{s^{2}}{n}
+\] From this expression, we can determine a few relationships. First, if
+the the data \(x_i\) is more spread out in the population, the sample
+mean will also be more spread out. Second, the larger the sample size,
+\(n\), the smaller the sampling variance (for a fixed population size).
+Third, the larger the population size, \(N\), the smaller the sampling
+variance (for a fixed sample size).
+
+\hypertarget{deriving-the-sampling-variance-of-the-sample-mean}{%
+\subsection{Deriving the sampling variance of the sample
+mean}\label{deriving-the-sampling-variance-of-the-sample-mean}}
+
+How did we obtain this expression for the sampling variance under simple
+random sampling? We might be tempted to simply say ``someone else proved
+it for me,'' but this blind faith in statistical theory limits our own
+understanding of this situation and our own ability to navigate novel
+scenarios that arise in our research lives.
+
+Let's begin with a simple application of the rules of variance that
+would be valid for any sampling design: \[
+\V[\Xbar_{n}] = \V\left[\frac{1}{n} \sum_{i=1}^N x_iZ_i\right] = \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] + \sum_{i=1}^N\sum_{j\neq i} x_ix_j\cov[Z_i,Z_j]\right].
+\] Notice in the second equality how the \(x_i\) and \(x_j\) values come
+out of the variance and covariance operators like they are constants.
+This is because in design-based inference, they are exactly constants.
+The only source of variation and uncertainty comes from the sampling,
+symbolized by the inclusion indicators, \(Z_i\). Clearly, to make
+progress, we will need to know the variance and covariance of these
+inclusion indicators. Recall that the variance of a binary indicator
+with probability \(p\) of being 1 is \(p(1 - p)\). So if we have
+\(\P(Z_i = 1) = n/N\) for a simple random sample, we have \[
+\V[Z_i] = \frac{n}{N}\left(1 - \frac{n}{N}\right) = \frac{n(N - n)}{N^2}.
+\]
+
+If you are used to the ``independent and identically distributed''
+framework (to which we will turn in the next chapter), the covariances
+in our sampling variances might surprise you. Don't we usually think of
+our units as independent? While this assumption would (and will) make
+our math lives easier, it is not true for the simple random sample. The
+srs samples units without replacement, which implies that inclusion is
+not independent---knowing that unit \(i\) was included the sample means
+that another unit \(j\) only has a \((n-1)/(N-1)\) probability of being
+included in the sample. To derive an expression for the covariance, note
+that \(\cov(Z_i, Z_j) = \E[Z_iZ_j] - \E[Z_i]\E[Z_j]\) and \[
+\E[Z_iZ_j] = \P(Z_i = 1, Z_j = 1) = \P(Z_i = 1)\P(Z_j =1 \mid Z_i = 1) = \frac{n}{N}\cdot \frac{n-1}{N-1}.
+\] Plugging this into our covariance statement, we get, \[
+\begin{aligned}
+\cov(Z_i, Z_j) &= \E[Z_iZ_j] - \E[Z_i]\E[Z_j] \\ &= \frac{n}{N}\cdot \frac{n-1}{N-1} - \frac{n^2}{N^2}. \\
+&=\frac{n}{N}\left(\frac{n-1}{N-1} - \frac{n}{N}\right) \\
+&= \frac{n}{N}\left(\frac{Nn-N - Nn + n}{N(N-1)}\right) \\
+&= -\frac{n(N- n)}{N^2(N-1)} \\
+&= -\frac{\V[Z_i]}{N-1}.
+\end{aligned}
+\] Given that variances and population sizes are positive, we can see
+that the covariance between the inclusions of two units is negative.
+Given that there are a fixed number of spots in the sample, Frodo being
+included lowers the chances that Sam is included, so we end up with this
+negative covariance.
+
+With the covariance and variance in hand, we can derive the sampling
+variance of the sample mean. \[
+\begin{aligned}
+\V[\Xbar_{n}] &=  \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] + \sum_{i=1}^N\sum_{j\neq i} x_ix_j\cov[Z_i,Z_j]\right] \\
+&=  \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\V[Z_i]\right] \\
+&=  \frac{\V[Z_i]}{n^2}\left[\sum_{i=1}^N x_i^2 - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right] \\
+&=  \frac{N-n}{nN^2}\left[\sum_{i=1}^N x_i^2 - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right]
+\end{aligned}
+\] Where do we go from here? Unfortunately, we now arrive at the
+non-obvious and seemingly magical step of ``adding and subtracting a
+crucial quantity.'' This step appears magical because you seem to have
+to know the step before you can complete the proof, but how could you
+ever complete the proof without knowing this step? In this case, we need
+to add and subtract the quantity \((N-1)^{-1} \sum_{i=1}^N x_i^2\). Why
+this quantity and how could we ever discover it on our own? Let's
+rewrite the population variance in a slightly different way to see what
+we might want to find, \[
+s^2 = \frac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 = \frac{1}{N-1} \left(\sum_{i=1}^N x_i^2  - N\overline{x}^2\right)
+\] Notice that we can write \[
+N^2\overline{x}^2 = \sum_{i=1}^N x_i^2 + \sum_{i=1}^N \sum_{j\neq i} x_ix_j, 
+\] which provides a hint as to the quantity that we will add and
+subtract \[
+\begin{aligned}
+\V[\Xbar_{n}] &=  \frac{N-n}{nN^2}\left[\sum_{i=1}^N x_i^2  \textcolor{red!50}{\underbrace{+ \frac{1}{N-1}\sum_{i=1}^N x_i^2 - \frac{1}{N-1}\sum_{i=1}^N x_i^2}_{\text{add and subtract}}} - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right] \\
+&=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{1}{N-1} \sum_{i=1}^N\sum_{j=i}^N x_ix_j\right] \\
+&=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{N^2}{N-1} \overline{x}\right] \\
+&=  \frac{N-n}{nN(N-1)}\left[\sum_{i=1}^N x_i^2  - N \overline{x}\right] \\
+&=  \frac{N-n}{nN(N-1)}\sum_{i=1}^N (x_i - \overline{x})^2 \\
+&= \frac{(N-n)}{N}\frac{s^2}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n}.
+\end{aligned}
+\] This proof is rather involved, but it does display some commonly-used
+approaches to deriving statistical results. It also highlights how the
+sampling scheme leads to dependence that makes the result more
+complicated. In the next chapter, we will see that the variance of the
+sample mean under indepdent and identically distributed sampling is much
+simpler.
+
+\hypertarget{estimating-the-sampling-variance}{%
+\subsection{Estimating the sampling
+variance}\label{estimating-the-sampling-variance}}
+
+One unfortunate aspect of the sampling variance, \(\V[\Xbar_n]\), is
+that it depends on the population variance, \(s^2\), which we cannot
+know unless have conducted a census of the entire population. Of course,
+in that case, we would hardly need to worry about uncertainty. Thus, we
+will need some way to estimate the sampling variance. Since we already
+know \(n\) and \(N\), the most straightforward way to do this is to find
+an estimator for the population variance.
+
+The \textbf{sample variance} is the variance formula applied to the
+sample itself, \[
+S^2 = \frac{1}{n-1} \sum_{i=1}^N Z_i(x_i - \Xbar_n)^2.
+\] We can obtain an estimator for the sampling variance by plugging this
+in for the population variance, \[
+\widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
+\]
+
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
+
+It is easy to get confused about the difference between the population
+variance, the sampling variance, and the sample variance. Adding to the
+confusion is that these are both variances, but for different
+distributions.
+
+\end{tcolorbox}
+
+Is \(\widehat{\V}[\Xbar_n]\) a good estimator for \(\V[\Xbar_{n}]\)? To
+answer this question, we can apply the same criteria as above in
+Question 4. Ideally, our estimator would be unbiased, which in this case
+would be that it does not systematically over- or underestimate how much
+variation there is in the sample mean across samples.
+
+\[
+\begin{aligned}
+\E[S^2] &= \frac{1}{n-1} \sum_{i=1}^N \E[Z_i(x_i - \Xbar_n)^2] \\
+&= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x} - (\Xbar_n - \overline{x}))^2\right] \\
+&= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x})^2 -2Z_i(x_i - \overline{x})(\Xbar_n - \overline{x}) + Z_i(\Xbar_n - \overline{x})^2\right] \\
+\end{aligned}
+\]
+
+Notice that \((\Xbar_n - \overline{x})\) does not depend on \(i\) so we
+can pull it out of the summations:
+
+\[
+\begin{aligned}
+\E[S^2] &= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x})^2 -2(\Xbar_n - \overline{x}) \sum_{i=1}^N Z_i(x_i - \overline{x}) + (\Xbar_n - \overline{x})^2 \sum_{i=1}^N Z_i\right] \\
+ &= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x})^2 -2n(\Xbar_n - \overline{x})^2  + n(\Xbar_n - \overline{x})^2\right] \\
+ &= \frac{1}{n-1}  \left[\sum_{i=1}^N \E[Z_i] (x_i - \overline{x})^2 -n\E[(\Xbar_n - \overline{x})^2]\right] \\
+ &= \frac{n}{N}\frac{1}{n-1}\sum_{i=1}^N (x_i - \overline{x})^2 -\frac{n}{n-1}\V[\Xbar_n] \\
+ &= \frac{n(N-1)}{N(n-1)}s^2 -\frac{(N-n)}{N(n-1)}s^2 \\
+ &= s^2
+\end{aligned}
+\]
+
+We have shown that the sample variance is unbiased for the population
+variance. To complete everything, we can just plug this into our
+estimated sampling variance, \[
+\E\left[\widehat{\V}[\Xbar_n]\right] = \left(1 - \frac{n}{N}\right)\frac{\E\left[S^2\right]}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n} = \V[\Xbar_n],
+\] establishing that our estimator is unbiased.
+
+\hypertarget{stratified-sampling-and-survey-weights}{%
+\section{Stratified sampling and survey
+weights}\label{stratified-sampling-and-survey-weights}}
+
+True to its name, the simple random sample is perhaps the most obvious
+way to conduct a random sample of a fixed size. If we have more
+information about the population, however, we might be able to obtain
+better estimates of our population quantities by incorporating this
+information into our sampling scheme. We can do this by conducting a
+\textbf{stratified random sample}, where we divide up the population
+into several strata (or groups) and conduct simple random samples within
+each stratum. We create these strata (or ``stratify the population'' in
+the usual jargon) based on the additional information about the
+population.
+
+For a concrete example of stratification, consider an expanded
+population of the entire fellowship of the ring.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Unit (\(i\)) & Race & Height in cm (\(x_i\)) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 (Frodo) & Hobbit & 124 \\
+2 (Sam) & Hobbit & 127 \\
+3 (Pip) & Hobbit & 123 \\
+4 (Merry) & Hobbit & 127 \\
+5 (Gimli) & Dwarf & 137 \\
+6 (Gandalf) & Wizard & 168 \\
+7 (Aragorn) & Man & 198 \\
+8 (Boromir) & Man & 193 \\
+9 (Legolas) & Elf & 183 \\
+\end{longtable}
+
+We could conduct stratified sampling here by splitting our population
+into two strata: hobbits and non-hobbits, making up 4/9ths \(\approx\)
+44\% and 5/9ths \(\approx\) 56\% of the population, respectively. If we
+were taking a sample of size 5 from this population, we could use a
+simple random sample, but we could end up with a very lopsided sample.
+We might, for instance, sample mostly or all non-hobbits. We can avoid
+this by conducting simple random samples of size 2 for the hobbits and
+size 3 for the non-hobbits. This would guarantee our sample would be
+40\% hobbit every time, while still maintaining randomness in our
+selection of which hobbits and non-hobbits go into the sample.
+
+Another reason to conduct a stratified random sample is to guarantee a
+level of precision for a certain subgroup of the population. In the
+social sciences, we often conduct nationally representative surveys, but
+have a specific interest in obtain estimates for certain minority
+populations like African Americans, Latinos, LGBT people, and others. In
+modest sample sizes, the number of respondents in one of these groups
+might be too small to learn much about their opinions. Thus, we might
+sample a higher proportion of the group of interest to ensure we can
+make precise statements about that group.
+
+Stratified random sampling is one example of a broad class of sampling
+methods that have unequal inclusion probabilities, which we denote
+\(\pi_i = \P(Z_{i} = 1)\). In a simple random sample, we have
+\(\pi_i = n/N\) for all \(i\). In the above fellowship example, we were
+sampling 2 hobbits and 3 non-hobbits, so we have the following inclusion
+probabilities:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Unit (\(i\)) & Race & Inclusion probability (\(\pi_i\)) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 (Frodo) & Hobbit & 0.5 \\
+2 (Sam) & Hobbit & 0.5 \\
+3 (Pip) & Hobbit & 0.5 \\
+4 (Merry) & Hobbit & 0.5 \\
+5 (Gimli) & Dwarf & 0.6 \\
+6 (Gandalf) & Wizard & 0.6 \\
+7 (Aragorn) & Man & 0.6 \\
+8 (Boromir) & Man & 0.6 \\
+9 (Legolas) & Elf & 0.6 \\
+\end{longtable}
+
+There are additional ways that we might conduct a random sample with
+unequal inclusion probabilities. For example, suppose we were randomly
+sampling 5 cities to study from the United States. We might want to bias
+our sample toward larger cities to capture a larger number of citizens
+in the overall sample. In that case, if the number of inhabitants for
+city \(i\) is \(b_i\), then our inclusion probabilities for sampling
+with replacement\footnote{This description is true for sampling with
+  replacement. When we want to sample without replacement, we would need
+  to adjust the probabilities to account for how being selected first
+  means that a unit cannot be selected second.} would be \[
+\pi_i = \frac{b_i}{\sum_{i=1}^N b_i}.
+\] Here again, we are using information about the population in our
+sampling design, though this information is more continuous whereas the
+information in the stratified estimator is discrete.
+
+When using a sampling design with unequal inclusion probabilities, we
+have obviously changed our sampling design (question 3), but the
+population and estimands (questions 1 and 2) remain the same. We are
+still interested in estimating the population mean, \(\overline{x}\). We
+now turn to our estimator (question 4), since we will need to use a new
+estimator that matches the design.
+
+There are actually two estimators that are commonly used to estimate the
+population mean when sampling with unequal inclusion probabilities. The
+first is called the \textbf{Horvitz-Thompson (HT) estimator} and has the
+form \[ 
+\widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^{N} \frac{Z_{i}x_{i}}{\pi_{i}},
+\] where we take the weighted average of those in our sample where the
+weights are the inverse of the inclusion probabilities. This is why the
+estimator is sometimes called the inverse probability weighting or IPW
+estimator.
+
+We can show that the HT estimator is unbiased for the population mean by
+noting that \(\E[Z_i] = \P(Z_i = 1) = \pi_i\), so that \[
+\E[\widetilde{X}_{HT}] = \frac{1}{N} \sum_{i=1}^N \frac{\E[Z_i]x_i}{\pi_i} = \frac{1}{N} \sum_{i=1}^N x_i = \overline{x}. 
+\] One downside of the HT estimator is that it can be unstable a unit
+with a very small inclusion probability is selected, since their weight
+\(1/\pi_i\) will be very large. This instability is the cost of being
+unbiased for the stratified design. We can write the formula for the
+sampling variance, but it is rather complicated and requires notation
+that is less important to the task at hand.
+
+The \textbf{Hájek estimator} normalizes the weights so they sum to \(N\)
+and has the form \[ 
+\widetilde{X}_{hj} = \frac{\sum_{i=1}^N Z_{i}x_{i} / \pi_{i}}{\sum_{i=1}^{N} Z_{i}/\pi_{i}}.
+\] This estimator is \textbf{biased} for the population mean since there
+is a random quantity in the denominator. The Hajek estimator is often
+considered the better estimator in many situations, though, because it
+have lower sampling variance than the HT estimator.
+
+\hypertarget{sampling-weights}{%
+\subsection{Sampling weights}\label{sampling-weights}}
+
+The HT and Hajek estimators are both functions of what are commonly
+called the \textbf{sampling weights}, \[w_i = \frac{1}{\pi_i}\]. We can
+write the HT estimator as \[
+\widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^N w_iZ_ix_i,
+\] and we can write the Hajek estimator as \[
+\widetilde{X}_{hj} = \frac{\sum_{i=1}^N w_iZ_{i}x_{i}}{\sum_{i=1}^{N} w_iZ_{i}}.
+\] These weights, \(w_i\), are commonly distributed with surveys because
+they are the only piece of information from the sampling design that we
+need to use the above estimators. This allows researchers to analyze a
+randomly sampled survey without knowledge of the exact
+design.\footnote{If we want design-based estimators of the sampling
+  variance, we would also need to know the joint inclusion
+  probabilities, which are the probabilities of any two units being
+  sampled together.}
+
+The sampling weights have a nice interpretation in terms of a
+pseudo-population. Each unit in the sample ``represents''
+\(w_i = 1/\pi_i\) units in the population, thus making the sample more
+representative of the population.
+
+Finally, we note that statistical software often is a little confusing
+in terms of how it handles weights. It may not be obvious what estimator
+the R function \texttt{weighted.mean(x,\ w)} is using. In fact, looking
+at the source code, we find that it basically calls
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(x }\SpecialCharTok{*}\NormalTok{ w) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(w)}
+\end{Highlighting}
+\end{Shaded}
+
+which is equivalent to the Hajek estimator above.
 
 \hypertarget{estimation}{%
 \chapter{Estimation}\label{estimation}}
@@ -974,7 +1449,7 @@ shorthand, we often say that the collection of random variables
 \(F\) if \(\{X_1, \ldots, X_n\}\) is iid with distribution \(F\). The
 \textbf{sample size} \(n\) is the number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1033,7 +1508,7 @@ modify \(X_i\) to be a random vector (that is, a vector of random
 variables) and then \(F\) becomes the joint distribution of that random
 vector. Nothing substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-warning-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1130,7 +1605,7 @@ we'll let \(\theta\) represent some generic quantity of interest.
 \textbf{Point estimation} describes how we obtain a single ``best
 guess'' about \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
@@ -1163,7 +1638,7 @@ guess about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 It is widespread, though not universal, to use the ``hat'' notation to
 define an estimator and its estimand. For example, \(\widehat{\theta}\)
@@ -1203,7 +1678,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-warning-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -1262,7 +1737,7 @@ know if we should model a given event count variable as Poisson or
 Negative Binomial? The attractive properties of MLE are only as good as
 our ability to specify the parametric model.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 One essential intuition to build about statistics is the
 \textbf{assumptions-precision tradeoff}. You can usually get more
@@ -1347,7 +1822,7 @@ interest here is the population covariance between these variables, \[
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Given the connection between the population mean and the sample mean,
 you will sometimes see the \(\E_n[\cdot]\) operator used as a shorthand
@@ -1524,7 +1999,7 @@ part of iid. Independence is not needed.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-warning-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased, but only when
@@ -1807,7 +2282,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 You will sometimes see convergence in probability written as
 \(\text{plim}(Z_n) = b\) if \(Z_n \inprob b\), \(\text{plim}\) stands
@@ -1835,7 +2310,7 @@ probability that an inconsistent estimator will be close to the truth
 will approach 0. Generally speaking, consistency is a very desirable
 property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 There are times when our estimators will be inconsistent, but they will
 converge in probability to a quantity that is understandable. For
@@ -1987,7 +2462,7 @@ conditions, the sample mean gets closer to the population mean as
 data is infinite, though that's a situation that most analysts will
 rarely face.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), and this is true.
@@ -2060,7 +2535,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 You will have noticed that many of the formal results we have presented
 so far have ``moment conditions'' that certain moments are finite. For
@@ -2347,7 +2822,7 @@ distribution of the underlying random variables, \(X_i\). They could be
 binary, event count, continuous, or anything. The CLT is incredibly
 broadly applicable.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
@@ -2475,7 +2950,7 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
@@ -2538,7 +3013,7 @@ confidence interval for their quantity of interest. Then, if the
 confidence intervals are valid, we should expect 95 of those confidence
 intervals to contain the true value.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-warning-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Suppose you calculate a 95\% confidence interval, \([0.1, 0.4]\). It's
 tempting to make a probability statement like
@@ -2888,7 +3363,7 @@ the observed estimate is unlikely under the maintained hypothesis, we
 might view this as evidence against that hypothesis. Thus, hypothesis
 tests help us assess evidence for particular guesses about the DGP.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 For the rest of this chapter, we'll introduce the concepts following the
 notation in the past chapters. We'll usually assume that we have a
@@ -3266,7 +3741,7 @@ with \(z_{\alpha/2}\) that puts \(\alpha/2\) in the upper tail of the
 standard normal. That is, if \(Z \sim \N(0, 1)\), then \(z_{\alpha/2}\)
 satisfies \(\P(Z \geq z_{\alpha/2}) = \alpha/2\).
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 In R, you can find the \(z_{\alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -3431,7 +3906,7 @@ decision for arbitrary test levels like \(\alpha = 0.05\). It might be
 best to view p-values as a transformation of the test statistic onto a
 common scale between 0 and 1.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-warning-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics and usually hinge on seemingly subtle
@@ -3839,7 +4314,7 @@ This BLP solves the same fundamental optimization problem as in the
 bivariate case: it chooses the set of coefficients that minimizes the
 mean-squared error averaging over the joint distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -3891,7 +4366,7 @@ a \(k\times k\) matrix and \(\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Intuitively, what is happening in the expression for the population
 regression coefficients? It is helpful to separate the intercept or
@@ -4446,7 +4921,7 @@ population regression coefficients \(\bfbeta\), representing the
 coefficients on the line of best fit in the population. We now take
 these as our quantity of interest.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -4525,7 +5000,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Almost all regression will contain an intercept term usually represented
 as a constant 1 in the covariate vector. It is also possible to separate
@@ -4949,7 +5424,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 The residual regression approach is:
 
@@ -5221,7 +5696,7 @@ assumptions needed to ensure that the best linear predictor,
 \(\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 The linear projection model makes the following assumptions:
 
@@ -5285,7 +5760,7 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the central limit
 theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
@@ -5557,7 +6032,7 @@ squared independent normals, where \(q\) is the number of rows of
 null hypothesis. Thus, under the null hypothesis of
 \(\mb{L}\bhat = \mb{c}\), we have \(W \indist \chi^2_{q}\).
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -5641,7 +6116,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5760,7 +6235,7 @@ robust to assumption violations. But homoskedasticity is such a
 historically important assumption that statistical software
 implementations of OLS like \texttt{lm()} in R assume it.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -5920,7 +6395,7 @@ Historically, we decided to assume (conditional) normality of the errors
 to proceed with some knowledge that we were wrong but hopefully not too
 wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, opacitybacktitle=0.6, bottomrule=.15mm, colback=white, colframe=quarto-callout-note-color-frame, arc=.35mm, opacityback=0, breakable, leftrule=.75mm, titlerule=0mm, left=2mm, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, colbacktitle=quarto-callout-note-color!10!white, coltitle=black]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, opacitybacktitle=0.6, rightrule=.15mm, breakable, bottomtitle=1mm, bottomrule=.15mm, coltitle=black, toptitle=1mm, opacityback=0, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, left=2mm, leftrule=.75mm, toprule=.15mm, colback=white]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
