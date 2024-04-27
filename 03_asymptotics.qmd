@@ -3,11 +3,17 @@
 
 ## Introduction
 
-In the last chapter, we defined estimators and started investigating their finite-sample properties like unbiasedness and the sampling variance. We call these "finite-sample" properties since they hold at any sample size. We saw that under iid data, the sample mean is unbiased for the population mean, but this result holds as much for $n = 10$ as it does for $n = 1,000,000$. But these properties are also of limited use: we only learn the center and spread of the sampling distribution of $\Xbar_n$ from these results. What about the shape of the distribution? We can often derive the shape if we are willing to make certain assumptions on the underlying data (for example, if the data is normal, then the sample means will also be normal). Still, this approach is brittle: if our parametric assumption is false, we're back to square one. 
+Recall our goal of estimating of the proportion of citizens that would prefer increasing the level of legal immigration. Based on our wandering in the last chapter, perhaps you now are using the sample proportion of immigration-supporters in a random sample of citizens. You might feel confident with this as an estimator, given that we have shown its finite-sample properties like unbiasedness and derived its sampling variance. We call these "finite-sample" properties since they hold at any sample size---they are as true for random samples of size for $n = 10$ as they are for random samples of size $n = 1,000,000$. 
+
+
+Finite-sample results, though, are of limited value because they only tell us about the center and spread of the sampling distribution of $\Xbar_n$. Suppose we found that $\Xbar_n = 0.47$ or 47% of respondents supported increasing immigration. We might want to know how plausible it would be for the true population proportion to be 50% or greater. To answer questions like this, which are crucial for making decision or learning about the world, we need to know the (approximate) distribution of $\Xbar_n$ in addition to the mean and the variance. We can often derive the exact distribution of an estimator if we are willing to make certain assumptions on the underlying data (for example, if the data is normal, then the sample means will also be normal). Still, this approach is brittle: if our parametric assumption is false, we're back to square one. 
 
 In this chapter, we will take a different approach and see what happens to the sampling distribution of estimators as the sample size gets large, which we refer to as **asymptotic theory**. While asymptotics will often simplify our derivations, it is essential to understand everything we do with asymptotics will be an approximation. No one ever has infinite data, but we hope that the approximations will be closer to the truth as our samples get larger. 
 
-## Why convergence with probability is hard
+Asymptotic results are key to modern statistical methods because many methods of quantifying uncertainty about our estimates rely on asymptotic approximations. To estimate standard errors, construct confidence intervals, or perform hypothesis tests without assuming a fully parametric model, we will rely on the asymptotic results we derive in this chapter. 
+
+
+## Convergence of deterministic sequences
 
 It's helpful to review the basic idea of convergence in deterministic sequences from calculus: 
 
@@ -17,7 +23,41 @@ A sequence $\{a_n: n = 1, 2, \ldots\}$ has the **limit** $a$ written $a_n \right
 
 We say that $a_n$ **converges** to $a$ if $\lim_{n\rightarrow\infty} a_n = a$. Basically, a sequence converges to a number if the sequence gets closer and closer to that number as the sequence goes on. 
 
-Can we apply this same idea to sequences of random variables (like estimators)? Let's look at a few examples that help clarify why this might be difficult.[^wass] Let's say that we have a sequence of $a_n = a$ for all $n$ (that is, a constant sequence). Then obviously $\lim_{n\rightarrow\infty} a_n = a$. Now let's say we have a sequence of random variables, $X_1, X_2, \ldots$, that are all independent with a standard normal distribution, $N(0,1)$. From the analogy to the deterministic case, it is tempting to say that $X_n$ converges to $X \sim N(0, 1)$, but notice that because they are all different random variables, $\P(X_n = X) = 0$. Thus, we must be careful about saying how one variable converges to another variable. 
+::: {#exm-limit}
+
+An important squence to know the limit of is $1/n$ as $n\to\infty$. It may seem clear that this converges to 0, but it can be helpful to show this in the language of the formal definition of convergence. 
+
+Let's pick a specific value of $\epsilon = 0.3$. Now we need to find an integer $n_{\epsilon}$ so that $|1/n - 0| = 1/n \leq \epsilon$ for all $n \geq n_{\epsilon}$. Clearly, if $\epsilon = 0.3$, then $n_{\epsilon} = 4$ would satisfy this condition since $1/4 \leq 0.3$. 
+
+```{r}
+#| label: "sequence"
+#| echo: false
+plot(x = 1:20, y = 1 / (1:20), las = 1,
+     pch = 19, xlab = "n", ylab = expression(a[n]))
+abline(h = 0.3, col = "grey70")
+abline(v = 4, col = "grey70")
+```
+
+More generally, for any $\epsilon$, we know that $n \geq 1/\epsilon$ implies $1/n \leq \epsilon$, so setting $n_{\epsilon} = 1/\epsilon$ ensures the definition holds for all values of $\epsilon$, thus ensuring the that $\lim_{n\to\infty} 1/n = 0$. 
+
+:::
+
+Most of the time, we will not use this formal definition to establish a limit but rather use the properties of limits. For example, convergence and limits follow basic arithmetic operations. Suppose that we have two sequences with limits $\lim_{n\to\infty} a_n = a$ and $\lim_{n\to\infty} b_n = b$. Then the properties of limits imply:
+
+- $\lim_{n\to\infty} (a_n + b_n) = a + b$
+- $\lim_{n\to\infty} a_nb_n = ab$
+- $\lim_{n\to\infty} ca_n = c\cdot a$
+- $\lim_{n\to\infty} (a_n/b_n) = a/b$ if $b \neq 0$
+- $\lim_{n\to\infty} a_n^{k} = a^{k}$
+
+These rules plus the result in @exm-limit allow us to other facts such as 
+$$
+\lim_{n\to\infty} \frac{2}{n} = 2 \cdot 0 = 0 \qquad  \lim_{n\to\infty} \frac{1}{n^{2}} = 0.
+$$
+
+
+
+Can we apply a similar definition of convergence to sequences of random variables (like estimators)? Let's look at a few examples that help clarify why this might be difficult.[^wass] Let's say that we have a sequence of $a_n = a$ for all $n$ (that is, a constant sequence). Then obviously $\lim_{n\rightarrow\infty} a_n = a$. Now let's say we have a sequence of random variables, $X_1, X_2, \ldots$, that are all independent with a standard normal distribution, $N(0,1)$. From the analogy to the deterministic case, it is tempting to say that $X_n$ converges to $X \sim N(0, 1)$, but notice that because they are all different random variables, $\P(X_n = X) = 0$. Thus, we must be careful about saying how one variable converges to another variable. 
 
 Another example highlights subtle problems with a sequence of random variables converging to a single value. Suppose we have a sequence of random variables $X_1, X_2, \ldots$ where $X_n \sim N(0, 1/n)$. Clearly, the distribution of $X_n$ will concentrate around 0 for large values of $n$, so it is tempting to say that $X_n$ converges to 0. But notice that $\P(X_n = 0) = 0$ because of the nature of continuous random variables. 
 
@@ -41,7 +81,31 @@ $$
 as $n\rightarrow \infty$. We write this $X_n \inprob b$. 
 :::
 
-With deterministic sequences, we said that $a_n$ converges to $a$ as it gets closer and closer to $a$ as $n$ gets bigger. For convergence in probability, the sequence of random variables converges to $b$ if the probability that random variables are far away from $b$ gets smaller and smaller as $n$ gets big. 
+What's happening in this definition? The even $|X_n - b| > \varepsilon$ says that a draw of $X_n$ is more than $\varepsilon$ away from $b$ (above or below). So convergence in probability says that the probability of being some distance away from the limit value goes to zero as the $n$ goes to $\infty$. With deterministic sequences, we said that $a_n$ converges to $a$ as it gets closer and closer to $a$ as $n$ gets bigger. For convergence in probability, the sequence of random variables converges to $b$ if the probability that random variables are far away from $b$ gets smaller and smaller as $n$ gets big. 
+
+
+::: {#exm-inprob}
+
+Let's illustrate the definition of convergence in probability. Let's construct a sequence of random variables, 
+$$
+X_n \sim N(0, 1/n).
+$$
+
+Intuitively, we can see that this sequence will be centered at zero with a shrinking variance. Below, we will see that this is enough to establish convergence in probability of $X_n$ to 0, but we can also show this in terms of its definition. To do so, we need to show that 
+$$
+\P(|X_n| > \varepsilon) \to 0.
+$$
+
+Let $\Phi(\cdot)$ be the cdf for the standard normal. For any $n$, the cdf for $X_n$ is $\P(X_{n} < x) = \Phi(\sqrt{n}x)$. Thus,
+$$
+\begin{aligned}
+\P(|X_n| > \varepsilon) &= \P(X_n < -\varepsilon) + \P(X_n > \varepsilon) \\ &= \Phi(-\sqrt{n}\varepsilon) + (1 - \Phi(\sqrt{n}\varepsilon)) \to 0.
+\end{aligned}
+$$
+The last limit is due to $\sqrt{n}\varepsilon \to \infty$ and thus, by the properties of the cdf, $\Phi(-\sqrt{n}\varepsilon) \to 0$ and $\Phi(\sqrt{n}\varepsilon) \to 1$. Clearly this holds for any $\varepsilon$, so $X_n \inprob 0$.
+
+:::
+
 
 
 ::: {.callout-note}
@@ -59,7 +123,15 @@ Convergence in probability is crucial for evaluating estimators. While we said t
 An estimator is **consistent** if $\widehat{\theta}_n \inprob \theta$. 
 :::
 
-Consistency of an estimator implies that the sampling distribution of this estimator "collapses" on the true value as the sample size gets large. We say an estimator is inconsistent if it converges in probability to any other value, which is obviously a terrible property of an estimator. As the sample size gets large, the probability that an inconsistent estimator will be close to the truth will approach 0. 
+Consistency of an estimator implies that the sampling distribution of this estimator "collapses" on the true value as the sample size gets large. We say an estimator is inconsistent if it converges in probability to any other value. As the sample size gets large, the probability that an inconsistent estimator will be close to the truth will approach 0. Generally speaking, consistency is a very desirable property of an estimator.  
+
+::: {.callout-note}
+
+There are times when our estimators will be inconsistent, but they will converge in probability to a quantity that is understandable. For example, we will see in later chapters that regression coefficients estimated by ordinary least squares (OLS) is consistent for the conditional expectation if the conditional expectation is linear. If that function is non-linear, however, then OLS will be consistent for the best linear approximation to that function. While not ideal, this estimator is at least consistent for an interpretable quantity. 
+
+:::
+
+
 
 We can also define convergence in probability for a sequence of random vectors, $\X_1, \X_2, \ldots$, where $\X_i = (X_{i1}, \ldots, X_{ik})$ is a random vector of length $k$. This sequence convergences in probability to a vector $\mb{b} = (b_1, \ldots, b_k)$ if and only if each random variable in the vector converges to the corresponding element in $\mb{b}$, or that $X_{nj} \inprob b_j$ for all $j = 1, \ldots, k$. 
 
@@ -119,7 +191,7 @@ This statement says the probability of being two standard deviations away from t
 
 ## The law of large numbers
 
-We can now use these inequalities to show how estimators can be consistent for their target quantities of interest. Why are these inequalities helpful for this purpose? Remember that convergence in probability was about the probability of an estimator being far away from a value going to zero. Chebyshev's inequality shows that we can bound these exact probabilities. 
+We can now use these inequalities to show how estimators can be consistent for their target quantities of interest without making parametric assumptions. Why are these inequalities helpful for this purpose? Remember that convergence in probability was about the probability of an estimator being far away from a value going to zero. Chebyshev's inequality shows that we can bound these exact probabilities. 
 
 The most famous consistency result has a special name.
 
@@ -133,7 +205,7 @@ Let $X_1, \ldots, X_n$ be i.i.d. draws from a distribution with mean $\mu = \E[X
 ::: {.proof}
 Recall that the sample mean is unbiased, so $\E[\Xbar_n] = \mu$ with sampling variance $\sigma^2/n$. We can then apply Chebyshev to the sample mean to get
 $$
-\P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\sigma^2}{n\delta^2}
+\P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\V[\Xbar_n]}{\delta} = \frac{\sigma^2}{n\delta^2}
 $$
 An $n\rightarrow\infty$, the right-hand side goes to 0, which means that the left-hand side also must go to 0, which is the definition of $\Xbar_n$ converging in probability to $\mu$. 
 :::
@@ -244,7 +316,7 @@ For any estimator $\widehat{\theta}_n$, if $\text{bias}[\widehat{\theta}_n] = 0$
 
 Thus, for unbiased estimators, if we can characterize its sampling variance, we should be able to tell if it is consistent. This result is handy since working with the probability statements used for the WLLN can sometimes be quite confusing. 
 
-What about biased estimators? Consider a plug-in estimator like $\widehat{\alpha} = \log(\Xbar_n)$ where $X_1, \ldots, X_n$ are iid from a population with mean $\mu$. We know that for nonlinear functions like logarithms we have $\log\left(\E[Z]\right) \neq \E[\log(Z)]$, so $\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])$ and the plug-in estimator will be biased for $\log(\mu)$. It will also be difficult to obtain an expression for the bias in terms of $n$. Is all hope lost here? Must we give up on consistency? No, and in fact, consistency will be much simpler to show in this setting. 
+What about biased estimators? Consider a situation where we calculate average household income, $\Xbar_n$, from a random sample with mean $\mu$, but our actual interest is in the log of average income, $\alpha = \log(\mu)$. Obvioulsy, we can use the standard plug-in estimator $\widehat{\alpha} = \log(\Xbar_n)$, but for nonlinear functions like logarithms we have $\log\left(\E[Z]\right) \neq \E[\log(Z)]$, so $\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])$ and the plug-in estimator will be biased for $\log(\mu)$. It will also be difficult to obtain an expression for the bias in terms of $n$. Is all hope lost here? Must we give up on consistency? No, and in fact, a few key properties of consistency will make it much easier to work with than unbiasedness. 
 
 
 ::: {#thm-inprob-properties}
@@ -302,7 +374,18 @@ For any estimator $\widehat{\theta}_n$, if $\text{bias}[\widehat{\theta}_n] \to 
 
 :::
 
+::: {.proof}
 
+Using Markov's inequality, we have
+$$
+\P\left( |\widehat{\theta}_n - \theta| \geq \delta \right) = \P((\widehat{\theta}_n-\theta)^2 \geq \delta^2) \leq \frac{\E[(\widehat{\theta}_n - \theta)^2]}{\delta^2} = \frac{\text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}]}{\delta^2} \to 0.
+$$
+The last inequality follows from the bias-variance decomposition of the mean squared error in @eq-mse-decomposition. 
+
+:::
+
+
+We can use this result to show consistency for a large range of estimators. 
 
 ::: {#exm-plug-in-variance}
 
@@ -344,6 +427,43 @@ for all values of $x$ for which $F(x)$ is continuous. We write this as $X_n \ind
 :::
 
 Essentially, convergence in distribution means that as $n$ gets large, the distribution of $X_n$ becomes more and more similar to the distribution of $X$, which we often call the **asymptotic distribution** of $X_n$ (other names include the **large-sample distribution**). If we know that $X_n \indist X$, then we can use the distribution of $X$ as an approximation to the distribution of $X_n$, and that distribution can be reasonably accurate. 
+
+::: {#exm-indist}
+
+A simple example of convergence in distribution would be the sequence
+$$
+X_n \sim N\left(\frac{1}{n}, 1 + \frac{1}{n}\right),
+$$
+which, of course, has the cdf,
+$$
+\Phi\left(\frac{x - 1/n}{1+1/n}\right).
+$$
+By inspection, this converges to $\Phi(x)$, which is the cdf for the standard normal. This implies $X_n \indist N(0, 1)$. 
+
+```{r}
+#| label: "indist"
+#| echo: false
+par(mfrow = c(1, 2))
+library(RColorBrewer)
+cols <- brewer.pal(5, "Set1")
+curve(pnorm(x, 1, 2), ylim = c(0,1), from = -4, 6, bty = "n", yaxt = "n", ylab = "F(x)", main = "cdf", col = cols[1], lwd = 2, lty = 2)
+curve(pnorm(x, 0.5, 1.5), from = -4, 6, add = TRUE, lty = 2, col = cols[2], lwd = 2)
+curve(pnorm(x, 0.25, 1.25), from = -4, 6, add = TRUE, lty = 3, col = cols[3], lwd = 2)
+curve(pnorm(x, 0.1, 1.1), from = -4, 6, add = TRUE, lty = 4, col = cols[4], lwd = 2)
+curve(pnorm(x, 0, 1), from = -4, 6, add = TRUE, lty = 1, col = "black", lwd = 2)
+
+curve(dnorm(x, 1, 2), from = -4, 6, bty = "n", yaxt = "n", ylab = "f(x)", main = "pdf", lwd = 2, col = cols[1], lty = 5, ylim = c(0, dnorm(0)))
+curve(dnorm(x, 0.5, 1.5), from = -4, 6, add = TRUE, lty = 2, lwd = 2, col = cols[2])
+curve(dnorm(x, 0.25, 1.25), from = -4, 6, add = TRUE, lty = 3, lwd = 2, col = cols[3])
+curve(dnorm(x, 0.1, 1.1), from = -4, 6, add = TRUE, lty = 4, lwd = 2, col = cols[4])
+curve(dnorm(x, 0, 1), from = -4, 6, add = TRUE, lwd = 2, col = "black")
+legend(x="topright", legend = c("n=1", "n=2", "n=4", "n=10", "N(0,1)"),
+       col = c(cols[1:4], "black"), lty = c(5, 2, 3, 4, 1), lwd = 2, bty = "n")
+```
+
+:::
+
+
 
 One of the most remarkable results in probability and statistics is that a large class of estimators will converge in distribution to one particular family of distributions: the normal. This result is one reason we study the normal so much and why investing in building intuition about it will pay off across many domains of applied work. We call this broad class of results the "central limit theorem" (CLT), but it would probably be more accurate to refer to them as "central limit theorems" since much of statistics is devoted to showing the result in different settings. We now present the simplest CLT for the sample mean. 
 

@@ -2,7 +2,7 @@
 
 # Preface {.unnumbered}
 
-This is a set of notes for [Government 2002: Quantitative Social Science Methods II](https://gov2002.mattblackwell.org) at Harvard University taught by [Matthew Blackwell](https://www.mattblackwell.org). The goal of this text is to provide a rigorous yet accessible introduction to the foundational topics in statistical inference with a special application to linear regression, a workhorse tool in the social sciences. The material is intended for first-year PhD students in political science, but it may be of interest more broadly. Much of the material has been adopted from various sources (far too many to recount now), but this book is especially indebted to the following texts:
+The goal of this text is to provide a rigorous yet accessible introduction to the foundational topics in statistical inference with a special application to linear regression, a workhorse tool in the social sciences. The material is intended for first-year PhD students in political science, but it may be of interest more broadly. Much of the material has been adopted from various sources (far too many to recount now), but this book is especially indebted to the following texts:
 
 - Hansen, Bruce. [*Probability & Statistics for Economists*](https://www.amazon.com/Probability-Statistics-Economists-Bruce-Hansen/dp/0691235945/). Princeton University Press. 
 - Hansen, Bruce. [*Econometrics*](https://www.amazon.com/Econometrics-Bruce-Hansen/dp/0691235899/). Princeton University Press. 
@@ -18,4 +18,4 @@ $\,$
 
 # Acknowledgements
 
-Much of how I approach this material comes from Adam Glynn, for whom I was a teaching fellow during graduate school.  Thanks to the students of Gov 2000 and Gov 2002 over years for helping me refine the material in this book. Also very special thanks to those who have provided valuable feedback including Zeki Akyol, Noah Dasanaike, and Jarell Cheong Tze Wen. 
+Much of how I approach this material comes from Adam Glynn, for whom I was a teaching fellow during graduate school. Thanks to the students of Gov 2000 and Gov 2002 over years for helping me refine the material in this book. Also very special thanks to those who have provided valuable feedback including Zeki Akyol, Noah Dasanaike, and Jarell Cheong Tze Wen.  

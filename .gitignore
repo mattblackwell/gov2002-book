@@ -7,3 +7,4 @@
 *.rel
 .Rhistory
 .DS_Store
+/index.aux

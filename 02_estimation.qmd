@@ -88,6 +88,20 @@ Note that there are many situations where the iid assumption is not appropriate.
 
 Finally, we have introduced the data as a scalar random variable, but often our data has multiple variables. In that case, we could easily modify $X_i$ to be a random vector (that is, a vector of random variables) and then $F$ becomes the joint distribution of that random vector. Nothing substantive changes about the above discussion. 
 
+::: {.callout-warning}
+
+Survey sampling is one of the most popular ways of obtaining samples from a population, but modern sampling practices rarely produce a "clean" set of $n$ iid responses. There are several reasons for this:
+
+- Modern random sampling techniques generally do not select every unit with the same probability. We might *oversample* certain groups for which we want more precise estimates, leading those groups to have a higher likelihood of being in the sample.  
+
+- Response rates to surveys have been in steep decline and can often dip below 10%. Thus, non-random selection into the observed sample might lead to problems. 
+
+- Internet polling is much less costly, but it is generally impossible to obtain a list of population email addresses (or other digital contact information) to randomly sample. Large survey firms, then, often recruit a large group of panelists with known demographic information from which they can randomly sample in a way that matches population demographic information. Because the initial opt-in panel is not randomly sampled from the population, this procedure does not produce a true "random sample," but, under certain assumptions, we can treat it like it is. 
+
+There are ways to handle all of these issues (mostly through the use of survey weights), but it is important to realize that using a modern survey "as if" it was a simple random sample might lead to poor performance and incorrect inferences.  
+
+:::
+
 
 ## Point estimation
 
@@ -405,7 +419,7 @@ Ideally, we would have this be as small as possible!
 We can also relate the MSE to the bias and the sampling variance (provided it is finite) with the following decomposition result: 
 $$
 \text{MSE} = \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
-$$
+$$ {#eq-mse-decomposition}
 This decomposition implies that, for unbiased estimators, MSE is the sampling variance. It also highlights why we might accept some bias for significant reductions in variance for lower overall MSE. 
 
 ```{r}
