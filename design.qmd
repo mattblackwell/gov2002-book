@@ -465,3 +465,8 @@ Finally, we note that statistical software often is a little confusing in terms 
 sum(x * w) / sum(w)
 ```
 which is equivalent to the Hajek estimator above. 
+
+
+## Conclusion
+
+This chapter covered the basic structure of design-based inference in the context of survey sampling. We introduced the basic questions of statistical inference, including specifying a population and quantity of interest, choosing a sampling design and estimator, and assessing uncertainty of our estimator. Of course, we have only scratched the surface of the types of designs and estimators used in the practice of survey sampling. Professional probability surveys often use clustering, which means randomly selecting larger clusters of units and then randomly sampling within these units. When combined with stratification, surveys end up being very complex. No matter how complex they are, though, the survey weights and associated estimators in the previous section are usually valid ways to estimate population quantities. 

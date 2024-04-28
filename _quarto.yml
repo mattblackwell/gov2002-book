@@ -46,7 +46,6 @@ format:
         
   pdf:
     documentclass: scrreprt
-    fontfamily: cochineal
     keep-tex: true
     include-in-header:
       - _bold.tex
