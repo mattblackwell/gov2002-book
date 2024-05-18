@@ -1,7 +1,9 @@
-# Estimation
+# Model-based inference
  
 
 ## Introduction
+
+Design-based inference is a coherent and internally consistent framework for estimating quantities and quantifying uncertainty.  
 
 Suppose you have been tasked with determining what fraction of a population supports a policy of increasing legal immigration limits. You have a sample of data on whether or not some individual respondents support the policy. How should you use the information you know (the data) to make a best guess about the information you don't know (the fraction of the population)? This task is called estimation and it's the cornerstone of most quantitative work in the social sciences. 
 
