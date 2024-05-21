@@ -17,8 +17,8 @@ The goals here are the target of our inference: what do we want to learn about w
 We will focus on a general workflow for statistical inference that will maximize the clarity and usefulness of the techniques in this book. The workflow boils down to answering a series of question about the goals, assumptions, and methods of our analysis. These are the core questions of any quantitative research endeavor:
 
 1. **Population**: who or what do we want to learn about?
-2. **Estimand**: what do we want to learn about the population?  
-3. **Design/model**: how will we collect the data, or, what assumptions are we making about how the data came to be?
+2. **Design/model**: how will we collect the data, or, what assumptions are we making about how the data came to be?
+3. **Estimand**: what do we want to learn about the population?  
 4. **Estimator**: how will we use the data to produce an estimate? 
 5. **Uncertainty**: how will we estimate and convey the error associated with my estimate?
 

@@ -3,15 +3,18 @@
 
 ## Introduction
 
-Design-based inference is a coherent and internally consistent framework for estimating quantities and quantifying uncertainty.  
+Suppose you have been tasked with determining what fraction of a population supports a policy of increasing legal immigration limits. You have a sample of data on whether or not some individual respondents support the policy but you don't know exactly how it was sampled. How should you use the information you know (the data) to make a best guess about the information you don't know (the fraction of the population)? 
 
-Suppose you have been tasked with determining what fraction of a population supports a policy of increasing legal immigration limits. You have a sample of data on whether or not some individual respondents support the policy. How should you use the information you know (the data) to make a best guess about the information you don't know (the fraction of the population)? This task is called estimation and it's the cornerstone of most quantitative work in the social sciences. 
 
-You might think to yourself: this seems simple, just use the fraction of the sample that supports the policy as the best guess about the fraction of the population. And, as we'll see, under certain conditions, this procedure is sound. The tricky part of statistics, though, is to understand what those "certain conditions" are and be able to determine if they hold in a given empirical setting. This line of thought may lead to uncomfortable questions such as, "where did this sample come from?"  
+Design-based inference is a coherent and internally consistent framework for estimating quantities and quantifying uncertainty. This crisp conceptual clarity comes from the knowledge of the sampling design, which also limits the applicability of the framework. How does one perform estimation and inference when lacking complete information about the sampling design? How does one proceed with inference if our outcomes are random due to nonresponse or measurement error? What if we would like to make inferences about a population not covered in the sampling frame?  In these cases, inference requires additional information that a researcher can incorporate via a **statistical model**.   
 
-We begin with perhaps the simplest and most sanguine of data origin stories: the **random sample**. The "sample" refers to the idea that our data is a subset of some larger **population**. The "random" modifier means that the subset was chosen by an uncertain process that did not favor one type of person versus another. Having a random sample from a population is an example of the "certain conditions" and our entry point into studying estimation in a rigorous manner. 
+A model-based approach to statistical inference views the data $X_1,\ldots, X_n$ as a set of random variables that follow some probability distribution. The measurements in the actual sample, $x_1, \ldots, x_n$, are realizations of these random variables. The probability distribution of $X_1,\ldots, X_n$ is the model for the data and all inferences are based on it. Models can be very specific (a researcher might assume the data are normally distributed) or can be very general (the distribution of the data has finite mean and variance). 
 
-Why focus on random samples so much even though many data sets are at least partially non-random or represent the entire population rather than a subset? Consider the famous story of a drunkard's search for a lost bill:[^drunk]
+A reasonable approach to the above estimation task is to use the fraction of the sample that supports the policy as the best guess about the fraction of the population. As we saw in the last chapter, a simple random sample would justify this approach.  In this chapter, we will explore what statistical models will justify the same procedure. 
+
+The focus of this book (and most of introductory statistics) will be on statistical models that assume units are **independent and identically distributed** or, more succinctly, **iid**. In essence, this assumption means that each unit gives us new information about the same underlying data-generating process. Because this assumption is often motivated by a probability sample from a population, some authors also refer to this as a **random sampling** assumption. The "sample" refers to the idea that our data is a subset of some larger **population**. The "random" modifier means that the subset was chosen by an uncertain process that did not favor one type of person versus another. 
+
+Why focus on iid/random samples so much even though many data sets are at least partially non-random or represent the entire population rather than a subset? Consider the famous story of a drunkard's search for a lost bill:[^drunk]
 
 > “I lost a \$2 bill down on Atlantic avenue,” said the man.
 > 
@@ -26,9 +29,6 @@ Like the poor Bostonian, we focus on searching an area (random samples) that are
 Probability is the mathematical study of uncertain events and is the basis of the mathematical study of estimation. In probability, we assume we know truth of the world (how many blue and red balls are in the urn) and calculate the chances of events (getting more than give red balls when drawing ten from the urn). Estimation works in reverse. Someone hands you ten balls, six red and four blue, and your task is to guess the contents of the urn from which they came. We have to use our observed data to make an **inference** about the data-generating process. 
 
 ![](assets/img/two-direction.png)
-
-
-
 
 An estimator is just a rule for converting our data into a best guess about some unknown quantity, like the fraction of the public that supports increasing legal immigration limits. What are the goals of studying estimators? In short, we prefer to use **good** estimators rather than **bad** estimators. But what makes an estimator good or bad? You probably have some intuitive sense that, for example, an estimator that always returns the value 3 is bad. Still, it will be helpful for us to formally define and explore some properties of estimators that will allow us to compare them and choose the good over the bad. We begin with an example that highlights two estimators that, at first glance, may seem similar. 
 
@@ -52,24 +52,40 @@ A standard estimator for the treatment effect in a study like this would be the 
 
 
 
-We have two goals in this chapter. First, we will introduce the entire framework of estimation and estimators. We will discuss different ways to compare the quality of estimators. These are properties that will be important to any estimator that you will meet now or in the future. Second, we will establish these properties for a general class of estimators that can be written as a sample mean. These results are useful in their own right since these estimators are ubiquitous, but the derivations also provide examples of how we establish such results. Building comfort with these proofs will help us understand the arguments about novel estimators we will inevitably see over the course of our careers. 
+We have two goals in this chapter. First, we will introduce the entire model-based framework of estimation and estimators. We will discuss different ways to compare the quality of estimators. Most of these properties will be similar to those of the design-based framework, except the properties will be with respect to the model rather than the sampling design. The core questions of quantitative research largely remain the same, with the exception of the second question, where we replace specifying the sampling design with a the specification of a probabilistic model for our data. For reference, the core questions are:
 
-## Samples and populations
+1. **Population**: who or what do we want to learn about?
+2. **Design/model**: how will we collect the data, or, what assumptions are we making about how the data came to be?
+3. **Quantity of interest**: what do we want to learn about the population?  
+4. **Estimator**: how will we use the data to produce an estimate? 
+5. **Uncertainty**: how will we estimate and convey the error associated with my estimate?
+
+
+The second goal of this chapter will be to establish key properties for a general class of estimators that can be written as a sample mean. These results are useful in their own right since these estimators are ubiquitous, but the derivations also provide examples of how we establish such results. Building comfort with these proofs will help us understand the arguments about novel estimators we will inevitably see over the course of our careers. 
+
+
+## Question 1: Populations, sample, and models
+
+The main advantage and disadvantage of relying on models is that they are abstract and theoretical, which means the connection between a model and the population it seeks to explain is less direct than with the design-based framework. Nevertheless, a clear articulation of who or what we want to learn about is crucial for evaluating what types of modeling assumptions will be sustainable or not. If a researcher is studying vote shares in an electoral system, they might tailor their model to two-party or multi-party systems. 
+
+As in the design-based setting, there is often a clear and distinct population such as "all registered voters" or "all citizens living in Boston." In other cases, the population may be more abstract. For example, a large literature across many fields has studied how the size of minority populations affects the views of the local majority population. Often, researchers are interested in making claims beyond the particular geographic region or minority/majority group, and instead are implicitly or explicitly considering a "superpopulation" of such cases that their model might explain. While there is nothing theoretically wrong with this approach, these ideas are often neglected in practice and the "scope conditions" of a particular model go unarticulated. The best quantitative work will be clear about what units or processes it is trying to learn about so that readers can evaluate how well the modeling assumptions fit that task.    
+
+## Question 2: Samples and models
 
 Let's begin by building a bare-bones probability model for how our data came to be. We might have a particular data set with a series of numbers representing the ages, political party affiliations, and opinions of some survey respondents. But we know that row 58 of our data could have produced a different set of number if a different respondent had been selected as row 58 or if that same respondent gave a different opinion about immigration because they happened to see a news story about it just before responding. To reason precisely about this type of uncertainty, we will write $X_i$ as the random variable representing the value that row $i$ of some variable will take, before we see the data. The distribution of this random variable would tell us what types of data we should expect to see. 
 
 
-Why do represent the data with random variables when we already know the value of the data itself? The study of estimation from a frequentist perspective (which is the perspective of this book) focuses on the properties of estimators across **repeated samples**. The random variable $X_i$ represents our uncertainty about what value, say, age will take for respondent $i$ in any of these samples, and the set $\{X_{1}, \ldots, X_{n}\}$ represents our uncertainty about the entire column of ages for all $n$ respondents. 
+Why do represent the data with random variables when we already know the value of the data itself? The study of estimation from a frequentist perspective (which is the perspective of this book) focuses on the properties of estimators across **repeated samples**. The random variable $X_i$ represents our uncertainty about what value, say, age will take for respondent $i$ in any of these samples, and the set $\{X_{1}, \ldots, X_{n}\}$ represents our uncertainty about the entire column of ages for all $n$ respondents. At the most general, the model-based approach will say that these $n$ random variables follow some joint distribution, $F_{X_{1},\ldots,X_{n}}$, 
+$$
+\{X_{1}, \ldots, X_{n}\} \sim F_{X_{1},\ldots,X_{n}}
+$$
+The joint distribution $F$ here represents our probability model for the data. Right now, we have made no assumptions about it, so it could be any joint probability distribution over $n$ random variables. This level of generality is difficult to work with in practice because there is essentially one draw from this joint distribution (the $n$ measurements in the data). The core question of modeling is about what restrictions will a researcher put on this joint distribution to make learning about it more tractable. 
 
-
-For most of this book, we'll focus on a relatively simple setting where we assume the data $\{X_1, \ldots, X_n\}$ are **independent and identically distributed** (iid) draws from a distribution with cumulative distribution function (cdf) $F$. They are independent in that information about any subset of random variable is not informative about any other subset of random variables, or, more formally, 
+Most of this book focuses on a relatively simple setting where we assume the data $\{X_1, \ldots, X_n\}$ are **independent and identically distributed** (iid) draws from a distribution with cumulative distribution function (cdf) $F$. They are independent in that information about any subset of random variable is not informative about any other subset of random variables, or, more formally, 
 $$
 F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n}) = F_{X_{1}}(x_{1})\cdots F_{X_{n}}(x_{n}) = \prod_{i=1}^n F(x_i)
 $$
 where $F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})$ is the joint cdf of the random variable and $F_{X_{j}}(x_{j})$ is the marginal cdf of the $j$th random variable.  They are "identically distributed" in the sense that each of the random variables $X_i$ have the same marginal distribution, $F$. 
-
-
-[^model]: This approach to inference is often called a **model-based approach** since we are assuming a probability model in the cdf, $F$. This is usually in contrast to a **design-based approach** to inference that views the population of interest as a finite group with fixed traits and the only randomness comes from the random sampling procedure.  
 
 
 
@@ -83,7 +99,7 @@ You might wonder why we reference the distribution of $X_i$ with the cdf, $F$. M
 
 Two metaphors can help build intuition about the concept of viewing the data as an iid draw from $F$:
 
-1. **Random sampling**. Suppose we have a population of size $N$ that is much larger than our sample size $n$, and we take a random sample of size $n$ from this population with replacement. Then the distribution of the data in the random sample will be iid draws from the population distribution of the variables we are sampling. For instance, suppose we take a random sample from a population of US citizens where the population proportion of Democratic party identifiers is 0.33. Then if we randomly sample $n = 100$ US citizens, each data point $X_i$ will be distributed Bernoulli with probability of success 0.33. 
+1. **Random sampling**. Suppose we have a population of size $N$ that is much larger than our sample size $n$, and we take a random sample of size $n$ from this population with replacement. Then the distribution of the data in the random sample will be iid draws from the population distribution of the variables we are sampling. For instance, suppose we take a random sample from a population of US citizens where the population proportion of Democratic party identifiers is 0.33. Then if we randomly sample $n = 100$ US citizens, each data point $X_i$ will be distributed Bernoulli with probability of success 0.33. The last chapter explored simple random samples without replacement, which is a more common type of sampling. Sampling without replacement creates dependence across units, which would violate the iid assumption. However, if the population size $N$ is very large relative to the sample size $n$, this dependence will be very small and the iid assumption will be relatively innocuous. 
 2. **Groundhog Day**. Random sampling does not always make sense as a justification for iid data, especially when the units are not samples at all but rather countries, states, or subnational units. In this case, we have to appeal to a thought experiment where $F$ represents the fundamental uncertainty in the data-generating process. The metaphor here is that if we could re-run history many times, like the 1993 American classic comedy *Groundhog Day*, data and outcomes would change slightly due to the inherently stochastic nature of the world. The iid assumption, then, is that each of the units in our data has the same DGP producing this data or the same distribution of outcomes under the *Groundhog Day* scenario. The set of all these infinite possible draws from the DGP is sometimes referred to as the **superpopulation**. 
 
 Note that there are many situations where the iid assumption is not appropriate. We will cover some of those later in the semester. But much of the innovation and growth in statistics over the last 50 years has been figuring out how to perform statistical inference when iid does not hold. Often, the solutions are specific to the type of iid violation you have (spatial, time-series, network, or clustered). As a rule of thumb, though, if you suspect iid is incorrect, your uncertainty statements will likely be overconfident (for example, confidence intervals, which we'll cover later, are too small). 
@@ -100,18 +116,16 @@ Survey sampling is one of the most popular ways of obtaining samples from a popu
 
 - Internet polling is much less costly, but it is generally impossible to obtain a list of population email addresses (or other digital contact information) to randomly sample. Large survey firms, then, often recruit a large group of panelists with known demographic information from which they can randomly sample in a way that matches population demographic information. Because the initial opt-in panel is not randomly sampled from the population, this procedure does not produce a true "random sample," but, under certain assumptions, we can treat it like it is. 
 
-There are ways to handle all of these issues (mostly through the use of survey weights), but it is important to realize that using a modern survey "as if" it was a simple random sample might lead to poor performance and incorrect inferences.  
+As discussed in the last chapter, there are ways to handle all of these issues (mostly through the use of survey weights), but it is important to realize that using a modern survey "as if" it was a simple random sample might lead to poor performance and incorrect inferences.  
 
 :::
 
 
-## Point estimation
-
-### Quantities of interest
+## Question 3: Quantities of interest
 
 
 
-In statistical inference, our goal is to learn about the data-generating process. Each data point $X_i$ represents a draw from a distribution, captured by the cdf $F$, and we would like to know more about this distribution. We might be interested in estimating the cdf at a general level or only some feature of the distribution, like a mean or conditional expectation function. 
+In model-based inference, our goal is to learn about the data-generating process. Each data point $X_i$ represents a draw from a distribution, captured by the cdf $F$, and we would like to know more about this distribution. We might be interested in estimating the cdf at a general level or only some feature of the distribution, like a mean or conditional expectation function. 
 
 
 
@@ -149,7 +163,7 @@ Some refer to quantities of interest as **parameters** or **estimands** (that is
 :::
 
 
-### Estimators 
+## Question 4: Estimators 
 
 Now that we have a target in mind, we can try to estimate it with our data. To do so, we first need a rule or algorithm or function that takes as inputs the data and returns a best guess about the quantity of interest. One of the most popular and useful algorithm would be to sum all the data points and divide by the number of points, which we can write mathematically as
 $$
@@ -384,7 +398,7 @@ Properties like unbiasedness might only hold for a subset of DGPs. For example, 
 :::
 
 
-### Estimation variance and the standard error
+## Question 5: Uncertainty 
 
 If a "good" estimator tends to be close to the truth, we should also care about the spread of the sampling distribution. In particular, we define the **sampling variance** as the variance of an estimator's sampling distribution, $\V[\widehat{\theta}]$, which measures how spread out the estimator is around its mean. For an unbiased estimator, lower sampling variance implies the distribution of $\widehat{\theta}$ is more concentrated around the truth. 
 
