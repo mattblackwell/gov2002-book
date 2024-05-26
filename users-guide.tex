@@ -301,7 +301,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, sharp corners, frame hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, interior hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, breakable, interior hidden, enhanced, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -434,47 +434,47 @@ attempts to correct this.
 \part{Statistical Inference}
 
 \hypertarget{design-based-inference}{%
-\chapter{Design-based Inference}\label{design-based-inference}}
+\chapter{Design-based inference}\label{design-based-inference}}
 
 \hypertarget{introduction-1}{%
 \section{Introduction}\label{introduction-1}}
 
-Quantitative analysis of social data has an alluring exactness. We can
-estimate the average minutes of YouTube videos watched down to the
-millisecond, giving us the aura of true scientists. But the great
-advantage of quantitative is not the ability to derive cold, hard,
-three-decimal point estimates. Rather, quantitative methods shine
-because they allow us to communicate the goals, assumptions, methods,
-and results of an analysis in a (hopefully) common, compact, and precise
-mathematical language. This language helps to clarify \emph{exactly}
-what you are doing with your data and why you are doing it.
+Quantitative analysis of social data has an alluring exactness to it. It
+allows us to estimate the average number of minutes of YouTube videos
+watched to the millisecond, and in doing so it gives us the aura of true
+scientists. But the advantage of quantitative analyses lies not in the
+ability to derive precise three-decimal point estimates; rather,
+quantitative methods shine because they allow us to communicate
+methodological goals, assumptions, and results in a (hopefully) common,
+compact, and precise mathematical language. It is this language that
+helps clarify \emph{exactly} what researchers are doing with their data
+and why.
 
-Unfortunately, this dewy view of quantitative methods is at odds with
-how these methods are used in the real world. Too often, we find some
-arbitrary data, apply a statistical tool we are familiar with, and
-shoehorn the results into a theoretical story that may have a tenuous
-connection into those first two steps. In this case, quantitative
-methods provide us with a very specific answer to a murky question about
-a shapeless target.
+This dewy view of quantitative methods is unfortunately often at odds
+with how these methods are used in the real world. All too often we as
+researchers find some arbitrary data, apply a statistical tool with
+which we are familiar, and then shoehorn the results into a theoretical
+story that may or may not have a (tenuous) connection. Quantitative
+methods applied this way will provide us with a very specific answer to
+a murky question about a shapeless target.
 
-This book is a guide to a better foundation for quantitative analysis,
-and in particular, statistical inference. Inference is the task of using
-data that we have to learn something about data we not see. The
-organizing motto of this book is:
+This book is a guide to a better foundation for quantitative analysis
+and, in particular, for statistical inference. Inference is the task of
+using the data we have to learn something about the data we do not have.
+
+The organizing motto of this book is to help us as researchers be
 
 \begin{quote}
 Precise in stating our goals, transparent in stating our assumptions,
 and honest in evaluating our results.
 \end{quote}
 
-The goals here are the target of our inference: what do we want to learn
-about who?
+These goals are the target of our inference -- or what do we want to
+learn and about whom.
 
-We will focus on a general workflow for statistical inference that will
-maximize the clarity and usefulness of the techniques in this book. The
-workflow boils down to answering a series of question about the goals,
-assumptions, and methods of our analysis. These are the core questions
-of any quantitative research endeavor:
+In pursuing these goals, this book will focus on a general workflow for
+statistical inference. The workflow boils down to answering a series of
+questions about the goals, assumptions, and methods of our analysis:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -482,169 +482,121 @@ of any quantitative research endeavor:
 \item
   \textbf{Population}: who or what do we want to learn about?
 \item
-  \textbf{Estimand}: what do we want to learn about the population?\\
-\item
   \textbf{Design/model}: how will we collect the data, or, what
   assumptions are we making about how the data came to be?
+\item
+  \textbf{Quantity of Interest}: what do we want to learn about the
+  population?\\
 \item
   \textbf{Estimator}: how will we use the data to produce an estimate?
 \item
   \textbf{Uncertainty}: how will we estimate and convey the error
-  associated with my estimate?
+  associated with the estimate?
 \end{enumerate}
 
-A mixture of substantive interests, feasibility, and statistical theory
-will determine the answer to these questions. They also vary is how
-specific the answers will be. The choice of population can vary greatly
-from study to study, whereas there may be many studies that employ the
-estimand and estimator.
+These questions form the core of any quantitative research endeavor. And
+the answers to these will draw on a mixture of substantive interests,
+feasibility, and statistical theory, and this mixture will vary from
+question to question. For example, the population of interest can vary
+greatly from study to study, whereas many disparate studies may employ
+the same estimand and estimator.
 
-The third core question highlights a core division in how we approach
-statistical inference: \textbf{design-based inference} vs
-\textbf{model-based inference}. Design-based inference typically focuses
-on situations in which we have precise knowledge of how our sample was
-randomly selected from the population. In this framework, uncertainty
-comes exclusively from the random nature of who is included in the
-sample. In the \textbf{model-based} framework, we treat our data as
-random variables and propose a probabilistic model for how the data came
-to be. These models vary in how strong the assumptions are on the model.
+The third core question is particularly important, since it highlights
+an essential division in how researchers approach statistical inference
+-- specifically, \textbf{design-based inference} vs \textbf{model-based
+inference}. Design-based inference typically focuses on situations in
+which we have precise knowledge of how our sample was randomly selected
+from the population. Uncertainty here comes exclusively from the random
+nature of which observations are included in the sample. By contrast, in
+the \textbf{model-based} framework, we treat our data as random
+variables and propose a probabilistic model for how the data came to
+exist. The models then vary in the strength of their assumptions.
 
-Design-based inference is the framework that most clearly delineates the
-core inferential questions, and so we will focus on it in this chapter.
-Its main disadvantages are that it is considerably less general than the
-model-based approach and that the mathematics of the framework are
-slightly more complicated.
+Design-based inference is the framework that addresses the core
+inferential questions most crisply, and so it is the focus of this
+chapter. Its main disadvantages are that it is considerably less general
+than the model-based approach and that the mathematics of the framework
+are slightly more complicated.
+
+We will now go over each of the core questions in more detail.
 
 \hypertarget{question-1-population}{%
 \section{Question 1: Population}\label{question-1-population}}
 
-Inference is the task of using data that we have to learn facts about
-the world. The most straightforward setting for this task is when we
-have a fixed set of units that we want to learn something about, which
-we call the \textbf{population} or \textbf{target population}. We are
-going to focus on random sampling from this population, but to do so, we
-need to have a a list of units from the population. This list of \(N\)
-units is called the \textbf{frame} or \textbf{sampling frame}, and we
-will index these units by \(i \in \mathcal{U} = \{1, \ldots, N\}\). Here
-we assume that \(N\), the size of the population, is known, though this
-may not be true in all settings.
+Inference is the task of using the data that we have to learn facts
+about the world (i.e., the data we do not have). The most
+straightforward setting is when we have a fixed set of units that we
+want to learn something about. These units are what we call the
+\textbf{population} or \textbf{target population}. We are going to focus
+on random sampling from this population, but, to do so, we need to have
+a list of units from the population. This list of \(N\) units is called
+the \textbf{frame} or \textbf{sampling frame}, and we will index these
+units in the sampling frame by \(i \in \mathcal{U} = \{1, \ldots, N\}\).
+Here we assume that \(N\), the size of the population, is known, but
+note that this may not always be true.
 
-The sampling frame is often differs from the target population for
-feasibility reasons. For example, a target population might be all the
-households in a given city, but a sampling frame might be the list of
-all residential telephone numbers for that city. Of course, there are
-many households that do not have landline telephones and rely on mobile
-phone exclusively. This gap between the target population and the
-sampling frame is called \textbf{undercoverage} or \textbf{coverage
-bias}.
+The sampling frame may differ from the target population simply for
+feasibility reasons. For example, the target population might include
+all the households in a given city, but the sampling frame might be the
+list of all residential telephone numbers for that city. Of course, many
+households do not have landline telephones and rely on mobile phone
+exclusively. This gap between the target population and the sampling
+frame is called \textbf{undercoverage} or \textbf{coverage bias}.
 
 \begin{example}[]\protect\hypertarget{exm-frame-bias}{}\label{exm-frame-bias}
 
-An early example of frame bias in survey sampling was the \emph{Literary
-Digest} poll of the 1936 U.S. presidential election. The magazine sent
-over 10 million ballots to addresses found in automobile registration
-lists and telephone books. The magazine's poll estimated that Alf
-Landon, the Republican candidate, would receive 55\% of the vote, while
-the incumbent, President Franklin D. Roosevelt, would only win 41\% of
-the vote. The poll had an impressive sample size of over 2 million
-respondents. Unfortunately for the \emph{Literary Digest}, Landon only
-received 37\% of the vote.
+An early but prominent example of frame bias in survey sampling is the
+infamous \emph{Literary Digest} poll of the 1936 U.S. presidential
+election. \emph{Literary Digest}, a (now defunct) magazine, sent over 10
+million ballots to addresses found in automobile registration lists and
+telephone books, trying to figure out who would win the important 1936
+presidential race. The sample size was huge: over 2 million respondents.
+In the end, the results predicted that Alf Landon, the Republican
+candidate, would receive 55\% of the vote, while the incumbent,
+Democratic President Franklin D. Roosevelt, would only win 41\% of the
+vote. Unfortunately for the \emph{Literary Digest}, Landon only received
+37\% of the vote.
 
-Many reasons for this massive polling error have been proposed,
-including the sampling frame being different from the target population.
-Only those with either a car or a telephone were included in the
-sampling frame, and citizens without either overwhelmingly supported
-Roosevelt. While this is no the only source of bias in this case
-(differential nonresponse seems to be a particularly big problem), the
-frame bias does contribute a large part of the error. For more about
+There are many possible reasons for this massive polling error. Most
+obviously, the sampling frame was different from that of the target
+population. Why? Only those with either a car or a telephone were
+included in the sampling frame, and people without either overwhelmingly
+supported the Democrat, Roosevelt. While this is not the only source of
+bias -- differential nonresponse seems to be a particularly big problem
+--the frame bias contributes a large part of the error. For more about
 this poll, see SQUIRE (1988).
 
 \end{example}
 
-One advantage of design-based inference is the how precisely we must
+One advantage of design-based inference is how precisely we must
 articulate the sampling frame. We can be extremely clear about the group
 of units we are trying to learn about. We shall see that in model-based
 inference the concept of the population and sampling frame become more
 amorphous.
 
-\hypertarget{question-2-quantity-of-interest}{%
-\section{Question 2: Quantity of
-Interest}\label{question-2-quantity-of-interest}}
+\hypertarget{question-2-sampling-design}{%
+\section{Question 2: Sampling design}\label{question-2-sampling-design}}
 
-The \textbf{quantity of interest} is a numerical summary of the
-population that we would like to learn about. These quantities are also
-called \textbf{estimands} (roughly the Latin for ``the thing to be
-estimated''). Let \(x_1, x_2, \ldots, x_N\) be a fixed set of
-characteristics, or items, about the population. Drawing on the
-statistician's favorite home decor, we might think about our population
-as a set of marbles in a jar and the \(x_i\) values indicate, for
-example, the color of the \(i\)-th marble. In the survey context,
-\(x_i\) might represent the age or ideology or income of the \(i\)-th
-person in the population.
-
-We can easily define many quantities of interest based on the population
-characteristics. Generally, these quantities are summaries of the values
-\(x_1, \ldots, x_N\) One of the most common and useful is the
-\textbf{population mean}, which we can define as \[
-\overline{x} = \frac{1}{N} \sum_{i=1}^N x_i.
-\] The population mean is fixed because \(N\) and the population
-characteristics \(x_1, \ldots, x_N\) are fixed. One other common
-estimand in the survey sampling literature is the population total, \[
-t = \sum_{i=1}^N x_i = N\overline{x}.
-\]
-
-\begin{example}[Subpopulation
-means]\protect\hypertarget{exm-subpopulation}{}\label{exm-subpopulation}
-
-We might also be interested in quantities for different subdomains.
-Suppose we are interested in estimating the fraction of (say)
-conservative-identifying respondents support increasing legal
-immigration limits. Let \(d= 1, \ldots, D\) be the number of subdomains
-or subpopulations. In this case, we might have \(d = 1\) are liberal
-identifiers, \(d = 2\) are moderate identifiers, and \(d = 3\) are
-conservative identifiers. We will refer to the subpopulation for each of
-these groups as \(\mathcal{U}_d \subset \{1,\ldots, N\}\) and we define
-the size of these groups as \(N_d = |\mathcal{U}_d\). So, we have
-\(N_3\) would be the number of conservative-identifying citizens in the
-population.
-
-The mean for each group is then \[
-\overline{x}_d = \frac{1}{N_d} \sum_{i \in \mathcal{U}_d} x_i.
-\]
-
-Subpopulation estimation can be slightly more complicated than
-population estimation because we may not know who is in which
-subpopulation until we we actually sample the population. For example,
-our sampling frame probably doesn't include information about the
-ideological affiliations of potential respondents. Thus, \(N_d\) will be
-unknown to the researcher, unlike \(N\) for the population mean.
-
-\end{example}
-
-There are many other quantities of interest that we might be interested
-in, but design-based inference is largely focused on these types of
-population and subpopulation means and totals.
-
-\hypertarget{question-3-sampling-design}{%
-\section{Question 3: Sampling design}\label{question-3-sampling-design}}
-
-Now that we have a clearly defined population, sampling frame, and
-quantity of interest, we can think about how we might select a sample
-from our population. We will focus on \textbf{probabilistic samples},
-where we select units by chance and each unit in the sampling frame has
-a non-0 probability of being included included in the sample. Let
-\(\mathcal{S} \subset \mathcal{U}\) be a sample and let
-\(\mb{Z} = (Z_1, Z_2, \ldots, Z_N)\) to be a vector of inclusion
+Now that we have a clearly defined population and sampling frame, we can
+consider how to select a sample from the population. We will focus on
+\textbf{probabilistic samples}, where units are selected into the sample
+by chance, and each unit in the sampling frame has a non-0 probability
+of being included. Let \(\mathcal{S} \subset \mathcal{U}\) be a sample
+and let \(\mb{Z} = (Z_1, Z_2, \ldots, Z_N)\) to be a vector of inclusion
 indicators such that \(Z_i = 1\) if \(i \in \mathcal{S}\) and
 \(Z_i = 0\) otherwise. We denote these indicators as upper-case letters
 because they are random variables. We assume the sample size is
 \(|\mathcal{S}| = n\).
 
-Suppose our sampling frame was Hobbits that were members of the
-fellowship of the ring. This is a valid, albeit small and fictional
-population with \(\mathcal{U} =\) \{Frodo, Sam, Pip, Merry\}. We can
-list all six possible samples of size 2 from this population in terms of
-the sample members \(\mathcal{S}\) or, equivalently, the inclusion
+Suppose our sampling frame was the hobbits who are members of the
+Fellowship of the Ring, an exclusive group brought into being by a
+wizened elf lord. This group of four hobbits is a valid -- albeit small
+and fictional population -- with \(\mathcal{U} =\) \{Frodo, Sam, Pip,
+Merry\}.
+
+Suppose we want to sample two hobbits from this group. We can list all
+six possible samples of size two from this population in terms of the
+sample members \(\mathcal{S}\) or, equivalently, the inclusion
 indicators \(\mb{Z}\):
 
 \begin{itemize}
@@ -664,11 +616,11 @@ indicators \(\mb{Z}\):
   \(\mathcal{S}_6 =\) \{Pip, Merry\} with \(\mb{Z}_{6} = (0, 0, 1, 1)\)
 \end{itemize}
 
-A \textbf{sampling design} is a complete specification of how likely
-each of these samples is to be selected. That is, we need to determine a
-selection probability \(\pi_j\) for each sample \(\mathcal{S}_j\). One
-of the most widely-studied designs is one that places equal probability
-on each of the possible samples of size \(n\).
+A \textbf{sampling design} is a complete specification of how likely to
+be selected each of these samples is. That is, we need to determine a
+selection probability \(\pi_j\) for each sample \(\mathcal{S}_j\). The
+most widely used and widely studied design is one that places equal
+probability on each of the possible samples of size \(n\).
 
 \begin{definition}[]\protect\hypertarget{def-srs}{}\label{def-srs}
 
@@ -684,14 +636,13 @@ a particular possible sampling, then, \[
 
 \end{definition}
 
-In the case of sampling two hobbits, the srs would place
-\(1/{4\choose 2} = 1/6\) probability of each of the above samples
-\(\mathcal{S}_j\). Notice that the simple random sample gives zero
-probability to any sample does not have exactly \(n\) units in the
-sample.
+If we sampled two hobbits, the srs (the simple random sample) would
+place \(1/{4\choose 2} = 1/6\) probability of each of the above samples
+\(\mathcal{S}_j\). Note that the srs gives zero probability to any
+sample that does not have exactly \(n\) units in the sample.
 
-Another common sampling design, called the \textbf{Bernoulli sampling}
-chooses each unit independently with the sample probability.
+Another common sampling design --the \textbf{Bernoulli sampling} design
+-- works by choosing each unit independently with the same probability.
 
 \begin{definition}[]\protect\hypertarget{def-srs}{}\label{def-srs}
 
@@ -699,34 +650,91 @@ chooses each unit independently with the sample probability.
 independent Bernoulli trials with probability of success \(q\) determine
 whether each unit in the population will be included in the sample. More
 specifically, let \(\mb{z} = (z_{1}, \ldots, z_{N})\) be a particular
-possible sampling. Then, Bernoulli sampling is \[
+possible sampling. Bernoulli sampling will then be \[
 \P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q_i^{Z_i}(1 - q_i)^{1-Z_i}
 \]
 
 \end{definition}
 
-Bernoulli sampling is simple and the independence of inclusion across
-units simplifies many calculation. However, the ``coin flipping''
-approach means that the sample size, \(N_s = \sum_{i=1}^N Z_i\) will be
-itself a random variable because it is the result of how many of the
-coin flips land on ``heads.''
+Bernoulli sampling is very straightforward because independently
+selecting units simplifies many calculations. However, this ``coin
+flipping'' approach means that the sample size,
+\(N_s = \sum_{i=1}^N Z_i\), will be itself a random variable because it
+is the result of how many of the coin flips land on ``heads.''
+
+\hypertarget{question-3-quantity-of-interest}{%
+\section{Question 3: Quantity of
+Interest}\label{question-3-quantity-of-interest}}
+
+The \textbf{quantity of interest} is a numerical summary of the
+population that we want to learn about. These quantities are also called
+\textbf{estimands} ( Latin for ``the thing to be estimated'').
+
+Let \(x_1, x_2, \ldots, x_N\) be a fixed set of characteristics, or
+items, about the population. Using the statistician's favorite home
+decor, we might think about our population as a set of marbles in a jar
+where the \(x_i\) values indicate, for example, the color of the
+\(i\)-th marble. In a survey, \(x_i\) might represent the age, ideology,
+or income of the \(i\)-th person in the population.
+
+We can define many useful quantities of interest based on the population
+characteristics. These quantities generally summarize the values
+\(x_1, \ldots, x_N\). One of the most common, and certainly one of the
+most useful, is the \textbf{population mean}, defined as \[
+\overline{x} = \frac{1}{N} \sum_{i=1}^N x_i.
+\] The population mean is fixed because \(N\) and the population
+characteristics \(x_1, \ldots, x_N\) are fixed. Another common estimand
+in the survey sampling literature is the population total, \[
+t = \sum_{i=1}^N x_i = N\overline{x}.
+\]
+
+\begin{example}[Subpopulation
+means]\protect\hypertarget{exm-subpopulation}{}\label{exm-subpopulation}
+
+We may also be interested in quantities for different subdomains.
+Suppose we are interested in estimating the fraction of (say)
+conservative-identifying respondents who support increasing legal
+immigration. Let \(d= 1, \ldots, D\) be the number of subdomains or
+subpopulations. In this case, we might have \(d = 1\) as liberal
+identifiers, \(d = 2\) as moderate identifiers, and \(d = 3\) as
+conservative identifiers. We will refer to the subpopulation for each of
+these groups as \(\mathcal{U}_d \subset \{1,\ldots, N\}\) and we define
+the size of these groups as \(N_d = |\mathcal{U}_d\). So, \(N_3\) would
+be the number of conservative-identifying citizens in the population.
+
+The mean for each group is then \[
+\overline{x}_d = \frac{1}{N_d} \sum_{i \in \mathcal{U}_d} x_i.
+\]
+
+Subpopulation estimation can be slightly more complicated than
+population estimation because we may not know who is in which
+subpopulation until we actually sample the population. For example, our
+sampling frame probably may not information about `potential
+respondents' ideology. Thus, \(N_d\) will be unknown to the researcher,
+unlike \(N\) for the population mean, which is known.
+
+\end{example}
+
+We may be interested in many other quantities of interest, but
+design-based inference is largely focused on these types of population
+and subpopulation means and totals.
 
 \hypertarget{question-4-estimator}{%
 \section{Question 4: Estimator}\label{question-4-estimator}}
 
 Now that we have a sampling design and a quantity of interest, we can
-consider how we might learn about the quantity of interest from our
+consider what we can learn about this quantity of interest from our
 sample. An \textbf{estimator} is a function of the sample measurements
-inteded as a best guess about our quantity of interest.
+intended as a best guess about our quantity of interest.
 
 If the most common estimand is the population mean, the most popular
-estimator is the \textbf{sample mean}, \[
+estimator is the \textbf{sample mean}, defined as \[
 \overline{X}_n = \frac{1}{n} \sum_{i=1}^{N}Z_ix_i
 \]
 
 The sample mean is a \textbf{random} quantity since it varies from
-sample to sample and those samples are chosen probabilistically. For
-example, say we have the following measurements of heights from our very
+sample to sample, and those samples are chosen probabilistically. For
+example, suppose we have the following height measurements from our
 small population of hobbits.
 
 \begin{longtable}[]{@{}ll@{}}
@@ -743,7 +751,7 @@ Unit (\(i\)) & Height in cm (\(x_i\)) \\
 \end{longtable}
 
 If we consider a simple random sample of size \(n=2\) from this
-population, we can list out the probability of all possible sample means
+population, we can list the probability of all possible sample means
 associated with this sampling design.
 
 \begin{longtable}[]{@{}
@@ -770,8 +778,8 @@ Sample mean (\(\overline{X}_n\))
 6 (Pip, Merry) & 1/6 & (123 + 127) / 2 = 125 \\
 \end{longtable}
 
-We can simplify this a bit to find the sampling distribution of the
-sample mean of hobbit height under a simple random sample of size 2:
+We can simplify find the \textbf{sampling distribution} of the sample
+mean of hobbit height under a srs of size 2:
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule\noalign{}
@@ -786,17 +794,18 @@ Sample mean & Probability \\
 127 & 1/6 \\
 \end{longtable}
 
-Thus, the sampling distribution combines the population with a sampling
-design to tell us what values of an estimator are more or less likely.
+Thus, the sampling distribution tells us what values of an estimator are
+more or less likely and depends on both the population distribution and
+the sampling design.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Notice that the sampling distribution of an estimator will depend on the
-sampling design. Here, we used the simple random sample, but Bernoulli
-sampling would have produced a different distribution. For example,
-under Bernoulli sampling, we could end up with a sample of just Frodo,
-in which case the sample mean would be 124, a value that was not
-possible with simple random sampling of size \(n=2\).
+sampling design. Here, we used a simple random sample. Bernoulli
+sampling would have produced a different distribution. Using Bernoulli
+sampling, we could end up with a sample of just Frodo, in which case the
+sample mean would be his height (124cm), a sample mean value that is
+impossible with simple random sampling of size \(n=2\).
 
 \end{tcolorbox}
 
@@ -804,20 +813,20 @@ possible with simple random sampling of size \(n=2\).
 \subsection{Properties of the sampling distribution of an
 estimator}\label{properties-of-the-sampling-distribution-of-an-estimator}}
 
-Generally speaking, we want ``good'' estimators, but what makes a
-``good'' estimator? The best estimator would be right all of the time
-(\(\Xbar_n = \overline{x}\) with probability 1), but this is only
-possible if we conduct a census (sample everyone in the population) or
-the population does not vary, neither of which are typical situations
-for the working researcher.
+Generally speaking, we want ``good'' estimators. But what makes an
+estimator ``good'\,'? The best estimator would obviously be the one that
+is right all of the time (\(\Xbar_n = \overline{x}\) with probability
+1), but this is only possible if we conduct a census --that is, sample
+everyone in the population -- or the population does not vary. Neither
+situation is typical for most researchers.
 
 We instead focus on properties of the sampling distribution of an
-estimator. We might ask the following types of questions:
+estimator. The following types of questions get at these properties:
 
 \begin{itemize}
 \tightlist
 \item
-  Is the variation in the realizations of the estimator centered on the
+  Are the estimator's observed values (realizations) centered on the
   true value of the quantity of interest? (unbiasedness)
 \item
   Is there a lot or a little variation in the realizations of the
@@ -831,168 +840,176 @@ estimator. We might ask the following types of questions:
 The answers to these questions will depend on (a) the estimator and (b)
 the sampling design.
 
-The sampling distribution shows us all the possible values of an
-estimator across different samples from the population. If we want to
-summarize this distribution with a single number, we would focus on its
-expectation, which is a measure of central tendency of the distribution.
-Roughly speaking, we would like the center of the distribution to be
-close to and, ideally, equal to the true quantity of interest. If this
-isn't the case, it means the estimator systematically over- or
+To back up, the sampling distribution shows us all the possible values
+of an estimator across different samples from the population. If we want
+to summarize this distribution with a single number, we would focus on
+its expectation, which is a measure of central tendency of the
+distribution. Roughly speaking, we want the center of the distribution
+to be close to and ideally equal to the true quantity of interest. If
+this is not the case, that means the estimator systematically over- or
 under-estimates the truth. We call this difference the \textbf{bias} of
-an estimator, and we write it mathematically as \[
+an estimator, which can be written mathematically as \[
 \textsf{bias}[\Xbar_{n}] = \E[\Xbar_{n}] - \overline{x}.
 \] Any estimator that has bias equal to zero is call an
 \textbf{unbiased} estimator.
 
-We can calculate the bias of our hobbit srs by first calculating the
-expected value of the estimator, \[
+We can calculate the bias of our hobbit srs (where we sampled two
+hobbits from the Fellowship of the Ring with equal probability) by first
+calculating the expected value of the estimator, \[
 \E[\Xbar_{n}] = \frac{1}{6}\cdot 123.5 + \frac{1}{3} \cdot 125 + \frac{1}{3} \cdot 125.5 + \frac{1}{6} \cdot 127 = 125.25,
-\] and compare this to the population mean, \[
+\] and comparing this to the population mean, \[
 \overline{x} = \frac{1}{4}\left(124 + 127 + 123 + 127\right) = 125.25.
-\] Thus, the sample mean in this simple random sample is unbiased.
+\] The two are the same, meaning the sample mean in this simple random
+sample is unbiased.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
-We often use the word ``bias'' to refer to other ways that our research
-could be systematically incorrect. For example, we might complain that a
-survey question is biased if it presents a question in leading or
-misleading manner or if it mismeasures the concept of interest. For
-example, suppose we wanted to estimate what proportion of a population
+Note that the word ``bias'' sometimes also refers to research that is
+systematically incorrect in other ways. For example, we might complain
+that a survey question is biased if it presents a leading or misleading
+question or if it mismeasures the concept of interest. To see this,
+suppose we wanted to estimate the proportion of a population that
 regularly donates money to a political campaign, but \(x_i\) actually
-measures whether or not they donated on the day of the survey. In this
+measures whether a person donated on the day of the survey. In this
 case, \(\overline{x}\) would be quite a bit lower than the quantity of
-interest that we actually want to measure. Textbooks often refer to this
-gap---between the measures we obtain and the measures we want---as
+interest because it only captures one day of donation patterns, not
+regular donations made over time. Textbooks often refer to this gap
+between the measures we obtain and the measures we want as
 \textbf{measurement bias}. This is distinct from the bias of the sample
-mean. If we took a srs from the population, \(\Xbar_{n}\) would still be
-an unbiased for \(\overline{x}\), even if that is the wrong quantity of
+mean. Using our donations example, taking an srs from the population of
+daily donors, \(\Xbar_{n}\) would still result in an unbiased estimate
+for \(\overline{x}\), even if that is entirely the wrong quantity of
 interest.
 
 \end{tcolorbox}
 
-Is the unbiasedness of our hobbit sampling unique? Thankfully, no. We
-can actually prove that the sample mean will be unbiased for the
-population mean under a simple random sample. Simply plugging in the
-definition of the sample mean, we obtain. \[ 
+Is the unbiasedness of our hobbit sampling unique to this example?
+Thankfully no. We can prove that the sample mean will be unbiased for
+the population mean under a simple random sample. Relying on the
+definition of the sample mean, we can obtain: \[ 
 \E[\Xbar_{n}] = \E\left[\frac{1}{n} \sum_{i=1}^{N} Z_{i}x_{i}\right] = \frac{1}{n} \sum_{i=1}^{N} \E[Z_{i}]x_{i} = \frac{1}{n} \sum_{i=1}^{N} \frac{n}{N}x_{i} = \frac{1}{N} \sum_{i=1}^{N}x_{i} = \overline{x} 
-\] The second equality is the key, where we use \(\E[Z_i] = n/N\) for
-the simple random sample. Intuitively, the probability of being included
-in the sample is just the fraction of the sample being selected,
-\(n/N\).
+\] Using \(\E[Z_i] = n/N\) for the simple random sample in the second
+equality is key. Intuitively, the probability of being included in the
+sample is simply the fraction of the sample being selected, \(n/N\).
 
 The second salient feature of an estimator's sampling distribution is
-how spread out it is. Generally speaking, we would prefer an estimator
-whose estimates are very similar from sample to sample, rather than an
-estimator whose estimates vary wildly from one sample to the next. We
-quantify this spread with the \textbf{sampling variance} which is just
-the variance of the sampling distribution of the estimator, or \[
+its spread. Generally speaking, we prefer an estimator whose estimates
+are very similar from sample to sample over an estimator whose estimates
+vary wildly from one sample to the next. We quantify this spread with
+the \textbf{sampling variance}, which is simply the variance of the
+sampling distribution of the estimator, or \[
 \V[\Xbar_n] = \E[(\Xbar_n - \E[\Xbar_n])^2].
-\] An alternative measure of spread is the \textbf{standard error} of an
-estimator, which is just the square root of the sampling variance, \[
+\] An alternative measure of spread is the \textbf{standard error} of
+the estimator, which is the square root of the sampling variance, \[
 \se[\Xbar_n] = \sqrt{\V[\Xbar_n]}.
 \] The standard error is often more interpretable because it is on the
-same scale as the original variable. So, if we were measuring income in
-the United States, the standard error would be measured in dollars,
-whereas the sampling variance would be measured in dollars squared.
+same scale as the original variable. Using our hobbits' heights example,
+the sampling variance would be measured in centimeters squared but the
+standard error would be measured in centimeters and, thus, easier to
+interpret.
 
-The final feature of interest is the \textbf{mean squared error} or
+The final important property is the \textbf{mean squared error} or
 \textbf{MSE}, which (as its name implies) measures the average of the
-squared error, \[
+squared error: \[
 \text{MSE} = \E[(\Xbar_n-\overline{x})^2].
-\] The keen-eyed reader might find this quantity redundant, because we
-showed above that the sample mean is unbiased so
-\(\E[\Xbar_n] = \overline{x}\), which would mean that the sampling
+\] Keen-eyed readers might find this quantity redundant because, as we
+showed above, the sample mean is unbiased, so
+\(\E[\Xbar_n] = \overline{x}\). This, in turn, means that the sampling
 variance of the sample mean is just the mean squared error. However,
-circumstances will often conspire to have us use biased estimators and
-so these two quantities will be different. In fact, if we have an
-estimator \(\widehat{\theta}\) for some population quantity \(\theta\),
-\[ 
+circumstances will often conspire to make us use biased estimators, so
+these two quantities will differ. In fact, if we have an estimator
+\(\widehat{\theta}\) for some population quantity \(\theta\), \[ 
 \begin{aligned}
 \text{MSE}[\widehat{\theta}] &= \E[(\widehat{\theta} - \theta)^2] \\
 &= \E[(\widehat{\theta} - \E[\widehat{\theta}] + \E[\widehat{\theta}] - \theta)^2] \\
 &= \E[(\widehat{\theta} - \E[\widehat{\theta}])^2] + \left(\E[\widehat{\theta}] - \theta\right) ^ 2 + 2\E[(\widehat{\theta} - \E[\widehat{\theta}])]\left(\E[\widehat{\theta}] - \theta\right) \\
 &= \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
 \end{aligned}
-\] We can see, then, that the MSE is low when bias and variance are low.
+\] Thus, the MSE is low when bias and variance are low.
 
-One way to conceptualize all of these concepts is to connect them to
-notions of precision and accuracy. In particular, estimators with low
-sampling variance are \textbf{precise}, whereas estimators with low MSE
-are \textbf{accurate}. We might have an estimator that is very precise,
-but inaccurate because it is biased.
+Note that connecting these concepts to notions of precision and accuracy
+is useful. In particular, estimators with low sampling variance are
+\textbf{precise}, whereas estimators with low MSE are \textbf{accurate}.
+An estimator can be very precise, but the same estimator can be
+inaccurate because it is biased.
 
 \hypertarget{question-5-uncertainty}{%
 \section{Question 5: Uncertainty}\label{question-5-uncertainty}}
 
-We have a population, a quantity of interest, a sampling design, an
-estimator, and, with data, an actual estimate. But if we have sampled,
-say, Sam and Merry from our hobbit population and obtained a sample mean
-height of 127, we might worry about all of the other samples and sample
-means we could have drawn. Is our estimate of 127 inches close to the
-true population mean? We cannot truly know without conducting a complete
-census, which would render our sampling pointless. Can we instead figure
-out how far we might be from the truth? The sampling variance actually
-answers this exact question, but it depends on the sampling distribution
-and we only have a single draw from this distribution: our estimate of
-127.
+We now have a population, a quantity of interest, a sampling design, an
+estimator, and, with data, an actual estimate. But if we sampled, say,
+Sam and Merry from the hobbit population and obtained a sample mean
+height of 127, a reasonable worry would be that different samples -- for
+example, Sam and Frodo or Merry and Pippin -- would give us a different
+sample mean. So is the estimate of 127 inches that we get from our
+sample of Sam and Merry close to the true population mean? We cannot
+truly know without conducting a complete census of all four hobbits,
+which would render our sampling pointless. Can we instead figure out how
+far we might be from the truth -- i.e., the true population mean? The
+sampling variance addresses this exact question, but the sampling
+variance depends on the sampling distribution, and we only have a single
+sample draw from this distribution, which gave the estimate of 127.
 
-If we have a specific estimator and sampling design, we can usually
+If we have a specific estimator and a sampling design, we can usually
 derive an analytical expression for the sampling variance (and, thus,
-the standard error). This will help us understand what factors will
-influence the sampling variance. To help us in this endeavor, we need to
-define an additional feature of the population distribution, the
+the standard error), which in turn will identify the factors influencing
+the sampling variance. To aid in this endeavor, we need to define an
+additional feature of the population distribution, the
 \textbf{population variance}, \[
 s^{2}= \frac{1}{N-1} \sum_{i=1}^{N} (x_{i} - \overline{x})^{2}.
-\] The population variance is a fixed quantity, measuring the spread of
-the \(x_i\) values in the population.
+\] The population variance measures the spread of the \(x_i\) values in
+the population. As such it is a fixed quantity and not a random
+variable.
 
-We can now write the sampling variance of \(\Xbar_n\) under simple
-random sampling as \[
+We now write the sampling variance of \(\Xbar_n\) under simple random
+sampling as \[
 \V[\Xbar_{n}] = \left(1 - \frac{n}{N}\right) \frac{s^{2}}{n}
-\] From this expression, we can determine a few relationships. First, if
-the the data \(x_i\) is more spread out in the population, the sample
-mean will also be more spread out. Second, the larger the sample size,
-\(n\), the smaller the sampling variance (for a fixed population size).
-Third, the larger the population size, \(N\), the smaller the sampling
-variance (for a fixed sample size).
+\] Several features stand out from this expression. First, if the data
+\(x_i\) is more spread out in the population, the sample mean will also
+be more spread out. Second, the larger the sample size, \(n\), the
+smaller the sampling variance (for a fixed population size). Third, the
+larger the population size, \(N\), the smaller the sampling variance
+(again for a fixed sample size).
 
 \hypertarget{deriving-the-sampling-variance-of-the-sample-mean}{%
 \subsection{Deriving the sampling variance of the sample
 mean}\label{deriving-the-sampling-variance-of-the-sample-mean}}
 
 How did we obtain this expression for the sampling variance under simple
-random sampling? We might be tempted to simply say ``someone else proved
-it for me,'' but this blind faith in statistical theory limits our own
-understanding of this situation and our own ability to navigate novel
-scenarios that arise in our research lives.
+random sampling? It would be tempting to simply say ``someone else
+proved it for me,'' but blind faith in statistical theory limits our own
+understanding of this situation and the ability to navigate novel
+scenarios that routinely arise in research.
 
-Let's begin with a simple application of the rules of variance that
-would be valid for any sampling design: \[
+To derive the sampling variance of the sample mean, let's begin with a
+simple application of the rules of variance that would be valid for any
+sampling design: \[
 \V[\Xbar_{n}] = \V\left[\frac{1}{n} \sum_{i=1}^N x_iZ_i\right] = \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] + \sum_{i=1}^N\sum_{j\neq i} x_ix_j\cov[Z_i,Z_j]\right].
-\] Notice in the second equality how the \(x_i\) and \(x_j\) values come
-out of the variance and covariance operators like they are constants.
-This is because in design-based inference, they are exactly constants.
+\] Note in the second equality that the \(x_i\) and \(x_j\) values come
+out of the variance and covariance operators as if they are constants.
+This is because, in design-based inference, they are exactly constants.
 The only source of variation and uncertainty comes from the sampling,
-symbolized by the inclusion indicators, \(Z_i\). Clearly, to make
-progress, we will need to know the variance and covariance of these
-inclusion indicators. Recall that the variance of a binary indicator
-with probability \(p\) of being 1 is \(p(1 - p)\). So if we have
-\(\P(Z_i = 1) = n/N\) for a simple random sample, we have \[
+indicated by the inclusion indicators, \(Z_i\). To make progress, we
+need to know the variance and covariance of these inclusion indicators.
+Recall that the variance of a binary indicator with probability \(p\) of
+being 1 is \(p(1 - p)\). So if \(\P(Z_i = 1) = n/N\) for a simple random
+sample, then \[
 \V[Z_i] = \frac{n}{N}\left(1 - \frac{n}{N}\right) = \frac{n(N - n)}{N^2}.
 \]
 
 If you are used to the ``independent and identically distributed''
 framework (to which we will turn in the next chapter), the covariances
-in our sampling variances might surprise you. Don't we usually think of
-our units as independent? While this assumption would (and will) make
-our math lives easier, it is not true for the simple random sample. The
-srs samples units without replacement, which implies that inclusion is
-not independent---knowing that unit \(i\) was included the sample means
-that another unit \(j\) only has a \((n-1)/(N-1)\) probability of being
-included in the sample. To derive an expression for the covariance, note
-that \(\cov(Z_i, Z_j) = \E[Z_iZ_j] - \E[Z_i]\E[Z_j]\) and \[
+in the sampling variances might surprise. Aren't units usually assumed
+to be independent? While this assumption would (and will) make our math
+lives easier, it is not true for the simple random sample. The srs
+samples units without replacement, which implies that units' inclusion
+into the sample is not independent---knowing that unit \(i\) was
+included in the sample means that another unit \(j\) has only a
+\((n-1)/(N-1)\) probability of being included in the sample. To derive
+an expression for the covariance, note that
+\(\cov(Z_i, Z_j) = \E[Z_iZ_j] - \E[Z_i]\E[Z_j]\) and \[
 \E[Z_iZ_j] = \P(Z_i = 1, Z_j = 1) = \P(Z_i = 1)\P(Z_j =1 \mid Z_i = 1) = \frac{n}{N}\cdot \frac{n-1}{N-1}.
-\] Plugging this into our covariance statement, we get, \[
+\] Plugging this into our covariance statement, we get \[
 \begin{aligned}
 \cov(Z_i, Z_j) &= \E[Z_iZ_j] - \E[Z_i]\E[Z_j] \\ &= \frac{n}{N}\cdot \frac{n-1}{N-1} - \frac{n^2}{N^2}. \\
 &=\frac{n}{N}\left(\frac{n-1}{N-1} - \frac{n}{N}\right) \\
@@ -1000,31 +1017,29 @@ that \(\cov(Z_i, Z_j) = \E[Z_iZ_j] - \E[Z_i]\E[Z_j]\) and \[
 &= -\frac{n(N- n)}{N^2(N-1)} \\
 &= -\frac{\V[Z_i]}{N-1}.
 \end{aligned}
-\] Given that variances and population sizes are positive, we can see
-that the covariance between the inclusions of two units is negative.
-Given that there are a fixed number of spots in the sample, Frodo being
-included lowers the chances that Sam is included, so we end up with this
-negative covariance.
+\] Given that variances and population sizes must be positive, the
+covariance between the inclusions of two units is negative. Going back
+to our hobbits, there are a fixed number of spots in the sample, and so
+Frodo being included lowers the chance that Sam is included, so we end
+up with this negative covariance.
 
-With the covariance and variance in hand, we can derive the sampling
-variance of the sample mean. \[
+With the covariance and variance now calculated, we can derive the
+sampling variance of the sample mean: \[
 \begin{aligned}
 \V[\Xbar_{n}] &=  \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] + \sum_{i=1}^N\sum_{j\neq i} x_ix_j\cov[Z_i,Z_j]\right] \\
 &=  \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\V[Z_i]\right] \\
 &=  \frac{\V[Z_i]}{n^2}\left[\sum_{i=1}^N x_i^2 - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right] \\
 &=  \frac{N-n}{nN^2}\left[\sum_{i=1}^N x_i^2 - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right]
 \end{aligned}
-\] Where do we go from here? Unfortunately, we now arrive at the
+\] Where do we go from here? Unfortunately, we have arrived at the
 non-obvious and seemingly magical step of ``adding and subtracting a
-crucial quantity.'' This step appears magical because you seem to have
-to know the step before you can complete the proof, but how could you
-ever complete the proof without knowing this step? In this case, we need
-to add and subtract the quantity \((N-1)^{-1} \sum_{i=1}^N x_i^2\). Why
-this quantity and how could we ever discover it on our own? Let's
-rewrite the population variance in a slightly different way to see what
-we might want to find, \[
+crucial quantity.'' (One needs to know the step before completing the
+proof, so how could you complete the proof without knowing this step?)
+In this case, it is necessary to add and subtract the quantity
+\((N-1)^{-1} \sum_{i=1}^N x_i^2\). To see why, rewrite the population
+variance in a slightly different way: \[
 s^2 = \frac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 = \frac{1}{N-1} \left(\sum_{i=1}^N x_i^2  - N\overline{x}^2\right)
-\] Notice that we can write \[
+\] Note that we can write \[
 N^2\overline{x}^2 = \sum_{i=1}^N x_i^2 + \sum_{i=1}^N \sum_{j\neq i} x_ix_j, 
 \] which provides a hint as to the quantity that we will add and
 subtract \[
@@ -1036,47 +1051,47 @@ subtract \[
 &=  \frac{N-n}{nN(N-1)}\sum_{i=1}^N (x_i - \overline{x})^2 \\
 &= \frac{(N-n)}{N}\frac{s^2}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n}.
 \end{aligned}
-\] This proof is rather involved, but it does display some commonly-used
+\] This proof is rather involved but does display some commonly used
 approaches to deriving statistical results. It also highlights how the
-sampling scheme leads to dependence that makes the result more
-complicated. In the next chapter, we will see that the variance of the
-sample mean under indepdent and identically distributed sampling is much
-simpler.
+sampling scheme leads to dependence, making the result more complicated.
+The next chapter will discuss how the variance of the sample mean under
+independent and identically distributed sampling is much simpler.
 
 \hypertarget{estimating-the-sampling-variance}{%
 \subsection{Estimating the sampling
 variance}\label{estimating-the-sampling-variance}}
 
-One unfortunate aspect of the sampling variance, \(\V[\Xbar_n]\), is
-that it depends on the population variance, \(s^2\), which we cannot
-know unless have conducted a census of the entire population. Of course,
-in that case, we would hardly need to worry about uncertainty. Thus, we
-will need some way to estimate the sampling variance. Since we already
-know \(n\) and \(N\), the most straightforward way to do this is to find
-an estimator for the population variance.
+An unfortunate aspect of the sampling variance, \(\V[\Xbar_n]\), is that
+it depends on the population variance, \(s^2\), which we cannot know
+unless we have a census of the entire population (If we had that
+information, we would not need to worry about uncertainty.) Thus, we
+need to estimate the sampling variance. Since we already know \(n\), the
+sample size, and \(N\), the population size, the most straightforward
+way to do this is to find an estimator for the population variance.
 
-The \textbf{sample variance} is the variance formula applied to the
-sample itself, \[
+A good estimator for this is the \textbf{sample variance}, which is
+simply the variance formula applied to the sample itself, \[
 S^2 = \frac{1}{n-1} \sum_{i=1}^N Z_i(x_i - \Xbar_n)^2.
-\] We can obtain an estimator for the sampling variance by plugging this
-in for the population variance, \[
+\] We can obtain an estimator for the sampling variance by substituting
+this in for the population variance, \[
 \widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 It is easy to get confused about the difference between the population
-variance, the sampling variance, and the sample variance. Adding to the
-confusion is that these are both variances, but for different
-distributions.
+variance, the variance of the sample, and the sampling variance (just as
+it is to get confused about the population, the distribution of the
+sample, and the sampling distribution). Adding to the confusion, these
+are all variances but for very distinct distributions.
 
 \end{tcolorbox}
 
-Is \(\widehat{\V}[\Xbar_n]\) a good estimator for \(\V[\Xbar_{n}]\)? To
-answer this question, we can apply the same criteria as above in
-Question 4. Ideally, our estimator would be unbiased, which in this case
-would be that it does not systematically over- or underestimate how much
-variation there is in the sample mean across samples.
+Why is \(\widehat{\V}[\Xbar_n]\) a ``good'' estimator for
+\(\V[\Xbar_{n}]\)? To answer this, we apply the same criteria as above
+in Question 4. Ideally, the estimator would be unbiased, meaning it does
+not systematically over- or underestimate how much variation is in the
+sample mean across repeated samples.
 
 \[
 \begin{aligned}
@@ -1100,29 +1115,31 @@ can pull it out of the summations:
 \end{aligned}
 \]
 
-We have shown that the sample variance is unbiased for the population
-variance. To complete everything, we can just plug this into our
+This shows that the sample variance is unbiased for the population
+variance. To complete the derivation, we can just plug this into the
 estimated sampling variance, \[
 \E\left[\widehat{\V}[\Xbar_n]\right] = \left(1 - \frac{n}{N}\right)\frac{\E\left[S^2\right]}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n} = \V[\Xbar_n],
-\] establishing that our estimator is unbiased.
+\] which establishes that the estimator is unbiased.
 
 \hypertarget{stratified-sampling-and-survey-weights}{%
 \section{Stratified sampling and survey
 weights}\label{stratified-sampling-and-survey-weights}}
 
-True to its name, the simple random sample is perhaps the most obvious
-way to conduct a random sample of a fixed size. If we have more
-information about the population, however, we might be able to obtain
-better estimates of our population quantities by incorporating this
-information into our sampling scheme. We can do this by conducting a
+True to its name, the simple random sample is perhaps the most
+straightforward way to take a random sample of a fixed size. With more
+information about the population, however, we might obtain better
+estimates of the population quantities by incorporating this information
+into the sampling scheme. We can do this by conducting a
 \textbf{stratified random sample}, where we divide up the population
 into several strata (or groups) and conduct simple random samples within
 each stratum. We create these strata (or ``stratify the population'' in
 the usual jargon) based on the additional information about the
 population.
 
-For a concrete example of stratification, consider an expanded
-population of the entire fellowship of the ring.
+Consider an expanded population of the entire Fellowship of the Ring,
+which included 9 adventurous members -- the four hobbits plus two humans
+(Aragorn and the doomed Boromir), an elf (Legolas of the Woodland
+Elves), a dwarf (Gimli), and a wizard (Gandalf the Grey)
 
 \begin{longtable}[]{@{}lll@{}}
 \toprule\noalign{}
@@ -1137,38 +1154,38 @@ Unit (\(i\)) & Race & Height in cm (\(x_i\)) \\
 4 (Merry) & Hobbit & 127 \\
 5 (Gimli) & Dwarf & 137 \\
 6 (Gandalf) & Wizard & 168 \\
-7 (Aragorn) & Man & 198 \\
-8 (Boromir) & Man & 193 \\
+7 (Aragorn) & Human & 198 \\
+8 (Boromir) & Human & 193 \\
 9 (Legolas) & Elf & 183 \\
 \end{longtable}
 
-We could conduct stratified sampling here by splitting our population
-into two strata: hobbits and non-hobbits, making up 4/9ths \(\approx\)
-44\% and 5/9ths \(\approx\) 56\% of the population, respectively. If we
-were taking a sample of size 5 from this population, we could use a
-simple random sample, but we could end up with a very lopsided sample.
-We might, for instance, sample mostly or all non-hobbits. We can avoid
-this by conducting simple random samples of size 2 for the hobbits and
-size 3 for the non-hobbits. This would guarantee our sample would be
-40\% hobbit every time, while still maintaining randomness in our
-selection of which hobbits and non-hobbits go into the sample.
+If we were taking a sample of size 5 from this population, we could use
+a simple random sample, but note that the sample could be lopsided. We
+could, for instance, sample mostly or all non-hobbits. We could instead
+conduct stratified sampling here by splitting our population into two
+strata: hobbits and non-hobbits, making up 4/9ths \(\approx\) 44\% and
+5/9ths \(\approx\) 56\% of the population, respectively. To get to a
+sample of 5, we could take simple random samples of size 2 for the
+hobbits and size 3 for the non-hobbits. This would guarantee our sample
+would be 40\% hobbit every time while still maintaining randomness in
+our selection of which hobbits and non-hobbits go into the sample.
 
 Another reason to conduct a stratified random sample is to guarantee a
-level of precision for a certain subgroup of the population. In the
-social sciences, we often conduct nationally representative surveys, but
-have a specific interest in obtain estimates for certain minority
-populations like African Americans, Latinos, LGBT people, and others. In
-modest sample sizes, the number of respondents in one of these groups
-might be too small to learn much about their opinions. Thus, we might
-sample a higher proportion of the group of interest to ensure we can
-make precise statements about that group.
+level of precision for a certain subgroup of the population. Social
+science researchers often conduct nationally representative surveys but
+have a specific interest in obtaining estimates for certain minority
+populations -- for example, African Americans, Latinos, people who are
+LGBTQ+, and others. In modest sample sizes, the number of respondents in
+one of these groups might be too small to learn much about their
+opinions. Sampling a higher proportion of the group of interest will
+help ensure that we can make precise statements about that group.
 
-Stratified random sampling is one example of a broad class of sampling
-methods that have unequal inclusion probabilities, which we denote
-\(\pi_i = \P(Z_{i} = 1)\). In a simple random sample, we have
-\(\pi_i = n/N\) for all \(i\). In the above fellowship example, we were
-sampling 2 hobbits and 3 non-hobbits, so we have the following inclusion
-probabilities:
+In a simple random sample, we have \(\pi_i = n/N\) for all \(i\). By
+contrast, stratified random sampling is an example of a broad class of
+sampling methods that have unequal inclusion probabilities, which we
+denote \(\pi_i = \P(Z_{i} = 1)\). In the Fellowship of the Ring example,
+we were sampling 2 hobbits and 3 non-hobbits, so we have the following
+inclusion probabilities:
 
 \begin{longtable}[]{@{}lll@{}}
 \toprule\noalign{}
@@ -1188,55 +1205,55 @@ Unit (\(i\)) & Race & Inclusion probability (\(\pi_i\)) \\
 9 (Legolas) & Elf & 0.6 \\
 \end{longtable}
 
-There are additional ways that we might conduct a random sample with
-unequal inclusion probabilities. For example, suppose we were randomly
-sampling 5 cities to study from the United States. We might want to bias
-our sample toward larger cities to capture a larger number of citizens
-in the overall sample. In that case, if the number of inhabitants for
-city \(i\) is \(b_i\), then our inclusion probabilities for sampling
-with replacement\footnote{This description is true for sampling with
-  replacement. When we want to sample without replacement, we would need
-  to adjust the probabilities to account for how being selected first
-  means that a unit cannot be selected second.} would be \[
+There are additional ways to conduct a random sample with unequal
+inclusion probabilities. For example, suppose the goal is to randomly
+sample 5 U.S. cities for study. We might want to bias our sample toward
+larger cities in order to capture a larger number of citizens in the
+overall sample. If the number of inhabitants for city \(i\) is \(b_i\),
+then our inclusion probabilities for sampling with
+replacement\footnote{This description is true for sampling with
+  replacement. When sampling without replacement, we would need to
+  adjust the probabilities to account for how being selected first means
+  that a unit cannot be selected second.} is \[
 \pi_i = \frac{b_i}{\sum_{i=1}^N b_i}.
-\] Here again, we are using information about the population in our
-sampling design, though this information is more continuous whereas the
-information in the stratified estimator is discrete.
+\] Note that we use information about the population in our sampling
+design, though this information is continuous whereas the information in
+the stratified estimator is discrete.
 
-When using a sampling design with unequal inclusion probabilities, we
-have obviously changed our sampling design (question 3), but the
-population and estimands (questions 1 and 2) remain the same. We are
-still interested in estimating the population mean, \(\overline{x}\). We
-now turn to our estimator (question 4), since we will need to use a new
-estimator that matches the design.
+Using a sampling design with unequal inclusion probabilities means that
+we have changed our sampling design (question 3), but the population and
+estimands (questions 1 and 2) remain the same. We are still interested
+in estimating the population mean, \(\overline{x}\). We now turn to the
+estimator (question 4), since we will need to use a new estimator that
+matches the design.
 
-There are actually two estimators that are commonly used to estimate the
-population mean when sampling with unequal inclusion probabilities. The
-first is called the \textbf{Horvitz-Thompson (HT) estimator} and has the
-form \[ 
+Two estimators are commonly used to estimate the population mean when
+sampling with unequal inclusion probabilities. The first, the
+\textbf{Horvitz-Thompson (HT) estimator}, has the form \[ 
 \widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^{N} \frac{Z_{i}x_{i}}{\pi_{i}},
-\] where we take the weighted average of those in our sample where the
-weights are the inverse of the inclusion probabilities. This is why the
-estimator is sometimes called the inverse probability weighting or IPW
-estimator.
+\] This takes the weighted average of those in the sample, with the
+weights being the inverse of the inclusion probabilities. This is why
+the estimator is sometimes called the inverse probability weighting, or
+IPW, estimator.
 
 We can show that the HT estimator is unbiased for the population mean by
 noting that \(\E[Z_i] = \P(Z_i = 1) = \pi_i\), so that \[
 \E[\widetilde{X}_{HT}] = \frac{1}{N} \sum_{i=1}^N \frac{\E[Z_i]x_i}{\pi_i} = \frac{1}{N} \sum_{i=1}^N x_i = \overline{x}. 
-\] One downside of the HT estimator is that it can be unstable a unit
-with a very small inclusion probability is selected, since their weight
-\(1/\pi_i\) will be very large. This instability is the cost of being
-unbiased for the stratified design. We can write the formula for the
-sampling variance, but it is rather complicated and requires notation
-that is less important to the task at hand.
+\] A downside of the HT estimator is that it can be unstable if a unit
+with a very small inclusion probability is selected since that unit's
+weight (\(1/\pi_i\)) will be very large. This instability is the cost of
+being unbiased for the stratified design. Also note that the formula for
+the sampling variance is rather complicated and requires notation that
+is less important to the task at hand.
 
-The \textbf{Hájek estimator} normalizes the weights so they sum to \(N\)
-and has the form \[ 
+The second estimator for the the population mean when sampling with
+unequal inclusion probabilities is the \textbf{Hájek estimator}, which
+normalizes the weights so they sum to \(N\) and has the form \[ 
 \widetilde{X}_{hj} = \frac{\sum_{i=1}^N Z_{i}x_{i} / \pi_{i}}{\sum_{i=1}^{N} Z_{i}/\pi_{i}}.
 \] This estimator is \textbf{biased} for the population mean since there
 is a random quantity in the denominator. The Hajek estimator is often
 considered the better estimator in many situations, though, because it
-have lower sampling variance than the HT estimator.
+has lower sampling variance than the HT estimator.
 
 \hypertarget{sampling-weights}{%
 \subsection{Sampling weights}\label{sampling-weights}}
@@ -1247,24 +1264,23 @@ write the HT estimator as \[
 \widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^N w_iZ_ix_i,
 \] and we can write the Hajek estimator as \[
 \widetilde{X}_{hj} = \frac{\sum_{i=1}^N w_iZ_{i}x_{i}}{\sum_{i=1}^{N} w_iZ_{i}}.
-\] These weights, \(w_i\), are commonly distributed with surveys because
-they are the only piece of information from the sampling design that we
-need to use the above estimators. This allows researchers to analyze a
-randomly sampled survey without knowledge of the exact
-design.\footnote{If we want design-based estimators of the sampling
-  variance, we would also need to know the joint inclusion
-  probabilities, which are the probabilities of any two units being
-  sampled together.}
+\] These weights, \(w_i\), are usually included in final survey data
+sets because they contain all the information about the sampling design
+a researcher needs to analyze the survey responses even without
+knowledge of the exact design.\footnote{If we want design-based
+  estimators of the sampling variance, we would also need to know the
+  joint inclusion probabilities, which are the probabilities of any two
+  units being sampled together.}
 
 The sampling weights have a nice interpretation in terms of a
-pseudo-population. Each unit in the sample ``represents''
-\(w_i = 1/\pi_i\) units in the population, thus making the sample more
+pseudo-population: each unit in the sample ``represents''
+\(w_i = 1/\pi_i\) units in the population. This makes the sample more
 representative of the population.
 
-Finally, we note that statistical software often is a little confusing
-in terms of how it handles weights. It may not be obvious what estimator
-the R function \texttt{weighted.mean(x,\ w)} is using. In fact, looking
-at the source code, we find that it basically calls
+Finally, note that statistical software often is a little confusing in
+how it handles weights. It may not be obvious what estimator function
+\texttt{weighted.mean(x,\ w)} in R is using. In fact, the source code
+basically calls
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1278,20 +1294,21 @@ which is equivalent to the Hajek estimator above.
 \section{Conclusion}\label{conclusion}}
 
 This chapter covered the basic structure of design-based inference in
-the context of survey sampling. We introduced the basic questions of
-statistical inference, including specifying a population and quantity of
-interest, choosing a sampling design and estimator, and assessing
-uncertainty of our estimator. Of course, we have only scratched the
-surface of the types of designs and estimators used in the practice of
-survey sampling. Professional probability surveys often use clustering,
-which means randomly selecting larger clusters of units and then
-randomly sampling within these units. When combined with stratification,
-surveys end up being very complex. No matter how complex they are,
-though, the survey weights and associated estimators in the previous
-section are usually valid ways to estimate population quantities.
+the context of sampling from a population. We introduced the basic
+questions of statistical inference, including specifying a population
+and quantity of interest, choosing a sampling design and estimator, and
+assessing uncertainty of the estimator. Of course, we have only
+scratched the surface of the types of designs and estimators used in the
+practice of sampling. Professional probability surveys often use
+clustering, which means randomly selecting larger clusters of units and
+then randomly sampling within these units. However complex the sampling
+design, the core steps of design-based statistical inference remain the
+same. A researcher must identify a population, determine a sampling
+design, choose a quantity of interest, select an estimator, and describe
+the uncertainty of any estimates.
 
-\hypertarget{estimation}{%
-\chapter{Estimation}\label{estimation}}
+\hypertarget{model-based-inference}{%
+\chapter{Model-based inference}\label{model-based-inference}}
 
 \hypertarget{introduction-2}{%
 \section{Introduction}\label{introduction-2}}
@@ -1299,31 +1316,51 @@ section are usually valid ways to estimate population quantities.
 Suppose you have been tasked with determining what fraction of a
 population supports a policy of increasing legal immigration limits. You
 have a sample of data on whether or not some individual respondents
-support the policy. How should you use the information you know (the
-data) to make a best guess about the information you don't know (the
-fraction of the population)? This task is called estimation and it's the
-cornerstone of most quantitative work in the social sciences.
+support the policy but you don't know exactly how it was sampled. How
+should you use the information you know (the data) to make a best guess
+about the information you don't know (the fraction of the population)?
 
-You might think to yourself: this seems simple, just use the fraction of
-the sample that supports the policy as the best guess about the fraction
-of the population. And, as we'll see, under certain conditions, this
-procedure is sound. The tricky part of statistics, though, is to
-understand what those ``certain conditions'' are and be able to
-determine if they hold in a given empirical setting. This line of
-thought may lead to uncomfortable questions such as, ``where did this
-sample come from?''
+Design-based inference is a coherent and internally consistent framework
+for estimating quantities and quantifying uncertainty. This crisp
+conceptual clarity comes from the knowledge of the sampling design,
+which also limits the applicability of the framework. How does one
+perform estimation and inference when lacking complete information about
+the sampling design? How does one proceed with inference if our outcomes
+are random due to nonresponse or measurement error? What if we would
+like to make inferences about a population not covered in the sampling
+frame? In these cases, inference requires additional information that a
+researcher can incorporate via a \textbf{statistical model}.
 
-We begin with perhaps the simplest and most sanguine of data origin
-stories: the \textbf{random sample}. The ``sample'' refers to the idea
-that our data is a subset of some larger \textbf{population}. The
-``random'' modifier means that the subset was chosen by an uncertain
-process that did not favor one type of person versus another. Having a
-random sample from a population is an example of the ``certain
-conditions'' and our entry point into studying estimation in a rigorous
-manner.
+A model-based approach to statistical inference views the data
+\(X_1,\ldots, X_n\) as a set of random variables that follow some
+probability distribution. The measurements in the actual sample,
+\(x_1, \ldots, x_n\), are realizations of these random variables. The
+probability distribution of \(X_1,\ldots, X_n\) is the model for the
+data and all inferences are based on it. Models can be very specific (a
+researcher might assume the data are normally distributed) or can be
+very general (the distribution of the data has finite mean and
+variance).
 
-Why focus on random samples so much even though many data sets are at
-least partially non-random or represent the entire population rather
+A reasonable approach to the above estimation task is to use the
+fraction of the sample that supports the policy as the best guess about
+the fraction of the population. As we saw in the last chapter, a simple
+random sample would justify this approach. In this chapter, we will
+explore what statistical models will justify the same procedure.
+
+The focus of this book (and most of introductory statistics) will be on
+statistical models that assume units are \textbf{independent and
+identically distributed} or, more succinctly, \textbf{iid}. In essence,
+this assumption means that each unit gives us new information about the
+same underlying data-generating process. Because this assumption is
+often motivated by a probability sample from a population, some authors
+also refer to this as a \textbf{random sampling} assumption. The
+``sample'' refers to the idea that our data is a subset of some larger
+\textbf{population}. The ``random'' modifier means that the subset was
+chosen by an uncertain process that did not favor one type of person
+versus another.
+
+Why focus on iid/random samples so much even though many data sets are
+at least partially non-random or represent the entire population rather
 than a subset? Consider the famous story of a drunkard's search for a
 lost bill:\footnote{1924 May 24, Boston Herald, Whiting's Column:
   Tammany Has Learned That This Is No Time for Political Bosses, Quote
@@ -1400,19 +1437,72 @@ prefer.
 \end{example}
 
 We have two goals in this chapter. First, we will introduce the entire
-framework of estimation and estimators. We will discuss different ways
-to compare the quality of estimators. These are properties that will be
-important to any estimator that you will meet now or in the future.
-Second, we will establish these properties for a general class of
-estimators that can be written as a sample mean. These results are
-useful in their own right since these estimators are ubiquitous, but the
-derivations also provide examples of how we establish such results.
-Building comfort with these proofs will help us understand the arguments
-about novel estimators we will inevitably see over the course of our
-careers.
+model-based framework of estimation and estimators. We will discuss
+different ways to compare the quality of estimators. Most of these
+properties will be similar to those of the design-based framework,
+except the properties will be with respect to the model rather than the
+sampling design. The core questions of quantitative research largely
+remain the same, with the exception of the second question, where we
+replace specifying the sampling design with a the specification of a
+probabilistic model for our data. For reference, the core questions are:
 
-\hypertarget{samples-and-populations}{%
-\section{Samples and populations}\label{samples-and-populations}}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Population}: who or what do we want to learn about?
+\item
+  \textbf{Design/model}: how will we collect the data, or, what
+  assumptions are we making about how the data came to be?
+\item
+  \textbf{Quantity of interest}: what do we want to learn about the
+  population?\\
+\item
+  \textbf{Estimator}: how will we use the data to produce an estimate?
+\item
+  \textbf{Uncertainty}: how will we estimate and convey the error
+  associated with my estimate?
+\end{enumerate}
+
+The second goal of this chapter will be to establish key properties for
+a general class of estimators that can be written as a sample mean.
+These results are useful in their own right since these estimators are
+ubiquitous, but the derivations also provide examples of how we
+establish such results. Building comfort with these proofs will help us
+understand the arguments about novel estimators we will inevitably see
+over the course of our careers.
+
+\hypertarget{question-1-populations-sample-and-models}{%
+\section{Question 1: Populations, sample, and
+models}\label{question-1-populations-sample-and-models}}
+
+The main advantage and disadvantage of relying on models is that they
+are abstract and theoretical, which means the connection between a model
+and the population it seeks to explain is less direct than with the
+design-based framework. Nevertheless, a clear articulation of who or
+what we want to learn about is crucial for evaluating what types of
+modeling assumptions will be sustainable or not. If a researcher is
+studying vote shares in an electoral system, they might tailor their
+model to two-party or multi-party systems.
+
+As in the design-based setting, there is often a clear and distinct
+population such as ``all registered voters'' or ``all citizens living in
+Boston.'' In other cases, the population may be more abstract. For
+example, a large literature across many fields has studied how the size
+of minority populations affects the views of the local majority
+population. Often, researchers are interested in making claims beyond
+the particular geographic region or minority/majority group, and instead
+are implicitly or explicitly considering a ``superpopulation'' of such
+cases that their model might explain. While there is nothing
+theoretically wrong with this approach, these ideas are often neglected
+in practice and the ``scope conditions'' of a particular model go
+unarticulated. The best quantitative work will be clear about what units
+or processes it is trying to learn about so that readers can evaluate
+how well the modeling assumptions fit that task.
+
+\hypertarget{question-2-samples-and-models}{%
+\section{Question 2: Samples and
+models}\label{question-2-samples-and-models}}
 
 Let's begin by building a bare-bones probability model for how our data
 came to be. We might have a particular data set with a series of numbers
@@ -1434,10 +1524,21 @@ properties of estimators across \textbf{repeated samples}. The random
 variable \(X_i\) represents our uncertainty about what value, say, age
 will take for respondent \(i\) in any of these samples, and the set
 \(\{X_{1}, \ldots, X_{n}\}\) represents our uncertainty about the entire
-column of ages for all \(n\) respondents.
+column of ages for all \(n\) respondents. At the most general, the
+model-based approach will say that these \(n\) random variables follow
+some joint distribution, \(F_{X_{1},\ldots,X_{n}}\), \[
+\{X_{1}, \ldots, X_{n}\} \sim F_{X_{1},\ldots,X_{n}}
+\] The joint distribution \(F\) here represents our probability model
+for the data. Right now, we have made no assumptions about it, so it
+could be any joint probability distribution over \(n\) random variables.
+This level of generality is difficult to work with in practice because
+there is essentially one draw from this joint distribution (the \(n\)
+measurements in the data). The core question of modeling is about what
+restrictions will a researcher put on this joint distribution to make
+learning about it more tractable.
 
-For most of this book, we'll focus on a relatively simple setting where
-we assume the data \(\{X_1, \ldots, X_n\}\) are \textbf{independent and
+Most of this book focuses on a relatively simple setting where we assume
+the data \(\{X_1, \ldots, X_n\}\) are \textbf{independent and
 identically distributed} (iid) draws from a distribution with cumulative
 distribution function (cdf) \(F\). They are independent in that
 information about any subset of random variable is not informative about
@@ -1454,18 +1555,13 @@ represents the unknown distribution of the data, otherwise known as the
 \textbf{data generating process} (DGP). Sometimes \(F\) is also referred
 to as the \textbf{population distribution} or even just
 \textbf{population}, which has its roots in viewing the data as a random
-sample from some larger population.\footnote{This approach to inference
-  is often called a \textbf{model-based approach} since we are assuming
-  a probability model in the cdf, \(F\). This is usually in contrast to
-  a \textbf{design-based approach} to inference that views the
-  population of interest as a finite group with fixed traits and the
-  only randomness comes from the random sampling procedure.} As a
-shorthand, we often say that the collection of random variables
+sample from some larger population.{[}\^{}model{]} As a shorthand, we
+often say that the collection of random variables
 \(\{X_1, \ldots, X_n\}\) is a \textbf{random sample} from population
 \(F\) if \(\{X_1, \ldots, X_n\}\) is iid with distribution \(F\). The
 \textbf{sample size} \(n\) is the number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1491,7 +1587,13 @@ data as an iid draw from \(F\):
   citizens where the population proportion of Democratic party
   identifiers is 0.33. Then if we randomly sample \(n = 100\) US
   citizens, each data point \(X_i\) will be distributed Bernoulli with
-  probability of success 0.33.
+  probability of success 0.33. The last chapter explored simple random
+  samples without replacement, which is a more common type of sampling.
+  Sampling without replacement creates dependence across units, which
+  would violate the iid assumption. However, if the population size
+  \(N\) is very large relative to the sample size \(n\), this dependence
+  will be very small and the iid assumption will be relatively
+  innocuous.
 \item
   \textbf{Groundhog Day}. Random sampling does not always make sense as
   a justification for iid data, especially when the units are not
@@ -1524,7 +1626,7 @@ modify \(X_i\) to be a random vector (that is, a vector of random
 variables) and then \(F\) becomes the joint distribution of that random
 vector. Nothing substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1553,20 +1655,18 @@ this:
   can treat it like it is.
 \end{itemize}
 
-There are ways to handle all of these issues (mostly through the use of
-survey weights), but it is important to realize that using a modern
-survey ``as if'' it was a simple random sample might lead to poor
-performance and incorrect inferences.
+As discussed in the last chapter, there are ways to handle all of these
+issues (mostly through the use of survey weights), but it is important
+to realize that using a modern survey ``as if'' it was a simple random
+sample might lead to poor performance and incorrect inferences.
 
 \end{tcolorbox}
 
-\hypertarget{point-estimation}{%
-\section{Point estimation}\label{point-estimation}}
+\hypertarget{question-3-quantities-of-interest}{%
+\section{Question 3: Quantities of
+interest}\label{question-3-quantities-of-interest}}
 
-\hypertarget{quantities-of-interest}{%
-\subsection{Quantities of interest}\label{quantities-of-interest}}
-
-In statistical inference, our goal is to learn about the data-generating
+In model-based inference, our goal is to learn about the data-generating
 process. Each data point \(X_i\) represents a draw from a distribution,
 captured by the cdf \(F\), and we would like to know more about this
 distribution. We might be interested in estimating the cdf at a general
@@ -1621,15 +1721,15 @@ we'll let \(\theta\) represent some generic quantity of interest.
 \textbf{Point estimation} describes how we obtain a single ``best
 guess'' about \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
 
 \end{tcolorbox}
 
-\hypertarget{estimators}{%
-\subsection{Estimators}\label{estimators}}
+\hypertarget{question-4-estimators}{%
+\section{Question 4: Estimators}\label{question-4-estimators}}
 
 Now that we have a target in mind, we can try to estimate it with our
 data. To do so, we first need a rule or algorithm or function that takes
@@ -1654,7 +1754,7 @@ guess about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 It is widespread, though not universal, to use the ``hat'' notation to
 define an estimator and its estimand. For example, \(\widehat{\theta}\)
@@ -1694,7 +1794,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -1753,7 +1853,7 @@ know if we should model a given event count variable as Poisson or
 Negative Binomial? The attractive properties of MLE are only as good as
 our ability to specify the parametric model.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 One essential intuition to build about statistics is the
 \textbf{assumptions-precision tradeoff}. You can usually get more
@@ -1838,7 +1938,7 @@ interest here is the population covariance between these variables, \[
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Given the connection between the population mean and the sample mean,
 you will sometimes see the \(\E_n[\cdot]\) operator used as a shorthand
@@ -2015,7 +2115,7 @@ part of iid. Independence is not needed.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased, but only when
@@ -2028,9 +2128,8 @@ class if it is unbiased for all \(F \in \mathcal{F}\).
 
 \end{tcolorbox}
 
-\hypertarget{estimation-variance-and-the-standard-error}{%
-\subsection{Estimation variance and the standard
-error}\label{estimation-variance-and-the-standard-error}}
+\hypertarget{question-5-uncertainty-1}{%
+\section{Question 5: Uncertainty}\label{question-5-uncertainty-1}}
 
 If a ``good'' estimator tends to be close to the truth, we should also
 care about the spread of the sampling distribution. In particular, we
@@ -2298,7 +2397,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 You will sometimes see convergence in probability written as
 \(\text{plim}(Z_n) = b\) if \(Z_n \inprob b\), \(\text{plim}\) stands
@@ -2326,7 +2425,7 @@ probability that an inconsistent estimator will be close to the truth
 will approach 0. Generally speaking, consistency is a very desirable
 property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 There are times when our estimators will be inconsistent, but they will
 converge in probability to a quantity that is understandable. For
@@ -2478,7 +2577,7 @@ conditions, the sample mean gets closer to the population mean as
 data is infinite, though that's a situation that most analysts will
 rarely face.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), and this is true.
@@ -2551,7 +2650,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 You will have noticed that many of the formal results we have presented
 so far have ``moment conditions'' that certain moments are finite. For
@@ -2838,7 +2937,7 @@ distribution of the underlying random variables, \(X_i\). They could be
 binary, event count, continuous, or anything. The CLT is incredibly
 broadly applicable.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
@@ -2966,7 +3065,7 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
@@ -3029,7 +3128,7 @@ confidence interval for their quantity of interest. Then, if the
 confidence intervals are valid, we should expect 95 of those confidence
 intervals to contain the true value.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Suppose you calculate a 95\% confidence interval, \([0.1, 0.4]\). It's
 tempting to make a probability statement like
@@ -3379,7 +3478,7 @@ the observed estimate is unlikely under the maintained hypothesis, we
 might view this as evidence against that hypothesis. Thus, hypothesis
 tests help us assess evidence for particular guesses about the DGP.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 For the rest of this chapter, we'll introduce the concepts following the
 notation in the past chapters. We'll usually assume that we have a
@@ -3757,7 +3856,7 @@ with \(z_{\alpha/2}\) that puts \(\alpha/2\) in the upper tail of the
 standard normal. That is, if \(Z \sim \N(0, 1)\), then \(z_{\alpha/2}\)
 satisfies \(\P(Z \geq z_{\alpha/2}) = \alpha/2\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 In R, you can find the \(z_{\alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -3922,7 +4021,7 @@ decision for arbitrary test levels like \(\alpha = 0.05\). It might be
 best to view p-values as a transformation of the test statistic onto a
 common scale between 0 and 1.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics and usually hinge on seemingly subtle
@@ -4330,7 +4429,7 @@ This BLP solves the same fundamental optimization problem as in the
 bivariate case: it chooses the set of coefficients that minimizes the
 mean-squared error averaging over the joint distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -4382,7 +4481,7 @@ a \(k\times k\) matrix and \(\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Intuitively, what is happening in the expression for the population
 regression coefficients? It is helpful to separate the intercept or
@@ -4937,7 +5036,7 @@ population regression coefficients \(\bfbeta\), representing the
 coefficients on the line of best fit in the population. We now take
 these as our quantity of interest.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -5016,7 +5115,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Almost all regression will contain an intercept term usually represented
 as a constant 1 in the covariate vector. It is also possible to separate
@@ -5440,7 +5539,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 The residual regression approach is:
 
@@ -5712,7 +5811,7 @@ assumptions needed to ensure that the best linear predictor,
 \(\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 The linear projection model makes the following assumptions:
 
@@ -5776,7 +5875,7 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the central limit
 theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
@@ -6048,7 +6147,7 @@ squared independent normals, where \(q\) is the number of rows of
 null hypothesis. Thus, under the null hypothesis of
 \(\mb{L}\bhat = \mb{c}\), we have \(W \indist \chi^2_{q}\).
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -6132,7 +6231,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6251,7 +6350,7 @@ robust to assumption violations. But homoskedasticity is such a
 historically important assumption that statistical software
 implementations of OLS like \texttt{lm()} in R assume it.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -6411,7 +6510,7 @@ Historically, we decided to assume (conditional) normality of the errors
 to proceed with some knowledge that we were wrong but hopefully not too
 wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, colframe=quarto-callout-note-color-frame, rightrule=.15mm, colback=white, breakable, opacityback=0, coltitle=black, opacitybacktitle=0.6, arc=.35mm, left=2mm, leftrule=.75mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, bottomrule=.15mm, bottomtitle=1mm, toprule=.15mm]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, breakable, coltitle=black, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, colback=white, bottomtitle=1mm, arc=.35mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, leftrule=.75mm, left=2mm, opacityback=0]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
