@@ -47,6 +47,16 @@ There are many possible reasons for this massive polling error. Most obviously, 
 
 One advantage of design-based inference is how precisely we must articulate the sampling frame. We can be extremely clear about the group of units we are trying to learn about. We shall see that in model-based inference the concept of the population and sampling frame become more amorphous.  
 
+
+::: {#exm-anes-population}
+
+## American National Election Survey, Population
+
+According to the materials from the American National Election Survey (ANES) in 2012, its target population is all U.S. citizens age 18 or older. The sampling frame for the face-to-face portion of the survey "consisted of the Delivery Sequence File (DSF) used by the United States Postal Service" for residential delivery of mail." Unfortunately, there are housing units that are covered by mail delivery by the postal service which would result in the potential for frame bias. The designers of the ANES used the Decennial Census to add many of these units to the final sampling frame. 
+
+:::
+
+
 ## Question 2: Sampling design
 
 Now that we have a clearly defined population and sampling frame, we can consider how to select a sample from the population. We will focus on **probabilistic samples**, where units are selected into the sample by chance, and each unit in the sampling frame has a non-0 probability of being included. Let $\mathcal{S} \subset \mathcal{U}$ be a sample and let $\mb{Z} = (Z_1, Z_2, \ldots, Z_N)$ to be a vector of inclusion indicators such that $Z_i = 1$ if $i \in \mathcal{S}$ and $Z_i = 0$ otherwise. We denote these indicators as upper-case letters because they are random variables. We assume the sample size is $|\mathcal{S}| = n$. 
@@ -88,9 +98,22 @@ $$
 $$
 :::
 
-Bernoulli sampling is very straightforward because independently selecting units simplifies many calculations. However, this "coin flipping" approach means that the sample size, $N_s = \sum_{i=1}^N Z_i$, will be itself a random variable because it is the result of how many of the coin flips land on "heads." 
+Bernoulli sampling is very straightforward because independently selecting units simplifies many calculations. However, this "coin flipping" approach means that the sample size, $N_s = \sum_{i=1}^N Z_i$, will be itself a random variable because it is the result of how many of the coin flips land on "heads."
+
+Simple random samples and Bernoulli random samples are simple to understand and implement. For large surveys, the sampling designs are often much more complicated for cost-saving reasons. We now describe the sampling design for the ANES, which contains many design features typical of similar large surveys.  
 
 
+::: {#exm-anes-design}
+
+## American National Election Survey, Sampling Design
+
+The ANES uses a typical yet complicated design for its 2012 face-to-face survey. First, the designers divided (or stratified) U.S. states into nine Census divisions (which are based on geography). Within each division, designers then randomly sampled a number of census tracts (with higher number of sampled tracts for divisions with higher populations). The census tracts with larger populations are selected with higher probability. 
+
+The second stage randomly samples addresses from the sampling frame (described in @exm-anes-population). More households were sampled from tracts with higher proportion of Black and Latino residents to obtain an oversample of these groups. 
+
+Finally, the third stage of sampling was to randomly select one eligible person per household for completion of the survey. 
+
+:::
 
 ## Question 3: Quantity of Interest
 
