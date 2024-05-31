@@ -426,6 +426,19 @@ If we add more covariates to this BLP, these interpretations change to "holding 
 
 Interactions are a routine part of social science research because they allow us to assess how the relationship between the outcome and an independent variable varies by the values of another variable. In the context of our study of voter wait times, if $X_{i1}$ is income and $X_{i2}$ is the Black/non-Black voter indicator, then $\beta_3$ represents the change in the slope of the wait time-income relationship between Black and non-Black voters.  
 
+::: {.callout-note}
+
+## Centering variables to improve interpretability
+
+In many cases, the so-called marginal coefficients on the lower-order terms ($\beta_1$ for $X_{i1}$ and $\beta_2$ for $X_{i2}$) are uninteresting parameters because they represent the marginal effect of one variable when the other is 0. If $X_{i1}$ is age and $X_{i2}$ is the Black/non-Black indicator, then $\beta_2$ is the estimated difference in average voter wait times for voters who are zero years old. Obviously, this is a nonsensical parameter. We can improve the interpretability of the coefficient by recentering the age variable. Suppose we include a mean-centered version of age, 
+$$
+\widetilde{X}_{i1} = X_{i1} - \overline{X}_1
+$$
+in place of $X_{i1}$. That is, we regress $Y_i$ on $\widetilde{X}_{i1}$, $X_{i2}$, and $\widetilde{X}_{i1}X_{i2}$. In this case, $\beta_2$ (the coefficient on the race indicator $X_{i2}$) is the marginal effect of $X_{i2}$ when $\widetilde{X}_{i1} = 0$ or when $X_{i1} = \overline{X}_1$. Thus, this coefficient is now the estimated difference in average voter wait times for the average-aged voter, which is far more interpretable. What is remarkable is that This recentering has no effect either $\beta_1$ or $\beta_3$. 
+
+
+:::
+
 
 ## Multiple regression from bivariate regression {#sec-fwl}
 
