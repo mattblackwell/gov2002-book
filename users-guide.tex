@@ -254,12 +254,12 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -301,7 +301,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, enhanced, breakable, frame hidden, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, frame hidden, interior hidden, borderline west={3pt}{0pt}{shadecolor}, enhanced, breakable, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -840,7 +840,7 @@ Thus, the sampling distribution tells us what values of an estimator are
 more or less likely and depends on both the population distribution and
 the sampling design.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 Notice that the sampling distribution of an estimator will depend on the
 sampling design. Here, we used a simple random sample. Bernoulli
@@ -904,7 +904,7 @@ calculating the expected value of the estimator, \[
 \] The two are the same, meaning the sample mean in this simple random
 sample is unbiased.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, toprule=.15mm, left=2mm]
 
 Note that the word ``bias'' sometimes also refers to research that is
 systematically incorrect in other ways. For example, we might complain
@@ -1119,7 +1119,7 @@ this in for the population variance, \[
 \widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, coltitle=black, toprule=.15mm, left=2mm]
 
 It is easy to get confused about the difference between the population
 variance, the variance of the sample, and the sampling variance (just as
@@ -1597,7 +1597,7 @@ often say that the collection of random variables
 \(F\) if \(\{X_1, \ldots, X_n\}\) is iid with distribution \(F\). The
 \textbf{sample size} \(n\) is the number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1679,7 +1679,7 @@ to be a random vector (that is, a vector of random variables) and then
 \(F\) becomes the joint distribution of that random vector. Nothing
 substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, toprule=.15mm, left=2mm]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1783,7 +1783,7 @@ complete distribution. To speak about estimation in general, we will let
 estimation} describes how we obtain a single ``best guess'' about
 \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
@@ -1815,7 +1815,7 @@ guess about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 It is widespread, though not universal, to use the ``hat'' notation to
 define an estimator and its estimand. For example, \(\widehat{\theta}\)
@@ -1856,7 +1856,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, toprule=.15mm, left=2mm]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -1915,7 +1915,7 @@ if we should model a given event count variable as Poisson or Negative
 Binomial? The attractive properties of MLE are only as good as the
 ability to specify the parametric model.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, coltitle=black, toprule=.15mm, left=2mm]
 
 Building up intuition about the \textbf{assumptions-precision tradeoff}
 is essential. Researchers can usually get more precise estimates if they
@@ -2000,7 +2000,7 @@ interest here is the population covariance between these variables, \[
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, coltitle=black, toprule=.15mm, left=2mm]
 
 Given the connection between the population mean and the sample mean,
 you may see the \(\E_n[\cdot]\) operator used as a shorthand for the
@@ -2181,7 +2181,7 @@ part of iid. Independence is not needed.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, toprule=.15mm, left=2mm]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased but only when
@@ -2465,7 +2465,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, coltitle=black, toprule=.15mm, left=2mm]
 
 Sometimes convergence in probability is written as
 \(\text{plim}(Z_n) = b\) when \(Z_n \inprob b\), \(\text{plim}\) stands
@@ -2493,7 +2493,7 @@ probability that an inconsistent estimator will be close to the truth
 will approach 0. Generally speaking, consistency is a very desirable
 property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 Estimators can be inconsistent yet still converge in probability to an
 understandable quantity. For example, we will discuss in later chapters
@@ -2643,7 +2643,7 @@ conditions, the sample mean gets closer to the population mean as
 \(n\rightarrow\infty\). This result holds even when the variance of the
 data is infinite, though researchers will rarely face such a situation.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), which is true.
@@ -2716,7 +2716,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, coltitle=black, toprule=.15mm, left=2mm]
 
 Note that many of the formal results presented so far have ``moment
 conditions'' that certain moments are finite. For the vector WLLN, we
@@ -3001,7 +3001,7 @@ distribution of the underlying random variables, \(X_i\). They could be
 binary, event count, continuous, or anything. The CLT is incredibly
 broadly applicable.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, coltitle=black, toprule=.15mm, left=2mm]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
@@ -3129,7 +3129,7 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
@@ -3192,7 +3192,7 @@ confidence interval for their quantity of interest. Then, if the
 confidence intervals are valid, we should expect 95 of those confidence
 intervals to contain the true value.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, toprule=.15mm, left=2mm]
 
 Suppose you calculate a 95\% confidence interval, \([0.1, 0.4]\). It's
 tempting to make a probability statement like
@@ -3547,7 +3547,7 @@ hypothesis, we might view this as evidence against that hypothesis.
 Thus, hypothesis tests help us assess evidence for particular guesses
 about the DGP.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, coltitle=black, toprule=.15mm, left=2mm]
 
 For the rest of this chapter, we will introduce the concepts following
 the notation in the past chapters. We will assume a random (iid) sample
@@ -3935,7 +3935,7 @@ know that the t-statistic is asymptotically normal,
 \(T \indist \N(0, 1)\). Thus, we can approximate the null distribution
 with the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, toprule=.15mm, left=2mm]
 
 The names of the various tests can be quite confusing because they are
 so similar. Earlier, we discussed one-sided versus two-sided tests,
@@ -3980,7 +3980,7 @@ with \(z_{\alpha/2}\) that puts \(\alpha/2\) in the upper tail of the
 standard normal. That is, if \(Z \sim \N(0, 1)\), then \(z_{\alpha/2}\)
 satisfies \(\P(Z \geq z_{\alpha/2}) = \alpha/2\).
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
 In R, you can find the \(z_{\alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -4148,7 +4148,7 @@ test levels like \(\alpha = 0.05\). It might be best to view p-values as
 a transformation of the test statistic onto a common scale between 0 and
 1.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, colframe=quarto-callout-warning-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, colback=white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, coltitle=black, toprule=.15mm, left=2mm]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics, and these criticisms sometimes hinge on
@@ -4305,44 +4305,45 @@ This connection can be handy for two reasons:
 \hypertarget{sec-regression}{%
 \chapter{Linear regression}\label{sec-regression}}
 
-Regression is a tool for assessing the relationship between an
-\textbf{outcome variable}, \(Y_i\), and a set of \textbf{covariates},
-\(\X_i\). In particular, these tools show how the conditional mean of
-\(Y_i\) varies as a function of \(\X_i\). For example, we may want to
-know how voting poll wait times vary as a function of some socioeconomic
-features of the precinct, like income and racial composition. We usually
-accomplish this task by estimating the \textbf{regression function} or
-\textbf{conditional expectation function} (CEF) of the outcome given the
-covariates, \[
+Regression is simply a set of tools for evaluating the relationship
+between an \textbf{outcome variable}, \(Y_i\), and a set of
+\textbf{covariates}, \(\X_i\). In particular, these tools show how the
+conditional mean of \(Y_i\) varies as a function of \(\X_i\). For
+example, we may want to know how wait times at voting precincts vary as
+a function of various socioeconomic features of the precinct, like
+income and racial composition. We can accomplish this by estimating the
+\textbf{regression function} or \textbf{conditional expectation
+function} (CEF) of the outcome given the covariates, \[
 \mu(\bfx) = \E[Y_i \mid \X_i = \bfx].
 \] Why are estimation and inference for this regression function
 special? Why can't we just use the approaches we have seen for the mean,
 variance, covariance, and so on? The fundamental problem with the CEF is
-that there may be many, many values \(\bfx\) that can occur and many
-different conditional expectations that we will need to estimate. If any
-variable in \(\X_i\) is continuous, we must estimate an infinite number
-of possible values of \(\mu(\bfx)\). Because it worsens as we add
-covariates to \(\X_i\), we refer to this problem as the \textbf{curse of
-dimensionality}. How can we resolve this with our measly finite data?
+that there may be many values \(\bfx\) that can occur and many different
+conditional expectations that we will need to estimate. If any variable
+in \(\X_i\) is continuous, we must estimate an infinite number of
+possible values of \(\mu(\bfx)\), and this worsens as we add covariates
+to \(\X_i\). Because of that, we refer to this problem as the
+\textbf{curse of dimensionality}. How can we resolve this with our
+measly finite data?
 
 In this chapter, we will explore two ways of ``solving'' the curse of
-dimensionality: assuming it away and changing the quantity of interest
-to something easier to estimate.
+dimensionality: (1) assuming it away, and (2) changing the quantity of
+interest to something easier to estimate.
 
-Regression is so ubiquitous in many scientific fields that it has a lot
-of acquired notational baggage. In particular, the labels of the \(Y_i\)
-and \(\X_i\) vary greatly:
+Regression is so ubiquitous across many scientific fields that it has
+generated a lot of acquired notational baggage. In particular, the
+labels of the \(Y_i\) and \(\X_i\) vary greatly:
 
 \begin{itemize}
 \tightlist
 \item
   The outcome can also be called: the response variable, the dependent
   variable, the labels (in machine learning), the left-hand side
-  variable, or the regressand.
+  variable, or the regressand
 \item
   The covariates are also called: the explanatory variables, the
-  independent variables, the predictors, the regressors, inputs, or
-  features.
+  independent variables, the predictors, the right-hand side variables,
+  the regressors, inputs, or features
 \end{itemize}
 
 \hypertarget{why-do-we-need-models}{%
@@ -4350,9 +4351,9 @@ and \(\X_i\) vary greatly:
 
 At first glance, the connection between the CEF and parametric models
 might be hazy. For example, imagine we are interested in estimating the
-average poll wait times (\(Y_i\)) for Black voters (\(X_i = 1\)) versus
-non-Black voters (\(X_i=0\)). In that case, there are two parameters to
-estimate, \[
+average wait times at a voting precinct (\(Y_i\)) for Black voters
+(\(X_i = 1\)) versus non-Black voters (\(X_i=0\)). In that case, there
+are two parameters to estimate, \[
 \mu(1) = \E[Y_i \mid X_i = 1] \quad \text{and}\quad \mu(0) = \E[Y_i \mid X_i = 0],
 \] which we could estimate by using the plug-in estimators that replace
 the population averages with their sample counterparts, \[ 
@@ -4364,26 +4365,29 @@ defined by race. The same logic would apply if we had \(k\) racial
 categories: we would have \(k\) conditional expectations to estimate and
 \(k\) (conditional) sample means.
 
-Now imagine that we want to know how the average poll wait time varies
-as a function of income so that \(X_i\) is (essentially) continuous. Now
-we have a different conditional expectation for every possible dollar
-amount from 0 to Bill Gates's income. Imagine we pick a particular
-income, \$42,238, and so we are interested in the conditional
-expectation \(\mu(42,238)= \E[Y_{i}\mid X_{i} = 42,238]\). We could use
-the same plug-in estimator in the discrete case, \[
+Now imagine that we want to know how the average wait time varies as a
+function of income so that \(X_i\) is (essentially) continuous. (Perhaps
+the theory here is that wait times may be lower in precincts with more
+affluent voters.) Now we have a different conditional expectation for
+every possible dollar amount from 0 to however much the wealthiest
+earner makes. Suppose we choose one particular income, \$42,238, and
+that we are interested in the conditional expectation
+\(\mu(42,238)= \E[Y_{i}\mid X_{i} = 42,238]\). We could use the same
+plug-in estimator as in the discrete case, \[
 \widehat{\mu}(42,238) = \frac{\sum_{i=1}^{n} Y_{i}\mathbb{1}(X_{i} = 42,238)}{\sum_{i=1}^{n}\mathbb{1}(X_{i} = 42,238)}.
-\] What is the problem with this estimator? In all likelihood, no units
-in any particular dataset have that exact income, meaning this estimator
-is undefined (we would be dividing by zero).
+\] This is straightforward, but there is one glaring problem with this
+estimator: in all likelihood, no units in the particular dataset have
+that exact income, meaning this estimator is undefined because we would
+be dividing by zero.
 
-One solution to this problem is to use \textbf{subclassification}, turn
-the continuous variable into a discrete one, and proceed with the
-discrete approach above. We might group incomes into \$25,000 bins and
-then calculate the average wait times of anyone between, say, \$25,000
-and \$50,000 income. When we make this estimator switch for practical
-purposes, we need to connect it back to the DGP of interest. We could
-\textbf{assume} that the CEF of interest only depends on these binned
-means, which would mean we have:\\
+One solution to this problem is to use \textbf{subclassification} to
+turn the continuous variable into a discrete one and then proceed with
+the discrete approach above. For example, we could group incomes into
+\$25,000 bins and then calculate the average wait times of anyone
+between, say, \$25,000 and \$50,000 income. When we make this estimator
+switch for practical purposes, we need to connect it back to the DGP of
+interest. We could \textbf{assume} that the CEF of interest only depends
+on these binned means, giving us:\\
 \[
 \mu(x) = 
 \begin{cases}
@@ -4398,11 +4402,11 @@ time does not vary within the bins. Figure~\ref{fig-cef-binned} shows a
 hypothetical joint distribution between income and wait times with the
 true CEF, \(\mu(x)\), shown in red. The figure also shows the bins
 created by subclassification and the implied CEF if we assume
-bin-constant means in blue. We can see that the blue function
-approximates the true CEF but deviates from it close to the bin edges.
-The trade-off is that once we make the assumption, we only have to
-estimate one mean for every bin rather than an infinite number of means
-for each possible income.
+bin-constant means in blue. Note that the blue function approximates the
+true CEF but deviates from it close to the bin edges. The trade-off is
+that once we make the assumption that wait times do not vary within the
+bins, we only have to estimate one mean for every bin rather than an
+infinite number of means for each possible income.
 
 \begin{figure}
 
@@ -4417,12 +4421,12 @@ and poll wait times (contour plot), conditional expectation function
 \end{figure}
 
 Similarly, we could \textbf{assume} that the CEF follows a simple
-functional form like a line, \[ 
+functional form such as a line: \[ 
 \mu(x) = \E[Y_{i}\mid X_{i} = x] = \beta_{0} + \beta_{1} x.
 \] This assumption reduces our infinite number of unknowns (the
-conditional mean at every possible income) to just two unknowns: the
-slope and intercept. As we will see, we can use the standard ordinary
-least squares to estimate these parameters. Notice again that if the
+conditional mean at every possible income) to just two unknowns: (1) the
+slope and (2) the intercept. As we will see, we can use the standard
+ordinary least squares to estimate these parameters. Note that if the
 true CEF is nonlinear, this assumption is incorrect, and any estimate
 based on this assumption might be biased or even inconsistent.
 
@@ -4434,7 +4438,7 @@ estimation. If our estimator \(\widehat{\mu}(x)\) performs poorly, it
 will be difficult to tell if this is because the estimator is flawed or
 our functional form assumptions are incorrect.
 
-To help clarify these issues, we will pursue a different approach:
+To clarify these issues, we will pursue a different approach:
 understanding what linear regression can estimate under minimal
 assumptions and then investigating how well this estimand approximates
 the true CEF.
@@ -4448,22 +4452,24 @@ regression}\label{bivariate-linear-regression}}
 
 Let's set aside the idea of the conditional expectation function and
 instead focus on finding the \textbf{linear} function of a single
-covariate \(X_i\) that best predicts the outcome. Remember that linear
-functions have the form \(a + bX_i\). The \textbf{best linear predictor}
-(BLP) or \textbf{population linear regression} of \(Y_i\) on \(X_i\) is
-defined as \[ 
+covariate \(X_i\) that best predicts the outcome. Recall from your
+earlier mathematical training that linear functions have the form
+\(a + bX_i\). The \textbf{best linear predictor} (BLP) or
+\textbf{population linear regression} of \(Y_i\) on \(X_i\) is defined
+as \[ 
 m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}].
-\] That is, the best linear predictor is the line that results in the
-lowest mean-squared error predictions of the outcome given the
-covariates, averaging over the joint distribution of the data. This
-function is a feature of the joint distribution of the data---the
-DGP---and so represents something that we would like to learn about with
-our sample. It is an alternative to the CEF for summarizing the
-relationship between the outcome and the covariate, though we will see
-that they will sometimes be equal. We call \((\beta_{0}, \beta_{1})\)
-the \textbf{population linear regression coefficients}. Notice that
-\(m(x)\) could differ greatly from the CEF \(\mu(x)\) if the latter is
-nonlinear.
+\] The expression being minimized is the expected prediction error, or
+the (squared) distance between the observed outcome and the outcome as
+predicted with a particular slope and intercept. The best linear
+predictor is the line (that is, slope and intercept values) that results
+in the lowest expected prediction error. Note that this function is a
+feature of the joint distribution of the data---the DGP---and so we
+cannot observe it directly. It must be estimated. The BLP is an
+alternative to the CEF for summarizing the relationship between the
+outcome and the covariate, though as we discuss later they will
+sometimes be equal. We call \((\beta_{0}, \beta_{1})\) the
+\textbf{population linear regression coefficients}. Note that \(m(x)\)
+could differ greatly from the CEF \(\mu(x)\) if the latter is nonlinear.
 
 We can solve for the best linear predictor using standard calculus
 (taking the derivative with respect to each coefficient, setting those
@@ -4486,31 +4492,31 @@ get \[
 \end{aligned}
 \]
 
-Thus the slope on the population linear regression of \(Y_i\) on \(X_i\)
-is equal to the ratio of the covariance of the two variables divided by
-the variance of \(X_i\). From this, we can immediately see that the
+Thus, the slope on the population linear regression of \(Y_i\) on
+\(X_i\) is equal to the ratio of the covariance of the two variables
+divided by the variance of \(X_i\). It follows from this that the
 covariance will determine the sign of the slope: positive covariances
 will lead to positive \(\beta_1\) and negative covariances will lead to
-negative \(\beta_1\). In addition, we can see that if \(Y_i\) and
-\(X_i\) are independent, \(\beta_1 = 0\). The slope scales this
-covariance by the variance of the covariate, so slopes are lower for
-more spread-out covariates and higher for more spread-out covariates. If
-we define the correlation between these variables as \(\rho_{YX}\), then
-we can relate the coefficient to this quantity as \[
+negative \(\beta_1\). In addition, if \(Y_i\) and \(X_i\) are
+independent, \(\beta_1 = 0\). The slope scales this covariance by the
+variance of the covariate, so slopes will be lower for more spread-out
+covariates and higher for less spread-out covariates. If we define the
+correlation between these variables as \(\rho_{YX}\), then we can relate
+the coefficient to this quantity as \[
 \beta_1 = \rho_{YX}\sqrt{\frac{\V[Y_i]}{\V[X_i]}}.
 \]
 
-Collecting together our results, we can write the population linear
-regression as \[
+Collecting these various results together, we can write the population
+linear regression as \[
 m(x) = \beta_0 + \beta_1x = \E[Y_i] + \beta_1(x - \E[X_i]),
 \] which shows how we adjust our best guess about \(Y_i\) from the mean
 of the outcome using the covariate.
 
-It's important to remember that the BLP, \(m(x)\), and the CEF,
-\(\mu(x)\), are distinct entities. If the CEF is nonlinear, as in
+Be sure to remember that the BLP, \(m(x)\), and the CEF, \(\mu(x)\), are
+distinct entities. If the CEF is nonlinear, as in
 Figure~\ref{fig-cef-blp}, there will be a difference between these
-functions, meaning that the BLP might produce subpar predictions. Below,
-we will derive a formal connection between the BLP and the CEF.
+functions, meaning that the BLP might produce subpar predictions. We
+will derive a formal connection between the BLP and the CEF below.
 
 \begin{figure}
 
@@ -4527,29 +4533,30 @@ predictor.}
 \subsection{Beyond linear
 approximations}\label{beyond-linear-approximations}}
 
-The linear part of the best linear predictor is less restrictive than at
-first glance. We can easily modify the minimum MSE problem to find the
-best quadratic, cubic, or general polynomial function of \(X_i\) that
-predicts \(Y_i\). For example, the quadratic function of \(X_i\) that
-best predicts \(Y_i\) would be \[ 
+The linear part of the ``best linear predictor'' is less restrictive
+than it appears at first glance. We can easily modify the minimum MSE
+problem to find the best quadratic, cubic, or general polynomial
+function of \(X_i\) that predicts \(Y_i\). For example, the quadratic
+function of \(X_i\) that best predicts \(Y_i\) would be \[ 
 m(X_i, X_i^2) = \beta_0 + \beta_1X_i + \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
-\] This equation is now a quadratic function of the covariates, but it
+\] While the equation is now a quadratic function of the covariates, it
 is still a linear function of the unknown parameters
-\((\beta_{0}, \beta_{1}, \beta_{2})\) so we will call this a best linear
-predictor.
+\((\beta_{0}, \beta_{1}, \beta_{2})\), so we still call this a best
+linear predictor.
 
-We could include higher order terms of \(X_i\) in the same manner, and
-as we include more polynomial terms, \(X_i^p\), the more flexible the
-function of \(X_i\) we will capture with the BLP. When we estimate the
-BLP, however, we usually will pay for this flexibility in terms of
-overfitting and high variance in our estimates.
+We could include higher-order terms of \(X_i\) in the same manner, and,
+including more polynomial terms, \(X_i^p\), will allow the BLP to be a
+more flexible function of \(X_i\). When we estimate the BLP, however, we
+usually pay for this flexibility with overfitting and high variance in
+our estimates.
 
 \hypertarget{linear-prediction-with-multiple-covariates}{%
 \subsection{Linear prediction with multiple
 covariates}\label{linear-prediction-with-multiple-covariates}}
 
 We now generalize the idea of a best linear predictor to a setting with
-an arbitrary number of covariates. In this setting, remember that the
+an arbitrary number of covariates, which more flexibly captures
+real-life empirical research scenarios. In this setting, recall that the
 linear function will be
 
 \[ 
@@ -4560,9 +4567,10 @@ m(\bfx) = \bfx'\bfbeta, \quad \text{where}\quad \bfbeta = \argmin_{\mb{b} \in \r
 
 This BLP solves the same fundamental optimization problem as in the
 bivariate case: it chooses the set of coefficients that minimizes the
-mean-squared error averaging over the joint distribution of the data.
+expected mean-squared error, where the expectation is over the joint
+distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, coltitle=black, toprule=.15mm, left=2mm]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -4585,10 +4593,10 @@ BLP:
 
 Under these assumptions, it is possible to derive a closed-form
 expression for the \textbf{population coefficients} \(\bfbeta\) using
-matrix calculus. To set up the optimization problem, we will find the
+matrix calculus. To set up the optimization problem, we find the
 first-order condition by taking the derivative of the expectation of the
-squared errors. First, let's take the derivative of the squared
-prediction errors using the chain rule: \[ 
+squared errors. First, take the derivative of the squared prediction
+errors using the chain rule: \[ 
 \begin{aligned}
   \frac{\partial}{\partial \mb{b}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
   &= 2\left(Y_{i} - \X_{i}'\mb{b}\right)\frac{\partial}{\partial \mb{b}}(Y_{i} - \X_{i}'\mb{b}) \\
@@ -4597,7 +4605,7 @@ prediction errors using the chain rule: \[
   &= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right),
 \end{aligned}
 \] where the third equality comes from the fact that
-\((Y_{i} - \X_{i}'\bfbeta)\) is a scalar. We can now plug this into the
+\((Y_{i} - \X_{i}'\bfbeta)\) is a scalar. We can plug this into the
 expectation to get the first-order condition and solve for \(\bfbeta\),
 \[ 
 \begin{aligned}
@@ -4606,19 +4614,21 @@ expectation to get the first-order condition and solve for \(\bfbeta\),
 \end{aligned}
 \] which implies the population coefficients are \[ 
 \bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
-\] We now have an expression for the coefficients for the population
+\] This gives us an expression for the coefficients for the population
 best linear predictor in terms of the joint distribution
-\((Y_{i}, \X_{i})\). A couple of facts might be useful for reasoning
-this expression. Recall that \(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\) is
-a \(k\times k\) matrix and \(\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]\) is a
+\((Y_{i}, \X_{i})\).
+
+A couple of facts might be useful for interpreting this expression
+substantively. Recall that \(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\) is a
+\(k\times k\) matrix and \(\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, coltitle=black, toprule=.15mm, left=2mm]
 
-Intuitively, what is happening in the expression for the population
-regression coefficients? It is helpful to separate the intercept or
-constant term so that we have \[ 
+What does the expression for the population regression coefficients
+mean? It is helpful to separate the intercept or constant term so that
+we have \[ 
 Y_{i} = \beta_{0} + \X'\bfbeta + e_{i},
 \] so \(\bfbeta\) refers to just the vector of coefficients for the
 covariates. In this case, we can write the coefficients in a more
@@ -4629,9 +4639,9 @@ interpretable way: \[
 Thus, the population coefficients take the covariance between the
 outcome and the covariates and ``divide'' it by information about
 variances and covariances of the covariates. The intercept recenters the
-regression so that projection errors are mean zero. Thus, we can see
-that these coefficients generalize the bivariate formula to this
-multiple covariate context.
+regression so that projection errors are mean zero. This means that
+these coefficients generalize the bivariate formula to this multiple
+covariate context.
 
 \end{tcolorbox}
 
@@ -4643,26 +4653,26 @@ m(\X_{i}) = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\
 \hypertarget{projection-error}{%
 \subsection{Projection error}\label{projection-error}}
 
-The \textbf{projection error} is the difference between the actual value
-of \(Y_i\) and the projection, \[ 
+The \textbf{projection error} or is the difference between the actual
+value of \(Y_i\) and the projection, \[ 
 e_{i} = Y_{i} - m(\X_{i}) = Y_i - \X_{i}'\bfbeta,
 \] where we have made no assumptions about this error yet. The
 projection error is simply the prediction error of the best linear
-prediction. Rewriting this definition, we can see that we can always
-write the outcome as the linear projection plus the projection error,
-\[ 
+prediction for a particular unit in the data. Rewriting this definition,
+we can see that we can always write the outcome as the linear projection
+plus the projection error, \[ 
 Y_{i} = \X_{i}'\bfbeta + e_{i}.
 \] Notice that this looks suspiciously similar to a linearity assumption
-on the CEF, but we haven't made any assumptions here. Instead, we have
-just used the definition of the projection error to write a tautological
+on the CEF, but we haven't made any assumptions here. Instead, we just
+used the definition of the projection error to write a tautological
 statement: \[ 
 Y_{i} = \X_{i}'\bfbeta + e_{i} = \X_{i}'\bfbeta + Y_{i} - \X_{i}'\bfbeta = Y_{i}.
 \] The critical difference between this representation and the usual
 linear model assumption is what properties \(e_{i}\) possesses.
 
-One key property of the projection errors is that when the covariate
+A key property of the projection errors is that when the covariate
 vector includes an ``intercept'' or constant term, the projection errors
-are uncorrelated with the covariates. To see this, we first note that
+are uncorrelated with the covariates. To see this, first note that
 \(\E[\X_{i}e_{i}] = 0\) since \[ 
 \begin{aligned}
   \E[\X_{i}e_{i}] &= \E[\X_{{i}}(Y_{i} - \X_{i}'\bfbeta)] \\
@@ -4676,7 +4686,7 @@ are uncorrelated with the covariates. To see this, we first note that
 imply that the projection error is uncorrelated with each \(X_{ij}\),
 since \[ 
 \cov(X_{ij}, e_{i}) = \E[X_{ij}e_{i}] - \E[X_{ij}]\E[e_{i}] = 0 - 0 = 0
-\] Notice that we still have made no assumptions about these projection
+\] Note that we still have made no assumptions about these projection
 errors except for some mild regularity conditions on the joint
 distribution of the outcome and covariates. Thus, in very general
 settings, we can write the linear projection model
@@ -4686,8 +4696,8 @@ conclude that \(\E[\X_{i}e_{i}] = 0\) by definition, not by assumption.
 
 The projection error is uncorrelated with the covariates, so does this
 mean that the CEF is linear? Unfortunately, no. Recall that while
-independence implies uncorrelated, the reverse does not hold. So when we
-look at the CEF, we have \[ 
+independence implies this lack of correlation, the reverse does not
+hold. So when we look at the CEF, we have \[ 
 \E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta + \E[e_{i} \mid \X_{i}],
 \] and the last term \(\E[e_{i} \mid \X_{i}]\) would only be 0 if the
 errors were independent of the covariates, so
@@ -4698,19 +4708,20 @@ projection errors be uncorrelated with the covariates, it will require
 additional assumptions to ensure that the true CEF is, in fact, linear
 \(\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta\).
 
-Let's take a step back. What have we shown here? In a nutshell, we have
-shown that a population linear regression exists under very general
-conditions, and we can write the coefficients of that population linear
-regression as a function of expectations of the joint distribution of
-the data. We did not assume that the CEF was linear nor that the
-projection errors were normal.
+To step back for a moment, what have we shown here? In a nutshell, we
+showed that a population linear regression exists under very general
+conditions and that we can write the coefficients of that population
+linear regression as a function of expectations of the joint
+distribution of the data. We did not, however, assume that the CEF was
+linear nor that the projection errors were normally distributed.
 
-Why do we care about this? The ordinary least squares estimator, the
-workhorse regression estimator, targets this quantity of interest in
-large samples, regardless of whether the true CEF is linear or not.
-Thus, even when a linear CEF assumption is incorrect, OLS still targets
-a perfectly valid quantity of interest: the coefficients from this
-population linear projection.
+Why is this important? The ordinary least squares estimator, the
+workhorse regression estimator of the social sciences, targets this
+quantity of interest in large samples, regardless of whether the true
+CEF is linear or not. Thus, even when a linear CEF assumption is
+incorrect and the projection errors are not normally distributed, OLS
+still targets a perfectly valid quantity of interest: the coefficients
+from this population linear projection.
 
 \hypertarget{linear-cefs-without-assumptions}{%
 \section{Linear CEFs without
@@ -4718,10 +4729,10 @@ assumptions}\label{linear-cefs-without-assumptions}}
 
 What is the relationship between the best linear predictor (which we
 just saw generally exists) and the CEF? To draw the connection, remember
-a vital property of the conditional expectation: it is the function of
-\(\X_i\) that best predicts \(Y_{i}\). The population regression was the
-best \textbf{linear} predictor, but the CEF is the best predictor among
-all nicely behaved functions of \(\X_{i}\), linear or nonlinear. In
+that the conditional expectation is importantly the function of \(\X_i\)
+that best predicts \(Y_{i}\). The population regression was the best
+\textbf{linear} predictor, but the CEF is the best predictor among all
+nicely behaved functions of \(\X_{i}\), linear or nonlinear. In
 particular, if we label \(L_2\) to be the set of all functions of the
 covariates \(g()\) that have finite squared expectation,
 \(\E[g(\X_{i})^{2}] < \infty\), then we can show that the CEF has the
@@ -4731,7 +4742,7 @@ lowest squared prediction error in this class of functions: \[
 
 So we have established that the CEF is the best predictor and the
 population linear regression \(m(\X_{i})\) is the best linear predictor.
-These two facts allow us to connect the CEF and the population
+These two facts allow us to connect the CEF to the population
 regression.
 
 \begin{theorem}[]\protect\hypertarget{thm-cef-blp}{}\label{thm-cef-blp}
@@ -4741,7 +4752,7 @@ If \(\mu(\X_{i})\) is a linear function of \(\X_i\), then
 
 \end{theorem}
 
-This theorem says that if the true CEF is linear, it equals the
+This theorem says that if the true CEF is linear, it must equal the
 population linear regression. The proof of this is straightforward: the
 CEF is the best predictor, so if it is linear, it must also be the best
 linear predictor.
@@ -4749,17 +4760,18 @@ linear predictor.
 In general, we are in the business of learning about the CEF, so we are
 unlikely to know if it genuinely is linear or not. In some situations,
 however, we can show that the CEF is linear without any additional
-assumptions. These will be situations when the covariates take on a
-finite number of possible values. Suppose we are interested in the CEF
-of poll wait times for Black (\(X_i = 1\)) vs.~non-Black (\(X_i = 0\))
+assumptions. These are situations where the covariates take on a finite
+number of possible values. Going back to the example from the chapter
+introduction, suppose we are interested in the CEF of wait times at
+voting precincts for Black (\(X_i = 1\)) vs.~non-Black (\(X_i = 0\))
 voters. In this case, there are two possible values of the CEF,
 \(\mu(1) = \E[Y_{i}\mid X_{i}= 1]\), the average wait time for Black
 voters, and \(\mu(0) = \E[Y_{i}\mid X_{i} = 0]\), the average wait time
 for non-Black voters. Notice that we can write the CEF as \[ 
 \mu(x) = x \mu(1) + (1 - x) \mu(0) = \mu(0) + x\left(\mu(1) - \mu(0)\right)= \beta_0 + x\beta_1,
 \] which is clearly a linear function of \(x\). Based on this
-derivation, we can see that the coefficients of this linear CEF have a
-clear interpretation:
+derivation, we obtain coefficients of this linear CEF that have clear
+substantive interpretations:
 
 \begin{itemize}
 \tightlist
@@ -4767,22 +4779,22 @@ clear interpretation:
   \(\beta_0 = \mu(0)\): the expected wait time for a Black voter.
 \item
   \(\beta_1 = \mu(1) - \mu(0)\): the difference in average wait times
-  between Black and non-Black voters. Notice that it matters how
-  \(X_{i}\) is defined here since the intercept will always be the
-  average outcome when \(X_i = 0\), and the slope will always be the
-  difference in means between the \(X_i = 1\) group and the \(X_i = 0\)
-  group.
+  between Black and non-Black voters. How \(X_{i}\) is defined here is
+  important since the intercept will always be the average outcome when
+  \(X_i = 0\), and the slope will always be the difference in means
+  between the \(X_i = 1\) group and the \(X_i = 0\) group.
 \end{itemize}
 
 What about a categorical covariate with more than two levels? For
-instance, we might be interested in wait times by party identification,
+example, we may be interested in wait times by party identification,
 where \(X_i = 1\) indicates Democratic voters, \(X_i = 2\) indicates
-Republican voters, and \(X_i = 3\) indicates independent voters. How can
-we write the CEF of wait times as a linear function of this variable?
-That would assume that the difference between Democrats and Republicans
-is the same as for Independents and Republicans. With more than two
-levels, we can represent a categorical variable as a vector of binary
-variables, \(\X_i = (X_{i1}, X_{i2})\), where \[ 
+Republican voters, and \(X_i = 3\) indicates Independent voters. We
+could write the CEF of wait times as a linear function of this variable,
+but that would assume that the difference between Democrats and
+Republicans is exactly the same as for Independents and Republicans --
+which is probably false. With more than two levels, we can represent a
+categorical variable as a vector of binary variables,
+\(\X_i = (X_{i1}, X_{i2})\), where \[ 
 \begin{aligned}
   X_{{i1}} &= \begin{cases}
                 1&\text{if Republican} \\
@@ -4794,11 +4806,11 @@ X_{{i2}} &= \begin{cases}
               \end{cases} \\
 \end{aligned}
 \] These two indicator variables encode the same information as the
-original three-level variable, \(X_{i}\). If I know the values of
-\(X_{i1}\) and \(X_{i2}\), I know exactly what party to which \(i\)
-belongs. Thus, the CEFs for \(X_i\) and the pair of indicator variables,
-\(\X_i\), are precisely the same, but the latter admits a lovely linear
-representation, \[
+original single three-level variable, \(X_{i}\), so if we know the
+values of \(X_{i1}\) and \(X_{i2}\), then we know exactly to which party
+\(i\) belongs. Thus, the CEFs for \(X_i\) and the pair of indicator
+variables, \(\X_i\), are precisely the same, but the latter allows for a
+lovely linear representation, \[
 \E[Y_i \mid X_{i1}, X_{i2}] = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2},
 \] where
 
@@ -4807,7 +4819,8 @@ representation, \[
 \item
   \(\beta_0 = \E[Y_{i} \mid X_{i1} = 0, X_{i2} = 0]\) is the average
   wait time for the group who does not get an indicator variable
-  (Democrats in this case).
+  (Democrats in this case). This group is sometimes called the baseline
+  group or the omitted group.
 \item
   \(\beta_1 = \E[Y_{i} \mid X_{i1} = 1, X_{i2} = 0] - \E[Y_{i} \mid X_{i1} = 0, X_{i2} = 0]\)
   is the difference in means between Republican voters and Democratic
@@ -4823,37 +4836,39 @@ representation, \[
 This approach easily generalizes to categorical variables with an
 arbitrary number of levels.
 
-What have we shown? The CEF will be linear without additional
-assumptions when there is a categorical covariate. We can show that this
-continues to hold even when we have multiple categorical variables. We
-now have two binary covariates: \(X_{i1}=1\) indicating a Black voter,
-and \(X_{i2} = 1\) indicating an urban voter. With these two binary
-variables, there are four possible values of the CEF: \[ 
+What have we shown? The CEF is linear without additional assumptions
+when there is a categorical covariate. We can show that this continues
+to hold even when we have multiple categorical variables. We now have
+two binary covariates: \(X_{i1}=1\) indicating a Black voter, and
+\(X_{i2} = 1\) indicating a retired voter versus a working-age voter.
+These two binary variables give us four possible values of the CEF: \[ 
 \mu(x_1, x_2) = \begin{cases} 
- \mu_{00} & \text{if } x_1 = 0 \text{ and } x_2 = 0 \text{ (non-Black, rural)} \\
- \mu_{10} & \text{if } x_1 = 1 \text{ and } x_2 = 0 \text{ (Black, rural)} \\
- \mu_{01} & \text{if } x_1 = 0 \text{ and } x_2 = 1 \text{ (non-Black, urban)} \\
- \mu_{11} & \text{if } x_1 = 1 \text{ and } x_2 = 1 \text{ (Black, urban)}
+ \mu_{00} & \text{if } x_1 = 0 \text{ and } x_2 = 0 \text{ (non-Black, working age)} \\
+ \mu_{10} & \text{if } x_1 = 1 \text{ and } x_2 = 0 \text{ (Black, working age)} \\
+ \mu_{01} & \text{if } x_1 = 0 \text{ and } x_2 = 1 \text{ (non-Black, retired)} \\
+ \mu_{11} & \text{if } x_1 = 1 \text{ and } x_2 = 1 \text{ (Black, retired)}
  \end{cases}
 \] We can write this as \[ 
 \mu(x_{1}, x_{2}) = (1 - x_{1})(1 - x_{2})\mu_{00} + x_{1}(1 -x_{2})\mu_{10} + (1-x_{1})x_{2}\mu_{01} + x_{1}x_{2}\mu_{11},
 \] which we can rewrite as \[ 
 \mu(x_1, x_2) = \beta_0 + x_1\beta_1 + x_2\beta_2 + x_1x_2\beta_3,
-\] where
+\] where the substantive interpretations are
 
 \begin{itemize}
 \tightlist
 \item
-  \(\beta_0 = \mu_{00}\): average wait times for rural non-Black voters.
+  \(\beta_0 = \mu_{00}\): average wait times for working-age non-Black
+  voters.
 \item
-  \(\beta_1 = \mu_{10} - \mu_{00}\): difference in means for rural Black
-  vs.~rural non-Black voters.
+  \(\beta_1 = \mu_{10} - \mu_{00}\): difference in means for working-age
+  Black vs.~working-age non-Black voters.
 \item
-  \(\beta_2 = \mu_{01} - \mu_{00}\): difference in means for urban
-  non-Black vs.~rural non-Black voters.
+  \(\beta_2 = \mu_{01} - \mu_{00}\): difference in means for retired
+  non-Black vs.~working-age non-Black voters.
 \item
   \(\beta_3 = (\mu_{11} - \mu_{01}) - (\mu_{10} - \mu_{00})\):
-  difference in urban racial difference vs rural racial difference.
+  difference in retired racial difference vs working-age racial
+  difference.
 \end{itemize}
 
 Thus, we can write the CEF with two binary covariates as linear when the
@@ -4888,16 +4903,14 @@ the resulting binary variables.
 
 We have established that when we have a set of categorical covariates,
 the true CEF will be linear, and we have seen the various ways to
-represent that CEF. Notice that when we use, for example, ordinary least
-squares, we are free to choose how to include our variables. That means
-that we could run a regression of \(Y_i\) on \(X_{i1}\) and \(X_{i2}\)
-without an interaction term. This model will only be correct if
-\(\beta_3\) is equal to 0, and so the interaction term is irrelevant.
-Because of this ability to choose our models, it's helpful to have a
-language for models that capture the linear CEF appropriately. We call a
-model \textbf{saturated} if there are as many coefficients as the CEF's
-unique values. A saturated model, by its nature, can always be written
-as a linear function without assumptions. The above examples show how to
+represent that CEF. Note that when we use, for example, ordinary least
+squares, we are free to choose how to include our variables. We could
+run a regression of \(Y_i\) on \(X_{i1}\) and \(X_{i2}\) without an
+interaction term, but this model will only be correct if \(\beta_3\) is
+equal to 0, and so the interaction term is irrelevant. We call a model
+\textbf{saturated} if there are as many coefficients as the CEF's unique
+values. A saturated model can, by its nature, always be written as a
+linear function without assumptions. The above examples show how to
 construct saturated models in various situations.
 
 \hypertarget{interpretation-of-the-regression-coefficients}{%
@@ -4908,11 +4921,11 @@ We have seen how to interpret population regression coefficients when
 the CEF is linear without assumptions. How do we interpret the
 population coefficients \(\bfbeta\) in other settings?
 
-Let's start with the simplest case, where every entry in \(\X_{i}\)
+Consider the simplest case, one in which every entry in \(\X_{i}\)
 represents a different covariate and no covariate is any function of
-another (we'll see why this caveat is necessary below). In this simple
-case, the \(k\)th coefficient, \(\beta_{k}\), will represent the change
-in the predicted outcome for a one-unit change in the \(k\)th covariate
+another (we will see why this caveat is necessary below). In this simple
+case, the \(k\)th coefficient, \(\beta_{k}\), represents the change in
+the predicted outcome for a one-unit change in the \(k\)th covariate
 \(X_{ik}\), holding all other covariates fixed. We can see this from \[ 
 \begin{aligned}
   m(x_{1} + 1, x_{2}) & = \beta_{0} + \beta_{1}(x_{1} + 1) + \beta_{2}x_{2} \\
@@ -4921,23 +4934,24 @@ in the predicted outcome for a one-unit change in the \(k\)th covariate
 \] so that the change in the predicted outcome for increasing \(X_{i1}\)
 by one unit is \[
  m(x_{1} + 1, x_{2}) - m(x_{1}, x_{2}) = \beta_1
-\] Notice that nothing changes in this interpretation if we add more
+\] Notice that nothing changes in this interpretation when adding more
 covariates to the vector, \[
  m(x_{1} + 1, \bfx_{2}) - m(x_{1}, \bfx_{2}) = \beta_1,
-\] the coefficient on a particular variable is the change in the
-predicted outcome for a one-unit change in the covariate holding all
-other covariates constant. Each coefficient summarizes the ``all else
-equal'' difference in the predicted outcome for each covariate.
+\] The coefficient on a particular variable is the change in the
+predicted outcome corresponding to a one-unit change in the covariate
+holding all other covariates constant. Each coefficient summarizes the
+``all else equal'' difference in the predicted outcome for each
+covariate.
 
 \hypertarget{polynomial-functions-of-the-covariates}{%
 \subsection{Polynomial functions of the
 covariates}\label{polynomial-functions-of-the-covariates}}
 
 The interpretation of the population regression coefficients becomes
-more complicated when we include nonlinear functions of the covariates.
+more complicated when including nonlinear functions of the covariates.
 In that case, multiple coefficients control how a change in a covariate
-will change the predicted value of \(Y_i\). Suppose that we have a
-quadratic function of \(X_{i1}\), \[ 
+will change the predicted value of \(Y_i\). For example, suppose we have
+a quadratic function of \(X_{i1}\), \[ 
 m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
 \] and try to look at a one-unit change in \(x_1\), \[ 
 \begin{aligned}
@@ -4945,18 +4959,18 @@ m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{
   m(x_{1}, x_{1}^{2}, x_{2}) &= \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
 \end{aligned} 
 \] resulting in \(\beta_1 + \beta_2(2x_{1} + 1)\). This formula might be
-an interesting quantity, but we will more commonly use the derivative of
+an interesting quantity, but we more commonly use the derivative of
 \(m(\bfx)\) with respect to \(x_1\) as a measure of the marginal effect
 of \(X_{i1}\) on the predicted value of \(Y_i\) (holding all other
 variables constant), where ``marginal'' here means the change in
-prediction for a very small change in \(X_{i1}\).\footnote{Notice the
+prediction for a very small change in \(X_{i1}\).\footnote{Note the
   choice of language here. The marginal effect is on the predicted value
   of \(Y_i\), not on \(Y_i\) itself. So these marginal effects are
   associational, not necessarily causal quantities.} In the case of the
 quadratic covariate, we have \[ 
 \frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1},
 \] so the marginal effect on prediction varies as a function of \(x_1\).
-From this, we can see that the individual interpretations of the
+From this, we see that the individual interpretations of the
 coefficients are less interesting: \(\beta_1\) is the marginal effect
 when \(X_{i1} = 0\) and \(\beta_2 / 2\) describes how a one-unit change
 in \(X_{i1}\) changes the marginal effect. As is hopefully clear, it
@@ -4967,13 +4981,13 @@ Section~\ref{sec-fwl}).
 \hypertarget{interactions}{%
 \subsection{Interactions}\label{interactions}}
 
-Another common nonlinear function of the covariates is when we include
+Another common nonlinear function occurs when including
 \textbf{interaction terms} or covariates that are products of two other
 covariates, \[ 
 m(x_{1}, x_{2}, x_{1}x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \beta_{3}x_{1}x_{2}.
-\] In these situations, we can also use the derivative of the BLP to
-measure the marginal effect of one variable or the other on the
-predicted value of \(Y_i\). In particular, we have \[ 
+\] In these situations, we can use the derivative of the BLP to measure
+the marginal effect of one variable or the other on the predicted value
+of \(Y_i\). In particular, we have \[ 
 \begin{aligned}
   \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_1} &= \beta_1 + \beta_3x_2, \\
   \frac{\partial m(x_{1}, x_{2}, x_{1}x_{2})}{\partial x_2} &= \beta_2 + \beta_3x_1.
@@ -4997,25 +5011,25 @@ predicted value of \(Y_i\). In particular, we have \[
 If we add more covariates to this BLP, these interpretations change to
 ``holding all other covariates constant.''
 
-Interactions are a routine part of social science research because they
+Interactions are a standard part of social science research because they
 allow us to assess how the relationship between the outcome and an
 independent variable varies by the values of another variable. In the
-context of our study of voter wait times, if \(X_{i1}\) is income and
-\(X_{i2}\) is the Black/non-Black voter indicator, then \(\beta_3\)
-represents the change in the slope of the wait time-income relationship
-between Black and non-Black voters.
+context of our study of wait times at a voting precinct, if \(X_{i1}\)
+is income and \(X_{i2}\) is the Black/non-Black voter indicator, then
+\(\beta_3\) represents the change in the slope of the wait time-income
+relationship between Black and non-Black voters.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, coltitle=black, toprule=.15mm, left=2mm]
 
 In many cases, the so-called marginal coefficients on the lower-order
 terms (\(\beta_1\) for \(X_{i1}\) and \(\beta_2\) for \(X_{i2}\)) are
-uninteresting parameters because they represent the marginal effect of
-one variable when the other is 0. If \(X_{i1}\) is age and \(X_{i2}\) is
-the Black/non-Black indicator, then \(\beta_2\) is the estimated
-difference in average voter wait times for voters who are zero years
-old. Obviously, this is a nonsensical parameter. We can improve the
-interpretability of the coefficient by recentering the age variable.
-Suppose we include a mean-centered version of age, \[
+uninteresting because they represent the marginal effect of one variable
+when the other is 0. If \(X_{i1}\) is age and \(X_{i2}\) is the
+Black/non-Black indicator, then \(\beta_2\) is the estimated difference
+in average voter wait times for voters who are zero years old, an
+obviously nonsensical parameter. We can improve the interpretability of
+the coefficient by recentering the age variable. Suppose we include a
+mean-centered version of age, \[
 \widetilde{X}_{i1} = X_{i1} - \overline{X}_1
 \] in place of \(X_{i1}\). That is, we regress \(Y_i\) on
 \(\widetilde{X}_{i1}\), \(X_{i2}\), and \(\widetilde{X}_{i1}X_{i2}\). In
@@ -5023,24 +5037,24 @@ this case, \(\beta_2\) (the coefficient on the race indicator
 \(X_{i2}\)) is the marginal effect of \(X_{i2}\) when
 \(\widetilde{X}_{i1} = 0\) or when \(X_{i1} = \overline{X}_1\). Thus,
 this coefficient is now the estimated difference in average voter wait
-times for the average-aged voter, which is far more interpretable. What
-is remarkable is that This recentering has no effect either \(\beta_1\)
-or \(\beta_3\).
+times for the average-aged voter, which is far more interpretable. This
+recentering has no effect on either \(\beta_1\) or \(\beta_3\), which is
+rather remarkable.
 
 \end{tcolorbox}
 
 \hypertarget{sec-fwl}{%
 \section{Multiple regression from bivariate regression}\label{sec-fwl}}
 
-When we have a regression of an outcome on two covariates, it is helpful
-to understand how the coefficients of one variable relate to the other.
-For example, if we have the following best linear projection:
+With a regression of an outcome on two covariates, understanding how the
+coefficients of one variable relate to the other is helpful. Consider
+the following best linear projection:
 \begin{equation}\protect\hypertarget{eq-two-var-blp}{}{ 
 (\alpha, \beta, \gamma) = \argmin_{(a,b,c) \in \mathbb{R}^{3}} \; \E[(Y_{i} - (a + bX_{i} + cZ_{i}))^{2}]
-}\label{eq-two-var-blp}\end{equation} Is there some way to understand
-the \(\beta\) coefficient here regarding simple linear regression? As it
-turns out, yes. From the above results, we know that the intercept has a
-simple form: \[
+}\label{eq-two-var-blp}\end{equation} Can we understand the \(\beta\)
+coefficient here in terms of a bivariate regression? As it turns out,
+yes. From the above results, we know that the intercept has a simple
+form: \[
 \alpha = \E[Y_i] - \beta\E[X_i] - \gamma\E[Z_i].
 \] Let's investigate the first order condition for \(\beta\): \[ 
 \begin{aligned}
@@ -5054,7 +5068,7 @@ case, \(\cov(Y_{i}, X_{i})/\V[X_{i}]\). When \(X_i\) and \(Z_i\) are
 uncorrelated, we sometimes call them \textbf{orthogonal}.
 
 To write a simple formula for \(\beta\) when the covariates are not
-orthogonal, we will \textbf{orthogonalize} \(X_i\) by obtaining the
+orthogonal, we \textbf{orthogonalize} \(X_i\) by obtaining the
 prediction errors from a population linear regression of \(X_i\) on
 \(Z_i\): \[ 
 \widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
@@ -5080,25 +5094,25 @@ can write the coefficient on \(X_{ik}\) as \[
 \] Thus, the population regression coefficient in the BLP is the same as
 from a bivariate regression of the outcome on the projection error for
 \(X_{ik}\) projected on all other covariates. One interpretation of
-coefficients in a population multiple regression is they represent the
-relationship between the outcome and the covariate after removing the
-linear relationships of all other variables.
+coefficients in a population multiple regression is that they represent
+the relationship between the outcome and the covariate after removing
+the linear relationships of all other variables.
 
 \hypertarget{omitted-variable-bias}{%
 \section{Omitted variable bias}\label{omitted-variable-bias}}
 
-In many situations, we might need to choose whether to include a
-variable in a regression or not, so it can be helpful to understand how
-this choice might affect the population coefficients on the other
-variables in the regression. Suppose we have a variable \(Z_i\) that we
-may add to our regression which currently has \(\X_i\) as the
-covariates. We can write this new projection as \[ 
+In many situations, we may need to choose whether to include a variable
+in a regression, so it can be helpful to understand how this choice
+might affect the population coefficients on the other variables in the
+regression. Suppose we have a variable \(Z_i\) that we may add to our
+regression, which currently has \(\X_i\) as the covariates. We can write
+this new projection as \[ 
 m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
 \] where we often refer to \(m(\X_i, Z_i)\) as the long regression and
 \(m(\X_i)\) as the short regression.
 
-We know from the definition of the BLP that we can write the short
-coefficients as \[ 
+From the definition of the BLP, we can write the short coefficients as
+\[ 
 \bs{\delta} = \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}Y_{i}].
 \] Letting \(e_i = Y_i - m(\X_{i}, Z_{i})\) be the projection errors
 from the long regression, we can write this as \[ 
@@ -5107,9 +5121,9 @@ from the long regression, we can write this as \[
               &= \left(\E[\X_{i}\X_{i}']\right)^{-1}(\E[\X_{i}\X_{i}']\bfbeta + \E[\X_{i}Z_{i}]\gamma + \E[\X_{i}e_{i}]) \\
               &= \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
 \end{aligned}
-\] Notice that the vector in the second term is the linear projection
-coefficients of a population linear regression of \(Z_i\) on the
-\(\X_i\). If we call these coefficients \(\bs{\pi}\), then the short
+\] Note that the vector in the second term is the vector of linear
+projection coefficients of a population linear regression of \(Z_i\) on
+the \(\X_i\). If we call these coefficients \(\bs{\pi}\), then the short
 coefficients are \[ 
 \bs{\delta} = \bfbeta + \bs{\pi}\gamma. 
 \]
@@ -5120,8 +5134,8 @@ the product of the coefficient on the ``excluded'' \(Z_i\) and the
 coefficient of the included \(\X_i\) on the excluded. Most textbooks
 refer to this difference as the \textbf{omitted variable bias} of
 omitting \(Z_i\) under the idea that \(\bfbeta\) is the true target of
-inference. But the result is much broader than this since it just tells
-us how to relate the coefficients of two nested projections.
+inference. But the result is much broader than this since it tells us
+how to relate the coefficients of two nested projections.
 
 The last two results (multiple regressions from bivariate and omitted
 variable bias) are sometimes presented as results for the ordinary least
@@ -5136,11 +5150,11 @@ The best linear predictor is, of course, a \emph{linear} approximation
 to the CEF, and this approximation could be quite poor if the true CEF
 is highly nonlinear. A more subtle issue with the BLP is that it is
 sensitive to the marginal distribution of the covariates when the CEF is
-nonlinear. Let's return to our example of voter wait times and income.
-In Figure~\ref{fig-blp-limits}, we show the true CEF and the BLP when we
-restrict income below \$50,000 or above \$100,000. The BLP can vary
-quite dramatically here. This figure is an extreme example, but the
-essential point will still hold as the marginal distribution of \(X_i\)
+nonlinear. Let's return to our example of wait times at voting precincts
+and income. In Figure~\ref{fig-blp-limits}, we show the true CEF and the
+BLP when we restrict income below \$50,000 or above \$100,000. The BLP
+can vary quite dramatically here. This figure is an extreme example, but
+the essential point still holds as the marginal distribution of \(X_i\)
 changes.
 
 \begin{figure}
@@ -5193,7 +5207,7 @@ population regression coefficients \(\bfbeta\), representing the
 coefficients on the line of best fit in the population. We now take
 these as our quantity of interest.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, coltitle=black, toprule=.15mm, left=2mm]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -5272,7 +5286,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, coltitle=black, toprule=.15mm, left=2mm]
 
 Almost all regression will contain an intercept term usually represented
 as a constant 1 in the covariate vector. It is also possible to separate
@@ -5696,7 +5710,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, coltitle=black, toprule=.15mm, left=2mm]
 
 The residual regression approach is:
 
@@ -5968,7 +5982,7 @@ assumptions needed to ensure that the best linear predictor,
 \(\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, coltitle=black, toprule=.15mm, left=2mm]
 
 The linear projection model makes the following assumptions:
 
@@ -6032,7 +6046,7 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the central limit
 theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, coltitle=black, toprule=.15mm, left=2mm]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
@@ -6304,7 +6318,7 @@ squared independent normals, where \(q\) is the number of rows of
 null hypothesis. Thus, under the null hypothesis of
 \(\mb{L}\bhat = \mb{c}\), we have \(W \indist \chi^2_{q}\).
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, coltitle=black, toprule=.15mm, left=2mm]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -6388,7 +6402,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, coltitle=black, toprule=.15mm, left=2mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6507,7 +6521,7 @@ robust to assumption violations. But homoskedasticity is such a
 historically important assumption that statistical software
 implementations of OLS like \texttt{lm()} in R assume it.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, coltitle=black, toprule=.15mm, left=2mm]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -6667,7 +6681,7 @@ Historically, we decided to assume (conditional) normality of the errors
 to proceed with some knowledge that we were wrong but hopefully not too
 wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, colback=white, left=2mm, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, toptitle=1mm, leftrule=.75mm, coltitle=black, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, titlerule=0mm, colframe=quarto-callout-note-color-frame, bottomrule=.15mm, opacitybacktitle=0.6, opacityback=0]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, arc=.35mm, toptitle=1mm, bottomtitle=1mm, breakable, opacitybacktitle=0.6, bottomrule=.15mm, opacityback=0, rightrule=.15mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, colback=white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, coltitle=black, toprule=.15mm, left=2mm]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
