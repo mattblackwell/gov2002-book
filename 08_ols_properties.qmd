@@ -1,3 +1,5 @@
+
+
 # The statistics of least squares {#sec-ols-statistics}
 
 The last chapter showcased the least squares estimator and investigated many of its more mechanical properties, which are essential for the practical application of OLS. But we still need to understand its statistical properties, as we discussed in Part I of this book: unbiasedness, sampling variance, consistency, and asymptotic normality. As we saw then, these properties fall into finite-sample (unbiasedness, sampling variance) and asymptotic (consistency, asymptotic normality). 
@@ -571,4 +573,6 @@ Few people believe errors follow a normal distribution, so why even present thes
 
 These arguments are not very convincing since whether the $t$ approximation will be any better than the normal in finite samples is unclear. But it may be the best we can do while we go and find more data. 
 
+## Summary
 
+In this chapter, we discussed the large-sample properties of OLS, which are quite strong. Under mild conditions, OLS is consistent for the population linear regression coefficients and is asymptotically normal. The variance of the OLS estimator, and thus the variance estimator, depends on whether the projection errors are assumed to be unrelated to the covariates (**homoskedastic**) or possibly related (**heteroskedastic**). Confidence intervals and hypothesis tests for individual OLS coefficients are largely the same as discussed in Part I of this book, and we can obtain finite-sample properties of OLS such as conditional unbiasedness if we assume the conditional expectation function is linear. If we further assume the errors are normally distributed, we can derive confidence intervals and hypothesis tests that are valid for all sample sizes. 

@@ -10,7 +10,7 @@ Finite-sample results, though, are of limited value because they only tell us ab
 
 In this chapter, we take a different approach by asking what happens to the sampling distribution of estimators as the sample size gets very large, which we refer to as **asymptotic theory**. While asymptotics will often simplify derivations, an essential point is that everything we do with asymptotics will be an approximation. No one ever has infinite data, but we hope that the approximations will be closer to the truth as our samples get larger. 
 
-Asymptotic results are key to modern statistical methods because many methods of quantifying uncertainty about estimates rely on asymptotic approximations. We will rely on the asymptotic results we derive in this chapter to estimate standard errors, construct confidence intervals, and perform hypothesis tests, all without without assuming a fully parametric model.
+Asymptotic results are key to modern statistical methods because many methods of quantifying uncertainty about estimates rely on asymptotic approximations. We will rely on the asymptotic results we derive in this chapter to estimate standard errors, construct confidence intervals, and perform hypothesis tests, all without assuming a fully parametric model.
 
 
 ## Convergence of deterministic sequences
@@ -603,9 +603,9 @@ As with the notation alert with the WLLN, we are using shorthand here, $\E\Vert 
 
 We now turn to an essential application of the central limit theorem: confidence intervals. 
 
-You have run your experiment and presented your readers with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect is **plausible** given the data we observe?
+Suppose we have run an experiment with a treatment and control group and have presented readers with our single best guess about the treatment effect using the difference in sample means. We have also presented the estimated standard error of this estimate to give readers a sense of how variable it is. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect is **plausible** given the data we observe?
 
-A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. **Confidence intervals** make this kind of intuition more formal by instead estimating ranges of values with a fixed percentage of these ranges containing the actual parameter value. 
+A point estimate of the difference in sample means typically has 0 probability of being the exact true value, but intuitively we hope that the true treatment effect is close to our estimate. **Confidence intervals** make this kind of intuition more formal by instead estimating ranges of values with a fixed percentage of these ranges containing the actual unknown parameter value. 
 
 We begin with the basic definition of a confidence interval. 
 
@@ -616,14 +616,14 @@ $$
 $$
 :::
 
-We say that a $1-\alpha$ confidence interval covers (contains, captures, traps, etc.) the true value at least $100(1-\alpha)\%$ of the time, and we refer to $1-\alpha$ as the **coverage probability** or simply **coverage**. Typical confidence intervals include 95% percent ($\alpha = 0.05$) and 90% ($\alpha = 0.1$). 
+We say that a $1-\alpha$ confidence interval covers (or contains, captures, traps, etc.) the true value at least $100(1-\alpha)\%$ of the time, and we refer to $1-\alpha$ as the **coverage probability** or simply **coverage**. Typical confidence intervals include 95% percent ($\alpha = 0.05$), 90% ($\alpha = 0.1$), and 99% ($\alpha = 0.01$). All else equal, larger coverage will imply larger intervals.
 
-So a confidence interval is a random interval with a particular guarantee about how often it will contain the true value. It's important to remember what is random and what is fixed in this setup. The interval varies from sample to sample, but the true value of the parameter stays fixed, and the coverage is how often we should expect the interval to contain that true value. The "repeating my sample over and over again" analogy can break down very quickly, so it's sometimes helpful to interpret it as giving guarantees across confidence intervals across different experiments. In particular, suppose that a journal publishes 100 quantitative articles annually, each producing a single 95% confidence interval for their quantity of interest. Then, if the confidence intervals are valid, we should expect 95 of those confidence intervals to contain the true value. 
+So a confidence interval is a random interval with a particular guarantee about how often it will contain the true value of the unknown population parameter (in our example, the true treatment effect). Remember what is random and what is fixed in this setup. The interval varies from sample to sample, but the true value of the parameter stays fixed even if it is unknown, and the coverage is how often we should expect the interval to contain that true value. The "repeating my sample over and over again" analogy can break down very quickly, so it is sometimes helpful to interpret it as giving guarantees across confidence intervals across different experiments. In particular, suppose that a journal publishes 100 quantitative articles annually, each producing a single 95% confidence interval for their quantity of interest. Then, if the confidence intervals are valid and each is constructed in the exact same way, we should expect 95 of those confidence intervals to contain the true value. 
 
 
 ::: {.callout-warning}
 
-Suppose you calculate a 95% confidence interval, $[0.1, 0.4]$. It's tempting to make a probability statement like $\P(0.1 \leq \theta \leq 0.4 \mid \theta) = 0.95$ or that there's a 95% chance that the parameter is in $[0.1, 0.4]$. But looking at the probability statement, everything on the left-hand side of the conditioning bar is fixed, so the probability either has to be 0 ($\theta$ is outside the interval) or 1 ($\theta$ is in the interval). The coverage probability of a confidence interval refers to its status as a pair of random variables, $(L, U)$, not any particular realization of those variables like $(0.1, 0.4)$. As an analogy, consider if calculated the sample mean as $0.25$ and then try to say that $0.25$ is unbiased for the population mean. This statement doesn't make sense because unbiasedness refers to how the sample mean varies from sample to sample. 
+Suppose we have a 95% confidence interval, $[0.1, 0.4]$. It would be tempting to make a probability statement like $\P(0.1 \leq \theta \leq 0.4 \mid \theta) = 0.95$ or that there's a 95% chance that the parameter is in $[0.1, 0.4]$. But looking at the probability statement, everything on the left-hand side of the conditioning bar is fixed, so the probability either has to be 0 ($\theta$ is outside the interval) or 1 ($\theta$ is in the interval); the unknown parameter is a fixed value, so it is either in the interval or it is not. Another way to think about this is that the coverage probability of a confidence interval refers to its status as a pair of random variables, $(L, U)$, not any particular realization of those variables like $(0.1, 0.4)$. As an analogy, consider if we calculated the sample mean as $0.25$ and then tried to say that $0.25$ is unbiased for the population mean. This statement doesn't make sense because unbiasedness refers not to a fixed value but how the sample mean varies from sample to sample.
 
 :::
 
@@ -633,28 +633,28 @@ $$
 \lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \geq 1-\alpha \quad\forall\theta\in\Theta.
 $$
 
-Asymptotic coverage is the property we can show for most confidence intervals since we usually rely on large sample approximations based on the central limit theorem. 
+We can show asymptotic coverage for most confidence intervals since we usually rely on large-sample approximations based on the central limit theorem. 
 
 
 
 ### Deriving confidence intervals
 
-If you have taken any statistics before, you probably have seen the standard formula for the 95% confidence interval of the sample mean, 
+To derive confidence intervals, consider the standard formula for the 95% confidence interval of the sample mean, 
 $$ 
 \left[\Xbar_n - 1.96\frac{s}{\sqrt{n}},\; \Xbar_n + 1.96\frac{s}{\sqrt{n}}\right],
 $$
-where you can recall that $s$ is the sample standard deviation and $s/\sqrt{n}$ is the estimate of the standard error of the sample mean. If this is a 95% confidence interval, then the probability that it contains the population mean $\mu$ should be 0.95, but how can we derive this? We can justify this logic using the central limit theorem, and the argument will hold for any asymptotically normal estimator. 
+where $s$ is the sample standard deviation and $s/\sqrt{n}$ is the estimate of the standard error of the sample mean. If this is a 95% confidence interval, then the probability that it contains the true population mean $\mu$ should be 0.95, but how can we derive this? We can justify this logic using the central limit theorem, and the argument will hold for any asymptotically normal estimator. 
 
 
-Let's say that we have an estimator, $\widehat{\theta}_n$ for the parameter $\theta$ with estimated standard error $\widehat{\se}[\widehat{\theta}_n]$. If the estimator is asymptotically normal, then in large samples, we know that
+Suppose we have an estimator, $\widehat{\theta}_n$ for the parameter $\theta$ with estimated standard error $\widehat{\se}[\widehat{\theta}_n]$. If the estimator is asymptotically normal, then in large samples, we know that
 $$ 
 \frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \sim \N(0, 1).
 $$
-We can then use our knowledge of the standard normal and the empirical rule to find
+Then we use our knowledge of the standard normal to find
 $$ 
-\P\left( -1.96 \leq \frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \leq 1.96\right) = 0.95
+\P\left( -1.96 \leq \frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \leq 1.96\right) = 0.95.
 $$
-and by multiplying each part of the inequality by $\widehat{\se}[\widehat{\theta}_n]$, we get
+Multiplying each part of the inequality by $\widehat{\se}[\widehat{\theta}_n]$ gives us
 $$ 
 \P\left( -1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \widehat{\theta}_n - \theta \leq 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
 $$
@@ -697,7 +697,7 @@ text(x = -2.2, y = 0.05, expression(alpha/2), pos = 2)
 ```
 
 
-How can we generalize this to $1-\alpha$ confidence intervals? For a standard normal rv, $Z$, we know that
+How can we generalize this to $1-\alpha$ confidence intervals? For a random variable that is distributed following a standard normal, $Z$, we know that
 $$ 
 \P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1-\alpha
 $$
@@ -720,7 +720,7 @@ $$
 
 ### Interpreting confidence intervals
 
-Remember that the interpretation of confidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval containing the true value in 95% of samples. Simulating repeated samples helps clarify this. 
+A very important point is that the interpretation of confidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that contains the true population value in 95% of samples. Simulating repeated samples helps clarify this. 
 
 
 ::: {#exm-cis}
@@ -731,7 +731,7 @@ Suppose we are taking samples of size $n=500$ of random variables where $X_i \si
 2. Calculate the 95% confidence interval sample mean $\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}$. 
 3. Plot the intervals along the x-axis and color them blue if they contain the truth (1) and red if not. 
 
-@fig-ci-sim shows 100 iterations of these steps. We see that, as expected, most calculated CIs contain the true value. Five random samples produce intervals that fail to include 1, an exact coverage rate of 95%. Of course, this is just one simulation, and a different set of 100 random samples might have produced a slightly different coverage rate. The guarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples, the long-run frequency of intervals covering the truth would approach 0.95. 
+@fig-ci-sim shows 100 iterations of these steps. We see that, as expected, most calculated CIs do contain the true value. Five random samples produce intervals that fail to include 1, an exact coverage rate of 95%. Of course, this is just one simulation, and a different set of 100 random samples might have produced a slightly different coverage rate. The guarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples, the long-run frequency of intervals covering the truth would approach 0.95. 
 
 ```{r}
 #| label: "fig-ci-sim"
@@ -767,7 +767,7 @@ Suppose that we know that an estimator follows the CLT, and so we have
 $$
 \sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V),
 $$
-but we actually want to estimate $h(\theta)$ so we use the plug-in estimator, $h(\widehat{\theta}_n)$. It seems like we should be able to apply part 1 of @thm-indist-properties. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, $\sqrt{n}(\widehat{\theta}_n - \theta)$, not to the original estimator itself like we would need to investigate the asymptotic distribution of $h(\widehat{\theta}_n)$. We can use a little bit of calculus to get an approximation of the distribution we need. 
+but we actually want to estimate $h(\theta)$ so we use the plug-in estimator, $h(\widehat{\theta}_n)$. It seems like we should be able to apply part 1 of @thm-indist-properties to obtain the asymptotic distribution of $h(\widehat{\theta}_n)$. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, $\sqrt{n}(\widehat{\theta}_n - \theta)$, not to the original estimator itself, and we would need the latter to investigate the asymptotic distribution of $h(\widehat{\theta}_n)$. We can use a little bit of calculus to get an approximation of the distribution we need. 
 
 
 ::: {#thm-delta-method}
@@ -779,7 +779,7 @@ $$
 
 :::
 
-Understanding what's happening here is useful since it might help give intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, $h()$? These functions can be well-approximated with a line in a neighborhood around a given point like $\theta$. In @fig-delta, we show this where the tangent line at $\theta_0$, which has slope $h'(\theta_0)$, is very similar to $h(\theta)$ for values close to $\theta_0$. Because of this, we can approximate the difference between $h(\widehat{\theta}_n)$ and $h(\theta_0)$ with the what this tangent line would give us:
+Understanding what is happening here provides intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, $h()$? These functions can be well-approximated with a line in a neighborhood around a given point like $\theta$. In @fig-delta, we show this at the point where the tangent line at $\theta_0$, which has slope $h'(\theta_0)$, is very similar to $h(\theta)$ for values close to $\theta_0$. Because of this, we can approximate the difference between $h(\widehat{\theta}_n)$ and $h(\theta_0)$ with the what this tangent line would give us:
 $$
 \underbrace{\left(h(\widehat{\theta_n}) - h(\theta_0)\right)}_{\text{change in } y} \approx \underbrace{h'(\theta_0)}_{\text{slope}} \underbrace{\left(\widehat{\theta}_n - \theta_0\right)}_{\text{change in } x},
 $$
@@ -844,7 +844,7 @@ since $\exp(\mu)^2 = \exp(2\mu)$.
 :::
 
 
-Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. We often will combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let $\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))$ map from $\mathbb{R}^k \to \mathbb{R}^m$ and be continuously differentiable (we make the function bold since it returns an $m$-dimensional vector). It will help us to use more compact matrix notation if we introduce a $m \times k$ Jacobian matrix of all partial derivatives
+Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. For example, suppose we want to combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let $\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))$ map from $\mathbb{R}^k \to \mathbb{R}^m$ and be continuously differentiable (we make the function bold since it returns an $m$-dimensional vector). It will help us to use more compact matrix notation if we introduce a $m \times k$ Jacobian matrix of all partial derivatives
 $$
 \mb{H}(\mb{\theta}) = \mb{\nabla}_{\mb{\theta}}\mb{h}(\mb{\theta}) = \begin{pmatrix}
   \frac{\partial h_1(\mb{\theta})}{\partial \theta_1} & \frac{\partial h_1(\mb{\theta})}{\partial \theta_2} & \cdots & \frac{\partial h_1(\mb{\theta})}{\partial \theta_k} \\
@@ -869,8 +869,13 @@ where $\mb{H} = \mb{H}(\mb{\theta}_0)$.
 :::
 
 
-This result follows from the approximation above plus rules about variances of random vectors. Remember that for any compatible matrix of constants, $\mb{A}$, we have $\V[\mb{A}'\mb{Z}] = \mb{A}\V[\mb{Z}]\mb{A}'$. You can see that the matrix of constants appears twice here, like the matrix version of the "squaring the constant" rule for variance. 
+This result follows from the approximation above plus rules about variances of random vectors. Recall that for any compatible matrix of constants, $\mb{A}$, we have $\V[\mb{A}'\mb{Z}] = \mb{A}\V[\mb{Z}]\mb{A}'$. The matrix of constants appears twice here, like the matrix version of the "squaring the constant" rule for variance. 
 
-The delta method is handy for generating closed-form approximations for asymptotic standard errors, but the math is often quite complex for even simple estimators. It is usually more straightforward for applied researchers to use computational tools like the bootstrap to approximate the standard errors we need. The bootstrap has the trade-off of taking more computational time to implement than the delta method. Still, it is more easily adaptable across different estimators and domains with little human thinking time. 
+The delta method is handy for generating closed-form approximations for asymptotic standard errors, but the math is often quite complex for even simple estimators. It is usually more straightforward for applied researchers to use computational tools such as the bootstrap to approximate the needed standard errors. The bootstrap has the trade-off of taking more computational time to implement compared to the delta method, but it is more easily adaptable across different estimators and domains. 
 
 
+## Summary
+
+In this chapter, we covered asymptotic analysis, which considers how estimators behave as we feed them larger and larger samples. While we never actually have infinite data, asymptotic results provide approximations that work quite well in practice. A **consistent** estimator converges in probability to a desired quantity of interest. We saw several ways of establishing consistency, including the **Law of Large Numbers** for the sample mean, which converges in probability to the population mean. The **Central Limit Theorem** tells us that the sample mean will be approximately normally distributed when we have large, iid samples. We also saw how the **continuous mapping theorem** and **Slutsky’s theorem** allow us to determine asymptotic results for a broad class of estimators. Knowing the asymptotic normality of an estimator allows us to derive **confidence intervals** that are valid in large samples. Finally, the **delta method** is a general tool for finding the asymptotic distribution of an estimator that is a function of another estimator with a known asymptotic distribution. 
+
+In the next chapter, we will leverage these asymptotic results to introduce another important tool for statistical inference: the hypothesis test. 

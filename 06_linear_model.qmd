@@ -1,3 +1,5 @@
+
+
 # Linear regression {#sec-regression}
 
 
@@ -525,4 +527,6 @@ text(x = -2, y = 45, "BLP\nX < 50", col = "dodgerblue", pos = 4)
 text(x = -2, y = 5, "BLP\nX > 100k", col = "dodgerblue", pos = 4)
 ```
 
+## Summary
 
+As we discussed in this chapter, with even a moderate number of covariates, conditional expectation functions (also known as regressions) become very difficult to estimate because of the high dimensionality involved. To avoid this problem, we can focus on a different quantity, the **best linear predictor** which is the linear function of the covariates that best predicts the outcome in mean-squared error. The BLP exists under very mild conditions and has very interpretable parameters. Another strategy is to impose a linearity assumption on the **conditional expectation function** to make it more estimable, in which case, the BLP and the CEF are the same function. With a small number of discrete covariates it is possible to **saturate** a model so that linearity holds mechanically. Coefficients on population linear regressions with multiple independent variables can always be written in terms of a regression of the outcome on one variable orthogonalized relative to the rest of the independent variables. The **omitted variable bias** formula shows how leaving a variable out of the best linear affects the coefficients on other independent variables. In the next chapter, we will turn to using data to estimate the coefficients for these population linear regressions. 

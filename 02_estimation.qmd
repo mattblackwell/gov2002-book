@@ -1,11 +1,11 @@
-# Model-based inference
+# Model-based inference {#sec-model-based}
  
 
 ## Introduction
 
 Suppose you have been tasked with estimating the fraction of a population that supports increasing legal immigration limits. You have a sample of data on some individual respondents’ support for the policy, but you don't know exactly how this data was sampled. How should you use the information you know (the data) to make a best guess about the information you don't know (the fraction of the population)? 
 
-The design-based approach that we discussed in the previous chapter is a coherent and internally consistent framework for estimating quantities and quantifying uncertainty, but this crisp conceptual clarity comes from the knowledge of the sampling design. Going back to our immigration example, a reasonable approach is to use the fraction of the sample that supports the policy as the best guess about the fraction of the population. As we saw in the last chapter, a simple random sample would justify this approach. 
+The design-based approach that we discussed in the previous chapter is a coherent and internally consistent framework for estimating quantities and quantifying uncertainty, but this crisp conceptual clarity comes from having exact knowledge of the sampling design. Going back to our immigration example, a reasonable approach is to use the fraction of the sample that supports the policy as the best guess about the fraction of the population. As we saw in the last chapter, a simple random sample would justify this approach. 
 
 But how does one perform estimation and inference when lacking complete information about the sampling design? How do we proceed with inference if outcomes are random due to nonresponse or measurement error? What if we would like to make inferences about a population not covered in the sampling frame?  In these cases, inference requires additional information that can be incorporated via a **statistical model**.  A model-based approach to statistical inference views the data $X_1,\ldots, X_n$ as a set of random variables that follow some probability distribution. The measurements in the actual sample, $x_1, \ldots, x_n$, are realizations of these random variables. The probability distribution of $X_1,\ldots, X_n$ is the model for the data and all inferences are based on it. Models can be very specific – for example, a researcher might assume the data are normally distributed – or can be very general – for example, the distribution of the data has finite mean and variance. 
 
@@ -463,5 +463,13 @@ text(x = 0.5, y = dnorm(0.5, 0.2, 0.5), expression(hat(theta)[b]),
 This figure shows the sampling distributions of two estimators: (1) $\widehat{\theta}_a$, which is unbiased (centered on the true value $\theta$) but with a high sampling variance, and (2) $\widehat{\theta}_b$, which is slightly biased but with much lower sampling variance. Even though $\widehat{\theta}_b$ is biased, the probability of drawing a value close to the truth is higher than for $\widehat{\theta}_a$. The MSE helps capture this balancing between bias and variance, and, indeed, in this case, $MSE[\widehat{\theta}_b] < MSE[\widehat{\theta}_a]$. 
 
 
+
+## Summary
+
+In this chapter, we introduced **model-based inference**, in which we posit a probability model for the data-generating process. These models can be **parametric** in the sense that we specify the probability distribution of the data up to some parameters. They can also be **semiparametric** where we only specify certain features of the distribution such as a finite mean and variance. This chapter mostly focused on the latter, where we assumed the observed data were **independent and identically distributed** draws from a population distribution with finite mean and variance. 
+
+An **estimator** is a function of the data meant as a guess for some quantity of interest in the population. Because it is a function of random variables (the data), estimators are also random variables and have distributions, called **sampling distributions**, across repeated draws from the population. If this distribution is centered on the true value of the quantity of interest, we call the estimator **unbiased**. The variance of the sampling distribution, called the **sampling variance**, tells us how variable we should expect the estimator to be across draws from the population. The mean-squared error is an overall measure of the accuracy of an estimator that combines notions of bias and sampling variance. 
+
+We showed in this chapter that the sample mean is unbiased for the population mean and that the sampling variance of the sample mean is the ratio of the population variance to the sample size. We also saw that **plug-in estimators** are a powerful way of constructing estimators as functions of sample means. That said, the focus of this chapter was finite-sample properties (that is, properties that are true no matter the sample size). In the next chapter, we will derive even more powerful results using large-sample approximations.  
 
 

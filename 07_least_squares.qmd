@@ -1,5 +1,3 @@
-
-
 # The mechanics of least squares {#sec-ols-mechanics}
 
 This chapter explores the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency. Because most people in the quantitative social sciences rely extensively on OLS for their own research, the time you spend developing deep familiarity with this approach will serve you well.
@@ -523,9 +521,9 @@ $$
 $$ {#eq-loo-coefs}
 This shows that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage would be close to $\overline{\X}$, where the outcome values have relatively little impact on the OLS fit (because the regression line must go through $\overline{Y}$). 
 
-### Influence points
+### Influential observations
 
-An influence point is an observation that has the power to change the coefficients and fitted values for a particular OLS specification. @fig-influence shows an example of such an influence point. 
+An influential observation (also sometimes called an influential point) is a unit that has the power to change the coefficients and fitted values for a particular OLS specification. @fig-influence shows an example of such an influence point. 
 
 ```{r}
 #| label: fig-influence
@@ -564,6 +562,8 @@ $$
 Different cutoffs exist for identifying “influential” observations, but they tend to be ad hoc. In any case, the more important question is "how much does this observation matter for my substantive interpretation" rather than the narrow question of a particular threshold. 
 
 
-It's all well and good to find influential points, but what should be done about them? The first thing to check is that the data is not corrupted somehow. Influence points sometimes occur because of a coding or data entry error. We may consider removing the observation if the error appears in the data acquired from another source but exercise transparency if this appears to be the case. Another approach is to consider a transformation of the dependent or independent variables, like taking the natural logarithm, that might dampen the effects of outliers. Finally, consider using methods that are robust to outliers such as least absolute deviations or least trimmed squares.  
+It's all well and good to find influential observations, but what should be done about them? The first thing to check is that the data is not corrupted somehow. Influence points sometimes occur because of a coding or data entry error. We may consider removing the observation if the error appears in the data acquired from another source but exercise transparency if this appears to be the case. Another approach is to consider a transformation of the dependent or independent variables, like taking the natural logarithm, that might dampen the effects of outliers. Finally, consider using methods that are robust to outliers such as least absolute deviations or least trimmed squares.  
 
+## Summary
 
+In this chapter, we introduced the **ordinary least squares** estimator, which finds the linear function of the $\X_i$ that minimizes the sum of the squared residuals and is the sample version of the best linear predictor in the last chapter. The $R^2$ statistic assesses the in-sample **model fit** of OLS by comparing how much better it predicts the outcome compared to a simple baseline predictor of the sample mean of the outcome. OLS can also be written in a very compact manner using matrix algebra, which allows us to understand the geometry of OLS as a **projection** of the outcome into space of linear functions of the independent variables. The **Frisch-Waugh-Lovell theorem** describes a residual regression approach to obtaining OLS estimates for subsets of coefficients, which can be helpful for computational efficiency or data visualization. Lastly, influential observations are those that alter the estimated coefficients when they are omitted from the OLS estimation, and there are several metrics that help to assess this. In the next chapter, we move from the mechanical properties to the statistical properties of OLS: unbiasedness, consistency, and asymptotic normality.

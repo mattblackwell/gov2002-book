@@ -1,4 +1,4 @@
-# Design-based inference
+# Design-based Inference {#sec-design-based}
 
 
 ## Introduction
@@ -47,7 +47,6 @@ There are many possible reasons for this massive polling error. Most obviously, 
 
 One advantage of design-based inference is how precisely we must articulate the sampling frame. We can be extremely clear about the group of units we are trying to learn about. We shall see that in model-based inference the concept of the population and sampling frame become more amorphous.  
 
-
 ::: {#exm-anes-population}
 
 ## American National Election Survey, Population
@@ -55,6 +54,7 @@ One advantage of design-based inference is how precisely we must articulate the 
 According to the materials from the American National Election Survey (ANES) in 2012, its target population is all U.S. citizens age 18 or older. The sampling frame for the face-to-face portion of the survey "consisted of the Delivery Sequence File (DSF) used by the United States Postal Service" for residential delivery of mail." Unfortunately, there are housing units that are covered by mail delivery by the postal service which would result in the potential for frame bias. The designers of the ANES used the Decennial Census to add many of these units to the final sampling frame. 
 
 :::
+
 
 
 ## Question 2: Sampling design
@@ -98,7 +98,7 @@ $$
 $$
 :::
 
-Bernoulli sampling is very straightforward because independently selecting units simplifies many calculations. However, this "coin flipping" approach means that the sample size, $N_s = \sum_{i=1}^N Z_i$, will be itself a random variable because it is the result of how many of the coin flips land on "heads."
+Bernoulli sampling is very straightforward because independently selecting units simplifies many calculations. However, this "coin flipping" approach means that the sample size, $N_s = \sum_{i=1}^N Z_i$, will be itself a random variable because it is the result of how many of the coin flips land on "heads." 
 
 Simple random samples and Bernoulli random samples are simple to understand and implement. For large surveys, the sampling designs are often much more complicated for cost-saving reasons. We now describe the sampling design for the ANES, which contains many design features typical of similar large surveys.  
 
@@ -114,6 +114,8 @@ The second stage randomly samples addresses from the sampling frame (described i
 Finally, the third stage of sampling was to randomly select one eligible person per household for completion of the survey. 
 
 :::
+
+
 
 ## Question 3: Quantity of Interest
 
@@ -497,7 +499,7 @@ sum(x * w) / sum(w)
 which is equivalent to the Hajek estimator above. 
 
 
-## Conclusion
+## Summary
 
 This chapter covered the basic structure of design-based inference in the context of sampling from a population. We introduced the basic questions of statistical inference, including specifying a population and quantity of interest, choosing a sampling design and estimator, and assessing uncertainty of the estimator. Of course, we have only scratched the surface of the types of designs and estimators used in the practice of sampling. Professional probability surveys often use clustering, which means randomly selecting larger clusters of units and then randomly sampling within these units. However complex the sampling design, the core steps of design-based statistical inference remain the same. A researcher must identify a population, determine a sampling design, choose a quantity of interest, select an estimator, and describe the uncertainty of any estimates. 
 

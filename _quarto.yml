@@ -47,6 +47,12 @@ format:
   pdf:
     documentclass: scrreprt
     keep-tex: true
+    fig-pos: th
+    fig-width: 10
+    fig-height: 6.18
+    out-width: 70%
+    fig-align: center
+    fontfamily: cochineal
     include-in-header:
       - _bold.tex
       - _macros_pdf.tex
