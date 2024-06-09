@@ -16,11 +16,11 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
 
       - name: Render Book project
         uses: quarto-dev/quarto-actions/render@v2
-        with:
-          to: html
     
       - name: Publish HTML book
         uses: quarto-dev/quarto-actions/publish@v2
