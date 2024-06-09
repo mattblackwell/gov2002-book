@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A User’s Guide to Statistical Inference and Regression - 6&nbsp; The mechanics of least squares</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./ols_properties.html" rel="next">
+<link href="./linear_model.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      RR: "{\\bf R}",
+      bs: ["\\boldsymbol{#1}", 1],
+      mb: ["\\mathbf{#1}", 1],
+      E: "\\mathbb{E}",
+      V: "\\mathbb{V}",
+      P: "\\mathbb{P}",
+      var: "\\text{var}",
+      cov: "\\text{cov}",
+      N: "\\mathcal{N}",
+      Bern: "\\text{Bern}",
+      Bin: "\\text{Bin}",
+      Pois: "\\text{Pois}",
+      Unif: "\\text{Unif}",
+      se: "\\textsf{se}",
+      U: "\\mb{U}",
+      Xbar: "\\overline{X}",
+      Ybar: "\\overline{Y}",
+      real: "\\mathbb{R}",
+      bbL: "\\mathbb{L}",
+      u: "\\mb{u}",
+      v: "\\mb{v}",
+      M: "\\mb{M}",
+      X: "\\mb{X}",
+      Xmat: "\\mathbb{X}",
+      bfx: "\\mb{x}",
+      y: "\\mb{y}",
+      bfbeta: "\\bs{\\beta}",
+      e: "\\bs{\\epsilon}",
+      bhat: "\\widehat{\\bs{\\beta}}",
+      XX: "\\Xmat'\\Xmat",
+      XXinv: "\\left(\\Xmat'\\Xmat\\right)^{-1}",
+      hatsig: "\\widehat{\\sigma}^2",
+      red: ["\\textcolor{red!60}{#1}", 1],
+      indianred: ["\\textcolor{indianred}{#1}", 1],
+      blue: ["\\textcolor{blue!60}{#1}", 1],
+      dblue: ["\\textcolor{dodgerblue}{#1}", 1],
+      indep: "\\perp\\!\\!\\!\\perp",
+      inprob: "\\overset{p}{\\to}",
+      indist: "\\overset{d}{\\to}",
+      argmax: ["\\operatorname\{arg\,max\}"],
+      argmin: ["\\operatorname\{arg\,min\}"]      
+    }
+  }
+};
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./least_squares.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./users-guide.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model-based inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./asymptotics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./least_squares.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ols_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#deriving-the-ols-estimator" id="toc-deriving-the-ols-estimator" class="nav-link active" data-scroll-target="#deriving-the-ols-estimator"><span class="header-section-number">6.1</span> Deriving the OLS estimator</a></li>
+  <li><a href="#model-fit" id="toc-model-fit" class="nav-link" data-scroll-target="#model-fit"><span class="header-section-number">6.2</span> Model fit</a></li>
+  <li><a href="#matrix-form-of-ols" id="toc-matrix-form-of-ols" class="nav-link" data-scroll-target="#matrix-form-of-ols"><span class="header-section-number">6.3</span> Matrix form of OLS</a></li>
+  <li><a href="#sec-rank" id="toc-sec-rank" class="nav-link" data-scroll-target="#sec-rank"><span class="header-section-number">6.4</span> Rank, linear independence, and multicollinearity</a></li>
+  <li><a href="#ols-coefficients-for-binary-and-categorical-regressors" id="toc-ols-coefficients-for-binary-and-categorical-regressors" class="nav-link" data-scroll-target="#ols-coefficients-for-binary-and-categorical-regressors"><span class="header-section-number">6.5</span> OLS coefficients for binary and categorical regressors</a></li>
+  <li><a href="#projection-and-geometry-of-least-squares" id="toc-projection-and-geometry-of-least-squares" class="nav-link" data-scroll-target="#projection-and-geometry-of-least-squares"><span class="header-section-number">6.6</span> Projection and geometry of least squares</a></li>
+  <li><a href="#projection-and-annihilator-matrices" id="toc-projection-and-annihilator-matrices" class="nav-link" data-scroll-target="#projection-and-annihilator-matrices"><span class="header-section-number">6.7</span> Projection and annihilator matrices</a></li>
+  <li><a href="#residual-regression" id="toc-residual-regression" class="nav-link" data-scroll-target="#residual-regression"><span class="header-section-number">6.8</span> Residual regression</a></li>
+  <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="header-section-number">6.9</span> Outliers, leverage points, and influential observations</a>
+  <ul class="collapse">
+  <li><a href="#sec-leverage" id="toc-sec-leverage" class="nav-link" data-scroll-target="#sec-leverage"><span class="header-section-number">6.9.1</span> Leverage points</a></li>
+  <li><a href="#outliers-and-leave-one-out-regression" id="toc-outliers-and-leave-one-out-regression" class="nav-link" data-scroll-target="#outliers-and-leave-one-out-regression"><span class="header-section-number">6.9.2</span> Outliers and leave-one-out regression</a></li>
+  <li><a href="#influential-observations" id="toc-influential-observations" class="nav-link" data-scroll-target="#influential-observations"><span class="header-section-number">6.9.3</span> Influential observations</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.10</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/least_squares.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./least_squares.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-ols-mechanics" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter explores the most widely used estimator for population linear regressions: <strong>ordinary least squares</strong> (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency. Because most people in the quantitative social sciences rely extensively on OLS for their own research, the time you spend developing deep familiarity with this approach will serve you well.</p>
+<p>In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS under the assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ajr-scatter" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ajr-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="least_squares_files/figure-html/fig-ajr-scatter-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ajr-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="deriving-the-ols-estimator" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="deriving-the-ols-estimator"><span class="header-section-number">6.1</span> Deriving the OLS estimator</h2>
+<p>The last chapter on the linear model and the best linear projection operated purely in the population, not samples. We derived the population regression coefficients <span class="math inline">\(\bfbeta\)</span>, representing the coefficients on the line of best fit in the population. We now take these as our quantity of interest. We now focus on how to use a sample from the population to make inferences about the line of best fit in the population and the population coefficients. To do this, we will focus on the OLS estimator for these population quantities.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Assumption
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The variables <span class="math inline">\(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\)</span> are i.i.d. draws from a common distribution <span class="math inline">\(F\)</span>.</p>
+</div>
+</div>
+<p>Recall the population linear coefficients (or best linear predictor coefficients) that we derived in the last chapter, <span class="math display">\[
+\bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]
+\]</span></p>
+<p>We will consider two different ways to derive the OLS estimator for these coefficients, both of which are versions of the plug-in principle. The first approach is to use the closed-form representation of the coefficients and then to replace any expectations with sample means, <span class="math display">\[
+\bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right),
+\]</span> which exists if <span class="math inline">\(\sum_{i=1}^n \X_i\X_i'\)</span> is <strong>positive definite</strong> and thus invertible. We will return to this assumption below.</p>
+<p>In a simple bivariate linear projection model <span class="math inline">\(m(X_{i}) = \beta_0 + \beta_1X_{i}\)</span>, we saw that the population slope was <span class="math inline">\(\beta_1= \text{cov}(Y_{i},X_{i})/ \V[X_{i}]\)</span>. This approach means that the estimator for the slope should be the ratio of the sample covariance of <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(X_i\)</span> to the sample variance of <span class="math inline">\(X_i\)</span>, or <span class="math display">\[
+\widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
+\]</span></p>
+<p>This plug-in approach is widely applicable and tends to have excellent properties in large samples under iid data. But the simplicity of the plug-in approach also hides some features of the estimator that become more apparent when deriving the estimator more explicitly using calculus. The second approach applies the plug-in principle not to the closed-form expression for the coefficients but to the optimization problem itself. We call this the <strong>least squares</strong> estimator because it minimizes the empirical (or sample) squared prediction error, <span class="math display">\[
+\bhat = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
+\]</span> where, <span class="math display">\[
+SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
+\]</span> is the sum of the squared residuals. To distinguish it from other, more complicated least squares estimators, we call this the <strong>ordinary least squares</strong> estimator, or OLS.</p>
+<p>Let’s solve this minimization problem. We write down the first-order conditions as <span class="math display">\[
+0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = 2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) - 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
+\]</span> We can rearrange this system of equations to <span class="math display">\[
+\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat = \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right).
+\]</span> To obtain the solution for <span class="math inline">\(\bhat\)</span>, notice that <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is a <span class="math inline">\((k+1) \times (k+1)\)</span> matrix and <span class="math inline">\(\bhat\)</span> and <span class="math inline">\(\sum_{i=1}^{n} \X_{i}Y_{i}\)</span> are both <span class="math inline">\(k+1\)</span> length column vectors. If <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is invertible, then we can multiply both sides of this equation by that inverse to arrive at <span class="math display">\[
+\bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right),
+\]</span> which is the same expression as the plug-in estimator (after canceling the <span class="math inline">\(1/n\)</span> terms). To confirm that we have found a minimum, we also need to check the second-order condition, <span class="math display">\[
+\frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right) &gt; 0.
+\]</span> What does the matrix being “positive” mean? In matrix algebra, this condition means that the matrix <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is <strong>positive definite</strong>, a condition that we discuss in <a href="#sec-rank" class="quarto-xref"><span>Section 6.4</span></a>.</p>
+<p>Both the plug-in or least squares approaches yield the same estimator for the best linear predictor/population linear regression coefficients.</p>
+<div id="thm-ols" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6.1</strong></span> If the <span class="math inline">\(\sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is positive definite, then the ordinary least squares estimator is <span class="math display">\[
+\bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right).
+\]</span></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Formula for the OLS slopes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Almost all regression will contain an intercept term, usually represented as a constant 1 in the covariate vector. It is also possible to obtain expressions for the OLS estimates of the intercept and variable coefficients separately. We can rewrite the best linear predictor decomposition as <span class="math display">\[
+Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}.
+\]</span> Defined this way, we can write the OLS estimator for the “slopes” on <span class="math inline">\(\X_i\)</span> as the OLS estimator with all variables demeaned: <span class="math display">\[
+\bhat = \left(\frac{1}{n} \sum_{i=1}^{n} (\X_{i} - \overline{\X})(\X_{i} - \overline{\X})'\right) \left(\frac{1}{n} \sum_{i=1}^{n}(\X_{i} - \overline{\X})(Y_{i} - \overline{Y})\right)
+\]</span> which is the inverse of the sample covariance matrix of <span class="math inline">\(\X_i\)</span> times the sample covariance of <span class="math inline">\(\X_i\)</span> and <span class="math inline">\(Y_i\)</span>. The intercept is <span class="math display">\[
+\widehat{\alpha} = \overline{Y} - \overline{\X}'\bhat.
+\]</span></p>
+</div>
+</div>
+<p>When dealing with actual data and not the population, we refer to the prediction errors <span class="math inline">\(\widehat{e}_{i} = Y_i - \X_i'\bhat\)</span> as the <strong>residuals</strong>. The predicted value itself, <span class="math inline">\(\widehat{Y}_i = \X_{i}'\bhat\)</span>, is also called the <strong>fitted value</strong>. With the population linear regression, we saw that the projection errors, <span class="math inline">\(e_i = Y_i - \X_i'\bfbeta\)</span>, were mean zero and uncorrelated with the covariates <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span>. The residuals have a similar property with respect to the covariates in the sample: <span class="math display">\[
+\sum_{i=1}^n \X_i\widehat{e}_i = 0.
+\]</span> The residuals are <em>exactly</em> uncorrelated with the covariates (when the covariates include a constant/intercept term), which is a mechanical artifact of the OLS estimator.</p>
+<p><a href="#fig-ssr-comp" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> shows how OLS works in the bivariate case. It displays three possible regression lines as well as the sum of the squared residuals for each line. OLS aims to find the line that minimizes the function on the right.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ssr-comp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ssr-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="least_squares_files/figure-html/fig-ssr-comp-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ssr-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: Different possible lines and their corresponding sum of squared residuals.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="model-fit" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="model-fit"><span class="header-section-number">6.2</span> Model fit</h2>
+<p>We have learned how to use OLS to obtain an estimate of the best linear predictor, but an open question is whether that prediction is any good. Does using <span class="math inline">\(\X_i\)</span> help us predict <span class="math inline">\(Y_i\)</span>? To investigate this, we consider two different prediction errors: (1) those using covariates and (2) those that do not.</p>
+<p>We have already seen the prediction error when using the covariates; it is just the <strong>sum of the squared residuals</strong>, <span class="math display">\[
+SSR = \sum_{i=1}^n (Y_i - \X_{i}'\bhat)^2.
+\]</span> Recall that the best predictor for <span class="math inline">\(Y_i\)</span> without any covariates is simply its sample mean <span class="math inline">\(\overline{Y}\)</span>. The prediction error without covariates is what we call the <strong>total sum of squares</strong>, <span class="math display">\[
+TSS = \sum_{i=1}^n (Y_i - \overline{Y})^2.
+\]</span> <a href="#fig-ssr-vs-tss" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> shows the difference between these two types of prediction errors.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ssr-vs-tss" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ssr-vs-tss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="least_squares_files/figure-html/fig-ssr-vs-tss-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ssr-vs-tss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.3: Total sum of squares vs.&nbsp;the sum of squared residuals.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can use the <strong>proportion reduction in prediction error</strong> from adding those covariates to measure how much those covariates improve the regression’s predictive ability. This value, called the <strong>coefficient of determination</strong> or <span class="math inline">\(R^2\)</span>, is simply <span class="math display">\[
+R^2 = \frac{TSS - SSR}{TSS} = 1-\frac{SSR}{TSS}.
+\]</span> The numerator, <span class="math inline">\(TSS - SSR\)</span>, is the reduction in prediction error moving from <span class="math inline">\(\overline{Y}\)</span> to <span class="math inline">\(\X_i'\bhat\)</span> as the predictor. The denominator is the prediction error using <span class="math inline">\(\overline{Y}\)</span>. Thus, the <span class="math inline">\(R^2\)</span> value is the fraction of the total prediction error eliminated by using <span class="math inline">\(\X_i\)</span> to predict <span class="math inline">\(Y_i\)</span>. Another way to think about this value is that it measures how much less noisy the residuals are relative to the overall variation in <span class="math inline">\(Y\)</span>. One thing to note is that OLS with covariates will <em>always</em> improve in-sample fit so that <span class="math inline">\(TSS \geq SSR\)</span> even if <span class="math inline">\(\X_i\)</span> is unrelated to <span class="math inline">\(Y_i\)</span>. This phantom improvement occurs because the point of OLS is to minimize the SSR, and it will do that even if it is just chasing noise.</p>
+<p>Since regression always improves in-sample fit, <span class="math inline">\(R^2\)</span> will fall between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(\X_i\)</span> are perfectly orthogonal in the data. (This is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance.) A value of 1 indicates a perfect linear fit, which occurs when all data points are perfectly predicted by the model with zero residuals.</p>
+</section>
+<section id="matrix-form-of-ols" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="matrix-form-of-ols"><span class="header-section-number">6.3</span> Matrix form of OLS</h2>
+<p>We derived the OLS estimator above using simple algebra and calculus, but a more common representation of the estimator relies on vectors and matrices. We usually write the linear model for a generic unit, <span class="math inline">\(Y_i = \X_i'\bfbeta + e_i\)</span>, but obviously, there are <span class="math inline">\(n\)</span> of these equations, <span class="math display">\[
+\begin{aligned}
+  Y_1 &amp;= \X_1'\bfbeta + e_1 \\
+  Y_2 &amp;= \X_2'\bfbeta + e_2 \\
+  &amp;\vdots \\
+  Y_n &amp;= \X_n'\bfbeta + e_n \\
+\end{aligned}
+\]</span> We can write this system of equations more compactly using matrix algebra. Combining the variables here into random vectors/matrices gives us: <span class="math display">\[
+\mb{Y} = \begin{pmatrix}
+Y_1 \\ Y_2 \\ \vdots \\ Y_n
+  \end{pmatrix}, \quad
+  \mathbb{X} = \begin{pmatrix}
+\X'_1 \\
+\X'_2 \\
+\vdots \\
+\X'_n
+  \end{pmatrix} =
+  \begin{pmatrix}
+    1 &amp; X_{11} &amp; X_{12} &amp; \cdots &amp; X_{1k} \\
+    1 &amp; X_{21} &amp; X_{22} &amp; \cdots &amp; X_{2k} \\
+    \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+    1 &amp; X_{n1} &amp; X_{n2} &amp; \cdots &amp; X_{nk} \\
+  \end{pmatrix},
+  \quad
+  \mb{e} = \begin{pmatrix}
+e_1 \\ e_2 \\ \vdots \\ e_n
+  \end{pmatrix}
+\]</span> We can write the above system of equations as <span class="math display">\[
+\mb{Y} = \mathbb{X}\bfbeta + \mb{e},
+\]</span> Note that <span class="math inline">\(\mathbb{X}\)</span> is an <span class="math inline">\(n \times (k+1)\)</span> matrix and <span class="math inline">\(\bfbeta\)</span> is a <span class="math inline">\(k+1\)</span> length column vector.</p>
+<p>Representing sums in matrix form is the critical link between the definition of OLS and matrix notation. In particular, we have <span class="math display">\[
+\begin{aligned}
+  \sum_{i=1}^n \X_i\X_i' &amp;= \Xmat'\Xmat \\
+  \sum_{i=1}^n \X_iY_i &amp;= \Xmat'\mb{Y},
+\end{aligned}
+\]</span> which means we can write the OLS estimator in the more recognizable form as <span class="math display">\[
+\bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1} \mathbb{X}'\mb{Y}.
+\]</span></p>
+<p>We can of course also define the vector of residuals, <span class="math display">\[
+\widehat{\mb{e}} = \mb{Y} - \mathbb{X}\bhat = \left[
+\begin{array}{c}
+    Y_1 \\
+    Y_2 \\
+    \vdots \\
+    Y_n
+    \end{array}
+\right] -
+\left[
+\begin{array}{c}
+   1\widehat{\beta}_0 + X_{11}\widehat{\beta}_1 + X_{12}\widehat{\beta}_2 + \dots + X_{1k}\widehat{\beta}_k \\
+   1\widehat{\beta}_0 + X_{21}\widehat{\beta}_1 + X_{22}\widehat{\beta}_2 + \dots + X_{2k}\widehat{\beta}_k \\
+   \vdots \\
+   1\widehat{\beta}_0 + X_{n1}\widehat{\beta}_1 + X_{n2}\widehat{\beta}_2 + \dots + X_{nk}\widehat{\beta}_k
+\end{array}
+\right],
+\]</span> and so the sum of the squared residuals in this case becomes <span class="math display">\[
+SSR(\bfbeta) = \Vert\mb{Y} - \mathbb{X}\bfbeta\Vert^{2} = (\mb{Y} - \mathbb{X}\bfbeta)'(\mb{Y} - \mathbb{X}\bfbeta),
+\]</span> where the double vertical lines are the Euclidean norm of the argument, <span class="math inline">\(\Vert \mb{z} \Vert = \sqrt{\sum_{i=1}^n z_i^{2}}\)</span>. The OLS minimization problem, then, is <span class="math display">\[
+\bhat = \argmin_{\mb{b} \in \mathbb{R}^{(k+1)}}\; \Vert\mb{Y} - \mathbb{X}\mb{b}\Vert^{2}
+\]</span> Finally, we can write the lack of correlation of the covariates and the residuals as <span class="math display">\[
+\mathbb{X}'\widehat{\mb{e}} = \sum_{i=1}^{n} \X_{i}\widehat{e}_{i} = 0,
+\]</span> which also implies these vectors are <strong>orthogonal</strong>.</p>
+</section>
+<section id="sec-rank" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-rank"><span class="header-section-number">6.4</span> Rank, linear independence, and multicollinearity</h2>
+<p>We noted that the OLS estimator exists when <span class="math inline">\(\sum_{i=1}^n \X_i\X_i'\)</span> is positive definite or that there is “no multicollinearity.” This assumption is equivalent to saying that the matrix <span class="math inline">\(\mathbb{X}\)</span> is full column rank, meaning that <span class="math inline">\(\text{rank}(\mathbb{X}) = (k+1)\)</span>, where <span class="math inline">\(k+1\)</span> is the number of columns of <span class="math inline">\(\mathbb{X}\)</span>. Recall from matrix algebra that the column rank is the number of linearly independent columns in the matrix, and <strong>linear independence</strong> means that <span class="math inline">\(\mathbb{X}\mb{b} = 0\)</span> if and only if <span class="math inline">\(\mb{b}\)</span> is a column vector of 0s. In other words, we have <span class="math display">\[
+b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0,
+\]</span> where <span class="math inline">\(\mathbb{X}_j\)</span> is the <span class="math inline">\(j\)</span>th column of <span class="math inline">\(\mathbb{X}\)</span>. Thus, full column rank says that all the columns are linearly independent or that there is no “multicollinearity.”</p>
+<p>Could this be violated? Suppose we accidentally included a linear function of one variable so that <span class="math inline">\(\mathbb{X}_2 = 2\mathbb{X}_1\)</span>. We then have <span class="math display">\[
+\begin{aligned}
+  \mathbb{X}\mb{b} &amp;= b_{1}\mathbb{X}_{1} + b_{2}2\mathbb{X}_1+ b_{3}\mathbb{X}_{3}+ \cdots + b_{k+1}\mathbb{X}_{k+1} \\
+  &amp;= (b_{1} + 2b_{2})\mathbb{X}_{1} + b_{3}\mathbb{X}_{3} + \cdots + b_{k+1}\mathbb{X}_{k+1}
+\end{aligned}
+\]</span> In this case, this expression equals 0 when <span class="math inline">\(b_3 = b_4 = \cdots = b_{k+1} = 0\)</span> and <span class="math inline">\(b_1 = -2b_2\)</span>. Thus, the collection of columns is linearly dependent, so we know that the rank of <span class="math inline">\(\mathbb{X}\)</span> must be less than full column rank (that is, less than <span class="math inline">\(k+1\)</span>). Hopefully it is also clear that if we removed the problematic column <span class="math inline">\(\mathbb{X}_2\)</span>, the resulting matrix would have <span class="math inline">\(k\)</span> linearly independent columns, implying that <span class="math inline">\(\mathbb{X}\)</span> is rank <span class="math inline">\(k\)</span>.</p>
+<p>Why does this rank condition matter for the OLS estimator? In short, linear independence of the columns of <span class="math inline">\(\Xmat\)</span> ensures that the inverse <span class="math inline">\((\Xmat'\Xmat)^{-1}\)</span> exists and so does <span class="math inline">\(\bhat\)</span>. This is because <span class="math inline">\(\Xmat\)</span> is of full column rank if and only if <span class="math inline">\(\Xmat'\Xmat\)</span> is non-singular and a matrix is invertible if and only if it is non-singular. This full rank condition further implies that <span class="math inline">\(\Xmat'\Xmat = \sum_{i=1}^{n}\X_{i}\X_{i}'\)</span> is positive definite, implying that the estimator is truly finding the minimal sum of squared residuals.</p>
+<p>What are common situations that lead to violations of no multicollinearity? We have seen one above, with one variable being a linear function of another. But this problem can come out in more subtle ways. Suppose we have a set of dummy variables corresponding to a single categorical variable, like the region of the world. This might mean we have <span class="math inline">\(X_{i1} = 1\)</span> for units in Asia (0 otherwise), <span class="math inline">\(X_{i2} = 1\)</span> for units in Europe (0 otherwise), <span class="math inline">\(X_{i3} = 1\)</span> for units in Africa (0 otherwise), and <span class="math inline">\(X_{i4} = 1\)</span> for units in the Americas (0 otherwise), and <span class="math inline">\(X_{i5} = 1\)</span> for countries in Oceania (0 otherwise). Each unit has to be in exactly one of these five regions, so there is a linear dependence between these variables, <span class="math display">\[
+X_{i5} = 1 - X_{i1} - X_{i2} - X_{i3} - X_{i4}.
+\]</span> That is, if a unit is not in Asia, Europe, Africa, or the Americas, we know it is in Oceania. We would get a linear dependence by including all of these variables in our regression with an intercept. (Note the 1 in the relationship between <span class="math inline">\(X_{i5}\)</span> and the other variables, the reason why there will be linear dependence when including a constant.) Thus, we usually omit one dummy variable from each categorical variable. In that case, the coefficients on the remaining dummies are differences in means between that category and the omitted one (perhaps conditional on other variables included, if included). So if we omitted <span class="math inline">\(X_{i5}\)</span> (Oceania), then the coefficient on <span class="math inline">\(X_{i1}\)</span> would be the difference in mean outcomes between units in Asia and Oceania.</p>
+<p>Collinearity can also occur when including both an intercept term and a variable that does not vary. This issue can often happen if we mistakenly subset our data, for example in this case if we subsetted the data to only the Asian units but still included the Asian dummy variable in the regression.</p>
+<p>Finally, note that most statistical software packages will “solve” the multicollinearity by arbitrarily removing as many linearly dependent covariates as is necessary to achieve full rank. R will show the estimated coefficients as <code>NA</code> in those cases.</p>
+</section>
+<section id="ols-coefficients-for-binary-and-categorical-regressors" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="ols-coefficients-for-binary-and-categorical-regressors"><span class="header-section-number">6.5</span> OLS coefficients for binary and categorical regressors</h2>
+<p>Suppose that the covariates include just the intercept and a single binary variable, <span class="math inline">\(\X_i = (1\; X_{i})'\)</span>, where <span class="math inline">\(X_i \in \{0,1\}\)</span>. In other words, the right-hand side contains only one covariate, an indicator variable. In this case, the OLS coefficient on <span class="math inline">\(X_i\)</span>, <span class="math inline">\(\widehat{\beta_{1}}\)</span>, is exactly equal to the difference in sample means of <span class="math inline">\(Y_i\)</span> in the <span class="math inline">\(X_i = 1\)</span> group and the <span class="math inline">\(X_i = 0\)</span> group: <span class="math display">\[
+\widehat{\beta}_{1} = \frac{\sum_{i=1}^{n} X_{i}Y_{i}}{\sum_{i=1}^{n} X_{i}} - \frac{\sum_{i=1}^{n} (1 - X_{i})Y_{i}}{\sum_{i=1}^{n} 1- X_{i}} = \overline{Y}_{X =1} - \overline{Y}_{X=0}
+\]</span> This very useful result is not an approximation: it holds exactly for any sample size.</p>
+<p>We can generalize this idea to discrete variables more broadly. Suppose we have our region variables from the last section and include in our covariates a constant and the dummies for Asia, Europe, Africa, and the Americas (with Oceania again being the omitted variable/category). Then the coefficient on the West dummy will be <span class="math display">\[
+\widehat{\beta}_{\text{Asia}} = \overline{Y}_{\text{Asia}} - \overline{Y}_{\text{Oceania}},
+\]</span> which is exactly the difference in sample means of <span class="math inline">\(Y_i\)</span> between Asian units and units in Oceania.</p>
+<p>Note that these interpretations only hold when the regression consists solely of the binary variable or the set of categorical dummy variables. These exact relationships fail when other covariates are added to the model.</p>
+</section>
+<section id="projection-and-geometry-of-least-squares" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="projection-and-geometry-of-least-squares"><span class="header-section-number">6.6</span> Projection and geometry of least squares</h2>
+<p>OLS has a very nice geometric interpretation that adds a lot of intuition for various aspects of the method. In this geometric approach, we view <span class="math inline">\(\mb{Y}\)</span> as an <span class="math inline">\(n\)</span>-dimensional vector in <span class="math inline">\(\mathbb{R}^n\)</span>. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix <span class="math inline">\(\Xmat\)</span> closest to this vector in terms of the Euclidean distance, which is just the sum of squares.</p>
+<p>Let <span class="math inline">\(\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^(k+1)\}\)</span> be the <strong>column space</strong> of the matrix <span class="math inline">\(\Xmat\)</span>. This set is all linear combinations of the columns of <span class="math inline">\(\Xmat\)</span> or the set of all possible linear predictions we could obtain from <span class="math inline">\(\Xmat\)</span>. Note that the OLS fitted values, <span class="math inline">\(\Xmat\bhat\)</span>, are in this column space. If, as we assume, <span class="math inline">\(\Xmat\)</span> has full column rank of <span class="math inline">\(k+1\)</span>, then the column space <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> will be a <span class="math inline">\(k+1\)</span>-dimensional surface inside of the larger <span class="math inline">\(n\)</span>-dimensional space. If <span class="math inline">\(\Xmat\)</span> has two columns, the column space will be a plane.</p>
+<p>Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of <span class="math inline">\(\Xmat\)</span> to the outcome vector <span class="math inline">\(\mb{Y}\)</span>. This is called the <strong>projection</strong> of <span class="math inline">\(\mb{Y}\)</span> onto <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>. <a href="#fig-projection" class="quarto-xref">Figure&nbsp;<span>6.4</span></a> shows this projection for a case with <span class="math inline">\(n=3\)</span> and 2 columns in <span class="math inline">\(\Xmat\)</span>. The shaded blue region represents the plane of the column space of <span class="math inline">\(\Xmat\)</span>, and <span class="math inline">\(\Xmat\bhat\)</span> is the closest point to <span class="math inline">\(\mb{Y}\)</span> in that space. This illustrates the whole idea of the OLS estimator: find the linear combination of the columns of <span class="math inline">\(\Xmat\)</span> (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).</p>
+<div id="fig-projection" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="assets/img/projection-drawing.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.4: Projection of Y on the column space of the covariates.
+</figcaption>
+</figure>
+</div>
+<p>This figure shows that the residual vector, which is the difference between the <span class="math inline">\(\mb{Y}\)</span> vector and the projection <span class="math inline">\(\Xmat\bhat\)</span>, is perpendicular or orthogonal to the column space of <span class="math inline">\(\Xmat\)</span>. This orthogonality is a consequence of the residuals being orthogonal to all the columns of <span class="math inline">\(\Xmat\)</span>, <span class="math display">\[
+\Xmat'\mb{e} = 0,
+\]</span> as we established above. Being orthogonal to all the columns means it will also be orthogonal to all linear combinations of the columns.</p>
+</section>
+<section id="projection-and-annihilator-matrices" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="projection-and-annihilator-matrices"><span class="header-section-number">6.7</span> Projection and annihilator matrices</h2>
+<p>With the idea of projection to the column space of <span class="math inline">\(\Xmat\)</span> established, we can define a way to project any vector into that space. The <span class="math inline">\(n\times n\)</span> <strong>projection matrix,</strong> <span class="math display">\[
+\mb{P}_{\Xmat} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat',
+\]</span> projects a vector into <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>. In particular, we can see that this gives us the fitted values for <span class="math inline">\(\mb{Y}\)</span>: <span class="math display">\[
+\mb{P}_{\Xmat}\mb{Y} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\mb{Y} = \Xmat\bhat.
+\]</span> Because we sometimes write the linear predictor as <span class="math inline">\(\widehat{\mb{Y}} = \Xmat\bhat\)</span>, the projection matrix is also called the <strong>hat matrix</strong>. With either name, multiplying a vector by <span class="math inline">\(\mb{P}_{\Xmat}\)</span> gives the best linear predictor of that vector as a function of <span class="math inline">\(\Xmat\)</span>. Intuitively, any vector that is already a linear combination of the columns of <span class="math inline">\(\Xmat\)</span> (so is in <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>) should be unaffected by this projection: the closest point in <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> to a point already in <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> is itself. We can also see this algebraically for any linear combination <span class="math inline">\(\Xmat\mb{c}\)</span>, <span class="math display">\[
+\mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{c} = \Xmat\mb{c},
+\]</span> because <span class="math inline">\((\Xmat'\Xmat)^{-1} \Xmat'\Xmat\)</span> simplifies to the identity matrix. In particular, the projection of <span class="math inline">\(\Xmat\)</span> onto itself is just itself: <span class="math inline">\(\mb{P}_{\Xmat}\Xmat = \Xmat\)</span>.</p>
+<p>The second matrix related to projection is the <strong>annihilator matrix</strong>, <span class="math display">\[
+\mb{M}_{\Xmat} = \mb{I}_{n} - \mb{P}_{\Xmat},
+\]</span> which projects any vector into the orthogonal complement to the column space of <span class="math inline">\(\Xmat\)</span>, <span class="math display">\[
+\mathcal{C}^{\perp}(\Xmat) = \{\mb{c} \in \mathbb{R}^n\;:\; \Xmat\mb{c} = 0 \}.
+\]</span> This matrix is called the annihilator matrix because applying it to any linear combination of <span class="math inline">\(\Xmat\)</span>, gives us 0: <span class="math display">\[
+\mb{M}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \Xmat\mb{c} = 0.
+\]</span> Note that <span class="math inline">\(\mb{M}_{\Xmat}\Xmat = 0\)</span>. Why should we care about this matrix? Perhaps a more evocative name might be the <strong>residual maker</strong> since it makes residuals when applied to <span class="math inline">\(\mb{Y}\)</span>, <span class="math display">\[
+\mb{M}_{\Xmat}\mb{Y} = (\mb{I}_{n} - \mb{P}_{\Xmat})\mb{Y} = \mb{Y} - \mb{P}_{\Xmat}\mb{Y} = \mb{Y} - \Xmat\bhat = \widehat{\mb{e}}.
+\]</span></p>
+<p>The projection matrix has several useful properties:</p>
+<ul>
+<li><p><span class="math inline">\(\mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}\)</span> are <strong>idempotent</strong>, which means that when applied to itself, it simply returns itself: <span class="math inline">\(\mb{P}_{\Xmat}\mb{P}_{\Xmat} = \mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}\mb{M}_{\Xmat} = \mb{M}_{\Xmat}\)</span>.</p></li>
+<li><p><span class="math inline">\(\mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}\)</span> are symmetric <span class="math inline">\(n \times n\)</span> matrices so that <span class="math inline">\(\mb{P}_{\Xmat}' = \mb{P}_{\Xmat}\)</span> and <span class="math inline">\(\mb{M}_{\Xmat}' = \mb{M}_{\Xmat}\)</span>.</p></li>
+<li><p>The rank of <span class="math inline">\(\mb{P}_{\Xmat}\)</span> is <span class="math inline">\(k+1\)</span> (the number of columns of <span class="math inline">\(\Xmat\)</span>) and the rank of <span class="math inline">\(\mb{M}_{\Xmat}\)</span> is <span class="math inline">\(n - k - 1\)</span>.</p></li>
+</ul>
+<p>We can use the projection and annihilator matrices to arrive at an orthogonal decomposition of the outcome vector: <span class="math display">\[
+\mb{Y} = \Xmat\bhat + \widehat{\mb{e}} = \mb{P}_{\Xmat}\mb{Y} + \mb{M}_{\Xmat}\mb{Y}.
+\]</span></p>
+</section>
+<section id="residual-regression" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="residual-regression"><span class="header-section-number">6.8</span> Residual regression</h2>
+<p>There are many situations where we can partition the covariates into two groups, and we might wonder if it is possible to express or calculate the OLS coefficients for just one set of covariates. In particular, let the columns of <span class="math inline">\(\Xmat\)</span> be partitioned into <span class="math inline">\([\Xmat_{1} \Xmat_{2}]\)</span>, so that the linear prediction we are estimating is <span class="math display">\[
+\mb{Y} = \Xmat_{1}\bfbeta_{1} + \Xmat_{2}\bfbeta_{2} + \mb{e},
+\]</span> with estimated coefficients and residuals <span class="math display">\[
+\mb{Y} = \Xmat_{1}\bhat_{1} + \Xmat_{2}\bhat_{2} + \widehat{\mb{e}}.
+\]</span></p>
+<p>We now document another way to obtain the estimator <span class="math inline">\(\bhat_1\)</span> from this regression using a technique called <strong>residual regression</strong>, <strong>partitioned regression</strong>, or the <strong>Frisch-Waugh-Lovell theorem</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Residual regression approach
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The residual regression approach is:</p>
+<ol type="1">
+<li>Use OLS to regress <span class="math inline">\(\mb{Y}\)</span> on <span class="math inline">\(\Xmat_2\)</span> and obtain residuals <span class="math inline">\(\widetilde{\mb{e}}_2\)</span>.</li>
+<li>Use OLS to regress each column of <span class="math inline">\(\Xmat_1\)</span> on <span class="math inline">\(\Xmat_2\)</span> and obtain residuals <span class="math inline">\(\widetilde{\Xmat}_1\)</span>.</li>
+<li>Use OLS to regress <span class="math inline">\(\widetilde{\mb{e}}_{2}\)</span> on <span class="math inline">\(\widetilde{\Xmat}_1\)</span>.</li>
+</ol>
+</div>
+</div>
+<div id="thm-fwl" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 6.2 (Frisch-Waugh-Lovell)</strong></span> The OLS coefficients from a regression of <span class="math inline">\(\widetilde{\mb{e}}_{2}\)</span> on <span class="math inline">\(\widetilde{\Xmat}_1\)</span> are equivalent to the coefficients on <span class="math inline">\(\Xmat_{1}\)</span> from the regression of <span class="math inline">\(\mb{Y}\)</span> on both <span class="math inline">\(\Xmat_{1}\)</span> and <span class="math inline">\(\Xmat_2\)</span>.</p>
+</div>
+<p>An implication of this theorem is that the regression coefficient for a given variable captures the relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation orthogonal to those other covariates.</p>
+<p>While perhaps unexpected, this result may not appear particularly useful. We can just run the long regression, right? But this trick can be very handy when <span class="math inline">\(\Xmat_2\)</span> consists of dummy variables (or “fixed effects”) for a categorical variable with many categories. For example, suppose <span class="math inline">\(\Xmat_2\)</span> consists of indicators for the county of residence for a respondent. In that case, that will have over 3,000 columns, meaning that direct calculation of the <span class="math inline">\(\bhat = (\bhat_{1}, \bhat_{2})\)</span> will require inverting a matrix that is bigger than <span class="math inline">\(3,000 \times 3,000\)</span>. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable are just the sample mean within each level of the variable. Thus, in this case, the residuals <span class="math inline">\(\widetilde{\mb{e}}_2\)</span> and <span class="math inline">\(\Xmat_1\)</span> can be computed by demeaning the outcome and <span class="math inline">\(\Xmat_1\)</span> within levels of the dummies in <span class="math inline">\(\Xmat_2\)</span>, which can be considerably faster computationally.</p>
+<p>Finally, using residual regression allows researchers to visualize the conditional relationships between the outcome and a single independent variable after adjusting for other covariates. In particular, one can check the relationship using this approach with a scatterplot of <span class="math inline">\(\widetilde{\mb{e}}_2\)</span> on <span class="math inline">\(\Xmat_1\)</span> (when it is a single column). This residualized scatterplot allows researchers to check if this conditional relationship appears linear or should be modeled in another way.</p>
+</section>
+<section id="outliers-leverage-points-and-influential-observations" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="outliers-leverage-points-and-influential-observations"><span class="header-section-number">6.9</span> Outliers, leverage points, and influential observations</h2>
+<p>Given that OLS finds the coefficients that minimize the sum of the squared residuals, asking how much impact each residual has on that solution is very helpful. Let <span class="math inline">\(\bhat_{(-i)}\)</span> be the OLS estimates if we omit unit <span class="math inline">\(i\)</span>. Intuitively, <strong>influential observations</strong> should significantly impact the estimated coefficients so that <span class="math inline">\(\bhat_{(-i)} - \bhat\)</span> is large in absolute value.</p>
+<p>Under what conditions do we have influential observations? OLS tries to minimize the sum of <strong>squared</strong> residuals, so it will move more in order to shrink larger residuals versus smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will exactly pass through the means of the outcome and the covariates: <span class="math inline">\(\overline{Y} = \overline{\X}\bhat\)</span>. Thus, by definition, this means that, when an observation is close to the average of the covariates, <span class="math inline">\(\overline{\X}\)</span>, it cannot have that much influence because OLS forces the regression line to go through <span class="math inline">\(\overline{Y}\)</span>. Thus, influential points will have two properties:</p>
+<ol type="1">
+<li>Have high <strong>leverage</strong>, where leverage roughly measures how far <span class="math inline">\(\X_i\)</span> is from <span class="math inline">\(\overline{\X}\)</span>, and</li>
+<li>Be an <strong>outlier</strong> in the sense of having a large residual (if left out of the regression).</li>
+</ol>
+<p>We’ll take each of these in turn.</p>
+<section id="sec-leverage" class="level3" data-number="6.9.1">
+<h3 data-number="6.9.1" class="anchored" data-anchor-id="sec-leverage"><span class="header-section-number">6.9.1</span> Leverage points</h3>
+<p>We can define the <strong>leverage</strong> of an observation by <span class="math display">\[
+h_{ii} = \X_{i}'\left(\Xmat'\Xmat\right)^{-1}\X_{i},
+\]</span> which is the <span class="math inline">\(i\)</span>th diagonal entry of the projection matrix, <span class="math inline">\(\mb{P}_{\Xmat}\)</span>. Notice that <span class="math display">\[
+\widehat{\mb{Y}} = \mb{P}_{\Xmat}\mb{Y} \qquad \implies \qquad \widehat{Y}_i = \sum_{j=1}^n h_{ij}Y_j,
+\]</span> so that <span class="math inline">\(h_{ij}\)</span> is the importance of observation <span class="math inline">\(j\)</span> for the fitted value for observation <span class="math inline">\(i\)</span>. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of <span class="math inline">\(\X_{i}\)</span>. Roughly speaking, these values are the weighted distance between <span class="math inline">\(\X_i\)</span> and <span class="math inline">\(\overline{\X}\)</span>, where the weights normalize to the empirical variance/covariance structure of the covariates (so that the scale of each covariate is roughly the same). We can see this most clearly when we fit a simple linear regression (with one covariate and an intercept) with OLS when the leverage is <span class="math display">\[
+h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overline{X})^2}
+\]</span></p>
+<p>Leverage values have three key properties:</p>
+<ol type="1">
+<li><span class="math inline">\(0 \leq h_{ii} \leq 1\)</span></li>
+<li><span class="math inline">\(h_{ii} \geq 1/n\)</span> if the model contains an intercept</li>
+<li><span class="math inline">\(\sum_{i=1}^{n} h_{ii} = k + 1\)</span></li>
+</ol>
+</section>
+<section id="outliers-and-leave-one-out-regression" class="level3" data-number="6.9.2">
+<h3 data-number="6.9.2" class="anchored" data-anchor-id="outliers-and-leave-one-out-regression"><span class="header-section-number">6.9.2</span> Outliers and leave-one-out regression</h3>
+<p>In the context of OLS, an <strong>outlier</strong> is an observation with a large prediction error for a particular OLS specification. <a href="#fig-outlier" class="quarto-xref">Figure&nbsp;<span>6.5</span></a> shows an example of an outlier.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-outlier" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="least_squares_files/figure-html/fig-outlier-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.5: An example of an outlier.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Intuitively, it seems as though we could use the residual <span class="math inline">\(\widehat{e}_i\)</span> to assess the prediction error for a given unit. But the residuals are not valid predictions because the OLS estimator is designed to make those as small as possible (in machine learning parlance, these were in the training set). In particular, if an outlier is influential, we already noted that it might “pull” the regression line toward it, and the resulting residual might be pretty small.</p>
+<p>To assess prediction errors more cleanly, we can use <strong>leave-one-out regression</strong> (LOO), which regresses <span class="math inline">\(\mb{Y}_{(-i)}\)</span> on <span class="math inline">\(\Xmat_{(-i)}\)</span>, where these omit unit <span class="math inline">\(i\)</span>: <span class="math display">\[
+\bhat_{(-i)} = \left(\Xmat'_{(-i)}\Xmat_{(-i)}\right)^{-1}\Xmat_{(-i)}\mb{Y}_{(-i)}.
+\]</span> We can then calculate LOO prediction errors as <span class="math display">\[
+\widetilde{e}_{i} = Y_{i} - \X_{i}'\bhat_{(-i)}.
+\]</span> Calculating these LOO prediction errors for each unit appears to be computationally costly because it seems as though we have to fit OLS <span class="math inline">\(n\)</span> times. Fortunately, there is a closed-form expression for the LOO coefficients and prediction errors in terms of the original regression, <span id="eq-loo-coefs"><span class="math display">\[
+\bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i \qquad \widetilde{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
+\tag{6.1}\]</span></span> This shows that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage would be close to <span class="math inline">\(\overline{\X}\)</span>, where the outcome values have relatively little impact on the OLS fit (because the regression line must go through <span class="math inline">\(\overline{Y}\)</span>).</p>
+</section>
+<section id="influential-observations" class="level3" data-number="6.9.3">
+<h3 data-number="6.9.3" class="anchored" data-anchor-id="influential-observations"><span class="header-section-number">6.9.3</span> Influential observations</h3>
+<p>An influential observation (also sometimes called an influential point) is a unit that has the power to change the coefficients and fitted values for a particular OLS specification. <a href="#fig-influence" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> shows an example of such an influence point.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-influence" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-influence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="least_squares_files/figure-html/fig-influence-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-influence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.6: An example of an influence point.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>One measure of influence, called DFBETA<span class="math inline">\(_i\)</span>, measures how much <span class="math inline">\(i\)</span> changes the estimated coefficient vector <span class="math display">\[
+\bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
+\]</span> so there is one value for each observation-covariate pair. When divided by the standard error of the estimated coefficients, this is called DFBETA<strong>S</strong> (where the “S” is for standardized). These are helpful if we focus on a particular coefficient.</p>
+<p>When we want to summarize how much an observation matters for the fit, we can use a compact measure of the influence of an observation by comparing the fitted value from the entire sample to the fitted value from the leave-one-out regression. Using the DFBETA above, we have <span class="math display">\[
+\widehat{Y}_i - \X_{i}\bhat_{(-1)} = \X_{i}'(\bhat -\bhat_{(-1)}) = \X_{i}'\left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i = h_{ii}\widetilde{e}_i,
+\]</span> so the influence of an observation is its leverage multiplied by how much of an outlier it is. This value is sometimes called DFFIT (difference in fit). One transformation of this quantity, <strong>Cook’s distance</strong>, standardizes this by the sum of the squared residuals: <span class="math display">\[
+D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\widetilde{e}_{i}^{2}}{\widehat{\mb{e}}'\widehat{\mb{e}}}.
+\]</span> Different cutoffs exist for identifying “influential” observations, but they tend to be ad hoc. In any case, the more important question is “how much does this observation matter for my substantive interpretation” rather than the narrow question of a particular threshold.</p>
+<p>It’s all well and good to find influential observations, but what should be done about them? The first thing to check is that the data is not corrupted somehow. Influence points sometimes occur because of a coding or data entry error. We may consider removing the observation if the error appears in the data acquired from another source but exercise transparency if this appears to be the case. Another approach is to consider a transformation of the dependent or independent variables, like taking the natural logarithm, that might dampen the effects of outliers. Finally, consider using methods that are robust to outliers such as least absolute deviations or least trimmed squares.</p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.10</span> Summary</h2>
+<p>In this chapter, we introduced the <strong>ordinary least squares</strong> estimator, which finds the linear function of the <span class="math inline">\(\X_i\)</span> that minimizes the sum of the squared residuals and is the sample version of the best linear predictor in the last chapter. The <span class="math inline">\(R^2\)</span> statistic assesses the in-sample <strong>model fit</strong> of OLS by comparing how much better it predicts the outcome compared to a simple baseline predictor of the sample mean of the outcome. OLS can also be written in a very compact manner using matrix algebra, which allows us to understand the geometry of OLS as a <strong>projection</strong> of the outcome into space of linear functions of the independent variables. The <strong>Frisch-Waugh-Lovell theorem</strong> describes a residual regression approach to obtaining OLS estimates for subsets of coefficients, which can be helpful for computational efficiency or data visualization. Lastly, influential observations are those that alter the estimated coefficients when they are omitted from the OLS estimation, and there are several metrics that help to assess this. In the next chapter, we move from the mechanical properties to the statistical properties of OLS: unbiasedness, consistency, and asymptotic normality.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./linear_model.html" class="pagination-link" aria-label="Linear regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./ols_properties.html" class="pagination-link" aria-label="The statistics of least squares">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/least_squares.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A User’s Guide to Statistical Inference and Regression - 4&nbsp; Hypothesis tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./linear_model.html" rel="next">
+<link href="./asymptotics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      RR: "{\\bf R}",
+      bs: ["\\boldsymbol{#1}", 1],
+      mb: ["\\mathbf{#1}", 1],
+      E: "\\mathbb{E}",
+      V: "\\mathbb{V}",
+      P: "\\mathbb{P}",
+      var: "\\text{var}",
+      cov: "\\text{cov}",
+      N: "\\mathcal{N}",
+      Bern: "\\text{Bern}",
+      Bin: "\\text{Bin}",
+      Pois: "\\text{Pois}",
+      Unif: "\\text{Unif}",
+      se: "\\textsf{se}",
+      U: "\\mb{U}",
+      Xbar: "\\overline{X}",
+      Ybar: "\\overline{Y}",
+      real: "\\mathbb{R}",
+      bbL: "\\mathbb{L}",
+      u: "\\mb{u}",
+      v: "\\mb{v}",
+      M: "\\mb{M}",
+      X: "\\mb{X}",
+      Xmat: "\\mathbb{X}",
+      bfx: "\\mb{x}",
+      y: "\\mb{y}",
+      bfbeta: "\\bs{\\beta}",
+      e: "\\bs{\\epsilon}",
+      bhat: "\\widehat{\\bs{\\beta}}",
+      XX: "\\Xmat'\\Xmat",
+      XXinv: "\\left(\\Xmat'\\Xmat\\right)^{-1}",
+      hatsig: "\\widehat{\\sigma}^2",
+      red: ["\\textcolor{red!60}{#1}", 1],
+      indianred: ["\\textcolor{indianred}{#1}", 1],
+      blue: ["\\textcolor{blue!60}{#1}", 1],
+      dblue: ["\\textcolor{dodgerblue}{#1}", 1],
+      indep: "\\perp\\!\\!\\!\\perp",
+      inprob: "\\overset{p}{\\to}",
+      indist: "\\overset{d}{\\to}",
+      argmax: ["\\operatorname\{arg\,max\}"],
+      argmin: ["\\operatorname\{arg\,min\}"]      
+    }
+  }
+};
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_tests.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./users-guide.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model-based inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./asymptotics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_tests.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./least_squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ols_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-lady-tasting-tea" id="toc-the-lady-tasting-tea" class="nav-link active" data-scroll-target="#the-lady-tasting-tea"><span class="header-section-number">4.1</span> The Lady Tasting Tea</a></li>
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">4.2</span> Hypotheses</a></li>
+  <li><a href="#the-procedure-of-hypothesis-testing" id="toc-the-procedure-of-hypothesis-testing" class="nav-link" data-scroll-target="#the-procedure-of-hypothesis-testing"><span class="header-section-number">4.3</span> The procedure of hypothesis testing</a></li>
+  <li><a href="#testing-errors" id="toc-testing-errors" class="nav-link" data-scroll-target="#testing-errors"><span class="header-section-number">4.4</span> Testing errors</a></li>
+  <li><a href="#determining-the-rejection-region" id="toc-determining-the-rejection-region" class="nav-link" data-scroll-target="#determining-the-rejection-region"><span class="header-section-number">4.5</span> Determining the rejection region</a></li>
+  <li><a href="#hypothesis-tests-of-the-sample-mean" id="toc-hypothesis-tests-of-the-sample-mean" class="nav-link" data-scroll-target="#hypothesis-tests-of-the-sample-mean"><span class="header-section-number">4.6</span> Hypothesis tests of the sample mean</a></li>
+  <li><a href="#the-wald-test" id="toc-the-wald-test" class="nav-link" data-scroll-target="#the-wald-test"><span class="header-section-number">4.7</span> The Wald test</a></li>
+  <li><a href="#p-values" id="toc-p-values" class="nav-link" data-scroll-target="#p-values"><span class="header-section-number">4.8</span> p-values</a></li>
+  <li><a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis"><span class="header-section-number">4.9</span> Power analysis</a></li>
+  <li><a href="#exact-tests-under-normal-data" id="toc-exact-tests-under-normal-data" class="nav-link" data-scroll-target="#exact-tests-under-normal-data"><span class="header-section-number">4.10</span> Exact tests under normal data</a></li>
+  <li><a href="#confidence-intervals-and-hypothesis-tests" id="toc-confidence-intervals-and-hypothesis-tests" class="nav-link" data-scroll-target="#confidence-intervals-and-hypothesis-tests"><span class="header-section-number">4.11</span> Confidence intervals and hypothesis tests</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.12</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/hypothesis_tests.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_tests.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-hypothesis-tests" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We have up to now discussed the properties of estimators that allow us to characterize their distributions in finite and large samples. These properties allow us to say, for example, that our estimated difference in means is equal to a true average treatment effect on average across repeated samples or that it will converge to the true value in large samples. These properties, however, are properties of repeated samples. Most researchers, on the other hand, will only have access to a single sample. <strong>Statistical inference</strong> is the process of using a single sample to learn about population parameters. As we will see, many common techniques of statistical inference are intuitively closely connected. One of the most ubiquitous in the social sciences is the hypothesis test, a kind of statistical thought experiment.</p>
+<section id="the-lady-tasting-tea" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-lady-tasting-tea"><span class="header-section-number">4.1</span> The Lady Tasting Tea</h2>
+<p>The story of the Lady Tasting Tea exemplifies the core ideas behind hypothesis testing.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> The story goes like this. R.A. Fisher, the early 20th-century British polymath and statistical pioneer, had prepared tea for his colleague, the algologist Muriel Bristol. Knowing that she preferred milk in her tea, he poured milk into a tea cup and then poured the hot tea into the milk and swirled it around. But Bristol rejected the cup, stating that she preferred pouring the tea first, then the milk. Fisher was skeptical of the idea that anyone could tell the difference between a cup poured milk-first versus tea-first, and so he and another colleague, William Roach, devised a test to see if Bristol could tell the difference between the two preparation methods.</p>
+<p>Fisher and Roach prepared 8 cups of tea, four with the milk poured first and four with the tea poured first. Then they presented the cups to Bristol in a random order (though she knew there were four of each type), and she proceeded to identify all of the cups correctly. At first glance, this seems like good evidence that she could tell the difference between the two types of tea, but Fisher, being a natural skeptic, raised the question, “Could she have just been randomly guessing and got lucky?” This led Fisher to a <strong>statistical thought experiment</strong>: what would the probability of identifying the correct cups be <em>if</em> she was guessing randomly?</p>
+<p>To calculate the probability of Bristol identifying the four milk-first cups correctly, note that “randomly guessing” would mean that she was selecting a group of 4 cups to be labeled milk-first from the 8 cups available. Using basic combinatorics, there are 70 ways to choose 4 cups among 8, but only 1 of those arrangements would be correct. Thus, if randomly guessing means choosing among those 70 options with equal chance, then the probability of guessing the right set of cups is 1/70 or <span class="math inline">\(\approx 0.014\)</span>. The low probability implies that the hypothesis of random guessing may be implausible.</p>
+<p>The story of the Lady Tasting Tea encapsulates many of the core elements of hypothesis testing. Hypothesis testing is about taking our observed estimate (Bristol identifying all four cups correctly) and seeing how likely that observed estimate would be under some assumption, or hypothesis, about the data-generating process (Bristol was randomly guessing). When the observed estimate is unlikely under the maintained hypothesis, we might view this as evidence against that hypothesis. Thus, hypothesis tests help us assess evidence for particular guesses about the DGP.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notation alert
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For the rest of this chapter, we will introduce the concepts following the notation in the past chapters. We will assume a random (iid) sample of random variables <span class="math inline">\(X_1, \ldots, X_n\)</span> from a distribution, <span class="math inline">\(F\)</span>. We’ll focus on estimating some parameter, <span class="math inline">\(\theta\)</span>, of this distribution (like the mean, median, variance, etc.), and we will refer to <span class="math inline">\(\Theta\)</span> as the set of possible values of <span class="math inline">\(\theta\)</span> or the <strong>parameter space</strong>.</p>
+</div>
+</div>
+</section>
+<section id="hypotheses" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="hypotheses"><span class="header-section-number">4.2</span> Hypotheses</h2>
+<p>In the context of hypothesis testing, hypotheses are simply statements about the population distribution. In particular, we will make statements that <span class="math inline">\(\theta = \theta_0\)</span> where <span class="math inline">\(\theta_0 \in \Theta\)</span> is the hypothesized value of <span class="math inline">\(\theta\)</span>, a population parameter. Hypotheses are ubiquitous in empirical work. Examples include:</p>
+<ul>
+<li>The population proportion of US citizens who identify as Democrats is 0.33.</li>
+<li>The population difference in average voter turnout between households who received get-out-the-vote mailers vs.&nbsp;those who did not is 0.</li>
+<li>The difference in the average incidence of human rights abuse in countries that signed a human rights treaty vs.&nbsp;those countries that did not sign is 0.</li>
+</ul>
+<p>Each of these is a statement about the true DGP. The latter two are examples where the hypothesis is phrased as a possible non-difference, which is very common. When <span class="math inline">\(\theta\)</span> represents the difference in means between two groups, then <span class="math inline">\(\theta = 0\)</span> is the hypothesis of no actual difference in population means or no treatment effect (if the causal effect is identified).</p>
+<p>The goal of hypothesis testing is to adjudicate between two complementary hypotheses.</p>
+<div id="def-null" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.1</strong></span> The two hypotheses in a hypothesis test are called the <strong>null hypothesis</strong> and the <strong>alternative hypothesis</strong>, denoted as <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span>, respectively.</p>
+</div>
+<p>These hypotheses are complementary, so if the null hypothesis is <span class="math inline">\(H_0: \theta \in \Theta_0\)</span>, then the alternative hypothesis is <span class="math inline">\(H_1: \theta \in \Theta_0^c\)</span>. The “null” in null hypothesis may seem odd until you realize that most null hypotheses are that there is no effect of some treatment or no difference in means. For example, suppose that <span class="math inline">\(\theta\)</span> is the difference in mean support for increasing legal immigration between a treatment group that received a pro-immigrant message with some facts about immigration and a control group that just received the immigration facts. The usual null hypothesis would be no difference in means or <span class="math inline">\(H_0: \theta = 0\)</span>, and the alternative would be <span class="math inline">\(H_1: \theta \neq 0\)</span>. Substantively, the null hypothesis would posit no average difference in the outcome – in this case support for increasing legal immigration – between the two groups.</p>
+<p>There are two common types of tests that differ in terms of the form of their null and alternative hypotheses. A <strong>two-sided test</strong> is of the form <span class="math display">\[
+H_0: \theta = \theta_0 \quad\text{versus}\quad H_1: \theta \neq \theta_0,
+\]</span> where the “two-sided” part refers to how the alternative contains values of <span class="math inline">\(\theta\)</span> above and below the null value <span class="math inline">\(\theta_0\)</span>.</p>
+<p>A <strong>one-sided test</strong> is of the form <span class="math display">\[
+H_0: \theta \leq \theta_0 \quad\text{versus}\quad H_1: \theta &gt; \theta_0,
+\]</span> or <span class="math display">\[
+H_0: \theta \geq \theta_0 \quad\text{versus}\quad H_1: \theta &lt; \theta_0.
+\]</span> Where the “one-sided” part refers to how the alternative contains values of <span class="math inline">\(\theta\)</span> only above or below the null value. Two-sided tests are much more common in the social sciences, mostly because we usually want to know if there is any evidence, positive or negative, against the presumption of no treatment effect or no relationship between two variables. One-sided tests are best suited for situations with clear, directional hypotheses that are ideally preregistered before collection of the data. Preregistration of the direction of a one-sided test is important because researchers changing the direction of the hypothesis after seeing the data can inflate the strength of evidence against the null. For this reason, one-sided tests outside of preregistered settings should be used with extreme caution. That said, unfortunately, the math of two-sided tests is also more complicated.</p>
+</section>
+<section id="the-procedure-of-hypothesis-testing" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="the-procedure-of-hypothesis-testing"><span class="header-section-number">4.3</span> The procedure of hypothesis testing</h2>
+<p>At the most basic level, a <strong>hypothesis test</strong> is a rule that specifies values of the sample data for which we will decide to <strong>reject</strong> the null hypothesis. Let <span class="math inline">\(\mathcal{X}_n\)</span> be the range of the sample—that is, all possible vectors <span class="math inline">\((x_1, \ldots, x_n)\)</span> that have a positive probability of occurring. A hypothesis test then describes a region of this space, <span class="math inline">\(R \subset \mathcal{X}_n\)</span>, called the <strong>rejection region</strong> where when <span class="math inline">\((X_1, \ldots, X_n) \in R\)</span> we will <strong>reject</strong> <span class="math inline">\(H_0\)</span> and when the data is outside this region, <span class="math inline">\((X_1, \ldots, X_n) \notin R\)</span> we <strong>retain</strong>, <strong>accept</strong>, or <strong>fail to reject</strong> the null hypothesis.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>How do we decide what the rejection region should be? Even though we define the rejection region in terms of the <strong>sample space</strong>, <span class="math inline">\(\mathcal{X}_n\)</span>, working with the entire vector of data can be unwieldy. We instead usually formulate the rejection region in terms of a <strong>test statistic</strong>, <span class="math inline">\(T = T(X_1, \ldots, X_n)\)</span>, where the rejection region becomes <span class="math display">\[
+R = \left\{(x_1, \ldots, x_n) : T(x_1, \ldots, x_n) &gt; c\right\},
+\]</span> where <span class="math inline">\(c\)</span> is called the <strong>critical value</strong>. This expression says that the rejection region is the collection of possible data sets that make the test statistic sufficiently large. Thus, the test statistic is a function of the data that should get larger as the observed data becomes incompatible with the null hypothesis. The critical value (and thus the rejection region) demarcates when the divergence between the observed data and the null hypothesis is large enough to allow us to reject the null hypothesis. Note that the test statistic is a random variable and has a distribution. We will exploit this later to better understand the different properties of a hypothesis test.</p>
+<p>Consider a simple one-sided test where you feel a bit ill and try to determine if you have a normal body temperature of 98.7 degrees Fahrenheit or if you have a fever. In this case, the thermometer reading is the test statistic since a larger reading are less consistent with a normal body temperature. Thermometers, however, are imperfect and noisy tools, so the reading might differ from 98.7 even if one’s temperature is normal. Thus, we can use a rejection region such as readings over 100.5 degrees to determine when to reject the null hypothesis of a normal body temperature.</p>
+<div id="exm-biden" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.1</strong></span> Suppose that <span class="math inline">\((X_1, \ldots, X_n)\)</span> represents a sample of US citizens where <span class="math inline">\(X_i = 1\)</span> indicates support for the current US president and <span class="math inline">\(X_i = 0\)</span> means opposition (no support). A good and reasonable null hypothesis is that the president does not have the support of a majority of American citizens. Let <span class="math inline">\(\mu = \E[X_i] = \P(X_i = 1)\)</span>. Then, a one-sided test would compare the two hypotheses: <span class="math display">\[
+H_0: \mu \leq 0.5 \quad\text{versus}\quad H_1: \mu &gt; 0.5.
+\]</span> In this case, we might use the sample mean as the test statistic, so that <span class="math inline">\(T(X_1, \ldots, X_n) = \Xbar_n\)</span>, and we have to find some threshold above 0.5 such that we would reject the null, <span class="math display">\[
+R = \left\{(x_1, \ldots, x_n): \Xbar_n &gt; c\right\}.
+\]</span> In words, we are asking how much support should we see for the current president before we reject the notion that he or she lacks majority support? Below we will select the critical value, <span class="math inline">\(c\)</span>, to have beneficial statistical properties.</p>
+</div>
+<p>The structure of a reject region will depend on whether a test is one- or two-sided. This is an important point of difference between the two test types that we will raise again below. One-sided tests will take the form <span class="math inline">\(T &gt; c\)</span>, whereas two-sided tests will take the form <span class="math inline">\(|T| &gt; c\)</span> since we want to count deviations from either side of the null hypothesis as evidence against that null.</p>
+</section>
+<section id="testing-errors" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="testing-errors"><span class="header-section-number">4.4</span> Testing errors</h2>
+<p>Hypothesis tests end with a decision to reject the null hypothesis or not, but this might be an incorrect decision. In particular, there are two ways to make errors and two ways to be correct in this setting, as shown in <a href="#tbl-errors" class="quarto-xref">Table&nbsp;<span>4.1</span></a>. The labels are confusing, but remember that <strong>Type I errors</strong> (said “type one”) are labeled so because they are the worst of the two types of errors. Type I errors occur when we reject a null when the null is in fact true. For example, if we have a null hypothesis of no treatment effect between a treatment and control condition, and we reject that null hypothesis (and conclude substantively that there is some sort of a treatment effect), then we would be committing a Type I error if in fact the null was true – that is, there is no real treatment effect but we concluded there was one. Type I errors are what we see in the replication crisis: lots of “significant” effects that turn out later to be null.</p>
+<p><strong>Type II errors</strong> (said “type two”) are generally considered less problematic. For such errors, There is a true relationship, but we cannot detect it with our test. That is, we do not reject a null that is false. For example, if we have a null hypothesis of no treatment effect between a treatment and control condition, we would be committing a Type II error if in fact there was a difference in the treatment and control but we concluded there wasn’t (we failed to reject the null hypothesis of no difference).</p>
+<div id="tbl-errors" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-errors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Typology of testing errors
+</figcaption>
+<div aria-describedby="tbl-errors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(H_0\)</span> True</th>
+<th><span class="math inline">\(H_0\)</span> False</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Retain <span class="math inline">\(H_0\)</span></td>
+<td>Awesome</td>
+<td>Type II error</td>
+</tr>
+<tr class="even">
+<td>Reject <span class="math inline">\(H_0\)</span></td>
+<td>Type I error</td>
+<td>Great</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Ideally, we would minimize the chances of making either a Type I or Type II error. Unfortunately, because the test statistic is a random variable, we cannot remove the probability of an error altogether. Instead, we will derive tests with some guaranteed performance to minimize the probability of Type I error, usually the more objectionable type of error. To derive this, we can define the <strong>power function</strong> of a test, <span class="math display">\[
+\pi(\theta) = \P\left( \text{Reject } H_0 \mid \theta \right) = \P\left( T \in R \mid \theta \right),
+\]</span> which is the probability of rejection as a function of the parameter of interest, <span class="math inline">\(\theta\)</span>. The power function tells us, for example, how likely we are to reject the null hypothesis of no treatment effect (no difference) as we vary the actual size of the treatment effect (which in this case is <span class="math inline">\(\theta\)</span>).</p>
+<p>We can define the probability of Type I error from the power function.</p>
+<div id="def-size" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.2</strong></span> The <strong>size</strong> of a hypothesis test with the null hypothesis <span class="math inline">\(H_0: \theta = \theta_0\)</span> is <span class="math display">\[
+\pi(\theta_0) = \P\left( \text{Reject } H_0 \mid \theta_0 \right).
+\]</span></p>
+</div>
+<p>You can think of the size of a test as the rate of false positives (or false discoveries) produced by the test. <a href="#fig-size-power" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> shows an example of rejection regions, size, and power for a one-sided test. In the left panel, we have the distribution of the test statistic under the null, with <span class="math inline">\(H_0: \theta = \theta_0\)</span>, and the rejection region is defined by values <span class="math inline">\(T &gt; c\)</span>. We refer to the distribution of the test statistic under the null hypothesis as the <strong>null distribution</strong> or the <strong>reference distribution</strong>. The shaded gray region is the probability of rejection under this null hypothesis, or the size of the test. Sometimes, we will get extreme samples by random chance, even under the null, leading to false discoveries.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>In the right panel, we overlay the distribution of the test statistic under one particular alternative, <span class="math inline">\(\theta = \theta_1 &gt; \theta_0\)</span>. The red-shaded region is the probability of rejecting the null when this alternative is true for the power—it is the probability of correctly rejecting the null when it is false. Intuitively, we can see that alternatives that produce test statistics closer to the rejection region will have higher power. This makes sense: detecting big deviations from the null should be easier than detecting minor ones.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-size-power" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-size-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="hypothesis_tests_files/figure-html/fig-size-power-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-size-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: Size of a test and power against an alternative.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-size-power" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> also hints at a tradeoff between size and power. Notice that we could make the size smaller (lower the false positive rate) by increasing the critical value to <span class="math inline">\(c' &gt; c\)</span>. This would make the probability of being in the rejection region smaller, <span class="math inline">\(\P(T &gt; c' \mid \theta_0) &lt; \P(T &gt; c \mid \theta_0)\)</span>, leading to a lower-sized test. Unfortunately, it would also reduce power in the right panel since the probability of being in the rejection region will be lower under any alternative, <span class="math inline">\(\P(T &gt; c' \mid \theta_1) &lt; \P(T &gt; c \mid \theta_1)\)</span>. This means we usually cannot simultaneously reduce both types of errors.</p>
+</section>
+<section id="determining-the-rejection-region" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="determining-the-rejection-region"><span class="header-section-number">4.5</span> Determining the rejection region</h2>
+<p>If we cannot simultaneously optimize a test’s size and power, how should we determine where the rejection region is? That is, how should we decide what empirical evidence will be strong enough for us to reject the null? The standard approach is to control the size of a test (that is, control the rate of false positives) and try to maximize the power of the test subject to that constraint. So we say, “I’m willing to accept at most X%” of findings will be false positives and do whatever we can to maximize power subject to that constraint.</p>
+<div id="def-level" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.3</strong></span> A test has <strong>significance level</strong> <span class="math inline">\(\alpha\)</span> if its size is less than or equal to <span class="math inline">\(\alpha\)</span>, or <span class="math inline">\(\pi(\theta_0) \leq \alpha\)</span>.</p>
+</div>
+<p>A test with a significance level of <span class="math inline">\(\alpha = 0.05\)</span> will have a false positive/Type I error rate no larger than 0.05. This level is widespread in the social sciences, though you also will see <span class="math inline">\(\alpha = 0.01\)</span> or <span class="math inline">\(\alpha = 0.1\)</span>. Frequentists justify this by saying this means that with <span class="math inline">\(\alpha = 0.05\)</span>, there will only be at most 5% of studies that will produce false discoveries.</p>
+<p>Our task is to construct the rejection region so that the <strong>null distribution</strong> of the test statistic <span class="math inline">\(G_0(t) = \P(T \leq t \mid \theta_0)\)</span> has less than <span class="math inline">\(\alpha\)</span> probability in that region. One-sided tests like in <a href="#fig-size-power" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> are the easiest to show, even though we warned you not to use them. We want to choose <span class="math inline">\(c\)</span> that puts no more than <span class="math inline">\(\alpha\)</span> probability in the tail, or <span class="math display">\[
+\P(T &gt; c \mid \theta_0) = 1 - G_0(c) \leq \alpha.
+\]</span> Remember that the smaller the value of <span class="math inline">\(c\)</span> we can use will maximize power, which implies that the critical value for the maximum power while maintaining the significance level is when <span class="math inline">\(1 - G_0(c) = \alpha\)</span>. We can use the <strong>quantile function</strong> of the null distribution to find the exact value of <span class="math inline">\(c\)</span> we need, <span class="math display">\[
+c = G^{-1}_0(1 - \alpha),
+\]</span> which substantively translates to say, “the value at which <span class="math inline">\(1-\alpha\)</span> of the null distribution is below.”</p>
+<p>The determination of the rejection region follows the same principles for two-sided tests, but it is more complicated because we reject when the magnitude of the test statistic is large, <span class="math inline">\(|T| &gt; c\)</span>. <a href="#fig-two-sided" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> shows that basic setup. Notice that because there are two (disjoint) regions, one on the left and one on the right, we can write the size (false positive rate) as <span class="math display">\[
+\pi(\theta_0) = G_0(-c) + 1 - G_0(c).
+\]</span> In most cases, the null distribution for such a test will be symmetric around 0 (usually asymptotically standard normal, actually), which means that <span class="math inline">\(G_0(-c) = 1 - G_0(c)\)</span>. This in turn implies that the size is <span class="math display">\[
+\pi(\theta_0) = 2(1 - G_0(c)).
+\]</span> Solving for the critical value that would make this <span class="math inline">\(\alpha\)</span> gives <span class="math display">\[
+c = G^{-1}_0(1 - \alpha/2).
+\]</span> Again, this formula can seem dense, but remember what you are doing: finding the value that puts <span class="math inline">\(\alpha/2\)</span> of the probability of the null distribution in each tail.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-two-sided" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-two-sided-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="hypothesis_tests_files/figure-html/fig-two-sided-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-two-sided-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.2: Rejection regions for a two-sided test.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hypothesis-tests-of-the-sample-mean" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="hypothesis-tests-of-the-sample-mean"><span class="header-section-number">4.6</span> Hypothesis tests of the sample mean</h2>
+<p>Consider the following extended example about hypothesis testing of a sample mean, sometimes called a <strong>one-sample test</strong> since we are usually using just one sample statistic (the sample mean in this case) and comparing that to some sort of natural conceptual benchmark. Let’s say <span class="math inline">\(X_i\)</span> represents feeling thermometer scores about “liberals” as a group on a scale of 0 to 100, with values closer to 0 indicating cooler feelings about liberals and values closer to 100 indicating warmer feelings about liberals. (This is similar to many survey items on nationally representative surveys, such as the ANES in the U.S.) We want to know if the population average differs from a value of 50, which is a good benchmark that would indicate roughly neutral feelings toward liberals. We can write this two-sided test as <span class="math display">\[
+H_0: \mu = 50 \quad\text{versus}\quad H_1: \mu \neq 50,
+\]</span> where <span class="math inline">\(\mu = \E[X_i]\)</span>. The standard test statistic for this type of test is the so-called <strong>t-statistic</strong>, <span class="math display">\[
+T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{s^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{s^2 / n}},
+\]</span> where <span class="math inline">\(\mu_0\)</span> is the null value of interest and <span class="math inline">\(s^2\)</span> is the sample variance. If the null hypothesis is true, then by the CLT, we know that the t-statistic is asymptotically normal, <span class="math inline">\(T \indist \N(0, 1)\)</span>. Thus, we can approximate the null distribution with the standard normal.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The names of the various tests can be quite confusing because they are so similar. Earlier, we discussed one-sided versus two-sided tests, which differed in what alternative hypotheses were being considered. One-sample and two-sample tests, on the other hand, describe how many group means we are comparing. In a one-sample test, we compare one population mean to a fixed number. For two-sample tests (described in more detail below), we are usually making null hypotheses about the different between two population means.</p>
+</div>
+</div>
+<p>Let’s create a two-sided test with level <span class="math inline">\(\alpha = 0.05\)</span>, our tolerance for Type I error. Then we need to find the rejection region that puts <span class="math inline">\(0.05\)</span> probability in the tails of the null distribution, which we just saw was <span class="math inline">\(\N(0,1)\)</span>. Let <span class="math inline">\(\Phi()\)</span> be the CDF for the standard normal and let <span class="math inline">\(\Phi^{-1}()\)</span> be the quantile function for the standard normal. Drawing on what we developed above, you can find the value <span class="math inline">\(c\)</span> so that <span class="math inline">\(\P(|T| &gt; c \mid \mu_0)\)</span> is 0.05 with <span class="math display">\[
+c = \Phi^{-1}(1 - 0.05/2) \approx 1.96,
+\]</span> This means that a test where we reject when <span class="math inline">\(|T| &gt; 1.96\)</span> would have a level of 0.05 asymptotically.</p>
+</section>
+<section id="the-wald-test" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="the-wald-test"><span class="header-section-number">4.7</span> The Wald test</h2>
+<p>We can generalize the hypothesis test for the sample mean to estimators more broadly. Let <span class="math inline">\(\widehat{\theta}_n\)</span> be an estimator for some parameter <span class="math inline">\(\theta\)</span> and let <span class="math inline">\(\widehat{\textsf{se}}[\widehat{\theta}_n]\)</span> be a consistent estimate of the standard error of the estimator, <span class="math inline">\(\textsf{se}[\widehat{\theta}_n] = \sqrt{\V[\widehat{\theta}_n]}\)</span>. We consider the two-sided test <span class="math display">\[
+H_0: \theta = \theta_0 \quad\text{versus}\quad H_1: \theta \neq \theta_0.
+\]</span></p>
+<p>In many cases, our estimators will be asymptotically normal by a version of the CLT so that under the null hypothesis, we have <span class="math display">\[
+T = \frac{\widehat{\theta}_n - \theta_0}{\widehat{\textsf{se}}[\widehat{\theta}_n]} \indist \N(0, 1).
+\]</span> The <strong>Wald test</strong> rejects <span class="math inline">\(H_0\)</span> when <span class="math inline">\(|T| &gt; z_{\alpha/2}\)</span>, with <span class="math inline">\(z_{\alpha/2}\)</span> that puts <span class="math inline">\(\alpha/2\)</span> in the upper tail of the standard normal. That is, if <span class="math inline">\(Z \sim \N(0, 1)\)</span>, then <span class="math inline">\(z_{\alpha/2}\)</span> satisfies <span class="math inline">\(\P(Z \geq z_{\alpha/2}) = \alpha/2\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In R, you can find the <span class="math inline">\(z_{\alpha/2}\)</span> values easily with the <code>qnorm()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.05</span> <span class="sc">/</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="thm-wald" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4.1</strong></span> Asymptotically, the Wald test has size <span class="math inline">\(\alpha\)</span> such that <span class="math display">\[
+\P(|T| &gt; z_{\alpha/2} \mid \theta_0) \to \alpha.
+\]</span></p>
+</div>
+<p>This result is very general, and it means that many, many hypothesis tests based on estimators will have the same form. The main difference across estimators will be how we calculate the estimated standard error.</p>
+<div id="exm-two-props" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.2 (Difference in proportions)</strong></span> Get-out-the-vote (GOTV) experiments are common in political science. A typical GOTV design might randomly assign a group of citizens to receive mailers encouraging them to vote, whereas a control group receives no message. We will define the turnout variables in the treatment group, <span class="math inline">\(Y_{1}, Y_{2}, \ldots, Y_{n_t}\)</span>, as iid draws from a Bernoulli distribution with success <span class="math inline">\(p_t\)</span>, which represents the population turnout rate in the treated group treated. The outcomes in the control group, <span class="math inline">\(X_{1}, X_{2}, \ldots, X_{n_c}\)</span>, are iid draws from another Bernoulli distribution with success <span class="math inline">\(p_c\)</span>, which represents the population turnout rate among citizens not receiving a mailer.</p>
+<p>Our goal is to learn about the effect of this treatment on whether a citizen votes, <span class="math inline">\(\tau = p_t - p_c\)</span>, and we will use the sample difference in means/proportions as our estimator, <span class="math inline">\(\widehat{\tau} = \Ybar - \Xbar\)</span>. To perform a Wald test, we need to either know or estimate the standard error of this estimator. Notice that because these are independent samples, the variance is <span class="math display">\[
+\V[\widehat{\tau}_n] = \V[\Ybar - \Xbar] = \V[\Ybar] + \V[\Xbar] = \frac{p_t(1-p_t)}{n_t} + \frac{p_c(1-p_c)}{n_c},
+\]</span> where the third equality comes from the fact that the underlying outcome variables <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(X_j\)</span> are binary. Obviously, we do not know the true population proportions <span class="math inline">\(p_t\)</span> and <span class="math inline">\(p_c\)</span> (that’s why we’re doing the test!), but we can estimate the standard error by replacing them with their estimates <span class="math display">\[
+\widehat{\textsf{se}}[\widehat{\tau}] = \sqrt{\frac{\Ybar(1 -\Ybar)}{n_t} + \frac{\Xbar(1-\Xbar)}{n_c}}.
+\]</span></p>
+<p>The typical null hypothesis test in this <strong>two-sample test</strong> is “no treatment effect” vs.&nbsp;“some treatment effect”: <span class="math display">\[
+H_0: \tau = p_t - p_c = 0 \quad\text{versus}\quad H_1: \tau \neq 0,
+\]</span> which gives the following test statistic for the Wald test <span class="math display">\[
+T = \frac{\Ybar - \Xbar}{\sqrt{\frac{\Ybar(1 -\Ybar)}{n_t} + \frac{\Xbar(1-\Xbar)}{n_c}}}.
+\]</span> If we wanted a test with level <span class="math inline">\(\alpha = 0.01\)</span>, we would reject the null when <span class="math inline">\(|T| &gt; 2.58\)</span> since</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.01</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.575829</code></pre>
+</div>
+</div>
+</div>
+<div id="exm-diff-in-means" class="theorem example">
+<p><span class="theorem-title"><strong>Example 4.3 (Difference in means)</strong></span> Consider a similar example with randomly assigned treatment and control groups, but instead the treatment is now an appeal for financial donations to a political campaign and the outcomes are continuous measures of how much money a person has donated. The treatment data <span class="math inline">\(Y_1, \ldots, Y_{n_t}\)</span> are iid draws from a population with mean <span class="math inline">\(\mu_t = \E[Y_i]\)</span> and population variance <span class="math inline">\(\sigma^2_t = \V[Y_i]\)</span>. The control data <span class="math inline">\(X_1, \ldots, X_{n_c}\)</span> are iid draws (independent of the <span class="math inline">\(Y_i\)</span>) from a population with mean <span class="math inline">\(\mu_c = \E[X_i]\)</span> and population variance <span class="math inline">\(\sigma^2_c = \V[X_i]\)</span>. The parameter of interest is similar to before: the population difference in means, <span class="math inline">\(\tau = \mu_t - \mu_c\)</span>. We will form the usual hypothesis test of <span class="math display">\[
+H_0: \tau = \mu_t - \mu_c = 0 \quad\text{versus}\quad H_1: \tau \neq 0.
+\]</span></p>
+<p>The only difference between this setting and the difference-in-proportions setting is that the standard error here is different because we cannot rely on binary outcomes. Instead, we’ll use our knowledge of the sampling variance of the sample means and independence between the samples to derive <span class="math display">\[
+\V[\widehat{\tau}] = \V[\Ybar] + \V[\Xbar] = \frac{\sigma^2_t}{n_t} + \frac{\sigma^2_c}{n_c},
+\]</span> where we can come up with an estimate of the unknown population variance with sample variances <span class="math display">\[
+\widehat{\se}[\widehat{\tau}] = \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}.
+\]</span> We can use this estimator to derive the Wald test statistic of <span class="math display">\[
+T = \frac{\widehat{\tau} - 0}{\widehat{\se}[\widehat{\tau}]} = \frac{\Ybar - \Xbar}{\sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}},
+\]</span> and if we want an asymptotic level of 0.05, we can reject when <span class="math inline">\(|T| &gt; 1.96\)</span>.</p>
+</div>
+</section>
+<section id="p-values" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="p-values"><span class="header-section-number">4.8</span> p-values</h2>
+<p>The hypothesis testing framework focuses on making a decision – to reject the null hypothesis or not – in the face of uncertainty. You choose a level of wrongness you are comfortable with (rate of false positives, or <span class="math inline">\(\alpha\)</span>) and then decide null vs.&nbsp;alternative based firmly on the rejection region.</p>
+<p>That said, note that we are discarding, somewhat artificially, information on how far the observed data is from the null hypothesis. We would “accept” the null if <span class="math inline">\(T = 1.95\)</span> in the last example but would reject it if <span class="math inline">\(T = 1.97\)</span>, even though these are very similar. Simply reporting the reject/retain decision also fails to give us a sense of possible other levels at which we might have rejected the null. Again, this makes sense if we need to make a single decision: other tests don’t matter because we carefully considered our <span class="math inline">\(\alpha\)</span> level test. But in the lower-stakes world of the academic social sciences, we can afford to be more informative.</p>
+<p>One alternative to reporting the reject/retain decision is to report a <strong>p-value</strong>.</p>
+<div id="def-p-value" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4.4</strong></span> The <strong>p-value</strong> of a test is the probability of observing a test statistic at least as extreme as the observed test statistic in the direction of the alternative hypothesis.</p>
+</div>
+<p>The line “in the direction of the alternative hypothesis” deals with the unfortunate headache of one-sided versus two-sided tests. For a one-sided test where larger values of <span class="math inline">\(T\)</span> correspond to more evidence for <span class="math inline">\(H_1\)</span>, the p-value is <span class="math display">\[
+\P(T(X_1,\ldots,X_n) &gt; T \mid \theta_0) = 1 - G_0(T),
+\]</span> whereas for a (symmetric) two-sided test, we have <span class="math display">\[
+\P(|T(X_1, \ldots, X_n)| &gt; |T| \mid \theta_0) = 2(1 - G_0(|T|)).
+\]</span></p>
+<p>In either case, the interpretation of the p-value is the same. It is the smallest size <span class="math inline">\(\alpha\)</span> at which a test would reject the null hypothesis. Presenting a p-value allows the reader to determine their own <span class="math inline">\(\alpha\)</span> level and determine quickly if the evidence would warrant rejecting <span class="math inline">\(H_0\)</span> in that case. Thus, the p-value is a more <strong>continuous</strong> measure of divergence between the observed data and the null hypothesis. Lower values indicate more divergence because the observed result is less likely under the null.</p>
+<p>Much of the controversy surrounding p-values focuses on arbitrary p-value cutoffs for determining statistical significance and sometimes publication decisions. These problems are not the fault of p-values but, rather, the hyperfixation on the reject/retain decision for arbitrary test levels like <span class="math inline">\(\alpha = 0.05\)</span>. It might be best to view p-values as a transformation of the test statistic onto a common scale between 0 and 1.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>People use many statistical shibboleths to purportedly identify people who don’t understand statistics, and these criticisms sometimes hinge on seemingly subtle differences in interpretation that are easy to miss. If you have intuitively mastered the core concepts, however, avoiding these common pitfalls will be much easier.</p>
+<p>The shibboleth with p-values is that sometimes people interpret them as “the probability that the null hypothesis is true.” But this doesn’t make sense from our definition because the p-value <em>conditions</em> on the null hypothesis—it cannot tell us anything about the probability of the null hypothesis being true. A more useful metaphor is that hypothesis tests are statistical thought experiments and that p-values answer the question: how likely would my data be if the null were true?</p>
+</div>
+</div>
+</section>
+<section id="power-analysis" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="power-analysis"><span class="header-section-number">4.9</span> Power analysis</h2>
+<p>Imagine you have spent a large amount of your research budget on a big experiment that tests a new and exciting theory, but the results come back, and… you fail to reject the null of no treatment effect. This can happen under two possible states of the world: (1) the null is true, and you correctly failed to reject it, or (2) the null is false but the test had insufficient power to detect the true effect (that is, to allow you to reject the null). Because this is unwanted uncertainty after the fact, it is common for researchers to conduct <strong>power analyses</strong> before collecting data. These analyses forecast the necessary sample size to ensure you can reject the null under a hypothesized effect size. These hypothesized effect sizes are vital to this exercise and often come from prior studies or substantive knowledge about the domain.</p>
+<p>Generally power analyses involve calculating the power function <span class="math inline">\(\pi(\theta) = \P(T(X_1, \ldots, X_n) \in R \mid \theta)\)</span> for different values of <span class="math inline">\(\theta\)</span>. It might also involve sample size calculations for a particular alternative, <span class="math inline">\(\theta_1\)</span>, the hypothesized treatment effect. In that case, we try to find the sample size <span class="math inline">\(n\)</span> to make the power <span class="math inline">\(\pi(\theta_1)\)</span> as close to a particular value (often 0.8) as possible. For simpler one-sided tests, solving for the sample size is straightforward. For more general situations or two-sided tests, however, we typically need numerical or simulation-based approaches to find the optimal sample size.</p>
+<p>With Wald tests, we can characterize the power function quite easily, even if the test does not allow us to back out sample size calculations easily.</p>
+<div id="thm-power" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 4.2</strong></span> For a Wald test with an asymptotically normal estimator, the power function for a particular alternative <span class="math inline">\(\theta_1 \neq \theta_0\)</span> is <span class="math display">\[
+\pi(\theta_1) = 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]} + z_{\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]}-z_{\alpha/2} \right).
+\]</span></p>
+</div>
+</section>
+<section id="exact-tests-under-normal-data" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="exact-tests-under-normal-data"><span class="header-section-number">4.10</span> Exact tests under normal data</h2>
+<p>The Wald test above relies on large-sample approximations but these may not be valid in finate samples. Can we get <strong>exact</strong> inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a <strong>parametric model</strong> for the data where <span class="math inline">\(X_1,\ldots,X_n\)</span> are iid samples from <span class="math inline">\(N(\mu,\sigma^2)\)</span>. Under a null hypothesis of <span class="math inline">\(H_0: \mu = \mu_0\)</span>, we can show that <span class="math display">\[
+T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
+\]</span> where <span class="math inline">\(t_{n-1}\)</span> is the <strong>Student’s t-distribution</strong> with <span class="math inline">\(n-1\)</span> degrees of freedom. This result implies the null distribution is <span class="math inline">\(t\)</span>, so we use quantiles of <span class="math inline">\(t\)</span> for critical values. For a one-sided test, <span class="math inline">\(c = G^{-1}_0(1 - \alpha)\)</span>, but now <span class="math inline">\(G_0\)</span> is <span class="math inline">\(t\)</span> with <span class="math inline">\(n-1\)</span> df and so we use <code>qt()</code> instead of <code>qnorm()</code> to calculate these critical values.</p>
+<p>The critical values for the <span class="math inline">\(t\)</span> distribution are always larger than the normal because the t distribution has fatter tails, as shown in <a href="#fig-shape-of-t" class="quarto-xref">Figure&nbsp;<span>4.3</span></a>. As <span class="math inline">\(n\to\infty\)</span>, however, the <span class="math inline">\(t\)</span> converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Most software packages calculate p-values and rejection regions based on the <span class="math inline">\(t\)</span> to exploit this conservativeness.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-shape-of-t" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-shape-of-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="hypothesis_tests_files/figure-html/fig-shape-of-t-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shape-of-t-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.3: Normal versus t distribution.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-intervals-and-hypothesis-tests" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="confidence-intervals-and-hypothesis-tests"><span class="header-section-number">4.11</span> Confidence intervals and hypothesis tests</h2>
+<p>At first glance, we may seem sloppy in using <span class="math inline">\(\alpha\)</span> in deriving a <span class="math inline">\(1 - \alpha\)</span> confidence interval in the last chapter and an <span class="math inline">\(\alpha\)</span>-level test in this chapter. In reality, we were foreshadowing the deep connection between confidence intervals and hypothesis tests: every <span class="math inline">\(1-\alpha\)</span> confidence interval contains all null hypotheses that we <strong>would not reject</strong> with an <span class="math inline">\(\alpha\)</span>-level test.</p>
+<p>This connection is easiest to see with an asymptotically normal estimator, <span class="math inline">\(\widehat{\theta}_n\)</span>. Consider the hypothesis test of <span class="math display">\[
+H_0: \theta = \theta_0 \quad \text{vs.}\quad H_1: \theta \neq \theta_0,
+\]</span> using the test statistic, <span class="math display">\[
+T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}.
+\]</span> As we discussed earlier, an <span class="math inline">\(\alpha = 0.05\)</span> test would reject this null when <span class="math inline">\(|T| &gt; 1.96\)</span>, or when <span class="math display">\[
+|\widehat{\theta}_{n} - \theta_{0}| &gt; 1.96 \widehat{\se}[\widehat{\theta}_{n}].
+\]</span> Notice that will be true when <span class="math display">\[
+\theta_{0} &lt; \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}] &lt; \theta_{0}
+\]</span> or, equivalently, that null hypothesis is outside of the 95% confidence interval, <span class="math display">\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].\]</span></p>
+<p>Our choice of the null hypothesis was arbitrary, which means that any null hypothesis outside the 95% confidence interval would be rejected by a <span class="math inline">\(\alpha = 0.05\)</span> level test. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject.</p>
+<p>This relationship holds more broadly. Any <span class="math inline">\(1-\alpha\)</span> confidence interval contains all possible parameter values that would not be rejected as the null hypothesis of an <span class="math inline">\(\alpha\)</span>-level hypothesis test. This connection can be handy for two reasons:</p>
+<ol type="1">
+<li>We can quickly determine if we would reject a null hypothesis at some level by inspecting if it falls in a confidence interval. For example, quickly looking to see whether 0 is included in the confidence interval is a fast and easy check on whether a null hypothesis of no treatment effect is or is not rejected – if it is included, the null cannot be rejected.</li>
+<li>In some situations, determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine which null hypotheses would not be rejected at level <span class="math inline">\(\alpha\)</span> to formulate the <span class="math inline">\(1-\alpha\)</span> confidence interval. We call this process <strong>inverting a test</strong>. A critical application of this method is for formulating confidence intervals for treatment effects based on randomization inference in the finite population analysis of experiments.</li>
+</ol>
+<!--# TODO: add example of inverting a test?-->
+</section>
+<section id="summary" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.12</span> Summary</h2>
+<p>In this chapter, we covered the basics of hypothesis tests, which are a type of statistical thought experiment. We assume that we know the true state of the world and determine how unlikely our observed data would be in that world. We described different types of tests (one-sided versus two-sided), introduced the properties of tests (size and power), and showed how to determine the rejection region of a test. We also described the Wald test, a general test that can be used in a wide variety of settings. P-values are a continuous measure of divergence between the observed data and the null hypothesis. Power analyses allow researchers to forecast how large of a sample they will need to detect different effect sizes with sufficient statistical power. Finally, confidence intervals and hypothesis tests are deeply connected since confidence intervals will contain all null hypotheses that cannot be rejected at a certain <span class="math inline">\(\alpha\)</span>.</p>
+<p>We have now covered the basic tools of statistical inference at a high level and have shown how to apply them to simple estimators like the sample mean or the sample difference in means. In Part II of this book, we turn to applying many of these ideas to the predominant estimator in the quantitative social sciences—ordinary least squares.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Senn12" class="csl-entry" role="listitem">
+Senn, Stephen. 2012. <span>“Tea for Three: Of Infusions and Inferences and Milk in First.”</span> <em>Significance</em> 9 (6): 30–33. https://doi.org/<a href="https://doi.org/10.1111/j.1740-9713.2012.00620.x">https://doi.org/10.1111/j.1740-9713.2012.00620.x</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The analysis here largely comes from <span class="citation" data-cites="Senn12">Senn (<a href="references.html#ref-Senn12" role="doc-biblioref">2012</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Different people and different textbooks describe what to do when we do not reject the null hypothesis differently. The terminology is not so important so long as you understand that rejecting the null does not mean the null is logically false and that “accepting” (or failing to reject) the null does not mean the null is logically true.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Eagle-eyed readers will notice that the null tested here is a point, while we previously defined the null in a one-sided test as a region <span class="math inline">\(H_0: \theta \leq \theta_0\)</span>. Technically, the size of the test will vary based on which of these nulls we choose. In this example, notice that any null to the left of <span class="math inline">\(\theta_0\)</span> will result in a lower size. And so, the null at the boundary, <span class="math inline">\(\theta_0\)</span>, will maximize the size of the test, making it the most “conservative” null to investigate. Technically, we should define the size of a test as <span class="math inline">\(\alpha = \sup_{\theta \in \Theta_0} \pi(\theta)\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./asymptotics.html" class="pagination-link" aria-label="Asymptotics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./linear_model.html" class="pagination-link" aria-label="Linear regression">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/hypothesis_tests.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

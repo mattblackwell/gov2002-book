@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A User’s Guide to Statistical Inference and Regression - 1&nbsp; Design-based Inference</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./estimation.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+  tex: {
+    macros: {
+      RR: "{\\bf R}",
+      bs: ["\\boldsymbol{#1}", 1],
+      mb: ["\\mathbf{#1}", 1],
+      E: "\\mathbb{E}",
+      V: "\\mathbb{V}",
+      P: "\\mathbb{P}",
+      var: "\\text{var}",
+      cov: "\\text{cov}",
+      N: "\\mathcal{N}",
+      Bern: "\\text{Bern}",
+      Bin: "\\text{Bin}",
+      Pois: "\\text{Pois}",
+      Unif: "\\text{Unif}",
+      se: "\\textsf{se}",
+      U: "\\mb{U}",
+      Xbar: "\\overline{X}",
+      Ybar: "\\overline{Y}",
+      real: "\\mathbb{R}",
+      bbL: "\\mathbb{L}",
+      u: "\\mb{u}",
+      v: "\\mb{v}",
+      M: "\\mb{M}",
+      X: "\\mb{X}",
+      Xmat: "\\mathbb{X}",
+      bfx: "\\mb{x}",
+      y: "\\mb{y}",
+      bfbeta: "\\bs{\\beta}",
+      e: "\\bs{\\epsilon}",
+      bhat: "\\widehat{\\bs{\\beta}}",
+      XX: "\\Xmat'\\Xmat",
+      XXinv: "\\left(\\Xmat'\\Xmat\\right)^{-1}",
+      hatsig: "\\widehat{\\sigma}^2",
+      red: ["\\textcolor{red!60}{#1}", 1],
+      indianred: ["\\textcolor{indianred}{#1}", 1],
+      blue: ["\\textcolor{blue!60}{#1}", 1],
+      dblue: ["\\textcolor{dodgerblue}{#1}", 1],
+      indep: "\\perp\\!\\!\\!\\perp",
+      inprob: "\\overset{p}{\\to}",
+      indist: "\\overset{d}{\\to}",
+      argmax: ["\\operatorname\{arg\,max\}"],
+      argmin: ["\\operatorname\{arg\,min\}"]      
+    }
+  }
+};
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./design.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./users-guide.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model-based inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./asymptotics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./least_squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ols_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1.1</span> Introduction</a></li>
+  <li><a href="#question-1-population" id="toc-question-1-population" class="nav-link" data-scroll-target="#question-1-population"><span class="header-section-number">1.2</span> Question 1: Population</a></li>
+  <li><a href="#question-2-sampling-design" id="toc-question-2-sampling-design" class="nav-link" data-scroll-target="#question-2-sampling-design"><span class="header-section-number">1.3</span> Question 2: Sampling design</a></li>
+  <li><a href="#question-3-quantity-of-interest" id="toc-question-3-quantity-of-interest" class="nav-link" data-scroll-target="#question-3-quantity-of-interest"><span class="header-section-number">1.4</span> Question 3: Quantity of Interest</a></li>
+  <li><a href="#question-4-estimator" id="toc-question-4-estimator" class="nav-link" data-scroll-target="#question-4-estimator"><span class="header-section-number">1.5</span> Question 4: Estimator</a>
+  <ul class="collapse">
+  <li><a href="#properties-of-the-sampling-distribution-of-an-estimator" id="toc-properties-of-the-sampling-distribution-of-an-estimator" class="nav-link" data-scroll-target="#properties-of-the-sampling-distribution-of-an-estimator"><span class="header-section-number">1.5.1</span> Properties of the sampling distribution of an estimator</a></li>
+  </ul></li>
+  <li><a href="#question-5-uncertainty" id="toc-question-5-uncertainty" class="nav-link" data-scroll-target="#question-5-uncertainty"><span class="header-section-number">1.6</span> Question 5: Uncertainty</a>
+  <ul class="collapse">
+  <li><a href="#deriving-the-sampling-variance-of-the-sample-mean" id="toc-deriving-the-sampling-variance-of-the-sample-mean" class="nav-link" data-scroll-target="#deriving-the-sampling-variance-of-the-sample-mean"><span class="header-section-number">1.6.1</span> Deriving the sampling variance of the sample mean</a></li>
+  <li><a href="#estimating-the-sampling-variance" id="toc-estimating-the-sampling-variance" class="nav-link" data-scroll-target="#estimating-the-sampling-variance"><span class="header-section-number">1.6.2</span> Estimating the sampling variance</a></li>
+  </ul></li>
+  <li><a href="#stratified-sampling-and-survey-weights" id="toc-stratified-sampling-and-survey-weights" class="nav-link" data-scroll-target="#stratified-sampling-and-survey-weights"><span class="header-section-number">1.7</span> Stratified sampling and survey weights</a>
+  <ul class="collapse">
+  <li><a href="#sampling-weights" id="toc-sampling-weights" class="nav-link" data-scroll-target="#sampling-weights"><span class="header-section-number">1.7.1</span> Sampling weights</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">1.8</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/design.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./design.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-design-based" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1.1</span> Introduction</h2>
+<p>Quantitative analysis of social data has an alluring exactness to it. It allows us to estimate the average number of minutes of YouTube videos watched to the millisecond, and in doing so it gives us the aura of true scientists. But the advantage of quantitative analyses lies not in the ability to derive precise three-decimal point estimates; rather, quantitative methods shine because they allow us to communicate methodological goals, assumptions, and results in a (hopefully) common, compact, and precise mathematical language. It is this language that helps clarify <em>exactly</em> what researchers are doing with their data and why.</p>
+<p>This dewy view of quantitative methods is unfortunately often at odds with how these methods are used in the real world. All too often we as researchers find some arbitrary data, apply a statistical tool with which we are familiar, and then shoehorn the results into a theoretical story that may or may not have a (tenuous) connection. Quantitative methods applied this way will provide us with a very specific answer to a murky question about a shapeless target.</p>
+<p>This book is a guide to a better foundation for quantitative analysis and, in particular, for statistical inference. Inference is the task of using the data we have to learn something about the data we do not have.</p>
+<p>The organizing motto of this book is to help us as researchers be</p>
+<blockquote class="blockquote">
+<p>Precise in stating our goals, transparent in stating our assumptions, and honest in evaluating our results.</p>
+</blockquote>
+<p>These goals are the target of our inference – or what do we want to learn and about whom.</p>
+<p>In pursuing these goals, this book will focus on a general workflow for statistical inference. The workflow boils down to answering a series of questions about the goals, assumptions, and methods of our analysis:</p>
+<ol type="1">
+<li><strong>Population</strong>: who or what do we want to learn about?</li>
+<li><strong>Design/model</strong>: how will we collect the data, or, what assumptions are we making about how the data came to be?</li>
+<li><strong>Quantity of Interest</strong>: what do we want to learn about the population?<br>
+</li>
+<li><strong>Estimator</strong>: how will we use the data to produce an estimate?</li>
+<li><strong>Uncertainty</strong>: how will we estimate and convey the error associated with the estimate?</li>
+</ol>
+<p>These questions form the core of any quantitative research endeavor. And the answers to these will draw on a mixture of substantive interests, feasibility, and statistical theory, and this mixture will vary from question to question. For example, the population of interest can vary greatly from study to study, whereas many disparate studies may employ the same estimand and estimator.</p>
+<p>The third core question is particularly important, since it highlights an essential division in how researchers approach statistical inference – specifically, <strong>design-based inference</strong> vs <strong>model-based inference</strong>. Design-based inference typically focuses on situations in which we have precise knowledge of how our sample was randomly selected from the population. Uncertainty here comes exclusively from the random nature of which observations are included in the sample. By contrast, in the <strong>model-based</strong> framework, we treat our data as random variables and propose a probabilistic model for how the data came to exist. The models then vary in the strength of their assumptions.</p>
+<p>Design-based inference is the framework that addresses the core inferential questions most crisply, and so it is the focus of this chapter. Its main disadvantages are that it is considerably less general than the model-based approach and that the mathematics of the framework are slightly more complicated.</p>
+<p>We will now go over each of the core questions in more detail.</p>
+</section>
+<section id="question-1-population" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="question-1-population"><span class="header-section-number">1.2</span> Question 1: Population</h2>
+<p>Inference is the task of using the data that we have to learn facts about the world (i.e., the data we do not have). The most straightforward setting is when we have a fixed set of units that we want to learn something about. These units are what we call the <strong>population</strong> or <strong>target population</strong>. We are going to focus on random sampling from this population, but, to do so, we need to have a list of units from the population. This list of <span class="math inline">\(N\)</span> units is called the <strong>frame</strong> or <strong>sampling frame</strong>, and we will index these units in the sampling frame by <span class="math inline">\(i \in \mathcal{U} = \{1, \ldots, N\}\)</span>. Here we assume that <span class="math inline">\(N\)</span>, the size of the population, is known, but note that this may not always be true.</p>
+<p>The sampling frame may differ from the target population simply for feasibility reasons. For example, the target population might include all the households in a given city, but the sampling frame might be the list of all residential telephone numbers for that city. Of course, many households do not have landline telephones and rely on mobile phone exclusively. This gap between the target population and the sampling frame is called <strong>undercoverage</strong> or <strong>coverage bias</strong>.</p>
+<div id="exm-frame-bias" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.1</strong></span> An early but prominent example of frame bias in survey sampling is the infamous <em>Literary Digest</em> poll of the 1936 U.S. presidential election. <em>Literary Digest</em>, a (now defunct) magazine, sent over 10 million ballots to addresses found in automobile registration lists and telephone books, trying to figure out who would win the important 1936 presidential race. The sample size was huge: over 2 million respondents. In the end, the results predicted that Alf Landon, the Republican candidate, would receive 55% of the vote, while the incumbent, Democratic President Franklin D. Roosevelt, would only win 41% of the vote. Unfortunately for the <em>Literary Digest</em>, Landon only received 37% of the vote.</p>
+<p>There are many possible reasons for this massive polling error. Most obviously, the sampling frame was different from that of the target population. Why? Only those with either a car or a telephone were included in the sampling frame, and people without either overwhelmingly supported the Democrat, Roosevelt. While this is not the only source of bias – differential nonresponse seems to be a particularly big problem –the frame bias contributes a large part of the error. For more about this poll, see <span class="citation" data-cites="Squire88">SQUIRE (<a href="references.html#ref-Squire88" role="doc-biblioref">1988</a>)</span>.</p>
+</div>
+<p>One advantage of design-based inference is how precisely we must articulate the sampling frame. We can be extremely clear about the group of units we are trying to learn about. We shall see that in model-based inference the concept of the population and sampling frame become more amorphous.</p>
+<div id="exm-anes-population" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.2 (American National Election Survey, Population)</strong></span> According to the materials from the American National Election Survey (ANES) in 2012, its target population is all U.S. citizens age 18 or older. The sampling frame for the face-to-face portion of the survey “consisted of the Delivery Sequence File (DSF) used by the United States Postal Service” for residential delivery of mail.” Unfortunately, there are housing units that are covered by mail delivery by the postal service which would result in the potential for frame bias. The designers of the ANES used the Decennial Census to add many of these units to the final sampling frame.</p>
+</div>
+</section>
+<section id="question-2-sampling-design" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="question-2-sampling-design"><span class="header-section-number">1.3</span> Question 2: Sampling design</h2>
+<p>Now that we have a clearly defined population and sampling frame, we can consider how to select a sample from the population. We will focus on <strong>probabilistic samples</strong>, where units are selected into the sample by chance, and each unit in the sampling frame has a non-0 probability of being included. Let <span class="math inline">\(\mathcal{S} \subset \mathcal{U}\)</span> be a sample and let <span class="math inline">\(\mb{Z} = (Z_1, Z_2, \ldots, Z_N)\)</span> to be a vector of inclusion indicators such that <span class="math inline">\(Z_i = 1\)</span> if <span class="math inline">\(i \in \mathcal{S}\)</span> and <span class="math inline">\(Z_i = 0\)</span> otherwise. We denote these indicators as upper-case letters because they are random variables. We assume the sample size is <span class="math inline">\(|\mathcal{S}| = n\)</span>.</p>
+<p>Suppose our sampling frame was the hobbits who are members of the Fellowship of the Ring, an exclusive group brought into being by a wizened elf lord. This group of four hobbits is a valid – albeit small and fictional population – with <span class="math inline">\(\mathcal{U} =\)</span> {Frodo, Sam, Pip, Merry}.</p>
+<p>Suppose we want to sample two hobbits from this group. We can list all six possible samples of size two from this population in terms of the sample members <span class="math inline">\(\mathcal{S}\)</span> or, equivalently, the inclusion indicators <span class="math inline">\(\mb{Z}\)</span>:</p>
+<ul>
+<li><span class="math inline">\(\mathcal{S}_1 =\)</span> {Frodo, Sam} with <span class="math inline">\(\mb{Z}_{1} = (1, 1, 0, 0)\)</span></li>
+<li><span class="math inline">\(\mathcal{S}_2 =\)</span> {Frodo, Pip} with <span class="math inline">\(\mb{Z}_{2} = (1, 0, 1, 0)\)</span></li>
+<li><span class="math inline">\(\mathcal{S}_3 =\)</span> {Frodo, Merry} with <span class="math inline">\(\mb{Z}_{3} = (1, 0, 0, 1)\)</span></li>
+<li><span class="math inline">\(\mathcal{S}_4 =\)</span> {Sam, Pip} with <span class="math inline">\(\mb{Z}_{4} = (0, 1, 1, 0)\)</span></li>
+<li><span class="math inline">\(\mathcal{S}_5 =\)</span> {Sam, Merry} with <span class="math inline">\(\mb{Z}_{5} = (0, 1, 0, 1)\)</span></li>
+<li><span class="math inline">\(\mathcal{S}_6 =\)</span> {Pip, Merry} with <span class="math inline">\(\mb{Z}_{6} = (0, 0, 1, 1)\)</span></li>
+</ul>
+<p>A <strong>sampling design</strong> is a complete specification of how likely to be selected each of these samples is. That is, we need to determine a selection probability <span class="math inline">\(\pi_j\)</span> for each sample <span class="math inline">\(\mathcal{S}_j\)</span>. The most widely used and widely studied design is one that places equal probability on each of the possible samples of size <span class="math inline">\(n\)</span>.</p>
+<div id="def-srs" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.1</strong></span> A <strong>simple random sample</strong> (srs) is a probability sampling design where each possible sample of size <span class="math inline">\(n\)</span> has the same probability of occurring. More specifically, let <span class="math inline">\(\mb{z} = (z_{1}, \ldots, z_{N})\)</span> be a particular possible sampling, then, <span class="math display">\[
+\P(\mb{Z} = \mb{z}) = \begin{cases}
+{N \choose n}^{-1} &amp;\text{if } \sum_{i=1}^N z_i = n,\\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+</div>
+<p>If we sampled two hobbits, the srs (the simple random sample) would place <span class="math inline">\(1/{4\choose 2} = 1/6\)</span> probability of each of the above samples <span class="math inline">\(\mathcal{S}_j\)</span>. Note that the srs gives zero probability to any sample that does not have exactly <span class="math inline">\(n\)</span> units in the sample.</p>
+<p>Another common sampling design –the <strong>Bernoulli sampling</strong> design – works by choosing each unit independently with the same probability.</p>
+<div id="def-srs" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1.2</strong></span> <strong>Bernoulli sampling</strong> is a probability sampling design where independent Bernoulli trials with probability of success <span class="math inline">\(q\)</span> determine whether each unit in the population will be included in the sample. More specifically, let <span class="math inline">\(\mb{z} = (z_{1}, \ldots, z_{N})\)</span> be a particular possible sampling. Bernoulli sampling will then be <span class="math display">\[
+\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q_i^{Z_i}(1 - q_i)^{1-Z_i}
+\]</span></p>
+</div>
+<p>Bernoulli sampling is very straightforward because independently selecting units simplifies many calculations. However, this “coin flipping” approach means that the sample size, <span class="math inline">\(N_s = \sum_{i=1}^N Z_i\)</span>, will be itself a random variable because it is the result of how many of the coin flips land on “heads.”</p>
+<p>Simple random samples and Bernoulli random samples are simple to understand and implement. For large surveys, the sampling designs are often much more complicated for cost-saving reasons. We now describe the sampling design for the ANES, which contains many design features typical of similar large surveys.</p>
+<div id="exm-anes-design" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.3 (American National Election Survey, Sampling Design)</strong></span> The ANES uses a typical yet complicated design for its 2012 face-to-face survey. First, the designers divided (or stratified) U.S. states into nine Census divisions (which are based on geography). Within each division, designers then randomly sampled a number of census tracts (with higher number of sampled tracts for divisions with higher populations). The census tracts with larger populations are selected with higher probability.</p>
+<p>The second stage randomly samples addresses from the sampling frame (described in <a href="#exm-anes-population" class="quarto-xref">Example&nbsp;<span>1.2</span></a>). More households were sampled from tracts with higher proportion of Black and Latino residents to obtain an oversample of these groups.</p>
+<p>Finally, the third stage of sampling was to randomly select one eligible person per household for completion of the survey.</p>
+</div>
+</section>
+<section id="question-3-quantity-of-interest" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="question-3-quantity-of-interest"><span class="header-section-number">1.4</span> Question 3: Quantity of Interest</h2>
+<p>The <strong>quantity of interest</strong> is a numerical summary of the population that we want to learn about. These quantities are also called <strong>estimands</strong> ( Latin for “the thing to be estimated”).</p>
+<p>Let <span class="math inline">\(x_1, x_2, \ldots, x_N\)</span> be a fixed set of characteristics, or items, about the population. Using the statistician’s favorite home decor, we might think about our population as a set of marbles in a jar where the <span class="math inline">\(x_i\)</span> values indicate, for example, the color of the <span class="math inline">\(i\)</span>-th marble. In a survey, <span class="math inline">\(x_i\)</span> might represent the age, ideology, or income of the <span class="math inline">\(i\)</span>-th person in the population.</p>
+<p>We can define many useful quantities of interest based on the population characteristics. These quantities generally summarize the values <span class="math inline">\(x_1, \ldots, x_N\)</span>. One of the most common, and certainly one of the most useful, is the <strong>population mean</strong>, defined as <span class="math display">\[
+\overline{x} = \frac{1}{N} \sum_{i=1}^N x_i.
+\]</span> The population mean is fixed because <span class="math inline">\(N\)</span> and the population characteristics <span class="math inline">\(x_1, \ldots, x_N\)</span> are fixed. Another common estimand in the survey sampling literature is the population total, <span class="math display">\[
+t = \sum_{i=1}^N x_i = N\overline{x}.
+\]</span></p>
+<div id="exm-subpopulation" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1.4 (Subpopulation means)</strong></span> We may also be interested in quantities for different subdomains. Suppose we are interested in estimating the fraction of (say) conservative-identifying respondents who support increasing legal immigration. Let <span class="math inline">\(d= 1, \ldots, D\)</span> be the number of subdomains or subpopulations. In this case, we might have <span class="math inline">\(d = 1\)</span> as liberal identifiers, <span class="math inline">\(d = 2\)</span> as moderate identifiers, and <span class="math inline">\(d = 3\)</span> as conservative identifiers. We will refer to the subpopulation for each of these groups as <span class="math inline">\(\mathcal{U}_d \subset \{1,\ldots, N\}\)</span> and we define the size of these groups as <span class="math inline">\(N_d = |\mathcal{U}_d\)</span>. So, <span class="math inline">\(N_3\)</span> would be the number of conservative-identifying citizens in the population.</p>
+<p>The mean for each group is then <span class="math display">\[
+\overline{x}_d = \frac{1}{N_d} \sum_{i \in \mathcal{U}_d} x_i.
+\]</span></p>
+<p>Subpopulation estimation can be slightly more complicated than population estimation because we may not know who is in which subpopulation until we actually sample the population. For example, our sampling frame probably may not information about ‘potential respondents’ ideology. Thus, <span class="math inline">\(N_d\)</span> will be unknown to the researcher, unlike <span class="math inline">\(N\)</span> for the population mean, which is known.</p>
+</div>
+<p>We may be interested in many other quantities of interest, but design-based inference is largely focused on these types of population and subpopulation means and totals.</p>
+</section>
+<section id="question-4-estimator" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="question-4-estimator"><span class="header-section-number">1.5</span> Question 4: Estimator</h2>
+<p>Now that we have a sampling design and a quantity of interest, we can consider what we can learn about this quantity of interest from our sample. An <strong>estimator</strong> is a function of the sample measurements intended as a best guess about our quantity of interest.</p>
+<p>If the most common estimand is the population mean, the most popular estimator is the <strong>sample mean</strong>, defined as <span class="math display">\[
+\overline{X}_n = \frac{1}{n} \sum_{i=1}^{N}Z_ix_i
+\]</span></p>
+<p>The sample mean is a <strong>random</strong> quantity since it varies from sample to sample, and those samples are chosen probabilistically. For example, suppose we have height measurements from our small population of hobbits in <a href="#tbl-hobbit-pop" class="quarto-xref">Table&nbsp;<span>1.1</span></a>.</p>
+<div id="tbl-hobbit-pop" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hobbit-pop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1.1: A small population of hobbits
+</figcaption>
+<div aria-describedby="tbl-hobbit-pop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Unit (<span class="math inline">\(i\)</span>)</th>
+<th style="text-align: left;">Height in cm (<span class="math inline">\(x_i\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1 (Frodo)</td>
+<td style="text-align: left;">124</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2 (Sam)</td>
+<td style="text-align: left;">127</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3 (Pip)</td>
+<td style="text-align: left;">123</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4 (Merry)</td>
+<td style="text-align: left;">127</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>If we consider a simple random sample of size <span class="math inline">\(n=2\)</span> from this population, we can list the probability of all possible sample means associated with this sampling design as we do in <a href="#tbl-hobbit-samples" class="quarto-xref">Table&nbsp;<span>1.2</span></a>. <a href="#tbl-sampling-dist" class="quarto-xref">Table&nbsp;<span>1.3</span></a> combines the equivalent values of the sample mean to arrive at the <strong>sampling distribution</strong> of the sample mean of hobbit height under a srs of size 2.</p>
+<div id="tbl-hobbit-samples" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hobbit-samples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1.2: All possible simple random samples of size 2 from the hobbit population
+</figcaption>
+<div aria-describedby="tbl-hobbit-samples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 31%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sample (<span class="math inline">\(j\)</span>)</th>
+<th style="text-align: left;">Probability (<span class="math inline">\(\pi_j\)</span>)</th>
+<th style="text-align: left;">Sample mean (<span class="math inline">\(\overline{X}_n\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1 (Frodo, Sam)</td>
+<td style="text-align: left;">1/6</td>
+<td style="text-align: left;">(124 + 127) / 2 = 125.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2 (Frodo, Pip)</td>
+<td style="text-align: left;">1/6</td>
+<td style="text-align: left;">(124 + 123) / 2 = 123.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3 (Frodo, Merry)</td>
+<td style="text-align: left;">1/6</td>
+<td style="text-align: left;">(124 + 127) / 2 = 125.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4 (Sam, Pip)</td>
+<td style="text-align: left;">1/6</td>
+<td style="text-align: left;">(127 + 123) / 2 = 125</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5 (Sam, Merry)</td>
+<td style="text-align: left;">1/6</td>
+<td style="text-align: left;">(127 + 127) / 2 = 127</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6 (Pip, Merry)</td>
+<td style="text-align: left;">1/6</td>
+<td style="text-align: left;">(123 + 127) / 2 = 125</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="tbl-sampling-dist" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1.3: Sampling distribution of the sample mean for simple random samples of size 2 from the hobbit population
+</figcaption>
+<div aria-describedby="tbl-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Sample mean</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>123.5</td>
+<td>1/6</td>
+</tr>
+<tr class="even">
+<td>125</td>
+<td>1/3</td>
+</tr>
+<tr class="odd">
+<td>125.5</td>
+<td>1/3</td>
+</tr>
+<tr class="even">
+<td>127</td>
+<td>1/6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Thus, the sampling distribution tells us what values of an estimator are more or less likely and depends on both the population distribution and the sampling design.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that the sampling distribution of an estimator will depend on the sampling design. Here, we used a simple random sample. Bernoulli sampling would have produced a different distribution. Using Bernoulli sampling, we could end up with a sample of just Frodo, in which case the sample mean would be his height (124cm), a sample mean value that is impossible with simple random sampling of size <span class="math inline">\(n=2\)</span>.</p>
+</div>
+</div>
+<section id="properties-of-the-sampling-distribution-of-an-estimator" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="properties-of-the-sampling-distribution-of-an-estimator"><span class="header-section-number">1.5.1</span> Properties of the sampling distribution of an estimator</h3>
+<p>Generally speaking, we want “good” estimators. But what makes an estimator “good’’? The best estimator would obviously be the one that is right all of the time (<span class="math inline">\(\Xbar_n = \overline{x}\)</span> with probability 1), but this is only possible if we conduct a census –that is, sample everyone in the population – or the population does not vary. Neither situation is typical for most researchers.</p>
+<p>We instead focus on properties of the sampling distribution of an estimator. The following types of questions get at these properties:</p>
+<ul>
+<li>Are the estimator’s observed values (realizations) centered on the true value of the quantity of interest? (unbiasedness)</li>
+<li>Is there a lot or a little variation in the realizations of the estimator across different samples from the population? (sample variance)</li>
+<li>On average, how close to the truth is the estimator? (mean square error)</li>
+</ul>
+<p>The answers to these questions will depend on (a) the estimator and (b) the sampling design.</p>
+<p>To back up, the sampling distribution shows us all the possible values of an estimator across different samples from the population. If we want to summarize this distribution with a single number, we would focus on its expectation, which is a measure of central tendency of the distribution. Roughly speaking, we want the center of the distribution to be close to and ideally equal to the true quantity of interest. If this is not the case, that means the estimator systematically over- or under-estimates the truth. We call this difference the <strong>bias</strong> of an estimator, which can be written mathematically as <span class="math display">\[
+\textsf{bias}[\Xbar_{n}] = \E[\Xbar_{n}] - \overline{x}.
+\]</span> Any estimator that has bias equal to zero is call an <strong>unbiased</strong> estimator.</p>
+<p>We can calculate the bias of our hobbit srs (where we sampled two hobbits from the Fellowship of the Ring with equal probability) by first calculating the expected value of the estimator, <span class="math display">\[
+\E[\Xbar_{n}] = \frac{1}{6}\cdot 123.5 + \frac{1}{3} \cdot 125 + \frac{1}{3} \cdot 125.5 + \frac{1}{6} \cdot 127 = 125.25,
+\]</span> and comparing this to the population mean, <span class="math display">\[
+\overline{x} = \frac{1}{4}\left(124 + 127 + 123 + 127\right) = 125.25.
+\]</span> The two are the same, meaning the sample mean in this simple random sample is unbiased.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the word “bias” sometimes also refers to research that is systematically incorrect in other ways. For example, we might complain that a survey question is biased if it presents a leading or misleading question or if it mismeasures the concept of interest. To see this, suppose we wanted to estimate the proportion of a population that regularly donates money to a political campaign, but <span class="math inline">\(x_i\)</span> actually measures whether a person donated on the day of the survey. In this case, <span class="math inline">\(\overline{x}\)</span> would be quite a bit lower than the quantity of interest because it only captures one day of donation patterns, not regular donations made over time. Textbooks often refer to this gap between the measures we obtain and the measures we want as <strong>measurement bias</strong>. This is distinct from the bias of the sample mean. Using our donations example, taking an srs from the population of daily donors, <span class="math inline">\(\Xbar_{n}\)</span> would still result in an unbiased estimate for <span class="math inline">\(\overline{x}\)</span>, even if that is entirely the wrong quantity of interest.</p>
+</div>
+</div>
+<p>Is the unbiasedness of our hobbit sampling unique to this example? Thankfully no. We can prove that the sample mean will be unbiased for the population mean under a simple random sample. Relying on the definition of the sample mean, we can obtain: <span class="math display">\[
+\E[\Xbar_{n}] = \E\left[\frac{1}{n} \sum_{i=1}^{N} Z_{i}x_{i}\right] = \frac{1}{n} \sum_{i=1}^{N} \E[Z_{i}]x_{i} = \frac{1}{n} \sum_{i=1}^{N} \frac{n}{N}x_{i} = \frac{1}{N} \sum_{i=1}^{N}x_{i} = \overline{x}
+\]</span> Using <span class="math inline">\(\E[Z_i] = n/N\)</span> for the simple random sample in the second equality is key. Intuitively, the probability of being included in the sample is simply the fraction of the sample being selected, <span class="math inline">\(n/N\)</span>.</p>
+<p>The second salient feature of an estimator’s sampling distribution is its spread. Generally speaking, we prefer an estimator whose estimates are very similar from sample to sample over an estimator whose estimates vary wildly from one sample to the next. We quantify this spread with the <strong>sampling variance</strong>, which is simply the variance of the sampling distribution of the estimator, or <span class="math display">\[
+\V[\Xbar_n] = \E[(\Xbar_n - \E[\Xbar_n])^2].
+\]</span> An alternative measure of spread is the <strong>standard error</strong> of the estimator, which is the square root of the sampling variance, <span class="math display">\[
+\se[\Xbar_n] = \sqrt{\V[\Xbar_n]}.
+\]</span> The standard error is often more interpretable because it is on the same scale as the original variable. Using our hobbits’ heights example, the sampling variance would be measured in centimeters squared but the standard error would be measured in centimeters and, thus, easier to interpret.</p>
+<p>The final important property is the <strong>mean squared error</strong> or <strong>MSE</strong>, which (as its name implies) measures the average of the squared error: <span class="math display">\[
+\text{MSE} = \E[(\Xbar_n-\overline{x})^2].
+\]</span> Keen-eyed readers might find this quantity redundant because, as we showed above, the sample mean is unbiased, so <span class="math inline">\(\E[\Xbar_n] = \overline{x}\)</span>. This, in turn, means that the sampling variance of the sample mean is just the mean squared error. However, circumstances will often conspire to make us use biased estimators, so these two quantities will differ. In fact, if we have an estimator <span class="math inline">\(\widehat{\theta}\)</span> for some population quantity <span class="math inline">\(\theta\)</span>, <span class="math display">\[
+\begin{aligned}
+\text{MSE}[\widehat{\theta}] &amp;= \E[(\widehat{\theta} - \theta)^2] \\
+&amp;= \E[(\widehat{\theta} - \E[\widehat{\theta}] + \E[\widehat{\theta}] - \theta)^2] \\
+&amp;= \E[(\widehat{\theta} - \E[\widehat{\theta}])^2] + \left(\E[\widehat{\theta}] - \theta\right) ^ 2 + 2\E[(\widehat{\theta} - \E[\widehat{\theta}])]\left(\E[\widehat{\theta}] - \theta\right) \\
+&amp;= \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
+\end{aligned}
+\]</span> Thus, the MSE is low when bias and variance are low.</p>
+<p>Note that connecting these concepts to notions of precision and accuracy is useful. In particular, estimators with low sampling variance are <strong>precise</strong>, whereas estimators with low MSE are <strong>accurate</strong>. An estimator can be very precise, but the same estimator can be inaccurate because it is biased.</p>
+</section>
+</section>
+<section id="question-5-uncertainty" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="question-5-uncertainty"><span class="header-section-number">1.6</span> Question 5: Uncertainty</h2>
+<p>We now have a population, a quantity of interest, a sampling design, an estimator, and, with data, an actual estimate. But if we sampled, say, Sam and Merry from the hobbit population and obtained a sample mean height of 127, a reasonable worry would be that different samples – for example, Sam and Frodo or Merry and Pippin – would give us a different sample mean. So is the estimate of 127 inches that we get from our sample of Sam and Merry close to the true population mean? We cannot truly know without conducting a complete census of all four hobbits, which would render our sampling pointless. Can we instead figure out how far we might be from the truth – i.e., the true population mean? The sampling variance addresses this exact question, but the sampling variance depends on the sampling distribution, and we only have a single sample draw from this distribution, which gave the estimate of 127.</p>
+<p>If we have a specific estimator and a sampling design, we can usually derive an analytical expression for the sampling variance (and, thus, the standard error), which in turn will identify the factors influencing the sampling variance. To aid in this endeavor, we need to define an additional feature of the population distribution, the <strong>population variance</strong>, <span class="math display">\[
+s^{2}= \frac{1}{N-1} \sum_{i=1}^{N} (x_{i} - \overline{x})^{2}.
+\]</span> The population variance measures the spread of the <span class="math inline">\(x_i\)</span> values in the population. As such it is a fixed quantity and not a random variable.</p>
+<p>We now write the sampling variance of <span class="math inline">\(\Xbar_n\)</span> under simple random sampling as <span class="math display">\[
+\V[\Xbar_{n}] = \left(1 - \frac{n}{N}\right) \frac{s^{2}}{n}
+\]</span> Several features stand out from this expression. First, if the data <span class="math inline">\(x_i\)</span> is more spread out in the population, the sample mean will also be more spread out. Second, the larger the sample size, <span class="math inline">\(n\)</span>, the smaller the sampling variance (for a fixed population size). Third, the larger the population size, <span class="math inline">\(N\)</span>, the smaller the sampling variance (again for a fixed sample size).</p>
+<section id="deriving-the-sampling-variance-of-the-sample-mean" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="deriving-the-sampling-variance-of-the-sample-mean"><span class="header-section-number">1.6.1</span> Deriving the sampling variance of the sample mean</h3>
+<p>How did we obtain this expression for the sampling variance under simple random sampling? It would be tempting to simply say “someone else proved it for me,” but blind faith in statistical theory limits our own understanding of this situation and the ability to navigate novel scenarios that routinely arise in research.</p>
+<p>To derive the sampling variance of the sample mean, let’s begin with a simple application of the rules of variance that would be valid for any sampling design: <span class="math display">\[
+\V[\Xbar_{n}] = \V\left[\frac{1}{n} \sum_{i=1}^N x_iZ_i\right] = \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] + \sum_{i=1}^N\sum_{j\neq i} x_ix_j\cov[Z_i,Z_j]\right].
+\]</span> Note in the second equality that the <span class="math inline">\(x_i\)</span> and <span class="math inline">\(x_j\)</span> values come out of the variance and covariance operators as if they are constants. This is because, in design-based inference, they are exactly constants. The only source of variation and uncertainty comes from the sampling, indicated by the inclusion indicators, <span class="math inline">\(Z_i\)</span>. To make progress, we need to know the variance and covariance of these inclusion indicators. Recall that the variance of a binary indicator with probability <span class="math inline">\(p\)</span> of being 1 is <span class="math inline">\(p(1 - p)\)</span>. So if <span class="math inline">\(\P(Z_i = 1) = n/N\)</span> for a simple random sample, then <span class="math display">\[
+\V[Z_i] = \frac{n}{N}\left(1 - \frac{n}{N}\right) = \frac{n(N - n)}{N^2}.
+\]</span></p>
+<p>If you are used to the “independent and identically distributed” framework (to which we will turn in the next chapter), the covariances in the sampling variances might surprise. Aren’t units usually assumed to be independent? While this assumption would (and will) make our math lives easier, it is not true for the simple random sample. The srs samples units without replacement, which implies that units’ inclusion into the sample is not independent—knowing that unit <span class="math inline">\(i\)</span> was included in the sample means that another unit <span class="math inline">\(j\)</span> has only a <span class="math inline">\((n-1)/(N-1)\)</span> probability of being included in the sample. To derive an expression for the covariance, note that <span class="math inline">\(\cov(Z_i, Z_j) = \E[Z_iZ_j] - \E[Z_i]\E[Z_j]\)</span> and <span class="math display">\[
+\E[Z_iZ_j] = \P(Z_i = 1, Z_j = 1) = \P(Z_i = 1)\P(Z_j =1 \mid Z_i = 1) = \frac{n}{N}\cdot \frac{n-1}{N-1}.
+\]</span> Plugging this into our covariance statement, we get <span class="math display">\[
+\begin{aligned}
+\cov(Z_i, Z_j) &amp;= \E[Z_iZ_j] - \E[Z_i]\E[Z_j] \\ &amp;= \frac{n}{N}\cdot \frac{n-1}{N-1} - \frac{n^2}{N^2}. \\
+&amp;=\frac{n}{N}\left(\frac{n-1}{N-1} - \frac{n}{N}\right) \\
+&amp;= \frac{n}{N}\left(\frac{Nn-N - Nn + n}{N(N-1)}\right) \\
+&amp;= -\frac{n(N- n)}{N^2(N-1)} \\
+&amp;= -\frac{\V[Z_i]}{N-1}.
+\end{aligned}
+\]</span> Given that variances and population sizes must be positive, the covariance between the inclusions of two units is negative. Going back to our hobbits, there are a fixed number of spots in the sample, and so Frodo being included lowers the chance that Sam is included, so we end up with this negative covariance.</p>
+<p>With the covariance and variance now calculated, we can derive the sampling variance of the sample mean: <span class="math display">\[
+\begin{aligned}
+\V[\Xbar_{n}] &amp;=  \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] + \sum_{i=1}^N\sum_{j\neq i} x_ix_j\cov[Z_i,Z_j]\right] \\
+&amp;=  \frac{1}{n^2}\left[\sum_{i=1}^N x_i^2\V[Z_i] - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\V[Z_i]\right] \\
+&amp;=  \frac{\V[Z_i]}{n^2}\left[\sum_{i=1}^N x_i^2 - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right] \\
+&amp;=  \frac{N-n}{nN^2}\left[\sum_{i=1}^N x_i^2 - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right]
+\end{aligned}
+\]</span> Where do we go from here? Unfortunately, we have arrived at the non-obvious and seemingly magical step of “adding and subtracting a crucial quantity.” (One needs to know the step before completing the proof, so how could you complete the proof without knowing this step?) In this case, it is necessary to add and subtract the quantity <span class="math inline">\((N-1)^{-1} \sum_{i=1}^N x_i^2\)</span>. To see why, rewrite the population variance in a slightly different way: <span class="math display">\[
+s^2 = \frac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 = \frac{1}{N-1} \left(\sum_{i=1}^N x_i^2  - N\overline{x}^2\right)
+\]</span> Note that we can write <span class="math display">\[
+N^2\overline{x}^2 = \sum_{i=1}^N x_i^2 + \sum_{i=1}^N \sum_{j\neq i} x_ix_j,
+\]</span> which provides a hint as to the quantity that we will add and subtract <span class="math display">\[
+\begin{aligned}
+\V[\Xbar_{n}] &amp;=  \frac{N-n}{nN^2}\left[\sum_{i=1}^N x_i^2  \textcolor{red!50}{\underbrace{+ \frac{1}{N-1}\sum_{i=1}^N x_i^2 - \frac{1}{N-1}\sum_{i=1}^N x_i^2}_{\text{add and subtract}}} - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right] \\
+&amp;=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{1}{N-1} \sum_{i=1}^N\sum_{j=i}^N x_ix_j\right] \\
+&amp;=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{N^2}{N-1} \overline{x}\right] \\
+&amp;=  \frac{N-n}{nN(N-1)}\left[\sum_{i=1}^N x_i^2  - N \overline{x}\right] \\
+&amp;=  \frac{N-n}{nN(N-1)}\sum_{i=1}^N (x_i - \overline{x})^2 \\
+&amp;= \frac{(N-n)}{N}\frac{s^2}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n}.
+\end{aligned}
+\]</span> This proof is rather involved but does display some commonly used approaches to deriving statistical results. It also highlights how the sampling scheme leads to dependence, making the result more complicated. The next chapter will discuss how the variance of the sample mean under independent and identically distributed sampling is much simpler.</p>
+</section>
+<section id="estimating-the-sampling-variance" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="estimating-the-sampling-variance"><span class="header-section-number">1.6.2</span> Estimating the sampling variance</h3>
+<p>An unfortunate aspect of the sampling variance, <span class="math inline">\(\V[\Xbar_n]\)</span>, is that it depends on the population variance, <span class="math inline">\(s^2\)</span>, which we cannot know unless we have a census of the entire population (If we had that information, we would not need to worry about uncertainty.) Thus, we need to estimate the sampling variance. Since we already know <span class="math inline">\(n\)</span>, the sample size, and <span class="math inline">\(N\)</span>, the population size, the most straightforward way to do this is to find an estimator for the population variance.</p>
+<p>A good estimator for this is the <strong>sample variance</strong>, which is simply the variance formula applied to the sample itself, <span class="math display">\[
+S^2 = \frac{1}{n-1} \sum_{i=1}^N Z_i(x_i - \Xbar_n)^2.
+\]</span> We can obtain an estimator for the sampling variance by substituting this in for the population variance, <span class="math display">\[
+\widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
+\]</span></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mind your variances
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is easy to get confused about the difference between the population variance, the variance of the sample, and the sampling variance (just as it is to get confused about the population, the distribution of the sample, and the sampling distribution). Adding to the confusion, these are all variances but for very distinct distributions.</p>
+</div>
+</div>
+<p>Why is <span class="math inline">\(\widehat{\V}[\Xbar_n]\)</span> a “good” estimator for <span class="math inline">\(\V[\Xbar_{n}]\)</span>? To answer this, we apply the same criteria as above in Question 4. Ideally, the estimator would be unbiased, meaning it does not systematically over- or underestimate how much variation is in the sample mean across repeated samples.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\E[S^2] &amp;= \frac{1}{n-1} \sum_{i=1}^N \E[Z_i(x_i - \Xbar_n)^2] \\
+&amp;= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x} - (\Xbar_n - \overline{x}))^2\right] \\
+&amp;= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x})^2 -2Z_i(x_i - \overline{x})(\Xbar_n - \overline{x}) + Z_i(\Xbar_n - \overline{x})^2\right] \\
+\end{aligned}
+\]</span></p>
+<p>Notice that <span class="math inline">\((\Xbar_n - \overline{x})\)</span> does not depend on <span class="math inline">\(i\)</span> so we can pull it out of the summations:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\E[S^2] &amp;= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x})^2 -2(\Xbar_n - \overline{x}) \sum_{i=1}^N Z_i(x_i - \overline{x}) + (\Xbar_n - \overline{x})^2 \sum_{i=1}^N Z_i\right] \\
+&amp;= \frac{1}{n-1}  \E\left[\sum_{i=1}^N Z_i(x_i - \overline{x})^2 -2n(\Xbar_n - \overline{x})^2  + n(\Xbar_n - \overline{x})^2\right] \\
+&amp;= \frac{1}{n-1}  \left[\sum_{i=1}^N \E[Z_i] (x_i - \overline{x})^2 -n\E[(\Xbar_n - \overline{x})^2]\right] \\
+&amp;= \frac{n}{N}\frac{1}{n-1}\sum_{i=1}^N (x_i - \overline{x})^2 -\frac{n}{n-1}\V[\Xbar_n] \\
+&amp;= \frac{n(N-1)}{N(n-1)}s^2 -\frac{(N-n)}{N(n-1)}s^2 \\
+&amp;= s^2
+\end{aligned}
+\]</span></p>
+<p>This shows that the sample variance is unbiased for the population variance. To complete the derivation, we can just plug this into the estimated sampling variance, <span class="math display">\[
+\E\left[\widehat{\V}[\Xbar_n]\right] = \left(1 - \frac{n}{N}\right)\frac{\E\left[S^2\right]}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n} = \V[\Xbar_n],
+\]</span> which establishes that the estimator is unbiased.</p>
+</section>
+</section>
+<section id="stratified-sampling-and-survey-weights" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="stratified-sampling-and-survey-weights"><span class="header-section-number">1.7</span> Stratified sampling and survey weights</h2>
+<p>True to its name, the simple random sample is perhaps the most straightforward way to take a random sample of a fixed size. With more information about the population, however, we might obtain better estimates of the population quantities by incorporating this information into the sampling scheme. We can do this by conducting a <strong>stratified random sample</strong>, where we divide up the population into several strata (or groups) and conduct simple random samples within each stratum. We create these strata (or “stratify the population” in the usual jargon) based on the additional information about the population.</p>
+<p>Consider an expanded population of the entire Fellowship of the Ring, which included 9 adventurous members – the four hobbits plus two humans (Aragorn and the doomed Boromir), an elf (Legolas of the Woodland Elves), a dwarf (Gimli), and a wizard (Gandalf the Grey)</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Unit (<span class="math inline">\(i\)</span>)</th>
+<th style="text-align: left;">Race</th>
+<th style="text-align: left;">Height in cm (<span class="math inline">\(x_i\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1 (Frodo)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">124</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2 (Sam)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">127</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3 (Pip)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">123</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4 (Merry)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">127</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5 (Gimli)</td>
+<td style="text-align: left;">Dwarf</td>
+<td style="text-align: left;">137</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6 (Gandalf)</td>
+<td style="text-align: left;">Wizard</td>
+<td style="text-align: left;">168</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7 (Aragorn)</td>
+<td style="text-align: left;">Human</td>
+<td style="text-align: left;">198</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8 (Boromir)</td>
+<td style="text-align: left;">Human</td>
+<td style="text-align: left;">193</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9 (Legolas)</td>
+<td style="text-align: left;">Elf</td>
+<td style="text-align: left;">183</td>
+</tr>
+</tbody>
+</table>
+<p>If we were taking a sample of size 5 from this population, we could use a simple random sample, but note that the sample could be lopsided. We could, for instance, sample mostly or all non-hobbits. We could instead conduct stratified sampling here by splitting our population into two strata: hobbits and non-hobbits, making up 4/9ths <span class="math inline">\(\approx\)</span> 44% and 5/9ths <span class="math inline">\(\approx\)</span> 56% of the population, respectively. To get to a sample of 5, we could take simple random samples of size 2 for the hobbits and size 3 for the non-hobbits. This would guarantee our sample would be 40% hobbit every time while still maintaining randomness in our selection of which hobbits and non-hobbits go into the sample.</p>
+<p>Another reason to conduct a stratified random sample is to guarantee a level of precision for a certain subgroup of the population. Social science researchers often conduct nationally representative surveys but have a specific interest in obtaining estimates for certain minority populations – for example, African Americans, Latinos, people who are LGBTQ+, and others. In modest sample sizes, the number of respondents in one of these groups might be too small to learn much about their opinions. Sampling a higher proportion of the group of interest will help ensure that we can make precise statements about that group.</p>
+<p>In a simple random sample, we have <span class="math inline">\(\pi_i = n/N\)</span> for all <span class="math inline">\(i\)</span>. By contrast, stratified random sampling is an example of a broad class of sampling methods that have unequal inclusion probabilities, which we denote <span class="math inline">\(\pi_i = \P(Z_{i} = 1)\)</span>. In the Fellowship of the Ring example, we were sampling 2 hobbits and 3 non-hobbits, so we have the following inclusion probabilities:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Unit (<span class="math inline">\(i\)</span>)</th>
+<th style="text-align: left;">Race</th>
+<th style="text-align: left;">Inclusion probability (<span class="math inline">\(\pi_i\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1 (Frodo)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2 (Sam)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3 (Pip)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4 (Merry)</td>
+<td style="text-align: left;">Hobbit</td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5 (Gimli)</td>
+<td style="text-align: left;">Dwarf</td>
+<td style="text-align: left;">0.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6 (Gandalf)</td>
+<td style="text-align: left;">Wizard</td>
+<td style="text-align: left;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7 (Aragorn)</td>
+<td style="text-align: left;">Man</td>
+<td style="text-align: left;">0.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8 (Boromir)</td>
+<td style="text-align: left;">Man</td>
+<td style="text-align: left;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9 (Legolas)</td>
+<td style="text-align: left;">Elf</td>
+<td style="text-align: left;">0.6</td>
+</tr>
+</tbody>
+</table>
+<p>There are additional ways to conduct a random sample with unequal inclusion probabilities. For example, suppose the goal is to randomly sample 5 U.S. cities for study. We might want to bias our sample toward larger cities in order to capture a larger number of citizens in the overall sample. If the number of inhabitants for city <span class="math inline">\(i\)</span> is <span class="math inline">\(b_i\)</span>, then our inclusion probabilities for sampling with replacement<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> is <span class="math display">\[
+\pi_i = \frac{b_i}{\sum_{i=1}^N b_i}.
+\]</span> Note that we use information about the population in our sampling design, though this information is continuous whereas the information in the stratified estimator is discrete.</p>
+<p>Using a sampling design with unequal inclusion probabilities means that we have changed our sampling design (question 3), but the population and estimands (questions 1 and 2) remain the same. We are still interested in estimating the population mean, <span class="math inline">\(\overline{x}\)</span>. We now turn to the estimator (question 4), since we will need to use a new estimator that matches the design.</p>
+<p>Two estimators are commonly used to estimate the population mean when sampling with unequal inclusion probabilities. The first, the <strong>Horvitz-Thompson (HT) estimator</strong>, has the form <span class="math display">\[
+\widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^{N} \frac{Z_{i}x_{i}}{\pi_{i}},
+\]</span> This takes the weighted average of those in the sample, with the weights being the inverse of the inclusion probabilities. This is why the estimator is sometimes called the inverse probability weighting, or IPW, estimator.</p>
+<p>We can show that the HT estimator is unbiased for the population mean by noting that <span class="math inline">\(\E[Z_i] = \P(Z_i = 1) = \pi_i\)</span>, so that <span class="math display">\[
+\E[\widetilde{X}_{HT}] = \frac{1}{N} \sum_{i=1}^N \frac{\E[Z_i]x_i}{\pi_i} = \frac{1}{N} \sum_{i=1}^N x_i = \overline{x}.
+\]</span> A downside of the HT estimator is that it can be unstable if a unit with a very small inclusion probability is selected since that unit’s weight (<span class="math inline">\(1/\pi_i\)</span>) will be very large. This instability is the cost of being unbiased for the stratified design. Also note that the formula for the sampling variance is rather complicated and requires notation that is less important to the task at hand.</p>
+<p>The second estimator for the the population mean when sampling with unequal inclusion probabilities is the <strong>Hájek estimator</strong>, which normalizes the weights so they sum to <span class="math inline">\(N\)</span> and has the form <span class="math display">\[
+\widetilde{X}_{hj} = \frac{\sum_{i=1}^N Z_{i}x_{i} / \pi_{i}}{\sum_{i=1}^{N} Z_{i}/\pi_{i}}.
+\]</span> This estimator is <strong>biased</strong> for the population mean since there is a random quantity in the denominator. The Hajek estimator is often considered the better estimator in many situations, though, because it has lower sampling variance than the HT estimator.</p>
+<section id="sampling-weights" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="sampling-weights"><span class="header-section-number">1.7.1</span> Sampling weights</h3>
+<p>The HT and Hajek estimators are both functions of what are commonly called the <strong>sampling weights</strong>, <span class="math display">\[w_i = \frac{1}{\pi_i}\]</span>. We can write the HT estimator as <span class="math display">\[
+\widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^N w_iZ_ix_i,
+\]</span> and we can write the Hajek estimator as <span class="math display">\[
+\widetilde{X}_{hj} = \frac{\sum_{i=1}^N w_iZ_{i}x_{i}}{\sum_{i=1}^{N} w_iZ_{i}}.
+\]</span> These weights, <span class="math inline">\(w_i\)</span>, are usually included in final survey data sets because they contain all the information about the sampling design a researcher needs to analyze the survey responses even without knowledge of the exact design.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>The sampling weights have a nice interpretation in terms of a pseudo-population: each unit in the sample “represents” <span class="math inline">\(w_i = 1/\pi_i\)</span> units in the population. This makes the sample more representative of the population.</p>
+<p>Finally, note that statistical software often is a little confusing in how it handles weights. It may not be obvious what estimator function <code>weighted.mean(x, w)</code> in R is using. In fact, the source code basically calls</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x <span class="sc">*</span> w) <span class="sc">/</span> <span class="fu">sum</span>(w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>which is equivalent to the Hajek estimator above.</p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">1.8</span> Summary</h2>
+<p>This chapter covered the basic structure of design-based inference in the context of sampling from a population. We introduced the basic questions of statistical inference, including specifying a population and quantity of interest, choosing a sampling design and estimator, and assessing uncertainty of the estimator. Of course, we have only scratched the surface of the types of designs and estimators used in the practice of sampling. Professional probability surveys often use clustering, which means randomly selecting larger clusters of units and then randomly sampling within these units. However complex the sampling design, the core steps of design-based statistical inference remain the same. A researcher must identify a population, determine a sampling design, choose a quantity of interest, select an estimator, and describe the uncertainty of any estimates.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Squire88" class="csl-entry" role="listitem">
+SQUIRE, PEVERILL. 1988. <span>“WHY THE 1936 LITERARY DIGEST POLL FAILED.”</span> <em>Public Opinion Quarterly</em> 52 (1): 125–33. <a href="https://doi.org/10.1086/269085">https://doi.org/10.1086/269085</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This description is true for sampling with replacement. When sampling without replacement, we would need to adjust the probabilities to account for how being selected first means that a unit cannot be selected second.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If we want design-based estimators of the sampling variance, we would also need to know the joint inclusion probabilities, which are the probabilities of any two units being sampled together.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./estimation.html" class="pagination-link" aria-label="Model-based inference">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model-based inference</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/design.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

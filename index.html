@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01_intro.html" rel="next">
+<link href="./design.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -200,12 +200,6 @@ window.Quarto = {
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -217,19 +211,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></span></a>
+  <a href="./design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link">
+  <a href="./estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model-based inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./asymptotics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link">
+  <a href="./hypothesis_tests.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
   </div>
 </li>
@@ -246,19 +246,19 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link">
+  <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link">
+  <a href="./least_squares.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_ols_properties.html" class="sidebar-item-text sidebar-link">
+  <a href="./ols_properties.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
   </div>
 </li>
@@ -280,8 +280,12 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+  <ul class="collapse">
+  <li><a href="#roadmap" id="toc-roadmap" class="nav-link" data-scroll-target="#roadmap">Roadmap</a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#colophon" id="toc-colophon" class="nav-link" data-scroll-target="#colophon">Colophon</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -316,22 +320,38 @@ window.Quarto = {
 <p><img src="assets/img/linear-approximation.png" class="img-fluid"></p>
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>The goal of this text is to provide a rigorous yet accessible introduction to the foundational topics in statistical inference with a special application to linear regression, a workhorse tool in the social sciences. The material is intended for first-year PhD students in political science, but it may be of interest more broadly. Much of the material has been adopted from various sources (far too many to recount now), but this book is especially indebted to the following texts:</p>
-<ul>
-<li>Hansen, Bruce. <a href="https://www.amazon.com/Probability-Statistics-Economists-Bruce-Hansen/dp/0691235945/"><em>Probability &amp; Statistics for Economists</em></a>. Princeton University Press.</li>
-<li>Hansen, Bruce. <a href="https://www.amazon.com/Econometrics-Bruce-Hansen/dp/0691235899/"><em>Econometrics</em></a>. Princeton University Press.</li>
-<li>Wasserman, Larry. <a href="https://link.springer.com/book/10.1007/978-0-387-21736-9"><em>All of Statistics: A Concise Course in Statistical Inference</em></a>. Springer.</li>
-<li>Wooldridge, Jeffrey. <a href="https://mitpress.mit.edu/9780262232586/econometric-analysis-of-cross-section-and-panel-data/"><em>Econometric Analysis of Cross Section and Panel Data</em></a>. The MIT Press.</li>
-</ul>
+<p>This book, like many before it, will try to teach you statistics. The field of statistics describes how we learn about the world using quantitative data. In the social sciences, an increasing share of empirical studies use statistical methods to provide evidence for or against conceptual arguments. And, while it is possible to conduct quantitative research without understanding statistics at an intuitive level, it is not a good idea. Quantitative research involves a host of <em>choices</em> about the model to use, variables to include, tuning parameters to set, assumptions to make, and so on. Without a deep understanding of statistics, you may find these choices bewildering and confusing, and you may simply (and possibly erroneously) yield to the default settings of your statistical software.</p>
+<p>The goal of this book is to give you the foundation to make methodological choices for your specific application with knowledge and with confidence. The material is intended for first-year PhD students in political science, but it may be of interest more broadly.</p>
+<p>We will focus on two key goals:</p>
+<ol type="1">
+<li><p><strong>Understand the basic ways to assess estimators</strong> With quantitative data, we often want to make statistical inferences about some unknown feature of the world. We use estimators (which are just ways of summarizing our data) to estimate these features. This book will introduce the basics of this task at a general enough level to be applicable to almost any estimator that you are likely to encounter in empirical research in the social sciences. We will also cover major concepts such as bias, sampling variance, consistency, and asymptotic normality, which are so common to such a large swath of (frequentist) inference that understanding them at a deep level will yield an enormous return on your time investment. Once you understand these core ideas, you will have a language to analyze any fancy new estimator that pops up in the next few decades.</p></li>
+<li><p><strong>Apply these ideas to the estimation of regression models</strong> This book will apply these ideas to one particular social science workhorse: regression. Many methods either use regression estimators like ordinary least squares or extend them in some way. Understanding how these estimators work is vital for conducting research, for reading and reviewing contemporary scholarship, and, frankly, for being a good and valuable colleague in seminars and workshops. Regression and regression estimators also provide an entry point for discussing parametric models as approximations, rather than as rigid assumptions about the truth of a given specification.</p></li>
+</ol>
+<p>Why write a book on statistics and regression when so many already exist? While some texts at this level exist in the fields of statistics and economics, they tend to focus on applications and models less relevant to other social sciences. This book attempts to correct this. The book also seeks to introduce a fairly high level of mathematical sophistication that will challenge and push you to develop stronger foundations in the material.</p>
+<section id="roadmap" class="level2">
+<h2 class="anchored" data-anchor-id="roadmap">Roadmap</h2>
+<p>This book has two major parts. Part I introduces the basics of statistical inference.</p>
+<p>We start in <a href="design.html" class="quarto-xref"><span>1&nbsp; Design-based Inference</span></a> by demonstrating basic concepts of estimation and inference from the design-based perspective in which we sample from a fixed, finite population, and all uncertainty comes from randomness over who is and is not included in the sample. This framework for inference has deep roots in the statistical literature and provides a great deal of intuition for how estimation and uncertainty work in simple settings. We will discuss how to use design-based inference to estimate features of the population from samples when the analyst knows the exact sampling design. Unfortunately, researchers often lack this knowledge about how their data came to be, limiting the usefulness of this approach.</p>
+<p><a href="estimation.html" class="quarto-xref"><span>2&nbsp; Model-based inference</span></a> introduces a more flexible approach to estimation: model-based inference. With this approach, the researcher posits a probability model for how the data came to be. This book focuses on models that posit “independent and identically distributed” data for this model. The chapter describes how estimation and inference proceed under these models and also introduces a broad class of estimators based on the plug-in principle.</p>
+<p>These two chapters focus on finite sample properties of different estimation techniques, but we can say more about an estimator if we consider how it behaves on larger and larger samples. <a href="asymptotics.html" class="quarto-xref"><span>3&nbsp; Asymptotics</span></a> introduces this type of asymptotic analysis. It covers the core results of asymptotic theory, such as the law of large numbers, the central limit theorem, and the delta method, but also shows why these results are important for statistical inference. In particular, the chapter shows how these results enable the creation of asymptotically valid confidence intervals.</p>
+<p><a href="hypothesis_tests.html" class="quarto-xref"><span>4&nbsp; Hypothesis tests</span></a> wraps up Part I of the book by introducing statistical inference with hypothesis testing. This chapter shows how to build hypothesis tests and provides intuition for all their aspects. We also cover power analyses for planning studies and the connection between confidence intervals and hypothesis tests.</p>
+<p>Part II of the book focuses on one particular estimator of great importance to quantitative social sciences: the least squares estimator.</p>
+<p><a href="linear_model.html" class="quarto-xref"><span>5&nbsp; Linear regression</span></a> begins by describing exactly what quantity of interest we are targeting when we discuss “linear models.” In particular, we discuss how a population best linear predictor exists even if the relationship between two variables is nonlinear. This provides a coherent basis for linear regression estimation as a linear approximation to a potentially nonlinear function. The chapter also shows how to interpret the coefficients in these linear regression models.</p>
+<p><a href="least_squares.html" class="quarto-xref"><span>6&nbsp; The mechanics of least squares</span></a> introduces the more mechanical properties of the least squares estimator: how the estimator is constructed, its geometrical interpretation, and how influential observations may affect the estimates it returns. This chapter introduces the least squares estimator in matrix form and provides key intuition for understanding this compact notation.</p>
+<p>Finally, <a href="ols_properties.html" class="quarto-xref"><span>7&nbsp; The statistics of least squares</span></a> describes the statistical properties of the least squares estimator. The chapter shows how modeling assumptions affect the kinds of properties we can obtain. The weakest modeling assumptions allow us to derive the surprisingly strong asymptotic properties of least squares that we depend on in most settings. The chapter then shows how stronger assumptions such as linearity and normally distributed errors can provide even stronger results but that they do so at the expense of potential model misspecification.</p>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>Much of how I approach this material comes from Adam Glynn, for whom I was a teaching fellow during graduate school. Thanks to the students of Gov 2000 and Gov 2002 over years for helping me refine the material in this book. Also very special thanks to those who have provided valuable feedback including Zeki Akyol, Noah Dasanaike, Maya Sen, and Jarell Cheong Tze Wen.</p>
+</section>
+<section id="colophon" class="level2">
+<h2 class="anchored" data-anchor-id="colophon">Colophon</h2>
 <p>You can find the source for this book at <a href="https://github.com/mattblackwell/gov2002-book" class="uri">https://github.com/mattblackwell/gov2002-book</a>. Any typos or errors can be reported at <a href="https://github.com/mattblackwell/gov2002-book/issues" class="uri">https://github.com/mattblackwell/gov2002-book/issues</a>. Thanks for reading.</p>
 <p>This is a Quarto book. To learn more about Quarto books visit <a href="https://quarto.org/docs/books" class="uri">https://quarto.org/docs/books</a>.</p>
-<p><span class="math inline">\(\,\)</span></p>
+<p><span class="math inline">\(\,\)</span> <span class="math inline">\(\,\)</span></p>
+
+
 </section>
-<section id="acknowledgements" class="level1">
-<h1>Acknowledgements</h1>
-<p>Much of how I approach this material comes from Adam Glynn, for whom I was a teaching fellow during graduate school. Thanks to the students of Gov 2000 and Gov 2002 over years for helping me refine the material in this book. Also very special thanks to those who have provided valuable feedback including Zeki Akyol, Noah Dasanaike, and Jarell Cheong Tze Wen.</p>
-
-
 </section>
 
 </main> <!-- /main -->
@@ -748,8 +768,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./design.html" class="pagination-link" aria-label="Design-based Inference">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -49,7 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./08_ols_properties.html" rel="prev">
+<link href="./ols_properties.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -189,12 +189,6 @@ window.MathJax = {
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
@@ -206,19 +200,25 @@ window.MathJax = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estimation</span></span></a>
+  <a href="./design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_asymptotics.html" class="sidebar-item-text sidebar-link">
+  <a href="./estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model-based inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./asymptotics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_hypothesis_tests.html" class="sidebar-item-text sidebar-link">
+  <a href="./hypothesis_tests.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
   </div>
 </li>
@@ -235,19 +235,19 @@ window.MathJax = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_linear_model.html" class="sidebar-item-text sidebar-link">
+  <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_least_squares.html" class="sidebar-item-text sidebar-link">
+  <a href="./least_squares.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08_ols_properties.html" class="sidebar-item-text sidebar-link">
+  <a href="./ols_properties.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
   </div>
 </li>
@@ -298,6 +298,10 @@ Theorem</span>.”</span> <em>Econometrica</em> 90 (3): 1283–94. <a href="http
 Senn, Stephen. 2012. <span>“Tea for Three: Of Infusions and Inferences
 and Milk in First.”</span> <em>Significance</em> 9 (6): 30–33.
 https://doi.org/<a href="https://doi.org/10.1111/j.1740-9713.2012.00620.x">https://doi.org/10.1111/j.1740-9713.2012.00620.x</a>.
+</div>
+<div id="ref-Squire88" class="csl-entry" role="listitem">
+SQUIRE, PEVERILL. 1988. <span>“WHY THE 1936 LITERARY DIGEST POLL
+FAILED.”</span> <em>Public Opinion Quarterly</em> 52 (1): 125–33. <a href="https://doi.org/10.1086/269085">https://doi.org/10.1086/269085</a>.
 </div>
 </div>
 
@@ -715,7 +719,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./08_ols_properties.html" class="pagination-link" aria-label="The statistics of least squares">
+      <a href="./ols_properties.html" class="pagination-link" aria-label="The statistics of least squares">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span>
       </a>          
   </div>
