@@ -1,11 +1,10 @@
-![](assets/img/linear-approximation.png)
-
 # Preface {.unnumbered}
 
+$\,$
 
 This book, like many before it, will try to teach you statistics. The field of statistics describes how we learn about the world using quantitative data. In the social sciences, an increasing share of empirical studies use statistical methods to provide evidence for or against conceptual arguments. And, while it is possible to conduct quantitative research without understanding statistics at an intuitive level, it is not a good idea. Quantitative research involves a host of *choices* about the model to use, variables to include, tuning parameters to set, assumptions to make, and so on. Without a deep understanding of statistics, you may find these choices bewildering and confusing, and you may simply (and possibly erroneously) yield to the default settings of your statistical software. 
 
-The goal of this book is to give you the foundation to make methodological choices for your specific application with knowledge and with confidence.  The material is intended for first-year PhD students in political science, but it may be of interest more broadly.
+The goal of this book is to give you the foundation to make methodological choices for your specific application with knowledge and with confidence.
 
 We will focus on two key goals: 
 
@@ -49,7 +48,3 @@ You can find the source for this book at <https://github.com/mattblackwell/gov20
 
 
 This is a Quarto book. To learn more about Quarto books visit <https://quarto.org/docs/books>. 
-
-
-$\,$
-$\,$

@@ -61,7 +61,7 @@ A standard estimator for the treatment effect in a study such as this would be t
 
 We now turn to the same key questions that we used to motivate design-based inference, but adapt these to consider model-based inference.
 
-## Question 1: Who or what do we want to learn about (What is the population)?  
+## Question 1: Population 
   
 
 
@@ -69,7 +69,7 @@ The main advantage and disadvantage of relying on models is that they are abstra
 
 As in the design-based setting, there is often a clear and distinct population such as "all registered voters" or "all Boston residents." In other cases, the population may be more abstract. For example, a large multi-field literature has studied how the size of minority populations affects the views of the local majority population. Researchers in this space may be interested in making claims beyond the particular geographic region or minority/majority group, instead implicitly or explicitly considering a "superpopulation" of such cases that their model might explain. While there is nothing theoretically wrong with this approach, these ideas are often neglected in practice and the "scope conditions" of a particular model go unarticulated. The best quantitative work will be clear about what units or processes it is trying to learn about so that readers can evaluate how well the modeling assumptions fit that task.    
 
-## Question 2: What assumptions are we making about how the data came to be (Model)?
+## Question 2: Statistical model
 
 Let's begin by building a bare-bones probability model for how our data came to be. As an example, suppose we have a data set with a series of numbers representing the ages, political party affiliations, and policy opinions of 1000 survey respondents. But we know that row 58 of our data could have produced a different set of numbers if another respondent had been selected as row 58 or if the original respondent gave a different opinion about immigration because they happened to see an immigration news story just before responding. To reason about this type of uncertainty precisely, we write $X_i$ as the random variable representing the value that row $i$ of some variable will take, before we see the data. The distribution of this random variable would tell us what types of data we should expect to see. 
 
@@ -121,7 +121,7 @@ As discussed in the last chapter, there are ways to handle all of these issues (
 :::
 
 
-## Question 3: What are the quantities of interest?
+## Question 3: Quantities of interest
 
 
 
@@ -163,7 +163,7 @@ Some refer to quantities of interest as **parameters** or **estimands** (that is
 :::
 
 
-## Question 4: How will we use the data to produce an estimate (Estimators)?
+## Question 4: Estimator
 
 Having a target in mind, we can estimate it with our data. To do so, we first need a rule or algorithm or function that takes as inputs the data and returns a best guess about the quantity of interest. One of the most popular and useful algorithm would be to sum all the data points and divide by the number of points:
 $$
@@ -399,7 +399,7 @@ Properties like unbiasedness might only hold for a subset of DGPs. For example, 
 :::
 
 
-## Question 5:  How will we estimate and convey the error associated with the estimate? (Uncertainty) 
+## Question 5: Uncertainty 
 
 The spread of the sampling distribution is also important. We define the **sampling variance** as the variance of an estimator's sampling distribution, $\V[\widehat{\theta}]$, which measures how spread out the estimator is around its mean. For an unbiased estimator, lower sampling variance implies the distribution of $\widehat{\theta}$ is more concentrated around the true value of the parameter. 
 
