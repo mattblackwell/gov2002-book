@@ -7,7 +7,12 @@ execute:
   
 book:
   title: "A User's Guide to Statistical Inference and Regression"
-  author: "Matthew Blackwell"
+  author:
+    - name: Matthew Blackwell
+      orcid: 0000-0002-3689-9527
+      email: mblackwell@gov.harvard.edu
+      url: https://www.mattblackwell.org/
+    
   output-file: "users-guide"
   reader-mode: true
   public-url: https://mattblackwell.github.io/gov2002-book/
