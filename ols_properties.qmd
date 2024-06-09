@@ -11,7 +11,7 @@ In this chapter, we will focus on the asymptotic properties of OLS because those
 As we saw in @sec-asymptotics, we need two key ingredients to conduct statistical inference with the OLS estimator: (1) a consistent estimate of the variance of $\bhat$ and (2) the approximate distribution of $\bhat$ in large samples. Remember that, since $\bhat$ is a vector, the variance of that estimator will actually be a variance-covariance matrix. To obtain the two key ingredients, we first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which includes its variance. 
 
 
-We begin by setting out the assumptions needed for establishing the large-sample properties of OLS, which are the same as the assumptions needed to ensure that the best linear predictor, $\bhat = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]$, is well-defined and unique. 
+We begin by setting out the assumptions needed for establishing the large-sample properties of OLS, which are the same as the assumptions needed to ensure that the best linear predictor, $\bfbeta = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]$, is well-defined and unique. 
 
 ::: {.callout-note}
 
