@@ -1,0 +1,17 @@
+# What to estimate?
+
+
+
+## Three goals
+
+
+## Descriptive estimands
+
+The simplest 
+
+## Causal estimands
+
+
+## Predictive estimands
+
+Basic idea: find a function of $X$ that minimizes some loss function. 

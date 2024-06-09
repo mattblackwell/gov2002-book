@@ -3,7 +3,8 @@
 /_book/
 .auto/
 *_files/
-
+site_libs
 *.rel
 .Rhistory
 .DS_Store
+/index.aux

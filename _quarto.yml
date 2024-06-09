@@ -16,17 +16,17 @@ book:
   downloads: [pdf]
   chapters:
     - index.qmd
-    - 01_intro.qmd
     - part: "Statistical Inference"
       chapters:
-        - 02_estimation.qmd
-        - 03_asymptotics.qmd
-        - 04_hypothesis_tests.qmd
+        - design.qmd
+        - estimation.qmd
+        - asymptotics.qmd
+        - hypothesis_tests.qmd
     - part: "Regression"
       chapters:
-        - 06_linear_model.qmd
-        - 07_least_squares.qmd
-        - 08_ols_properties.qmd
+        - linear_model.qmd
+        - least_squares.qmd
+        - ols_properties.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -45,8 +45,13 @@ format:
         
   pdf:
     documentclass: scrreprt
-    fontfamily: cochineal
     keep-tex: true
+    fig-pos: th
+    fig-width: 10
+    fig-height: 6.18
+    fig-align: center
+    fontfamily: cochineal
+    fontsize: 13pt
     include-in-header:
       - _bold.tex
       - _macros_pdf.tex
