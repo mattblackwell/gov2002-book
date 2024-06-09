@@ -135,7 +135,7 @@ $$
 $$
 where we use $n-k-1$ in the denominator instead of $n$ to correct for the residuals being slightly less variable than the actual errors (because OLS mechanically attempts to make the residuals small). For consistent variance estimation, $n-k -1$ or $n$ can be used, since either way $\widehat{\sigma}^2 \inprob \sigma^2$. Thus, under homoskedasticity, we have
 $$ 
-\widehat{\mb{V}}_{\bfbeta}^{\texttt{lm}} = \widehat{\sigma}^{2}\left(\Xmat'\Xmat\right)^{{-1}},
+\widehat{\mb{V}}_{\bfbeta}^{\texttt{lm}} = \widehat{\sigma}^{2}\left(\frac{1}{n}\Xmat'\Xmat\right)^{{-1}} = n\widehat{\sigma}^{2}\left(\Xmat'\Xmat\right)^{{-1}},
 $$
 This is the standard variance estimator used by `lm()` in R and `reg` in Stata. 
 
