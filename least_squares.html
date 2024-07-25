@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A User’s Guide to Statistical Inference and Regression - 6&nbsp; The mechanics of least squares</title>
+<title>6&nbsp; The mechanics of least squares – A User's Guide to Statistical Inference and Regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -118,7 +118,7 @@ window.MathJax = {
 };
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -157,13 +157,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./least_squares.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -202,9 +202,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Statistical Inference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -237,9 +237,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Regression</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -324,7 +324,7 @@ window.Quarto = {
 <p>In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS under the assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ajr-scatter" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-ajr-scatter" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ajr-scatter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="least_squares_files/figure-html/fig-ajr-scatter-1.png" class="img-fluid figure-img" width="672">
@@ -406,7 +406,7 @@ Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}.
 <p><a href="#fig-ssr-comp" class="quarto-xref">Figure&nbsp;<span>6.2</span></a> shows how OLS works in the bivariate case. It displays three possible regression lines as well as the sum of the squared residuals for each line. OLS aims to find the line that minimizes the function on the right.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ssr-comp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-ssr-comp" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ssr-comp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="least_squares_files/figure-html/fig-ssr-comp-1.png" class="img-fluid figure-img" width="672">
@@ -429,7 +429,7 @@ TSS = \sum_{i=1}^n (Y_i - \overline{Y})^2.
 \]</span> <a href="#fig-ssr-vs-tss" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> shows the difference between these two types of prediction errors.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ssr-vs-tss" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-ssr-vs-tss" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ssr-vs-tss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="least_squares_files/figure-html/fig-ssr-vs-tss-1.png" class="img-fluid figure-img" width="672">
@@ -544,7 +544,7 @@ X_{i5} = 1 - X_{i1} - X_{i2} - X_{i3} - X_{i4}.
 <p>OLS has a very nice geometric interpretation that adds a lot of intuition for various aspects of the method. In this geometric approach, we view <span class="math inline">\(\mb{Y}\)</span> as an <span class="math inline">\(n\)</span>-dimensional vector in <span class="math inline">\(\mathbb{R}^n\)</span>. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix <span class="math inline">\(\Xmat\)</span> closest to this vector in terms of the Euclidean distance, which is just the sum of squares.</p>
 <p>Let <span class="math inline">\(\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^(k+1)\}\)</span> be the <strong>column space</strong> of the matrix <span class="math inline">\(\Xmat\)</span>. This set is all linear combinations of the columns of <span class="math inline">\(\Xmat\)</span> or the set of all possible linear predictions we could obtain from <span class="math inline">\(\Xmat\)</span>. Note that the OLS fitted values, <span class="math inline">\(\Xmat\bhat\)</span>, are in this column space. If, as we assume, <span class="math inline">\(\Xmat\)</span> has full column rank of <span class="math inline">\(k+1\)</span>, then the column space <span class="math inline">\(\mathcal{C}(\Xmat)\)</span> will be a <span class="math inline">\(k+1\)</span>-dimensional surface inside of the larger <span class="math inline">\(n\)</span>-dimensional space. If <span class="math inline">\(\Xmat\)</span> has two columns, the column space will be a plane.</p>
 <p>Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of <span class="math inline">\(\Xmat\)</span> to the outcome vector <span class="math inline">\(\mb{Y}\)</span>. This is called the <strong>projection</strong> of <span class="math inline">\(\mb{Y}\)</span> onto <span class="math inline">\(\mathcal{C}(\Xmat)\)</span>. <a href="#fig-projection" class="quarto-xref">Figure&nbsp;<span>6.4</span></a> shows this projection for a case with <span class="math inline">\(n=3\)</span> and 2 columns in <span class="math inline">\(\Xmat\)</span>. The shaded blue region represents the plane of the column space of <span class="math inline">\(\Xmat\)</span>, and <span class="math inline">\(\Xmat\bhat\)</span> is the closest point to <span class="math inline">\(\mb{Y}\)</span> in that space. This illustrates the whole idea of the OLS estimator: find the linear combination of the columns of <span class="math inline">\(\Xmat\)</span> (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).</p>
-<div id="fig-projection" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-projection" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="assets/img/projection-drawing.png" class="img-fluid figure-img">
@@ -649,7 +649,7 @@ h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overli
 <p>In the context of OLS, an <strong>outlier</strong> is an observation with a large prediction error for a particular OLS specification. <a href="#fig-outlier" class="quarto-xref">Figure&nbsp;<span>6.5</span></a> shows an example of an outlier.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-outlier" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-outlier" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-outlier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="least_squares_files/figure-html/fig-outlier-1.png" class="img-fluid figure-img" width="672">
@@ -675,7 +675,7 @@ Figure&nbsp;6.5: An example of an outlier.
 <p>An influential observation (also sometimes called an influential point) is a unit that has the power to change the coefficients and fitted values for a particular OLS specification. <a href="#fig-influence" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> shows an example of such an influence point.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-influence" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-influence" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-influence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="least_squares_files/figure-html/fig-influence-1.png" class="img-fluid figure-img" width="672">
@@ -741,18 +741,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -784,7 +773,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -792,7 +803,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
