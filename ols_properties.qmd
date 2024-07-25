@@ -213,13 +213,13 @@ $$
 $$
 Thus, $\mb{L}\bfbeta = \mb{0}$ is equivalent to $\beta_1 = 0$ and $\beta_3 = 0$. Notice that with other $\mb{L}$ matrices, we could represent more complicated hypotheses like $2\beta_1 - \beta_2 = 34$, though we mostly stick to simpler functions. Let $\widehat{\bs{\theta}} = \mb{L}\bhat$ be the OLS estimate of the function of the coefficients. By the delta method (discussed in @sec-delta-method), we have
 $$ 
-\sqrt{n}\left(\mb{L}\bhat - \mb{L}\bfbeta\right) \indist \N(0, \mb{L}'\mb{V}_{\bfbeta}\mb{L}).
+\sqrt{n}\left(\mb{L}\bhat - \mb{L}\bfbeta\right) \indist \N(0, \mb{L}\mb{V}_{\bfbeta}\mb{L}').
 $$
-We can now generalize the squared $t$ statistic in @eq-squared-t by taking the distances $\mb{L}\bhat - \mb{c}$ weighted by the variance-covariance matrix $\mb{L}'\mb{V}_{\bfbeta}\mb{L}$, 
+We can now generalize the squared $t$ statistic in @eq-squared-t by taking the distances $\mb{L}\bhat - \mb{c}$ weighted by the variance-covariance matrix $\mb{L}\mb{V}_{\bfbeta}\mb{L}'$, 
 $$ 
-W = n(\mb{L}\bhat - \mb{c})'(\mb{L}'\mb{V}_{\bfbeta}\mb{L})^{-1}(\mb{L}\bhat - \mb{c}),
+W = n(\mb{L}\bhat - \mb{c})'(\mb{L}\mb{V}_{\bfbeta}\mb{L}')^{-1}(\mb{L}\bhat - \mb{c}),
 $$
-which is called the **Wald test statistic**. This statistic generalizes the ideas of the t-statistic to multiple parameters. With the t-statistic, we recenter to have mean 0 and divide by the standard error to get a variance of 1. If we ignore the middle variance weighting, we have $(\mb{L}\bhat - \mb{c})'(\mb{L}\bhat - \mb{c})$ which is just the sum of the squared deviations of the estimates from the null. Including the $(\mb{L}'\mb{V}_{\bfbeta}\mb{L})^{-1}$ weight has the effect of rescaling the distribution of $\mb{L}\bhat - \mb{c}$ to make it rotationally symmetric around 0 (so the resulting dimensions are uncorrelated) with each dimension having an equal variance of 1. In this way, the Wald statistic transforms the random vectors to be mean-centered and have variance 1 (just the t-statistic), but also to have the resulting random variables in the vector be uncorrelated.[^norms]
+which is called the **Wald test statistic**. This statistic generalizes the ideas of the t-statistic to multiple parameters. With the t-statistic, we recenter to have mean 0 and divide by the standard error to get a variance of 1. If we ignore the middle variance weighting, we have $(\mb{L}\bhat - \mb{c})'(\mb{L}\bhat - \mb{c})$ which is just the sum of the squared deviations of the estimates from the null. Including the $(\mb{L}\mb{V}_{\bfbeta}\mb{L}')^{-1}$ weight has the effect of rescaling the distribution of $\mb{L}\bhat - \mb{c}$ to make it rotationally symmetric around 0 (so the resulting dimensions are uncorrelated) with each dimension having an equal variance of 1. In this way, the Wald statistic transforms the random vectors to be mean-centered and have variance 1 (just the t-statistic), but also to have the resulting random variables in the vector be uncorrelated.[^norms]
 
 
 [^norms]: The form of the Wald statistic is that of a weighted inner product, $\mb{x}'\mb{Ay}$, where $\mb{A}$ is a symmetric positive-definite weighting matrix. 
