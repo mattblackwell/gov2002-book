@@ -101,8 +101,10 @@ $$
 \begin{aligned}
   \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
   \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
-\end{aligned}  
+\end{aligned},
 $$
+where we have evaluated the derivatives at the optimum values, $\beta_0$ and $\beta_1$, in the first equality of both lines.  
+
 Given the linearity of expectations, it is easy to solve for $\beta_0$ in terms of $\beta_1$,
 $$ 
 \beta_{0} = \E[Y_{i}] - \beta_{1}\E[X_{i}].
@@ -214,7 +216,7 @@ Y_{i} = \beta_{0} + \X'\bfbeta + e_{i},
 $$
 so $\bfbeta$ refers to just the vector of coefficients for the covariates. In this case, we can write the coefficients in a more interpretable way:
 $$ 
-\bfbeta = \V[\X]^{-1}\text{Cov}(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
+\bfbeta = \V[\X]^{-1}\cov(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
 $$
 
 Thus, the population coefficients take the covariance between the outcome and the covariates and "divide" it by information about variances and covariances of the covariates. The intercept recenters the regression so that projection errors are mean zero. This means that these coefficients generalize the bivariate formula to this multiple covariate context. 
@@ -467,7 +469,7 @@ $$
 $$
 Given the properties of projection errors, we know that this orthogonalized version of $X_{i}$ will be uncorrelated with $Z_{i}$ since $\E[\widetilde{X}_{i}Z_{i}] = 0$. Remarkably, the coefficient on $X_i$ from the "long" BLP in @eq-two-var-blp is the same as the regression of $Y_i$ on this orthogonalized $\widetilde{X}_i$, 
 $$ 
-\beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
+\beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
 $$
 
 We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-k}$ be the vector of covariates omitting the $k$th entry and let $m_k(\X_{i,-k})$ represent the BLP of $X_{ik}$ on these other covariates. We can define $\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})$ as the $k$th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on $X_{ik}$ as

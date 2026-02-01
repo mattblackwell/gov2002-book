@@ -281,7 +281,7 @@ This plug-in estimator differs from the standard sample variance, which divides 
 
 Suppose we have two variables, $(X_i, Y_i)$. A natural quantity of interest here is the population covariance between these variables, 
 $$
-\sigma_{xy} = \text{Cov}[X_i,Y_i] = \E[(X_i - \E[X_i])(Y_i-\E[Y_i])],
+\sigma_{xy} = \cov[X_i,Y_i] = \E[(X_i - \E[X_i])(Y_i-\E[Y_i])],
 $$
 which has the plug-in estimator,
 $$

@@ -291,12 +291,12 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -728,14 +728,14 @@ sample that does not have exactly \(n\) units in the sample.
 Another common sampling design --the \textbf{Bernoulli sampling} design
 -- works by choosing each unit independently with the same probability.
 
-\begin{definition}[]\protect\hypertarget{def-srs}{}\label{def-srs}
+\begin{definition}[]\protect\hypertarget{def-bernoulli-sampling}{}\label{def-bernoulli-sampling}
 
 \textbf{Bernoulli sampling} is a probability sampling design where
 independent Bernoulli trials with probability of success \(q\) determine
 whether each unit in the population will be included in the sample. More
 specifically, let \(\mb{z} = (z_{1}, \ldots, z_{N})\) be a particular
 possible sampling. Bernoulli sampling will then be \[
-\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q_i^{Z_i}(1 - q_i)^{1-Z_i}
+\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q^{Z_i}(1 - q)^{1-Z_i}
 \]
 
 \end{definition}
@@ -809,7 +809,7 @@ subpopulations. In this case, we might have \(d = 1\) as liberal
 identifiers, \(d = 2\) as moderate identifiers, and \(d = 3\) as
 conservative identifiers. We will refer to the subpopulation for each of
 these groups as \(\mathcal{U}_d \subset \{1,\ldots, N\}\) and we define
-the size of these groups as \(N_d = |\mathcal{U}_d\). So, \(N_3\) would
+the size of these groups as \(N_d = |\mathcal{U}_d|\). So, \(N_3\) would
 be the number of conservative-identifying citizens in the population.
 
 The mean for each group is then \[
@@ -819,7 +819,7 @@ The mean for each group is then \[
 Subpopulation estimation can be slightly more complicated than
 population estimation because we may not know who is in which
 subpopulation until we actually sample the population. For example, our
-sampling frame probably may not information about `potential
+sampling frame probably may not have information about `potential
 respondents' ideology. Thus, \(N_d\) will be unknown to the researcher,
 unlike \(N\) for the population mean, which is known.
 
@@ -933,7 +933,7 @@ Thus, the sampling distribution tells us what values of an estimator are
 more or less likely and depends on both the population distribution and
 the sampling design.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Notice that the sampling distribution of an estimator will depend on the
 sampling design. Here, we used a simple random sample. Bernoulli
@@ -996,7 +996,7 @@ calculating the expected value of the estimator, \[
 \] The two are the same, meaning the sample mean in this simple random
 sample is unbiased.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 Note that the word ``bias'' sometimes also refers to research that is
 systematically incorrect in other ways. For example, we might complain
@@ -1208,7 +1208,7 @@ this in for the population variance, \[
 \widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 It is easy to get confused about the difference between the population
 variance, the variance of the sample, and the sampling variance (just as
@@ -1676,7 +1676,7 @@ often say that the collection of random variables
 \(F\) if \(\{X_1, \ldots, X_n\}\) is iid with distribution \(F\). The
 \textbf{sample size} \(n\) is the number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1758,7 +1758,7 @@ to be a random vector (that is, a vector of random variables) and then
 \(F\) becomes the joint distribution of that random vector. Nothing
 substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1861,7 +1861,7 @@ complete distribution. To speak about estimation in general, we will let
 estimation} describes how we obtain a single ``best guess'' about
 \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
@@ -1891,7 +1891,7 @@ guess about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 It is widespread, though not universal, to use the ``hat'' notation to
 define an estimator and its estimand. For example, \(\widehat{\theta}\)
@@ -1932,7 +1932,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -1989,7 +1989,7 @@ if we should model a given event count variable as Poisson or Negative
 Binomial? The attractive properties of MLE are only as good as the
 ability to specify the parametric model.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Building up intuition about the \textbf{assumptions-precision tradeoff}
 is essential. Researchers can usually get more precise estimates if they
@@ -2066,14 +2066,14 @@ covariance]\protect\hypertarget{exm-cov-est}{}\label{exm-cov-est}
 
 Suppose we have two variables, \((X_i, Y_i)\). A natural quantity of
 interest here is the population covariance between these variables, \[
-\sigma_{xy} = \text{Cov}[X_i,Y_i] = \E[(X_i - \E[X_i])(Y_i-\E[Y_i])],
+\sigma_{xy} = \cov[X_i,Y_i] = \E[(X_i - \E[X_i])(Y_i-\E[Y_i])],
 \] which has the plug-in estimator, \[
 \widehat{\sigma}_{xy} = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)(Y_i - \Ybar_n).
 \]
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Given the connection between the population mean and the sample mean,
 you may see the \(\E_n[\cdot]\) operator used as a shorthand for the
@@ -2252,7 +2252,7 @@ part of iid. Independence is not needed.
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased but only when
@@ -2560,7 +2560,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Sometimes convergence in probability is written as
 \(\text{plim}(Z_n) = b\) when \(Z_n \inprob b\), \(\text{plim}\) stands
@@ -2588,7 +2588,7 @@ probability that an inconsistent estimator will be close to the truth
 will approach 0. Generally speaking, consistency is a very desirable
 property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Estimators can be inconsistent yet still converge in probability to an
 understandable quantity. For example, we will discuss in later chapters
@@ -2730,7 +2730,7 @@ conditions, the sample mean gets closer to the population mean as
 \(n\rightarrow\infty\). This result holds even when the variance of the
 data is infinite, though researchers will rarely face such a situation.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), which is true.
@@ -2805,7 +2805,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Note that many of the formal results presented so far have ``moment
 conditions'' that certain moments are finite. For the vector WLLN, we
@@ -3086,7 +3086,7 @@ distribution of the underlying random variables, \(X_i\). They could be
 binary, event count, continuous, or anything. The CLT is incredibly
 broadly applicable.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
@@ -3216,7 +3216,7 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
@@ -3283,7 +3283,7 @@ interest. Then, if the confidence intervals are valid and each is
 constructed in the exact same way, we should expect 95 of those
 confidence intervals to contain the true value.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 Suppose we have a 95\% confidence interval, \([0.1, 0.4]\). It would be
 tempting to make a probability statement like
@@ -3665,7 +3665,7 @@ hypothesis, we might view this as evidence against that hypothesis.
 Thus, hypothesis tests help us assess evidence for particular guesses
 about the DGP.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 For the rest of this chapter, we will introduce the concepts following
 the notation in the past chapters. We will assume a random (iid) sample
@@ -4051,7 +4051,7 @@ know that the t-statistic is asymptotically normal,
 \(T \indist \N(0, 1)\). Thus, we can approximate the null distribution
 with the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 The names of the various tests can be quite confusing because they are
 so similar. Earlier, we discussed one-sided versus two-sided tests,
@@ -4095,7 +4095,7 @@ with \(z_{\alpha/2}\) that puts \(\alpha/2\) in the upper tail of the
 standard normal. That is, if \(Z \sim \N(0, 1)\), then \(z_{\alpha/2}\)
 satisfies \(\P(Z \geq z_{\alpha/2}) = \alpha/2\).
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 In R, you can find the \(z_{\alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -4262,7 +4262,7 @@ test levels like \(\alpha = 0.05\). It might be best to view p-values as
 a transformation of the test statistic onto a common scale between 0 and
 1.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-warning-color-frame]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics, and these criticisms sometimes hinge on
@@ -4324,7 +4324,7 @@ function for a particular alternative \(\theta_1 \neq \theta_0\) is \[
 data}\label{exact-tests-under-normal-data}
 
 The Wald test above relies on large-sample approximations but these may
-not be valid in finate samples. Can we get \textbf{exact} inferences at
+not be valid in finite samples. Can we get \textbf{exact} inferences at
 any sample size? Yes, if we make stronger assumptions about the data. In
 particular, assume a \textbf{parametric model} for the data where
 \(X_1,\ldots,X_n\) are iid samples from \(N(\mu,\sigma^2)\). Under a
@@ -4612,9 +4612,12 @@ first-order conditions, in this case, are \[
 \begin{aligned}
   \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
   \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
-\end{aligned}  
-\] Given the linearity of expectations, it is easy to solve for
-\(\beta_0\) in terms of \(\beta_1\), \[ 
+\end{aligned},
+\] where we have evaluated the derivatives at the optimum values,
+\(\beta_0\) and \(\beta_1\), in the first equality of both lines.
+
+Given the linearity of expectations, it is easy to solve for \(\beta_0\)
+in terms of \(\beta_1\), \[ 
 \beta_{0} = \E[Y_{i}] - \beta_{1}\E[X_{i}].
 \] We can plug this into the first-order condition for \(\beta_1\) to
 get \[ 
@@ -4704,7 +4707,7 @@ bivariate case: it chooses the set of coefficients that minimizes the
 expected mean-squared error, where the expectation is over the joint
 distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -4758,7 +4761,7 @@ substantively. Recall that \(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 What does the expression for the population regression coefficients
 mean? It is helpful to separate the intercept or constant term so that
@@ -4767,7 +4770,7 @@ Y_{i} = \beta_{0} + \X'\bfbeta + e_{i},
 \] so \(\bfbeta\) refers to just the vector of coefficients for the
 covariates. In this case, we can write the coefficients in a more
 interpretable way: \[ 
-\bfbeta = \V[\X]^{-1}\text{Cov}(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
+\bfbeta = \V[\X]^{-1}\cov(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
 \]
 
 Thus, the population coefficients take the covariance between the
@@ -5148,7 +5151,7 @@ is income and \(X_{i2}\) is the Black/non-Black voter indicator, then
 \(\beta_3\) represents the change in the slope of the wait time-income
 relationship between Black and non-Black voters.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 In many cases, the so-called marginal coefficients on the lower-order
 terms (\(\beta_1\) for \(X_{i1}\) and \(\beta_2\) for \(X_{i2}\)) are
@@ -5205,7 +5208,7 @@ since \(\E[\widetilde{X}_{i}Z_{i}] = 0\). Remarkably, the coefficient on
 \(X_i\) from the ``long'' BLP in Equation~\ref{eq-two-var-blp} is the
 same as the regression of \(Y_i\) on this orthogonalized
 \(\widetilde{X}_i\), \[ 
-\beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
+\beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
 \]
 
 We can expand this idea to when there are several other covariates.
@@ -5361,7 +5364,7 @@ from the population to make inferences about the line of best fit in the
 population and the population coefficients. To do this, we will focus on
 the OLS estimator for these population quantities.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -5384,10 +5387,9 @@ definite} and thus invertible. We will return to this assumption below.
 
 In a simple bivariate linear projection model
 \(m(X_{i}) = \beta_0 + \beta_1X_{i}\), we saw that the population slope
-was \(\beta_1= \text{cov}(Y_{i},X_{i})/ \V[X_{i}]\). This approach means
-that the estimator for the slope should be the ratio of the sample
-covariance of \(Y_i\) and \(X_i\) to the sample variance of \(X_i\), or
-\[ 
+was \(\beta_1= \cov(Y_{i},X_{i})/ \V[X_{i}]\). This approach means that
+the estimator for the slope should be the ratio of the sample covariance
+of \(Y_i\) and \(X_i\) to the sample variance of \(X_i\), or \[ 
 \widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
 \]
 
@@ -5440,7 +5442,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Almost all regression will contain an intercept term, usually
 represented as a constant 1 in the covariate vector. It is also possible
@@ -5742,7 +5744,7 @@ combination of the covariate matrix \(\Xmat\) closest to this vector in
 terms of the Euclidean distance, which is just the sum of squares.
 
 Let
-\(\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^(k+1)\}\)
+\(\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^{k+1}\}\)
 be the \textbf{column space} of the matrix \(\Xmat\). This set is all
 linear combinations of the columns of \(\Xmat\) or the set of all
 possible linear predictions we could obtain from \(\Xmat\). Note that
@@ -5865,7 +5867,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 The residual regression approach is:
 
@@ -6155,7 +6157,7 @@ needed to ensure that the best linear predictor,
 \(\bfbeta = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 The linear projection model makes the following assumptions:
 
@@ -6218,7 +6220,7 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the Central Limit
 Theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
@@ -6511,7 +6513,7 @@ we only need a one-sided rejection region of the form
 straightforward (see the above callout tip). For \(q = 2\) and a
 \(\alpha = 0.05\), the critical value is roughly 6.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -6587,7 +6589,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6648,7 +6650,7 @@ we have, \[
 \(\V[\mb{e}\mid \Xmat] = \E[\mb{ee}' \mid \Xmat]\), which is a matrix
 with diagonal entries \(\E[e_{i}^{2} \mid \Xmat] = \sigma^2_i\) and
 off-diagonal entries
-\(\E[e_{i}e_{j} \Xmat] = \E[e_{i}\mid \Xmat]\E[e_{j}\mid\Xmat] = 0\),
+\(\E[e_{i}e_{j} \mid \Xmat] = \E[e_{i}\mid \Xmat]\E[e_{j}\mid\Xmat] = 0\),
 where the first equality follows from the independence of the errors
 across units. Thus, \(\V[\mb{e} \mid \Xmat]\) is a diagonal matrix with
 \(\sigma^2_i\) along the diagonal, which means \[
@@ -6704,7 +6706,7 @@ homoskedasticity of errors is such a historically important assumption
 that statistical software implementations of OLS like \texttt{lm()} in R
 assume it by default.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -6859,7 +6861,7 @@ proceed in small samples? Historically we would have assumed
 (conditional) normality of the errors, basically proceeding with some
 knowledge that we were wrong but hopefully not too wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, colback=white, toptitle=1mm, bottomrule=.15mm, breakable, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, titlerule=0mm, opacitybacktitle=0.6, rightrule=.15mm, coltitle=black, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, toprule=.15mm, left=2mm, opacityback=0, bottomtitle=1mm, arc=.35mm]
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, toprule=.15mm, bottomrule=.15mm, opacitybacktitle=0.6, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, breakable, colback=white, left=2mm, opacityback=0, toptitle=1mm, titlerule=0mm, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, leftrule=.75mm, coltitle=black, colframe=quarto-callout-note-color-frame]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
