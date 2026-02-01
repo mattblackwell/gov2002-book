@@ -205,7 +205,7 @@ Let $X_1, \ldots, X_n$ be i.i.d. draws from a distribution with mean $\mu = \E[X
 ::: {.proof}
 Recall that the sample mean is unbiased, so $\E[\Xbar_n] = \mu$ with sampling variance $\sigma^2/n$. We can then apply Chebyshev to the sample mean to get
 $$
-\P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\V[\Xbar_n]}{\delta} = \frac{\sigma^2}{n\delta^2}
+\P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\V[\Xbar_n]}{\delta^2} = \frac{\sigma^2}{n\delta^2}
 $$
 An $n\rightarrow\infty$, the right-hand side goes to 0, which means that the left-hand side also must go to 0, which is the definition of $\Xbar_n$ converging in probability to $\mu$. 
 :::
