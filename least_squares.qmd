@@ -65,7 +65,7 @@ is the sum of the squared residuals. To distinguish it from other, more complica
 
 Let's solve this minimization problem. We write down the first-order conditions as
 $$ 
-0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = 2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) - 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
+0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = -2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) + 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
 $$
 We can rearrange this system of equations to
 $$ 
