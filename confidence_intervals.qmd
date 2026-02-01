@@ -177,7 +177,7 @@ $$
 $$
 Notice that will be true when 
 $$ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 $$
 or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 
