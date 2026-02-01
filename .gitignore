@@ -8,3 +8,5 @@ site_libs
 .Rhistory
 .DS_Store
 /index.aux
+
+**/*.quarto_ipynb
