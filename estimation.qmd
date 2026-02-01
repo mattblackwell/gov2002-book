@@ -365,7 +365,7 @@ The sampling distribution is the distribution of these sample means across repea
 
 As discussed in our introduction to estimators, their usefulness depends on how well they help us learn about the quantity of interest. If we get an estimate $\widehat{\theta} = 1.6$, we would like to know that this is "close" to the true parameter $\theta$. The sampling distribution is key to answering these questions. Intuitively, we would like the sampling distribution of $\widehat{\theta}_n$ to be as tightly clustered around the true $\theta$ as possible. Here, though, we run into a problem: the sampling distribution depends on the population distribution since it is about repeated samples of the data from that distribution filtered through the function $\theta()$. Since $F$ is unknown, this implies that the sampling distribution will also usually be unknown. 
 
-Even though we cannot precisely pin down the entire sampling distribution, we can use assumptions to derive specific properties of the sampling distribution that are useful in comparing estimators. Note that the properties here will be very similar to the 
+Even though we cannot precisely pin down the entire sampling distribution, we can use assumptions to derive specific properties of the sampling distribution that are useful in comparing estimators. Note that the properties here will be very similar to the properties of a good estimator defined in @sec-design-properties.
 
 
 ### Bias

@@ -211,7 +211,7 @@ Notice that the sampling distribution of an estimator will depend on the samplin
 
 
 
-### Properties of the sampling distribution of an estimator 
+### Properties of the sampling distribution of an estimator {#sec-design-properties}
 
 Generally speaking, we want "good" estimators. But what makes an estimator “good’’? The best estimator would obviously be the one that is right all of the time ($\Xbar_n = \overline{x}$ with probability 1), but this is only possible if we conduct a census –that is, sample everyone in the population – or the population does not vary. Neither situation is typical for most researchers.
 
