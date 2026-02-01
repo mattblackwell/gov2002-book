@@ -556,7 +556,7 @@ Under the normal linear regression model, we have
 $$ 
 \begin{aligned}
   \bhat \mid \Xmat &\sim \N\left(\bfbeta, \sigma^{2}\left(\Xmat'\Xmat\right)^{-1}\right) \\
-  \frac{\widehat{\beta}_{j} - \beta_{j}}{[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}]_{jj}/\sqrt{n}} &\sim t_{n-k-1} \\
+  \frac{\widehat{\beta}_{j} - \beta_{j}}{[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}]_{jj}} &\sim t_{n-k-1} \\
   W/q &\sim F_{q, n-k-1}. 
 \end{aligned}
 $$
