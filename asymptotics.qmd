@@ -855,7 +855,7 @@ $$
 $$
 which we can use to generate the equivalent multivariate linear approximation
 $$
-\left(\mb{h}(\widehat{\mb{\theta}}_n) - \mb{h}(\mb{\theta}_0)\right) \approx \mb{H}(\mb{\theta}_0)'\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0\right).
+\left(\mb{h}(\widehat{\mb{\theta}}_n) - \mb{h}(\mb{\theta}_0)\right) \approx \mb{H}(\mb{\theta}_0)\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0\right).
 $$
 We can use this fact to derive the multivariate delta method.
 
