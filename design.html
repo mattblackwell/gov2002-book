@@ -441,9 +441,9 @@ window.Quarto = {
 </div>
 <p>If we sampled two hobbits, the srs (the simple random sample) would place <span class="math inline">\(1/{4\choose 2} = 1/6\)</span> probability of each of the above samples <span class="math inline">\(\mathcal{S}_j\)</span>. Note that the srs gives zero probability to any sample that does not have exactly <span class="math inline">\(n\)</span> units in the sample.</p>
 <p>Another common sampling design –the <strong>Bernoulli sampling</strong> design – works by choosing each unit independently with the same probability.</p>
-<div id="def-srs" class="theorem definition">
+<div id="def-bernoulli-sampling" class="theorem definition">
 <p><span class="theorem-title"><strong>Definition 1.2</strong></span> <strong>Bernoulli sampling</strong> is a probability sampling design where independent Bernoulli trials with probability of success <span class="math inline">\(q\)</span> determine whether each unit in the population will be included in the sample. More specifically, let <span class="math inline">\(\mb{z} = (z_{1}, \ldots, z_{N})\)</span> be a particular possible sampling. Bernoulli sampling will then be <span class="math display">\[
-\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q_i^{Z_i}(1 - q_i)^{1-Z_i}
+\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q^{Z_i}(1 - q)^{1-Z_i}
 \]</span></p>
 </div>
 <p>Bernoulli sampling is very straightforward because independently selecting units simplifies many calculations. However, this “coin flipping” approach means that the sample size, <span class="math inline">\(N_s = \sum_{i=1}^N Z_i\)</span>, will be itself a random variable because it is the result of how many of the coin flips land on “heads.”</p>
@@ -464,11 +464,11 @@ window.Quarto = {
 t = \sum_{i=1}^N x_i = N\overline{x}.
 \]</span></p>
 <div id="exm-subpopulation" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1.4 (Subpopulation means)</strong></span> We may also be interested in quantities for different subdomains. Suppose we are interested in estimating the fraction of (say) conservative-identifying respondents who support increasing legal immigration. Let <span class="math inline">\(d= 1, \ldots, D\)</span> be the number of subdomains or subpopulations. In this case, we might have <span class="math inline">\(d = 1\)</span> as liberal identifiers, <span class="math inline">\(d = 2\)</span> as moderate identifiers, and <span class="math inline">\(d = 3\)</span> as conservative identifiers. We will refer to the subpopulation for each of these groups as <span class="math inline">\(\mathcal{U}_d \subset \{1,\ldots, N\}\)</span> and we define the size of these groups as <span class="math inline">\(N_d = |\mathcal{U}_d\)</span>. So, <span class="math inline">\(N_3\)</span> would be the number of conservative-identifying citizens in the population.</p>
+<p><span class="theorem-title"><strong>Example 1.4 (Subpopulation means)</strong></span> We may also be interested in quantities for different subdomains. Suppose we are interested in estimating the fraction of (say) conservative-identifying respondents who support increasing legal immigration. Let <span class="math inline">\(d= 1, \ldots, D\)</span> be the number of subdomains or subpopulations. In this case, we might have <span class="math inline">\(d = 1\)</span> as liberal identifiers, <span class="math inline">\(d = 2\)</span> as moderate identifiers, and <span class="math inline">\(d = 3\)</span> as conservative identifiers. We will refer to the subpopulation for each of these groups as <span class="math inline">\(\mathcal{U}_d \subset \{1,\ldots, N\}\)</span> and we define the size of these groups as <span class="math inline">\(N_d = |\mathcal{U}_d|\)</span>. So, <span class="math inline">\(N_3\)</span> would be the number of conservative-identifying citizens in the population.</p>
 <p>The mean for each group is then <span class="math display">\[
 \overline{x}_d = \frac{1}{N_d} \sum_{i \in \mathcal{U}_d} x_i.
 \]</span></p>
-<p>Subpopulation estimation can be slightly more complicated than population estimation because we may not know who is in which subpopulation until we actually sample the population. For example, our sampling frame probably may not information about ‘potential respondents’ ideology. Thus, <span class="math inline">\(N_d\)</span> will be unknown to the researcher, unlike <span class="math inline">\(N\)</span> for the population mean, which is known.</p>
+<p>Subpopulation estimation can be slightly more complicated than population estimation because we may not know who is in which subpopulation until we actually sample the population. For example, our sampling frame probably may not have information about ‘potential respondents’ ideology. Thus, <span class="math inline">\(N_d\)</span> will be unknown to the researcher, unlike <span class="math inline">\(N\)</span> for the population mean, which is known.</p>
 </div>
 <p>We may be interested in many other quantities of interest, but design-based inference is largely focused on these types of population and subpopulation means and totals.</p>
 </section>
@@ -713,9 +713,9 @@ N^2\overline{x}^2 = \sum_{i=1}^N x_i^2 + \sum_{i=1}^N \sum_{j\neq i} x_ix_j,
 \]</span> which provides a hint as to the quantity that we will add and subtract <span class="math display">\[
 \begin{aligned}
 \V[\Xbar_{n}] &amp;=  \frac{N-n}{nN^2}\left[\sum_{i=1}^N x_i^2  \textcolor{red!50}{\underbrace{+ \frac{1}{N-1}\sum_{i=1}^N x_i^2 - \frac{1}{N-1}\sum_{i=1}^N x_i^2}_{\text{add and subtract}}} - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right] \\
-&amp;=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{1}{N-1} \sum_{i=1}^N\sum_{j=i}^N x_ix_j\right] \\
-&amp;=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{N^2}{N-1} \overline{x}\right] \\
-&amp;=  \frac{N-n}{nN(N-1)}\left[\sum_{i=1}^N x_i^2  - N \overline{x}\right] \\
+&amp;=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{1}{N-1} \sum_{i=1}^N\sum_{j=1}^N x_ix_j\right] \\
+&amp;=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{N^2}{N-1} \overline{x}^2\right] \\
+&amp;=  \frac{N-n}{nN(N-1)}\left[\sum_{i=1}^N x_i^2  - N \overline{x}^2\right] \\
 &amp;=  \frac{N-n}{nN(N-1)}\sum_{i=1}^N (x_i - \overline{x})^2 \\
 &amp;= \frac{(N-n)}{N}\frac{s^2}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n}.
 \end{aligned}

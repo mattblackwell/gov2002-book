@@ -386,8 +386,9 @@ m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \ar
 \begin{aligned}
   \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{0}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})] = 0 \\
   \frac{\partial \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}]}{\partial b_{1}} = \E[-2(Y_{i} - \beta_{0} - \beta_{1}X_{i})X_{i}] = 0
-\end{aligned}  
-\]</span> Given the linearity of expectations, it is easy to solve for <span class="math inline">\(\beta_0\)</span> in terms of <span class="math inline">\(\beta_1\)</span>, <span class="math display">\[
+\end{aligned},
+\]</span> where we have evaluated the derivatives at the optimum values, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, in the first equality of both lines.</p>
+<p>Given the linearity of expectations, it is easy to solve for <span class="math inline">\(\beta_0\)</span> in terms of <span class="math inline">\(\beta_1\)</span>, <span class="math display">\[
 \beta_{0} = \E[Y_{i}] - \beta_{1}\E[X_{i}].
 \]</span> We can plug this into the first-order condition for <span class="math inline">\(\beta_1\)</span> to get <span class="math display">\[
 \begin{aligned}
@@ -485,7 +486,7 @@ Note
 <p>What does the expression for the population regression coefficients mean? It is helpful to separate the intercept or constant term so that we have <span class="math display">\[
 Y_{i} = \beta_{0} + \X'\bfbeta + e_{i},
 \]</span> so <span class="math inline">\(\bfbeta\)</span> refers to just the vector of coefficients for the covariates. In this case, we can write the coefficients in a more interpretable way: <span class="math display">\[
-\bfbeta = \V[\X]^{-1}\text{Cov}(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
+\bfbeta = \V[\X]^{-1}\cov(\X, Y), \qquad \beta_0 = \mu_Y - \mb{\mu}'_{\mb{X}}\bfbeta
 \]</span></p>
 <p>Thus, the population coefficients take the covariance between the outcome and the covariates and “divide” it by information about variances and covariances of the covariates. The intercept recenters the regression so that projection errors are mean zero. This means that these coefficients generalize the bivariate formula to this multiple covariate context.</p>
 </div>
@@ -661,7 +662,7 @@ m(x_{1}, x_{2}, x_{1}x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \bet
 <p>To write a simple formula for <span class="math inline">\(\beta\)</span> when the covariates are not orthogonal, we <strong>orthogonalize</strong> <span class="math inline">\(X_i\)</span> by obtaining the prediction errors from a population linear regression of <span class="math inline">\(X_i\)</span> on <span class="math inline">\(Z_i\)</span>: <span class="math display">\[
 \widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
 \]</span> Given the properties of projection errors, we know that this orthogonalized version of <span class="math inline">\(X_{i}\)</span> will be uncorrelated with <span class="math inline">\(Z_{i}\)</span> since <span class="math inline">\(\E[\widetilde{X}_{i}Z_{i}] = 0\)</span>. Remarkably, the coefficient on <span class="math inline">\(X_i\)</span> from the “long” BLP in <a href="#eq-two-var-blp" class="quarto-xref">Equation&nbsp;<span>5.1</span></a> is the same as the regression of <span class="math inline">\(Y_i\)</span> on this orthogonalized <span class="math inline">\(\widetilde{X}_i\)</span>, <span class="math display">\[
-\beta = \frac{\text{cov}(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
+\beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
 \]</span></p>
 <p>We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(\X_i\)</span> and we are interested in the coefficient on the <span class="math inline">\(k\)</span>th covariate. Let <span class="math inline">\(\X_{i,-k}\)</span> be the vector of covariates omitting the <span class="math inline">\(k\)</span>th entry and let <span class="math inline">\(m_k(\X_{i,-k})\)</span> represent the BLP of <span class="math inline">\(X_{ik}\)</span> on these other covariates. We can define <span class="math inline">\(\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})\)</span> as the <span class="math inline">\(k\)</span>th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on <span class="math inline">\(X_{ik}\)</span> as <span class="math display">\[
 \beta_k = \frac{\cov(Y_i, \widetilde{X}_{ik})}{\V[\widetilde{X}_{ik}]}.

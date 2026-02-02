@@ -604,7 +604,7 @@ F = \frac{W}{q}.
 \]</span> because under the linear CEF assumption <span class="math inline">\(\E[\mb{e}\mid \Xmat] = 0\)</span>.</p>
 <p>For the conditional sampling variance, we can use the same decomposition we have, <span class="math display">\[
 \V[\bhat \mid \Xmat] = \V[\bfbeta + (\Xmat'\Xmat)^{-1}\Xmat'\mb{e} \mid \Xmat] = (\Xmat'\Xmat)^{-1}\Xmat'\V[\mb{e} \mid \Xmat]\Xmat(\Xmat'\Xmat)^{-1}.
-\]</span> Since <span class="math inline">\(\E[\mb{e}\mid \Xmat] = 0\)</span>, we know that <span class="math inline">\(\V[\mb{e}\mid \Xmat] = \E[\mb{ee}' \mid \Xmat]\)</span>, which is a matrix with diagonal entries <span class="math inline">\(\E[e_{i}^{2} \mid \Xmat] = \sigma^2_i\)</span> and off-diagonal entries <span class="math inline">\(\E[e_{i}e_{j} \Xmat] = \E[e_{i}\mid \Xmat]\E[e_{j}\mid\Xmat] = 0\)</span>, where the first equality follows from the independence of the errors across units. Thus, <span class="math inline">\(\V[\mb{e} \mid \Xmat]\)</span> is a diagonal matrix with <span class="math inline">\(\sigma^2_i\)</span> along the diagonal, which means <span class="math display">\[
+\]</span> Since <span class="math inline">\(\E[\mb{e}\mid \Xmat] = 0\)</span>, we know that <span class="math inline">\(\V[\mb{e}\mid \Xmat] = \E[\mb{ee}' \mid \Xmat]\)</span>, which is a matrix with diagonal entries <span class="math inline">\(\E[e_{i}^{2} \mid \Xmat] = \sigma^2_i\)</span> and off-diagonal entries <span class="math inline">\(\E[e_{i}e_{j} \mid \Xmat] = \E[e_{i}\mid \Xmat]\E[e_{j}\mid\Xmat] = 0\)</span>, where the first equality follows from the independence of the errors across units. Thus, <span class="math inline">\(\V[\mb{e} \mid \Xmat]\)</span> is a diagonal matrix with <span class="math inline">\(\sigma^2_i\)</span> along the diagonal, which means <span class="math display">\[
 \Xmat'\V[\mb{e} \mid \Xmat]\Xmat = \sum_{i=1}^n \sigma^2_i \X_i\X_i',
 \]</span> establishing the conditional sampling variance.</p>
 </div>
@@ -731,7 +731,7 @@ e_i \mid \Xmat \sim \N(0, \sigma^2).
 <p><span class="theorem-title"><strong>Theorem 7.6</strong></span> Under the normal linear regression model, we have <span class="math display">\[
 \begin{aligned}
   \bhat \mid \Xmat &amp;\sim \N\left(\bfbeta, \sigma^{2}\left(\Xmat'\Xmat\right)^{-1}\right) \\
-  \frac{\widehat{\beta}_{j} - \beta_{j}}{[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}]_{jj}/\sqrt{n}} &amp;\sim t_{n-k-1} \\
+  \frac{\widehat{\beta}_{j} - \beta_{j}}{[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}]_{jj}} &amp;\sim t_{n-k-1} \\
   W/q &amp;\sim F_{q, n-k-1}.
 \end{aligned}
 \]</span></p>

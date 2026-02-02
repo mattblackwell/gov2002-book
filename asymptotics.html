@@ -491,7 +491,7 @@ Note
 </div>
 <div class="proof">
 <p><span class="proof-title"><em>Proof</em>. </span>Recall that the sample mean is unbiased, so <span class="math inline">\(\E[\Xbar_n] = \mu\)</span> with sampling variance <span class="math inline">\(\sigma^2/n\)</span>. We can then apply Chebyshev to the sample mean to get <span class="math display">\[
-\P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\V[\Xbar_n]}{\delta} = \frac{\sigma^2}{n\delta^2}
+\P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\V[\Xbar_n]}{\delta^2} = \frac{\sigma^2}{n\delta^2}
 \]</span> An <span class="math inline">\(n\rightarrow\infty\)</span>, the right-hand side goes to 0, which means that the left-hand side also must go to 0, which is the definition of <span class="math inline">\(\Xbar_n\)</span> converging in probability to <span class="math inline">\(\mu\)</span>.</p>
 </div>
 <p>The weak law of large numbers (WLLN) shows that, under general conditions, the sample mean gets closer to the population mean as <span class="math inline">\(n\rightarrow\infty\)</span>. This result holds even when the variance of the data is infinite, though researchers will rarely face such a situation.</p>
@@ -894,7 +894,7 @@ h'(\mu) = \frac{\partial \exp(\mu)}{\partial \mu} = \exp(\mu)
   \frac{\partial h_m(\mb{\theta})}{\partial \theta_1} &amp; \frac{\partial h_m(\mb{\theta})}{\partial \theta_2} &amp; \cdots &amp; \frac{\partial h_m(\mb{\theta})}{\partial \theta_k}
 \end{pmatrix},
 \]</span> which we can use to generate the equivalent multivariate linear approximation <span class="math display">\[
-\left(\mb{h}(\widehat{\mb{\theta}}_n) - \mb{h}(\mb{\theta}_0)\right) \approx \mb{H}(\mb{\theta}_0)'\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0\right).
+\left(\mb{h}(\widehat{\mb{\theta}}_n) - \mb{h}(\mb{\theta}_0)\right) \approx \mb{H}(\mb{\theta}_0)\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0\right).
 \]</span> We can use this fact to derive the multivariate delta method.</p>
 <div id="thm-multivariate-delta" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.12</strong></span> Suppose that <span class="math inline">\(\sqrt{n}\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0 \right) \indist \N(0, \mb{\Sigma})\)</span>, then for any function <span class="math inline">\(\mb{h}\)</span> that is continuously differentiable in a neighborhood of <span class="math inline">\(\mb{\theta}_0\)</span>, we have <span class="math display">\[
