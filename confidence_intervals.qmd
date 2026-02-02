@@ -73,7 +73,7 @@ $$
 $$
 is an asymptotically valid estimator.[^1] Replacing $\Xbar_n$ for $\widehat{\theta}_n$ and $s/\sqrt{n}$ for $\widehat{\se}[\widehat{\theta}_n]$ establishes how the standard 95% confidence interval for the sample mean above asymptotically valid. 
 
-[^1]: Implicit in this analyis is that the estimate of the standard error is consistent. 
+[^1]: Implicit in this analysis is that the estimate of the standard error is consistent. 
 
 
 ```{r}
@@ -118,7 +118,7 @@ $$
 
 ## Interpreting confidence intervals
 
-Remember that the interpretation of cofidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this a bit. 
+Remember that the interpretation of confidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this a bit. 
 
 
 ::: {#exm-cis}
@@ -129,7 +129,7 @@ Suppose that we are taking samples of size $n=500$ of random variables where $X_
 2. Calculate the 95% confidence interval sample mean $\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}$. 
 3. Plot the intervals along the x-axis and color them blue if they contain the truth (1) and red if they do not. 
 
-@fig-ci-sim shows 100 iteraction of these steps. Here we see that, as expected, the large majority of calculated CIs conatain the true value. In fact, exactly 5 of the random samples produce intervals that fail to include 1, which is an exact coverage rate of 95%. Of course, this is just one simulation and a different set of 100 random samples might have produced a slightly different coverage rate. The gauarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples the long-run frequency of intervals covering the truth would approach 0.95. 
+@fig-ci-sim shows 100 iterations of these steps. Here we see that, as expected, the large majority of calculated CIs contain the true value. In fact, exactly 5 of the random samples produce intervals that fail to include 1, which is an exact coverage rate of 95%. Of course, this is just one simulation and a different set of 100 random samples might have produced a slightly different coverage rate. The guarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples the long-run frequency of intervals covering the truth would approach 0.95. 
 
 ```{r}
 #| label: "fig-ci-sim"
@@ -177,7 +177,7 @@ $$
 $$
 Notice that will be true when 
 $$ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + \widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 $$
 or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 

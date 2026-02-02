@@ -91,10 +91,10 @@ If we sampled two hobbits, the srs (the simple random sample) would place $1/{4\
 
 Another common sampling design –the **Bernoulli sampling** design – works by choosing each unit independently with the same probability. 
 
-::: {#def-srs}
+::: {#def-bernoulli-sampling}
 **Bernoulli sampling** is a probability sampling design where independent Bernoulli trials with probability of success $q$ determine whether each unit in the population will be included in the sample. More specifically, let $\mb{z} = (z_{1}, \ldots, z_{N})$ be a particular possible sampling. Bernoulli sampling will then be 
 $$
-\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q_i^{Z_i}(1 - q_i)^{1-Z_i}
+\P(\mb{Z} = \mb{z}) = \P(Z_1 = z_1) \cdots \P(Z_N = z_N) = \prod_{i=1}^N q^{Z_i}(1 - q)^{1-Z_i}
 $$
 :::
 
@@ -136,14 +136,14 @@ $$
 
 ## Subpopulation means
 
-We may also be interested in quantities for different subdomains. Suppose we are interested in estimating the fraction of (say) conservative-identifying respondents who support increasing legal immigration. Let $d= 1, \ldots, D$ be the number of subdomains or subpopulations. In this case, we might have $d = 1$ as liberal identifiers, $d = 2$ as moderate identifiers, and $d = 3$ as conservative identifiers. We will refer to the subpopulation for each of these groups as $\mathcal{U}_d \subset \{1,\ldots, N\}$ and we define the size of these groups as $N_d = |\mathcal{U}_d$. So, $N_3$ would be the number of conservative-identifying citizens in the population. 
+We may also be interested in quantities for different subdomains. Suppose we are interested in estimating the fraction of (say) conservative-identifying respondents who support increasing legal immigration. Let $d= 1, \ldots, D$ be the number of subdomains or subpopulations. In this case, we might have $d = 1$ as liberal identifiers, $d = 2$ as moderate identifiers, and $d = 3$ as conservative identifiers. We will refer to the subpopulation for each of these groups as $\mathcal{U}_d \subset \{1,\ldots, N\}$ and we define the size of these groups as $N_d = |\mathcal{U}_d|$. So, $N_3$ would be the number of conservative-identifying citizens in the population. 
 
 The mean for each group is then
 $$
 \overline{x}_d = \frac{1}{N_d} \sum_{i \in \mathcal{U}_d} x_i.
 $$
 
-Subpopulation estimation can be slightly more complicated than population estimation because we may not know who is in which subpopulation until we actually sample the population. For example, our sampling frame probably may not information about ‘potential respondents’ ideology. Thus, $N_d$ will be unknown to the researcher, unlike $N$ for the population mean, which is known. 
+Subpopulation estimation can be slightly more complicated than population estimation because we may not know who is in which subpopulation until we actually sample the population. For example, our sampling frame probably may not have information about ‘potential respondents’ ideology. Thus, $N_d$ will be unknown to the researcher, unlike $N$ for the population mean, which is known. 
 
 :::
 
@@ -349,9 +349,9 @@ which provides a hint as to the quantity that we will add and subtract
 $$
 \begin{aligned}
 \V[\Xbar_{n}] &=  \frac{N-n}{nN^2}\left[\sum_{i=1}^N x_i^2  \textcolor{red!50}{\underbrace{+ \frac{1}{N-1}\sum_{i=1}^N x_i^2 - \frac{1}{N-1}\sum_{i=1}^N x_i^2}_{\text{add and subtract}}} - \frac{1}{N-1} \sum_{i=1}^N\sum_{j\neq i} x_ix_j\right] \\
-&=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{1}{N-1} \sum_{i=1}^N\sum_{j=i}^N x_ix_j\right] \\
-&=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{N^2}{N-1} \overline{x}\right] \\
-&=  \frac{N-n}{nN(N-1)}\left[\sum_{i=1}^N x_i^2  - N \overline{x}\right] \\
+&=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{1}{N-1} \sum_{i=1}^N\sum_{j=1}^N x_ix_j\right] \\
+&=  \frac{N-n}{nN^2}\left[\frac{N}{N-1}\sum_{i=1}^N x_i^2  - \frac{N^2}{N-1} \overline{x}^2\right] \\
+&=  \frac{N-n}{nN(N-1)}\left[\sum_{i=1}^N x_i^2  - N \overline{x}^2\right] \\
 &=  \frac{N-n}{nN(N-1)}\sum_{i=1}^N (x_i - \overline{x})^2 \\
 &= \frac{(N-n)}{N}\frac{s^2}{n} = \left(1 - \frac{n}{N}\right)\frac{s^2}{n}.
 \end{aligned}

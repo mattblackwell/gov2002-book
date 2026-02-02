@@ -25,7 +25,7 @@ The linear projection model makes the following assumptions:
 
 3. $\E[\Vert \X_{i}\Vert^{2}] < \infty$ (finite variances and covariances of covariates)
 
-2. $\E[\X_{i}\X_{i}']$ is positive definite (no linear dependence in the covariates)
+4. $\E[\X_{i}\X_{i}']$ is positive definite (no linear dependence in the covariates)
 :::
 
 
@@ -372,7 +372,7 @@ For the conditional sampling variance, we can use the same decomposition we have
 $$
 \V[\bhat \mid \Xmat] = \V[\bfbeta + (\Xmat'\Xmat)^{-1}\Xmat'\mb{e} \mid \Xmat] = (\Xmat'\Xmat)^{-1}\Xmat'\V[\mb{e} \mid \Xmat]\Xmat(\Xmat'\Xmat)^{-1}. 
 $$
-Since $\E[\mb{e}\mid \Xmat] = 0$, we know that $\V[\mb{e}\mid \Xmat] = \E[\mb{ee}' \mid \Xmat]$, which is a matrix with diagonal entries $\E[e_{i}^{2} \mid \Xmat] = \sigma^2_i$ and off-diagonal entries $\E[e_{i}e_{j} \Xmat] = \E[e_{i}\mid \Xmat]\E[e_{j}\mid\Xmat] = 0$, where the first equality follows from the independence of the errors across units. Thus, $\V[\mb{e} \mid \Xmat]$ is a diagonal matrix with $\sigma^2_i$ along the diagonal, which means
+Since $\E[\mb{e}\mid \Xmat] = 0$, we know that $\V[\mb{e}\mid \Xmat] = \E[\mb{ee}' \mid \Xmat]$, which is a matrix with diagonal entries $\E[e_{i}^{2} \mid \Xmat] = \sigma^2_i$ and off-diagonal entries $\E[e_{i}e_{j} \mid \Xmat] = \E[e_{i}\mid \Xmat]\E[e_{j}\mid\Xmat] = 0$, where the first equality follows from the independence of the errors across units. Thus, $\V[\mb{e} \mid \Xmat]$ is a diagonal matrix with $\sigma^2_i$ along the diagonal, which means
 $$
 \Xmat'\V[\mb{e} \mid \Xmat]\Xmat = \sum_{i=1}^n \sigma^2_i \X_i\X_i',
 $$
@@ -556,7 +556,7 @@ Under the normal linear regression model, we have
 $$ 
 \begin{aligned}
   \bhat \mid \Xmat &\sim \N\left(\bfbeta, \sigma^{2}\left(\Xmat'\Xmat\right)^{-1}\right) \\
-  \frac{\widehat{\beta}_{j} - \beta_{j}}{[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}]_{jj}/\sqrt{n}} &\sim t_{n-k-1} \\
+  \frac{\widehat{\beta}_{j} - \beta_{j}}{[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}]_{jj}} &\sim t_{n-k-1} \\
   W/q &\sim F_{q, n-k-1}. 
 \end{aligned}
 $$

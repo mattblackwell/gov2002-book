@@ -394,7 +394,7 @@ $$
 
 ## Exact tests under normal data
 
-The Wald test above relies on large-sample approximations but these may not be valid in finate samples. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are iid samples from $N(\mu,\sigma^2)$. Under a null hypothesis of $H_0: \mu = \mu_0$, we can show that 
+The Wald test above relies on large-sample approximations but these may not be valid in finite samples. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are iid samples from $N(\mu,\sigma^2)$. Under a null hypothesis of $H_0: \mu = \mu_0$, we can show that 
 $$ 
 T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
 $$

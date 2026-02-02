@@ -47,7 +47,7 @@ $$
 which exists if $\sum_{i=1}^n \X_i\X_i'$ is **positive definite** and thus invertible. We will return to this assumption below. 
 
 
-In a simple bivariate linear projection model $m(X_{i}) = \beta_0 + \beta_1X_{i}$, we saw that the population slope was $\beta_1= \text{cov}(Y_{i},X_{i})/ \V[X_{i}]$. This approach means that the estimator for the slope should be the ratio of the sample covariance of $Y_i$ and $X_i$ to the sample variance of $X_i$, or
+In a simple bivariate linear projection model $m(X_{i}) = \beta_0 + \beta_1X_{i}$, we saw that the population slope was $\beta_1= \cov(Y_{i},X_{i})/ \V[X_{i}]$. This approach means that the estimator for the slope should be the ratio of the sample covariance of $Y_i$ and $X_i$ to the sample variance of $X_i$, or
 $$ 
 \widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
 $$
@@ -65,7 +65,7 @@ is the sum of the squared residuals. To distinguish it from other, more complica
 
 Let's solve this minimization problem. We write down the first-order conditions as
 $$ 
-0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = 2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) - 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
+0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = -2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) + 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
 $$
 We can rearrange this system of equations to
 $$ 
@@ -332,7 +332,7 @@ Note that these interpretations only hold when the regression consists solely of
 
 OLS has a very nice geometric interpretation that adds a lot of intuition for various aspects of the method. In this geometric approach, we view $\mb{Y}$ as an $n$-dimensional vector in $\mathbb{R}^n$. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix $\Xmat$ closest to this vector in terms of the Euclidean distance, which is just the sum of squares.
 
-Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^(k+1)\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Note that the OLS fitted values, $\Xmat\bhat$, are in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
+Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^{k+1}\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Note that the OLS fitted values, $\Xmat\bhat$, are in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
 
 Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of $\Xmat$ to the outcome vector $\mb{Y}$. This is called the **projection** of $\mb{Y}$ onto $\mathcal{C}(\Xmat)$. @fig-projection shows this projection for a case with $n=3$ and 2 columns in $\Xmat$. The shaded blue region represents the plane of the column space of $\Xmat$, and $\Xmat\bhat$ is the closest point to $\mb{Y}$ in that space. This illustrates the whole idea of the OLS estimator: find the linear combination of the columns of $\Xmat$ (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).
 
