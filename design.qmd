@@ -228,7 +228,7 @@ To back up, the sampling distribution shows us all the possible values of an est
 $$
 \textsf{bias}[\Xbar_{n}] = \E[\Xbar_{n}] - \overline{x}.
 $$
-Any estimator that has bias equal to zero is call an **unbiased** estimator. 
+Any estimator that has bias equal to zero is called an **unbiased** estimator. 
 
 We can calculate the bias of our hobbit srs (where we sampled two hobbits from the Fellowship of the Ring with equal probability) by first calculating the expected value of the estimator,
 $$
