@@ -81,7 +81,7 @@ $$
 as $n\rightarrow \infty$. We write this $X_n \inprob b$. 
 :::
 
-What's happening in this definition? The even $|X_n - b| > \varepsilon$ says that a draw of $X_n$ is more than $\varepsilon$ away from $b$ (above or below). So convergence in probability says that the probability of being some distance away from the limit value goes to zero as the $n$ goes to $\infty$. With deterministic sequences, we said that $a_n$ converges to $a$ as it gets closer and closer to $a$ as $n$ gets bigger. For convergence in probability, the sequence of random variables converges to $b$ if the probability that random variables are far away from $b$ gets smaller and smaller as $n$ gets big. 
+What's happening in this definition? The event $|X_n - b| > \varepsilon$ says that a draw of $X_n$ is more than $\varepsilon$ away from $b$ (above or below). So convergence in probability says that the probability of being some distance away from the limit value goes to zero as the $n$ goes to $\infty$. With deterministic sequences, we said that $a_n$ converges to $a$ as it gets closer and closer to $a$ as $n$ gets bigger. For convergence in probability, the sequence of random variables converges to $b$ if the probability that random variables are far away from $b$ gets smaller and smaller as $n$ gets big. 
 
 
 ::: {#exm-inprob}
