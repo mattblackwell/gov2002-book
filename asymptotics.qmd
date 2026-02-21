@@ -239,19 +239,27 @@ for (i in 1:nsims) {
   s1000 <- rexp(n = 1000, rate = 0.5)
   s10000 <- rexp(n = 10000, rate = 0.5)
 
-  holder[i,1] <- mean(s5)
-  holder[i,2] <- mean(s15)
-  holder[i,3] <- mean(s30)
-  holder[i,4] <- mean(s100)
-  holder[i,5] <- mean(s1000)
-  holder[i,6] <- mean(s10000)
+  holder[i, 1] <- mean(s5)
+  holder[i, 2] <- mean(s15)
+  holder[i, 3] <- mean(s30)
+  holder[i, 4] <- mean(s100)
+  holder[i, 5] <- mean(s1000)
+  holder[i, 6] <- mean(s10000)
 }
 par(las = 1, mar = c(3.1, 4.1, 0.1, 0.1))
-plot(density(holder[,2]), xlim = c(0,4), bty = "n", main = "", lwd = 2, xlab = "", ylim = range(density(holder[,5])$y))
-abline(v=2, col = "grey50")
-lines(density(holder[,3]), col = "violet", lwd = 2)
-lines(density(holder[,4]), col = "dodgerblue", lwd = 2)
-lines(density(holder[,5]), col = "green3", lwd = 2)
+plot(
+  density(holder[, 2]),
+  xlim = c(0, 4),
+  bty = "n",
+  main = "",
+  lwd = 2,
+  xlab = "",
+  ylim = range(density(holder[, 5])$y)
+)
+abline(v = 2, col = "grey50")
+lines(density(holder[, 3]), col = "violet", lwd = 2)
+lines(density(holder[, 4]), col = "dodgerblue", lwd = 2)
+lines(density(holder[, 5]), col = "green3", lwd = 2)
 text(x = 1.25, y = 0.5, expression(bar(X)[15]), col = "black", pos = 2)
 text(x = 1.7, y = 1, expression(bar(X)[30]), col = "violet", pos = 2)
 text(x = 1.9, y = 1.75, expression(bar(X)[100]), col = "dodgerblue", pos = 2)
@@ -446,19 +454,63 @@ By inspection, this converges to $\Phi(x)$, which is the cdf for the standard no
 par(mfrow = c(1, 2))
 library(RColorBrewer)
 cols <- brewer.pal(5, "Set1")
-curve(pnorm(x, 1, 2), ylim = c(0,1), from = -4, 6, bty = "n", yaxt = "n", ylab = "F(x)", main = "cdf", col = cols[1], lwd = 2, lty = 2)
-curve(pnorm(x, 0.5, 1.5), from = -4, 6, add = TRUE, lty = 2, col = cols[2], lwd = 2)
-curve(pnorm(x, 0.25, 1.25), from = -4, 6, add = TRUE, lty = 3, col = cols[3], lwd = 2)
-curve(pnorm(x, 0.1, 1.1), from = -4, 6, add = TRUE, lty = 4, col = cols[4], lwd = 2)
-curve(pnorm(x, 0, 1), from = -4, 6, add = TRUE, lty = 1, col = "black", lwd = 2)
+curve(
+  pnorm(x, 1, 2),
+  ylim = c(0, 1),
+  from = -4,
+  to = 6,
+  bty = "n",
+  yaxt = "n",
+  ylab = "F(x)",
+  main = "cdf",
+  col = cols[1],
+  lwd = 2,
+  lty = 2
+)
+curve(
+  pnorm(x, 0.5, 1.5),
+  from = -4, to = 6, add = TRUE, lty = 2, col = cols[2], lwd = 2
+)
+curve(
+  pnorm(x, 0.25, 1.25),
+  from = -4, to = 6, add = TRUE, lty = 3, col = cols[3], lwd = 2
+)
+curve(
+  pnorm(x, 0.1, 1.1),
+  from = -4, 6, add = TRUE, lty = 4, col = cols[4], lwd = 2
+)
+curve(
+  pnorm(x, 0, 1), from = -4, 6, add = TRUE, lty = 1, col = "black", lwd = 2
+)
 
-curve(dnorm(x, 1, 2), from = -4, 6, bty = "n", yaxt = "n", ylab = "f(x)", main = "pdf", lwd = 2, col = cols[1], lty = 5, ylim = c(0, dnorm(0)))
-curve(dnorm(x, 0.5, 1.5), from = -4, 6, add = TRUE, lty = 2, lwd = 2, col = cols[2])
-curve(dnorm(x, 0.25, 1.25), from = -4, 6, add = TRUE, lty = 3, lwd = 2, col = cols[3])
-curve(dnorm(x, 0.1, 1.1), from = -4, 6, add = TRUE, lty = 4, lwd = 2, col = cols[4])
-curve(dnorm(x, 0, 1), from = -4, 6, add = TRUE, lwd = 2, col = "black")
-legend(x="topright", legend = c("n=1", "n=2", "n=4", "n=10", "N(0,1)"),
-       col = c(cols[1:4], "black"), lty = c(5, 2, 3, 4, 1), lwd = 2, bty = "n")
+curve(
+  dnorm(x, 1, 2),
+  from = -4, to = 6, bty = "n", yaxt = "n", ylab = "f(x)", main = "pdf",
+  lwd = 2, col = cols[1], lty = 5, ylim = c(0, dnorm(0))
+)
+curve(
+  dnorm(x, 0.5, 1.5),
+  from = -4, to = 6, add = TRUE, lty = 2, lwd = 2, col = cols[2]
+)
+curve(
+  dnorm(x, 0.25, 1.25),
+  from = -4, to = 6, add = TRUE, lty = 3, lwd = 2, col = cols[3]
+)
+curve(
+  dnorm(x, 0.1, 1.1),
+  from = -4, to = 6, add = TRUE, lty = 4, lwd = 2, col = cols[4]
+)
+curve(
+  dnorm(x, 0, 1), from = -4, to = 6, add = TRUE, lwd = 2, col = "black"
+)
+legend(
+  x = "topright",
+  legend = c("n=1", "n=2", "n=4", "n=10", "N(0,1)"),
+  col = c(cols[1:4], "black"),
+  lty = c(5, 2, 3, 4, 1),
+  lwd = 2,
+  bty = "n"
+)
 ```
 
 :::
@@ -525,19 +577,42 @@ for (i in 1:nsims) {
   s1000 <- rbinom(n = 1000, size = 1, prob = 0.25)
   s10000 <- rbinom(n = 10000, size = 1, prob = 0.25)
 
-  holder2[i,1] <- mean(s5)
-  holder2[i,2] <- mean(s15)
-  holder2[i,3] <- mean(s30)
-  holder2[i,4] <- mean(s100)
-  holder2[i,5] <- mean(s1000)
-  holder2[i,6] <- mean(s10000)
+  holder2[i, 1] <- mean(s5)
+  holder2[i, 2] <- mean(s15)
+  holder2[i, 3] <- mean(s30)
+  holder2[i, 4] <- mean(s100)
+  holder2[i, 5] <- mean(s1000)
+  holder2[i, 6] <- mean(s10000)
 }
 
 par(las = 1, mar = c(3.1, 4.1, 0.1, 0.1))
-plot(density((holder2[,3] - 0.25) * sqrt(16/3) * sqrt(30)), xlim = c(-3,3), bty = "n", main = "", lwd = 2, xlab = "", col = "dodgerblue", ylim = c(0, 0.75))
-lines(density((holder2[,4] - 0.25) * sqrt(16/3) * sqrt(100)), bty = "n", main = "", lwd = 2, col = "indianred")
-abline(v=0, col = "grey50")
-legend(x=1, y = 0.5, legend = c("n = 30", "n = 100", "N(0, 1)"), col = c("dodgerblue", "indianred", "grey50"), lwd = 2, lty = c(1, 1, 2), bty = "n")
+plot(
+  density((holder2[, 3] - 0.25) * sqrt(16 / 3) * sqrt(30)),
+  xlim = c(-3, 3),
+  bty = "n",
+  main = "",
+  lwd = 2,
+  xlab = "",
+  col = "dodgerblue",
+  ylim = c(0, 0.75)
+)
+lines(
+  density((holder2[, 4] - 0.25) * sqrt(16 / 3) * sqrt(100)),
+  bty = "n",
+  main = "",
+  lwd = 2,
+  col = "indianred"
+)
+abline(v = 0, col = "grey50")
+legend(
+  x = 1,
+  y = 0.5,
+  legend = c("n = 30", "n = 100", "N(0, 1)"),
+  col = c("dodgerblue", "indianred", "grey50"),
+  lwd = 2,
+  lty = c(1, 1, 2),
+  bty = "n"
+)
 curve(dnorm(x), from = -3, to = 3, add = TRUE, lwd = 2, lty = 2, col = "grey50")
 ```
 
@@ -682,18 +757,32 @@ is an asymptotically valid estimator.[^1] Replacing $\Xbar_n$ for $\widehat{\the
 #| label: fig-std-normal
 #| echo: false
 #| fig-cap: "Critical values for the standard normal."
-curve(dnorm(x), from = -4, to = 4, ylim = c(-.05, 0.5), bty = "l", las = 1, xlab = "z", ylab = expression(f(z)), xaxt = "n")
+curve(
+  dnorm(x), from = -4, to = 4, ylim = c(-.05, 0.5), bty = "l", las = 1,
+  xlab = "z", ylab = expression(f(z)), xaxt = "n"
+)
 abline(h = 0)
-axis(side = 1, at = c(-1.96, 1.96), labels = c(expression(-z[alpha/2]), expression(z[alpha/2])))
-polygon(c(-4,seq(-4,-1.96,0.01),-1.96), c(0,dnorm(seq(-4,-1.96,0.01)), 0), col = "grey70", border = NA)
-polygon(c(4,seq(4,1.96,-0.01),1.96), c(0,dnorm(seq(4,1.96,-0.01)), 0), col = "grey70", border = NA)
+axis(
+  side = 1, at = c(-1.96, 1.96),
+  labels = c(expression(-z[alpha / 2]), expression(z[alpha / 2]))
+)
+polygon(
+  c(-4, seq(-4, -1.96, 0.01), -1.96),
+  c(0, dnorm(seq(-4, -1.96, 0.01)), 0),
+  col = "grey70",
+  border = NA
+)
+polygon(
+  c(4, seq(4, 1.96, -0.01), 1.96),
+  c(0, dnorm(seq(4, 1.96, -0.01)), 0),
+  col = "grey70",
+  border = NA
+)
 abline(v = 1.96, lty = 2, col = "grey60")
 abline(v = -1.96, lty = 2, col = "grey60")
-## text(x = 1.94, y = -0.04, "c", pos = 4)
-## text(x = -1.94, y = -0.04, "-c", pos = 2)
-text(x = 0, y = dnorm(0)/2, expression(1-alpha))
-text(x = 2.2, y = 0.05, expression(alpha/2), pos = 4)
-text(x = -2.2, y = 0.05, expression(alpha/2), pos = 2)
+text(x = 0, y = dnorm(0) / 2, expression(1 - alpha))
+text(x = 2.2, y = 0.05, expression(alpha / 2), pos = 4)
+text(x = -2.2, y = 0.05, expression(alpha / 2), pos = 2)
 ```
 
 
@@ -738,22 +827,22 @@ Suppose we are taking samples of size $n=500$ of random variables where $X_i \si
 #| echo: false
 #| fig.cap: "95% confidence intervals from 100 random samples. Intervals are blue if they contain the truth and red if they do not."
 set.seed(02143)
-sims<- 10000
+sims <- 10000
 cover <- rep(0, times = sims)
-low.bound <- up.bound <- rep(NA, times = sims)
-for(i in 1:sims){
-    draws <- rnorm(500, mean = 1, sd = sqrt(10))
-    low.bound[i] <- mean(draws) - sd(draws) / sqrt(500) * 1.96
-    up.bound[i] <- mean(draws) + sd(draws) / sqrt(500) * 1.96
-    if (low.bound[i] < 1 & up.bound[i] > 1) {
-        cover[i] <- 1
-    }
+low_bound <- up_bound <- rep(NA, times = sims)
+for (i in 1:sims) {
+  draws <- rnorm(500, mean = 1, sd = sqrt(10))
+  low_bound[i] <- mean(draws) - sd(draws) / sqrt(500) * 1.96
+  up_bound[i] <- mean(draws) + sd(draws) / sqrt(500) * 1.96
+  if (low.bound[i] < 1 && up.bound[i] > 1) {
+    cover[i] <- 1
+  }
 }
 cols <- ifelse(cover == 1, "dodgerblue", "indianred")
-plot(x = NULL, y = NULL, xlim = c(1,100), ylim = c(0.5, 1.5), bty = "n",
+plot(x = NULL, y = NULL, xlim = c(1, 100), ylim = c(0.5, 1.5), bty = "n",
      xlab = "Trial", ylab = "Estimate", xaxt = "n", las = 1)
 abline(h = 1, col = "grey", lwd = 3)
-segments(x0 = 1:100, y0 = low.bound[1:100], y1 = up.bound[1:100],
+segments(x0 = 1:100, y0 = low_bound[1:100], y1 = up_bound[1:100],
          col = cols[1:100], lwd = 3)
 ```
 
@@ -798,18 +887,33 @@ by the properties of variances.
 #| echo: false
 #| fig-cap: "Linear approximation to nonlinear functions."
 
-curve(x ^ 2, from = -3, to = 3, lwd = 2, bty = "l", ylim = c(0, 10),
-      xaxt = "n", yaxt = "n", xlab = expression(theta), ylab = expression(h(theta)))
-axis(side = 1, at = c(-1, -1.25), labels = c(expression(theta[0]), expression(hat(theta)[n])))
-axis(side = 2, at = c(1, 1.25^2), labels = c(expression(h(theta[0])), expression(h(hat(theta)[n]))), las =1)
+curve(
+  x ^ 2, from = -3, to = 3, lwd = 2, bty = "l", ylim = c(0, 10),
+  xaxt = "n", yaxt = "n", xlab = expression(theta),
+  ylab = expression(h(theta))
+)
+axis(
+  side = 1, at = c(-1, -1.25),
+  labels = c(expression(theta[0]), expression(hat(theta)[n]))
+)
+axis(
+  side = 2, at = c(1, 1.25^2),
+  labels = c(expression(h(theta[0])), expression(h(hat(theta)[n]))), las = 1
+)
 abline(a = -1, b = -2, col = "indianred1", lwd = 2)
 segments(x0 = -1, y0 = -1, y1 = 1, lty = 2, lwd = 1.5)
 segments(x0 = -1.25, y0 = -1, y1 = 1.25^2, lty = 2, lwd = 1.5, col = "grey50")
-segments(x0 = -20, x1 = -1.25, y0 = 1.25 ^ 2, lwd = 1.5, lty = 2, col = "grey50")
+segments(
+  x0 = -20, x1 = -1.25, y0 = 1.25 ^ 2, lwd = 1.5, lty = 2, col = "grey50"
+)
 segments(x0 = -20, x1 = -1, y0 = 1, lwd = 1.5, lty = 2, col = "black")
 segments(x0 = -2.5, x1 = -2.5, y0 = 4, y1 = 3)
 segments(x0 = -2.5, x1 = -2, y0 = 3, y1 = 3)
-text(x = -2.5, y = 3.5, expression(h*minute*(x)), pos = 2, cex = 0.88, offset = 0.1)
+text(
+  x = -2.5,
+  y = 3.5, expression(h * minute * (x)), pos = 2, cex = 0.88,
+  offset = 0.1
+)
 text(x = -2.25, y = 3, "1", pos = 1, cex = 0.88, offset = 0.25)
 text(x = 2.75, y = 2.75^2, expression(h()), pos = 4)
 ```
