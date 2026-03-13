@@ -188,3 +188,75 @@ This relationship holds more broadly. Any $1-\alpha$ confidence interval contain
 2. There are situations where determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine what null hypotheses would not be rejected at level $\alpha$ to formulate the $1-\alpha$ confidence interval. This process is called **inverting a test**. One important application of this method is for formulating confidence intervals for treatment effects based on randomization inference in the finite population analysis of experiments. 
 
 <!--# TODO: add example of inverting a test?-->
+
+## Resampling approaches to confidence intervals
+
+The entire approach to constructing confidence intervals depends on having an estimator for the standard error. For simple cases like the sample mean, we have simple and straightforward estimators for the standard error, such as $\widehat{\se} = \widehat{\sigma}/\sqrt{n}$. For some more complicated quantities of interest, such as $\mu^2$ or $\log(\mu)$ with estimators $\Xbar_{n}^2$ and $\log(\Xbar_{n})$, we saw in @sec-delta-method that the delta method can provide estimators for the standard error. 
+
+What about quantities of interest and estimators that are not nice differentiable function, such as the median? How do we obtain the standard error in those cases? We could turn to our local department of mathematics for aid, but why think harder when we can get a computer to think for us. In the 20th century, statisticians figured out that we can approximate standard errors using computational approaches.  
+
+All of the computational approaches to confidence intervals (and hypothesis tests) rely on a common idea: resampling. Our goal with statistical inference is to learn about the entire distribution of the estimator, but we only have a single sample from the population distribution. Ideally, we could repeatedly sample from the population (as we have done in many of our simulation exercises in this book). Imagine, we could get $R$ random samples from the population and obtain estimates from each:
+$$
+\left(\widehat{\theta}_{1}, \widehat{\theta}_{2}, \ldots, \widehat{\theta}_{R}\right) 
+$$
+These estimates represent $R$ draws from the sampling distribution of $\widehat{\theta}$. Recall we only get one of these draws, but what if we had them all? Then we could estimate the standard error with the empirical standard deviation of these estimates:
+$$
+\sqrt{\frac{1}{R} \sum_{r=1}^R \left(\widehat{\theta}_{r} - \overline{\theta}_{R}\right)^2},
+$$
+where $\overline{\theta}_{R} = (1/R) \sum_{r=1}^R \widehat{\theta}_{r}$ is the average of the $R$ samples. 
+
+Resampling approaches to inference generate additional samples from the single original sample (thus leading to the name *re*sampling). The key difference between different methods is how we do the resampling. 
+
+### The Jackknife
+
+The jackknife is a resampling technique that generates additional samples by removing observations. Let $\widehat{\theta}_{(-i)}$ be the estimate when omitting the $i$th observation from the sample and let $\overline{\theta}_{n} = (1/n) \sum_{i=1}^n \widehat{\theta}_{(-i)}$ be the average of these leave-one-out estimates. Under some conditions, the variation of $\widehat{\theta}_{(-i)}$ around $\overline{\theta}_{n}$ should be similar to the variation of $\widehat{\theta}_{n}$ around $\theta$. This fact motivates the jackknife variance estimator, 
+$$
+V_{jk} = \frac{n-1}{n} \sum_{i=1}^n \left(\widehat{\theta}_{(-i)} - \overline{\theta}_{n}\right)^2,
+$$
+where the $n-1$ in the numerator accounts for the reduced variability of the jackknife samples compared to "fresh" samples. Indeed, two jackknife samples share $n-2$ common values.
+
+Under iid sampling and some regularity conditions (namely that the estimator is a smooth function of the data), the jackknife variance estimator will be consistent in the sense that 
+$$
+V_{jk} / \V[\widehat{\theta}_n] \inprob 1
+$$
+
+
+
+
+We can see why we use the $n-1$ adjustment, we can focus on the easiest case: the sample mean. Define the leave-one-out sample mean as 
+$$
+\Xbar_{(i)} = \frac{1}{n-1} \sum_{j \neq i} X_j,
+$$
+and notice that we can easily write this in terms of the full sample mean,
+$$
+\Xbar_{(i)} = \frac{1}{n-1}\left(\sum_{j=1} ^n X_j - X_i \right) = \frac{1}{n-1}\left(n\Xbar_{n} - X_i \right). 
+$$
+
+From this expression, we can also show that the mean of the jackknife estimates is the same as the full sample mean:
+$$
+\begin{aligned}
+\Xbar_{jk} = \frac{1}{n} \sum_{i=1}^n \Xbar_{(i)} &= \frac{1}{n(n-1)} \sum_{i=1}^n n\Xbar_{n} - X_i \\
+&= \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} \Xbar_n \\
+&= \Xbar_n
+\end{aligned}
+$$
+
+From these two facts, we can see that the jackknife deviations rescaled version of the original deviations, 
+$$
+(\Xbar_{(i)} - \Xbar_{jk}) = \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} X_i - \Xbar_n = \frac{1}{n-1}(\Xbar_n - X_i)
+$$
+This key fact justifies the jackknife variance estimator since, 
+$$
+\begin{aligned}
+V_{jk} &= \frac{n-1}{n} \sum_{i=1}^n (\Xbar_{(i)} - \Xbar_{jk})^2 \\
+&= \frac{n-1}{n(n-1)^2} \sum_{i=1}^n (X_i -\Xbar_n)^2 \\
+&=\frac{\widehat{\sigma}^2}{n},
+\end{aligned}
+$$
+which is the typical estimator for the sampling variance of the sample mean. 
+
+These derivations show how the jackknife variance estimator for the sample mean is actually identical to the usual sampling variance estimator. Obviously, this fact means that the jackknife does not have a huge benefit for the sample mean itself. But the basic intuition---that the jackknife deviations are similar to a $(n-1)^{-1}$ scaled version of full-sample deviation---generalizes to other estimators that are smooth functions of the data where the jackknife could be more fruitfully applied. 
+
+The smoothness requirements of the jackknife are actually more restrictive than they appear. In particular, it rules out using the jackknife for sample quantiles like the sample median. There are modifications of the jackknife, such as the **delete-d jackknife** (where we drop $d>1$ observations at a time) that have better properties for these types of estimators, but there are also alternative resampling approaches that work well in more general settings. 
+
+

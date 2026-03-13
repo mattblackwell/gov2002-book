@@ -834,7 +834,7 @@ for (i in 1:sims) {
   draws <- rnorm(500, mean = 1, sd = sqrt(10))
   low_bound[i] <- mean(draws) - sd(draws) / sqrt(500) * 1.96
   up_bound[i] <- mean(draws) + sd(draws) / sqrt(500) * 1.96
-  if (low.bound[i] < 1 && up.bound[i] > 1) {
+  if (low_bound[i] < 1 && up_bound[i] > 1) {
     cover[i] <- 1
   }
 }
