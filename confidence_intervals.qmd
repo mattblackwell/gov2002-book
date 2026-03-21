@@ -35,7 +35,102 @@ This will usually be the property that we can show for most confidence intervals
 
 
 
-## Deriving confidence intervals
+## Deriving confidence intervals {#sec-deriving-cis}
+
+A thought experiment can give the basic intuition for almost all approaches to generating confidence intervals. Suppose we've estimated support for increasing legal immigration to be $\widehat{\theta}_n = 0.56$ from a sample of size $n = 400$. Our goal is to derive a probabilistic bound on the true proportion from this sample. We can start with trying to derive the probablistic lower bound. 
+
+
+Recall that we can think of all estimators as the true value plus some estimation error,
+$$
+\widehat{\theta}_n = \theta + \text{estimation error}.
+$$
+We already know the estimate, so if we knew the estimation error, then we would could back out the true value of the parameter, $\theta$. Obviously, we don't know the estimation error, but in many cases we know (or can approximate) the *distribution* of the estimation error. For example, for asymptotically normal estimators, we know that, in large samples,
+$$
+\widehat{\theta}_n - \theta \sim N(0, \se[\widehat{\theta}_n]).
+$$
+In the case of the proportion support for increasing legal immigration, we know that $\se[\widehat{\theta}_n] = \sqrt{\theta(1 - \theta)/n}$ given that the outcome is binary.  
+
+From this insight, we can engage our thought experiment: what if we had an extremely large positive estimation error that was, say, larger than 97.5% of estimation errors?  Intuitively, if we have a large estimator error, then the true value of $\theta$ should be much smaller than our estimate and could provide a probabilistic lower bound for $\theta$. From the normal distribution, this estimation error would be 
+$$
+\widehat{\theta}_n - \theta = 1.96 \times \se[\widehat{\theta}_n]
+$$
+from which we can back out the implied true value of the parameter,
+$$
+L = \widehat{\theta}_n - 1.96 \times \se[\widehat{\theta}_n].
+$$
+Here, $L$ is a probabilistic or random lower bound because the value $\widehat{\theta}_n$ is random. Sometimes it will cover the true value ($L \leq \theta$) and sometimes it will not cover the true value ($L > \theta$). We controlled how often it covers the true value. 
+Because 2.5% of estimation errors will be larger than $1.96 \times \se[\widehat{\theta}_n]$, then $L$ will be a valid lower bound (cover the true value) in 97.5% of samples, or $\P(L \leq \theta) \approx 0.975$ and not cover the true value 2.5% of samples. 
+
+In the immigration esample, we have 
+$$
+L = 0.56 - 1.96 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.56 - 0.048 = 0.511,
+$$
+where we have used the usual plugin estimator for the standard error. A lower bound of $0.511$ tells us that values below that are only compatible with very large and rare chance errors. What if a 2.5% chance of this bound being wrong is too high? We could instead consider what the truth would be for a positive chance error that is larger than 99% of chance errors, which would be $z_{0.99} \times \se[\widehat{\theta}_n] = 2.32 \times \se[\widehat{\theta}_n]$. In the immimgration example, we have
+$$
+L = 0.56 - 2.32 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
+$$
+which is a lower lower bound. This refelcts a fundamental tradeoff: our probabilistic bounds get worse (rule out a smaller region of possible values) as we base them off of more extreme chance errors. 
+
+A similar approach can help to derive an upper bound. We imagine a very large negative estimation error that implies a probabilistic upper bound on $\theta$. A very large negative estimation error could be $-1.96 \times \se[\widehat{\theta}_n]$ which is smaller than 2.5% of estimation errors. This result would imply a probabilistic upper bound of
+$$
+U = \widehat{\theta}_n + 1.96 \times \se[\widehat{\theta}_n],
+$$
+which will not cover the true value 2.5% of the time, $\P(U < \theta) \approx 0.025$. 
+
+We have derived a probabilistic upper bound and lower bound separately, but we can easily combine them into one interval. Intuitively, if our upper bound misses the true value in 2.5% of samples and the lower bound misses the true value in 2.5% of samples, then the interval $[L, U]$ should not cover the true value 5% of the time. Formally, we have:
+$$
+\P(L \leq \theta \leq U) = 1 - \left(\P(L > \theta) + \P(U < \theta)\right) = 1 - (0.025 + 0.025) = 0.95.
+$$
+
+More generally, for a $100(1-\alpha)$% confidence interval, we need to determine the range of chance errors that puts $\alpha/2$ in each of the tails. 
+
+```{r}
+#| label: fig-chance-errors
+#| echo: false
+#| fig-cap: "Chance error distribution."
+curve(dnorm(x), from = -4, to = 4, ylim = c(-.05, 0.5), bty = "l", las = 1, xlab = expression(hat(theta)[n] - theta), ylab = expression(f(z)), xaxt = "n")
+abline(h = 0)
+axis(side = 1, at = c(-1.96, 1.96), labels = c(expression(z[alpha/2] %*% "se"(hat(theta)[n])), expression(z[1-alpha/2]%*% "se"(hat(theta)[n]))))
+polygon(c(-4,seq(-4,-1.96,0.01),-1.96), c(0,dnorm(seq(-4,-1.96,0.01)), 0), col = "grey70", border = NA)
+polygon(c(4,seq(4,1.96,-0.01),1.96), c(0,dnorm(seq(4,1.96,-0.01)), 0), col = "grey70", border = NA)
+abline(v = 1.96, lty = 2, col = "grey60")
+abline(v = -1.96, lty = 2, col = "grey60")
+## text(x = 1.94, y = -0.04, "c", pos = 4)
+## text(x = -1.94, y = -0.04, "-c", pos = 2)
+text(x = 0, y = dnorm(0)/2, expression(1-alpha))
+text(x = 2.2, y = 0.05, expression(alpha/2), pos = 4)
+text(x = -2.2, y = 0.05, expression(alpha/2), pos = 2)
+```
+
+Thus, for the $100(1-\alpha)$% confidence interval, we can derive the implied the lower bound as 
+$$
+L = \widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n],
+$$
+and the upper bound as 
+$$
+U = \widehat{\theta}_n - z_{\alpha/2} \se[\widehat{\theta}_n].
+$$
+It's slightly unintuitive that we subtract the chance imbalances in both of these expressions, but recall that $z_{\alpha/2}\se[\widehat{\theta}_n]$ will be a negative number (it is, after all, a large negative chance error). In particular, for asymptotically normal estimators, we know that the chance error distribution is symmetric so that $z_{\alpha/2} = -z_{1-\alpha/2}$, leading to the usual confidence interval formula,
+$$
+[L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n], \widehat{\theta}_n + z_{1-\alpha/2} \se[\widehat{\theta}_n]\right].
+$$
+
+This is sometimes shortened to $\widehat{\theta}_n \pm z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]$. Remember that we can obtain the values of $z_{\alpha/2}$ easily from R:
+
+```{r}
+## alpha = 0.1 for 90% CI
+qnorm(0.1 / 2, lower.tail = FALSE)
+```
+
+As a concrete example, then, we could derive a 90% asymptotic confidence interval for the sample mean as 
+$$
+\left[\Xbar_{n} - 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}\right]
+$$
+
+
+
+
+## Deriving confidence intervals (alternate)
 
 If you have taken any statistics before, you probably have seen the standard formula for the 95% confidence interval of the sample mean, 
 $$ 
@@ -111,7 +206,7 @@ qnorm(0.1 / 2, lower.tail = FALSE)
 ```
 
 As a concrete example, then, we could derive a 90% asymptotic confidence interval for the sample mean as 
-$$ 
+$$
 \left[\Xbar_{n} - 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}\right]
 $$
 
@@ -207,7 +302,7 @@ where $\overline{\theta}_{R} = (1/R) \sum_{r=1}^R \widehat{\theta}_{r}$ is the a
 
 Resampling approaches to inference generate additional samples from the single original sample (thus leading to the name *re*sampling). The key difference between different methods is how we do the resampling. 
 
-### The Jackknife
+### The jackknife
 
 The jackknife is a resampling technique that generates additional samples by removing observations. Let $\widehat{\theta}_{(-i)}$ be the estimate when omitting the $i$th observation from the sample and let $\overline{\theta}_{n} = (1/n) \sum_{i=1}^n \widehat{\theta}_{(-i)}$ be the average of these leave-one-out estimates. Under some conditions, the variation of $\widehat{\theta}_{(-i)}$ around $\overline{\theta}_{n}$ should be similar to the variation of $\widehat{\theta}_{n}$ around $\theta$. This fact motivates the jackknife variance estimator, 
 $$
@@ -220,7 +315,10 @@ $$
 V_{jk} / \V[\widehat{\theta}_n] \inprob 1
 $$
 
-
+With this variance estimator in hand, one can derive confidence intervals in the usual way, dropping in the jackknife variance estimator for the usual one,
+$$
+CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{\alpha/2}\sqrt{\frac{V_{jk}}{n}}, \widehat{\theta}_n + z_{\alpha/2}\sqrt{\frac{V_{jk}}{n}} \right] 
+$$
 
 
 We can see why we use the $n-1$ adjustment, we can focus on the easiest case: the sample mean. Define the leave-one-out sample mean as 
@@ -259,4 +357,34 @@ These derivations show how the jackknife variance estimator for the sample mean 
 
 The smoothness requirements of the jackknife are actually more restrictive than they appear. In particular, it rules out using the jackknife for sample quantiles like the sample median. There are modifications of the jackknife, such as the **delete-d jackknife** (where we drop $d>1$ observations at a time) that have better properties for these types of estimators, but there are also alternative resampling approaches that work well in more general settings. 
 
+### The nonparametric bootstrap
 
+Another way to generate additional artificial samples is to randomly sample from the data itself. The **nonparametric bootstrap** is a resampling technique that generates a distribution of estimates by repeatedly sampling the data with replacement. In particular, we can define the empirical distribution of the data as $F_n$, which places $1/n$ probability on each observed data point. This distribution has a cdf of 
+$$
+F_n(x) = (1/n) \sum_{i=1}^n \mathbb{1}(X_i \leq x).
+$$
+Let $X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n \sim F_n$ be an iid sample (sample with replacement) from this empirical distribution. We call this a **bootstrap sample** from the notion that we are pulling ourselves up by our own bootstraps (or our own sample data). We can then compute our estimator on this bootstrap sample, $\widehat{\theta}^* = \theta(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n)$. 
+
+Intuitively, we are treating the sample data as if it were the population. With this pseudo-population, we can repeated sample as many bootstrap samples as our hearts desire (and our computers can handle). In each bootstrap sample, we can compute our estimator, giving us a large number of bootstrap draws of the estimator. 
+
+How can use these bootstrap estimates to derive a confidence interval? One way to think about confidence intervals is that they encode what values of the true parameter are consistent with a "plausible" range of chance errors. In the asymptotically normal case above, we might imagine asking: what if our estimate had a large positive chance error, so that $\widehat{\theta}_n - \theta$ was larger than 97.5\% of errors. This would imply that $\widehat{\theta}_n - \theta = 1.96 \se[\widehat{\theta}_n]$, and the implied true value in this case would be $\theta = \widehat{\theta}_n - 1.96 \se[\widehat{\theta}_n]$
+
+::: {#def-bootstrap-variance}
+
+## Basic bootstrap confidence interval
+
+1. Draw a sample with replacement of size $n$ from $F_n$ and apply the estimator to this sample, $\widehat{\theta}_r$.
+2. Repeat Step 1 $R$ time to obtain $\widehat{\theta}_1, \widehat{\theta}_2, \ldots, \widehat{\theta}_R$. 
+3. Calculate the $\alpha/2$ and $1-\alpha/2$ quantiles of the distribution of $(\widehat{\theta}_1 - \widehat{\theta}_n, \ldots, \widehat{\theta}_R - \widehat{\theta}_n)$, which are the bootstrap estimates minus the full sample estimate, and define these as $t_{\alpha/2}$ and $t_{1-\alpha/2}$. 
+
+4. Construct a $(1-\alpha)$ confidence interval as 
+$$
+CI_{1-\alpha, boot} = \left[\widehat{\theta}_n - t_{1-\alpha/2}, \widehat{\theta}_{n} - t_{\alpha/2}\right]
+$$ {#eq-bootstrap-cis}
+
+:::
+
+
+In the construction of the bootstrap confidence intervals, it may be confusing that we subtract both quantiles from the estimate, rather than add one and subtract one. But recall the derivation of confidence intervals in @sec-deriving-cis as using the distribution of chance errors. The bootstrap approach leverages the  "bootstrap deviations" such as $\widehat{\theta}_r - \widehat{\theta}_n$ to approximate the distribution of $\widehat{\theta}_n - \theta$. The quantile $t_{1-\alpha/2}$ ($0.975$ for $\alpha = 0.05$) of these deviations will represent a large positive chance deviation, meaning that the lower bound $\widehat{\theta}_n - t_{1-\alpha/2}$ of the confidence interval will be below $\widehat{\theta}_n$. The quantile $t_{\alpha/2}$, on the other hand, ($0.025$ for $\alpha = 0.05$) will be a large negative chance error, meaning the upper bound $\widehat{\theta}_n - t_{\alpha/2}$ will be larger than $\widehat{\theta}$.  
+
+Just like for the asymptotically normal estimators in @sec-sec-deriving-cis, we can back out the implied true value from these deviations, leading to the bootstrap confidence intervals formula in @eq-bootstrap-cis. 
