@@ -253,6 +253,28 @@ segments(x0 = 1:100, y0 = low.bound[1:100], y1 = up.bound[1:100],
 
 :::
 
+## Exact confidence intervals under normal data
+
+In the last chapter, we saw that we could obtain tests with the correct or exact size if we make the parametric modeling assumption that the data are normally distributed. We can take a similar approach to show that, under normal data, a $100(1-\alpha)$ confidence interval for the sample mean will have coverage exactly equal to $1-\alpha$.In practice, we rarely believe this modeling assumption, but for historical reasons this is the default of many statistical software packages, and it works well in practice as an ad hoc adjustment in finite samples. 
+
+Assume that the data are distributed iid $X_i \sim N(\mu, \sigma^2)$. Under this assumption, we know that the normalized chance errors will be distributed as
+$$
+\frac{\Xbar_n - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)
+$$
+at any sample size. With asymptotically normal estimators, we relied on Slutsky's Theorem to allow us to replace the unknown population variance $\sigma^2$ with its consistent estimator $S^2_n$. In small samples, we cannot rely on that, but with normal data, we know that using the sample variance estimator leads to a Student's t-distribution,
+$$
+\frac{\Xbar_n - \mu}{S_n / \sqrt{n}} \sim t_{n-1}.
+$$
+In the continusing abuse of notation, let $t_{\nu,\alpha}$ be the $\alpha$ quantile of a Student's t-distribution with $\nu$ degrees of freedom so that $\P(T_{\nu} \leq t_{\nu, \alpha}) = \alpha$. Then, for a 95% confidence interval with $n=50$, the large normalize shocks would be $t_{49, 0.975} = 2.01$ on the positive side and $t_{49, 0.025} = -2.01$ on the negative side. Plugging these in above and solving for the upper and lower bounds gives
+$$
+[L, U] = \left[\Xbar_{50} - 2.01 \times \frac{S_{50}}{\sqrt{50},} \Xbar_{50} + 2.01 \times \frac{S_{50}}{\sqrt{50}} \right].
+$$
+More generally, the $100(1-\alpha)$ confidence interval for the sample mean under normal data with $n$ iid draws would be
+$$
+[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \times \frac{S_{n}}{\sqrt{n}}, \Xbar_{n} + t_{n-1,1-\alpha/2} \times \frac{S_{n}}{\sqrt{n}} \right].
+$$
+
+
 ## Confidence intervals and hypothesis tests
 
 
@@ -388,3 +410,5 @@ $$ {#eq-bootstrap-cis}
 In the construction of the bootstrap confidence intervals, it may be confusing that we subtract both quantiles from the estimate, rather than add one and subtract one. But recall the derivation of confidence intervals in @sec-deriving-cis as using the distribution of chance errors. The bootstrap approach leverages the  "bootstrap deviations" such as $\widehat{\theta}_r - \widehat{\theta}_n$ to approximate the distribution of $\widehat{\theta}_n - \theta$. The quantile $t_{1-\alpha/2}$ ($0.975$ for $\alpha = 0.05$) of these deviations will represent a large positive chance deviation, meaning that the lower bound $\widehat{\theta}_n - t_{1-\alpha/2}$ of the confidence interval will be below $\widehat{\theta}_n$. The quantile $t_{\alpha/2}$, on the other hand, ($0.025$ for $\alpha = 0.05$) will be a large negative chance error, meaning the upper bound $\widehat{\theta}_n - t_{\alpha/2}$ will be larger than $\widehat{\theta}$.  
 
 Just like for the asymptotically normal estimators in @sec-sec-deriving-cis, we can back out the implied true value from these deviations, leading to the bootstrap confidence intervals formula in @eq-bootstrap-cis. 
+
+
