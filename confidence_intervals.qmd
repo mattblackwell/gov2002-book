@@ -115,18 +115,49 @@ $$
 [L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n], \widehat{\theta}_n + z_{1-\alpha/2} \se[\widehat{\theta}_n]\right].
 $$
 
-This is sometimes shortened to $\widehat{\theta}_n \pm z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]$. Remember that we can obtain the values of $z_{\alpha/2}$ easily from R:
+This is sometimes shortened to $\widehat{\theta}_n \pm z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]$ and the term $\pm z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]$ is sometimes called the **margin of error**. 
+
+
+::: {#exm-sample-mean-ci}
+
+## Confidence interval for the sample mean
+
+Consider the sample mean of a iid random variables, $X_1, \ldots, X_n$ where $\E[X_i] = \mu$ and $\V[X_i] = \sigma^2$. Recall that the central limit theorem shows that the sample mean will roughly be normally distributed $\Xbar_n \sim N(\mu, \sigma^2/n)$, which implies we can estimate its standard error as
+$$
+\widehat{\se}[\Xbar] = \frac{S_n}{\sqrt{n}},
+$$
+where $S_n = (n-1)^{-1} \sum_{i=1}^n (X_i - \Xbar)^2$ is the sample variance. 
+
+Suppose we want to find a 90% confidence interval. In this case, we would need to first obtain the critical value, $z_{1-\alpha/2}$, where $\alpha = 0.1$ in this case:
 
 ```{r}
 ## alpha = 0.1 for 90% CI
-qnorm(0.1 / 2, lower.tail = FALSE)
+qnorm(1- 0.1 / 2)
 ```
 
-As a concrete example, then, we could derive a 90% asymptotic confidence interval for the sample mean as 
+Combining these two facts, a 90% asymptotic confidence interval for the sample mean would be
 $$
-\left[\Xbar_{n} - 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}\right]
+\left[\Xbar_{n} - 1.64 \frac{S_n}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{S_n}{\sqrt{n}}\right]
 $$
 
+:::
+
+::: {#exm-diff-in-means-ci}
+
+## Difference in means 
+
+Recall the difference in menas of randomly assigned treatment and control groups in @exm-diff-in-means. The treatment data $Y_1, \ldots, Y_{n_t}$ are iid draws from a population with mean $\mu_t = \E[Y_i]$ and population variance $\sigma^2_t = \V[Y_i]$. The control data $X_1, \ldots, X_{n_c}$ are iid draws (independent of the $Y_i$) from a population with mean $\mu_c = \E[X_i]$ and population variance $\sigma^2_c = \V[X_i]$. The parameter of interest is the population difference in means, $\tau = \mu_t - \mu_c$, which we estimate with the usual difference in sample means estimator: $\widehat{\tau} = \Ybar - \Xbar$. 
+
+Recall that we can estimate the standard error of $\widehat{\tau}$ with
+$$
+\widehat{\se}[\widehat{\tau}] = \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}.
+$$
+Thus, we can form a 95% confidence interval for this estimator as 
+$$
+\left[\Ybar - \Xbar - 1.96 \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}, \Ybar - \Xbar + 1.96 \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}\right]
+$$
+
+:::
 
 
 
@@ -171,6 +202,7 @@ is an asymptotically valid estimator.[^1] Replacing $\Xbar_n$ for $\widehat{\the
 [^1]: Implicit in this analysis is that the estimate of the standard error is consistent. 
 
 
+
 ```{r}
 #| label: fig-std-normal
 #| echo: false
@@ -209,7 +241,6 @@ As a concrete example, then, we could derive a 90% asymptotic confidence interva
 $$
 \left[\Xbar_{n} - 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}\right]
 $$
-
 
 ## Interpreting confidence intervals
 
@@ -409,7 +440,7 @@ $$ {#eq-bootstrap-cis}
 
 In the construction of the bootstrap confidence intervals, it may be confusing that we subtract both quantiles from the estimate, rather than add one and subtract one. But recall the derivation of confidence intervals in @sec-deriving-cis as using the distribution of chance errors. The bootstrap approach leverages the  "bootstrap deviations" such as $\widehat{\theta}_r - \widehat{\theta}_n$ to approximate the distribution of $\widehat{\theta}_n - \theta$. The quantile $t_{1-\alpha/2}$ ($0.975$ for $\alpha = 0.05$) of these deviations will represent a large positive chance deviation, meaning that the lower bound $\widehat{\theta}_n - t_{1-\alpha/2}$ of the confidence interval will be below $\widehat{\theta}_n$. The quantile $t_{\alpha/2}$, on the other hand, ($0.025$ for $\alpha = 0.05$) will be a large negative chance error, meaning the upper bound $\widehat{\theta}_n - t_{\alpha/2}$ will be larger than $\widehat{\theta}$.  
 
-Just like for the asymptotically normal estimators in @sec-sec-deriving-cis, we can back out the implied true value from these deviations, leading to the bootstrap confidence intervals formula in @eq-bootstrap-cis. 
+Just like for the asymptotically normal estimators in @sec-deriving-cis, we can back out the implied true value from these deviations, leading to the bootstrap confidence intervals formula in @eq-bootstrap-cis. 
 
 
 There is another, slightly simpler bootstrap procedure that derives plausible values of the parameter from the distribution of the bootstrap replications themselves rather than the deviations. This approach is called the **percentile bootstrap method**. 
