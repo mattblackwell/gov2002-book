@@ -25,6 +25,12 @@ Let's say you calculate a 95% confidence interval and it's $[0.1, 0.4]$. It's te
 
 :::
 
+::: {.callout-note}
+
+Bayesian inference---which treats the data as fixed and the parameters as random---can make probabilistic statements about the true mean being in the observed interval, but this approach also usually requires a parametric model and a probability distribution for the true mean before we see the data (called the prior distribution). Confusingly or thankfully (depending on how you view it), these Bayesian credible intervals (as they are called) are often very similar to the corresponding confidence intervals, especially in large samples (see the Bernstein-von Mises Theorem for more information on this). This convergence of Bayesian and frequentist interval estimators leads to a diversity of views on how important the exact interpretation of confidence intervals actually is.  
+
+:::
+
 
 In most cases, we will not be able to derive exact confidence intervals, but rather confidence intervals that are **asymptotically valid**, which means that if we write the interval as a function of the sample size, $(L_n, U_n)$ they would have **asymptotic coverage**
 $$
@@ -466,3 +472,6 @@ While it is very intuitive and easy to implement, it has some theoretical proper
 
 
 
+## Summary
+
+This chapter covered confidence intervals, which are as essential tool on the statsitical work bench. We saw how to derive confidence intervals from the distribution of chance estimation error and learned the exact interpretation of confidence intervals. We also saw the deep connection between confidence intervals and hypothesis tests. Under an assumption of normal data, we saw how to use the t-distribution to obtain exact confidence intervals at any sample size. Finally, we investigated resampling methods such as the jackknife and the bootstrap as ways to obtain confidence intervals when deriving the sampling distribution of an estimator is not feasible. 
