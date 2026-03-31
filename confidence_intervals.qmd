@@ -1,7 +1,7 @@
 # Confidence intervals
 
 
-You have run your experiment and presented your readers with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are **plausible** given the data we observe?
+You have run your experiment and presented your readers with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are consistent with the data we observe and some reasonable values of chance estimation errors?
 
 A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. **Confidence intervals** make this kind of intuition more formal by instead estimating ranges of values with a fixed percentage of these ranges containing the true value of the parameter. 
 
@@ -50,7 +50,7 @@ Recall that we can think of all estimators as the true value plus some estimatio
 $$
 \widehat{\theta}_n = \theta + \text{estimation error}.
 $$
-We already know the estimate, so if we knew the estimation error, then we would could back out the true value of the parameter, $\theta$. Obviously, we don't know the estimation error, but in many cases we know (or can approximate) the *distribution* of the estimation error. For example, for asymptotically normal estimators, we know that, in large samples,
+We already know the estimate, so if we knew the estimation error, then we could back out the true value of the parameter, $\theta$. Obviously, we don't know the estimation error, but in many cases we know (or can approximate) the *distribution* of the estimation error. For example, for asymptotically normal estimators, we know that, in large samples,
 $$
 \widehat{\theta}_n - \theta \sim N(0, \se[\widehat{\theta}_n]).
 $$
@@ -67,15 +67,15 @@ $$
 Here, $L$ is a probabilistic or random lower bound because the value $\widehat{\theta}_n$ is random. Sometimes it will cover the true value ($L \leq \theta$) and sometimes it will not cover the true value ($L > \theta$). We controlled how often it covers the true value. 
 Because 2.5% of estimation errors will be larger than $1.96 \times \se[\widehat{\theta}_n]$, then $L$ will be a valid lower bound (cover the true value) in 97.5% of samples, or $\P(L \leq \theta) \approx 0.975$ and not cover the true value 2.5% of samples. 
 
-In the immigration esample, we have 
+In the immigration sample, we have 
 $$
 L = 0.56 - 1.96 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.56 - 0.048 = 0.511,
 $$
-where we have used the usual plugin estimator for the standard error. A lower bound of $0.511$ tells us that values below that are only compatible with very large and rare chance errors. What if a 2.5% chance of this bound being wrong is too high? We could instead consider what the truth would be for a positive chance error that is larger than 99% of chance errors, which would be $z_{0.99} \times \se[\widehat{\theta}_n] = 2.32 \times \se[\widehat{\theta}_n]$. In the immimgration example, we have
+where we have used the usual plugin estimator for the standard error. A lower bound of $0.511$ tells us that values below that are only compatible with very large and rare chance errors. What if a 2.5% chance of this bound being wrong is too high? We could instead consider what the truth would be for a positive chance error that is larger than 99% of chance errors, which would be $z_{0.99} \times \se[\widehat{\theta}_n] = 2.32 \times \se[\widehat{\theta}_n]$. In the immigration example, we have
 $$
 L = 0.56 - 2.32 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
 $$
-which is a lower lower bound. This refelcts a fundamental tradeoff: our probabilistic bounds get worse (rule out a smaller region of possible values) as we base them off of more extreme chance errors. 
+which is a lower lower bound. This reflects a fundamental tradeoff: our probabilistic bounds get worse (rule out a smaller region of possible values) as we base them off of more extreme chance errors. 
 
 A similar approach can help to derive an upper bound. We imagine a very large negative estimation error that implies a probabilistic upper bound on $\theta$. A very large negative estimation error could be $-1.96 \times \se[\widehat{\theta}_n]$ which is smaller than 2.5% of estimation errors. This result would imply a probabilistic upper bound of
 $$
@@ -116,7 +116,7 @@ and the upper bound as
 $$
 U = \widehat{\theta}_n - z_{\alpha/2} \se[\widehat{\theta}_n].
 $$
-It's slightly unintuitive that we subtract the chance imbalances in both of these expressions, but recall that $z_{\alpha/2}\se[\widehat{\theta}_n]$ will be a negative number (it is, after all, a large negative chance error). In particular, for asymptotically normal estimators, we know that the chance error distribution is symmetric so that $z_{\alpha/2} = -z_{1-\alpha/2}$, leading to the usual confidence interval formula,
+where $z_a = \P(Z \leq a)$ be the standard normal quantile at $a$. It's slightly unintuitive that we subtract the chance imbalances in both of these expressions, but recall that $z_{\alpha/2}\se[\widehat{\theta}_n]$ will be a negative number (it is, after all, a large negative chance error). In particular, for asymptotically normal estimators, we know that the chance error distribution is symmetric so that $z_{\alpha/2} = -z_{1-\alpha/2}$, leading to the usual confidence interval formula,
 $$
 [L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n], \widehat{\theta}_n + z_{1-\alpha/2} \se[\widehat{\theta}_n]\right].
 $$
@@ -376,7 +376,7 @@ $$
 
 With this variance estimator in hand, one can derive confidence intervals in the usual way, dropping in the jackknife variance estimator for the usual one,
 $$
-CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{\alpha/2}\sqrt{\frac{V_{jk}}{n}}, \widehat{\theta}_n + z_{\alpha/2}\sqrt{\frac{V_{jk}}{n}} \right] 
+CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{\alpha/2}\sqrt{V_{jk}}, \widehat{\theta}_n + z_{\alpha/2}\sqrt{V_{jk}} \right] 
 $$
 
 
@@ -433,10 +433,10 @@ How can use these bootstrap estimates to derive a confidence interval? Recall th
 ## Basic bootstrap confidence interval
 
 1. Draw a sample with replacement of size $n$ from $F_n$ and apply the estimator to this sample, $\widehat{\theta}_r$.
-2. Repeat Step 1 $R$ time to obtain $\widehat{\theta}^*_{(1)}, \widehat{\theta}^*_{(2)}, \ldots, \widehat{\theta}^*_{(R)}$. 
+2. Repeat Step 1 $R$ times to obtain $\widehat{\theta}^*_{(1)}, \widehat{\theta}^*_{(2)}, \ldots, \widehat{\theta}^*_{(R)}$. 
 3. Calculate the $\alpha/2$ and $1-\alpha/2$ quantiles of the distribution of $(\widehat{\theta}^*_{(1)} - \widehat{\theta}_n, \ldots, \widehat{\theta}^*_{(R)} - \widehat{\theta}_n)$, which are the bootstrap estimates minus the full sample estimate, and define these as $c_{\alpha/2}$ and $c_{1-\alpha/2}$. 
 
-4. Construct a $(1-\alpha)$ confidence interval as 
+4. Construct a $100(1-\alpha)\%$ confidence interval as 
 $$
 CI_{1-\alpha, boot} = \left[\widehat{\theta}_n - c_{1-\alpha/2}, \widehat{\theta}_{n} - c_{\alpha/2}\right]
 $$ {#eq-bootstrap-cis}
@@ -461,14 +461,14 @@ There is another, slightly simpler bootstrap procedure that derives plausible va
 2. Repeat Step 1 $R$ time to obtain $\widehat{\theta}^*_{(1)}, \widehat{\theta}^*_{(2)}, \ldots, \widehat{\theta}^*_{(R)}$. 
 3. Calculate the $\alpha/2$ and $1-\alpha/2$ quantiles of the distribution of $(\widehat{\theta}^*_{(1)}, \ldots, \widehat{\theta}^*_{(R)})$, which are the bootstrap estimates minus the full sample estimate, and define these as $\widetilde{\theta}^*_{\alpha/2}$ and $\widetilde{\theta}^*_{1-\alpha/2}$. 
 
-4. Construct a $(1-\alpha)$ confidence interval as 
+4. Construct a $100(1-\alpha)\%$ confidence interval as 
 $$
 CI_{1-\alpha, perc} = \left[\widetilde{\theta}^*_{\alpha/2}, \widetilde{\theta}^*_{1-\alpha/2}\right]
 $$ {#eq-perc-bootstrap-cis}
 
 :::
 
-While it is very intuitive and easy to implement, it has some theoretical properties that make it less appealing. In particular, when the sampling distribution of the estimator is skewed or biased, this method can perform worse in small samples (though, asymptotically it is often valid). In practice, the difference between the basic and percentile bootstrap confidence intervals is often very minor. 
+While it is very intuitive and easy to implement, it has some theoretical properties that make it less appealing. In particular, when the sampling distribution of the estimator is skewed or biased, this method can perform worse in small samples (though, asymptotically it is often valid). In practice, the difference between the basic and percentile bootstrap confidence intervals is often very minor. There are more complicated bootstrap procedures that are more accurate (the bootstrap-t and accelerated bootstrap, $BC_a$), but these significantly more computation than the above approaches. 
 
 
 
