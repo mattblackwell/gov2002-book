@@ -260,13 +260,13 @@ In many cases, our estimators will be asymptotically normal by a version of the 
 $$ 
 T = \frac{\widehat{\theta}_n - \theta_0}{\widehat{\textsf{se}}[\widehat{\theta}_n]} \indist \N(0, 1). 
 $$
-The **Wald test** rejects $H_0$ when $|T| > z_{\alpha/2}$, with $z_{\alpha/2}$ that puts $\alpha/2$ in the upper tail of the standard normal. That is, if $Z \sim \N(0, 1)$, then $z_{\alpha/2}$ satisfies $\P(Z \geq z_{\alpha/2}) = \alpha/2$. 
+The **Wald test** rejects $H_0$ when $|T| > z_{1-\alpha/2}$, where $z_{a}$ is the $a$-th quantile of the standard normal. That is, if $Z \sim \N(0, 1)$, then $z_a$ satisfies $\P(Z \leq z_a) = a$. While the $1-\alpha/2$ expression is slightly confusing, the critical value $z_{1-\alpha/2} is the value that puts probability $\alpha/2$ in the upper tail of the standard normal. 
 
 ::: {.callout-note}
 
-In R, you can find the $z_{\alpha/2}$ values easily with the `qnorm()` function:
+In R, you can find the $z_{1- \alpha/2}$ values easily with the `qnorm()` function:
 ```{r}
-qnorm(0.05 / 2, lower.tail = FALSE)
+qnorm(1 - 0.05 / 2)
 ```
 
 :::
@@ -274,7 +274,7 @@ qnorm(0.05 / 2, lower.tail = FALSE)
 ::: {#thm-wald}
 Asymptotically, the Wald test has size $\alpha$ such that
 $$ 
-\P(|T| > z_{\alpha/2} \mid \theta_0) \to \alpha.
+\P(|T| > z_{1 - \alpha/2} \mid \theta_0) \to \alpha.
 $$
 
 :::
@@ -386,7 +386,7 @@ With Wald tests, we can characterize the power function quite easily, even if th
 ::: {#thm-power}
 For a Wald test with an asymptotically normal estimator, the power function for a particular alternative $\theta_1 \neq \theta_0$ is 
 $$ 
-\pi(\theta_1) = 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]} + z_{\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]}-z_{\alpha/2} \right).
+\pi(\theta_1) = 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]} + z_{1-\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]}-z_{1-\alpha/2} \right).
 $$
 
 :::
