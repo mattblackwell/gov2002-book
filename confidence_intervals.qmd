@@ -43,10 +43,10 @@ With the exception of certain parametric models (such as the normal model discus
 
 ## Deriving confidence intervals {#sec-deriving-cis}
 
-A thought experiment can give the basic intuition for almost all approaches to generating confidence intervals. Suppose we've estimated support for increasing legal immigration to be $\widehat{\theta}_n = 0.56$ from a sample of size $n = 400$. We can start our confidence interval journey with trying to derive a probabilistic lower bound---that is, a bound that will lower than the true rate of support with a fixed probability. 
+A thought experiment can give the basic intuition for almost all approaches to deriving confidence intervals. We can start our confidence interval journey by focusing on one side. In particular, we will derive a probabilistic lower bound---that is, a bound that will lower than the true quantity of interest with a fixed probability. 
 
 
-Recall that we can think of all estimators as the true value plus some estimation error,
+Suppose we've estimated support for increasing legal immigration to be $\widehat{\theta}_n = 0.56$ from a sample of size $n = 400$. Recall that we can think of all estimators as the true value plus some estimation error,
 $$
 \widehat{\theta}_n = \theta + \text{estimation error}.
 $$
@@ -58,30 +58,36 @@ In the case of the proportion support for increasing legal immigration, we know 
 
 From this insight, we can engage our thought experiment: what if we had an extremely large positive estimation error that was, say, larger than 97.5% of estimation errors?  Intuitively, if we have a large estimator error, then the true value of $\theta$ should be much smaller than our estimate and could provide a probabilistic lower bound for $\theta$. 
 
-Recall that $z_a$ is the $a$-th quantile of the standard normal, which implies that the 97.5% quantile of the chance error distribution would be $z_{0.975}\times \se[\widehat{\theta}_n]$, where $z_{0.975} \approx 1.96$. Thus, the upper bound on the estimation error would be 
+Recall that $z_a$ is the $a$-th quantile of the standard normal, which implies that the 97.5% quantile of the chance error distribution would be $z_{0.975}\, \se[\widehat{\theta}_n]$, where $z_{0.975} \approx 1.96$. Thus, the upper bound on the estimation error would be 
 $$
-\widehat{\theta}_n - \theta = 1.96 \times \se[\widehat{\theta}_n]
+\widehat{\theta}_n - \theta = 1.96\, \se[\widehat{\theta}_n]
 $$
 from which we can back out the implied true value of the parameter,
 $$
-L = \widehat{\theta}_n - 1.96 \times \se[\widehat{\theta}_n].
+L = \widehat{\theta}_n - 1.96\, \se[\widehat{\theta}_n].
 $$
 Here, $L$ is a probabilistic or random lower bound because the value $\widehat{\theta}_n$ is random. Sometimes it will cover the true value ($L \leq \theta$) and sometimes it will not cover the true value ($L > \theta$). We controlled how often it covers the true value. 
-Because 2.5% of estimation errors will be larger than $1.96 \times \se[\widehat{\theta}_n]$, then $L$ will be a valid lower bound (cover the true value) in 97.5% of samples, or $\P(L \leq \theta) \approx 0.975$ and not cover the true value 2.5% of samples. 
+Because 2.5% of estimation errors will be larger than $1.96 \, \se[\widehat{\theta}_n]$, then $L$ will be a valid lower bound (cover the true value) in 97.5% of samples, or $\P(L \leq \theta) \approx 0.975$ and not cover the true value 2.5% of samples. 
 
 In the immigration sample, we have 
 $$
-L = 0.56 - 1.96 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.56 - 0.048 = 0.511,
+L = 0.56 - 1.96 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.56 - 0.048 = 0.511,
 $$
-where we have used the usual plugin estimator for the standard error. A lower bound of $0.511$ tells us that values below that are only compatible with very large and rare chance errors. What if a 2.5% chance of this bound being wrong is too high? We could instead consider what the truth would be for a positive chance error that is larger than 99% of chance errors, which would be $z_{0.99} \times \se[\widehat{\theta}_n] \approx 2.32 \times \se[\widehat{\theta}_n]$. In the immigration example, we have
+where we have used the usual plugin estimator for the standard error. A lower bound of $0.511$ tells us that values below that are only compatible with very large and rare chance errors. 
+
+What if a 2.5% chance of this bound being wrong is too high? We could instead consider what the truth would be for a positive chance error that is larger than 99% of chance errors, which would be $z_{0.99} \,     \se[\widehat{\theta}_n] \approx 2.32 \, \se[\widehat{\theta}_n]$. In the immigration example, we have
 $$
-L = 0.56 - 2.32 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
+L = 0.56 - 2.32 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
 $$
 which is a lower lower bound. This reflects a fundamental tradeoff: our probabilistic bounds get worse (rule out a smaller region of possible values) as we base them off of more extreme chance errors. 
 
-A similar approach can help to derive an upper bound. We imagine a very large negative estimation error that implies a probabilistic upper bound on $\theta$. A very large negative estimation error could be $-1.96 \times \se[\widehat{\theta}_n]$ which is smaller than 2.5% of estimation errors. This result would imply a probabilistic upper bound of
+A similar approach can help to derive an upper bound. We imagine a very large negative estimation error that implies a probabilistic upper bound on $\theta$. A very large negative estimation error could be
 $$
-U = \widehat{\theta}_n + 1.96 \times \se[\widehat{\theta}_n],
+\widehat{\theta}_n - \theta = -1.96 \, \se[\widehat{\theta}_n]
+$$
+ which is smaller than 2.5% of estimation errors. This result would imply a probabilistic upper bound of
+$$
+U = \widehat{\theta}_n + 1.96 \, \se[\widehat{\theta}_n],
 $$
 which will not cover the true value 2.5% of the time, $\P(U < \theta) \approx 0.025$. 
 
@@ -112,18 +118,17 @@ text(x = -2.2, y = 0.05, expression(alpha/2), pos = 2)
 
 Thus, for the $100(1-\alpha)$% confidence interval, we can derive the implied lower bound as 
 $$
-L = \widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n],
+L = \widehat{\theta}_n - z_{1-\alpha/2}\, \se[\widehat{\theta}_n],
 $$
 and the upper bound as 
 $$
-U = \widehat{\theta}_n - z_{\alpha/2} \se[\widehat{\theta}_n].
+U = \widehat{\theta}_n - z_{\alpha/2}\, \se[\widehat{\theta}_n].
 $$
-It's slightly unintuitive that we subtract the chance imbalances in both of these expressions, but recall that $z_{\alpha/2}\se[\widehat{\theta}_n]$ will be a negative number (it is, after all, a large negative chance error). In particular, for asymptotically normal estimators, we know that the chance error distribution is symmetric so that $z_{\alpha/2} = -z_{1-\alpha/2}$, leading to the usual confidence interval formula,
+It's slightly unintuitive that we subtract the chance imbalances in both of these expressions, but recall that $z_{\alpha/2}\,\se[\widehat{\theta}_n]$ will be a negative number (it is, after all, a large negative chance error). In particular, for asymptotically normal estimators, we know that the chance error distribution is symmetric so that $z_{\alpha/2} = -z_{1-\alpha/2}$, leading to the usual confidence interval formula,
 $$
-[L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n],\; \widehat{\theta}_n + z_{1-\alpha/2} \se[\widehat{\theta}_n]\right].
+[L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_n],\; \widehat{\theta}_n + z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_n]\right],
 $$
-
-This is sometimes shortened to $\widehat{\theta}_n \pm z_{1-\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]$. 
+where we have substituted the estimated standard error for the true standard error. By Slutsky's theorem (@thm-indist-properties), this substitution does not affect the asymptotic coverage of the interval. This is sometimes shortened to $\widehat{\theta}_n \pm z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_{n}]$. 
 
 
 ::: {#exm-sample-mean-ci}
@@ -132,9 +137,9 @@ This is sometimes shortened to $\widehat{\theta}_n \pm z_{1-\alpha/2} \widehat{\
 
 Consider the sample mean of iid random variables, $X_1, \ldots, X_n$ where $\E[X_i] = \mu$ and $\V[X_i] = \sigma^2$. Recall that the central limit theorem shows that the sample mean will roughly be normally distributed $\Xbar_n \sim N(\mu, \sigma^2/n)$, which implies we can estimate its standard error as
 $$
-\widehat{\se}[\Xbar] = \frac{S_n}{\sqrt{n}},
+\widehat{\se}[\Xbar] = \frac{s_n}{\sqrt{n}},
 $$
-where $S^2_n = (n-1)^{-1} \sum_{i=1}^n (X_i - \Xbar)^2$ is the sample variance. 
+where $s^2_n = (n-1)^{-1} \sum_{i=1}^n (X_i - \Xbar)^2$ is the sample variance. 
 
 Suppose we want to find a 90% confidence interval. In this case, we would need to first obtain the critical value, $z_{1-\alpha/2}$, where $\alpha = 0.1$ in this case:
 
@@ -145,13 +150,13 @@ qnorm(1- 0.1 / 2)
 
 Combining these two facts, a 90% asymptotic confidence interval for the sample mean would be
 $$
-\left[\Xbar_{n} - 1.64 \frac{S_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \frac{S_n}{\sqrt{n}}\right]
+\left[\Xbar_{n} - 1.64\, \frac{s_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \,\frac{s_n}{\sqrt{n}}\right]
 $$
 
-In polling, the term $\pm z_{1-\alpha/2} \times \frac{S_n}{\sqrt{n}}$ is sometimes called the **margin of error**, where $\alpha = 0.05$ is the usually unstated default. From this expression, we can see that this margin of error (equivalently, the width of a confidence interval) will generally shrink when:
+In polling, the term $\pm z_{1-\alpha/2} \, \frac{S_n}{\sqrt{n}}$ is sometimes called the **margin of error**, where $\alpha = 0.05$ is the usually unstated default. From this expression, we can see that this margin of error (equivalently, the width of a confidence interval) will generally shrink when:
 
 1. We increase the amount of data we have, ($n$ is larger),
-2. We have less noisy data, ($S_n$ is smaller), or
+2. We have less noisy data, ($s_n$ is smaller), or
 3. We want a lower confidence level ($\alpha$ is larger so $z_{1-\alpha/2}$ is smaller).
 
 Note that even though larger sample sizes will lead to narrower confidence intervals, the shrinkage is not linear: increasing the sample size by a factor of 100 will only reduce the width by a factor of 10. 
@@ -170,7 +175,7 @@ $$
 $$
 Thus, we can form a 95% confidence interval for this estimator as 
 $$
-\left[\Ybar - \Xbar - 1.96 \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}},\; \Ybar - \Xbar + 1.96 \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}\right]
+\left[\Ybar - \Xbar - 1.96\, \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}},\; \Ybar - \Xbar + 1.96\, \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}\right]
 $$
 
 From this expression, we can see that the width of the difference-in-means confidence intervals is a function of the noise and number of observations in both samples. 
@@ -182,7 +187,7 @@ From this expression, we can see that the width of the difference-in-means confi
 
 ## Interpreting confidence intervals
 
-Remember that the interpretation of confidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this a bit. 
+Remember that the interpretation of confidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this interpretation. 
 
 
 ::: {#exm-cis}
@@ -190,7 +195,7 @@ Remember that the interpretation of confidence is how the random interval perfor
 Suppose that we are taking samples of size $n=500$ of random variables where $X_i \sim \N(1, 10)$, and we want to estimate the population mean $\E[X] = 1$. To do so, we repeat the following steps:
 
 1. Draw a sample of $n=500$ from $\N(1, 10)$. 
-2. Calculate the 95% confidence interval of the sample mean $\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}$. 
+2. Calculate the 95% confidence interval of the sample mean $\Xbar_n \pm 1.96\,\widehat{\sigma}/\sqrt{n}$. 
 3. Plot the intervals along the x-axis and color them blue if they contain the truth (1) and red if they do not. 
 
 @fig-ci-sim shows 100 iterations of these steps. Here we see that, as expected, the large majority of calculated CIs contain the true value. In fact, exactly 5 of the random samples produce intervals that fail to include 1, which is an exact coverage rate of 95%. Of course, this is just one simulation and a different set of 100 random samples might have produced a slightly different coverage rate. The guarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples the long-run frequency of intervals covering the truth would approach 0.95. 
@@ -230,24 +235,26 @@ Assume that the data are distributed iid $X_i \sim N(\mu, \sigma^2)$. Under this
 $$
 \frac{\Xbar_n - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)
 $$
-at any sample size. With asymptotically normal estimators, we relied on Slutsky's Theorem to allow us to replace the unknown population variance $\sigma^2$ with its consistent estimator $S^2_n$. In small samples, we cannot rely on that, but with normal data, we know that using the sample variance estimator leads to a Student's t-distribution,
+at any sample size. With asymptotically normal estimators, we relied on Slutsky's theorem to allow us to replace the unknown population variance $\sigma^2$ with its consistent estimator $S^2_n$. In small samples, we cannot rely on that, but with normal data, we know that using the sample variance estimator leads to a Student's t-distribution,
 $$
-\frac{\Xbar_n - \mu}{S_n / \sqrt{n}} \sim t_{n-1}.
+\frac{\Xbar_n - \mu}{s_n / \sqrt{n}} \sim t_{n-1}.
 $$
 In the continuing abuse of notation, let $t_{\nu,\alpha}$ be the $\alpha$ quantile of a Student's t-distribution with $\nu$ degrees of freedom so that $\P(T_{\nu} \leq t_{\nu, \alpha}) = \alpha$. Then, for a 95% confidence interval with $n=50$, the large normalized shocks would be $t_{49, 0.975} = 2.01$ on the positive side and $t_{49, 0.025} = -2.01$ on the negative side. Plugging these in above and solving for the upper and lower bounds gives
 $$
-[L, U] = \left[\Xbar_{50} - 2.01 \times \frac{S_{50}}{\sqrt{50}}, \; \Xbar_{50} + 2.01 \times \frac{S_{50}}{\sqrt{50}} \right].
+[L, U] = \left[\Xbar_{50} - 2.01 \, \frac{s_{50}}{\sqrt{50}}, \; \Xbar_{50} + 2.01 \, \frac{s_{50}}{\sqrt{50}} \right].
 $$
+Comparing the margin of error of this interval to the asymptotically normal estimator, $\pm 1.96\,s_{50}/\sqrt{50}$, we can see that $t$-based confidence interval is slightly wider. Even if the data is not normally distributed, this extra width can help improve coverage in small samples when the asymptotically normal estimator could show undercoverage. 
+
 More generally, the $100(1-\alpha)\%$ confidence interval for the sample mean under normal data with $n$ iid draws would be
 $$
-[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \times \frac{S_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \times \frac{S_{n}}{\sqrt{n}} \right].
+[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}} \right].
 $$
 
 
 ## Confidence intervals and hypothesis tests
 
 
-At first glance, we may seem sloppy in using $\alpha$ in the derivation of a $1 - \alpha$ confidence interval in this chapter and in an $\alpha$-level test in the last chapter. In reality, we were simply foreshadowing the deep connection between the two: every $1-\alpha$ confidence interval contains all null hypotheses that we **would not reject** with an $\alpha$-level test. 
+At first glance, you might accuse me of sloppy notation. Why use $\alpha$ in the derivation of a $1 - \alpha$ confidence interval in this chapter but also in an $\alpha$-level test in the last chapter? In reality, this was simply foreshadowing the deep connection between the two: every $1-\alpha$ confidence interval contains all null hypotheses that we **would not reject** with an $\alpha$-level test. 
 
 This connection is easiest to see with an asymptotically normal estimator, $\widehat{\theta}_n$. Consider the hypothesis test of 
 $$ 
@@ -259,13 +266,13 @@ T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]
 $$
 As we discussed in the last chapter, an $\alpha = 0.05$ test would reject this null when $|T| > 1.96$, or when 
 $$ 
-|\widehat{\theta}_{n} - \theta_{0}| > 1.96 \widehat{\se}[\widehat{\theta}_{n}]. 
+|\widehat{\theta}_{n} - \theta_{0}| > 1.96\, \widehat{\se}[\widehat{\theta}_{n}]. 
 $$
 This will be true when 
 $$ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 $$
-or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
+or, equivalently, that null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 
 
 This relationship holds more broadly. Any $1-\alpha$ confidence interval contains all possible parameter values that would not be rejected as the null hypothesis of an $\alpha$-level hypothesis test. This can be really useful for two reasons:
@@ -277,10 +284,10 @@ This relationship holds more broadly. Any $1-\alpha$ confidence interval contain
 
 ## Wilson score interval
 
-Consider a sample of binary random variables, $X_i \in \{0,1\}$ with a common probability of success, $p = \P(X_i = 1) = \E[X_i]$. We can construct the sample proportion, $\widehat{p} = \frac{1}{n} \sum_{i=1}^n X_i$, which is exactly the same as the sample mean. Thus, we could also use the above asymptotically normal confidence intervals, and they do indeed work well in large samples. However, these normal-based CIs can perform poorly in small samples, especially when the population proportion, $p$, is close to 0 or 1. For example, suppose we obtain $\widehat{p} = 0.99$ with $n=100$. The normal-based 95% confidence interval would be
+Consider a sample of binary random variables, $X_i \in \{0,1\}$ with a common probability of success, $p = \P(X_i = 1) = \E[X_i]$. We can construct the sample proportion, $\widehat{p} = \frac{1}{n} \sum_{i=1}^n X_i$, which is exactly the same as the sample mean. Thus, we could also use the above asymptotically normal confidence intervals, and they do indeed work well in large samples when $p$ is close to 0.5. However, these normal-based CIs can perform poorly in small samples, especially when the population proportion, $p$, is close to 0 or 1. For example, suppose we obtain $\widehat{p} = 0.99$ with $n=100$. The normal-based 95% confidence interval would be
 $$
 \begin{aligned}
-&0.99 \pm 1.96\times \sqrt{\frac{0.99 \times 0.01}{100}} \\ &= [0.97, 1.01]
+&0.99 \pm 1.96\, \sqrt{\frac{0.99 \times 0.01}{100}} \\ &= [0.97, 1.01]
 \end{aligned}
 $$
 Even with 100 observations, our confidence interval includes values of the true proportion above 1, which we know is logically impossible. Can we obtain better confidence intervals in this setting? Yes, we can! 
@@ -302,12 +309,12 @@ $$
 \left(1 + \frac{z^2_{1-\alpha/2}}{n}\right)p^2 - \left(2\widehat{p} + \frac{z^2_{1-\alpha/2}}{n}\right)p + \widehat{p}^2 \leq 0.
 $$
 
-Solving this quadratic equation using your favorite mnemonic device gives the interval
+Solving this quadratic equation using your favorite mnemonic device gives the slightly uglier interval
 $$
 CI_{\alpha} = \frac{1}{1 + z^2_{1-\alpha/2}/n}\left(\widehat{p} + \frac{z^2_{1-\alpha/2}}{2n} \pm \frac{z_{1-\alpha/2}}{2n} \sqrt{4n\widehat{p}(1-\widehat{p}) + z^2_{1-\alpha/2}}\right)
 $$
 
-@fig-wilson-vs-wald compares the Wilson score interval to the normal-based intervals as a function of the sample proportion for $n = 50$. The Wilson interval is always contained within $[0, 1]$, while the normal interval extends above 1 when $\widehat{p}$ is close to 1. The Wilson interval is also notably wider than the normal interval near the boundary, reflecting a more honest accounting of the uncertainty in this region.
+@fig-wilson-vs-wald compares the Wilson score interval to the normal-based intervals as a function of the sample proportion for $n = 50$. Around $p=0.5$, the intervals are almost identical, but as $p$ approaches 1, they diverge. The Wilson interval is always contained within $[0, 1]$, while the normal interval extends above 1 when $\widehat{p}$ is close to 1. The Wilson interval is also notably wider than the normal interval near the boundary, reflecting a more honest accounting of the uncertainty in this region.
 
 ```{r}
 #| label: fig-wilson-vs-wald
@@ -350,9 +357,9 @@ legend("topleft", legend = c("Normal", "Wilson"), col = c("indianred", "dodgerbl
 
 ## Resampling approaches to confidence intervals
 
-The entire approach to constructing confidence intervals depends on having an estimator for the standard error. For simple cases like the sample mean, we have simple and straightforward estimators for the standard error, such as $\widehat{\se} = \widehat{\sigma}/\sqrt{n}$. For some more complicated quantities of interest, such as $\mu^2$ or $\log(\mu)$ with estimators $\Xbar_{n}^2$ and $\log(\Xbar_{n})$, we saw in @sec-delta-method that the delta method can provide estimators for the standard error. 
+So far, the entire approach to constructing confidence intervals depends on having an estimator for the standard error. For simple cases like the sample mean, we have simple and straightforward estimators for the standard error, such as $\widehat{\se} = \widehat{\sigma}/\sqrt{n}$. For some more complicated quantities of interest, such as $\mu^2$ or $\log(\mu)$ with estimators $\Xbar_{n}^2$ and $\log(\Xbar_{n})$, we saw in @sec-delta-method that the delta method can provide estimators for the standard error. 
 
-What about quantities of interest and estimators that are not nice differentiable functions, such as the median? How do we obtain the standard error in those cases? We could turn to our local department of mathematics for aid, but why think harder when we can get a computer to think for us. In the 20th century, statisticians figured out that we can approximate standard errors using computational approaches.  
+What about quantities of interest and estimators that are not nice differentiable functions, such as the median? How do we obtain the standard error in those cases? We could turn to our local department of mathematics for aid, but why think harder when we can get a computer to think for us? In the 20th century, statisticians figured out that we can obtain confidence intervals using computational approaches.  
 
 All of the computational approaches to confidence intervals (and hypothesis tests) rely on a common idea: resampling. Our goal with statistical inference is to learn about the entire distribution of the estimator, but we only have a single sample from the population distribution. Ideally, we could repeatedly sample from the population (as we have done in many of our simulation exercises in this book). Imagine, we could get $R$ random samples from the population and obtain estimates from each:
 $$
@@ -368,7 +375,11 @@ Resampling approaches to inference generate additional samples from the single o
 
 ### The jackknife
 
-The jackknife is a resampling technique that generates additional samples by removing observations. Let $\widehat{\theta}_{(-i)}$ be the estimate when omitting the $i$th observation from the sample and let $\overline{\theta}_{n} = (1/n) \sum_{i=1}^n \widehat{\theta}_{(-i)}$ be the average of these leave-one-out estimates. Under some conditions, the variation of $\widehat{\theta}_{(-i)}$ around $\overline{\theta}_{n}$ should be similar to the variation of $\widehat{\theta}_{n}$ around $\theta$. This fact motivates the jackknife variance estimator, 
+The jackknife is a resampling technique that generates additional samples by removing observations. Let $\widehat{\theta}_{(-i)}$ be the estimate when omitting the $i$th observation from the sample. For example, the leave-one-out sample mean would be
+$$
+\Xbar_{(-i)} = \frac{1}{n-1} \sum_{j \neq i} X_j,
+$$
+Let $\overline{\theta}_{n} = (1/n) \sum_{i=1}^n \widehat{\theta}_{(-i)}$ be the average of the leave-one-out estimates. Under some conditions, the variation of $\widehat{\theta}_{(-i)}$ around $\overline{\theta}_{n}$ should be similar to the variation of $\widehat{\theta}_{n}$ around $\theta$. This fact motivates the jackknife variance estimator, 
 $$
 V_{jk} = \frac{n-1}{n} \sum_{i=1}^n \left(\widehat{\theta}_{(-i)} - \overline{\theta}_{n}\right)^2,
 $$
@@ -381,23 +392,19 @@ $$
 
 With this variance estimator in hand, one can derive confidence intervals in the usual way, dropping in the jackknife variance estimator for the usual one,
 $$
-CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{1-\alpha/2}\sqrt{V_{jk}},\; \widehat{\theta}_n + z_{1-\alpha/2}\sqrt{V_{jk}} \right] 
+CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{1-\alpha/2}\,\sqrt{V_{jk}},\; \widehat{\theta}_n + z_{1-\alpha/2}\,\sqrt{V_{jk}} \right] 
 $$
 
 
-To see why we use the $n-1$ adjustment, we can focus on the easiest case: the sample mean. Define the leave-one-out sample mean as 
+To see why we use the $n-1$ adjustment, we can focus on the easiest case: the sample mean. Notice that we can easily write leave-one-out sample mean in terms of the full sample mean,
 $$
-\Xbar_{(i)} = \frac{1}{n-1} \sum_{j \neq i} X_j,
-$$
-and notice that we can easily write this in terms of the full sample mean,
-$$
-\Xbar_{(i)} = \frac{1}{n-1}\left(\sum_{j=1} ^n X_j - X_i \right) = \frac{1}{n-1}\left(n\Xbar_{n} - X_i \right). 
+\Xbar_{(-i)} = \frac{1}{n-1}\left(\sum_{j=1} ^n X_j - X_i \right) = \frac{1}{n-1}\left(n\Xbar_{n} - X_i \right). 
 $$
 
 From this expression, we can also show that the mean of the jackknife estimates is the same as the full sample mean:
 $$
 \begin{aligned}
-\Xbar_{jk} = \frac{1}{n} \sum_{i=1}^n \Xbar_{(i)} &= \frac{1}{n(n-1)} \sum_{i=1}^n n\Xbar_{n} - X_i \\
+\Xbar_{jk} = \frac{1}{n} \sum_{i=1}^n \Xbar_{(-i)} &= \frac{1}{n(n-1)} \sum_{i=1}^n n\Xbar_{n} - X_i \\
 &= \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} \Xbar_n \\
 &= \Xbar_n
 \end{aligned}
@@ -405,12 +412,12 @@ $$
 
 From these two facts, we can see that the jackknife deviations are a rescaled version of the original deviations, 
 $$
-(\Xbar_{(i)} - \Xbar_{jk}) = \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} X_i - \Xbar_n = \frac{1}{n-1}(\Xbar_n - X_i)
+(\Xbar_{(-i)} - \Xbar_{jk}) = \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} X_i - \Xbar_n = \frac{1}{n-1}(\Xbar_n - X_i)
 $$
 This key fact justifies the jackknife variance estimator since, 
 $$
 \begin{aligned}
-V_{jk} &= \frac{n-1}{n} \sum_{i=1}^n (\Xbar_{(i)} - \Xbar_{jk})^2 \\
+V_{jk} &= \frac{n-1}{n} \sum_{i=1}^n (\Xbar_{(-i)} - \Xbar_{jk})^2 \\
 &= \frac{n-1}{n(n-1)^2} \sum_{i=1}^n (X_i -\Xbar_n)^2 \\
 &=\frac{\widehat{\sigma}^2}{n},
 \end{aligned}
@@ -449,9 +456,7 @@ $$ {#eq-bootstrap-cis}
 :::
 
 
-In the construction of the bootstrap confidence intervals, it may be confusing that we subtract both quantiles from the estimate, rather than add one and subtract one. But recall the derivation of confidence intervals in @sec-deriving-cis as using the distribution of chance errors. The bootstrap approach leverages the "bootstrap deviations" such as $\widehat{\theta}^*_{(r)} - \widehat{\theta}_n$ to approximate the distribution of $\widehat{\theta}_n - \theta$. The quantile $c_{1-\alpha/2}$ ($0.975$ for $\alpha = 0.05$) of these deviations will represent a large positive chance deviation, meaning that the lower bound $\widehat{\theta}_n - c_{1-\alpha/2}$ of the confidence interval will be below $\widehat{\theta}_n$. The quantile $c_{\alpha/2}$, on the other hand, ($0.025$ for $\alpha = 0.05$) will be a large negative chance error, meaning the upper bound $\widehat{\theta}_n - c_{\alpha/2}$ will be larger than $\widehat{\theta}_n$.  
-
-Just like for the asymptotically normal estimators in @sec-deriving-cis, we can back out the implied true value from these deviations, leading to the bootstrap confidence intervals formula in @eq-bootstrap-cis. 
+In the construction of the bootstrap confidence intervals, it may be confusing that we subtract both quantiles from the estimate, rather than add one and subtract one. But recall the derivation of confidence intervals in @sec-deriving-cis as using the distribution of chance errors. The bootstrap approach leverages the "bootstrap deviations" such as $\widehat{\theta}^*_{(r)} - \widehat{\theta}_n$ to approximate the distribution of $\widehat{\theta}_n - \theta$. The quantile $c_{1-\alpha/2}$ ($0.975$ for $\alpha = 0.05$) of these deviations will represent a large positive chance deviation, meaning that the lower bound $\widehat{\theta}_n - c_{1-\alpha/2}$ of the confidence interval will be below $\widehat{\theta}_n$. The quantile $c_{\alpha/2}$, on the other hand, ($0.025$ for $\alpha = 0.05$) will be a large negative chance error, meaning the upper bound $\widehat{\theta}_n - c_{\alpha/2}$ will be larger than $\widehat{\theta}_n$. Just like for the asymptotically normal estimators in @sec-deriving-cis, we can back out the implied true value from these deviations, leading to the bootstrap confidence intervals formula in @eq-bootstrap-cis. 
 
 
 There is another, slightly simpler bootstrap procedure that derives plausible values of the parameter from the distribution of the bootstrap replications themselves rather than the deviations. This approach is called the **percentile bootstrap method**. 
