@@ -10,3 +10,4 @@ site_libs
 /index.aux
 
 **/*.quarto_ipynb
+/.vscode/
