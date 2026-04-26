@@ -1,6 +1,12 @@
 <script>
 window.MathJax = {
   tex: {
+    packages: {'[+]': ['mathtools']},
+    mathtools: {
+      pairedDelimiters: {
+        abs: ['\\lvert', '\\rvert']
+      }
+    },
     macros: {
       RR: "{\\bf R}",
       bs: ["\\boldsymbol{#1}", 1],
