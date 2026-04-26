@@ -1,9 +1,9 @@
 # Confidence intervals
 
 
-You have run your experiment and presented your readers with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are consistent with the data we observe and some reasonable values of chance estimation errors?
+You have run your experiment and presented your audience with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are consistent with the data we observe and some reasonable values of chance estimation errors?
 
-A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. **Confidence intervals** make this kind of intuition more formal by instead estimating ranges of values with a fixed percentage of these ranges containing the true value of the parameter. 
+A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. **Confidence intervals** make this kind of intuition more formal by estimating a range of values that will contain the true value in a fixed percentage of random samples. 
 
 We begin with the basic definition of a confidence interval. 
 
@@ -37,13 +37,13 @@ $$
 \lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \geq 1-\alpha \quad\forall\theta\in\Theta.
 $$
 
-This will usually be the property that we can show for most confidence intervals, since we usually rely on large sample approximations based on the central limit theorem. 
+With the exception of certain parametric models (such as the normal model discussed below), we will often have to settle for establishing asymptotic coverage, since we usually rely on large sample approximations based on the central limit theorem. 
 
 
 
 ## Deriving confidence intervals {#sec-deriving-cis}
 
-A thought experiment can give the basic intuition for almost all approaches to generating confidence intervals. Suppose we've estimated support for increasing legal immigration to be $\widehat{\theta}_n = 0.56$ from a sample of size $n = 400$. Our goal is to derive a probabilistic bound on the true proportion from this sample. We can start with trying to derive the probabilistic lower bound. 
+A thought experiment can give the basic intuition for almost all approaches to generating confidence intervals. Suppose we've estimated support for increasing legal immigration to be $\widehat{\theta}_n = 0.56$ from a sample of size $n = 400$. We can start our confidence interval journey with trying to derive a probabilistic lower bound---that is, a bound that will lower than the true rate of support with a fixed probability. 
 
 
 Recall that we can think of all estimators as the true value plus some estimation error,
