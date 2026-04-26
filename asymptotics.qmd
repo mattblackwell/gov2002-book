@@ -57,7 +57,7 @@ $$
 
 
 
-Can we apply a similar definition of convergence to sequences of random variables (like estimators)? Possibly. Some examples clarify why this might be difficult.[^wass] Suppose we have a sequence of $a_n = a$ for all $n$ (that is, a constant sequence). Then obviously $\lim_{n\rightarrow\infty} a_n = a$. Now let's say we have a sequence of random variables, $X_1, X_2, \ldots$, that are all independent with a standard normal distribution, $N(0,1)$. From the analogy to the deterministic case, saying that $X_n$ converges to $X \sim N(0, 1)$ would be tempting, but note that because they are all different random variables, $\P(X_n = X) = 0$. Thus, we must be careful about saying how one variable converges to another variable. 
+Can we apply a similar definition of convergence to sequences of random variables (like estimators)? Possibly. Some examples clarify why this might be difficult.[^wass] Suppose we have a sequence of $a_n = a$ for all $n$ (that is, a constant sequence). Then obviously $\lim_{n\rightarrow\infty} a_n = a$. Now let's say we have a sequence of random variables, $X_1, X_2, \ldots$, that are all independent with a standard normal distribution, $N(0,1)$ (where $N(\mu, \sigma^2))$ indicates a normal distribution with mean $\mu$ and variance $\sigma^2$). From the analogy to the deterministic case, saying that $X_n$ converges to $X \sim N(0, 1)$ would be tempting, but note that because they are all different random variables, $\P(X_n = X) = 0$. Thus, we must be careful about saying how one variable converges to another variable. 
 
 Another example highlights subtle problems with a sequence of random variables converging to a single value. Suppose we have a sequence of random variables $X_1, X_2, \ldots$ where $X_n \sim N(0, 1/n)$. Clearly, the distribution of $X_n$ will concentrate around 0 for large values of $n$, so saying that $X_n$ converges to 0 is tempting. But notice that $\P(X_n = 0) = 0$ because of the nature of continuous random variables. 
 
@@ -227,8 +227,9 @@ Seeing how the distribution of the sample mean changes as a function of the samp
 ```{r}
 #| label: "fig-lln-sim"
 #| echo: false
-#| fig-cap: "Sampling distribution of the sample mean as a function of
-#| sample size."
+#| fig-cap: |
+#|  Sampling distribution of the sample mean as a function of
+#|  sample size.
 nsims <- 10000
 holder <- matrix(NA, nrow = nsims, ncol = 6)
 for (i in 1:nsims) {
@@ -239,19 +240,27 @@ for (i in 1:nsims) {
   s1000 <- rexp(n = 1000, rate = 0.5)
   s10000 <- rexp(n = 10000, rate = 0.5)
 
-  holder[i,1] <- mean(s5)
-  holder[i,2] <- mean(s15)
-  holder[i,3] <- mean(s30)
-  holder[i,4] <- mean(s100)
-  holder[i,5] <- mean(s1000)
-  holder[i,6] <- mean(s10000)
+  holder[i, 1] <- mean(s5)
+  holder[i, 2] <- mean(s15)
+  holder[i, 3] <- mean(s30)
+  holder[i, 4] <- mean(s100)
+  holder[i, 5] <- mean(s1000)
+  holder[i, 6] <- mean(s10000)
 }
 par(las = 1, mar = c(3.1, 4.1, 0.1, 0.1))
-plot(density(holder[,2]), xlim = c(0,4), bty = "n", main = "", lwd = 2, xlab = "", ylim = range(density(holder[,5])$y))
-abline(v=2, col = "grey50")
-lines(density(holder[,3]), col = "violet", lwd = 2)
-lines(density(holder[,4]), col = "dodgerblue", lwd = 2)
-lines(density(holder[,5]), col = "green3", lwd = 2)
+plot(
+  density(holder[, 2]),
+  xlim = c(0, 4),
+  bty = "n",
+  main = "",
+  lwd = 2,
+  xlab = "",
+  ylim = range(density(holder[, 5])$y)
+)
+abline(v = 2, col = "grey50")
+lines(density(holder[, 3]), col = "violet", lwd = 2)
+lines(density(holder[, 4]), col = "dodgerblue", lwd = 2)
+lines(density(holder[, 5]), col = "green3", lwd = 2)
 text(x = 1.25, y = 0.5, expression(bar(X)[15]), col = "black", pos = 2)
 text(x = 1.7, y = 1, expression(bar(X)[30]), col = "violet", pos = 2)
 text(x = 1.9, y = 1.75, expression(bar(X)[100]), col = "dodgerblue", pos = 2)
@@ -446,19 +455,63 @@ By inspection, this converges to $\Phi(x)$, which is the cdf for the standard no
 par(mfrow = c(1, 2))
 library(RColorBrewer)
 cols <- brewer.pal(5, "Set1")
-curve(pnorm(x, 1, 2), ylim = c(0,1), from = -4, 6, bty = "n", yaxt = "n", ylab = "F(x)", main = "cdf", col = cols[1], lwd = 2, lty = 2)
-curve(pnorm(x, 0.5, 1.5), from = -4, 6, add = TRUE, lty = 2, col = cols[2], lwd = 2)
-curve(pnorm(x, 0.25, 1.25), from = -4, 6, add = TRUE, lty = 3, col = cols[3], lwd = 2)
-curve(pnorm(x, 0.1, 1.1), from = -4, 6, add = TRUE, lty = 4, col = cols[4], lwd = 2)
-curve(pnorm(x, 0, 1), from = -4, 6, add = TRUE, lty = 1, col = "black", lwd = 2)
+curve(
+  pnorm(x, 1, 2),
+  ylim = c(0, 1),
+  from = -4,
+  to = 6,
+  bty = "n",
+  yaxt = "n",
+  ylab = "F(x)",
+  main = "cdf",
+  col = cols[1],
+  lwd = 2,
+  lty = 2
+)
+curve(
+  pnorm(x, 0.5, 1.5),
+  from = -4, to = 6, add = TRUE, lty = 2, col = cols[2], lwd = 2
+)
+curve(
+  pnorm(x, 0.25, 1.25),
+  from = -4, to = 6, add = TRUE, lty = 3, col = cols[3], lwd = 2
+)
+curve(
+  pnorm(x, 0.1, 1.1),
+  from = -4, 6, add = TRUE, lty = 4, col = cols[4], lwd = 2
+)
+curve(
+  pnorm(x, 0, 1), from = -4, 6, add = TRUE, lty = 1, col = "black", lwd = 2
+)
 
-curve(dnorm(x, 1, 2), from = -4, 6, bty = "n", yaxt = "n", ylab = "f(x)", main = "pdf", lwd = 2, col = cols[1], lty = 5, ylim = c(0, dnorm(0)))
-curve(dnorm(x, 0.5, 1.5), from = -4, 6, add = TRUE, lty = 2, lwd = 2, col = cols[2])
-curve(dnorm(x, 0.25, 1.25), from = -4, 6, add = TRUE, lty = 3, lwd = 2, col = cols[3])
-curve(dnorm(x, 0.1, 1.1), from = -4, 6, add = TRUE, lty = 4, lwd = 2, col = cols[4])
-curve(dnorm(x, 0, 1), from = -4, 6, add = TRUE, lwd = 2, col = "black")
-legend(x="topright", legend = c("n=1", "n=2", "n=4", "n=10", "N(0,1)"),
-       col = c(cols[1:4], "black"), lty = c(5, 2, 3, 4, 1), lwd = 2, bty = "n")
+curve(
+  dnorm(x, 1, 2),
+  from = -4, to = 6, bty = "n", yaxt = "n", ylab = "f(x)", main = "pdf",
+  lwd = 2, col = cols[1], lty = 5, ylim = c(0, dnorm(0))
+)
+curve(
+  dnorm(x, 0.5, 1.5),
+  from = -4, to = 6, add = TRUE, lty = 2, lwd = 2, col = cols[2]
+)
+curve(
+  dnorm(x, 0.25, 1.25),
+  from = -4, to = 6, add = TRUE, lty = 3, lwd = 2, col = cols[3]
+)
+curve(
+  dnorm(x, 0.1, 1.1),
+  from = -4, to = 6, add = TRUE, lty = 4, lwd = 2, col = cols[4]
+)
+curve(
+  dnorm(x, 0, 1), from = -4, to = 6, add = TRUE, lwd = 2, col = "black"
+)
+legend(
+  x = "topright",
+  legend = c("n=1", "n=2", "n=4", "n=10", "N(0,1)"),
+  col = c(cols[1:4], "black"),
+  lty = c(5, 2, 3, 4, 1),
+  lwd = 2,
+  bty = "n"
+)
 ```
 
 :::
@@ -512,8 +565,9 @@ To illustrate how the CLT works, we can simulate the sampling distribution of th
 ```{r}
 #| label: fig-clt
 #| echo: false
-#| fig-cap: "Sampling distributions of the normalized sample mean at
-#| n=30 and n=100."
+#| fig-cap: |
+#|  Sampling distributions of the normalized sample mean at
+#|  n=30 and n=100.
 set.seed(02138)
 nsims <- 10000
 holder2 <- matrix(NA, nrow = nsims, ncol = 6)
@@ -525,19 +579,42 @@ for (i in 1:nsims) {
   s1000 <- rbinom(n = 1000, size = 1, prob = 0.25)
   s10000 <- rbinom(n = 10000, size = 1, prob = 0.25)
 
-  holder2[i,1] <- mean(s5)
-  holder2[i,2] <- mean(s15)
-  holder2[i,3] <- mean(s30)
-  holder2[i,4] <- mean(s100)
-  holder2[i,5] <- mean(s1000)
-  holder2[i,6] <- mean(s10000)
+  holder2[i, 1] <- mean(s5)
+  holder2[i, 2] <- mean(s15)
+  holder2[i, 3] <- mean(s30)
+  holder2[i, 4] <- mean(s100)
+  holder2[i, 5] <- mean(s1000)
+  holder2[i, 6] <- mean(s10000)
 }
 
 par(las = 1, mar = c(3.1, 4.1, 0.1, 0.1))
-plot(density((holder2[,3] - 0.25) * sqrt(16/3) * sqrt(30)), xlim = c(-3,3), bty = "n", main = "", lwd = 2, xlab = "", col = "dodgerblue", ylim = c(0, 0.75))
-lines(density((holder2[,4] - 0.25) * sqrt(16/3) * sqrt(100)), bty = "n", main = "", lwd = 2, col = "indianred")
-abline(v=0, col = "grey50")
-legend(x=1, y = 0.5, legend = c("n = 30", "n = 100", "N(0, 1)"), col = c("dodgerblue", "indianred", "grey50"), lwd = 2, lty = c(1, 1, 2), bty = "n")
+plot(
+  density((holder2[, 3] - 0.25) * sqrt(16 / 3) * sqrt(30)),
+  xlim = c(-3, 3),
+  bty = "n",
+  main = "",
+  lwd = 2,
+  xlab = "",
+  col = "dodgerblue",
+  ylim = c(0, 0.75)
+)
+lines(
+  density((holder2[, 4] - 0.25) * sqrt(16 / 3) * sqrt(100)),
+  bty = "n",
+  main = "",
+  lwd = 2,
+  col = "indianred"
+)
+abline(v = 0, col = "grey50")
+legend(
+  x = 1,
+  y = 0.5,
+  legend = c("n = 30", "n = 100", "N(0, 1)"),
+  col = c("dodgerblue", "indianred", "grey50"),
+  lwd = 2,
+  lty = c(1, 1, 2),
+  bty = "n"
+)
 curve(dnorm(x), from = -3, to = 3, add = TRUE, lwd = 2, lty = 2, col = "grey50")
 ```
 
@@ -598,167 +675,6 @@ As with the notation alert with the WLLN, we are using shorthand here, $\E\Vert 
 
 :::
 
-## Confidence intervals
-
-
-We now turn to an essential application of the central limit theorem: confidence intervals. 
-
-Suppose we have run an experiment with a treatment and control group and have presented readers with our single best guess about the treatment effect using the difference in sample means. We have also presented the estimated standard error of this estimate to give readers a sense of how variable it is. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect is **plausible** given the data we observe?
-
-A point estimate of the difference in sample means typically has 0 probability of being the exact true value, but intuitively we hope that the true treatment effect is close to our estimate. **Confidence intervals** make this kind of intuition more formal by instead estimating ranges of values with a fixed percentage of these ranges containing the actual unknown parameter value. 
-
-We begin with the basic definition of a confidence interval. 
-
-::: {#def-coverage}
-A $1-\alpha$ **confidence interval** for a real-valued parameter $\theta$ is a pair of statistics $L= L(X_1, \ldots, X_n)$ and $U = U(X_1, \ldots, X_n)$ such that $L < U$ for all values of the sample and such that 
-$$ 
-\P(L \leq \theta \leq U \mid \theta) \geq 1-\alpha, \quad \forall \theta \in \Theta.
-$$
-:::
-
-We say that a $1-\alpha$ confidence interval covers (or contains, captures, traps, etc.) the true value at least $100(1-\alpha)\%$ of the time, and we refer to $1-\alpha$ as the **coverage probability** or simply **coverage**. Typical confidence intervals include 95% percent ($\alpha = 0.05$), 90% ($\alpha = 0.1$), and 99% ($\alpha = 0.01$). All else equal, larger coverage will imply larger intervals.
-
-So a confidence interval is a random interval with a particular guarantee about how often it will contain the true value of the unknown population parameter (in our example, the true treatment effect). Remember what is random and what is fixed in this setup. The interval varies from sample to sample, but the true value of the parameter stays fixed even if it is unknown, and the coverage is how often we should expect the interval to contain that true value. The "repeating my sample over and over again" analogy can break down very quickly, so it is sometimes helpful to interpret it as giving guarantees across confidence intervals across different experiments. In particular, suppose that a journal publishes 100 quantitative articles annually, each producing a single 95% confidence interval for their quantity of interest. Then, if the confidence intervals are valid and each is constructed in the exact same way, we should expect 95 of those confidence intervals to contain the true value. 
-
-
-::: {.callout-warning}
-
-Suppose we have a 95% confidence interval, $[0.1, 0.4]$. It would be tempting to make a probability statement like $\P(0.1 \leq \theta \leq 0.4 \mid \theta) = 0.95$ or that there's a 95% chance that the parameter is in $[0.1, 0.4]$. But looking at the probability statement, everything on the left-hand side of the conditioning bar is fixed, so the probability either has to be 0 ($\theta$ is outside the interval) or 1 ($\theta$ is in the interval); the unknown parameter is a fixed value, so it is either in the interval or it is not. Another way to think about this is that the coverage probability of a confidence interval refers to its status as a pair of random variables, $(L, U)$, not any particular realization of those variables like $(0.1, 0.4)$. As an analogy, consider if we calculated the sample mean as $0.25$ and then tried to say that $0.25$ is unbiased for the population mean. This statement doesn't make sense because unbiasedness refers not to a fixed value but how the sample mean varies from sample to sample.
-
-:::
-
-
-In most cases, we will not be able to derive exact confidence intervals but rather confidence intervals that are **asymptotically valid**, which means that if we write the interval as a function of the sample size, $(L_n, U_n)$, they would have **asymptotic coverage**
-$$
-\lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \geq 1-\alpha \quad\forall\theta\in\Theta.
-$$
-
-We can show asymptotic coverage for most confidence intervals since we usually rely on large-sample approximations based on the central limit theorem. 
-
-
-
-### Deriving confidence intervals
-
-To derive confidence intervals, consider the standard formula for the 95% confidence interval of the sample mean, 
-$$ 
-\left[\Xbar_n - 1.96\frac{s}{\sqrt{n}},\; \Xbar_n + 1.96\frac{s}{\sqrt{n}}\right],
-$$
-where $s$ is the sample standard deviation and $s/\sqrt{n}$ is the estimate of the standard error of the sample mean. If this is a 95% confidence interval, then the probability that it contains the true population mean $\mu$ should be 0.95, but how can we derive this? We can justify this logic using the central limit theorem, and the argument will hold for any asymptotically normal estimator. 
-
-
-Suppose we have an estimator, $\widehat{\theta}_n$ for the parameter $\theta$ with estimated standard error $\widehat{\se}[\widehat{\theta}_n]$. If the estimator is asymptotically normal, then in large samples, we know that
-$$ 
-\frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \sim \N(0, 1).
-$$
-Then we use our knowledge of the standard normal to find
-$$ 
-\P\left( -1.96 \leq \frac{\widehat{\theta}_n - \theta}{\widehat{\se}[\widehat{\theta}_n]} \leq 1.96\right) = 0.95.
-$$
-Multiplying each part of the inequality by $\widehat{\se}[\widehat{\theta}_n]$ gives us
-$$ 
-\P\left( -1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \widehat{\theta}_n - \theta \leq 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
-$$
-We then subtract all parts by the estimator to get
-$$ 
-\P\left(-\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq - \theta \leq -\widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95,
-$$
-and finally we multiply all parts by $-1$ (and flipping the inequalities) to arrive at
-$$ 
-\P\left(\widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \leq \theta \leq \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n]\right) = 0.95.
-$$
-To connect back to the definition of the confidence interval, we have now shown that the random interval $[L, U]$ where
-$$ 
-\begin{aligned}
-  L = L(X_1, \ldots, X_n) &= \widehat{\theta}_n - 1.96\,\widehat{\se}[\widehat{\theta}_n] \\
-  U = U(X_1, \ldots, X_n) &= \widehat{\theta}_n + 1.96\,\widehat{\se}[\widehat{\theta}_n],
-\end{aligned}
-$$
-is an asymptotically valid estimator.[^1] Replacing $\Xbar_n$ for $\widehat{\theta}_n$ and $s/\sqrt{n}$ for $\widehat{\se}[\widehat{\theta}_n]$ establishes how the standard 95% confidence interval for the sample mean above is asymptotically valid. 
-
-[^1]: Implicit in this analysis is that the standard error estimate is consistent. 
-
-
-```{r}
-#| label: fig-std-normal
-#| echo: false
-#| fig-cap: "Critical values for the standard normal."
-curve(dnorm(x), from = -4, to = 4, ylim = c(-.05, 0.5), bty = "l", las = 1, xlab = "z", ylab = expression(f(z)), xaxt = "n")
-abline(h = 0)
-axis(side = 1, at = c(-1.96, 1.96), labels = c(expression(-z[alpha/2]), expression(z[alpha/2])))
-polygon(c(-4,seq(-4,-1.96,0.01),-1.96), c(0,dnorm(seq(-4,-1.96,0.01)), 0), col = "grey70", border = NA)
-polygon(c(4,seq(4,1.96,-0.01),1.96), c(0,dnorm(seq(4,1.96,-0.01)), 0), col = "grey70", border = NA)
-abline(v = 1.96, lty = 2, col = "grey60")
-abline(v = -1.96, lty = 2, col = "grey60")
-## text(x = 1.94, y = -0.04, "c", pos = 4)
-## text(x = -1.94, y = -0.04, "-c", pos = 2)
-text(x = 0, y = dnorm(0)/2, expression(1-alpha))
-text(x = 2.2, y = 0.05, expression(alpha/2), pos = 4)
-text(x = -2.2, y = 0.05, expression(alpha/2), pos = 2)
-```
-
-
-How can we generalize this to $1-\alpha$ confidence intervals? For a random variable that is distributed following a standard normal, $Z$, we know that
-$$ 
-\P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1-\alpha
-$$
-which implies that we can obtain a $1-\alpha$ asymptotic confidence intervals by using the interval $[L, U]$, where
-$$ 
-L = \widehat{\theta}_{n} - z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}], \quad U = \widehat{\theta}_{n} + z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]. 
-$$
-This is sometimes shortened to $\widehat{\theta}_n \pm z_{\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]$. Remember that we can obtain the values of $z_{\alpha/2}$ easily from R:
-
-```{r}
-## alpha = 0.1 for 90% CI
-qnorm(0.1 / 2, lower.tail = FALSE)
-```
-
-As a concrete example, then, we could derive a 90% asymptotic confidence interval for the sample mean as 
-$$ 
-\left[\Xbar_{n} - 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}, \Xbar_{n} + 1.64 \frac{\widehat{\sigma}}{\sqrt{n}}\right]
-$$
-
-
-### Interpreting confidence intervals
-
-A very important point is that the interpretation of confidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that contains the true population value in 95% of samples. Simulating repeated samples helps clarify this. 
-
-
-::: {#exm-cis}
-
-Suppose we are taking samples of size $n=500$ of random variables where $X_i \sim \N(1, 10)$, and we want to estimate the population mean $\E[X] = 1$. To do so, we repeat the following steps:
-
-1. Draw a sample of $n=500$ from $\N(1, 10)$. 
-2. Calculate the 95% confidence interval sample mean $\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}$. 
-3. Plot the intervals along the x-axis and color them blue if they contain the truth (1) and red if not. 
-
-@fig-ci-sim shows 100 iterations of these steps. We see that, as expected, most calculated CIs do contain the true value. Five random samples produce intervals that fail to include 1, an exact coverage rate of 95%. Of course, this is just one simulation, and a different set of 100 random samples might have produced a slightly different coverage rate. The guarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples, the long-run frequency of intervals covering the truth would approach 0.95. 
-
-```{r}
-#| label: "fig-ci-sim"
-#| echo: false
-#| fig.cap: "95% confidence intervals from 100 random samples. Intervals are blue if they contain the truth and red if they do not."
-set.seed(02143)
-sims<- 10000
-cover <- rep(0, times = sims)
-low.bound <- up.bound <- rep(NA, times = sims)
-for(i in 1:sims){
-    draws <- rnorm(500, mean = 1, sd = sqrt(10))
-    low.bound[i] <- mean(draws) - sd(draws) / sqrt(500) * 1.96
-    up.bound[i] <- mean(draws) + sd(draws) / sqrt(500) * 1.96
-    if (low.bound[i] < 1 & up.bound[i] > 1) {
-        cover[i] <- 1
-    }
-}
-cols <- ifelse(cover == 1, "dodgerblue", "indianred")
-plot(x = NULL, y = NULL, xlim = c(1,100), ylim = c(0.5, 1.5), bty = "n",
-     xlab = "Trial", ylab = "Estimate", xaxt = "n", las = 1)
-abline(h = 1, col = "grey", lwd = 3)
-segments(x0 = 1:100, y0 = low.bound[1:100], y1 = up.bound[1:100],
-         col = cols[1:100], lwd = 3)
-```
-
-
-:::
 
 
 ## Delta method {#sec-delta-method}
@@ -798,18 +714,33 @@ by the properties of variances.
 #| echo: false
 #| fig-cap: "Linear approximation to nonlinear functions."
 
-curve(x ^ 2, from = -3, to = 3, lwd = 2, bty = "l", ylim = c(0, 10),
-      xaxt = "n", yaxt = "n", xlab = expression(theta), ylab = expression(h(theta)))
-axis(side = 1, at = c(-1, -1.25), labels = c(expression(theta[0]), expression(hat(theta)[n])))
-axis(side = 2, at = c(1, 1.25^2), labels = c(expression(h(theta[0])), expression(h(hat(theta)[n]))), las =1)
+curve(
+  x ^ 2, from = -3, to = 3, lwd = 2, bty = "l", ylim = c(0, 10),
+  xaxt = "n", yaxt = "n", xlab = expression(theta),
+  ylab = expression(h(theta))
+)
+axis(
+  side = 1, at = c(-1, -1.25),
+  labels = c(expression(theta[0]), expression(hat(theta)[n]))
+)
+axis(
+  side = 2, at = c(1, 1.25^2),
+  labels = c(expression(h(theta[0])), expression(h(hat(theta)[n]))), las = 1
+)
 abline(a = -1, b = -2, col = "indianred1", lwd = 2)
 segments(x0 = -1, y0 = -1, y1 = 1, lty = 2, lwd = 1.5)
 segments(x0 = -1.25, y0 = -1, y1 = 1.25^2, lty = 2, lwd = 1.5, col = "grey50")
-segments(x0 = -20, x1 = -1.25, y0 = 1.25 ^ 2, lwd = 1.5, lty = 2, col = "grey50")
+segments(
+  x0 = -20, x1 = -1.25, y0 = 1.25 ^ 2, lwd = 1.5, lty = 2, col = "grey50"
+)
 segments(x0 = -20, x1 = -1, y0 = 1, lwd = 1.5, lty = 2, col = "black")
 segments(x0 = -2.5, x1 = -2.5, y0 = 4, y1 = 3)
 segments(x0 = -2.5, x1 = -2, y0 = 3, y1 = 3)
-text(x = -2.5, y = 3.5, expression(h*minute*(x)), pos = 2, cex = 0.88, offset = 0.1)
+text(
+  x = -2.5,
+  y = 3.5, expression(h * minute * (x)), pos = 2, cex = 0.88,
+  offset = 0.1
+)
 text(x = -2.25, y = 3, "1", pos = 1, cex = 0.88, offset = 0.25)
 text(x = 2.75, y = 2.75^2, expression(h()), pos = 4)
 ```
@@ -876,6 +807,6 @@ The delta method is handy for generating closed-form approximations for asymptot
 
 ## Summary
 
-In this chapter, we covered asymptotic analysis, which considers how estimators behave as we feed them larger and larger samples. While we never actually have infinite data, asymptotic results provide approximations that work quite well in practice. A **consistent** estimator converges in probability to a desired quantity of interest. We saw several ways of establishing consistency, including the **Law of Large Numbers** for the sample mean, which converges in probability to the population mean. The **Central Limit Theorem** tells us that the sample mean will be approximately normally distributed when we have large, iid samples. We also saw how the **continuous mapping theorem** and **Slutsky’s theorem** allow us to determine asymptotic results for a broad class of estimators. Knowing the asymptotic normality of an estimator allows us to derive **confidence intervals** that are valid in large samples. Finally, the **delta method** is a general tool for finding the asymptotic distribution of an estimator that is a function of another estimator with a known asymptotic distribution. 
+In this chapter, we covered asymptotic analysis, which considers how estimators behave as we feed them larger and larger samples. While we never actually have infinite data, asymptotic results provide approximations that work quite well in practice. A **consistent** estimator converges in probability to a desired quantity of interest. We saw several ways of establishing consistency, including the **Law of Large Numbers** for the sample mean, which converges in probability to the population mean. The **Central Limit Theorem** tells us that the sample mean will be approximately normally distributed when we have large, iid samples. We also saw how the **continuous mapping theorem** and **Slutsky’s theorem** allow us to determine asymptotic results for a broad class of estimators. Finally, the **delta method** is a general tool for finding the asymptotic distribution of an estimator that is a function of another estimator with a known asymptotic distribution. 
 
 In the next chapter, we will leverage these asymptotic results to introduce another important tool for statistical inference: the hypothesis test. 

@@ -27,6 +27,7 @@ book:
         - estimation.qmd
         - asymptotics.qmd
         - hypothesis_tests.qmd
+        - confidence_intervals.qmd
     - part: "Regression"
       chapters:
         - linear_model.qmd
