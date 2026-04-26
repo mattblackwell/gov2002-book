@@ -307,7 +307,43 @@ $$
 CI_{\alpha} = \frac{1}{1 + z^2_{1-\alpha/2}/n}\left(\widehat{p} + \frac{z^2_{1-\alpha/2}}{2n} \pm \frac{z_{1-\alpha/2}}{2n} \sqrt{4n\widehat{p}(1-\widehat{p}) + z^2_{1-\alpha/2}}\right)
 $$
 
+@fig-wilson-vs-wald compares the Wilson score interval to the asymptotic normal interval (often called the Wald interval in this context) as a function of the sample proportion for $n = 50$. The Wilson interval is always contained within $[0, 1]$, while the Wald interval extends above 1 when $\widehat{p}$ is close to 1. The Wilson interval is also notably wider than the Wald interval near the boundary, reflecting a more honest accounting of the uncertainty in this region.
 
+```{r}
+#| label: fig-wilson-vs-wald
+#| echo: false
+#| fig-cap: "Comparison of the 95% Wald (normal) and Wilson score confidence intervals as a function of the sample proportion with $n = 50$."
+n <- 50
+p_hat <- seq(0.5, 0.995, length.out = 500)
+z <- qnorm(0.975)
+
+## Wald (asymptotic normal) CI
+wald_se <- sqrt(p_hat * (1 - p_hat) / n)
+wald_lo <- p_hat - z * wald_se
+wald_hi <- p_hat + z * wald_se
+
+## Wilson score CI
+denom <- 1 + z^2 / n
+center <- (p_hat + z^2 / (2 * n)) / denom
+half_width <- (z / (2 * n)) * sqrt(4 * n * p_hat * (1 - p_hat) + z^2) / denom
+wilson_lo <- center - half_width
+wilson_hi <- center + half_width
+
+plot(NULL, xlim = c(0.5, 1), ylim = c(0.3, 1.15), xlab = expression(hat(p)),
+     ylab = "Confidence bound", bty = "l", las = 1)
+abline(h = 1, col = "grey30", lty = 2, lwd = 1.5)
+polygon(c(p_hat, rev(p_hat)), c(wald_lo, rev(wald_hi)),
+        col = adjustcolor("indianred", 0.3), border = NA)
+lines(p_hat, wald_lo, col = "indianred", lwd = 2)
+lines(p_hat, wald_hi, col = "indianred", lwd = 2)
+polygon(c(p_hat, rev(p_hat)), c(wilson_lo, rev(wilson_hi)),
+        col = adjustcolor("dodgerblue", 0.3), border = NA)
+lines(p_hat, wilson_lo, col = "dodgerblue", lwd = 2)
+lines(p_hat, wilson_hi, col = "dodgerblue", lwd = 2)
+abline(0, 1, col = "grey50", lty = 2)
+legend("topleft", legend = c("Wald", "Wilson"), col = c("indianred", "dodgerblue"),
+       lwd = 2, bty = "n")
+```
 
 :::
 
