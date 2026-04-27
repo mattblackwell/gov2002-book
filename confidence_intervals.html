@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Confidence intervals – A User's Guide to Statistical Inference and Regression</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./linear_model.html" rel="next">
+<link href="./hypothesis_tests.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-36bf55b16c7cb4b1420f41495cb5446a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+window.MathJax = {
+  tex: {
+    packages: {'[+]': ['mathtools']},
+    mathtools: {
+      pairedDelimiters: {
+        abs: ['\\lvert', '\\rvert']
+      }
+    },
+    macros: {
+      RR: "{\\bf R}",
+      bs: ["\\boldsymbol{#1}", 1],
+      mb: ["\\mathbf{#1}", 1],
+      E: "\\mathbb{E}",
+      V: "\\mathbb{V}",
+      P: "\\mathbb{P}",
+      var: "\\text{var}",
+      cov: "\\text{cov}",
+      N: "\\mathcal{N}",
+      Bern: "\\text{Bern}",
+      Bin: "\\text{Bin}",
+      Pois: "\\text{Pois}",
+      Unif: "\\text{Unif}",
+      se: "\\textsf{se}",
+      U: "\\mb{U}",
+      Xbar: "\\overline{X}",
+      Ybar: "\\overline{Y}",
+      real: "\\mathbb{R}",
+      bbL: "\\mathbb{L}",
+      u: "\\mb{u}",
+      v: "\\mb{v}",
+      M: "\\mb{M}",
+      X: "\\mb{X}",
+      Xmat: "\\mathbb{X}",
+      bfx: "\\mb{x}",
+      y: "\\mb{y}",
+      bfbeta: "\\bs{\\beta}",
+      e: "\\bs{\\epsilon}",
+      bhat: "\\widehat{\\bs{\\beta}}",
+      XX: "\\Xmat'\\Xmat",
+      XXinv: "\\left(\\Xmat'\\Xmat\\right)^{-1}",
+      hatsig: "\\widehat{\\sigma}^2",
+      red: ["\\textcolor{red!60}{#1}", 1],
+      indianred: ["\\textcolor{indianred}{#1}", 1],
+      blue: ["\\textcolor{blue!60}{#1}", 1],
+      dblue: ["\\textcolor{dodgerblue}{#1}", 1],
+      indep: "\\perp\\!\\!\\!\\perp",
+      inprob: "\\overset{p}{\\to}",
+      indist: "\\overset{d}{\\to}",
+      argmax: ["\\operatorname\{arg\,max\}"],
+      argmin: ["\\operatorname\{arg\,min\}"]      
+    }
+  }
+};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./confidence_intervals.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">A User’s Guide to Statistical Inference and Regression</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/mattblackwell/gov2002-book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./users-guide.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Design-based Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Model-based inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./asymptotics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Asymptotics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./confidence_intervals.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./least_squares.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ols_properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-deriving-cis" id="toc-sec-deriving-cis" class="nav-link active" data-scroll-target="#sec-deriving-cis"><span class="header-section-number">5.1</span> Deriving confidence intervals</a></li>
+  <li><a href="#interpreting-confidence-intervals" id="toc-interpreting-confidence-intervals" class="nav-link" data-scroll-target="#interpreting-confidence-intervals"><span class="header-section-number">5.2</span> Interpreting confidence intervals</a></li>
+  <li><a href="#exact-confidence-intervals-under-normal-data" id="toc-exact-confidence-intervals-under-normal-data" class="nav-link" data-scroll-target="#exact-confidence-intervals-under-normal-data"><span class="header-section-number">5.3</span> Exact confidence intervals under normal data</a></li>
+  <li><a href="#confidence-intervals-and-hypothesis-tests" id="toc-confidence-intervals-and-hypothesis-tests" class="nav-link" data-scroll-target="#confidence-intervals-and-hypothesis-tests"><span class="header-section-number">5.4</span> Confidence intervals and hypothesis tests</a></li>
+  <li><a href="#resampling-approaches-to-confidence-intervals" id="toc-resampling-approaches-to-confidence-intervals" class="nav-link" data-scroll-target="#resampling-approaches-to-confidence-intervals"><span class="header-section-number">5.5</span> Resampling approaches to confidence intervals</a>
+  <ul class="collapse">
+  <li><a href="#the-jackknife" id="toc-the-jackknife" class="nav-link" data-scroll-target="#the-jackknife"><span class="header-section-number">5.5.1</span> The jackknife</a></li>
+  <li><a href="#the-nonparametric-bootstrap" id="toc-the-nonparametric-bootstrap" class="nav-link" data-scroll-target="#the-nonparametric-bootstrap"><span class="header-section-number">5.5.2</span> The nonparametric bootstrap</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.6</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/confidence_intervals.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./design.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./confidence_intervals.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>You have run your experiment and presented your audience with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are consistent with the data we observe and some reasonable values of chance estimation errors?</p>
+<p>A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. <strong>Confidence intervals</strong> make this kind of intuition more formal by estimating a range of values that will contain the true value in a fixed percentage of random samples.</p>
+<p>We begin with the basic definition of a confidence interval.</p>
+<div id="def-coverage" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.1</strong></span> A <span class="math inline">\(1-\alpha\)</span> <strong>confidence interval</strong> for a real-valued parameter <span class="math inline">\(\theta\)</span> is a pair of statistics <span class="math inline">\(L= L(X_1, \ldots, X_n)\)</span> and <span class="math inline">\(U = U(X_1, \ldots, X_n)\)</span> such that <span class="math inline">\(L &lt; U\)</span> for all values of the sample and such that <span class="math display">\[
+\P(L \leq \theta \leq U \mid \theta) \geq 1-\alpha, \quad \forall \theta \in \Theta.
+\]</span></p>
+</div>
+<p>We say that a <span class="math inline">\(1-\alpha\)</span> confidence interval covers (contains, captures, traps, etc) the true value at least <span class="math inline">\(100(1-\alpha)\%\)</span> of the time, and we refer to <span class="math inline">\(1-\alpha\)</span> as the <strong>coverage probability</strong> or simply <strong>coverage</strong>. Common confidence intervals include 95% (<span class="math inline">\(\alpha = 0.05\)</span>) and 90% (<span class="math inline">\(\alpha = 0.1\)</span>).</p>
+<p>So a confidence interval is a random interval that has a particular guarantee about how often it will contain the true value. It’s important to remember what is random and what is fixed in this setup. The interval varies from sample to sample but the true value of the parameter stays fixed, and the coverage is how often we should expect the interval to contain that true value. The “repeating my sample over and over again” analogy can break down very quickly, so it’s sometimes helpful to interpret as giving guarantees across confidence intervals across different experiments. In particular, suppose that a journal publishes 100 quantitative articles per year and each produces a single 95% confidence interval for their quantity of interest. Then, if the confidence intervals are valid, then we should expect 5 of those confidence intervals to not contain their true quantity of interest.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s say you calculate a 95% confidence interval and it’s <span class="math inline">\([0.1, 0.4]\)</span>. It’s tempting to make a probability statement like <span class="math inline">\(\P(0.1 \leq \theta \leq 0.4 \mid \theta) = 0.95\)</span> or that there’s a 95% chance that the true parameter is in <span class="math inline">\([0.1, 0.4]\)</span>. But looking at the probability statement, everything on left-hand side of the conditioning bar is fixed, so the probability either has to be 0 (<span class="math inline">\(\theta\)</span> is outside the interval) or 1 (<span class="math inline">\(\theta\)</span> is in the interval). The coverage probability of a confidence interval refers to its status as a pair of random variables, <span class="math inline">\((L, U)\)</span>, not any particular realization of those variables like <span class="math inline">\((0.1, 0.4)\)</span>. As an analogy, consider if we calculated the sample mean as <span class="math inline">\(0.25\)</span> and then tried to say that <span class="math inline">\(0.25\)</span> is unbiased for the population mean. This doesn’t make sense because unbiasedness refers to how the sample mean varies from sample to sample.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bayesian inference—which treats the data as fixed and the parameters as random—can make probabilistic statements about the true mean being in the observed interval, but this approach also usually requires a parametric model and a probability distribution for the true mean before we see the data (called the prior distribution). Confusingly or thankfully (depending on how you view it), these Bayesian credible intervals (as they are called) are often very similar to the corresponding confidence intervals, especially in large samples (see the Bernstein-von Mises Theorem for more information on this). This convergence of Bayesian and frequentist interval estimators leads to a diversity of views on how important the exact interpretation of confidence intervals actually is.</p>
+</div>
+</div>
+<p>In most cases, we will not be able to derive exact confidence intervals, but rather confidence intervals that are <strong>asymptotically valid</strong>, which means that if we write the interval as a function of the sample size, <span class="math inline">\((L_n, U_n)\)</span> they would have <strong>asymptotic coverage</strong> <span class="math display">\[
+\lim_{n\to\infty} \P(L_n \leq \theta \leq U_n) \geq 1-\alpha \quad\forall\theta\in\Theta.
+\]</span></p>
+<p>With the exception of certain parametric models (such as the normal model discussed below), we will often have to settle for establishing asymptotic coverage, since we usually rely on large sample approximations based on the central limit theorem.</p>
+<section id="sec-deriving-cis" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-deriving-cis"><span class="header-section-number">5.1</span> Deriving confidence intervals</h2>
+<p>A thought experiment can give the basic intuition for almost all approaches to deriving confidence intervals. We can start our confidence interval journey by focusing on one side. In particular, we will derive a probabilistic lower bound—that is, a bound that will lower than the true quantity of interest with a fixed probability.</p>
+<p>Suppose we’ve estimated support for increasing legal immigration to be <span class="math inline">\(\widehat{\theta}_n = 0.56\)</span> from a sample of size <span class="math inline">\(n = 400\)</span>. Recall that we can think of all estimators as the true value plus some estimation error, <span class="math display">\[
+\widehat{\theta}_n = \theta + \text{estimation error}.
+\]</span> We already know the estimate, so if we knew the estimation error, then we could back out the true value of the parameter, <span class="math inline">\(\theta\)</span>. Obviously, we don’t know the estimation error, but in many cases we know (or can approximate) the <em>distribution</em> of the estimation error. For example, for asymptotically normal estimators, we know that, in large samples, <span class="math display">\[
+\widehat{\theta}_n - \theta \sim N(0, \se[\widehat{\theta}_n]^2).
+\]</span> In the case of the proportion support for increasing legal immigration, we know that <span class="math inline">\(\se[\widehat{\theta}_n] = \sqrt{\theta(1 - \theta)/n}\)</span> given that the outcome is binary.</p>
+<p>From this insight, we can engage our thought experiment: what if we had an extremely large positive estimation error that was, say, larger than 97.5% of estimation errors? Intuitively, if we have a large estimator error, then the true value of <span class="math inline">\(\theta\)</span> should be much smaller than our estimate and could provide a probabilistic lower bound for <span class="math inline">\(\theta\)</span>.</p>
+<p>Recall that <span class="math inline">\(z_a\)</span> is the <span class="math inline">\(a\)</span>-th quantile of the standard normal, which implies that the 97.5% quantile of the chance error distribution would be <span class="math inline">\(z_{0.975}\, \se[\widehat{\theta}_n]\)</span>, where <span class="math inline">\(z_{0.975} \approx 1.96\)</span>. Thus, the upper bound on the estimation error would be <span class="math display">\[
+\widehat{\theta}_n - \theta = 1.96\, \se[\widehat{\theta}_n]
+\]</span> from which we can back out the implied true value of the parameter, <span class="math display">\[
+L = \widehat{\theta}_n - 1.96\, \se[\widehat{\theta}_n].
+\]</span> Here, <span class="math inline">\(L\)</span> is a probabilistic or random lower bound because the value <span class="math inline">\(\widehat{\theta}_n\)</span> is random. Sometimes it will cover the true value (<span class="math inline">\(L \leq \theta\)</span>) and sometimes it will not cover the true value (<span class="math inline">\(L &gt; \theta\)</span>). We controlled how often it covers the true value. Because 2.5% of estimation errors will be larger than <span class="math inline">\(1.96 \, \se[\widehat{\theta}_n]\)</span>, then <span class="math inline">\(L\)</span> will be a valid lower bound (cover the true value) in 97.5% of samples, or <span class="math inline">\(\P(L \leq \theta) \approx 0.975\)</span> and not cover the true value 2.5% of samples.</p>
+<p>In the immigration sample, we have <span class="math display">\[
+L = 0.56 - 1.96 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.56 - 0.048 = 0.511,
+\]</span> where we have used the usual plugin estimator for the standard error. A lower bound of <span class="math inline">\(0.511\)</span> tells us that values below that are only compatible with very large and rare chance errors.</p>
+<p>What if a 2.5% chance of this bound being wrong is too high? We could instead consider what the truth would be for a positive chance error that is larger than 99% of chance errors, which would be <span class="math inline">\(z_{0.99} \,     \se[\widehat{\theta}_n] \approx 2.32 \, \se[\widehat{\theta}_n]\)</span>. In the immigration example, we have <span class="math display">\[
+L = 0.56 - 2.32 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
+\]</span> which is a lower lower bound. This reflects a fundamental tradeoff: our probabilistic bounds get worse (rule out a smaller region of possible values) as we base them off of more extreme chance errors.</p>
+<p>A similar approach can help to derive an upper bound. We imagine a very large negative estimation error that implies a probabilistic upper bound on <span class="math inline">\(\theta\)</span>. A very large negative estimation error could be <span class="math display">\[
+\widehat{\theta}_n - \theta = -1.96 \, \se[\widehat{\theta}_n]
+\]</span> which is smaller than 2.5% of estimation errors. This result would imply a probabilistic upper bound of <span class="math display">\[
+U = \widehat{\theta}_n + 1.96 \, \se[\widehat{\theta}_n],
+\]</span> which will not cover the true value 2.5% of the time, <span class="math inline">\(\P(U &lt; \theta) \approx 0.025\)</span>.</p>
+<p>We have derived a probabilistic upper bound and lower bound separately, but we can easily combine them into one interval. Intuitively, if our upper bound misses the true value in 2.5% of samples and the lower bound misses the true value in 2.5% of samples, then the interval <span class="math inline">\([L, U]\)</span> should not cover the true value 5% of the time. Formally, we have: <span class="math display">\[
+\P(L \leq \theta \leq U) = 1 - \left(\P(L &gt; \theta) + \P(U &lt; \theta)\right) = 1 - (0.025 + 0.025) = 0.95.
+\]</span></p>
+<p>More generally, for a <span class="math inline">\(100(1-\alpha)\)</span>% confidence interval, we need to determine the range of chance errors that puts <span class="math inline">\(\alpha/2\)</span> in each of the tails.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chance-errors" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chance-errors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="confidence_intervals_files/figure-html/fig-chance-errors-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chance-errors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Chance error distribution.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Thus, for the <span class="math inline">\(100(1-\alpha)\)</span>% confidence interval, we can derive the implied lower bound as <span class="math display">\[
+L = \widehat{\theta}_n - z_{1-\alpha/2}\, \se[\widehat{\theta}_n],
+\]</span> and the upper bound as <span class="math display">\[
+U = \widehat{\theta}_n - z_{\alpha/2}\, \se[\widehat{\theta}_n].
+\]</span> It’s slightly unintuitive that we subtract the chance imbalances in both of these expressions, but recall that <span class="math inline">\(z_{\alpha/2}\,\se[\widehat{\theta}_n]\)</span> will be a negative number (it is, after all, a large negative chance error). In particular, for asymptotically normal estimators, we know that the chance error distribution is symmetric so that <span class="math inline">\(z_{\alpha/2} = -z_{1-\alpha/2}\)</span>, leading to the usual confidence interval formula, <span class="math display">\[
+[L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_n],\; \widehat{\theta}_n + z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_n]\right],
+\]</span> where we have substituted the estimated standard error for the true standard error. By Slutsky’s theorem (<a href="asymptotics.html#thm-indist-properties" class="quarto-xref">Theorem&nbsp;<span>3.9</span></a>), this substitution does not affect the asymptotic coverage of the interval. This is sometimes shortened to <span class="math inline">\(\widehat{\theta}_n \pm z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_{n}]\)</span>.</p>
+<div id="exm-sample-mean-ci" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.1 (Confidence interval for the sample mean)</strong></span> Consider the sample mean of iid random variables, <span class="math inline">\(X_1, \ldots, X_n\)</span> where <span class="math inline">\(\E[X_i] = \mu\)</span> and <span class="math inline">\(\V[X_i] = \sigma^2\)</span>. Recall that the central limit theorem shows that the sample mean will roughly be normally distributed <span class="math inline">\(\Xbar_n \sim N(\mu, \sigma^2/n)\)</span>, which implies we can estimate its standard error as <span class="math display">\[
+\widehat{\se}[\Xbar] = \frac{s_n}{\sqrt{n}},
+\]</span> where <span class="math inline">\(s^2_n = (n-1)^{-1} \sum_{i=1}^n (X_i - \Xbar)^2\)</span> is the sample variance.</p>
+<p>Suppose we want to find a 90% confidence interval. In this case, we would need to first obtain the critical value, <span class="math inline">\(z_{1-\alpha/2}\)</span>, where <span class="math inline">\(\alpha = 0.1\)</span> in this case:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## alpha = 0.1 for 90% CI</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span> <span class="fl">0.1</span> <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.644854</code></pre>
+</div>
+</div>
+<p>Combining these two facts, a 90% asymptotic confidence interval for the sample mean would be <span class="math display">\[
+\left[\Xbar_{n} - 1.64\, \frac{s_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \,\frac{s_n}{\sqrt{n}}\right]
+\]</span></p>
+<p>In polling, the term <span class="math inline">\(\pm z_{1-\alpha/2} \, \frac{S_n}{\sqrt{n}}\)</span> is sometimes called the <strong>margin of error</strong>, where <span class="math inline">\(\alpha = 0.05\)</span> is the usually unstated default. From this expression, we can see that this margin of error (equivalently, the width of a confidence interval) will generally shrink when:</p>
+<ol type="1">
+<li>We increase the amount of data we have, (<span class="math inline">\(n\)</span> is larger),</li>
+<li>We have less noisy data, (<span class="math inline">\(s_n\)</span> is smaller), or</li>
+<li>We want a lower confidence level (<span class="math inline">\(\alpha\)</span> is larger so <span class="math inline">\(z_{1-\alpha/2}\)</span> is smaller).</li>
+</ol>
+<p>Note that even though larger sample sizes will lead to narrower confidence intervals, the shrinkage is not linear: increasing the sample size by a factor of 100 will only reduce the width by a factor of 10.</p>
+</div>
+<div id="exm-diff-in-means-ci" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.2 (Difference in means)</strong></span> Recall the difference in means of randomly assigned treatment and control groups in <a href="hypothesis_tests.html#exm-diff-in-means" class="quarto-xref">Example&nbsp;<span>4.3</span></a>. The treatment data <span class="math inline">\(Y_1, \ldots, Y_{n_t}\)</span> are iid draws from a population with mean <span class="math inline">\(\mu_t = \E[Y_i]\)</span> and population variance <span class="math inline">\(\sigma^2_t = \V[Y_i]\)</span>. The control data <span class="math inline">\(X_1, \ldots, X_{n_c}\)</span> are iid draws (independent of the <span class="math inline">\(Y_i\)</span>) from a population with mean <span class="math inline">\(\mu_c = \E[X_i]\)</span> and population variance <span class="math inline">\(\sigma^2_c = \V[X_i]\)</span>. The parameter of interest is the population difference in means, <span class="math inline">\(\tau = \mu_t - \mu_c\)</span>, which we estimate with the usual difference in sample means estimator: <span class="math inline">\(\widehat{\tau} = \Ybar - \Xbar\)</span>.</p>
+<p>Recall that we can estimate the standard error of <span class="math inline">\(\widehat{\tau}\)</span> with <span class="math display">\[
+\widehat{\se}[\widehat{\tau}] = \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}.
+\]</span> Thus, we can form a 95% confidence interval for this estimator as <span class="math display">\[
+\left[\Ybar - \Xbar - 1.96\, \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}},\; \Ybar - \Xbar + 1.96\, \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}\right]
+\]</span></p>
+<p>From this expression, we can see that the width of the difference-in-means confidence intervals is a function of the noise and number of observations in both samples.</p>
+</div>
+</section>
+<section id="interpreting-confidence-intervals" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="interpreting-confidence-intervals"><span class="header-section-number">5.2</span> Interpreting confidence intervals</h2>
+<p>Remember that the interpretation of confidence is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this interpretation.</p>
+<div id="exm-cis" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.3</strong></span> Suppose that we are taking samples of size <span class="math inline">\(n=500\)</span> of random variables where <span class="math inline">\(X_i \sim \N(1, 10)\)</span>, and we want to estimate the population mean <span class="math inline">\(\E[X] = 1\)</span>. To do so, we repeat the following steps:</p>
+<ol type="1">
+<li>Draw a sample of <span class="math inline">\(n=500\)</span> from <span class="math inline">\(\N(1, 10)\)</span>.</li>
+<li>Calculate the 95% confidence interval of the sample mean <span class="math inline">\(\Xbar_n \pm 1.96\,\widehat{\sigma}/\sqrt{n}\)</span>.</li>
+<li>Plot the intervals along the x-axis and color them blue if they contain the truth (1) and red if they do not.</li>
+</ol>
+<p><a href="#fig-ci-sim" class="quarto-xref">Figure&nbsp;<span>5.2</span></a> shows 100 iterations of these steps. Here we see that, as expected, the large majority of calculated CIs contain the true value. In fact, exactly 5 of the random samples produce intervals that fail to include 1, which is an exact coverage rate of 95%. Of course, this is just one simulation and a different set of 100 random samples might have produced a slightly different coverage rate. The guarantee of the 95% confidence intervals is that if we were to continue to take these repeated samples the long-run frequency of intervals covering the truth would approach 0.95.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ci-sim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ci-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="confidence_intervals_files/figure-html/fig-ci-sim-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ci-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: 95% confidence intervals from 100 random samples. Intervals are blue if they contain the truth and red if they do not.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="exact-confidence-intervals-under-normal-data" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="exact-confidence-intervals-under-normal-data"><span class="header-section-number">5.3</span> Exact confidence intervals under normal data</h2>
+<p>In the last chapter, we saw that we could obtain tests with the correct or exact size if we make the parametric modeling assumption that the data are normally distributed. We can take a similar approach to show that, under normal data, a <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for the sample mean will have coverage exactly equal to <span class="math inline">\(1-\alpha\)</span>. In practice, we rarely believe this modeling assumption, but for historical reasons this is the default of many statistical software packages, and it works well in practice as an ad hoc adjustment in finite samples.</p>
+<p>Assume that the data are distributed iid <span class="math inline">\(X_i \sim N(\mu, \sigma^2)\)</span>. Under this assumption, we know that the normalized chance errors will be distributed as <span class="math display">\[
+\frac{\Xbar_n - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)
+\]</span> at any sample size. With asymptotically normal estimators, we relied on Slutsky’s theorem to allow us to replace the unknown population variance <span class="math inline">\(\sigma^2\)</span> with its consistent estimator <span class="math inline">\(S^2_n\)</span>. In small samples, we cannot rely on that, but with normal data, we know that using the sample variance estimator leads to a Student’s t-distribution, <span class="math display">\[
+\frac{\Xbar_n - \mu}{s_n / \sqrt{n}} \sim t_{n-1}.
+\]</span> In the continuing abuse of notation, let <span class="math inline">\(t_{\nu,\alpha}\)</span> be the <span class="math inline">\(\alpha\)</span> quantile of a Student’s t-distribution with <span class="math inline">\(\nu\)</span> degrees of freedom so that <span class="math inline">\(\P(T_{\nu} \leq t_{\nu, \alpha}) = \alpha\)</span>. Then, for a 95% confidence interval with <span class="math inline">\(n=50\)</span>, the large normalized shocks would be <span class="math inline">\(t_{49, 0.975} = 2.01\)</span> on the positive side and <span class="math inline">\(t_{49, 0.025} = -2.01\)</span> on the negative side. Plugging these in above and solving for the upper and lower bounds gives <span class="math display">\[
+[L, U] = \left[\Xbar_{50} - 2.01 \, \frac{s_{50}}{\sqrt{50}}, \; \Xbar_{50} + 2.01 \, \frac{s_{50}}{\sqrt{50}} \right].
+\]</span> Comparing the margin of error of this interval to the asymptotically normal estimator, <span class="math inline">\(\pm 1.96\,s_{50}/\sqrt{50}\)</span>, we can see that <span class="math inline">\(t\)</span>-based confidence interval is slightly wider. Even if the data is not normally distributed, this extra width can help improve coverage in small samples when the asymptotically normal estimator could show undercoverage.</p>
+<p>More generally, the <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for the sample mean under normal data with <span class="math inline">\(n\)</span> iid draws would be <span class="math display">\[
+[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}} \right].
+\]</span></p>
+</section>
+<section id="confidence-intervals-and-hypothesis-tests" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="confidence-intervals-and-hypothesis-tests"><span class="header-section-number">5.4</span> Confidence intervals and hypothesis tests</h2>
+<p>At first glance, you might accuse me of sloppy notation. Why use <span class="math inline">\(\alpha\)</span> in the derivation of a <span class="math inline">\(1 - \alpha\)</span> confidence interval in this chapter but also in an <span class="math inline">\(\alpha\)</span>-level test in the last chapter? In reality, this was simply foreshadowing the deep connection between the two: every <span class="math inline">\(1-\alpha\)</span> confidence interval contains all null hypotheses that we <strong>would not reject</strong> with an <span class="math inline">\(\alpha\)</span>-level test.</p>
+<p>This connection is easiest to see with an asymptotically normal estimator, <span class="math inline">\(\widehat{\theta}_n\)</span>. Consider the hypothesis test of <span class="math display">\[
+H_0: \theta = \theta_0 \quad \text{vs.}\quad H_1: \theta \neq \theta_0,
+\]</span> using the test statistic, <span class="math display">\[
+T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}.
+\]</span> As we discussed in the last chapter, an <span class="math inline">\(\alpha = 0.05\)</span> test would reject this null when <span class="math inline">\(|T| &gt; 1.96\)</span>, or when <span class="math display">\[
+|\widehat{\theta}_{n} - \theta_{0}| &gt; 1.96\, \widehat{\se}[\widehat{\theta}_{n}].
+\]</span> This will be true when <span class="math display">\[
+\theta_{0} &lt; \widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}] &lt; \theta_{0}
+\]</span> or, equivalently, that null hypothesis is outside of the 95% confidence interval, <span class="math display">\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\right].\]</span> Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by a <span class="math inline">\(\alpha = 0.05\)</span> level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject.</p>
+<p>This relationship holds more broadly. Any <span class="math inline">\(1-\alpha\)</span> confidence interval contains all possible parameter values that would not be rejected as the null hypothesis of an <span class="math inline">\(\alpha\)</span>-level hypothesis test. This can be really useful for two reasons:</p>
+<ol type="1">
+<li>We can quickly determine if a null hypothesis is rejected at some level by inspecting if it falls in a confidence interval.</li>
+<li>There are situations where determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine what null hypotheses would not be rejected at level <span class="math inline">\(\alpha\)</span> to formulate the <span class="math inline">\(1-\alpha\)</span> confidence interval. This process is called <strong>inverting a test</strong>. One important application of this method is for formulating confidence intervals for treatment effects based on randomization inference in the finite population analysis of experiments.</li>
+</ol>
+<div id="exm-wilson" class="theorem example">
+<p><span class="theorem-title"><strong>Example 5.4 (Wilson score interval)</strong></span> Consider a sample of binary random variables, <span class="math inline">\(X_i \in \{0,1\}\)</span> with a common probability of success, <span class="math inline">\(p = \P(X_i = 1) = \E[X_i]\)</span>. We can construct the sample proportion, <span class="math inline">\(\widehat{p} = \frac{1}{n} \sum_{i=1}^n X_i\)</span>, which is exactly the same as the sample mean. Thus, we could also use the above asymptotically normal confidence intervals, and they do indeed work well in large samples when <span class="math inline">\(p\)</span> is close to 0.5. However, these normal-based CIs can perform poorly in small samples, especially when the population proportion, <span class="math inline">\(p\)</span>, is close to 0 or 1. For example, suppose we obtain <span class="math inline">\(\widehat{p} = 0.99\)</span> with <span class="math inline">\(n=100\)</span>. The normal-based 95% confidence interval would be <span class="math display">\[
+\begin{aligned}
+&amp;0.99 \pm 1.96\, \sqrt{\frac{0.99 \times 0.01}{100}} \\ &amp;= [0.97, 1.01]
+\end{aligned}
+\]</span> Even with 100 observations, our confidence interval includes values of the true proportion above 1, which we know is logically impossible. Can we obtain better confidence intervals in this setting? Yes, we can!</p>
+<p>Let’s use hypothesis test inversion. The relevant test is of the null hypothesis <span class="math inline">\(H_0: p = p_0\)</span>. With binary outcomes, the null hypothesis determines the entire sampling distribution of <span class="math inline">\(\widehat{p}\)</span> as <span class="math inline">\(N(p_0, p_0(1-p_0)/n)\)</span>. The sampling variance for the sample proportion only depends on the population proportion, unlike the more general sample mean case where it depends on another unknown quantity, the population variance. We can then implement a test with the following rejection region: <span class="math display">\[
+\abs*{\frac{\sqrt{n}(\widehat{p} - p_0)}{\sqrt{p_0(1-p_0)}}} &gt; z_{1-\alpha/2}.
+\]</span> We can obtain a <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval from inverting this test by finding values of <span class="math inline">\(p_0\)</span> that we could not reject this test, or, <span class="math display">\[
+\left\{p \mid \abs*{\frac{\sqrt{n}(\widehat{p} - p)}{\sqrt{p(1-p)}}} \leq z_{1-\alpha/2}\right\}.
+\]</span> Squaring both sides gives <span class="math display">\[
+\frac{n(\widehat{p}-p)^2}{p(1-p)} \leq z^2_{1-\alpha/2},
+\]</span> which we can rearrange to <span class="math display">\[
+\left(1 + \frac{z^2_{1-\alpha/2}}{n}\right)p^2 - \left(2\widehat{p} + \frac{z^2_{1-\alpha/2}}{n}\right)p + \widehat{p}^2 \leq 0.
+\]</span></p>
+<p>Solving this quadratic equation using your favorite mnemonic device gives the slightly uglier interval <span class="math display">\[
+CI_{\alpha} = \frac{1}{1 + z^2_{1-\alpha/2}/n}\left(\widehat{p} + \frac{z^2_{1-\alpha/2}}{2n} \pm \frac{z_{1-\alpha/2}}{2n} \sqrt{4n\widehat{p}(1-\widehat{p}) + z^2_{1-\alpha/2}}\right)
+\]</span></p>
+<p><a href="#fig-wilson-vs-wald" class="quarto-xref">Figure&nbsp;<span>5.3</span></a> compares the Wilson score interval to the normal-based intervals as a function of the sample proportion for <span class="math inline">\(n = 50\)</span>. Around <span class="math inline">\(p=0.5\)</span>, the intervals are almost identical, but as <span class="math inline">\(p\)</span> approaches 1, they diverge. The Wilson interval is always contained within <span class="math inline">\([0, 1]\)</span>, while the normal interval extends above 1 when <span class="math inline">\(\widehat{p}\)</span> is close to 1. The Wilson interval is also notably wider than the normal interval near the boundary, reflecting a more honest accounting of the uncertainty in this region.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wilson-vs-wald" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wilson-vs-wald-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="confidence_intervals_files/figure-html/fig-wilson-vs-wald-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wilson-vs-wald-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: Comparison of the 95% asymptotically normal and Wilson score confidence intervals as a function of the sample proportion with <span class="math inline">\(n = 50\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="resampling-approaches-to-confidence-intervals" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="resampling-approaches-to-confidence-intervals"><span class="header-section-number">5.5</span> Resampling approaches to confidence intervals</h2>
+<p>So far, the entire approach to constructing confidence intervals depends on having an estimator for the standard error. For simple cases like the sample mean, we have simple and straightforward estimators for the standard error, such as <span class="math inline">\(\widehat{\se} = \widehat{\sigma}/\sqrt{n}\)</span>. For some more complicated quantities of interest, such as <span class="math inline">\(\mu^2\)</span> or <span class="math inline">\(\log(\mu)\)</span> with estimators <span class="math inline">\(\Xbar_{n}^2\)</span> and <span class="math inline">\(\log(\Xbar_{n})\)</span>, we saw in <a href="asymptotics.html#sec-delta-method" class="quarto-xref"><span>Section 3.8</span></a> that the delta method can provide estimators for the standard error.</p>
+<p>What about quantities of interest and estimators that are not nice differentiable functions, such as the median? How do we obtain the standard error in those cases? We could turn to our local department of mathematics for aid, but why think harder when we can get a computer to think for us? In the 20th century, statisticians figured out that we can obtain confidence intervals using computational approaches.</p>
+<p>All of the computational approaches to confidence intervals (and hypothesis tests) rely on a common idea: resampling. Our goal with statistical inference is to learn about the entire distribution of the estimator, but we only have a single sample from the population distribution. Ideally, we could repeatedly sample from the population (as we have done in many of our simulation exercises in this book). Imagine, we could get <span class="math inline">\(R\)</span> random samples from the population and obtain estimates from each: <span class="math display">\[
+\left(\widehat{\theta}_{1}, \widehat{\theta}_{2}, \ldots, \widehat{\theta}_{R}\right)
+\]</span> These estimates represent <span class="math inline">\(R\)</span> draws from the sampling distribution of <span class="math inline">\(\widehat{\theta}\)</span>. Recall we only get one of these draws, but what if we had them all? Then we could estimate the standard error with the empirical standard deviation of these estimates: <span class="math display">\[
+\sqrt{\frac{1}{R} \sum_{r=1}^R \left(\widehat{\theta}_{r} - \overline{\theta}_{R}\right)^2},
+\]</span> where <span class="math inline">\(\overline{\theta}_{R} = (1/R) \sum_{r=1}^R \widehat{\theta}_{r}\)</span> is the average of the <span class="math inline">\(R\)</span> samples.</p>
+<p>Resampling approaches to inference generate additional samples from the single original sample (thus leading to the name <em>re</em>sampling). The key difference between different methods is how we do the resampling.</p>
+<section id="the-jackknife" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="the-jackknife"><span class="header-section-number">5.5.1</span> The jackknife</h3>
+<p>The jackknife is a resampling technique that generates additional samples by removing observations. Let <span class="math inline">\(\widehat{\theta}_{(-i)}\)</span> be the estimate when omitting the <span class="math inline">\(i\)</span>th observation from the sample. For example, the leave-one-out sample mean would be <span class="math display">\[
+\Xbar_{(-i)} = \frac{1}{n-1} \sum_{j \neq i} X_j,
+\]</span> Let <span class="math inline">\(\overline{\theta}_{n} = (1/n) \sum_{i=1}^n \widehat{\theta}_{(-i)}\)</span> be the average of the leave-one-out estimates. Under some conditions, the variation of <span class="math inline">\(\widehat{\theta}_{(-i)}\)</span> around <span class="math inline">\(\overline{\theta}_{n}\)</span> should be similar to the variation of <span class="math inline">\(\widehat{\theta}_{n}\)</span> around <span class="math inline">\(\theta\)</span>. This fact motivates the jackknife variance estimator, <span class="math display">\[
+V_{jk} = \frac{n-1}{n} \sum_{i=1}^n \left(\widehat{\theta}_{(-i)} - \overline{\theta}_{n}\right)^2,
+\]</span> where the <span class="math inline">\(n-1\)</span> in the numerator accounts for the reduced variability of the jackknife samples compared to “fresh” samples. Indeed, two jackknife samples share <span class="math inline">\(n-2\)</span> common values.</p>
+<p>Under iid sampling and some regularity conditions (namely that the estimator is a smooth function of the data), the jackknife variance estimator will be consistent in the sense that <span class="math display">\[
+V_{jk} / \V[\widehat{\theta}_n] \inprob 1
+\]</span></p>
+<p>With this variance estimator in hand, one can derive confidence intervals in the usual way, dropping in the jackknife variance estimator for the usual one, <span class="math display">\[
+CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{1-\alpha/2}\,\sqrt{V_{jk}},\; \widehat{\theta}_n + z_{1-\alpha/2}\,\sqrt{V_{jk}} \right]
+\]</span></p>
+<p>To see why we use the <span class="math inline">\(n-1\)</span> adjustment, we can focus on the easiest case: the sample mean. Notice that we can easily write leave-one-out sample mean in terms of the full sample mean, <span class="math display">\[
+\Xbar_{(-i)} = \frac{1}{n-1}\left(\sum_{j=1} ^n X_j - X_i \right) = \frac{1}{n-1}\left(n\Xbar_{n} - X_i \right).
+\]</span></p>
+<p>From this expression, we can also show that the mean of the jackknife estimates is the same as the full sample mean: <span class="math display">\[
+\begin{aligned}
+\Xbar_{jk} = \frac{1}{n} \sum_{i=1}^n \Xbar_{(-i)} &amp;= \frac{1}{n(n-1)} \sum_{i=1}^n n\Xbar_{n} - X_i \\
+&amp;= \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} \Xbar_n \\
+&amp;= \Xbar_n
+\end{aligned}
+\]</span></p>
+<p>From these two facts, we can see that the jackknife deviations are a rescaled version of the original deviations, <span class="math display">\[
+(\Xbar_{(-i)} - \Xbar_{jk}) = \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} X_i - \Xbar_n = \frac{1}{n-1}(\Xbar_n - X_i)
+\]</span> This key fact justifies the jackknife variance estimator since, <span class="math display">\[
+\begin{aligned}
+V_{jk} &amp;= \frac{n-1}{n} \sum_{i=1}^n (\Xbar_{(-i)} - \Xbar_{jk})^2 \\
+&amp;= \frac{n-1}{n(n-1)^2} \sum_{i=1}^n (X_i -\Xbar_n)^2 \\
+&amp;=\frac{\widehat{\sigma}^2}{n},
+\end{aligned}
+\]</span> which is the typical estimator for the sampling variance of the sample mean.</p>
+<p>These derivations show how the jackknife variance estimator for the sample mean is actually identical to the usual sampling variance estimator. Obviously, this fact means that the jackknife does not have a huge benefit for the sample mean itself. But the basic intuition—that the jackknife deviations are similar to a <span class="math inline">\((n-1)^{-1}\)</span> scaled version of full-sample deviation—generalizes to other estimators that are smooth functions of the data where the jackknife could be more fruitfully applied.</p>
+<p>The smoothness requirements of the jackknife are actually more restrictive than they appear. In particular, it rules out using the jackknife for sample quantiles like the sample median. There are modifications of the jackknife, such as the <strong>delete-d jackknife</strong> (where we drop <span class="math inline">\(d&gt;1\)</span> observations at a time) that have better properties for these types of estimators, but there are also alternative resampling approaches that work well in more general settings.</p>
+</section>
+<section id="the-nonparametric-bootstrap" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="the-nonparametric-bootstrap"><span class="header-section-number">5.5.2</span> The nonparametric bootstrap</h3>
+<p>Another way to generate additional artificial samples is to randomly sample from the data itself. The <strong>nonparametric bootstrap</strong> is a resampling technique that generates a distribution of estimates by repeatedly sampling the data with replacement. In particular, we can define the empirical distribution of the data as <span class="math inline">\(F_n\)</span>, which places <span class="math inline">\(1/n\)</span> probability on each observed data point. This distribution has a cdf of <span class="math display">\[
+F_n(x) = (1/n) \sum_{i=1}^n \mathbb{1}(X_i \leq x).
+\]</span> Let <span class="math inline">\(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n \sim F_n\)</span> be an iid sample (sample with replacement) from this empirical distribution. We call this a <strong>bootstrap sample</strong> from the notion that we are pulling ourselves up by our own bootstraps (or our own sample data). We can then compute our estimator on this bootstrap sample, <span class="math inline">\(\widehat{\theta}^* = \theta(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n)\)</span>. We will usually draw repeated bootstrap samples, giving a number of bootstrap replications, <span class="math inline">\(\widehat{\theta}^*_{(1)}, \ldots, \widehat{\theta}^*_{(R)}\)</span>.</p>
+<p>Intuitively, we are treating the sample data as if it were the population. With this pseudo-population, we can repeatedly sample as many bootstrap samples as our hearts desire (and our computers can handle). In each bootstrap sample, we can compute our estimator, giving us a large number of bootstrap draws of the estimator.</p>
+<p>How can we use these bootstrap estimates to derive a confidence interval? Recall that above we derived confidence intervals from the distribution of chance errors, <span class="math inline">\(\widehat{\theta}_n - \theta\)</span>, which we assumed that we knew from asymptotic theory. If we are resorting to the bootstrap, we likely have decided deriving that asymptotic theory is beyond our abilities or interest. The bootstrap provides an alternative. Notice that the bootstrap replications, <span class="math inline">\(\widehat{\theta}^*_{(r)}\)</span>, are random samples from a “population” that has a known true mean: our original estimate, <span class="math inline">\(\widehat{\theta}_n\)</span>. Thus, the bootstrap replications are to the full-sample estimator as the full-sample estimator is to the true population value, <span class="math inline">\(\theta\)</span>. The bootstrap approach to confidence intervals is to use the distribution of bootstrap deviations, <span class="math inline">\(\widehat{\theta}^*_{(r)} - \widehat{\theta}_{n}\)</span>, as a proxy for the true chance errors, <span class="math inline">\(\widehat{\theta}_n - \theta\)</span>. We can compute as many bootstrap deviations as our computer can handle, allowing us to take the sample quantile of this distribution as good approximations of the large chance errors in either direction.</p>
+<div id="def-basic-bootstrap" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.2 (Basic bootstrap confidence interval)</strong></span> &nbsp;</p>
+<ol type="1">
+<li><p>Draw a sample with replacement of size <span class="math inline">\(n\)</span> from <span class="math inline">\(F_n\)</span> and apply the estimator to this sample, <span class="math inline">\(\widehat{\theta}^*_{(r)}\)</span>.</p></li>
+<li><p>Repeat Step 1 <span class="math inline">\(R\)</span> times to obtain <span class="math inline">\(\widehat{\theta}^*_{(1)}, \widehat{\theta}^*_{(2)}, \ldots, \widehat{\theta}^*_{(R)}\)</span>.</p></li>
+<li><p>Calculate the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the distribution of <span class="math inline">\((\widehat{\theta}^*_{(1)} - \widehat{\theta}_n, \ldots, \widehat{\theta}^*_{(R)} - \widehat{\theta}_n)\)</span>, which are the bootstrap estimates minus the full sample estimate, and define these as <span class="math inline">\(c_{\alpha/2}\)</span> and <span class="math inline">\(c_{1-\alpha/2}\)</span>.</p></li>
+<li><p>Construct a <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval as <span id="eq-bootstrap-cis"><span class="math display">\[
+CI_{1-\alpha, boot} = \left[\widehat{\theta}_n - c_{1-\alpha/2},\; \widehat{\theta}_{n} - c_{\alpha/2}\right]
+\tag{5.1}\]</span></span></p></li>
+</ol>
+</div>
+<p>In the construction of the bootstrap confidence intervals, it may be confusing that we subtract both quantiles from the estimate, rather than add one and subtract one. But recall the derivation of confidence intervals in <a href="#sec-deriving-cis" class="quarto-xref"><span>Section 5.1</span></a> as using the distribution of chance errors. The bootstrap approach leverages the “bootstrap deviations” such as <span class="math inline">\(\widehat{\theta}^*_{(r)} - \widehat{\theta}_n\)</span> to approximate the distribution of <span class="math inline">\(\widehat{\theta}_n - \theta\)</span>. The quantile <span class="math inline">\(c_{1-\alpha/2}\)</span> (<span class="math inline">\(0.975\)</span> for <span class="math inline">\(\alpha = 0.05\)</span>) of these deviations will represent a large positive chance deviation, meaning that the lower bound <span class="math inline">\(\widehat{\theta}_n - c_{1-\alpha/2}\)</span> of the confidence interval will be below <span class="math inline">\(\widehat{\theta}_n\)</span>. The quantile <span class="math inline">\(c_{\alpha/2}\)</span>, on the other hand, (<span class="math inline">\(0.025\)</span> for <span class="math inline">\(\alpha = 0.05\)</span>) will be a large negative chance error, meaning the upper bound <span class="math inline">\(\widehat{\theta}_n - c_{\alpha/2}\)</span> will be larger than <span class="math inline">\(\widehat{\theta}_n\)</span>. Just like for the asymptotically normal estimators in <a href="#sec-deriving-cis" class="quarto-xref"><span>Section 5.1</span></a>, we can back out the implied true value from these deviations, leading to the bootstrap confidence intervals formula in <a href="#eq-bootstrap-cis" class="quarto-xref">Equation&nbsp;<span>5.1</span></a>.</p>
+<p>There is another, slightly simpler bootstrap procedure that derives plausible values of the parameter from the distribution of the bootstrap replications themselves rather than the deviations. This approach is called the <strong>percentile bootstrap method</strong>.</p>
+<div id="def-percentile-bootstrap" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5.3 (Percentile bootstrap confidence interval)</strong></span> &nbsp;</p>
+<ol type="1">
+<li><p>Draw a sample with replacement of size <span class="math inline">\(n\)</span> from <span class="math inline">\(F_n\)</span> and apply the estimator to this sample, <span class="math inline">\(\widehat{\theta}^*_{(r)}\)</span>.</p></li>
+<li><p>Repeat Step 1 <span class="math inline">\(R\)</span> times to obtain <span class="math inline">\(\widehat{\theta}^*_{(1)}, \widehat{\theta}^*_{(2)}, \ldots, \widehat{\theta}^*_{(R)}\)</span>.</p></li>
+<li><p>Calculate the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the distribution of <span class="math inline">\((\widehat{\theta}^*_{(1)}, \ldots, \widehat{\theta}^*_{(R)})\)</span> and define these as <span class="math inline">\(\widetilde{\theta}^*_{\alpha/2}\)</span> and <span class="math inline">\(\widetilde{\theta}^*_{1-\alpha/2}\)</span>.</p></li>
+<li><p>Construct a <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval as <span id="eq-perc-bootstrap-cis"><span class="math display">\[
+CI_{1-\alpha, perc} = \left[\widetilde{\theta}^*_{\alpha/2},\; \widetilde{\theta}^*_{1-\alpha/2}\right]
+\tag{5.2}\]</span></span></p></li>
+</ol>
+</div>
+<p>While it is very intuitive and easy to implement, it has some theoretical properties that make it less appealing. In particular, when the sampling distribution of the estimator is skewed or biased, this method can perform worse in small samples (though, asymptotically it is often valid). In practice, the difference between the basic and percentile bootstrap confidence intervals is often very minor. There are more complicated bootstrap procedures that are more accurate (the bootstrap-t and accelerated bootstrap, <span class="math inline">\(BC_a\)</span>), but these require significantly more computation than the above approaches.</p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.6</span> Summary</h2>
+<p>This chapter covered confidence intervals, which are an essential tool on the statistical work bench. We saw how to derive confidence intervals from the distribution of chance estimation error and learned the exact interpretation of confidence intervals. We also saw the deep connection between confidence intervals and hypothesis tests. Under an assumption of normal data, we saw how to use the t-distribution to obtain exact confidence intervals at any sample size. Finally, we investigated resampling methods such as the jackknife and the bootstrap as ways to obtain confidence intervals when deriving the sampling distribution of an estimator is not feasible.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./hypothesis_tests.html" class="pagination-link" aria-label="Hypothesis tests">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./linear_model.html" class="pagination-link" aria-label="Linear regression">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/confidence_intervals.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; The statistics of least squares – A User's Guide to Statistical Inference and Regression</title>
+<title>8&nbsp; The statistics of least squares – A User's Guide to Statistical Inference and Regression</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -59,7 +62,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -89,15 +91,14 @@ div.csl-indent {
 <link href="./least_squares.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0dd2bd5de344125cf763a379ddc3eb04.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-36bf55b16c7cb4b1420f41495cb5446a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -128,6 +129,12 @@ div.csl-indent {
 <script>
 window.MathJax = {
   tex: {
+    packages: {'[+]': ['mathtools']},
+    mathtools: {
+      pairedDelimiters: {
+        abs: ['\\lvert', '\\rvert']
+      }
+    },
     macros: {
       RR: "{\\bf R}",
       bs: ["\\boldsymbol{#1}", 1],
@@ -176,7 +183,7 @@ window.MathJax = {
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -217,7 +224,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./ols_properties.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./ols_properties.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -290,6 +297,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Hypothesis tests</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./confidence_intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -304,19 +317,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./least_squares.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ols_properties.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></a>
   </div>
 </li>
       </ul>
@@ -337,24 +350,24 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#large-sample-properties-of-ols" id="toc-large-sample-properties-of-ols" class="nav-link active" data-scroll-target="#large-sample-properties-of-ols"><span class="header-section-number">7.1</span> Large-sample properties of OLS</a></li>
-  <li><a href="#variance-estimation-for-ols" id="toc-variance-estimation-for-ols" class="nav-link" data-scroll-target="#variance-estimation-for-ols"><span class="header-section-number">7.2</span> Variance estimation for OLS</a></li>
-  <li><a href="#inference-for-multiple-parameters" id="toc-inference-for-multiple-parameters" class="nav-link" data-scroll-target="#inference-for-multiple-parameters"><span class="header-section-number">7.3</span> Inference for multiple parameters</a></li>
-  <li><a href="#finite-sample-properties-with-a-linear-cef" id="toc-finite-sample-properties-with-a-linear-cef" class="nav-link" data-scroll-target="#finite-sample-properties-with-a-linear-cef"><span class="header-section-number">7.4</span> Finite-sample properties with a linear CEF</a>
+  <li><a href="#large-sample-properties-of-ols" id="toc-large-sample-properties-of-ols" class="nav-link active" data-scroll-target="#large-sample-properties-of-ols"><span class="header-section-number">8.1</span> Large-sample properties of OLS</a></li>
+  <li><a href="#variance-estimation-for-ols" id="toc-variance-estimation-for-ols" class="nav-link" data-scroll-target="#variance-estimation-for-ols"><span class="header-section-number">8.2</span> Variance estimation for OLS</a></li>
+  <li><a href="#inference-for-multiple-parameters" id="toc-inference-for-multiple-parameters" class="nav-link" data-scroll-target="#inference-for-multiple-parameters"><span class="header-section-number">8.3</span> Inference for multiple parameters</a></li>
+  <li><a href="#finite-sample-properties-with-a-linear-cef" id="toc-finite-sample-properties-with-a-linear-cef" class="nav-link" data-scroll-target="#finite-sample-properties-with-a-linear-cef"><span class="header-section-number">8.4</span> Finite-sample properties with a linear CEF</a>
   <ul class="collapse">
-  <li><a href="#linear-cef-model-under-homoskedasticity" id="toc-linear-cef-model-under-homoskedasticity" class="nav-link" data-scroll-target="#linear-cef-model-under-homoskedasticity"><span class="header-section-number">7.4.1</span> Linear CEF model under homoskedasticity</a></li>
+  <li><a href="#linear-cef-model-under-homoskedasticity" id="toc-linear-cef-model-under-homoskedasticity" class="nav-link" data-scroll-target="#linear-cef-model-under-homoskedasticity"><span class="header-section-number">8.4.1</span> Linear CEF model under homoskedasticity</a></li>
   </ul></li>
-  <li><a href="#the-normal-linear-model" id="toc-the-normal-linear-model" class="nav-link" data-scroll-target="#the-normal-linear-model"><span class="header-section-number">7.5</span> The normal linear model</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.6</span> Summary</a></li>
+  <li><a href="#the-normal-linear-model" id="toc-the-normal-linear-model" class="nav-link" data-scroll-target="#the-normal-linear-model"><span class="header-section-number">8.5</span> The normal linear model</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.6</span> Summary</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/mattblackwell/gov2002-book/edit/main/ols_properties.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/mattblackwell/gov2002-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./ols_properties.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_model.html">Regression</a></li><li class="breadcrumb-item"><a href="./ols_properties.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-ols-statistics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></h1>
+<h1 class="title"><span id="sec-ols-statistics" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The statistics of least squares</span></span></h1>
 </div>
 
 
@@ -372,9 +385,9 @@ window.Quarto = {
 
 
 <p>The last chapter showcased the least squares estimator and investigated many of its more mechanical properties, which are essential for the practical application of OLS. But we still need to understand its statistical properties, as we discussed in Part I of this book: unbiasedness, sampling variance, consistency, and asymptotic normality. As we saw then, these properties fall into finite-sample (unbiasedness, sampling variance) and asymptotic (consistency, asymptotic normality).</p>
-<p>In this chapter, we will focus on the asymptotic properties of OLS because those properties hold under the relatively mild conditions of the linear projection model introduced in <a href="linear_model.html#sec-linear-projection" class="quarto-xref"><span>Section 5.2</span></a>. We will see that OLS consistently estimates a coherent quantity of interest (the best linear predictor) regardless of whether the conditional expectation is linear. That is, for the asymptotic properties of the estimator, we will not need the commonly invoked linearity assumption. Later, when we investigate the finite-sample properties, we will show how linearity will help us establish unbiasedness and also how the normality of the errors can allow us to conduct exact, finite-sample inference. But these assumptions are very strong, so understanding what we can say about OLS without them is vital.</p>
-<section id="large-sample-properties-of-ols" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="large-sample-properties-of-ols"><span class="header-section-number">7.1</span> Large-sample properties of OLS</h2>
+<p>In this chapter, we will focus on the asymptotic properties of OLS because those properties hold under the relatively mild conditions of the linear projection model introduced in <a href="linear_model.html#sec-linear-projection" class="quarto-xref"><span>Section 6.2</span></a>. We will see that OLS consistently estimates a coherent quantity of interest (the best linear predictor) regardless of whether the conditional expectation is linear. That is, for the asymptotic properties of the estimator, we will not need the commonly invoked linearity assumption. Later, when we investigate the finite-sample properties, we will show how linearity will help us establish unbiasedness and also how the normality of the errors can allow us to conduct exact, finite-sample inference. But these assumptions are very strong, so understanding what we can say about OLS without them is vital.</p>
+<section id="large-sample-properties-of-ols" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="large-sample-properties-of-ols"><span class="header-section-number">8.1</span> Large-sample properties of OLS</h2>
 <p>As we saw in <a href="asymptotics.html" class="quarto-xref"><span>Chapter 3</span></a>, we need two key ingredients to conduct statistical inference with the OLS estimator: (1) a consistent estimate of the variance of <span class="math inline">\(\bhat\)</span> and (2) the approximate distribution of <span class="math inline">\(\bhat\)</span> in large samples. Remember that, since <span class="math inline">\(\bhat\)</span> is a vector, the variance of that estimator will actually be a variance-covariance matrix. To obtain the two key ingredients, we first establish the consistency of OLS and then use the central limit theorem to derive its asymptotic distribution, which includes its variance.</p>
 <p>We begin by setting out the assumptions needed for establishing the large-sample properties of OLS, which are the same as the assumptions needed to ensure that the best linear predictor, <span class="math inline">\(\bfbeta = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\)</span>, is well-defined and unique.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -406,7 +419,7 @@ window.Quarto = {
 \bhat \inprob \bfbeta + \mb{Q}_{\X\X}^{-1}\E[\X_ie_i] = \bfbeta,
 \]</span> The linear projection assumptions ensure that the LLN applies to these sample means and that <span class="math inline">\(\E[\X_{i}\X_{i}']\)</span> is invertible.</p>
 <div id="thm-ols-consistency" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 7.1</strong></span> Under the above linear projection assumptions, the OLS estimator is consistent for the best linear projection coefficients, <span class="math inline">\(\bhat \inprob \bfbeta\)</span>.</p>
+<p><span class="theorem-title"><strong>Theorem 8.1</strong></span> Under the above linear projection assumptions, the OLS estimator is consistent for the best linear projection coefficients, <span class="math inline">\(\bhat \inprob \bfbeta\)</span>.</p>
 </div>
 <p>Thus, OLS should be close to the population linear regression in large samples under relatively mild conditions. Remember that this may not equal the conditional expectation if the CEF is nonlinear. What we can say is that OLS converges to the best <em>linear</em> approximation to the CEF. Of course, this also means that, if the CEF is linear, then OLS will consistently estimate the coefficients of the CEF.</p>
 <p>To emphasize, the only assumptions made about the dependent variable are that it (1) has finite variance and (2) is iid. Under this assumption, the outcome could be continuous, categorical, binary, or event count.</p>
@@ -423,18 +436,18 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>Suppose that we have a function of the data iid random vectors <span class="math inline">\(\X_1, \ldots, \X_n\)</span>, <span class="math inline">\(g(\X_{i})\)</span> where <span class="math inline">\(\E[g(\X_{i})] = 0\)</span> and so <span class="math inline">\(\V[g(\X_{i})] = \E[g(\X_{i})g(\X_{i})']\)</span>. Then if <span class="math inline">\(\E[\Vert g(\X_{i})\Vert^{2}] &lt; \infty\)</span>, the CLT implies that <span id="eq-clt-mean-zero"><span class="math display">\[
 \sqrt{n}\left(\frac{1}{n} \sum_{i=1}^{n} g(\X_{i}) - \E[g(\X_{i})]\right) = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} g(\X_{i}) \indist \N(0, \E[g(\X_{i})g(\X_{i}')])
-\tag{7.1}\]</span></span></p>
+\tag{8.1}\]</span></span></p>
 </div>
 </div>
 <p>We now manipulate our decomposition to arrive at the <em>stabilized</em> version of the estimator, <span class="math display">\[
 \sqrt{n}\left( \bhat - \bfbeta\right) = \left( \frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left( \frac{1}{\sqrt{n}} \sum_{i=1}^n \X_ie_i \right).
-\]</span> Recall that we stabilize an estimator to ensure it has a fixed variance as the sample size grows, allowing it to have a non-degenerate asymptotic distribution. The stabilization works by asymptotically centering it (that is, subtracting the value to which it converges) and multiplying by the square root of the sample size. We have already established that the first term on the right-hand side will converge in probability to <span class="math inline">\(\mb{Q}_{\X\X}^{-1}\)</span>. Notice that <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span>, so we can apply <a href="#eq-clt-mean-zero" class="quarto-xref">Equation&nbsp;<span>7.1</span></a> to the second term. The covariance matrix of <span class="math inline">\(\X_ie_{i}\)</span> is <span class="math display">\[
+\]</span> Recall that we stabilize an estimator to ensure it has a fixed variance as the sample size grows, allowing it to have a non-degenerate asymptotic distribution. The stabilization works by asymptotically centering it (that is, subtracting the value to which it converges) and multiplying by the square root of the sample size. We have already established that the first term on the right-hand side will converge in probability to <span class="math inline">\(\mb{Q}_{\X\X}^{-1}\)</span>. Notice that <span class="math inline">\(\E[\X_{i}e_{i}] = 0\)</span>, so we can apply <a href="#eq-clt-mean-zero" class="quarto-xref">Equation&nbsp;<span>8.1</span></a> to the second term. The covariance matrix of <span class="math inline">\(\X_ie_{i}\)</span> is <span class="math display">\[
 \mb{\Omega} = \V[\X_{i}e_{i}] = \E[\X_{i}e_{i}(\X_{i}e_{i})'] = \E[e_{i}^{2}\X_{i}\X_{i}'].
 \]</span> The CLT will imply that <span class="math display">\[
 \frac{1}{\sqrt{n}} \sum_{i=1}^n \X_ie_i \indist \N(0, \mb{\Omega}).
 \]</span> Combining these facts with Slutsky’s Theorem implies the following theorem.</p>
 <div id="thm-ols-asymptotic-normality" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 7.2</strong></span> Suppose that the linear projection assumptions hold and, in addition, we have <span class="math inline">\(\E[Y_{i}^{4}] &lt; \infty\)</span> and <span class="math inline">\(\E[\lVert\X_{i}\rVert^{4}] &lt; \infty\)</span>. Then the OLS estimator is asymptotically normal with <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 8.2</strong></span> Suppose that the linear projection assumptions hold and, in addition, we have <span class="math inline">\(\E[Y_{i}^{4}] &lt; \infty\)</span> and <span class="math inline">\(\E[\lVert\X_{i}\rVert^{4}] &lt; \infty\)</span>. Then the OLS estimator is asymptotically normal with <span class="math display">\[
 \sqrt{n}\left( \bhat - \bfbeta\right) \indist \N(0, \mb{V}_{\bfbeta}),
 \]</span> where <span class="math display">\[
 \mb{V}_{\bfbeta} = \mb{Q}_{\X\X}^{-1}\mb{\Omega}\mb{Q}_{\X\X}^{-1} = \left( \E[\X_i\X_i'] \right)^{-1}\E[e_i^2\X_i\X_i']\left( \E[\X_i\X_i'] \right)^{-1}.
@@ -442,8 +455,8 @@ window.Quarto = {
 </div>
 <p>Thus, with a large enough sample size we can approximate the distribution of <span class="math inline">\(\bhat\)</span> with a multivariate normal distribution with mean <span class="math inline">\(\bfbeta\)</span> and covariance matrix <span class="math inline">\(\mb{V}_{\bfbeta}/n\)</span>. In particular, the square root of the <span class="math inline">\(j\)</span>th diagonals of this matrix will be standard errors for <span class="math inline">\(\widehat{\beta}_j\)</span>. Knowing the shape of the OLS estimator’s multivariate distribution will allow us to conduct hypothesis tests and generate confidence intervals for both individual coefficients and groups of coefficients. But, first, we need an estimate of the covariance matrix.</p>
 </section>
-<section id="variance-estimation-for-ols" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="variance-estimation-for-ols"><span class="header-section-number">7.2</span> Variance estimation for OLS</h2>
+<section id="variance-estimation-for-ols" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="variance-estimation-for-ols"><span class="header-section-number">8.2</span> Variance estimation for OLS</h2>
 <p>The asymptotic normality of OLS from the last section is of limited value without some way to estimate the covariance matrix, <span class="math display">\[
 \mb{V}_{\bfbeta} = \mb{Q}_{\X\X}^{-1}\mb{\Omega}\mb{Q}_{\X\X}^{-1}.
 \]</span> Since each term here is a population mean, this is an ideal place in which to drop a plug-in estimator. For now, we will use the following estimators: <span class="math display">\[
@@ -451,7 +464,7 @@ window.Quarto = {
   \mb{Q}_{\X\X} &amp;= \E[\X_{i}\X_{i}'] &amp; \widehat{\mb{Q}}_{\X\X} &amp;= \frac{1}{n} \sum_{i=1}^{n} \X_{i}\X_{i}' = \frac{1}{n}\Xmat'\Xmat \\
   \mb{\Omega} &amp;= \E[e_i^2\X_i\X_i'] &amp; \widehat{\mb{\Omega}} &amp; = \frac{1}{n}\sum_{i=1}^n\widehat{e}_i^2\X_i\X_i'.
 \end{aligned}
-\]</span> Under the assumptions of <a href="#thm-ols-asymptotic-normality" class="quarto-xref">Theorem&nbsp;<span>7.2</span></a>, the LLN will imply that these are consistent for the quantities we need, <span class="math inline">\(\widehat{\mb{Q}}_{\X\X} \inprob \mb{Q}_{\X\X}\)</span> and <span class="math inline">\(\widehat{\mb{\Omega}} \inprob \mb{\Omega}\)</span>. We can plug these into the variance formula to arrive at <span class="math display">\[
+\]</span> Under the assumptions of <a href="#thm-ols-asymptotic-normality" class="quarto-xref">Theorem&nbsp;<span>8.2</span></a>, the LLN will imply that these are consistent for the quantities we need, <span class="math inline">\(\widehat{\mb{Q}}_{\X\X} \inprob \mb{Q}_{\X\X}\)</span> and <span class="math inline">\(\widehat{\mb{\Omega}} \inprob \mb{\Omega}\)</span>. We can plug these into the variance formula to arrive at <span class="math display">\[
 \begin{aligned}
   \widehat{\mb{V}}_{\bfbeta} &amp;= \widehat{\mb{Q}}_{\X\X}^{-1}\widehat{\mb{\Omega}}\widehat{\mb{Q}}_{\X\X}^{-1} \\
   &amp;= \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1} \left( \frac{1}{n} \sum_{i=1}^n\widehat{e}_i^2\X_i\X_i' \right) \left( \frac{1}{n} \Xmat'\Xmat \right)^{-1},
@@ -480,8 +493,8 @@ t = \frac{\widehat{\beta}_{j}}{\widehat{\se}(\widehat{\beta}_{j})},
 \left[\widehat{\beta}_{j} - z_{\alpha/2}\;\widehat{\se}(\widehat{\beta}_{j}),\;\widehat{\beta}_{j} + z_{\alpha/2}\;\widehat{\se}(\widehat{\beta}_{j})\right].
 \]</span> For reasons we will discuss below, standard software typically relies on the <span class="math inline">\(t\)</span> distribution instead of the normal for hypothesis testing and confidence intervals. Still, this difference is of little consequence in large samples.</p>
 </section>
-<section id="inference-for-multiple-parameters" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="inference-for-multiple-parameters"><span class="header-section-number">7.3</span> Inference for multiple parameters</h2>
+<section id="inference-for-multiple-parameters" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="inference-for-multiple-parameters"><span class="header-section-number">8.3</span> Inference for multiple parameters</h2>
 <p>With multiple coefficients, we might have hypotheses that involve more than one coefficient. As an example, consider a regression with an interaction between two covariates, <span class="math display">\[
 Y_i = \beta_0 + X_i\beta_1 + Z_i\beta_2 + X_iZ_i\beta_3 + e_i.
 \]</span> Suppose we wanted to test the hypothesis that <span class="math inline">\(X_i\)</span> does not affect the best linear predictor for <span class="math inline">\(Y_i\)</span>. That would be <span class="math display">\[
@@ -491,7 +504,7 @@ H_{0}: \beta_{1} = 0 \text{ and } \beta_{3} = 0\quad\text{vs}\quad H_{1}: \beta_
 t = \frac{\widehat{\beta}_{j} - b_{0}}{\widehat{\se}(\widehat{\beta}_{j})},
 \]</span> and we usually take the absolute value, <span class="math inline">\(|t|\)</span>, as our measure of how extreme our estimate is given the null distribution. But notice that we could also use the square of the <span class="math inline">\(t\)</span> statistic, which is <span id="eq-squared-t"><span class="math display">\[
 t^{2} = \frac{\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{\V[\widehat{\beta}_{j}]} = \frac{n\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{[\mb{V}_{\bfbeta}]_{[jj]}}.
-\tag{7.2}\]</span></span></p>
+\tag{8.2}\]</span></span></p>
 <p>While <span class="math inline">\(|t|\)</span> is the usual test statistic we use for two-sided tests, we could equivalently use <span class="math inline">\(t^2\)</span> and arrive at the exact same conclusions (as long as we knew the distribution of <span class="math inline">\(t^2\)</span> under the null hypothesis). It turns out that the <span class="math inline">\(t^2\)</span> version of the test statistic will generalize more easily to comparing multiple coefficients. This version of the test statistic suggests another general way to differentiate the null from the alternative: by taking the squared distance between them and dividing by the variance of the estimate.</p>
 <p>Can we generalize this idea to hypotheses about multiple parameters? Adding the sum of squared distances for each component of the null hypothesis is straightforward. For our interaction example, that would be <span class="math display">\[
 \widehat{\beta}_1^2 + \widehat{\beta}_3^2,
@@ -508,12 +521,12 @@ t^{2} = \frac{\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{\V[\widehat{\beta}_{
   0 \\
   0
 \end{pmatrix}
-\]</span> Thus, <span class="math inline">\(\mb{L}\bfbeta = \mb{0}\)</span> is equivalent to <span class="math inline">\(\beta_1 = 0\)</span> and <span class="math inline">\(\beta_3 = 0\)</span>. Notice that with other <span class="math inline">\(\mb{L}\)</span> matrices, we could represent more complicated hypotheses like <span class="math inline">\(2\beta_1 - \beta_2 = 34\)</span>, though we mostly stick to simpler functions. Let <span class="math inline">\(\widehat{\bs{\theta}} = \mb{L}\bhat\)</span> be the OLS estimate of the function of the coefficients. By the delta method (discussed in <a href="asymptotics.html#sec-delta-method" class="quarto-xref"><span>Section 3.9</span></a>), we have <span class="math display">\[
+\]</span> Thus, <span class="math inline">\(\mb{L}\bfbeta = \mb{0}\)</span> is equivalent to <span class="math inline">\(\beta_1 = 0\)</span> and <span class="math inline">\(\beta_3 = 0\)</span>. Notice that with other <span class="math inline">\(\mb{L}\)</span> matrices, we could represent more complicated hypotheses like <span class="math inline">\(2\beta_1 - \beta_2 = 34\)</span>, though we mostly stick to simpler functions. Let <span class="math inline">\(\widehat{\bs{\theta}} = \mb{L}\bhat\)</span> be the OLS estimate of the function of the coefficients. By the delta method (discussed in <a href="asymptotics.html#sec-delta-method" class="quarto-xref"><span>Section 3.8</span></a>), we have <span class="math display">\[
 \sqrt{n}\left(\mb{L}\bhat - \mb{L}\bfbeta\right) \indist \N(0, \mb{L}\mb{V}_{\bfbeta}\mb{L}').
-\]</span> We can now generalize the squared <span class="math inline">\(t\)</span> statistic in <a href="#eq-squared-t" class="quarto-xref">Equation&nbsp;<span>7.2</span></a> by taking the distances <span class="math inline">\(\mb{L}\bhat - \mb{c}\)</span> weighted by the variance-covariance matrix <span class="math inline">\(\mb{L}\mb{V}_{\bfbeta}\mb{L}'\)</span>, <span class="math display">\[
+\]</span> We can now generalize the squared <span class="math inline">\(t\)</span> statistic in <a href="#eq-squared-t" class="quarto-xref">Equation&nbsp;<span>8.2</span></a> by taking the distances <span class="math inline">\(\mb{L}\bhat - \mb{c}\)</span> weighted by the variance-covariance matrix <span class="math inline">\(\mb{L}\mb{V}_{\bfbeta}\mb{L}'\)</span>, <span class="math display">\[
 W = n(\mb{L}\bhat - \mb{c})'(\mb{L}\mb{V}_{\bfbeta}\mb{L}')^{-1}(\mb{L}\bhat - \mb{c}),
 \]</span> which is called the <strong>Wald test statistic</strong>. This statistic generalizes the ideas of the t-statistic to multiple parameters. With the t-statistic, we recenter to have mean 0 and divide by the standard error to get a variance of 1. If we ignore the middle variance weighting, we have <span class="math inline">\((\mb{L}\bhat - \mb{c})'(\mb{L}\bhat - \mb{c})\)</span> which is just the sum of the squared deviations of the estimates from the null. Including the <span class="math inline">\((\mb{L}\mb{V}_{\bfbeta}\mb{L}')^{-1}\)</span> weight has the effect of rescaling the distribution of <span class="math inline">\(\mb{L}\bhat - \mb{c}\)</span> to make it rotationally symmetric around 0 (so the resulting dimensions are uncorrelated) with each dimension having an equal variance of 1. In this way, the Wald statistic transforms the random vectors to be mean-centered and have variance 1 (just the t-statistic), but also to have the resulting random variables in the vector be uncorrelated.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>Why transform the data in this way? <a href="#fig-wald" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> shows the contour plot of a hypothetical joint distribution of two coefficients from an OLS regression. We might want to know the distance between different points in the distribution and the mean, which in this case is <span class="math inline">\((1, 2)\)</span>. Without considering the joint distribution, the circle is obviously closer to the mean than the triangle. However, looking at the two points on the distribution, the circle is at a lower contour than the triangle, meaning it is more extreme than the triangle for this particular distribution. The Wald statistic, then, takes into consideration how much of a “climb” it is for <span class="math inline">\(\mb{L}\bhat\)</span> to get to <span class="math inline">\(\mb{c}\)</span> given the distribution of <span class="math inline">\(\mb{L}\bhat\)</span>.</p>
+<p>Why transform the data in this way? <a href="#fig-wald" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> shows the contour plot of a hypothetical joint distribution of two coefficients from an OLS regression. We might want to know the distance between different points in the distribution and the mean, which in this case is <span class="math inline">\((1, 2)\)</span>. Without considering the joint distribution, the circle is obviously closer to the mean than the triangle. However, looking at the two points on the distribution, the circle is at a lower contour than the triangle, meaning it is more extreme than the triangle for this particular distribution. The Wald statistic, then, takes into consideration how much of a “climb” it is for <span class="math inline">\(\mb{L}\bhat\)</span> to get to <span class="math inline">\(\mb{c}\)</span> given the distribution of <span class="math inline">\(\mb{L}\bhat\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-wald" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -522,7 +535,7 @@ W = n(\mb{L}\bhat - \mb{c})'(\mb{L}\mb{V}_{\bfbeta}\mb{L}')^{-1}(\mb{L}\bhat - \
 <img src="ols_properties_files/figure-html/fig-wald-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wald-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.1: Hypothetical joint distribution of two slope coefficients. The circle is closer to the center of the distribution by the standard Euclidean distance, but the triangle is closer once you consider the joint distribution.
+Figure&nbsp;8.1: Hypothetical joint distribution of two slope coefficients. The circle is closer to the center of the distribution by the standard Euclidean distance, but the triangle is closer once you consider the joint distribution.
 </figcaption>
 </figure>
 </div>
@@ -563,8 +576,8 @@ F = \frac{W}{q}.
 <p>This result implies a critical value of 6.182 on the scale of the Wald statistic (multiplying it by <span class="math inline">\(q = 2\)</span>). Compared to the earlier critical value of 5.991 based on the <span class="math inline">\(\chi^2_2\)</span> distribution, we can see that the inferences will be very similar even in moderately-sized datasets.</p>
 <p>Finally, note that the F-statistic reported by <code>lm()</code> in R is the test of all the coefficients being equal to 0 jointly except for the intercept. In modern quantitative social sciences, this test is seldom substantively interesting.</p>
 </section>
-<section id="finite-sample-properties-with-a-linear-cef" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="finite-sample-properties-with-a-linear-cef"><span class="header-section-number">7.4</span> Finite-sample properties with a linear CEF</h2>
+<section id="finite-sample-properties-with-a-linear-cef" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="finite-sample-properties-with-a-linear-cef"><span class="header-section-number">8.4</span> Finite-sample properties with a linear CEF</h2>
 <p>All the above results have been large-sample properties, and we have not addressed finite-sample properties like the sampling variance or unbiasedness. Under the linear projection assumption above, OLS is generally biased without stronger assumptions. This section introduces the stronger assumption that will allow us to establish stronger properties for OLS. As usual, however, remember that these stronger assumptions can be wrong.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -587,10 +600,10 @@ F = \frac{W}{q}.
 </ol>
 </div>
 </div>
-<p>We discussed the concept of a linear CEF extensively in <a href="linear_model.html" class="quarto-xref"><span>Chapter 5</span></a>. However, recall that the CEF might be linear mechanically if the model is <strong>saturated</strong> or when there are as many coefficients in the model as there are unique values of <span class="math inline">\(\X_i\)</span>. When a model is not saturated, the linear CEF assumption is just that: an assumption. What can this assumption do? It can aid in establishing some nice statistical properties in finite samples.</p>
+<p>We discussed the concept of a linear CEF extensively in <a href="linear_model.html" class="quarto-xref"><span>Chapter 6</span></a>. However, recall that the CEF might be linear mechanically if the model is <strong>saturated</strong> or when there are as many coefficients in the model as there are unique values of <span class="math inline">\(\X_i\)</span>. When a model is not saturated, the linear CEF assumption is just that: an assumption. What can this assumption do? It can aid in establishing some nice statistical properties in finite samples.</p>
 <p>Before proceeding, note that, when focusing on the finite sample inference for OLS, we focused on its properties <strong>conditional on the observed covariates</strong>, such as <span class="math inline">\(\E[\bhat \mid \Xmat]\)</span> or <span class="math inline">\(\V[\bhat \mid \Xmat]\)</span>. The historical reason for this is that the researcher often chose these independent variables and so they were not random. Thus, sometimes <span class="math inline">\(\Xmat\)</span> is treated as “fixed” in some older texts, which might even omit explicit conditioning statements.</p>
 <div id="thm-ols-unbiased" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 7.3</strong></span> Under the linear regression model assumption, OLS is unbiased for the population regression coefficients, <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 8.3</strong></span> Under the linear regression model assumption, OLS is unbiased for the population regression coefficients, <span class="math display">\[
 \E[\bhat \mid \Xmat] = \bfbeta,
 \]</span> and its conditional sampling variance is <span class="math display">\[
 \mb{\V}_{\bhat} = \V[\bhat \mid \Xmat] = \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2_i \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1},
@@ -623,8 +636,8 @@ F = \frac{W}{q}.
 \]</span> is a valid plug-in estimator for the asymptotic variance and <span class="math display">\[
 \widehat{\mb{V}}_{\bhat} = n^{-1}\widehat{\mb{V}}_{\bfbeta}.
 \]</span> Thus, in practice, the asymptotic and finite-sample results under a linear CEF justify the same variance estimator.</p>
-<section id="linear-cef-model-under-homoskedasticity" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="linear-cef-model-under-homoskedasticity"><span class="header-section-number">7.4.1</span> Linear CEF model under homoskedasticity</h3>
+<section id="linear-cef-model-under-homoskedasticity" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="linear-cef-model-under-homoskedasticity"><span class="header-section-number">8.4.1</span> Linear CEF model under homoskedasticity</h3>
 <p>If we are willing to assume that the standard errors are homoskedastic, we can derive even stronger results for OLS. Stronger assumptions typically lead to stronger conclusions, but, obviously, those conclusions may not be robust to assumption violations. But homoskedasticity of errors is such a historically important assumption that statistical software implementations of OLS like <code>lm()</code> in R assume it by default.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -642,14 +655,14 @@ F = \frac{W}{q}.
 </div>
 </div>
 <div id="thm-homoskedasticity" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 7.4</strong></span> Under a linear CEF model with homoskedastic errors, the conditional sampling variance is <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 8.4</strong></span> Under a linear CEF model with homoskedastic errors, the conditional sampling variance is <span class="math display">\[
 \mb{V}^{\texttt{lm}}_{\bhat} = \V[\bhat \mid \Xmat] = \sigma^2 \left( \Xmat'\Xmat \right)^{-1},
 \]</span> and the variance estimator <span class="math display">\[
 \widehat{\mb{V}}^{\texttt{lm}}_{\bhat} = \widehat{\sigma}^2 \left( \Xmat'\Xmat \right)^{-1} \quad\text{where,}\quad \widehat{\sigma}^2 = \frac{1}{n - k - 1} \sum_{i=1}^n \widehat{e}_i^2
 \]</span> is unbiased, <span class="math inline">\(\E[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat} \mid \Xmat] = \mb{V}^{\texttt{lm}}_{\bhat}\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Under homoskedasticity <span class="math inline">\(\sigma^2_i = \sigma^2\)</span> for all <span class="math inline">\(i\)</span>. Recall that <span class="math inline">\(\sum_{i=1}^n \X_i\X_i' = \Xmat'\Xmat\)</span>. Thus, the conditional sampling variance from <a href="#thm-ols-unbiased" class="quarto-xref">Theorem&nbsp;<span>7.3</span></a>, <span class="math display">\[
+<p><span class="proof-title"><em>Proof</em>. </span>Under homoskedasticity <span class="math inline">\(\sigma^2_i = \sigma^2\)</span> for all <span class="math inline">\(i\)</span>. Recall that <span class="math inline">\(\sum_{i=1}^n \X_i\X_i' = \Xmat'\Xmat\)</span>. Thus, the conditional sampling variance from <a href="#thm-ols-unbiased" class="quarto-xref">Theorem&nbsp;<span>8.3</span></a>, <span class="math display">\[
 \begin{aligned}
 \V[\bhat \mid \Xmat] &amp;= \left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \sigma^2 \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \\ &amp;= \sigma^2\left( \Xmat'\Xmat \right)^{-1}\left( \sum_{i=1}^n \X_i\X_i' \right) \left( \Xmat'\Xmat \right)^{-1} \\&amp;= \sigma^2\left( \Xmat'\Xmat \right)^{-1}\left( \Xmat'\Xmat \right) \left( \Xmat'\Xmat \right)^{-1} \\&amp;= \sigma^2\left( \Xmat'\Xmat \right)^{-1} = \mb{V}^{\texttt{lm}}_{\bhat}.
 \end{aligned}
@@ -660,7 +673,7 @@ F = \frac{W}{q}.
 \V[\widehat{\mb{e}} \mid \Xmat] = \mb{M}_{\Xmat}\V[\mb{e} \mid \Xmat] = \mb{M}_{\Xmat}\sigma^2,
 \]</span> where the first equality holds because <span class="math inline">\(\mb{M}_{\Xmat} = \mb{I}_{n} - \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\)</span> is constant conditional on <span class="math inline">\(\Xmat\)</span>. Notice that the diagonal entries of this matrix are the variances of particular residuals <span class="math inline">\(\widehat{e}_i\)</span> and that the diagonal entries of the annihilator matrix are <span class="math inline">\(1 - h_{ii}\)</span> (since the <span class="math inline">\(h_{ii}\)</span> are the diagonal entries of <span class="math inline">\(\mb{P}_{\Xmat}\)</span>). Thus, we have <span class="math display">\[
 \V[\widehat{e}_i \mid \Xmat] = \E[\widehat{e}_{i}^{2} \mid \Xmat] = (1 - h_{ii})\sigma^{2}.
-\]</span> In the last chapter in <a href="least_squares.html#sec-leverage" class="quarto-xref"><span>Section 6.9.1</span></a>, we established that one property of these leverage values is <span class="math inline">\(\sum_{i=1}^n h_{ii} = k+ 1\)</span>, so <span class="math inline">\(\sum_{i=1}^n 1- h_{ii} = n - k - 1\)</span> and we have <span class="math display">\[
+\]</span> In the last chapter in <a href="least_squares.html#sec-leverage" class="quarto-xref"><span>Section 7.9.1</span></a>, we established that one property of these leverage values is <span class="math inline">\(\sum_{i=1}^n h_{ii} = k+ 1\)</span>, so <span class="math inline">\(\sum_{i=1}^n 1- h_{ii} = n - k - 1\)</span> and we have <span class="math display">\[
 \begin{aligned}
   \E[\widehat{\sigma}^{2} \mid \Xmat] &amp;= \frac{1}{n-k-1} \sum_{i=1}^{n} \E[\widehat{e}_{i}^{2} \mid \Xmat] \\
                                       &amp;= \frac{\sigma^{2}}{n-k-1} \sum_{i=1}^{n} 1 - h_{ii} \\
@@ -671,7 +684,7 @@ F = \frac{W}{q}.
 <p>Thus, under the linear CEF model and homoskedasticity of the errors, we have an unbiased variance estimator that is a simple function of the sum of squared residuals and the design matrix. Most statistical software packages estimate standard errors using <span class="math inline">\(\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}\)</span>.</p>
 <p>The final result we can derive for the linear CEF under the homoskedasticity assumption is an optimality result. That is, we might ask if there is another estimator for <span class="math inline">\(\bfbeta\)</span> that would outperform OLS in the sense of having a lower sampling variance. Perhaps surprisingly, no linear estimator for <span class="math inline">\(\bfbeta\)</span> has a lower conditional variance, meaning that OLS is the <strong>best linear unbiased estimator</strong>, often jovially shortened to BLUE. This result is famously known as the Gauss-Markov Theorem.</p>
 <div id="thm-gauss-markov" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 7.5</strong></span> Let <span class="math inline">\(\widetilde{\bfbeta} = \mb{AY}\)</span> be a linear and unbiased estimator for <span class="math inline">\(\bfbeta\)</span>. Under the linear CEF model with homoskedastic errors, <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 8.5</strong></span> Let <span class="math inline">\(\widetilde{\bfbeta} = \mb{AY}\)</span> be a linear and unbiased estimator for <span class="math inline">\(\bfbeta\)</span>. Under the linear CEF model with homoskedastic errors, <span class="math display">\[
 \V[\widetilde{\bfbeta}\mid \Xmat] \geq \V[\bhat \mid \Xmat].
 \]</span></p>
 </div>
@@ -704,8 +717,8 @@ F = \frac{W}{q}.
 <p>Finally, note that while we have shown this result for linear estimators, <span class="citation" data-cites="Hansen22">Hansen (<a href="references.html#ref-Hansen22" role="doc-biblioref">2022</a>)</span> proves a more general version of this result that applies to any unbiased estimator.</p>
 </section>
 </section>
-<section id="the-normal-linear-model" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="the-normal-linear-model"><span class="header-section-number">7.5</span> The normal linear model</h2>
+<section id="the-normal-linear-model" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="the-normal-linear-model"><span class="header-section-number">8.5</span> The normal linear model</h2>
 <p>Finally, we add the strongest and thus least loved of the classical linear regression assumption: (conditional) normality of the errors. Historically the reason to use this assumption was that finite-sample inference hits a roadblock without some knowledge of the sampling distribution of <span class="math inline">\(\bhat\)</span>. Under the linear CEF model, we saw that <span class="math inline">\(\bhat\)</span> is unbiased, and under homoskedasticity, we could produce an unbiased estimator of the conditional variance. But for hypothesis testing or for generating confidence intervals, we need to make probability statements about the estimator, and, for that, we need to know its exact distribution. When the sample size is large, we can rely on the CLT and know <span class="math inline">\(\bhat\)</span> is approximately normal. But how do we proceed in small samples? Historically we would have assumed (conditional) normality of the errors, basically proceeding with some knowledge that we were wrong but hopefully not too wrong.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -728,7 +741,7 @@ e_i \mid \Xmat \sim \N(0, \sigma^2).
 <li>Notice that the normal regression model has the homoskedasticity assumption baked in.</li>
 </ul>
 <div id="thm-normal-ols" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 7.6</strong></span> Under the normal linear regression model, we have <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 8.6</strong></span> Under the normal linear regression model, we have <span class="math display">\[
 \begin{aligned}
   \bhat \mid \Xmat &amp;\sim \N\left(\bfbeta, \sigma^{2}\left(\Xmat'\Xmat\right)^{-1}\right) \\
   \frac{\widehat{\beta}_{j} - \beta_{j}}{[\widehat{\mb{V}}^{\texttt{lm}}_{\bhat}]_{jj}} &amp;\sim t_{n-k-1} \\
@@ -744,12 +757,12 @@ e_i \mid \Xmat \sim \N(0, \sigma^2).
 </ul>
 <p>These arguments are not very convincing since whether the <span class="math inline">\(t\)</span> approximation will be any better than the normal in finite samples is unclear. But it may be the best we can do while we go and find more data.</p>
 </section>
-<section id="summary" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.6</span> Summary</h2>
+<section id="summary" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.6</span> Summary</h2>
 <p>In this chapter, we discussed the large-sample properties of OLS, which are quite strong. Under mild conditions, OLS is consistent for the population linear regression coefficients and is asymptotically normal. The variance of the OLS estimator, and thus the variance estimator, depends on whether the projection errors are assumed to be unrelated to the covariates (<strong>homoskedastic</strong>) or possibly related (<strong>heteroskedastic</strong>). Confidence intervals and hypothesis tests for individual OLS coefficients are largely the same as discussed in Part I of this book, and we can obtain finite-sample properties of OLS such as conditional unbiasedness if we assume the conditional expectation function is linear. If we further assume the errors are normally distributed, we can derive confidence intervals and hypothesis tests that are valid for all sample sizes.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Hansen22" class="csl-entry" role="listitem">
 Hansen, Bruce E. 2022. <span>“A <span>Modern Gauss</span>–<span>Markov Theorem</span>.”</span> <em>Econometrica</em> 90 (3): 1283–94. <a href="https://doi.org/10.3982/ECTA19255">https://doi.org/10.3982/ECTA19255</a>.
 </div>
@@ -1167,7 +1180,7 @@ Hansen, Bruce E. 2022. <span>“A <span>Modern Gauss</span>–<span>Markov Theor
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./least_squares.html" class="pagination-link" aria-label="The mechanics of least squares">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">The mechanics of least squares</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
