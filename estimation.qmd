@@ -24,7 +24,7 @@ Like the poor drunkard, we focus on searching an area (random samples) that are 
 
 [^drunk]: 1924 May 24, Boston Herald, Whiting’s Column: Tammany Has Learned That This Is No Time for Political Bosses, Quote Page 2, Column 1, Boston, Massachusetts. (GenealogyBank)
 
-This chapter has two goals. First, we will introduce the entire model-based framework of estimation and estimators. We will discuss different ways to compare the properties of estimators. Most of these properties will be similar to those of the design-based framework, except the properties will be with respect to the model rather than the sampling design. (The core questions of quantitative research largely remain the same, but we replace specifying the sampling design with the specification of a probabilistic model for our data.) Second, we will establish key properties for a general class of estimators that can be written as a sample mean. These results are useful in their own right since these estimators are ubiquitous, but the derivations also provide examples of how we establish such results. Building comfort with these proofs helps us understand the arguments about novel estimators that we inevitably see over the course of our careers. While this chapter will not get to more complicated question like nonresponse, measurement error, or dependent data, the model-based approach we present here is the foundation upon which all these extensions can be built. 
+This chapter has two goals. First, we will introduce the entire model-based framework of estimation and estimators. We will discuss different ways to compare the properties of estimators. Most of these properties will be similar to those of the design-based framework, except the properties will be with respect to the model rather than the sampling design. (The core questions of quantitative research largely remain the same, but we replace specifying the sampling design with the specification of a probabilistic model for our data.) Second, we will establish key properties for a general class of estimators that can be written as a sample mean. These results are useful in their own right since these estimators are ubiquitous, but the derivations also provide examples of how we establish such results. Building comfort with these proofs helps us understand the arguments about novel estimators that we inevitably see over the course of our careers. While this chapter will not get to more complicated questions like nonresponse, measurement error, or dependent data, the model-based approach we present here is the foundation upon which all these extensions can be built. 
 
 ## Probability vs inference: the big picture
 
@@ -51,7 +51,7 @@ $$
 $$
 where $n_1 = \sum_{i=1}^n D_i$ is the number of treated units and $n_0 = n - n_1$ is the number of control units. 
 
-A standard estimator for the treatment effect in a study such as this would be the difference in means, $\Ybar_1 - \Ybar_0$. But this is only one of many possible estimators. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This estimator is commonly called a **poststratification** estimator. Which of these two estimators we should prefer is at first glance unclear. 
+A standard estimator for the treatment effect in a study such as this would be the difference in means, $\Ybar_1 - \Ybar_0$. But this is only one of many possible estimators. We could also estimate the effect by taking this difference in means separately by party identification and then averaging those party-specific effects by the size of those groups. This estimator is commonly called a **poststratification** estimator. How should we choose between these two estimators? This chapter develops the tools we need to answer this question. 
 
 :::
 
@@ -95,9 +95,9 @@ You might wonder why we reference the distribution of $X_i$ with the cdf, $F$. M
 
 Two metaphors help build intuition behind viewing the data as an iid draw from $F$:
 
-1. **Random sampling**. Suppose we have a population of size $N$ that is much larger than our sample size $n$, and we take a random sample of size $n$ from this population. The distribution of the data in the random sample will be approximately iid draws from the population distribution of the variables we are sampling (and exactly iid if sampling is done with replacement)     . For example, suppose the population proportion of Democratic party identifiers among U.S. citizens is 0.33. If we randomly sample $n = 100$ U.S. citizens, each data point $X_i$ will be distributed Bernoulli with a probability of success (i.e., Democratic Party identifier) of 0.33. 
+1. **Random sampling**. Suppose we have a population of size $N$ that is much larger than our sample size $n$, and we take a random sample of size $n$ from this population. The distribution of the data in the random sample will be approximately iid draws from the population distribution of the variables we are sampling (and exactly iid if sampling is done with replacement). For example, suppose the population proportion of Democratic party identifiers among U.S. citizens is 0.33. If we randomly sample $n = 100$ U.S. citizens, each data point $X_i$ will be distributed Bernoulli with a probability of success (i.e., Democratic Party identifier) of 0.33. 
 
-Note that the last chapter explored simple random samples *without replacement*, which is a more common type of sampling – since generally people are selected into a survey once and they do not go back into the pool of potential survey takers. Sampling without replacement creates dependence across units, which would violate the iid assumption. However, if the population size $N$ is very large relative to the sample size $n$, this dependence will be very small, and the iid assumption will be relatively innocuous. 
+Note that the last chapter explored simple random samples *without replacement*, which is a more common type of sampling---since generally people are selected into a survey once and they do not go back into the pool of potential survey takers. Sampling without replacement creates dependence across units, which would violate the iid assumption. However, if the population size $N$ is very large relative to the sample size $n$, this dependence will be very small, and the iid assumption will be relatively innocuous. 
 
 2. **Groundhog Day**. Random sampling does not always make sense as a justification for iid data, especially when the units are not samples at all but rather countries, states, or subnational units. (In these cases, the population can be the same as the sample – for example, using all 50 states to draw conclusions on the efficacy of state policy.) In this case, we have to appeal to a thought experiment where $F$ represents the fundamental uncertainty in the data-generating process. The metaphor here is that if we could re-run history many times, such as what happens to the protagonist played by Bill Murray in the 1993 American comedy movie *Groundhog Day* when he is magically forced to relive February 2 over and over again. Under this fiction, data and outcomes would change slightly due to the inherently stochastic nature of the world. In the movie, for example, Murray’s character starts off the same day in exactly the same way, but he begins to change his actions and the outcomes at the end of each day change in subtle ways. The iid assumption, then, is that each of the units in our data has the same DGP producing this data or the same distribution of outcomes under the *Groundhog Day* scenario. The set of all these infinite possible draws from the DGP is sometimes referred to as the **superpopulation**. 
 
@@ -237,7 +237,7 @@ Maximum likelihood estimators have nice properties, especially in large samples.
 
 #### Plug-in estimators
 
-In many cases, we do not have confidence in our ability to specify all aspects of the data generating process correctly. A **semiparametric model** specifies a finite-dimensional set of parameters for the generating process but leaves the rest of the distribution unspecified. For example, we might define a population mean, $\mu = \E[X_i]$ and a population variance, $\sigma^2 = \V[X_i]$ but leave the shape of the distribution unrestricted. The advantage of this modeling approach is that This ensures that our estimators will be less dependent on correctly specifying distributions about which we have little intuition or knowledge.  
+In many cases, we do not have confidence in our ability to specify all aspects of the data generating process correctly. A **semiparametric model** specifies a finite-dimensional set of parameters for the generating process but leaves the rest of the distribution unspecified. For example, we might define a population mean, $\mu = \E[X_i]$ and a population variance, $\sigma^2 = \V[X_i]$ but leave the shape of the distribution unrestricted. The advantage of this modeling approach is that our estimators will be less dependent on correctly specifying distributions about which we have little intuition or knowledge.  
 
 The primary method for constructing estimators in this setting is to use a **plug-in estimator**, which replaces any function of the population distribution with an equivalent function of the empirical or sample distribution. In econometrics, this is also called the **analog principle** or analog estimation after @Manski88. For example, we replace any population mean with the equivalent sample mean or population medians with sample medians, and so on. This approach fits nicely with an estimand-driven workflow because the formula for the quantity of interest naturally suggests plug-in estimators. 
 
@@ -272,7 +272,7 @@ $$
 
 :::
 
-More generally, any quantity of interest about the population can be written as mapping from the space of all distribution to a real number (or vector of real numbers), $\psi(F)$. We call such a mapping a **statistical functional** (functionals are like functions that take other functions as inputs). Formally, a **plug-in estimator** of $\theta = \psi(F)$ is defined as $\widehat{\theta}_n = \psi(\widehat{F}_n)$. If we can write the functional in terms of population means, then one shortcut to derive these estimators is to replace any population means, $\E[]$ with sample means $\E_n[]$. 
+More generally, any quantity of interest about the population can be written as mapping from the space of all distributions to a real number (or vector of real numbers), $\psi(F)$. We call such a mapping a **statistical functional** (functionals are like functions that take other functions as inputs). Formally, a plug-in estimator of $\theta = \psi(F)$ is defined as $\widehat{\theta}_n = \psi(\widehat{F}_n)$. If we can write the functional in terms of population means, then one shortcut to derive these estimators is to replace any population means, $\E[\cdot]$ with sample means $\E_n[\cdot]$. 
 
 ::: {#exm-var-est}
 
@@ -283,7 +283,7 @@ $$
 \sigma^2 = \psi(F) = \E[X_i^2] - (\E[X_i])^2
 $$
 
-To derive a plug-in estimator for this quantity, we simply the population means with sample means and rearrange:
+To derive a plug-in estimator for this quantity, we simply replace the population means with sample means and rearrange:
 $$
 \begin{aligned}
 \widehat{\sigma}^2 = \psi(\widehat{F}_n) &= \E_n[X_i^2] - (\E_n[X_i])^2 \\
@@ -323,15 +323,15 @@ Plug-in estimation goes beyond just replacing population means with sample means
 
 ## Estimating the population median
 
-The population median, $m = F^{-1}(0.5) = \inf\left\{x : F(x) \geq p \right\}$ can be replaced by the the empirical version, $\widehat{m} = \widehat{F}_n^{-1}(0.5) = = \inf \left\{x : \widehat{F}_n(x) \geq p \right\}$, which is simply the smallest value the variable can take such that $100\times p %$ of the empirical distribution is below it. 
+The population median, $m = F^{-1}(0.5) = \inf\left\{x : F(x) \geq p \right\}$ can be replaced by the empirical version, $\widehat{m} = \widehat{F}_n^{-1}(0.5) = = \inf \left\{x : \widehat{F}_n(x) \geq p \right\}$, which is simply the smallest value the variable can take such that $100p \%$ of the empirical distribution is below it. 
 
 :::
 
-Finally, plug-in estimation can work even when we do not have a closed-form solution for the quantity of interest. Many quantities are solutions to minimization problems which are easy state. For example, the population mean minimizes the mean squared prediction error, 
+Finally, plug-in estimation can work even when we do not have a closed-form solution for the quantity of interest. Many quantities are solutions to minimization problems which are easy to state. For example, the population mean minimizes the mean squared prediction error, 
 $$
 \E[X_i] = \argmin_{b} \E\left[(X_i - b)^2\right].
 $$
-We can form plug-in estimators by replace these population optimization problems with their sample counterparts. MLE is of this form, and so is ordinary least squares, as we will see in @sec-ols-mechanics.
+We can form plug-in estimators by replacing these population optimization problems with their sample counterparts. MLE is of this form, and so is ordinary least squares, as we will see in @sec-ols-mechanics.
 
 ### The three distributions: population, empirical, and sampling
 
@@ -356,7 +356,7 @@ The population distribution describes the probability of randomly selecting a pe
 Suppose the population distribution of $X_i$ followed a binomial distribution with four trials and probability of success in each trial of $p = 0.4$. We could generate one sample with $n = 10$ and thus one empirical distribution using `rbinom()`:
 
 ```{r}
-set.seed(0123)
+set.seed(123)
 my_samp <- rbinom(n = 10, size = 4, prob = 0.4)
 my_samp
 prop.table(table(factor(my_samp, levels = 0:4)))
@@ -384,7 +384,7 @@ The sampling distribution is the distribution of these sample means across repea
 
 ### Bias
 
-As discussed in our introduction to estimators, their usefulness depends on how well they help us learn about the quantity of interest. If we get an estimate $\widehat{\theta}_n = 1.6$, we would like to know that this is "close" to the true parameter $\theta$. The sampling distribution is key to answering these questions. Intuitively, we would like the sampling distribution of $\widehat{\theta}_n$ to be as tightly clustered around the true $\theta$ as possible. Here, though, we run into a problem: the sampling distribution depends on the population distribution since it is about repeated samples of the data from that distribution filtered through the function $g()$. Since $F$ is unknown, this implies that the sampling distribution will also usually be unknown. 
+As discussed in our introduction to estimators, their usefulness depends on how well they help us learn about the quantity of interest. If we get an estimate of $1.6$, we would like to know that this is "close" to the true parameter $\theta$. The sampling distribution is key to answering these questions. Intuitively, we would like the sampling distribution of $\widehat{\theta}_n$ to be as tightly clustered around the true $\theta$ as possible. Here, though, we run into a problem: the sampling distribution depends on the population distribution since it is about repeated samples of the data from that distribution filtered through the function $g()$. Since $F$ is unknown, this implies that the sampling distribution will also usually be unknown. 
 
 Even though we cannot precisely pin down the entire sampling distribution, we can use assumptions to derive specific properties of the sampling distribution that are useful in comparing estimators. Note that the properties here will be very similar to the properties of a good estimator defined in @sec-design-properties.
 
@@ -400,7 +400,7 @@ However, all else is not always equal, and unbiasedness is not a property to whi
 ::: {#exm-mean-unbiased}
 
 ## Unbiasedness of the sample mean
-The sample mean is unbiased for the population mean when the data is iid and $\E|X| < \infty$. In particular, we apply the rules of expectations:
+The sample mean is unbiased for the population mean when the data is iid and $\E|X_i| < \infty$. In particular, we apply the rules of expectations:
 $$\begin{aligned}
 \E\left[ \Xbar_n \right] &= \E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] & (\text{definition of } \Xbar_n) \\
 &= \frac{1}{n} \sum_{i=1}^n \E[X_i] & (\text{linearity of } \E)\\
@@ -413,7 +413,7 @@ Notice that we never invoke independence here and only used part of the  "identi
 
 ::: {.callout-warning}
 
-Properties like unbiasedness might only hold for a subset of DGPs. For example, we just showed that the sample mean is unbiased but only when the population mean is finite. There are probability distributions, like the Cauchy, that are not finite and where the expected value diverges. Thus, here we are dealing with a restricted class of DGPs that rules out such distributions. This is sometimes formalized by defining a class $\mathcal{F}$ of distributions; unbiasedness might hold in that class if it is unbiased for all $F \in \mathcal{F}$. 
+Properties like unbiasedness might only hold for a subset of DGPs. For example, we just showed that the sample mean is unbiased but only when the population mean is defined. There are probability distributions, like the Cauchy, for which the expected value is undefined. Thus, here we are dealing with a restricted class of DGPs that rules out such distributions. This is sometimes formalized by defining a class $\mathcal{F}$ of distributions; unbiasedness might hold in that class if it is unbiased for all $F \in \mathcal{F}$. 
 
 :::
 
@@ -435,7 +435,7 @@ On the other hand, nonlinear plug-in estimators are typically (though not always
 
 ## Bias of the population variance plug-in estimator
 
-In @exm-var-est,we introduced the plug-in estimator for the population variance, 
+In @exm-var-est, we introduced the plug-in estimator for the population variance, 
 $$
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
 $$
@@ -451,8 +451,8 @@ $$
 &= \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \sum_{j\neq i} \underbrace{\E[X_i]\E[X_j]}_{\text{independence}} \\
 &= \E[X_i^2] - \frac{1}{n}\E[X_i^2] - \frac{1}{n^2} n(n-1)\mu^2 \\
 &= \frac{n-1}{n} \left(\E[X_i^2] - \mu^2\right) \\
-&= \frac{n-1}{n} \sigma^2 = \sigma^2 - \frac{1}{n}\sigma^2
-\end{aligned}. 
+&= \frac{n-1}{n} \sigma^2 = \sigma^2 - \frac{1}{n}\sigma^2.
+\end{aligned}
 $$
 Thus, we can see that the bias of the plug-in estimator is $-(1/n)\sigma^2$, so it  underestimates the variance (though this bias declines as the sample size grows).
 
@@ -461,7 +461,7 @@ The standard sample variance, on the other hand, divides by $n-1$ instead of $n$
 $$
 S_n^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \Xbar_n)^2,
 $$
-which we can see is related the plug-in estimator as
+which we can see is related to the plug-in estimator as
 $$
 S_n^2 = \frac{n}{n-1}\widehat{\sigma}^2.
 $$
@@ -469,7 +469,7 @@ Combining this with our derivation above, this shows that the standard sample va
 $$
 \E[S_n^2] = \frac{n}{n-1}\E\left[\widehat{\sigma}^2\right] = \frac{n}{n-1}\frac{n-1}{n} \sigma^2 = \sigma^2.
 $$
-This result is why the sample variance uses the $n-1$ instead of $n$ in the denominator (referred to as the Bessel correction). It's a form of bias correction!
+This result is why the sample variance uses the $n-1$ instead of $n$ in the denominator (referred to as Bessel's correction). It's a form of bias correction!
 
 
 ::: 
@@ -507,7 +507,7 @@ $$
 \V\left[\frac{1}{n} \sum_{i=1}^n r(X_i)\right] = \frac{1}{n^2} \sum_{i=1}^n \V[r(X_i)] = \frac{\V[r(X_i)]}{n}.
 $$
 
-One could easily estimate this quantity by replacing the population variance $\V[r(X_i)]$ with the sample variance of $r(X_i)$. Note that the derivation for non-linear plug-in estimators depends on large-sample approximations that will see in the next chapter. 
+One could easily estimate this quantity by replacing the population variance $\V[r(X_i)]$ with the sample variance of $r(X_i)$. Note that the derivation for non-linear plug-in estimators depends on large-sample approximations that we will see in the next chapter. 
 
 :::
 
@@ -532,7 +532,7 @@ This estimator is actually biased because the sample standard deviation is biase
 
 ### Mean squared error
 
-Bias and sampling variance measure two properties of "good" estimators because they capture the fact that we want the estimator to be as close as possible to the true value. One summary measure of the quality of an estimator is the **mean squared error** or **MSE**, which is  
+Bias and sampling variance measure two properties of "good" estimators because they capture the fact that we want the estimator to be as close as possible to the true value. One summary measure of the quality of an estimator is the **mean squared error** or **MSE**, which is
 $$
 \text{MSE} = \E[(\widehat{\theta}_n-\theta)^2].
 $$
@@ -552,10 +552,11 @@ $$ {#eq-mse-decomposition}
 
 ## Population mean estimators, revisited
 
-in @exm-mean-est, we explored three estimators for the population mean, $mu$.  We can now asess their properties to compare three of them (we omit the maximum estimator because its derivations are more complicated)
+In @exm-mean-est, we explored three estimators for the population mean, $\mu$.  We can now assess their properties to compare three of them (we omit the maximum estimator because its derivations are more complicated)
 
-$$\begin{aligned}
-\E[\widehat{\theta}_{n,1}] &= \E\left[\frac{1}{n} \sum_{i=1}^n X_i,\right] = \mu \\ 
+$$
+\begin{aligned}
+\E[\widehat{\theta}_{n,1}] &= \E\left[\frac{1}{n} \sum_{i=1}^n X_i \right] = \mu \\ 
 \E[\widehat{\theta}_{n,2}] &= \E[X_1] = \mu, \\ 
 \E[\widehat{\theta}_{n,4}] = \E[3] = 3.
 \end{aligned}
@@ -603,7 +604,7 @@ segments(
 )
 axis(
   side = 1, at = c(-5, 0, 5), labels = c("", expression(theta), ""),
-  cex = 1.5
+  cex.axis = 1.5
 )
 text(
   x = 0.5, y = dnorm(0.5, 0.2, 0.5), expression(hat(theta)[b]),
@@ -611,14 +612,14 @@ text(
 )
 ```
 
-@fig-mse shows the sampling distributions of two estimators: (1) $\widehat{\theta}_a$, which is unbiased (centered on the true value $\theta$) but with a high sampling variance, and (2) $\widehat{\theta}_b$, which is slightly biased but with much lower sampling variance. Even though $\widehat{\theta}_b$ is biased, its average draw will be closer (in squared distance) to the truth than average draw of $\widehat{\theta}_a$. The MSE helps capture this balancing between bias and variance, and, indeed, in this case, $\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]$. 
+@fig-mse shows the sampling distributions of two estimators: (1) $\widehat{\theta}_a$, which is unbiased (centered on the true value $\theta$) but with a high sampling variance, and (2) $\widehat{\theta}_b$, which is slightly biased but with much lower sampling variance. Even though $\widehat{\theta}_b$ is biased, its average draw will be closer (in squared distance) to the truth than the average draw of $\widehat{\theta}_a$. The MSE helps capture this balancing between bias and variance, and, indeed, in this case, $\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]$. 
 
 
 ::: {.callout-note}
 
 ## No free lunch
 
-Building up intuition about the **assumptions-precision tradeoff** is essential. Researchers can usually get more precise estimates if they make stronger and potentially more fragile assumptions that, if incorrect, yield bias. Conversely, weaker assumptions typically will cost preceision while guarding against bias due to incorrect assumptions. The decomposition of the MSE above gets at this exact tension. 
+Building up intuition about the **assumptions-precision tradeoff** is essential. Researchers can usually get more precise estimates if they make stronger and potentially more fragile assumptions that, if incorrect, yield bias. Conversely, weaker assumptions typically will cost precision while guarding against bias due to incorrect assumptions. The decomposition of the MSE above gets at this exact tension. 
 
 :::
 
@@ -631,7 +632,7 @@ In @exm-rct, we introduced the basic idea of a randomized control trial on frami
 
 **Population.** The nature of the population will vary by setting but here we probably want to make generalizations to all citizens of the United States. 
 
-**Statistical model.** In survey experiments, we have a representative survey that should approximate a random sample from the population. We can model this approximation as each outcome-treatment pair, $(Y_i, D_i)$, begin an iid from the population distribution of those two variables. In this setting, we only care about the conditional distribution of $Y_i$ given $D_i = 1$ or $D_i = 0$. We show what the population distributions might look like for these two groups in @fig-rct-population-distribution. 
+**Statistical model.** In survey experiments, we have a representative survey that should approximate a random sample from the population. We can model this approximation as each outcome-treatment pair, $(Y_i, D_i)$, being iid draws from the population distribution of those two variables. In this setting, we only care about the conditional distribution of $Y_i$ given $D_i = 1$ or $D_i = 0$. We show what the population distributions might look like for these two groups in @fig-rct-population-distribution. 
 
 ![Population distributions in the immigration RCT example](assets/img/diff_in_means.png){#fig-rct-population-distribution}
 
