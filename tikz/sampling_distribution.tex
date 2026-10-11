@@ -1,0 +1,40 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{amsmath,amssymb}
+% sans serif for text and math
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[eulergreek]{sansmath}
+\sansmath
+\usetikzlibrary{positioning}
+\definecolor{seablue}{HTML}{006994}
+
+\begin{document}
+\begin{tikzpicture}
+\node[rectangle, draw, color=seablue, minimum height = 2cm, minimum width = 2cm, very thick] (pdf) at (-6,0) {$F(x)$};
+\node[below=0cm of pdf, text width = 2cm, text badly centered] {population distribution};
+\node[rectangle, draw, color=seablue, minimum height = 2cm, minimum width = 2cm, very thick] (ols) at (0,0) {$\widehat{\theta}_n$};
+\node[below=0cm of ols] {estimator};
+\node[left] (s1)  at (-2,1) {\scriptsize $\{X^1_1,\ldots,X^1_n\}$};
+\draw[->, very thick] (s1) to [out=0, in=150] (ols);
+\draw[->, very thick] (pdf) to [out=30, in=180] (s1);
+\node[right] (b1)  at (2,1) {\scriptsize  $\widehat{\theta}^1_n$};
+\draw[<-, very thick] (b1) to [out=180, in=30] (ols);
+\node[left] (s2)  at (-2,0.5) {\scriptsize $\{X^2_1,\ldots,X^2_n\}$};
+\draw[->, very thick] (s2) to [out=0, in=165] (ols);
+\draw[->, very thick] (pdf) to [out=15, in=180] (s2);
+\node[right] (b2)  at (2,0.5) {\scriptsize  $\widehat{\theta}^2_n$};
+\draw[<-, very thick] (b2) to [out=180, in=15] (ols);
+\node at (-2.25,0) {$\vdots$};
+\node at (2,0) {$\vdots$};
+\node[left] (sk1)  at (-2,-0.5) {\scriptsize $\{X^{k-1}_1,\ldots,X^{k-1}_n\}$};
+\draw[->, very thick] (sk1) to [out=0, in=195] (ols);
+\draw[->, very thick] (pdf) to [out=-15, in=180] (sk1);
+\node[right] (bk1)  at (2,-0.5) {\scriptsize  $\widehat{\theta}_n^{k-1}$};
+\draw[<-, very thick] (bk1) to [out=180, in=-15] (ols);
+\node[left] (sk) at (-2,-1) {\scriptsize $\{X^k_1,\ldots,X^k_n\}$};
+\draw[->, very thick] (pdf) to [out=-30, in=180] (sk);
+\draw[->, very thick] (sk) to [out=0, in=210] (ols);
+\node[right] (bk)  at (2,-1) {\scriptsize  $\widehat{\theta}_n^k$};
+\draw[<-, very thick] (bk) to [out=180, in=-30] (ols);
+\node[below=0cm of bk, text width = 2cm, text badly centered] {sampling distribution};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,17 @@
+% Template for a book figure. Copy to <figure-name>.tex; the output will be
+% assets/img/<figure-name>.png. Files starting with "_" are skipped by build.sh.
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{amsmath,amssymb}
+% sans serif for text and math
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[eulergreek]{sansmath}
+\sansmath
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\begin{document}
+\begin{tikzpicture}
+  \draw[-{Stealth}] (0,0) -- (3,0) node[right] {$x$};
+  \draw[-{Stealth}] (0,0) -- (0,2) node[above] {$y$};
+  \draw[thick, blue] (0,0.2) .. controls (1,1.8) and (2,0.4) .. (2.8,1.5);
+\end{tikzpicture}
+\end{document}

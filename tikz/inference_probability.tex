@@ -1,0 +1,16 @@
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{amsmath,amssymb}
+% sans serif for text and math
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[eulergreek]{sansmath}
+\sansmath
+\usetikzlibrary{positioning,arrows}
+
+\begin{document}
+\begin{tikzpicture}
+\node[circle, draw, thick, text width = 2cm, text badly centered] (dgp) {Data generating process};
+\node[circle, right = 2.5cm of dgp, draw, thick] (obs) {Observed data};
+\draw[->, thick,>=triangle 45] (dgp) to [out=45, in=135] node [midway, above] {probability}  (obs);
+\draw[->, thick,>=triangle 45] (obs) to [out=-135, in=-45] node [midway, below] {inference} (dgp);
+\end{tikzpicture}
+\end{document}
