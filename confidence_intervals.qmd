@@ -1,4 +1,4 @@
-# Confidence intervals
+# Confidence intervals {#sec-confidence-intervals}
 
 
 You have run your experiment and presented your audience with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches answer a fairly compelling question: what range of values of the treatment effect are consistent with the data we observe and some reasonable values of chance estimation errors?
@@ -102,18 +102,36 @@ More generally, for a $100(1-\alpha)$% confidence interval, we need to determine
 #| label: fig-chance-errors
 #| echo: false
 #| fig-cap: "Chance error distribution."
-curve(dnorm(x), from = -4, to = 4, ylim = c(-.05, 0.5), bty = "l", las = 1, xlab = expression(hat(theta)[n] - theta), ylab = expression(f(z)), xaxt = "n")
+curve(
+  dnorm(x),
+  from = -4, to = 4, ylim = c(-.05, 0.5), bty = "l", las = 1,
+  xlab = expression(hat(theta)[n] - theta), ylab = expression(f(z)), xaxt = "n"
+)
 abline(h = 0)
-axis(side = 1, at = c(-1.96, 1.96), labels = c(expression(z[alpha/2] %*% "se"(hat(theta)[n])), expression(z[1-alpha/2]%*% "se"(hat(theta)[n]))))
-polygon(c(-4,seq(-4,-1.96,0.01),-1.96), c(0,dnorm(seq(-4,-1.96,0.01)), 0), col = "grey70", border = NA)
-polygon(c(4,seq(4,1.96,-0.01),1.96), c(0,dnorm(seq(4,1.96,-0.01)), 0), col = "grey70", border = NA)
+axis(
+  side = 1, at = c(-1.96, 1.96),
+  labels = c(
+    expression(z[alpha / 2] %*% "se"(hat(theta)[n])),
+    expression(z[1 - alpha / 2] %*% "se"(hat(theta)[n]))
+  )
+)
+
+
+polygon(
+  c(-4, seq(-4, -1.96, 0.01), -1.96),
+  c(0, dnorm(seq(-4, -1.96, 0.01)), 0),
+  col = "grey70", border = NA
+)
+polygon(
+  c(4, seq(4, 1.96, -0.01), 1.96),
+  c(0, dnorm(seq(4, 1.96, -0.01)), 0),
+  col = "grey70", border = NA
+)
 abline(v = 1.96, lty = 2, col = "grey60")
 abline(v = -1.96, lty = 2, col = "grey60")
-## text(x = 1.94, y = -0.04, "c", pos = 4)
-## text(x = -1.94, y = -0.04, "-c", pos = 2)
-text(x = 0, y = dnorm(0)/2, expression(1-alpha))
-text(x = 2.2, y = 0.05, expression(alpha/2), pos = 4)
-text(x = -2.2, y = 0.05, expression(alpha/2), pos = 2)
+text(x = 0, y = dnorm(0) / 2, expression(1 - alpha))
+text(x = 2.2, y = 0.05, expression(alpha / 2), pos = 4)
+text(x = -2.2, y = 0.05, expression(alpha / 2), pos = 2)
 ```
 
 Thus, for the $100(1-\alpha)$% confidence interval, we can derive the implied lower bound as 
@@ -145,7 +163,7 @@ Suppose we want to find a 90% confidence interval. In this case, we would need t
 
 ```{r}
 ## alpha = 0.1 for 90% CI
-qnorm(1- 0.1 / 2)
+qnorm(1 - 0.1 / 2)
 ```
 
 Combining these two facts, a 90% asymptotic confidence interval for the sample mean would be
@@ -203,25 +221,31 @@ Suppose that we are taking samples of size $n=500$ of random variables where $X_
 ```{r}
 #| label: "fig-ci-sim"
 #| echo: false
-#| fig.cap: "95% confidence intervals from 100 random samples. Intervals are blue if they contain the truth and red if they do not."
+#| fig.cap: >
+#|  95% confidence intervals from 100 random samples.
+#|  Intervals are blue if they contain the truth and red if they do not.
 set.seed(02143)
-sims<- 10000
+sims <- 10000
 cover <- rep(0, times = sims)
-low.bound <- up.bound <- rep(NA, times = sims)
-for(i in 1:sims){
-    draws <- rnorm(500, mean = 1, sd = sqrt(10))
-    low.bound[i] <- mean(draws) - sd(draws) / sqrt(500) * 1.96
-    up.bound[i] <- mean(draws) + sd(draws) / sqrt(500) * 1.96
-    if (low.bound[i] < 1 & up.bound[i] > 1) {
-        cover[i] <- 1
-    }
+low_bound <- up_bound <- rep(NA, times = sims)
+for (i in 1:sims) {
+  draws <- rnorm(500, mean = 1, sd = sqrt(10))
+  low_bound[i] <- mean(draws) - sd(draws) / sqrt(500) * 1.96
+  up_bound[i] <- mean(draws) + sd(draws) / sqrt(500) * 1.96
+  if (low_bound[i] < 1 && up_bound[i] > 1) {
+    cover[i] <- 1
+  }
 }
 cols <- ifelse(cover == 1, "dodgerblue", "indianred")
-plot(x = NULL, y = NULL, xlim = c(1,100), ylim = c(0.5, 1.5), bty = "n",
-     xlab = "Trial", ylab = "Estimate", xaxt = "n", las = 1)
+plot(
+  x = NULL, y = NULL, xlim = c(1, 100), ylim = c(0.5, 1.5), bty = "n",
+  xlab = "Trial", ylab = "Estimate", xaxt = "n", las = 1
+)
 abline(h = 1, col = "grey", lwd = 3)
-segments(x0 = 1:100, y0 = low.bound[1:100], y1 = up.bound[1:100],
-         col = cols[1:100], lwd = 3)
+segments(
+  x0 = 1:100, y0 = low_bound[1:100], y1 = up_bound[1:100],
+  col = cols[1:100], lwd = 3
+)
 ```
 
 
@@ -319,7 +343,9 @@ $$
 ```{r}
 #| label: fig-wilson-vs-wald
 #| echo: false
-#| fig-cap: "Comparison of the 95% asymptotically normal and Wilson score confidence intervals as a function of the sample proportion with $n = 50$."
+#| fig-cap: >
+#|  Comparison of the 95% asymptotically normal and Wilson score confidence
+#|  intervals as a function of the sample proportion with $n = 50$.
 n <- 50
 p_hat <- seq(0.5, 0.995, length.out = 500)
 z <- qnorm(0.975)
@@ -336,20 +362,26 @@ half_width <- (z / (2 * n)) * sqrt(4 * n * p_hat * (1 - p_hat) + z^2) / denom
 wilson_lo <- center - half_width
 wilson_hi <- center + half_width
 
-plot(NULL, xlim = c(0.5, 1), ylim = c(0.3, 1.15), xlab = expression(hat(p)),
-     ylab = "Confidence bound", bty = "l", las = 1)
+plot(NULL,
+  xlim = c(0.5, 1), ylim = c(0.3, 1.15), xlab = expression(hat(p)),
+  ylab = "Confidence bound", bty = "l", las = 1
+)
 abline(h = 1, col = "grey30", lty = 2, lwd = 1.5)
 polygon(c(p_hat, rev(p_hat)), c(wald_lo, rev(wald_hi)),
-        col = adjustcolor("indianred", 0.3), border = NA)
+  col = adjustcolor("indianred", 0.3), border = NA
+)
 lines(p_hat, wald_lo, col = "indianred", lwd = 2)
 lines(p_hat, wald_hi, col = "indianred", lwd = 2)
 polygon(c(p_hat, rev(p_hat)), c(wilson_lo, rev(wilson_hi)),
-        col = adjustcolor("dodgerblue", 0.3), border = NA)
+  col = adjustcolor("dodgerblue", 0.3), border = NA
+)
 lines(p_hat, wilson_lo, col = "dodgerblue", lwd = 2)
 lines(p_hat, wilson_hi, col = "dodgerblue", lwd = 2)
 abline(0, 1, col = "grey50", lty = 2)
-legend("topleft", legend = c("Normal", "Wilson"), col = c("indianred", "dodgerblue"),
-       lwd = 2, bty = "n")
+legend("topleft",
+  legend = c("Normal", "Wilson"), col = c("indianred", "dodgerblue"),
+  lwd = 2, bty = "n"
+)
 ```
 
 :::
