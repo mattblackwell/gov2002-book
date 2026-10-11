@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -41,10 +44,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-36bf55b16c7cb4b1420f41495cb5446a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-fd0503e23dce65854c81c5baaade3bdf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -121,15 +124,15 @@ window.MathJax = {
       indep: "\\perp\\!\\!\\!\\perp",
       inprob: "\\overset{p}{\\to}",
       indist: "\\overset{d}{\\to}",
-      argmax: ["\\operatorname\{arg\,max\}"],
-      argmin: ["\\operatorname\{arg\,min\}"]      
+      argmax: ["\\operatorname\{arg\\,max\}"],
+      argmin: ["\\operatorname\{arg\\,min\}"]      
     }
   }
 };
 </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -582,16 +585,7 @@ Figure&nbsp;3.1: Sampling distribution of the sample mean as a function of sampl
 <div id="exm-plug-in-variance" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3.5 (Plug-in variance estimator)</strong></span> In the last chapter, we introduced the plug-in estimator for the population variance, <span class="math display">\[
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
-\]</span> which we will now show is biased but consistent. To see the bias note that we can rewrite the sum of square deviations <span class="math display">\[\sum_{i=1}^n (X_i - \Xbar_n)^2 = \sum_{i=1}^n X_i^2 - n\Xbar_n^2. \]</span> Then, the expectation of the plug-in estimator is <span class="math display">\[
-\begin{aligned}
-\E[\widehat{\sigma}^2] &amp; = \E\left[\frac{1}{n}\sum_{i=1}^n X_i^2\right] - \E[\Xbar_n^2] \\
-&amp;= \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \sum_{j=1}^n \E[X_iX_j] \\
-&amp;= \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \sum_{j\neq i} \underbrace{\E[X_i]\E[X_j]}_{\text{independence}} \\
-&amp;= \E[X_i^2] - \frac{1}{n}\E[X_i^2] - \frac{1}{n^2} n(n-1)\mu^2 \\
-&amp;= \frac{n-1}{n} \left(\E[X_i^2] - \mu^2\right) \\
-&amp;= \frac{n-1}{n} \sigma^2 = \sigma^2 - \frac{1}{n}\sigma^2
-\end{aligned}.
-\]</span> Thus, we can see that the bias of the plug-in estimator is <span class="math inline">\(-(1/n)\sigma^2\)</span>, so it slightly underestimates the variance. Nicely, though, the bias shrinks as a function of the sample size, so according to <a href="#thm-consis-2" class="quarto-xref">Theorem&nbsp;<span>3.7</span></a>, it will be consistent so long as the sampling variance of <span class="math inline">\(\widehat{\sigma}^2\)</span> shrinks as a function of the sample size, which it does (though omit that proof here). Of course, simply multiplying this estimator by <span class="math inline">\(n/(n-1)\)</span> will give an unbiased and consistent estimator that is also the typical sample variance estimator.</p>
+\]</span> and derived its bias as <span class="math inline">\(-(1/n)\sigma^2\)</span>. We can easily show that this estimator is biased but consistent. The bias shrinks as a function of the sample size, so according to <a href="#thm-consis-2" class="quarto-xref">Theorem&nbsp;<span>3.7</span></a>, it will be consistent so long as the sampling variance of <span class="math inline">\(\widehat{\sigma}^2\)</span> shrinks as a function of the sample size, which it does (though we omit that proof here). Of course, simply multiplying this estimator by <span class="math inline">\(n/(n-1)\)</span> will give an unbiased and consistent estimator that is also the typical sample variance estimator.</p>
 </div>
 </section>
 <section id="convergence-in-distribution-and-the-central-limit-theorem" class="level2" data-number="3.7">
