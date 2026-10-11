@@ -295,11 +295,11 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -936,7 +936,7 @@ Thus, the sampling distribution tells us what values of an estimator are
 more or less likely and depends on both the population distribution and
 the sampling design.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Notice that the sampling distribution of an estimator will depend on the
 sampling design. Here, we used a simple random sample. Bernoulli
@@ -999,7 +999,7 @@ calculating the expected value of the estimator, \[
 \] The two are the same, meaning the sample mean in this simple random
 sample is unbiased.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Note that the word ``bias'' sometimes also refers to research that is
 systematically incorrect in other ways. For example, we might complain
@@ -1060,7 +1060,7 @@ these two quantities will differ. In fact, if we have an estimator
 \text{MSE}[\widehat{\theta}] &= \E[(\widehat{\theta} - \theta)^2] \\
 &= \E[(\widehat{\theta} - \E[\widehat{\theta}] + \E[\widehat{\theta}] - \theta)^2] \\
 &= \E[(\widehat{\theta} - \E[\widehat{\theta}])^2] + \left(\E[\widehat{\theta}] - \theta\right) ^ 2 + 2\E[(\widehat{\theta} - \E[\widehat{\theta}])]\left(\E[\widehat{\theta}] - \theta\right) \\
-&= \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
+&= \textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
 \end{aligned}
 \] Thus, the MSE is low when bias and variance are low.
 
@@ -1211,7 +1211,7 @@ this in for the population variance, \[
 \widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 It is easy to get confused about the difference between the population
 variance, the variance of the sample, and the sampling variance (just as
@@ -1525,7 +1525,10 @@ written as a sample mean. These results are useful in their own right
 since these estimators are ubiquitous, but the derivations also provide
 examples of how we establish such results. Building comfort with these
 proofs helps us understand the arguments about novel estimators that we
-inevitably see over the course of our careers.
+inevitably see over the course of our careers. While this chapter will
+not get to more complicated question like nonresponse, measurement
+error, or dependent data, the model-based approach we present here is
+the foundation upon which all these extensions can be built.
 
 \section{Probability vs inference: the big
 picture}\label{probability-vs-inference-the-big-picture}
@@ -1540,7 +1543,18 @@ is to guess the contents of the urn from which they came. With
 estimation, we use our observed data to make an \textbf{inference} about
 the data-generating process.
 
-\pandocbounded{\includegraphics[keepaspectratio]{assets/img/two-direction.png}}
+\begin{figure}[th]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{assets/img/inference_probability.png}}
+
+}
+
+\caption{\label{fig-inference-probability}The duality of probability and
+inference}
+
+\end{figure}%
 
 An estimator is a rule for converting our data into a best guess about
 some unknown quantity, such as the percent of balls in the urn, or, to
@@ -1565,13 +1579,13 @@ Suppose we are conducting a randomized experiment on framing effects.
 All respondents receive factual information about current immigration
 levels. Those in the treatment group (\(D_i = 1\)) receive additional
 information about the positive benefits of immigration, while those in
-the control group (\(D_i = 0\)) receive no additional framing. The
-outcome is a binary outcome, whether the respondent supports increasing
-legal immigration limits (\(Y_i = 1\)) or not (\(Y_i = 0\)). The
-observed data consists of \(n\) pairs of random variables, the outcome,
-and the treatment assignment: \(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\).
+the control group (\(D_i = 0\)) receive no additional framing. We then
+ask respondents to provide a number of how much the legal immigration
+limits should be changed in the upcoming year (\(Y_i\)). The observed
+data consists of \(n\) pairs of random variables, the outcome, and the
+treatment assignment: \(\{(Y_1, D_1), \ldots, (Y_n, D_n)\}\).
 
-Define the two sample means/proportions in each group as \[
+Define the two sample means in each group as \[
 \Ybar_1 = \frac{1}{n_1} \sum_{i: D_i = 1} Y_i, \qquad\qquad \Ybar_0 = \frac{1}{n_0} \sum_{i: D_i = 0} Y_i,
 \] where \(n_1 = \sum_{i=1}^n D_i\) is the number of treated units and
 \(n_0 = n - n_1\) is the number of control units.
@@ -1660,26 +1674,27 @@ We focus on a relatively simple setting where we assume the data
 distributed} (iid) draws from a distribution with cumulative
 distribution function (cdf) \(F\). They are independent in that
 information about any subset of random variable is not informative about
-any other subset of random variables, or, more formally, \[
+any other subset of random variables. They are ``identically
+distributed'' in the sense that each of the random variables \(X_i\)
+have the same marginal distribution, \(F\). More formally, both of these
+imply \[
 F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n}) = F_{X_{1}}(x_{1})\cdots F_{X_{n}}(x_{n}) = \prod_{i=1}^n F(x_i)
 \] where \(F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})\) is the joint
 cdf of the random variable and \(F_{X_{j}}(x_{j})\) is the marginal cdf
-of the \(j\)th random variable. They are ``identically distributed'' in
-the sense that each of the random variables \(X_i\) have the same
-marginal distribution, \(F\).
+of the \(j\)th random variable.
 
 Note that we are being purposely vague about this cdf---it simply
 represents the unknown distribution of the data, otherwise known as the
 \textbf{data generating process} (DGP). Sometimes \(F\) is also referred
 to as the \textbf{population distribution} or even just
 \textbf{population}, which has its roots in viewing the data as a random
-sample from some larger population.{[}\^{}model{]} As a shorthand, we
-often say that the collection of random variables
-\(\{X_1, \ldots, X_n\}\) is a \textbf{random sample} from population
-\(F\) if \(\{X_1, \ldots, X_n\}\) is iid with distribution \(F\). The
-\textbf{sample size} \(n\) is the number of units in the sample.
+sample from some larger population. As a shorthand, we often say that
+the collection of random variables \(\{X_1, \ldots, X_n\}\) is a
+\textbf{random sample} from population \(F\) if \(\{X_1, \ldots, X_n\}\)
+is iid with distribution \(F\). The \textbf{sample size} \(n\) is the
+number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1699,14 +1714,14 @@ draw from \(F\):
 \item
   \textbf{Random sampling}. Suppose we have a population of size \(N\)
   that is much larger than our sample size \(n\), and we take a random
-  sample of size \(n\) from this population with replacement. The
-  distribution of the data in the random sample will be iid draws from
-  the population distribution of the variables we are sampling. For
-  example, suppose the population proportion of Democratic party
-  identifiers among U.S. citizens is 0.33. If we randomly sample
-  \(n = 100\) U.S. citizens, each data point \(X_i\) will be distributed
-  Bernoulli with a probability of success (i.e., Democratic Party
-  identifier) of 0.33.
+  sample of size \(n\) from this population. The distribution of the
+  data in the random sample will be approximately iid draws from the
+  population distribution of the variables we are sampling (and exactly
+  iid if sampling is done with replacement) . For example, suppose the
+  population proportion of Democratic party identifiers among U.S.
+  citizens is 0.33. If we randomly sample \(n = 100\) U.S. citizens,
+  each data point \(X_i\) will be distributed Bernoulli with a
+  probability of success (i.e., Democratic Party identifier) of 0.33.
 \end{enumerate}
 
 Note that the last chapter explored simple random samples \emph{without
@@ -1750,10 +1765,10 @@ appropriate, which we discuss in later chapters. But much of the
 innovation and growth in statistics over the last 50 years has been in
 figuring out how to make statistical inferences when iid does not hold.
 The solutions are often specific to the type of iid violation (e.g.,
-spatial, time-series, network, clustered). As a rule of thumb, however,
-if the iid assumption may not be valid, any uncertainty statements will
-likely be overconfident. For example, confidence intervals, which we
-will cover in later chapters, are too small.
+spatial, time-series, network, clustered). However, if the iid
+assumption may not be valid, any uncertainty statements will likely be
+incorrect. For example, confidence intervals, which we will cover in
+Chapter~\ref{sec-confidence-intervals}, could be too small or too large.
 
 Finally, we introduced the data as a scalar random variable, but often
 our data has multiple variables. In that case, we easily modify \(X_i\)
@@ -1761,7 +1776,7 @@ to be a random vector (that is, a vector of random variables) and then
 \(F\) becomes the joint distribution of that random vector. Nothing
 substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1790,10 +1805,11 @@ this:
   certain assumptions, we can treat it like it is.
 \end{itemize}
 
-As discussed in the last chapter, there are ways to handle all of these
-issues (mostly through the use of survey weights), but it is important
-to realize that using a modern survey ``as if'' it was a simple random
-sample might lead to poor performance and incorrect inferences.
+As discussed in Chapter~\ref{sec-design-based}, there are ways to handle
+all of these issues (mostly through the use of survey weights), but it
+is important to realize that using a modern survey ``as if'' it was a
+simple random sample might lead to poor performance and incorrect
+inferences.
 
 \end{tcolorbox}
 
@@ -1817,7 +1833,7 @@ mean]\protect\hypertarget{exm-prop}{}\label{exm-prop}
 
 We may be interested in where the typical member of a population falls
 on some questions. Suppose we wanted to know the proportion of US
-citizens who support increasing legal immigration For citizen \(i\),
+citizens who support increasing legal immigration. For citizen \(i\),
 denote support as \(Y_i = 1\). Our quantity of interest is then the mean
 of this random variable, \(\mu = \E[Y_i] = \P(Y_{i} = 1)\). This is the
 same as the probability of randomly drawing someone from the population
@@ -1851,7 +1867,8 @@ expectations): 1) the average support for increasing legal immigration
 in the treatment group, \(\mu_1 = \E[Y_i \mid D_i = 1]\), and 2) the
 same average in the control group, \(\mu_0 = \E[Y_i \mid D_i = 0]\).
 This difference, \(\mu_1 - \mu_0\), is a function of unknown features of
-these two conditional distributions.
+these two conditional distributions. When treatment is randomized, we
+can also say that this difference is the average treatment effect.
 
 \end{example}
 
@@ -1864,7 +1881,7 @@ complete distribution. To speak about estimation in general, we will let
 estimation} describes how we obtain a single ``best guess'' about
 \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
@@ -1876,10 +1893,10 @@ Some refer to quantities of interest as \textbf{parameters} or
 Having a target in mind, we can estimate it with our data. To do so, we
 first need a rule or algorithm or function that takes as inputs the data
 and returns a best guess about the quantity of interest. One of the most
-popular and useful algorithm would be to sum all the data points and
+popular and useful algorithms would be to sum all the data points and
 divide by the number of points: \[
 \frac{X_1 + X_2 + \cdots + X_n}{n}.
-\] This, the much-celebrated sample mean, provides a rule for how
+\] This, the much-celebrated sample mean, provides a rule for how to
 produce a single-number summary of the data. To go one pedantic step
 further and define it as a function of the data more explicitly: \[
 \textsf{mean}(X_1, X_2, \ldots, X_n) = \frac{X_1 + X_2 + \cdots + X_n}{n}.
@@ -1888,18 +1905,18 @@ estimator for an arbitrary quantity of interest.
 
 \begin{definition}[]\protect\hypertarget{def-estimator}{}\label{def-estimator}
 
-An \textbf{estimator} \(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\)
-for some parameter \(\theta\), is a function of the data intended as a
-guess about \(\theta\).
+An \textbf{estimator} \(\widehat{\theta}_n = g(X_1, \ldots, X_n)\) for
+some parameter \(\theta\), is a function of the data intended as a guess
+about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 It is widespread, though not universal, to use the ``hat'' notation to
-define an estimator and its estimand. For example, \(\widehat{\theta}\)
-(or ``theta hat'') indicates that this estimator is targeting the
-parameter \(\theta\).
+define an estimator and its estimand. For example,
+\(\widehat{\theta}_n\) (or ``theta hat'') indicates that this estimator
+is targeting the parameter \(\theta\) from a sample of size \(n\).
 
 \end{tcolorbox}
 
@@ -1924,10 +1941,20 @@ random variables, then any function of them is also a random variable.
 Thus, we can view \(\widehat{\theta}_n\) as a random variable that has a
 distribution induced by the randomness of the sample. Drawing two
 different samples of respondents will lead to two different estimates.
-For example, here we illustrate two samples of size \(n =5\) from the
+For example, here we illustrate two samples of size \(n = 5\) from the
 population distribution of a binary variable:
 
-\pandocbounded{\includegraphics[keepaspectratio]{assets/img/sampling-distribution.png}}
+\begin{figure}[th]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{assets/img/samples.png}}
+
+}
+
+\caption{\label{fig-two-samples}Two samples from the sample population}
+
+\end{figure}%
 
 We can see that the mean of the variable depends on what exact values
 end up in our sample. We refer to the distribution of
@@ -1935,7 +1962,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -1943,16 +1970,16 @@ estimate. The estimator is a function of the data, whereas the
 see the data (that is, the data are realized). The estimator is a random
 variable that has uncertainty over what value it will take, and we
 represent the estimator as a function of random variables,
-\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\). An estimate is a
-single number, such as 0.38, that we calculated in R with our data (our
-draw from \(F\)). Formally, the estimate is \(\theta(x_1, \ldots, x_n)\)
-when the data is \(\{X_1, \ldots, X_n\} = \{x_1, \ldots, x_n\}\),
-whereas we represent the estimator as a function of random variables,
-\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\).
+\(\widehat{\theta}_n = g(X_1, \ldots, X_n)\). An estimate is a single
+number, such as 0.38, that we calculated in R with our data (our draw
+from \(F\)). Formally, the estimate is \(g(x_1, \ldots, x_n)\) when the
+data is \(\{X_1, \ldots, X_n\} = \{x_1, \ldots, x_n\}\), whereas we
+represent the estimator as a function of random variables,
+\(\widehat{\theta}_n = g(X_1, \ldots, X_n)\).
 
 \end{tcolorbox}
 
-\section{How to find estimators}\label{how-to-find-estimators}
+\subsection{How to find estimators}\label{how-to-find-estimators}
 
 Where do estimators come from? That may seem like a question reserved
 for statisticians or methodologists or others responsible for
@@ -1963,7 +1990,7 @@ weaknesses. We will briefly introduce estimators based on parametric
 models, before turning to the main focus of this book, plug-in
 estimators.
 
-\subsection{Parametric models and maximum
+\subsubsection{Parametric models and maximum
 likelihood}\label{parametric-models-and-maximum-likelihood}
 
 The first method for generating estimators relies on \textbf{parametric
@@ -1976,14 +2003,15 @@ denoted by \(\Theta\). Because we assume we know the distribution of the
 data, we can write the probability density function, or pdf, as
 \(f(X_i \mid \theta)\) and define the likelihood function as the product
 of these pdfs over the units as a function of the parameters: \[
-L(\theta) = \prod_{i=1}^n f(X_i \mid \theta).
+L_n(\theta) = \prod_{i=1}^n f(X_i \mid \theta).
 \] We can then define the \textbf{maximum likelihood} estimator (MLE)
 for \(\theta\) as the values of the parameter that, well, maximize the
 likelihood: \[
-\widehat{\theta}_{mle} = \argmax_{\theta \in \Theta} \; L(\theta)
-\] Sometimes we can use calculus to derive a closed-form expression for
-the MLE. At other times we use iterative techniques that search the
-parameter space for the maximum.
+\widehat{\theta}_{\text{mle}} = \argmax_{\theta \in \Theta} \; L_n(\theta),
+\] where we make some regularity assumption to ensure the maximum exists
+and is unique. Sometimes we can use calculus to derive a closed-form
+expression for the MLE. At other times we use iterative techniques that
+search the parameter space for the maximum.
 
 Maximum likelihood estimators have nice properties, especially in large
 samples. Unfortunately, they also require the correct knowledge of the
@@ -1992,75 +2020,101 @@ if we should model a given event count variable as Poisson or Negative
 Binomial? The attractive properties of MLE are only as good as the
 ability to specify the parametric model.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, arc=.35mm, rightrule=.15mm, left=2mm]
+\subsubsection{Plug-in estimators}\label{plug-in-estimators}
 
-Building up intuition about the \textbf{assumptions-precision tradeoff}
-is essential. Researchers can usually get more precise estimates if they
-make stronger and potentially more fragile assumptions. Conversely, they
-will almost always get less accurate estimates when weakening the
-assumptions.
+In many cases, we do not have confidence in our ability to specify all
+aspects of the data generating process correctly. A
+\textbf{semiparametric model} specifies a finite-dimensional set of
+parameters for the generating process but leaves the rest of the
+distribution unspecified. For example, we might define a population
+mean, \(\mu = \E[X_i]\) and a population variance,
+\(\sigma^2 = \V[X_i]\) but leave the shape of the distribution
+unrestricted. The advantage of this modeling approach is that This
+ensures that our estimators will be less dependent on correctly
+specifying distributions about which we have little intuition or
+knowledge.
+
+The primary method for constructing estimators in this setting is to use
+a \textbf{plug-in estimator}, which replaces any function of the
+population distribution with an equivalent function of the empirical or
+sample distribution. In econometrics, this is also called the
+\textbf{analog principle} or analog estimation after Manski (1988). For
+example, we replace any population mean with the equivalent sample mean
+or population medians with sample medians, and so on. This approach fits
+nicely with an estimand-driven workflow because the formula for the
+quantity of interest naturally suggests plug-in estimators.
+
+Plug-in estimation is very intuitive---replace population means with
+sample means---but it's helpful to understand its core formal
+components. If we have data \((X_1, \ldots, X_n)\) that are distributed
+iid with distribution \(F\), then we can define the empirical
+distribution as \[
+\widehat{F}_n(x) = \frac{\sum_{i=1}^n \mathbb{I}(X_i \leq x)}{n},
+\] where \(\mathbb{I}(A)\) is an \emph{indicator function} that takes
+the value 1 if the event \(A\) occurs and 0 otherwise. In plain
+language, we are replacing the unknown population distribution \(F\)
+with a discrete uniform distribution over our data points, with \(1/n\)
+probability assigned to each unit. Why do this? It encodes that, if we
+have a random sample, our best guess about the population distribution
+of \(X_i\) is the sample distribution in our observed data.
+
+A simple example of a plug-in estimator is the sample mean. Suppose
+\(X_i\) has a discrete distribution over integers so we can write its
+mean as \[
+\E[X_i] = \sum_{x} x\,\P(X_i = x) = \sum_{x} x\, (F(x) - F(x-1)).
+\] The plug-in approach would have us replace \(F\) with
+\(\widehat{F}_n\) in this setup: \[
+\begin{aligned}
+\sum_{x} x\, (\widehat{F}_n(x) - \widehat{F}_n(x-1)) &= \sum_{x} x\, \sum_{i=1}^n \frac{\mathbb{I}(X_i = x)}{n} \\
+&=  \sum_{i=1}^n \sum_{x} x\,\frac{\mathbb{I}(X_i = x)}{n} \\
+& = \frac{1}{n} \sum_{i=1}^n X_i = \Xbar_n
+\end{aligned}
+\] where we used the fact that \(\sum_{x} x\,\mathbb{I}(X_i = x) = X_i\)
+here. Thus, the \textbf{sample mean} is a plug-in estimator for the
+population mean. Note that this result does not actually depend on
+having a discrete random variable. For more detail on the statistical
+theory of plug-in estimation, see Wasserman (2004) Section 7.2.
+
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
+
+Given the connection between the population mean and the sample mean,
+you may see the \(\E_n[\cdot]\) operator used as a shorthand for the
+sample average: \[
+\E_n[r(X_i)] \equiv \frac{1}{n} \sum_{i=1}^n r(X_i).
+\]
 
 \end{tcolorbox}
 
-\subsection{Plug-in estimators}\label{plug-in-estimators}
-
-The second broad class of estimators is \textbf{semiparametric} in that
-we specify some finite-dimensional parameters of the DGP but leave the
-rest of the distribution unspecified. For example, we might define a
-population mean, \(\mu = \E[X_i]\) and a population variance,
-\(\sigma^2 = \V[X_i]\) but leave the shape of the distribution
-unrestricted. This ensures that our estimators will be less dependent on
-correctly specifying distributions about which we have little intuition
-or knowledge.
-
-The primary method for constructing estimators in this setting is to use
-the \textbf{plug-in estimator}, or the estimator that replaces any
-population mean with a sample mean. Obviously, in the case of estimating
-the population mean, \(\mu\), we will use the \textbf{sample mean} as
-the estimate: \[
-\Xbar_n = \frac{1}{n} \sum_{i=1}^n X_i \quad \text{estimates} \quad \E[X_i] = \int_{\mathcal{X}} x f(x)dx
-\] In plain language, we are replacing the unknown population
-distribution \(f(x)\) in the population mean with a discrete uniform
-distribution over our data points, with \(1/n\) probability assigned to
-each unit. Why do this? It encodes that, if we have a random sample, our
-best guess about the population distribution of \(X_i\) is the sample
-distribution in our observed data. If this intuition fails, you can hold
-onto an analog principle: sample means of random variables are natural
-estimators of population means.
-
-What about estimating something more complicated, like the expected
-value of a function of the data, \(\theta = \E[r(X_i)]\)? The key is to
-see that \(r(X_i)\) is also a random variable. Let this random variable
-be \(Y_i = r(X_i)\). Now we can see that \(\theta\) is just the
-population expectation of this random variable. Using the plug-in
-estimator gives us: \[
-\widehat{\theta} = \frac{1}{n} \sum_{i=1}^n Y_i = \frac{1}{n} \sum_{i=1}^n r(X_i). 
-\]
-
-These facts enable us to describe a more general plug-in estimator. To
-estimate some quantity of interest that is a function of population
-means, we can generate a plug-in estimator by replacing any population
-mean with a sample mean. Formally, let
-\(\alpha = g\left(\E[r(X_i)]\right)\) be a parameter that is defined as
-a function of the population mean of a (possibly vector-valued) function
-of the data. We can then estimate this parameter by plugging in the
-sample mean for the population mean to get the \textbf{plug-in
-estimator}, \[
-\widehat{\alpha} = g\left( \frac{1}{n} \sum_{i=1}^n r(X_i) \right) \quad \text{estimates} \quad \alpha = g\left(\E[r(X_i)]\right)
-\] This approach to plug-in estimation with sample means is very general
-and will allow us to derive estimators in various settings.
+More generally, any quantity of interest about the population can be
+written as mapping from the space of all distribution to a real number
+(or vector of real numbers), \(\psi(F)\). We call such a mapping a
+\textbf{statistical functional} (functionals are like functions that
+take other functions as inputs). Formally, a \textbf{plug-in estimator}
+of \(\theta = \psi(F)\) is defined as
+\(\widehat{\theta}_n = \psi(\widehat{F}_n)\). If we can write the
+functional in terms of population means, then one shortcut to derive
+these estimators is to replace any population means, \(\E[]\) with
+sample means \(\E_n[]\).
 
 \begin{example}[Estimating population
 variance]\protect\hypertarget{exm-var-est}{}\label{exm-var-est}
 
 The population variance of a random variable is
-\(\sigma^2 = \E[(X_i - \E[X_i])^2]\). To derive a plug-in estimator for
-this quantity, we replace the inner \(\E[X_i]\) with \(\Xbar_n\) and the
-outer expectation with another sample mean: \[
-\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2.
+\(\sigma^2 = \E[(X_i - \E[X_i])^2]=\E[X_i^2] - (\E[X_i])^2\), which we
+can write as the functional \[
+\sigma^2 = \psi(F) = \E[X_i^2] - (\E[X_i])^2
+\]
+
+To derive a plug-in estimator for this quantity, we simply the
+population means with sample means and rearrange: \[
+\begin{aligned}
+\widehat{\sigma}^2 = \psi(\widehat{F}_n) &= \E_n[X_i^2] - (\E_n[X_i])^2 \\
+&=\frac{1}{n} \sum_{i=1}^n X_i^2 - \left(\frac{1}{n} \sum_{i=1}^n X_i\right)^2 \\
+&=\frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2.
+\end{aligned}
 \] This plug-in estimator differs from the standard sample variance,
-which divides by \(n - 1\) rather than \(n\). This minor difference does
-not matter in moderate to large samples.
+which divides by \(n - 1\) rather than \(n\). This difference shrinks as
+the sample size grows.
 
 \end{example}
 
@@ -2076,28 +2130,43 @@ interest here is the population covariance between these variables, \[
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, left=2mm]
+There is a special class of statistical functionals called linear
+functionals of the form \(\theta = \E[r(X_i)]\). The key is to see that
+\(r(X_i)\) is also a random variable. Let this random variable be
+\(Y_i = r(X_i)\). Now we can see that \(\theta\) is just the population
+expectation of this random variable. Using the plug-in estimator gives
+us: \[
+\widehat{\theta}_n = \frac{1}{n} \sum_{i=1}^n Y_i = \frac{1}{n} \sum_{i=1}^n r(X_i).
+\] We refer to these as \textbf{linear plug-in estimators}.
 
-Given the connection between the population mean and the sample mean,
-you may see the \(\E_n[\cdot]\) operator used as a shorthand for the
-sample average: \[
-\E_n[r(X_i)] \equiv \frac{1}{n} \sum_{i=1}^n r(X_i).
-\]
+Plug-in estimation goes beyond just replacing population means with
+sample means. We can derive estimators of the population quantiles like
+the median with sample versions of those quantities.
 
-\end{tcolorbox}
+\begin{example}[Estimating the population
+median]\protect\hypertarget{exm-median}{}\label{exm-median}
 
-Finally, plug-in estimation goes beyond just replacing population means
-with sample means. We can derive estimators of the population quantiles
-like the median with sample versions of those quantities. These
-approaches are unified in replacing the unknown population cdf, \(F\),
-with the empirical cdf, \[
-\widehat{F}_n(x) = \frac{\sum_{i=1}^n \mathbb{I}(X_i \leq x)}{n},
-\] where \(\mathbb{I}(A)\) is an \emph{indicator function} that takes
-the value 1 if the event \(A\) occurs and 0 otherwise. For a more
-complete and technical treatment of these ideas, see Wasserman (2004)
-Chapter 7.
+The population median,
+\(m = F^{-1}(0.5) = \inf\left\{x : F(x) \geq p \right\}\) can be
+replaced by the the empirical version,
+\(\widehat{m} = \widehat{F}_n^{-1}(0.5) = = \inf \left\{x : \widehat{F}_n(x) \geq p \right\}\),
+which is simply the smallest value the variable can take such that
+\(100\times p %
+\) of the empirical distribution is below it.
 
-\section{The three distributions: population, empirical, and
+\end{example}
+
+Finally, plug-in estimation can work even when we do not have a
+closed-form solution for the quantity of interest. Many quantities are
+solutions to minimization problems which are easy state. For example,
+the population mean minimizes the mean squared prediction error, \[
+\E[X_i] = \argmin_{b} \E\left[(X_i - b)^2\right].
+\] We can form plug-in estimators by replace these population
+optimization problems with their sample counterparts. MLE is of this
+form, and so is ordinary least squares, as we will see in
+Chapter~\ref{sec-ols-mechanics}.
+
+\subsection{The three distributions: population, empirical, and
 sampling}\label{the-three-distributions-population-empirical-and-sampling}
 
 Once we start to wade into estimation, there are several distributions
@@ -2114,13 +2183,26 @@ our data frame). Because this is a random sample from the population
 distribution and can serve as an estimator of \(F\), we sometimes call
 this \(\widehat{F}_n\).
 
+\begin{figure}[th]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{assets/img/sampling_distribution.png}}
+
+}
+
+\caption{\label{fig-sampling-dist}A representation of the sampling
+distribution}
+
+\end{figure}%
+
 Separately from both is the \textbf{sampling distribution of an
 estimator}, which is the probability distribution of
 \(\widehat{\theta}_n\). This represents the uncertainty around our
 estimate before we see the data. Remember that our estimator is itself a
 random variable because it is a function of random variables: the data
 itself. That is, we defined the estimator as
-\(\widehat{\theta}_n = \theta(X_1, \ldots, X_n)\).
+\(\widehat{\theta}_n = g(X_1, \ldots, X_n)\).
 
 \begin{example}[Likert
 responses]\protect\hypertarget{exm-three-dist}{}\label{exm-three-dist}
@@ -2139,12 +2221,13 @@ each value. And the sampling distribution of the sample mean,
 across repeated samples from the population.
 
 Suppose the population distribution of \(X_i\) followed a binomial
-distribution with five trials and probability of success in each trial
+distribution with four trials and probability of success in each trial
 of \(p = 0.4\). We could generate one sample with \(n = 10\) and thus
 one empirical distribution using \texttt{rbinom()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{0123}\NormalTok{)}
 \NormalTok{my\_samp }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{prob =} \FloatTok{0.4}\NormalTok{)}
 \NormalTok{my\_samp}
 \end{Highlighting}
@@ -2156,14 +2239,14 @@ one empirical distribution using \texttt{rbinom()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{table}\NormalTok{(my\_samp)}
+\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(}\FunctionTok{factor}\NormalTok{(my\_samp, }\AttributeTok{levels =} \DecValTok{0}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-my_samp
-0 1 2 3 
-1 3 3 3 
+
+  0   1   2   3   4 
+0.1 0.3 0.3 0.3 0.0 
 \end{verbatim}
 
 We obtain one draw from the sampling distribution of \(\Xbar_n\) by
@@ -2179,14 +2262,14 @@ taking the mean of this sample:
 [1] 1.8
 \end{verbatim}
 
-If we had a different sample,however, we would obtain a different
+If we had a different sample, however, we would obtain a different
 empirical distribution and thus get a different estimate of the sample
 mean:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{my\_samp2 }\OtherTok{\textless{}{-}} \FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{prob =} \FloatTok{0.4}\NormalTok{)}
-\FunctionTok{mean}\NormalTok{(my\_samp2) }
+\FunctionTok{mean}\NormalTok{(my\_samp2)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2199,21 +2282,20 @@ across repeated sampling.
 
 \end{example}
 
-\section{Finite-sample properties of
-estimators}\label{finite-sample-properties-of-estimators}
+\subsection{Bias}\label{bias}
 
 As discussed in our introduction to estimators, their usefulness depends
 on how well they help us learn about the quantity of interest. If we get
-an estimate \(\widehat{\theta} = 1.6\), we would like to know that this
-is ``close'' to the true parameter \(\theta\). The sampling distribution
-is key to answering these questions. Intuitively, we would like the
-sampling distribution of \(\widehat{\theta}_n\) to be as tightly
-clustered around the true \(\theta\) as possible. Here, though, we run
-into a problem: the sampling distribution depends on the population
-distribution since it is about repeated samples of the data from that
-distribution filtered through the function \(\theta()\). Since \(F\) is
-unknown, this implies that the sampling distribution will also usually
-be unknown.
+an estimate \(\widehat{\theta}_n = 1.6\), we would like to know that
+this is ``close'' to the true parameter \(\theta\). The sampling
+distribution is key to answering these questions. Intuitively, we would
+like the sampling distribution of \(\widehat{\theta}_n\) to be as
+tightly clustered around the true \(\theta\) as possible. Here, though,
+we run into a problem: the sampling distribution depends on the
+population distribution since it is about repeated samples of the data
+from that distribution filtered through the function \(g()\). Since
+\(F\) is unknown, this implies that the sampling distribution will also
+usually be unknown.
 
 Even though we cannot precisely pin down the entire sampling
 distribution, we can use assumptions to derive specific properties of
@@ -2221,19 +2303,17 @@ the sampling distribution that are useful in comparing estimators. Note
 that the properties here will be very similar to the properties of a
 good estimator defined in Section~\ref{sec-design-properties}.
 
-\subsection{Bias}\label{bias}
-
 The first property of the sampling distribution concerns its central
 tendency. In particular, we define the \textbf{bias} (or
-\textbf{estimation bias}) of estimator \(\widehat{\theta}\) for
+\textbf{estimation bias}) of estimator \(\widehat{\theta}_n\) for
 parameter \(\theta\) as \[
-\text{bias}[\widehat{\theta}] = \E[\widehat{\theta}] - \theta,
+\textsf{bias}[\widehat{\theta}_n] = \E[\widehat{\theta}_n] - \theta,
 \] which is the difference between the mean of the estimator (across
 repeated samples) and the true parameter. All else equal, we would like
 the estimation bias to be as small as possible. The smallest possible
 bias, obviously, is 0, and we define an \textbf{unbiased estimator} as
-one with \(\text{bias}[\widehat{\theta}] = 0\) or equivalently,
-\(\E[\widehat{\theta}] = \theta\).
+one with \(\textsf{bias}[\widehat{\theta}_n] = 0\) or equivalently,
+\(\E[\widehat{\theta}_n] = \theta\).
 
 However, all else is not always equal, and unbiasedness is not a
 property to which we should become overly attached. Many biased
@@ -2248,19 +2328,20 @@ and \(\E|X| < \infty\). In particular, we apply the rules of
 expectations: \[\begin{aligned}
 \E\left[ \Xbar_n \right] &= \E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] & (\text{definition of } \Xbar_n) \\
 &= \frac{1}{n} \sum_{i=1}^n \E[X_i] & (\text{linearity of } \E)\\
-&= \frac{1}{n} \sum_{i=1}^n \mu & (X_i \text{ identically distributed})\\
+&= \frac{1}{n} \sum_{i=1}^n \mu & (\E[X_i] = \mu \text{ for all }i)\\
 &= \mu.
-\end{aligned}\] Notice that we only used the ``identically distributed''
-part of iid. Independence is not needed.
+\end{aligned}\] Notice that we never invoke independence here and only
+used part of the ``identically distributed'' assumption---namely a
+common finite mean \(\E[X_i] = \mu\).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased but only when
-the population mean is finite. There are probability distributions like
-the Cauchy that are not finite and where the expected value diverges.
+the population mean is finite. There are probability distributions, like
+the Cauchy, that are not finite and where the expected value diverges.
 Thus, here we are dealing with a restricted class of DGPs that rules out
 such distributions. This is sometimes formalized by defining a class
 \(\mathcal{F}\) of distributions; unbiasedness might hold in that class
@@ -2268,21 +2349,80 @@ if it is unbiased for all \(F \in \mathcal{F}\).
 
 \end{tcolorbox}
 
+\begin{example}[Linear plug-in estimators are
+unbiased]\protect\hypertarget{exm-linear-unbiased}{}\label{exm-linear-unbiased}
+
+For iid data, \(X_i\), we can show that any linear plug-in estimators
+are unbiased. Recall that linear plug-in estimators are of the form
+\(\frac{1}{n} \sum_{i=1}^n r(X_i)\) and we assume
+\(\E[|r(X_i)|] < \infty\). Thus, similar to the proof of the
+unbiasedness of the sample mean, we have
+
+\[
+\E\left[\frac{1}{n} \sum_{i=1}^n r(X_i)\right] = \frac{1}{n} \sum_{i=1}^n \E\left[r(X_i)\right] = \E\left[r(X_i)\right].
+\]
+
+\end{example}
+
+On the other hand, nonlinear plug-in estimators are typically (though
+not always) biased, which we can see in the example of the plug-in
+estimator for the population variance.
+
+\begin{example}[Bias of the population variance plug-in
+estimator]\protect\hypertarget{exm-bias-plugin-variance}{}\label{exm-bias-plugin-variance}
+
+In Example~\ref{exm-var-est},we introduced the plug-in estimator for the
+population variance, \[
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
+\] which we will now show is biased. To see the bias note that we can
+rewrite the sum of square deviations \[
+\sum_{i=1}^n (X_i - \Xbar_n)^2 = \sum_{i=1}^n X_i^2 - n\Xbar_n^2.
+\] Then, the expectation of the plug-in estimator is \[
+\begin{aligned}
+\E[\widehat{\sigma}^2] & = \E\left[\frac{1}{n}\sum_{i=1}^n X_i^2\right] - \E[\Xbar_n^2] \\
+&= \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \sum_{j=1}^n \E[X_iX_j] \\
+&= \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \sum_{j\neq i} \underbrace{\E[X_i]\E[X_j]}_{\text{independence}} \\
+&= \E[X_i^2] - \frac{1}{n}\E[X_i^2] - \frac{1}{n^2} n(n-1)\mu^2 \\
+&= \frac{n-1}{n} \left(\E[X_i^2] - \mu^2\right) \\
+&= \frac{n-1}{n} \sigma^2 = \sigma^2 - \frac{1}{n}\sigma^2
+\end{aligned}. 
+\] Thus, we can see that the bias of the plug-in estimator is
+\(-(1/n)\sigma^2\), so it underestimates the variance (though this bias
+declines as the sample size grows).
+
+The standard sample variance, on the other hand, divides by \(n-1\)
+instead of \(n\),
+
+\[
+S_n^2 = \frac{1}{n-1}\sum_{i=1}^n (X_i - \Xbar_n)^2,
+\] which we can see is related the plug-in estimator as \[
+S_n^2 = \frac{n}{n-1}\widehat{\sigma}^2.
+\] Combining this with our derivation above, this shows that the
+standard sample variance is exactly unbiased, \[
+\E[S_n^2] = \frac{n}{n-1}\E\left[\widehat{\sigma}^2\right] = \frac{n}{n-1}\frac{n-1}{n} \sigma^2 = \sigma^2.
+\] This result is why the sample variance uses the \(n-1\) instead of
+\(n\) in the denominator (referred to as the Bessel correction). It's a
+form of bias correction!
+
+\end{example}
+
 \section{Question 5: Uncertainty}\label{question-5-uncertainty-1}
 
-The spread of the sampling distribution is also important. We define the
+Question 4 focused on how to construct estimators and checking whether
+they center on parameter of interest. Question 5 focues on how much the
+estimator will vary from sample to sample. We define the
 \textbf{sampling variance} as the variance of an estimator's sampling
-distribution, \(\V[\widehat{\theta}]\), which measures how spread out
+distribution, \(\V[\widehat{\theta}_n]\), which measures how spread out
 the estimator is around its mean. For an unbiased estimator, lower
-sampling variance implies the distribution of \(\widehat{\theta}\) is
-more concentrated around the true value of the parameter.
+sampling variance implies the distribution of \(\widehat{\theta}_n\) is
+(in squared distance) to the true value on average.
 
 \begin{example}[Sampling variance of the sample
 mean]\protect\hypertarget{exm-mean-var}{}\label{exm-mean-var}
 
 We can prove that the sampling variance of the sample mean of iid data
 for all \(F\) such that \(\V[X_i]\) is finite (more precisely,
-\(\E[X_i^2] < \infty\))
+\(\E[X_i^2] < \infty\)) is \(\V[\Xbar_n] = \sigma^2/n\).
 
 \[\begin{aligned}
   \V\left[ \Xbar_n \right] &= \V\left[ \frac{1}{n} \sum_{i=1}^n X_i \right] & (\text{definition of } \Xbar_n) \\
@@ -2290,19 +2430,54 @@ for all \(F\) such that \(\V[X_i]\) is finite (more precisely,
                            &= \frac{1}{n^2} \sum_{i=1}^n \V[X_i] & (\text{independence}) \\
                            &= \frac{1}{n^2} \sum_{i=1}^n \sigma^2 & (X_i \text{ identically distributed}) \\
                            &= \frac{\sigma^2}{n}
-\end{aligned}\]
+\end{aligned}\] Note that we invoked independence here, but we only need
+a weaker condition---pairwise zero correlation---in order to obtain the
+result.
 
 \end{example}
 
-As we discussed before, an alternative measure of spread for any
-distribution is the standard deviation, which is on the same scale as
-the original random variable. The standard deviation of the sampling
-distribution of \(\widehat{\theta}\) is known as the \textbf{standard
-error} of \(\widehat{\theta}\):
-\(\se(\widehat{\theta}) = \sqrt{\V[\widehat{\theta}]}\).
+\begin{example}[Sampling variance of linear plug-in
+estimators]\protect\hypertarget{exm-linear-plugin-var}{}\label{exm-linear-plugin-var}
+
+If \(\E[r(X_i)^2] < \infty\), we can generalize the sampling variance
+result to any linear plug-in estimator.
+
+\[
+\V\left[\frac{1}{n} \sum_{i=1}^n r(X_i)\right] = \frac{1}{n^2} \sum_{i=1}^n \V[r(X_i)] = \frac{\V[r(X_i)]}{n}.
+\]
+
+One could easily estimate this quantity by replacing the population
+variance \(\V[r(X_i)]\) with the sample variance of \(r(X_i)\). Note
+that the derivation for non-linear plug-in estimators depends on
+large-sample approximations that will see in the next chapter.
+
+\end{example}
+
+\subsection{Estimating the standard
+error}\label{estimating-the-standard-error}
+
+As we discussed in Section~\ref{sec-design-properties}, an alternative
+measure of spread for any distribution is the standard deviation, which
+is on the same scale as the original random variable. The standard
+deviation of the sampling distribution of \(\widehat{\theta}_n\) is
+known as the \textbf{standard error} of \(\widehat{\theta}_n\):
+\(\se[\widehat{\theta}_n]= \sqrt{\V[\widehat{\theta}_n]}\).
 
 Given the above derivation, the standard error of the sample mean under
-iid sampling is \(\sigma / \sqrt{n}\).
+iid sampling is \(\sigma / \sqrt{n}\). Notice that this quantity depends
+on the population distribution through \(\sigma\) and so is unknown. We
+can estimate the standard error by replacing this population standard
+deviation with the sample standard deviation,
+
+\[
+S_n = \sqrt{S_n^2} = \sqrt{\frac{\sum_{i=1}^n (X_i - \Xbar_n)^2}{n-1}}
+\] to obtain the estimated standard error, \[
+\widehat{\se}[\Xbar_n] = \frac{S_n}{\sqrt{n}}.
+\] This estimator is actually biased because the sample standard
+deviation is biased for the population standard deviation (a decent
+exercise is to work through why). However, as we will see in the next
+chapter, this estimator has properties that make it a good and useful
+estimator in larger samples.
 
 \subsection{Mean squared error}\label{mean-squared-error}
 
@@ -2312,48 +2487,229 @@ as possible to the true value. One summary measure of the quality of an
 estimator is the \textbf{mean squared error} or \textbf{MSE}, which is\\
 \[
 \text{MSE} = \E[(\widehat{\theta}_n-\theta)^2].
-\] We would ideally have this be as small as possible!
+\] We would ideally have this be as small as possible! If we are
+comparing two estimators, \(\widehat{\theta}_a\) and
+\(\widehat{\theta}_b\) and one has a lower MSE, \[
+\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a],
+\] then we say that \(\widehat{\theta}_b\) is \textbf{more efficient}
+than \(\widehat{\theta}_a\).
 
 The MSE also relates to the bias and the sampling variance (provided it
-is finite) via the following decomposition result:
+is finite) via the following decomposition result (see
+Section~\ref{sec-design-properties} for a derivation):
 \begin{equation}\phantomsection\label{eq-mse-decomposition}{
-\text{MSE} = \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
-}\end{equation} This decomposition implies that, for unbiased
-estimators, MSE is the sampling variance. It also highlights why we
-might accept some bias for significant reductions in variance for lower
-overall MSE.
+\text{MSE} = \textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
+}\end{equation}
+
+\begin{example}[Population mean estimators,
+revisited]\protect\hypertarget{exm-mean-est-properties}{}\label{exm-mean-est-properties}
+
+in Example~\ref{exm-mean-est}, we explored three estimators for the
+population mean, \(mu\). We can now asess their properties to compare
+three of them (we omit the maximum estimator because its derivations are
+more complicated)
+
+\[\begin{aligned}
+\E[\widehat{\theta}_{n,1}] &= \E\left[\frac{1}{n} \sum_{i=1}^n X_i,\right] = \mu \\ 
+\E[\widehat{\theta}_{n,2}] &= \E[X_1] = \mu, \\ 
+\E[\widehat{\theta}_{n,4}] = \E[3] = 3.
+\end{aligned}
+\]
+
+Clearly the first two are unbiased, and the last has bias equal to
+\(3 - \mu\). Combining these with the variance derivations, the
+decomposition in Equation~\ref{eq-mse-decomposition} implies:
+\[\begin{aligned}
+\text{MSE}[\widehat{\theta}_{n,1}] &= \V[\Xbar_n] =  \frac{\sigma^2}{n} \\ 
+\text{MSE}[\widehat{\theta}_{n,2}] &= \V[X_1] = \sigma^2, \\ 
+\V[\widehat{\theta}_{n,4}] = \textsf{bias}[\widehat{\theta}_{n,4}] + \V[\widehat{\theta}_{n,4}] = (3- \mu)^2.
+\end{aligned}
+\]
+
+We can see that, as long as \(n > 1\) (and \(\sigma^2 >0\)), the sample
+mean will have lower MSE than the first observation. Its comparison to
+the ``always 3'' estimator is slightly more interesting because it
+depends on the value of the mean. If \(|3 - \mu| < \sigma/\sqrt{n}\),
+then ``always 3'' will have a lower MSE, but the sample mean will
+otherwise have lower MSE.
+
+\end{example}
+
+This decomposition implies that, for unbiased estimators, MSE is the
+sampling variance. It also highlights why we might accept some bias for
+significant reductions in variance for lower overall MSE.
 
 \begin{figure}[th]
 
-{\centering \pandocbounded{\includegraphics[keepaspectratio]{estimation_files/figure-pdf/mse-1.pdf}}
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{estimation_files/figure-pdf/fig-mse-1.pdf}}
 
 }
 
-\caption{Two sampling distributions}
+\caption{\label{fig-mse}Two sampling distributions}
 
 \end{figure}%
 
-This figure shows the sampling distributions of two estimators: (1)
-\(\widehat{\theta}_a\), which is unbiased (centered on the true value
-\(\theta\)) but with a high sampling variance, and (2)
+Figure~\ref{fig-mse} shows the sampling distributions of two estimators:
+(1) \(\widehat{\theta}_a\), which is unbiased (centered on the true
+value \(\theta\)) but with a high sampling variance, and (2)
 \(\widehat{\theta}_b\), which is slightly biased but with much lower
-sampling variance. Even though \(\widehat{\theta}_b\) is biased, the
-probability of drawing a value close to the truth is higher than for
-\(\widehat{\theta}_a\). The MSE helps capture this balancing between
-bias and variance, and, indeed, in this case,
-\(MSE[\widehat{\theta}_b] < MSE[\widehat{\theta}_a]\).
+sampling variance. Even though \(\widehat{\theta}_b\) is biased, its
+average draw will be closer (in squared distance) to the truth than
+average draw of \(\widehat{\theta}_a\). The MSE helps capture this
+balancing between bias and variance, and, indeed, in this case,
+\(\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]\).
+
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
+
+Building up intuition about the \textbf{assumptions-precision tradeoff}
+is essential. Researchers can usually get more precise estimates if they
+make stronger and potentially more fragile assumptions that, if
+incorrect, yield bias. Conversely, weaker assumptions typically will
+cost preceision while guarding against bias due to incorrect
+assumptions. The decomposition of the MSE above gets at this exact
+tension.
+
+\end{tcolorbox}
+
+\section{Randomized control trials}\label{sec-model-rct}
+
+In Example~\ref{exm-rct}, we introduced the basic idea of a randomized
+control trial on framing effects. We can now analyze the difference in
+mean estimator in the context of the five questions.
+
+\textbf{Population.} The nature of the population will vary by setting
+but here we probably want to make generalizations to all citizens of the
+United States.
+
+\textbf{Statistical model.} In survey experiments, we have a
+representative survey that should approximate a random sample from the
+population. We can model this approximation as each outcome-treatment
+pair, \((Y_i, D_i)\), begin an iid from the population distribution of
+those two variables. In this setting, we only care about the conditional
+distribution of \(Y_i\) given \(D_i = 1\) or \(D_i = 0\). We show what
+the population distributions might look like for these two groups in
+Figure~\ref{fig-rct-population-distribution}.
+
+\begin{figure}[th]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{assets/img/diff_in_means.png}}
+
+}
+
+\caption{\label{fig-rct-population-distribution}Population distributions
+in the immigration RCT example}
+
+\end{figure}%
+
+\textbf{Quantities of interest.} Let \(\mu_d = \E[Y_i \mid D_i = d]\) be
+the conditional mean of the outcome in either the treated or control
+group. The quantity of interest for a randomized control trial is
+typically the average difference in the populations, or \[
+\tau = \mu_1 - \mu_0.
+\] We can also write the conditional variance of the outcome for each
+group as \(\sigma^2_d = \V[Y_i \mid D_i = d]\).
+
+\textbf{Estimator} The estimator we introduced in Example~\ref{exm-rct}
+was the difference in sample means (or, equivalently, the difference in
+sample proportions since \(Y_i\) is binary),
+\[\widehat{\tau} = \Ybar_1 - \Ybar_0.\]
+
+To determine the main properties of this estimator, we will employ a
+slight trick: conditioning on the observed treatment assignment. Let
+\(\mathbf{D} = (D_1, \ldots, D_n)\) be the vector of observed treatment
+assignment for all units. Conditional on \(\mathbf{D}\), the treated and
+control groups outcomes simply iid samples of fixed sizes \(n_1\) and
+\(n_0\) from the conditional distribution of \(Y_i\) given \(D_i = 1\)
+or \(D_i = 0\), respectively, so we can employ the key results about
+sample means above.
+
+The treated average is conditionally unbiased: \[
+\begin{aligned}
+\E[\Ybar_1 \mid \mathbf{D}] &= \E\left[\frac{1}{n_1} \sum_{i=1}^n D_iY_i \mid \mathbf{D}\right] \\
+&= \frac{1}{n_1} \sum_{i=1}^n D_i \E[Y_i \mid \mathbf{D}] \\
+&= \frac{1}{n_1} \sum_{i=1}^n D_i \mu_1 \\
+&= \frac{\sum_{i=1}^n D_i}{n_1}  \mu_1  \\
+&= \mu_1
+\end{aligned}
+\] The third equality leverages two subtle facts. First, indepdendence
+of units means that the outcome for respondent \(i\) only depends on its
+own treatment, so \(\E[Y_i \mid \mathbf{D}] = \E[Y_i \mid D_i]\).
+Second, recall conditional expectations are random variables so\\
+\[
+\E[Y_i \mid D_i] = D_i \mu_1 + (1 - D_i)\mu_0
+\] Thus, \(D_i\E[Y_i \mid D_i]\) is going to be \(D_i \mu_1\).
+
+From this derivation, we can see that sample conditional mean
+\(\Ybar_1\) is unbiased for the population condition mean, \(\mu_1\). By
+a similar argument, the control sample average is also unbiased for the
+control population average, which implies that the difference in sample
+means is also unbiased for the population difference in means,
+\(\E[\widehat{\tau} \mid \mathbf{D}] = \tau\).
+
+\textbf{Uncertainty.} What about the sampling variance of the difference
+in means? Conditional on the observed assignment, the sample means have
+the same form as \(\V[\Xbar_n]\):
+
+\[
+\V[\Ybar_1 \mid \mathbf{D}] =\frac{1}{n_1^2}\sum_{i=1}^n D_i\,\V[Y_i \mid D_i = 1] = \frac{\sigma^2_1}{n_1},
+\]
+
+and likewise for \(\V[\Ybar_0 \mid \mathbf{D}] = \sigma^2_0/ n_0\).
+
+Conditional on the observed treatment assignment, the treatment and
+control data are independent samples, meaning the (conditional) variance
+of the difference in means estimator is the sum of conditional
+variances: \[
+\V[\widehat{\tau} \mid \mathbf{D}] = \frac{\sigma^2_1}{n_1} + \frac{\sigma^2_0}{n_0}.
+\]
+
+To estimate this variance, we can replace each unknown \(\sigma^2_d\)
+with the sample variance within that group,
+\(S^2_d = \frac{1}{n_d - 1}\sum_{i:D_i = d}(Y_i - \Ybar_d)^2\) to obtain
+estimates of the sampling variance and standard error: \[
+\begin{aligned}
+\widehat{\V}[\widehat{\tau}] &= \frac{S^2_1}{n_1} + \frac{S^2_0}{n_0} \\
+\widehat{\se}[\widehat{\tau}] &= \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}
+\end{aligned}
+\] Conditional on the observed treatment assignment, \(\mathbf{D}\),
+remember that the treated and control groups are just iid samples from a
+distribution and so we know that the sample variances are unbiased,
+\(\E[S^2_d \mid \mathbf{D}] = \sigma^2_d\), which implies that
+\(\widehat{\V}[\widehat{\tau}]\) is also unbiased for
+\(\V[\widehat{\tau} \mid \mathbf{D}]\).
+
+Much like the standard error estimator for the mean,
+\(\widehat{\se}[\widehat{\tau}]\) will be slightly biased downward.
+Chapter~\ref{sec-asymptotics} will show us why these estimators will
+still work well in large samples.
+
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
+
+In the above derivation, we ignored the possibility that either all the
+units were treated or all the units were in control. In those cases, the
+difference in sample means would not exist because it would involve
+dividing by zero. In the expectations, then, we are implicitly
+conditioning on \(n_1, n_0 > 1\).
+
+\end{tcolorbox}
 
 \section{Summary}\label{summary-1}
 
-In this chapter, we introduced \textbf{model-based inference}, in which
-we posit a probability model for the data-generating process. These
-models can be \textbf{parametric} in the sense that we specify the
-probability distribution of the data up to some parameters. They can
-also be \textbf{semiparametric} where we only specify certain features
-of the distribution such as a finite mean and variance. This chapter
-mostly focused on the latter, where we assumed the observed data were
-\textbf{independent and identically distributed} draws from a population
-distribution with finite mean and variance.
+In this chapter, we introduced \textbf{model-based inference}, which
+treats the data as random variables drawn from a probability model
+rather than from a known sampling design (as in
+Chapter~\ref{sec-design-based}). These models can be \textbf{parametric}
+in the sense that we specify the probability distribution of the data up
+to some parameters, Or, they can also be \textbf{semiparametric} where
+we only specify certain features of the distribution such as a finite
+mean and variance. This chapter mostly focused on the latter, where we
+assumed the observed data were \textbf{independent and identically
+distributed} draws from a population distribution with finite mean and
+variance.
 
 An \textbf{estimator} is a function of the data meant as a guess for
 some quantity of interest in the population. Because it is a function of
@@ -2371,10 +2727,14 @@ We showed in this chapter that the sample mean is unbiased for the
 population mean and that the sampling variance of the sample mean is the
 ratio of the population variance to the sample size. We also saw that
 \textbf{plug-in estimators} are a powerful way of constructing
-estimators as functions of sample means. That said, the focus of this
-chapter was finite-sample properties (that is, properties that are true
-no matter the sample size). In the next chapter, we will derive even
-more powerful results using large-sample approximations.
+estimators as functions of sample means.
+
+The results in this chapter hold for any fixed sample size, but to build
+a stronger foundation for statistical inference, we will need to look
+past these finit-sample results. For example, they do not tell us why
+\(S_n/\sqrt{n}\) is a valid estimator for the standard error even though
+it is biased. Chapter~\ref{sec-asymptotics} will provide a framework for
+understanding how to evaluate estimators as \(n\) grows large.
 
 \chapter{Asymptotics}\label{sec-asymptotics}
 
@@ -2565,7 +2925,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Sometimes convergence in probability is written as
 \(\text{plim}(Z_n) = b\) when \(Z_n \inprob b\), \(\text{plim}\) stands
@@ -2593,7 +2953,7 @@ probability that an inconsistent estimator will be close to the truth
 will approach 0. Generally speaking, consistency is a very desirable
 property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Estimators can be inconsistent yet still converge in probability to an
 understandable quantity. For example, we will discuss in later chapters
@@ -2735,7 +3095,7 @@ conditions, the sample mean gets closer to the population mean as
 \(n\rightarrow\infty\). This result holds even when the variance of the
 data is infinite, though researchers will rarely face such a situation.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), which is true.
@@ -2810,7 +3170,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Note that many of the formal results presented so far have ``moment
 conditions'' that certain moments are finite. For the vector WLLN, we
@@ -2840,7 +3200,7 @@ sampling variance shrinks as the sample size grows.
 \begin{theorem}[]\protect\hypertarget{thm-consis}{}\label{thm-consis}
 
 For any estimator \(\widehat{\theta}_n\), if
-\(\text{bias}[\widehat{\theta}_n] = 0\) and
+\(\textsf{bias}[\widehat{\theta}_n] = 0\) and
 \(\V[\widehat{\theta}_n] \rightarrow 0\) as \(n\rightarrow \infty\),
 then \(\widehat{\theta}_n\) is consistent.
 
@@ -2964,7 +3324,7 @@ vanishes as the sample size grows.
 \begin{theorem}[]\protect\hypertarget{thm-consis-2}{}\label{thm-consis-2}
 
 For any estimator \(\widehat{\theta}_n\), if
-\(\text{bias}[\widehat{\theta}_n] \to 0\) and
+\(\textsf{bias}[\widehat{\theta}_n] \to 0\) and
 \(\V[\widehat{\theta}_n] \rightarrow 0\) as \(n\rightarrow \infty\),
 then \(\widehat{\theta}_n\) is consistent.
 
@@ -2972,7 +3332,7 @@ then \(\widehat{\theta}_n\) is consistent.
 
 \begin{proof}
 Using Markov's inequality, we have \[
-\P\left( |\widehat{\theta}_n - \theta| \geq \delta \right) = \P((\widehat{\theta}_n-\theta)^2 \geq \delta^2) \leq \frac{\E[(\widehat{\theta}_n - \theta)^2]}{\delta^2} = \frac{\text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}]}{\delta^2} \to 0.
+\P\left( |\widehat{\theta}_n - \theta| \geq \delta \right) = \P((\widehat{\theta}_n-\theta)^2 \geq \delta^2) \leq \frac{\E[(\widehat{\theta}_n - \theta)^2]}{\delta^2} = \frac{\textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}]}{\delta^2} \to 0.
 \] The last inequality follows from the bias-variance decomposition of
 the mean squared error in Equation~\ref{eq-mse-decomposition}.
 \end{proof}
@@ -2986,27 +3346,14 @@ estimator]\protect\hypertarget{exm-plug-in-variance}{}\label{exm-plug-in-varianc
 In the last chapter, we introduced the plug-in estimator for the
 population variance, \[
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
-\] which we will now show is biased but consistent. To see the bias note
-that we can rewrite the sum of square deviations
-\[\sum_{i=1}^n (X_i - \Xbar_n)^2 = \sum_{i=1}^n X_i^2 - n\Xbar_n^2. \]
-Then, the expectation of the plug-in estimator is \[
-\begin{aligned}
-\E[\widehat{\sigma}^2] & = \E\left[\frac{1}{n}\sum_{i=1}^n X_i^2\right] - \E[\Xbar_n^2] \\
-&= \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \sum_{j=1}^n \E[X_iX_j] \\
-&= \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \E[X_i^2] - \frac{1}{n^2}\sum_{i=1}^n \sum_{j\neq i} \underbrace{\E[X_i]\E[X_j]}_{\text{independence}} \\
-&= \E[X_i^2] - \frac{1}{n}\E[X_i^2] - \frac{1}{n^2} n(n-1)\mu^2 \\
-&= \frac{n-1}{n} \left(\E[X_i^2] - \mu^2\right) \\
-&= \frac{n-1}{n} \sigma^2 = \sigma^2 - \frac{1}{n}\sigma^2
-\end{aligned}. 
-\] Thus, we can see that the bias of the plug-in estimator is
-\(-(1/n)\sigma^2\), so it slightly underestimates the variance. Nicely,
-though, the bias shrinks as a function of the sample size, so according
-to Theorem~\ref{thm-consis-2}, it will be consistent so long as the
-sampling variance of \(\widehat{\sigma}^2\) shrinks as a function of the
-sample size, which it does (though omit that proof here). Of course,
-simply multiplying this estimator by \(n/(n-1)\) will give an unbiased
-and consistent estimator that is also the typical sample variance
-estimator.
+\] and derived its bias as \(-(1/n)\sigma^2\). We can easily show that
+this estimator is biased but consistent. The bias shrinks as a function
+of the sample size, so according to Theorem~\ref{thm-consis-2}, it will
+be consistent so long as the sampling variance of \(\widehat{\sigma}^2\)
+shrinks as a function of the sample size, which it does (though we omit
+that proof here). Of course, simply multiplying this estimator by
+\(n/(n-1)\) will give an unbiased and consistent estimator that is also
+the typical sample variance estimator.
 
 \end{example}
 
@@ -3091,7 +3438,7 @@ distribution of the underlying random variables, \(X_i\). They could be
 binary, event count, continuous, or anything. The CLT is incredibly
 broadly applicable.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
@@ -3221,7 +3568,7 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
@@ -3446,7 +3793,7 @@ hypothesis, we might view this as evidence against that hypothesis.
 Thus, hypothesis tests help us assess evidence for particular guesses
 about the DGP.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 For the rest of this chapter, we will introduce the concepts following
 the notation in the past chapters. We will assume a random (iid) sample
@@ -3832,7 +4179,7 @@ know that the t-statistic is asymptotically normal,
 \(T \indist \N(0, 1)\). Thus, we can approximate the null distribution
 with the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 The names of the various tests can be quite confusing because they are
 so similar. Earlier, we discussed one-sided versus two-sided tests,
@@ -3878,7 +4225,7 @@ is, if \(Z \sim \N(0, 1)\), then \(z_a\) satisfies
 confusing, the critical value \$z\_\{1-\alpha/2\} is the value that puts
 probability \(\alpha/2\) in the upper tail of the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 In R, you can find the \(z_{1- \alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -4045,7 +4392,7 @@ test levels like \(\alpha = 0.05\). It might be best to view p-values as
 a transformation of the test statistic onto a common scale between 0 and
 1.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics, and these criticisms sometimes hinge on
@@ -4163,7 +4510,7 @@ sample mean or the sample difference in means. In Part II of this book,
 we turn to applying many of these ideas to the predominant estimator in
 the quantitative social sciences---ordinary least squares.
 
-\chapter{Confidence intervals}\label{confidence-intervals}
+\chapter{Confidence intervals}\label{sec-confidence-intervals}
 
 You have run your experiment and presented your audience with your
 single best guess about the treatment effect with the difference in
@@ -4214,7 +4561,7 @@ confidence interval for their quantity of interest. Then, if the
 confidence intervals are valid, then we should expect 5 of those
 confidence intervals to not contain their true quantity of interest.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, colbacktitle=quarto-callout-warning-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Let's say you calculate a 95\% confidence interval and it's
 \([0.1, 0.4]\). It's tempting to make a probability statement like
@@ -4233,7 +4580,7 @@ sample to sample.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Bayesian inference---which treats the data as fixed and the parameters
 as random---can make probabilistic statements about the true mean being
@@ -4295,25 +4642,25 @@ estimate and could provide a probabilistic lower bound for \(\theta\).
 
 Recall that \(z_a\) is the \(a\)-th quantile of the standard normal,
 which implies that the 97.5\% quantile of the chance error distribution
-would be \(z_{0.975}\times \se[\widehat{\theta}_n]\), where
+would be \(z_{0.975}\, \se[\widehat{\theta}_n]\), where
 \(z_{0.975} \approx 1.96\). Thus, the upper bound on the estimation
 error would be \[
-\widehat{\theta}_n - \theta = 1.96 \times \se[\widehat{\theta}_n]
+\widehat{\theta}_n - \theta = 1.96\, \se[\widehat{\theta}_n]
 \] from which we can back out the implied true value of the parameter,
 \[
-L = \widehat{\theta}_n - 1.96 \times \se[\widehat{\theta}_n].
+L = \widehat{\theta}_n - 1.96\, \se[\widehat{\theta}_n].
 \] Here, \(L\) is a probabilistic or random lower bound because the
 value \(\widehat{\theta}_n\) is random. Sometimes it will cover the true
 value (\(L \leq \theta\)) and sometimes it will not cover the true value
 (\(L > \theta\)). We controlled how often it covers the true value.
 Because 2.5\% of estimation errors will be larger than
-\(1.96 \times \se[\widehat{\theta}_n]\), then \(L\) will be a valid
-lower bound (cover the true value) in 97.5\% of samples, or
+\(1.96 \, \se[\widehat{\theta}_n]\), then \(L\) will be a valid lower
+bound (cover the true value) in 97.5\% of samples, or
 \(\P(L \leq \theta) \approx 0.975\) and not cover the true value 2.5\%
 of samples.
 
 In the immigration sample, we have \[
-L = 0.56 - 1.96 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.56 - 0.048 = 0.511,
+L = 0.56 - 1.96 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.56 - 0.048 = 0.511,
 \] where we have used the usual plugin estimator for the standard error.
 A lower bound of \(0.511\) tells us that values below that are only
 compatible with very large and rare chance errors.
@@ -4321,9 +4668,9 @@ compatible with very large and rare chance errors.
 What if a 2.5\% chance of this bound being wrong is too high? We could
 instead consider what the truth would be for a positive chance error
 that is larger than 99\% of chance errors, which would be
-\(z_{0.99} \times \se[\widehat{\theta}_n] \approx 2.32 \times \se[\widehat{\theta}_n]\).
+\(z_{0.99} \,     \se[\widehat{\theta}_n] \approx 2.32 \, \se[\widehat{\theta}_n]\).
 In the immigration example, we have \[
-L = 0.56 - 2.32 \times \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
+L = 0.56 - 2.32 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
 \] which is a lower lower bound. This reflects a fundamental tradeoff:
 our probabilistic bounds get worse (rule out a smaller region of
 possible values) as we base them off of more extreme chance errors.
@@ -4331,10 +4678,10 @@ possible values) as we base them off of more extreme chance errors.
 A similar approach can help to derive an upper bound. We imagine a very
 large negative estimation error that implies a probabilistic upper bound
 on \(\theta\). A very large negative estimation error could be \[
-\widehat{\theta}_n - \theta = -1.96 \times \se[\widehat{\theta}_n]
+\widehat{\theta}_n - \theta = -1.96 \, \se[\widehat{\theta}_n]
 \] which is smaller than 2.5\% of estimation errors. This result would
 imply a probabilistic upper bound of \[
-U = \widehat{\theta}_n + 1.96 \times \se[\widehat{\theta}_n],
+U = \widehat{\theta}_n + 1.96 \, \se[\widehat{\theta}_n],
 \] which will not cover the true value 2.5\% of the time,
 \(\P(U < \theta) \approx 0.025\).
 
@@ -4365,21 +4712,22 @@ of the tails.
 
 Thus, for the \(100(1-\alpha)\)\% confidence interval, we can derive the
 implied lower bound as \[
-L = \widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n],
+L = \widehat{\theta}_n - z_{1-\alpha/2}\, \se[\widehat{\theta}_n],
 \] and the upper bound as \[
-U = \widehat{\theta}_n - z_{\alpha/2} \se[\widehat{\theta}_n].
+U = \widehat{\theta}_n - z_{\alpha/2}\, \se[\widehat{\theta}_n].
 \] It's slightly unintuitive that we subtract the chance imbalances in
 both of these expressions, but recall that
-\(z_{\alpha/2}\se[\widehat{\theta}_n]\) will be a negative number (it
+\(z_{\alpha/2}\,\se[\widehat{\theta}_n]\) will be a negative number (it
 is, after all, a large negative chance error). In particular, for
 asymptotically normal estimators, we know that the chance error
 distribution is symmetric so that \(z_{\alpha/2} = -z_{1-\alpha/2}\),
 leading to the usual confidence interval formula, \[
-[L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2} \se[\widehat{\theta}_n],\; \widehat{\theta}_n + z_{1-\alpha/2} \se[\widehat{\theta}_n]\right].
-\]
-
-This is sometimes shortened to
-\(\widehat{\theta}_n \pm z_{1-\alpha/2} \widehat{\se}[\widehat{\theta}_{n}]\).
+[L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_n],\; \widehat{\theta}_n + z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_n]\right],
+\] where we have substituted the estimated standard error for the true
+standard error. By Slutsky's theorem
+(Theorem~\ref{thm-indist-properties}), this substitution does not affect
+the asymptotic coverage of the interval. This is sometimes shortened to
+\(\widehat{\theta}_n \pm z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_{n}]\).
 
 \begin{example}[Confidence interval for the sample
 mean]\protect\hypertarget{exm-sample-mean-ci}{}\label{exm-sample-mean-ci}
@@ -4389,8 +4737,8 @@ where \(\E[X_i] = \mu\) and \(\V[X_i] = \sigma^2\). Recall that the
 central limit theorem shows that the sample mean will roughly be
 normally distributed \(\Xbar_n \sim N(\mu, \sigma^2/n)\), which implies
 we can estimate its standard error as \[
-\widehat{\se}[\Xbar] = \frac{S_n}{\sqrt{n}},
-\] where \(S^2_n = (n-1)^{-1} \sum_{i=1}^n (X_i - \Xbar)^2\) is the
+\widehat{\se}[\Xbar] = \frac{s_n}{\sqrt{n}},
+\] where \(s^2_n = (n-1)^{-1} \sum_{i=1}^n (X_i - \Xbar)^2\) is the
 sample variance.
 
 Suppose we want to find a 90\% confidence interval. In this case, we
@@ -4410,14 +4758,14 @@ would need to first obtain the critical value, \(z_{1-\alpha/2}\), where
 
 Combining these two facts, a 90\% asymptotic confidence interval for the
 sample mean would be \[
-\left[\Xbar_{n} - 1.64 \frac{S_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \frac{S_n}{\sqrt{n}}\right]
+\left[\Xbar_{n} - 1.64\, \frac{s_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \,\frac{s_n}{\sqrt{n}}\right]
 \]
 
-In polling, the term \(\pm z_{1-\alpha/2} \times \frac{S_n}{\sqrt{n}}\)
-is sometimes called the \textbf{margin of error}, where
-\(\alpha = 0.05\) is the usually unstated default. From this expression,
-we can see that this margin of error (equivalently, the width of a
-confidence interval) will generally shrink when:
+In polling, the term \(\pm z_{1-\alpha/2} \, \frac{S_n}{\sqrt{n}}\) is
+sometimes called the \textbf{margin of error}, where \(\alpha = 0.05\)
+is the usually unstated default. From this expression, we can see that
+this margin of error (equivalently, the width of a confidence interval)
+will generally shrink when:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -4425,7 +4773,7 @@ confidence interval) will generally shrink when:
 \item
   We increase the amount of data we have, (\(n\) is larger),
 \item
-  We have less noisy data, (\(S_n\) is smaller), or
+  We have less noisy data, (\(s_n\) is smaller), or
 \item
   We want a lower confidence level (\(\alpha\) is larger so
   \(z_{1-\alpha/2}\) is smaller).
@@ -4455,7 +4803,7 @@ Recall that we can estimate the standard error of \(\widehat{\tau}\)
 with \[
 \widehat{\se}[\widehat{\tau}] = \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}.
 \] Thus, we can form a 95\% confidence interval for this estimator as \[
-\left[\Ybar - \Xbar - 1.96 \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}},\; \Ybar - \Xbar + 1.96 \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}\right]
+\left[\Ybar - \Xbar - 1.96\, \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}},\; \Ybar - \Xbar + 1.96\, \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}\right]
 \]
 
 From this expression, we can see that the width of the
@@ -4470,7 +4818,8 @@ intervals}\label{interpreting-confidence-intervals}
 Remember that the interpretation of confidence is how the random
 interval performs over repeated samples. A valid 95\% confidence
 interval is a random interval that will contain the true value in 95\%
-of samples. Simulating repeated samples can help to clarify this a bit.
+of samples. Simulating repeated samples can help to clarify this
+interpretation.
 
 \begin{example}[]\protect\hypertarget{exm-cis}{}\label{exm-cis}
 
@@ -4485,7 +4834,7 @@ mean \(\E[X] = 1\). To do so, we repeat the following steps:
   Draw a sample of \(n=500\) from \(\N(1, 10)\).
 \item
   Calculate the 95\% confidence interval of the sample mean
-  \(\Xbar_n \pm 1.96\widehat{\sigma}/\sqrt{n}\).
+  \(\Xbar_n \pm 1.96\,\widehat{\sigma}/\sqrt{n}\).
 \item
   Plot the intervals along the x-axis and color them blue if they
   contain the truth (1) and red if they do not.
@@ -4534,12 +4883,12 @@ Under this assumption, we know that the normalized chance errors will be
 distributed as \[
 \frac{\Xbar_n - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)
 \] at any sample size. With asymptotically normal estimators, we relied
-on Slutsky's Theorem to allow us to replace the unknown population
+on Slutsky's theorem to allow us to replace the unknown population
 variance \(\sigma^2\) with its consistent estimator \(S^2_n\). In small
 samples, we cannot rely on that, but with normal data, we know that
 using the sample variance estimator leads to a Student's t-distribution,
 \[
-\frac{\Xbar_n - \mu}{S_n / \sqrt{n}} \sim t_{n-1}.
+\frac{\Xbar_n - \mu}{s_n / \sqrt{n}} \sim t_{n-1}.
 \] In the continuing abuse of notation, let \(t_{\nu,\alpha}\) be the
 \(\alpha\) quantile of a Student's t-distribution with \(\nu\) degrees
 of freedom so that \(\P(T_{\nu} \leq t_{\nu, \alpha}) = \alpha\). Then,
@@ -4547,21 +4896,29 @@ for a 95\% confidence interval with \(n=50\), the large normalized
 shocks would be \(t_{49, 0.975} = 2.01\) on the positive side and
 \(t_{49, 0.025} = -2.01\) on the negative side. Plugging these in above
 and solving for the upper and lower bounds gives \[
-[L, U] = \left[\Xbar_{50} - 2.01 \times \frac{S_{50}}{\sqrt{50}}, \; \Xbar_{50} + 2.01 \times \frac{S_{50}}{\sqrt{50}} \right].
-\] More generally, the \(100(1-\alpha)\%\) confidence interval for the
+[L, U] = \left[\Xbar_{50} - 2.01 \, \frac{s_{50}}{\sqrt{50}}, \; \Xbar_{50} + 2.01 \, \frac{s_{50}}{\sqrt{50}} \right].
+\] Comparing the margin of error of this interval to the asymptotically
+normal estimator, \(\pm 1.96\,s_{50}/\sqrt{50}\), we can see that
+\(t\)-based confidence interval is slightly wider. Even if the data is
+not normally distributed, this extra width can help improve coverage in
+small samples when the asymptotically normal estimator could show
+undercoverage.
+
+More generally, the \(100(1-\alpha)\%\) confidence interval for the
 sample mean under normal data with \(n\) iid draws would be \[
-[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \times \frac{S_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \times \frac{S_{n}}{\sqrt{n}} \right].
+[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}} \right].
 \]
 
 \section{Confidence intervals and hypothesis
 tests}\label{confidence-intervals-and-hypothesis-tests}
 
-At first glance, we may seem sloppy in using \(\alpha\) in the
-derivation of a \(1 - \alpha\) confidence interval in this chapter and
-in an \(\alpha\)-level test in the last chapter. In reality, we were
-simply foreshadowing the deep connection between the two: every
-\(1-\alpha\) confidence interval contains all null hypotheses that we
-\textbf{would not reject} with an \(\alpha\)-level test.
+At first glance, you might accuse me of sloppy notation. Why use
+\(\alpha\) in the derivation of a \(1 - \alpha\) confidence interval in
+this chapter but also in an \(\alpha\)-level test in the last chapter?
+In reality, this was simply foreshadowing the deep connection between
+the two: every \(1-\alpha\) confidence interval contains all null
+hypotheses that we \textbf{would not reject} with an \(\alpha\)-level
+test.
 
 This connection is easiest to see with an asymptotically normal
 estimator, \(\widehat{\theta}_n\). Consider the hypothesis test of \[ 
@@ -4570,12 +4927,12 @@ H_0: \theta = \theta_0 \quad \text{vs.}\quad H_1: \theta \neq \theta_0,
 T = \frac{\widehat{\theta}_{n} - \theta_{0}}{\widehat{\se}[\widehat{\theta}_{n}]}. 
 \] As we discussed in the last chapter, an \(\alpha = 0.05\) test would
 reject this null when \(|T| > 1.96\), or when \[ 
-|\widehat{\theta}_{n} - \theta_{0}| > 1.96 \widehat{\se}[\widehat{\theta}_{n}]. 
+|\widehat{\theta}_{n} - \theta_{0}| > 1.96\, \widehat{\se}[\widehat{\theta}_{n}]. 
 \] This will be true when \[ 
-\theta_{0} < \widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
+\theta_{0} < \widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}] < \theta_{0}
 \] or, equivalently, that null hypothesis is outside of the 95\%
 confidence interval,
-\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\widehat{\se}[\widehat{\theta}_{n}]\right].\]
+\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\right].\]
 Of course, our choice of the null hypothesis was arbitrary, which means
 that any null hypothesis that is outside the 95\% confidence interval
 would be rejected by a \(\alpha = 0.05\) level test of that null. And
@@ -4614,12 +4971,13 @@ construct the sample proportion,
 \(\widehat{p} = \frac{1}{n} \sum_{i=1}^n X_i\), which is exactly the
 same as the sample mean. Thus, we could also use the above
 asymptotically normal confidence intervals, and they do indeed work well
-in large samples. However, these normal-based CIs can perform poorly in
-small samples, especially when the population proportion, \(p\), is
-close to 0 or 1. For example, suppose we obtain \(\widehat{p} = 0.99\)
-with \(n=100\). The normal-based 95\% confidence interval would be \[
+in large samples when \(p\) is close to 0.5. However, these normal-based
+CIs can perform poorly in small samples, especially when the population
+proportion, \(p\), is close to 0 or 1. For example, suppose we obtain
+\(\widehat{p} = 0.99\) with \(n=100\). The normal-based 95\% confidence
+interval would be \[
 \begin{aligned}
-&0.99 \pm 1.96\times \sqrt{\frac{0.99 \times 0.01}{100}} \\ &= [0.97, 1.01]
+&0.99 \pm 1.96\, \sqrt{\frac{0.99 \times 0.01}{100}} \\ &= [0.97, 1.01]
 \end{aligned}
 \] Even with 100 observations, our confidence interval includes values
 of the true proportion above 1, which we know is logically impossible.
@@ -4645,17 +5003,18 @@ reject this test, or, \[
 \]
 
 Solving this quadratic equation using your favorite mnemonic device
-gives the interval \[
+gives the slightly uglier interval \[
 CI_{\alpha} = \frac{1}{1 + z^2_{1-\alpha/2}/n}\left(\widehat{p} + \frac{z^2_{1-\alpha/2}}{2n} \pm \frac{z_{1-\alpha/2}}{2n} \sqrt{4n\widehat{p}(1-\widehat{p}) + z^2_{1-\alpha/2}}\right)
 \]
 
 Figure~\ref{fig-wilson-vs-wald} compares the Wilson score interval to
 the normal-based intervals as a function of the sample proportion for
-\(n = 50\). The Wilson interval is always contained within \([0, 1]\),
-while the normal interval extends above 1 when \(\widehat{p}\) is close
-to 1. The Wilson interval is also notably wider than the normal interval
-near the boundary, reflecting a more honest accounting of the
-uncertainty in this region.
+\(n = 50\). Around \(p=0.5\), the intervals are almost identical, but as
+\(p\) approaches 1, they diverge. The Wilson interval is always
+contained within \([0, 1]\), while the normal interval extends above 1
+when \(\widehat{p}\) is close to 1. The Wilson interval is also notably
+wider than the normal interval near the boundary, reflecting a more
+honest accounting of the uncertainty in this region.
 
 \begin{figure}[th]
 
@@ -4676,8 +5035,8 @@ proportion with \(n = 50\).}
 \section{Resampling approaches to confidence
 intervals}\label{resampling-approaches-to-confidence-intervals}
 
-The entire approach to constructing confidence intervals depends on
-having an estimator for the standard error. For simple cases like the
+So far, the entire approach to constructing confidence intervals depends
+on having an estimator for the standard error. For simple cases like the
 sample mean, we have simple and straightforward estimators for the
 standard error, such as \(\widehat{\se} = \widehat{\sigma}/\sqrt{n}\).
 For some more complicated quantities of interest, such as \(\mu^2\) or
@@ -4689,8 +5048,8 @@ What about quantities of interest and estimators that are not nice
 differentiable functions, such as the median? How do we obtain the
 standard error in those cases? We could turn to our local department of
 mathematics for aid, but why think harder when we can get a computer to
-think for us. In the 20th century, statisticians figured out that we can
-approximate standard errors using computational approaches.
+think for us? In the 20th century, statisticians figured out that we can
+obtain confidence intervals using computational approaches.
 
 All of the computational approaches to confidence intervals (and
 hypothesis tests) rely on a common idea: resampling. Our goal with
@@ -4718,9 +5077,12 @@ key difference between different methods is how we do the resampling.
 
 The jackknife is a resampling technique that generates additional
 samples by removing observations. Let \(\widehat{\theta}_{(-i)}\) be the
-estimate when omitting the \(i\)th observation from the sample and let
+estimate when omitting the \(i\)th observation from the sample. For
+example, the leave-one-out sample mean would be \[
+\Xbar_{(-i)} = \frac{1}{n-1} \sum_{j \neq i} X_j,
+\] Let
 \(\overline{\theta}_{n} = (1/n) \sum_{i=1}^n \widehat{\theta}_{(-i)}\)
-be the average of these leave-one-out estimates. Under some conditions,
+be the average of the leave-one-out estimates. Under some conditions,
 the variation of \(\widehat{\theta}_{(-i)}\) around
 \(\overline{\theta}_{n}\) should be similar to the variation of
 \(\widehat{\theta}_{n}\) around \(\theta\). This fact motivates the
@@ -4739,21 +5101,19 @@ V_{jk} / \V[\widehat{\theta}_n] \inprob 1
 With this variance estimator in hand, one can derive confidence
 intervals in the usual way, dropping in the jackknife variance estimator
 for the usual one, \[
-CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{1-\alpha/2}\sqrt{V_{jk}},\; \widehat{\theta}_n + z_{1-\alpha/2}\sqrt{V_{jk}} \right] 
+CI_{\alpha, jk} = \left[\widehat{\theta}_n - z_{1-\alpha/2}\,\sqrt{V_{jk}},\; \widehat{\theta}_n + z_{1-\alpha/2}\,\sqrt{V_{jk}} \right] 
 \]
 
 To see why we use the \(n-1\) adjustment, we can focus on the easiest
-case: the sample mean. Define the leave-one-out sample mean as \[
-\Xbar_{(i)} = \frac{1}{n-1} \sum_{j \neq i} X_j,
-\] and notice that we can easily write this in terms of the full sample
-mean, \[
-\Xbar_{(i)} = \frac{1}{n-1}\left(\sum_{j=1} ^n X_j - X_i \right) = \frac{1}{n-1}\left(n\Xbar_{n} - X_i \right). 
+case: the sample mean. Notice that we can easily write leave-one-out
+sample mean in terms of the full sample mean, \[
+\Xbar_{(-i)} = \frac{1}{n-1}\left(\sum_{j=1} ^n X_j - X_i \right) = \frac{1}{n-1}\left(n\Xbar_{n} - X_i \right). 
 \]
 
 From this expression, we can also show that the mean of the jackknife
 estimates is the same as the full sample mean: \[
 \begin{aligned}
-\Xbar_{jk} = \frac{1}{n} \sum_{i=1}^n \Xbar_{(i)} &= \frac{1}{n(n-1)} \sum_{i=1}^n n\Xbar_{n} - X_i \\
+\Xbar_{jk} = \frac{1}{n} \sum_{i=1}^n \Xbar_{(-i)} &= \frac{1}{n(n-1)} \sum_{i=1}^n n\Xbar_{n} - X_i \\
 &= \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} \Xbar_n \\
 &= \Xbar_n
 \end{aligned}
@@ -4761,10 +5121,10 @@ estimates is the same as the full sample mean: \[
 
 From these two facts, we can see that the jackknife deviations are a
 rescaled version of the original deviations, \[
-(\Xbar_{(i)} - \Xbar_{jk}) = \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} X_i - \Xbar_n = \frac{1}{n-1}(\Xbar_n - X_i)
+(\Xbar_{(-i)} - \Xbar_{jk}) = \frac{n}{n-1} \Xbar_n - \frac{1}{n-1} X_i - \Xbar_n = \frac{1}{n-1}(\Xbar_n - X_i)
 \] This key fact justifies the jackknife variance estimator since, \[
 \begin{aligned}
-V_{jk} &= \frac{n-1}{n} \sum_{i=1}^n (\Xbar_{(i)} - \Xbar_{jk})^2 \\
+V_{jk} &= \frac{n-1}{n} \sum_{i=1}^n (\Xbar_{(-i)} - \Xbar_{jk})^2 \\
 &= \frac{n-1}{n(n-1)^2} \sum_{i=1}^n (X_i -\Xbar_n)^2 \\
 &=\frac{\widehat{\sigma}^2}{n},
 \end{aligned}
@@ -4875,12 +5235,10 @@ confidence interval will be below \(\widehat{\theta}_n\). The quantile
 \(c_{\alpha/2}\), on the other hand, (\(0.025\) for \(\alpha = 0.05\))
 will be a large negative chance error, meaning the upper bound
 \(\widehat{\theta}_n - c_{\alpha/2}\) will be larger than
-\(\widehat{\theta}_n\).
-
-Just like for the asymptotically normal estimators in
-Section~\ref{sec-deriving-cis}, we can back out the implied true value
-from these deviations, leading to the bootstrap confidence intervals
-formula in Equation~\ref{eq-bootstrap-cis}.
+\(\widehat{\theta}_n\). Just like for the asymptotically normal
+estimators in Section~\ref{sec-deriving-cis}, we can back out the
+implied true value from these deviations, leading to the bootstrap
+confidence intervals formula in Equation~\ref{eq-bootstrap-cis}.
 
 There is another, slightly simpler bootstrap procedure that derives
 plausible values of the parameter from the distribution of the bootstrap
@@ -5209,7 +5567,7 @@ bivariate case: it chooses the set of coefficients that minimizes the
 expected mean-squared error, where the expectation is over the joint
 distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -5263,7 +5621,7 @@ substantively. Recall that \(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 What does the expression for the population regression coefficients
 mean? It is helpful to separate the intercept or constant term so that
@@ -5653,7 +6011,7 @@ is income and \(X_{i2}\) is the Black/non-Black voter indicator, then
 \(\beta_3\) represents the change in the slope of the wait time-income
 relationship between Black and non-Black voters.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 In many cases, the so-called marginal coefficients on the lower-order
 terms (\(\beta_1\) for \(X_{i1}\) and \(\beta_2\) for \(X_{i2}\)) are
@@ -5866,7 +6224,7 @@ from the population to make inferences about the line of best fit in the
 population and the population coefficients. To do this, we will focus on
 the OLS estimator for these population quantities.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -5892,7 +6250,7 @@ In a simple bivariate linear projection model
 was \(\beta_1= \cov(Y_{i},X_{i})/ \V[X_{i}]\). This approach means that
 the estimator for the slope should be the ratio of the sample covariance
 of \(Y_i\) and \(X_i\) to the sample variance of \(X_i\), or \[ 
-\widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
+\widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
 \]
 
 This plug-in approach is widely applicable and tends to have excellent
@@ -5944,7 +6302,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Almost all regression will contain an intercept term, usually
 represented as a constant 1 in the covariate vector. It is also possible
@@ -6369,7 +6727,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 The residual regression approach is:
 
@@ -6659,7 +7017,7 @@ needed to ensure that the best linear predictor,
 \(\bfbeta = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 The linear projection model makes the following assumptions:
 
@@ -6722,7 +7080,7 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the Central Limit
 Theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
@@ -7015,7 +7373,7 @@ we only need a one-sided rejection region of the form
 straightforward (see the above callout tip). For \(q = 2\) and a
 \(\alpha = 0.05\), the critical value is roughly 6.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -7091,7 +7449,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -7208,7 +7566,7 @@ homoskedasticity of errors is such a historically important assumption
 that statistical software implementations of OLS like \texttt{lm()} in R
 assume it by default.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -7363,7 +7721,7 @@ proceed in small samples? Historically we would have assumed
 (conditional) normality of the errors, basically proceeding with some
 knowledge that we were wrong but hopefully not too wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, colback=white, toptitle=1mm, leftrule=.75mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, bottomtitle=1mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, arc=.35mm, rightrule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, bottomtitle=1mm, breakable, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, colback=white, bottomrule=.15mm, coltitle=black, left=2mm, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, colbacktitle=quarto-callout-note-color!10!white, titlerule=0mm, toprule=.15mm, rightrule=.15mm, leftrule=.75mm]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
@@ -7465,6 +7823,11 @@ Hansen, Bruce E. 2022. {``A {Modern Gauss}--{Markov Theorem}.''}
 \emph{Econometrica} 90 (3): 1283--94.
 \url{https://doi.org/10.3982/ECTA19255}.
 
+\bibitem[\citeproctext]{ref-Manski88}
+Manski, Charles F. 1988. \emph{Analog Estimation Methods in
+Econometrics}. Vol. 39. Monographs on Statistics and Applied
+Probability. New York: Chapman; Hall.
+
 \bibitem[\citeproctext]{ref-Senn12}
 Senn, Stephen. 2012. {``Tea for Three: Of Infusions and Inferences and
 Milk in First.''} \emph{Significance} 9 (6): 30--33.
@@ -7474,6 +7837,11 @@ https://doi.org/\url{https://doi.org/10.1111/j.1740-9713.2012.00620.x}.
 SQUIRE, PEVERILL. 1988. {``WHY THE 1936 LITERARY DIGEST POLL FAILED.''}
 \emph{Public Opinion Quarterly} 52 (1): 125--33.
 \url{https://doi.org/10.1086/269085}.
+
+\bibitem[\citeproctext]{ref-Wasserman04}
+Wasserman, Larry. 2004. \emph{All of Statistics: A Concise Course in
+Statistical Inference}. Springer Texts in Statistics. New York:
+Springer. \url{https://doi.org/10.1007/978-0-387-21736-9}.
 
 \end{CSLReferences}
 

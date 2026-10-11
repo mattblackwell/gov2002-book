@@ -273,7 +273,7 @@ $$
 \text{MSE}[\widehat{\theta}] &= \E[(\widehat{\theta} - \theta)^2] \\
 &= \E[(\widehat{\theta} - \E[\widehat{\theta}] + \E[\widehat{\theta}] - \theta)^2] \\
 &= \E[(\widehat{\theta} - \E[\widehat{\theta}])^2] + \left(\E[\widehat{\theta}] - \theta\right) ^ 2 + 2\E[(\widehat{\theta} - \E[\widehat{\theta}])]\left(\E[\widehat{\theta}] - \theta\right) \\
-&= \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
+&= \textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
 \end{aligned}
 $$ 
 Thus, the MSE is low when bias and variance are low. 

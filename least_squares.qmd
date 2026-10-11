@@ -49,7 +49,7 @@ which exists if $\sum_{i=1}^n \X_i\X_i'$ is **positive definite** and thus inver
 
 In a simple bivariate linear projection model $m(X_{i}) = \beta_0 + \beta_1X_{i}$, we saw that the population slope was $\beta_1= \cov(Y_{i},X_{i})/ \V[X_{i}]$. This approach means that the estimator for the slope should be the ratio of the sample covariance of $Y_i$ and $X_i$ to the sample variance of $X_i$, or
 $$ 
-\widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n-1}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n-1} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
+\widehat{\beta}_{1} = \frac{\widehat{\sigma}_{Y,X}}{\widehat{\sigma}^{2}_{X}} = \frac{ \frac{1}{n}\sum_{i=1}^{n} (Y_{i} - \overline{Y})(X_{i} - \overline{X})}{\frac{1}{n} \sum_{i=1}^{n} (X_{i} - \Xbar)^{2}}.
 $$
 
 This plug-in approach is widely applicable and tends to have excellent properties in large samples under iid data. But the simplicity of the plug-in approach also hides some features of the estimator that become more apparent when deriving the estimator more explicitly using calculus. 

@@ -47,8 +47,8 @@ window.MathJax = {
       indep: "\\perp\\!\\!\\!\\perp",
       inprob: "\\overset{p}{\\to}",
       indist: "\\overset{d}{\\to}",
-      argmax: ["\\operatorname\{arg\,max\}"],
-      argmin: ["\\operatorname\{arg\,min\}"]      
+      argmax: ["\\operatorname\{arg\\,max\}"],
+      argmin: ["\\operatorname\{arg\\,min\}"]      
     }
   }
 };
