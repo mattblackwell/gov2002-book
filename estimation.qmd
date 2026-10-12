@@ -5,7 +5,7 @@
 
 Suppose you have been tasked with estimating the fraction of a population that supports increasing legal immigration limits. You have a sample of data on some individual respondents’ support for the policy, but you don't know exactly how this data was sampled. How should you use the information you know (the data) to make a best guess about the information you don't know (the fraction of the population)? 
 
-The design-based approach that we discussed in the previous chapter is a coherent and internally consistent framework for estimating quantities and quantifying uncertainty, but this crisp conceptual clarity comes from having exact knowledge of the sampling design. Going back to our immigration example, a reasonable approach is to use the fraction of the sample that supports the policy as the best guess about the fraction of the population. As we saw in the last chapter, a simple random sample would justify this approach. 
+The design-based approach that we discussed in @sec-design-based is a coherent and internally consistent framework for estimating quantities and quantifying uncertainty, but this crisp conceptual clarity comes from having exact knowledge of the sampling design. Going back to our immigration example, a reasonable approach is to use the fraction of the sample that supports the policy as the best guess about the fraction of the population. As we saw in the last chapter, a simple random sample would justify this approach. 
 
 But how does one perform estimation and inference when lacking complete information about the sampling design? How do we proceed with inference if outcomes are random due to nonresponse or measurement error? What if we would like to make inferences about a population not covered in the sampling frame?  In these cases, inference requires additional information that can be incorporated via a **statistical model**.  A model-based approach to statistical inference views the data $X_1,\ldots, X_n$ as a set of random variables that follow some probability distribution. The measurements in the actual sample, $x_1, \ldots, x_n$, are realizations of these random variables. The probability distribution of $X_1,\ldots, X_n$ is the model for the data and all inferences are based on it. Models can be very specific – for example, a researcher might assume the data are normally distributed – or can be very general – for example, the distribution of the data has finite mean and variance.
 
@@ -20,7 +20,7 @@ Why focus on iid/random samples even though many data sets are at least partiall
 > 
 > “Because,” said the man as he turned away and continued his hunt on his hands and knees, “the light’s better up here.”
 
-Like the poor drunkard, we focus on searching an area (random samples) that are easier to search because there is more light or, more accurately, easier math. Unlike this apocryphal tale, our search will help us better understand the darkness of non-random samples because the core ideas and intuitions from random sampling form the basis for the theoretical extensions into more exotic settings. 
+Like the poor drunkard, we focus on searching an area (random sampling) that is easier to search because there is more light or, more accurately, easier math. Unlike this apocryphal tale, our search will help us better understand the darkness of non-random samples because the core ideas and intuitions from random sampling form the basis for the theoretical extensions into more exotic settings. 
 
 [^drunk]: 1924 May 24, Boston Herald, Whiting’s Column: Tammany Has Learned That This Is No Time for Political Bosses, Quote Page 2, Column 1, Boston, Massachusetts. (GenealogyBank)
 
@@ -28,9 +28,9 @@ This chapter has two goals. First, we will introduce the entire model-based fram
 
 ## Probability vs inference: the big picture
 
-Probability is the mathematical study of uncertain events and is the basis of the mathematical study of estimation. In probability, we assume we know the truth of the world (how many blue and red balls are in the urn) and calculate the probability of possible events (getting more than five red balls when drawing ten from the urn). Estimation works in reverse. Someone hands you five balls, 2 red and 3 blue, and your task is to guess the contents of the urn from which they came. With estimation, we use our observed data to make an **inference** about the data-generating process. 
+Probability is the mathematical study of uncertain events and is the basis of the mathematical study of estimation. In probability, we assume we know the truth of the world (how many blue and red balls are in the urn) and calculate the probability of possible events (getting more than five red balls when drawing ten from the urn). Estimation works in reverse. Someone hands you five balls, 2 red and 3 blue, and your task is to guess the contents of the urn from which they came. With estimation, we use our observed data to make an **inference** about the data-generating process. @fig-inference-probability shows the duality of these two processes. 
 
-![The duality of probability and inference](assets/img/inference_probability.png){#fig-inference-probability}
+![The duality of probability and inference](assets/img/inference_probability.png){#fig-inference-probability fig-alt="Diagram with two circles labelled 'data-generating process' and 'observed data' with a line going from the first the second labelled 'probability' and a line going from the second to the first labelled 'inference.'"}
 
 An estimator is a rule for converting our data into a best guess about some unknown quantity, such as the percent of balls in the urn, or, to use our example from the introduction,  the fraction of the public supporting increasing legal immigration limits. For example, an estimator could be a rule that the proportion of red balls that you draw from the urn is a good guess for the proportion of red balls that you would find if you looked inside the urn.
 
@@ -79,11 +79,11 @@ $$
 $$
 The joint distribution $F$ here represents the probability model for the data. We have made no assumptions about it so far, so it could be any joint probability distribution over $n$ random variables. Note that this level of generality is difficult to work with in practice because there is essentially one draw from this joint distribution (the $n$ measurements in the data). The core question of modeling is about what restrictions a researcher puts on this joint distribution to make learning about it more tractable. 
 
-We focus on a relatively simple setting where we assume the data $\{X_1, \ldots, X_n\}$ are **independent and identically distributed** (iid) draws from a distribution with cumulative distribution function (cdf) $F$. They are independent in that information about any subset of random variable is not informative about any other subset of random variables. They are "identically distributed" in the sense that each of the random variables $X_i$ have the same marginal distribution, $F$. More formally, both of these imply
+We focus on a relatively simple setting where we assume the data $\{X_1, \ldots, X_n\}$ are **independent and identically distributed** (iid) draws from a distribution with a common marginal cumulative distribution function (cdf) $F$. They are independent in that information about any disjoint subset of random variable is not informative about any other subset of random variables. They are "identically distributed" in the sense that each of the random variables $X_i$ have the same marginal distribution, $F$. More formally, both of these imply
 $$
 F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n}) = F_{X_{1}}(x_{1})\cdots F_{X_{n}}(x_{n}) = \prod_{i=1}^n F(x_i)
 $$
-where $F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})$ is the joint cdf of the random variable and $F_{X_{j}}(x_{j})$ is the marginal cdf of the $j$th random variable.  
+where $F_{X_{1},\ldots,X_{n}}(x_{1}, \ldots, x_{n})$ is the joint cdf of the random variable and $F_{X_{j}}(x_{j})$ is the marginal cdf of the $j$th random variable. Throughout, we assume that $F$ has a finite mean and variance. 
 
 Note that we are being purposely vague about this cdf---it simply represents the unknown distribution of the data, otherwise known as the **data generating process** (DGP). Sometimes $F$ is also referred to as the **population distribution** or even just **population**, which has its roots in viewing the data as a random sample from some larger population. As a shorthand, we often say that the collection of random variables $\{X_1, \ldots, X_n\}$ is a **random sample** from population $F$ if $\{X_1, \ldots, X_n\}$ is iid with distribution $F$. The **sample size** $n$ is the number of units in the sample. 
 
@@ -97,11 +97,11 @@ Two metaphors help build intuition behind viewing the data as an iid draw from $
 
 1. **Random sampling**. Suppose we have a population of size $N$ that is much larger than our sample size $n$, and we take a random sample of size $n$ from this population. The distribution of the data in the random sample will be approximately iid draws from the population distribution of the variables we are sampling (and exactly iid if sampling is done with replacement). For example, suppose the population proportion of Democratic party identifiers among U.S. citizens is 0.33. If we randomly sample $n = 100$ U.S. citizens, each data point $X_i$ will be distributed Bernoulli with a probability of success (i.e., Democratic Party identifier) of 0.33. 
 
-Note that the last chapter explored simple random samples *without replacement*, which is a more common type of sampling---since generally people are selected into a survey once and they do not go back into the pool of potential survey takers. Sampling without replacement creates dependence across units, which would violate the iid assumption. However, if the population size $N$ is very large relative to the sample size $n$, this dependence will be very small, and the iid assumption will be relatively innocuous. 
+Note that @sec-design-based explored simple random samples *without replacement*, which is a more common type of sampling---since generally people are selected into a survey once and they do not go back into the pool of potential survey takers. Sampling without replacement creates dependence across units, which would violate the iid assumption. However, if the population size $N$ is very large relative to the sample size $n$, this dependence will be very small, and the iid assumption will be relatively innocuous. 
 
 2. **Groundhog Day**. Random sampling does not always make sense as a justification for iid data, especially when the units are not samples at all but rather countries, states, or subnational units. (In these cases, the population can be the same as the sample – for example, using all 50 states to draw conclusions on the efficacy of state policy.) In this case, we have to appeal to a thought experiment where $F$ represents the fundamental uncertainty in the data-generating process. The metaphor here is that if we could re-run history many times, such as what happens to the protagonist played by Bill Murray in the 1993 American comedy movie *Groundhog Day* when he is magically forced to relive February 2 over and over again. Under this fiction, data and outcomes would change slightly due to the inherently stochastic nature of the world. In the movie, for example, Murray’s character starts off the same day in exactly the same way, but he begins to change his actions and the outcomes at the end of each day change in subtle ways. The iid assumption, then, is that each of the units in our data has the same DGP producing this data or the same distribution of outcomes under the *Groundhog Day* scenario. The set of all these infinite possible draws from the DGP is sometimes referred to as the **superpopulation**. 
 
-Note that there are other situations where the iid assumption is not appropriate, which we discuss in later chapters. But much of the innovation and growth in statistics over the last 50 years has been in figuring out how to make statistical inferences when iid does not hold. The solutions are often specific to the type of iid violation (e.g., spatial, time-series, network, clustered). However, if the iid assumption may not be valid, any uncertainty statements will likely be incorrect. For example, confidence intervals, which we will cover in @sec-confidence-intervals, could be too small or too large. 
+Note that there are other situations where the iid assumption is not appropriate, and much of the innovation and growth in statistics over the last 50 years has been in figuring out how to make statistical inferences when iid does not hold. The solutions are often specific to the type of iid violation (e.g., spatial, time-series, network, clustered). However, if the iid assumption may not be valid, any uncertainty statements will likely be incorrect. For example, confidence intervals, which we will cover in @sec-confidence-intervals, could be too small or too large. 
 
 Finally, we introduced the data as a scalar random variable, but often our data has multiple variables. In that case, we easily modify $X_i$ to be a random vector (that is, a vector of random variables) and then $F$ becomes the joint distribution of that random vector. Nothing substantive changes about the above discussion. 
 
@@ -124,7 +124,7 @@ As discussed in @sec-design-based, there are ways to handle all of these issues 
 
 
 
-In model-based inference, our goal is to learn about the data-generating process. Each data point $X_i$ represents a draw from a distribution, captured by the cdf $F$, and we would like to know more about this distribution. We might be interested in estimating the cdf at a general level or only some feature of the distribution, like a mean or conditional expectation function. We call these numerical features the **quantities of interest**. (Similarly, in the design-based inference framework we discussed in the previous chapter, the quantity of interest was a numerical summary of the finite population.) 
+In model-based inference, our goal is to learn about the data-generating process. Each data point $X_i$ represents a draw from a distribution, captured by the cdf $F$, and we would like to know more about this distribution. We might be interested in estimating the cdf at a general level or only some feature of the distribution, like a mean or conditional expectation function. We call these numerical features the **quantities of interest**. (Similarly, in the design-based inference framework we discussed in @sec-design-based, the quantity of interest was a numerical summary of the finite population.) 
 
 The following are examples of frequently used quantities of interest:
 
@@ -149,7 +149,7 @@ We may also be interested in variation in the population. For example, feeling t
 
 ## RCT continued
 
-@exm-rct discussed a typical estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional probabilities (or expectations): 1) the average support for increasing legal immigration in the treatment group, $\mu_1 = \E[Y_i \mid D_i = 1]$, and 2) the same average in the control group, $\mu_0 = \E[Y_i \mid D_i = 0]$. This difference, $\mu_1 - \mu_0$, is a function of unknown features of these two conditional distributions. When treatment is randomized, we can also say that this difference is the average treatment effect. 
+@exm-rct discussed a typical estimator for an experimental study with a binary treatment. The goal of that experiment is to learn about the difference between two conditional expectations: 1) the average preferred change in legal immigration in the treatment group, $\mu_1 = \E[Y_i \mid D_i = 1]$, and 2) the same average in the control group, $\mu_0 = \E[Y_i \mid D_i = 0]$. This difference, $\mu_1 - \mu_0$, is a function of unknown features of these two conditional distributions. When treatment is randomized, we can also say that this difference is the average treatment effect. 
 
 :::
 
@@ -172,7 +172,7 @@ This, the much-celebrated sample mean, provides a rule for how to produce a sing
 $$
 \textsf{mean}(X_1, X_2, \ldots, X_n) = \frac{X_1 + X_2 + \cdots + X_n}{n}.
 $$
-We can use this model to provide a definition for an arbitrary estimator for an arbitrary quantity of interest.
+We can generalize this idea to provide a definition for an arbitrary estimator for an arbitrary quantity of interest.
 
 ::: {#def-estimator}
 An **estimator** $\widehat{\theta}_n = g(X_1, \ldots, X_n)$ for some parameter $\theta$, is a function of the data intended as a guess about $\theta$.
@@ -194,19 +194,19 @@ Suppose our goal is to estimate the population mean of $F$, which we will repres
 $$
 \widehat{\theta}_{n,1} = \frac{1}{n} \sum_{i=1}^n X_i, \quad \widehat{\theta}_{n,2} = X_1, \quad \widehat{\theta}_{n,3} = \text{max}(X_1,\ldots,X_n), \quad \widehat{\theta}_{n,4} = 3
 $$
-The first is just the sample mean, which is an intuitive and natural estimator for the population mean. The second just uses the first observation. While this seems silly, this is a valid statistic since it is a function of the data! The third takes the maximum value in the sample, and the fourth always returns three, regardless of the data. These are also valid statistics.
+The first is just the sample mean, which is an intuitive and natural estimator for the population mean. The second just uses the first observation. While this seems silly, this is a valid estimator since it is a function of the data! The third takes the maximum value in the sample, and the fourth always returns three, regardless of the data. These are also valid estimators.
 :::
 
 
-When we view the data $\{X_{1}, \ldots, X_{n}\}$ as a collection of random variables, then any function of them is also a random variable. Thus, we can view $\widehat{\theta}_n$ as a random variable that has a distribution induced by the randomness of the sample. Drawing two different samples of respondents will lead to two different estimates. For example, here we illustrate two samples of size $n = 5$ from the population distribution of a binary variable: 
+When we view the data $\{X_{1}, \ldots, X_{n}\}$ as a collection of random variables, then any function of them is also a random variable. Thus, we can view $\widehat{\theta}_n$ as a random variable that has a distribution induced by the randomness of the sample. Drawing two different samples of respondents will lead to two different estimates. For example, @fig-two-samples illustrates two samples of size $n = 5$ from the population distribution of a binary variable. 
 
-![Two samples from the sample population](assets/img/samples.png){#fig-two-samples}
+![Two samples from the same population](assets/img/samples.png){#fig-two-samples fig-alt="Diagram showing two random samples of binary data from a population and the means from them."}
 
 We can see that the mean of the variable depends on what exact values end up in our sample. We refer to the distribution of $\widehat{\theta}_n$ across repeated samples as its **sampling distribution**. The sampling distribution of an estimator will be the basis for all of the formal statistical properties of an estimator.  
 
 ::: {.callout-warning}
 
-One important distinction of jargon is between an estimator and an estimate. The estimator is a function of the data, whereas the **estimate** is the *realized value* of the estimator once we see the data (that is, the data are realized). The estimator is a random variable that has uncertainty over what value it will take, and we represent the estimator as a function of random variables, $\widehat{\theta}_n = g(X_1, \ldots, X_n)$. 
+One important distinction of jargon is between an estimator and an estimate. The estimator is a function of the data, whereas the **estimate** is the *realized value* of the estimator once we see the data (that is, the data are realized). The estimator is a random variable that has uncertainty over what value it will take. 
 An estimate is a single number, such as 0.38, that we calculated in R with our data (our draw from $F$). Formally, the estimate is $g(x_1, \ldots, x_n)$ when the data is $\{X_1, \ldots, X_n\} = \{x_1, \ldots, x_n\}$, whereas we represent the estimator as a function of random variables, $\widehat{\theta}_n = g(X_1, \ldots, X_n)$. 
 
 :::
@@ -222,7 +222,7 @@ Where do estimators come from? That may seem like a question reserved for statis
 
 #### Parametric models and maximum likelihood 
 
-The first method for generating estimators relies on **parametric models**, in which the researcher specifies the exact distribution (up to some unknown parameters) of the DGP. Let $\theta$ be the parameters of this distribution, where  $\{X_1, \ldots, X_n\}$ be iid draws from $F_{\theta}$. We should also formally state the set of possible values the parameters can take, which we call the **parameter space**, denoted by  $\Theta$. Because we assume we know the distribution of the data, we can write the probability density function, or pdf, as $f(X_i \mid \theta)$ and define the likelihood function as the product of these pdfs over the units as a function of the parameters:
+The first method for generating estimators relies on **parametric models**, in which the researcher specifies the exact distribution (up to some unknown parameters) of the DGP. Let $\theta$ be the parameters of this distribution, where  $\{X_1, \ldots, X_n\}$ are iid draws from $F_{\theta}$. We should also formally state the set of possible values the parameters can take, which we call the **parameter space**, denoted by  $\Theta$. Because we assume we know the distribution of the data, we can write the probability density function, or pdf, as $f(X_i \mid \theta)$ and define the likelihood function as the product of these pdfs over the units as a function of the parameters:
 $$
 L_n(\theta) = \prod_{i=1}^n f(X_i \mid \theta).
 $$
@@ -323,7 +323,7 @@ Plug-in estimation goes beyond just replacing population means with sample means
 
 ## Estimating the population median
 
-The population median, $m = F^{-1}(0.5) = \inf\left\{x : F(x) \geq p \right\}$ can be replaced by the empirical version, $\widehat{m} = \widehat{F}_n^{-1}(0.5) = = \inf \left\{x : \widehat{F}_n(x) \geq p \right\}$, which is simply the smallest value the variable can take such that $100p \%$ of the empirical distribution is below it. 
+The population median, $m = F^{-1}(0.5) = \inf\left\{x : F(x) \geq 0.5 \right\}$ can be replaced by the empirical version, $\widehat{m} = \widehat{F}_n^{-1}(0.5) = \inf \left\{x : \widehat{F}_n(x) \geq 0.5 \right\}$, which is simply the smallest value the variable can take such that 50% of the empirical distribution is at or below it. 
 
 :::
 
@@ -341,10 +341,10 @@ The **population distribution** is the distribution of the random variable, $X_i
 
 
 
- ![A representation of the sampling distribution](assets/img/sampling_distribution.png){#fig-sampling-dist}
+ ![A representation of the sampling distribution](assets/img/sampling_distribution.png){#fig-sampling-dist fig-alt="Diagram of the sampling distribution process. Many random samples from the population passed through the estimator box/function to produce many random draws from the distribution of the estimator."}
 
 
-Separately from both is the **sampling distribution of an estimator**, which is the probability distribution of $\widehat{\theta}_n$. This represents the uncertainty around our estimate before we see the data. Remember that our estimator is itself a random variable because it is a function of random variables: the data itself. That is, we defined the estimator as $\widehat{\theta}_n = g(X_1, \ldots, X_n)$. 
+Separately from both is the sampling distribution of an estimator, which is the probability distribution of $\widehat{\theta}_n$. This represents the uncertainty around our estimate before we see the data. @fig-sampling-dist shows how these three distributions relate. Remember that our estimator is itself a random variable because it is a function of random variables: the data itself. That is, we defined the estimator as $\widehat{\theta}_n = g(X_1, \ldots, X_n)$. 
 
 ::: {#exm-three-dist}
 ## Likert responses
@@ -376,7 +376,30 @@ my_samp2 <- rbinom(n = 10, size = 4, prob = 0.4)
 mean(my_samp2)
 ```
 
-The sampling distribution is the distribution of these sample means across repeated sampling.
+The sampling distribution is the distribution of these sample means across repeated sampling. @fig-likert-sampling-dist
+
+```{r}
+#| label: fig-likert-sampling-dist
+#| echo: true
+#| fig-cap: >
+#|  Sampling distribution of the sample mean in the Likert data example.
+#| fig-alt: >
+#|  Histogram showing the sampling distribution of the sample mean in the 
+#|  Likert data example.
+
+R <- 1000
+sampling_dist <- rep(NA, times = R)
+for (r in seq_len(R)) {
+  sampling_dist[r] <- mean(rbinom(n = 10, size = 4, prob = 0.4))
+}
+
+hist(
+  sampling_dist,
+  main = "",
+  xlab = expression(bar(X)[n]),
+  border = "white"
+)
+```
  
 
 :::
@@ -413,7 +436,7 @@ Notice that we never invoke independence here and only used part of the  "identi
 
 ::: {.callout-warning}
 
-Properties like unbiasedness might only hold for a subset of DGPs. For example, we just showed that the sample mean is unbiased but only when the population mean is defined. There are probability distributions, like the Cauchy, for which the expected value is undefined. Thus, here we are dealing with a restricted class of DGPs that rules out such distributions. This is sometimes formalized by defining a class $\mathcal{F}$ of distributions; unbiasedness might hold in that class if it is unbiased for all $F \in \mathcal{F}$. 
+Properties like unbiasedness might only hold for a subset of DGPs. For example, we just showed that the sample mean is unbiased but only when the population mean is defined. There are probability distributions, like the Cauchy, for which the expected value is undefined. Thus, here we are dealing with a restricted class of DGPs that rules out such distributions. This is sometimes formalized by defining a class $\mathcal{F}$ of distributions as in the last example (all $F$ such that $\E|X_i| < \infty$). We say an estimator is unbiased over $\mathcal F$ if $\E_F[\widehat\theta_n]=\theta(F)$ for every $F\in\mathcal F$. 
 
 :::
 
@@ -477,7 +500,7 @@ This result is why the sample variance uses the $n-1$ instead of $n$ in the deno
 
 ## Question 5: Uncertainty 
 
-Question 4 focused on how to construct estimators and checking whether they center on parameter of interest. Question 5 focues on how much the estimator will vary from sample to sample. We define the **sampling variance** as the variance of an estimator's sampling distribution, $\V[\widehat{\theta}_n]$, which measures how spread out the estimator is around its mean. For an unbiased estimator, lower sampling variance implies the distribution of $\widehat{\theta}_n$ is  (in squared distance) to the true value on average. 
+Question 4 focused on how to construct estimators and checking whether they center on the parameter of interest. Question 5 focuses on how much the estimator will vary from sample to sample. We define the **sampling variance** as the variance of an estimator's sampling distribution, $\V[\widehat{\theta}_n]$, which measures how spread out the estimator is around its mean. For an unbiased estimator, lower sampling variance implies the distribution of $\widehat{\theta}_n$ is closer (in squared distance) to the true value on average. 
 
 
 ::: {#exm-mean-var}
@@ -507,7 +530,7 @@ $$
 \V\left[\frac{1}{n} \sum_{i=1}^n r(X_i)\right] = \frac{1}{n^2} \sum_{i=1}^n \V[r(X_i)] = \frac{\V[r(X_i)]}{n}.
 $$
 
-One could easily estimate this quantity by replacing the population variance $\V[r(X_i)]$ with the sample variance of $r(X_i)$. Note that the derivation for non-linear plug-in estimators depends on large-sample approximations that we will see in the next chapter. 
+One could easily estimate this quantity by replacing the population variance $\V[r(X_i)]$ with the sample variance of $r(X_i)$. Note that the derivation for non-linear plug-in estimators depends on large-sample approximations that we will see in @sec-delta-method.
 
 :::
 
@@ -526,7 +549,7 @@ to obtain the estimated standard error,
 $$
 \widehat{\se}[\Xbar_n] = \frac{S_n}{\sqrt{n}}.
 $$
-This estimator is actually biased because the sample standard deviation is biased for the population standard deviation (a decent exercise is to work through why). However, as we will see in the next chapter, this estimator has properties that make it a good and useful estimator in larger samples. 
+This estimator is actually biased because the sample standard deviation is biased for the population standard deviation (a decent exercise is to work through why). However, as we will see in @sec-asymptotics, this estimator has properties that make it a good and useful estimator in larger samples. 
 
 
 
@@ -534,7 +557,7 @@ This estimator is actually biased because the sample standard deviation is biase
 
 Bias and sampling variance measure two properties of "good" estimators because they capture the fact that we want the estimator to be as close as possible to the true value. One summary measure of the quality of an estimator is the **mean squared error** or **MSE**, which is
 $$
-\text{MSE} = \E[(\widehat{\theta}_n-\theta)^2].
+\text{MSE}[\widehat{\theta}_n] = \E[(\widehat{\theta}_n-\theta)^2].
 $$
 We would ideally have this be as small as possible! If we are comparing two estimators, $\widehat{\theta}_a$ and $\widehat{\theta}_b$ and one has a lower MSE, 
 $$
@@ -545,28 +568,28 @@ then we say that $\widehat{\theta}_b$ is **more efficient** than $\widehat{\thet
 
 The MSE also relates to the bias and the sampling variance (provided it is finite) via the following decomposition result (see @sec-design-properties for a derivation): 
 $$
-\text{MSE} = \textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
+\text{MSE}[\widehat{\theta}_n] = \textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
 $$ {#eq-mse-decomposition}
 
 ::: {#exm-mean-est-properties}
 
 ## Population mean estimators, revisited
 
-In @exm-mean-est, we explored three estimators for the population mean, $\mu$.  We can now assess their properties to compare three of them (we omit the maximum estimator because its derivations are more complicated)
+In @exm-mean-est, we explored four estimators for the population mean, $\mu$.  We can now assess their properties to compare three of them (we omit the maximum estimator because its derivations are more complicated)
 
 $$
 \begin{aligned}
-\E[\widehat{\theta}_{n,1}] &= \E\left[\frac{1}{n} \sum_{i=1}^n X_i \right] = \mu \\ 
+\E[\widehat{\theta}_{n,1}] &= \E\left[\frac{1}{n} \sum_{i=1}^n X_i \right] = \mu, \\ 
 \E[\widehat{\theta}_{n,2}] &= \E[X_1] = \mu, \\ 
-\E[\widehat{\theta}_{n,4}] = \E[3] = 3.
+\E[\widehat{\theta}_{n,4}] &= \E[3] = 3.
 \end{aligned}
 $$
 
 Clearly the first two are unbiased, and the last has bias equal to $3 - \mu$. Combining these with the variance derivations, the decomposition in @eq-mse-decomposition implies:
 $$\begin{aligned}
-\text{MSE}[\widehat{\theta}_{n,1}] &= \V[\Xbar_n] =  \frac{\sigma^2}{n} \\ 
+\text{MSE}[\widehat{\theta}_{n,1}] &= \V[\Xbar_n] =  \frac{\sigma^2}{n}, \\ 
 \text{MSE}[\widehat{\theta}_{n,2}] &= \V[X_1] = \sigma^2, \\ 
-\V[\widehat{\theta}_{n,4}] = \textsf{bias}[\widehat{\theta}_{n,4}] + \V[\widehat{\theta}_{n,4}] = (3- \mu)^2.
+\text{MSE}[\widehat{\theta}_{n,4}] &= \textsf{bias}[\widehat{\theta}_{n,4}]^2 + \V[\widehat{\theta}_{n,4}] = (3- \mu)^2.
 \end{aligned}
 $$
 
@@ -582,6 +605,11 @@ This decomposition implies that, for unbiased estimators, MSE is the sampling va
 #| label: fig-mse
 #| echo: false
 #| fig-cap: "Two sampling distributions"
+#| fig-alt: >
+#|   Example with two sampling distributions. One (labelled theta hat a) is
+#|   centered on the true value theta but with high spread around that value.
+#|   The other (labelled theta hat b) is slightly biased but has much less
+#|   variance. 
 par(mar = c(2, 0.1, 0.1, 0.1))
 curve(
   dnorm(x, 0, 1),
@@ -612,7 +640,7 @@ text(
 )
 ```
 
-@fig-mse shows the sampling distributions of two estimators: (1) $\widehat{\theta}_a$, which is unbiased (centered on the true value $\theta$) but with a high sampling variance, and (2) $\widehat{\theta}_b$, which is slightly biased but with much lower sampling variance. Even though $\widehat{\theta}_b$ is biased, its average draw will be closer (in squared distance) to the truth than the average draw of $\widehat{\theta}_a$. The MSE helps capture this balancing between bias and variance, and, indeed, in this case, $\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]$. 
+@fig-mse shows the sampling distributions of two estimators: (1) $\widehat{\theta}_a$, which is unbiased (centered on the true value $\theta$) but with a high sampling variance, and (2) $\widehat{\theta}_b$, which is slightly biased but with much lower sampling variance. Even though $\widehat{\theta}_b$ is biased, its draw will, on average, be closer to the truth in squared distance than those of $\widehat{\theta}_a$. The MSE helps capture this balancing between bias and variance, and, indeed, in this case, $\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]$. 
 
 
 ::: {.callout-note}
@@ -627,14 +655,14 @@ Building up intuition about the **assumptions-precision tradeoff** is essential.
 
 ## Randomized control trials {#sec-model-rct}
 
-In @exm-rct, we introduced the basic idea of a randomized control trial on framing effects. We can now analyze the difference in mean estimator in the context of the five questions. 
+In @exm-rct, we introduced the basic idea of a randomized control trial on framing effects. We can now analyze the difference-in-means estimator in the context of the five questions. 
 
 
 **Population.** The nature of the population will vary by setting but here we probably want to make generalizations to all citizens of the United States. 
 
 **Statistical model.** In survey experiments, we have a representative survey that should approximate a random sample from the population. We can model this approximation as each outcome-treatment pair, $(Y_i, D_i)$, being iid draws from the population distribution of those two variables. In this setting, we only care about the conditional distribution of $Y_i$ given $D_i = 1$ or $D_i = 0$. We show what the population distributions might look like for these two groups in @fig-rct-population-distribution. 
 
-![Population distributions in the immigration RCT example](assets/img/diff_in_means.png){#fig-rct-population-distribution}
+![Population distributions in the immigration RCT example](assets/img/diff_in_means.png){#fig-rct-population-distribution fig-alt="Example population distributions of the outcome under treatment and control with the population difference in means labelled."}
 
 **Quantities of interest.** Let $\mu_d = \E[Y_i \mid D_i = d]$ be the conditional mean of the outcome in either the treated or control group. The quantity of interest for a randomized control trial is typically the average difference in the populations, or
 $$
@@ -643,9 +671,17 @@ $$
 We can also write the conditional variance of the outcome for each group as $\sigma^2_d = \V[Y_i \mid D_i = d]$.
 
 
-**Estimator** The estimator we introduced in @exm-rct was the difference in sample means (or, equivalently, the difference in sample proportions since $Y_i$ is binary), $$\widehat{\tau} = \Ybar_1 - \Ybar_0.$$
+**Estimator.** The estimator we introduced in @exm-rct was the difference in sample means, 
+$$\widehat{\tau} = \Ybar_1 - \Ybar_0.$$
 
-To determine the main properties of this estimator, we will employ a slight trick: conditioning on the observed treatment assignment. Let $\mathbf{D} = (D_1, \ldots, D_n)$ be the vector of observed treatment assignment for all units. Conditional on $\mathbf{D}$, the treated and control groups outcomes simply iid samples of fixed sizes $n_1$ and $n_0$ from the conditional distribution of $Y_i$ given $D_i = 1$ or $D_i = 0$, respectively, so we can employ the key results about sample means above.  
+To determine the main properties of this estimator, we will employ a slight trick: conditioning on the observed treatment assignment. Let $\mathbf{D} = (D_1, \ldots, D_n)$ be the vector of observed treatment assignment for all units. Conditional on $\mathbf{D}$, the treated and control groups outcomes are iid samples of fixed sizes $n_1$ and $n_0$ from the conditional distribution of $Y_i$ given $D_i = 1$ or $D_i = 0$, respectively, so we can employ the key results about sample means above.  
+
+::: {.callout-warning}
+
+It only makes sense to derive the properties of the difference-in-means estimator conditional on $\mathbf{D}$ when that treatment assignment will allow well-defined sample means and sample variances. Thus, thoughout these derivations, we implicitly condition on $n_1, n_0 > 1$ (since the sample variance requires at least 2 units to be well-defined). 
+
+:::
+
 
 The treated average is conditionally unbiased:
 $$
@@ -657,14 +693,14 @@ $$
 &= \mu_1
 \end{aligned}
 $$
-The third equality leverages two subtle facts. First, indepdendence of units means that the outcome for respondent $i$ only depends on its own treatment, so $\E[Y_i \mid \mathbf{D}] = \E[Y_i \mid D_i]$. Second, recall conditional expectations are random variables so  
+The third equality leverages two subtle facts. First, independence of units means that $Y_i$ is independent of other units' treatments, so $\E[Y_i \mid \mathbf{D}] = \E[Y_i \mid D_i]$. Second, recall conditional expectations are random variables so  
 $$
 \E[Y_i \mid D_i] = D_i \mu_1 + (1 - D_i)\mu_0
 $$
 Thus, $D_i\E[Y_i \mid D_i]$ is going to be $D_i \mu_1$. 
 
 
-From this derivation, we can see that sample conditional mean $\Ybar_1$ is unbiased for the population condition mean, $\mu_1$. By a similar argument, the control sample average is also unbiased for the control population average, which implies that the difference in sample means is also unbiased for the population difference in means, $\E[\widehat{\tau} \mid \mathbf{D}] = \tau$. 
+From this derivation, we can see that sample conditional mean $\Ybar_1$ is unbiased for the population condition mean, $\mu_1$. By a similar argument, the control sample average is also unbiased for the control population average, which implies that the difference in sample means is also unbiased for the population difference in means, $\E[\widehat{\tau} \mid \mathbf{D}] = \tau$. Given that this holds for any $\mathbf{D}$ with non-empty groups, the law of iterated expectations implies $\E[\widehat{\tau}] = \tau$ and the estimator is unconditionally unbiased as well. 
 
 
 **Uncertainty.** What about the sampling variance of the difference in means? Conditional on the observed assignment, the sample means have the same form as $\V[\Xbar_n]$:
@@ -688,26 +724,21 @@ $$
 \widehat{\se}[\widehat{\tau}] &= \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}
 \end{aligned}
 $$
-Conditional on the observed treatment assignment, $\mathbf{D}$, remember that the treated and control groups are just iid samples from a distribution and so we know that the sample variances are unbiased, $\E[S^2_d \mid \mathbf{D}] = \sigma^2_d$, which implies that $\widehat{\V}[\widehat{\tau}]$ is also unbiased for $\V[\widehat{\tau} \mid \mathbf{D}]$. 
+Here, we have abused notation slightly by using subscripts for the treatment/control labels instead of sample size: $S^2_1$ is the sample variance in the treatment group, not sample variance with $n = 1$. Conditional on the observed treatment assignment, $\mathbf{D}$, remember that the treated and control groups are just iid samples from a distribution and so we know that the sample variances are unbiased, $\E[S^2_d \mid \mathbf{D}] = \sigma^2_d$, which implies that $\widehat{\V}[\widehat{\tau}]$ is also unbiased for $\V[\widehat{\tau} \mid \mathbf{D}]$, conditional on $\mathbf{D}$. Note that $\E[\widehat\tau\mid\mathbf D]=\tau$ does not depend on the treatment assignment, which implies that $\widehat{\V}[\widehat{\tau}]$ is unbiased for the unconditional variance, $\V[\widehat{\tau}]$, as well. 
 
 Much like the standard error estimator for the mean, $\widehat{\se}[\widehat{\tau}]$ will be slightly biased downward. @sec-asymptotics will show us why these estimators will still work well in large samples. 
 
-::: {.callout-warning}
-
-In the above derivation, we ignored the possibility that either all the units were treated or all the units were in control. In those cases, the difference in sample means would not exist because it would involve dividing by zero. In the expectations, then, we are implicitly conditioning on $n_1, n_0 > 1$. 
-
-:::
 
 
 ## Summary
 
-In this chapter, we introduced **model-based inference**, which treats the data as random variables drawn from a probability model rather than from a known sampling design (as in @sec-design-based). These models can be **parametric** in the sense that we specify the probability distribution of the data up to some parameters, Or, they can also be **semiparametric** where we only specify certain features of the distribution such as a finite mean and variance. This chapter mostly focused on the latter, where we assumed the observed data were **independent and identically distributed** draws from a population distribution with finite mean and variance. 
+In this chapter, we introduced **model-based inference**, which treats the data as random variables drawn from a probability model rather than from a known sampling design (as in @sec-design-based). These models can be **parametric** in the sense that we specify the probability distribution of the data up to some parameters, or they can also be **semiparametric** where we only specify certain features of the distribution such as a finite mean and variance. This chapter mostly focused on the latter, where we assumed the observed data were **independent and identically distributed** draws from a population distribution with finite mean and variance. 
 
 An **estimator** is a function of the data meant as a guess for some quantity of interest in the population. Because it is a function of random variables (the data), estimators are also random variables and have distributions, called **sampling distributions**, across repeated draws from the population. If this distribution is centered on the true value of the quantity of interest, we call the estimator **unbiased**. The variance of the sampling distribution, called the **sampling variance**, tells us how variable we should expect the estimator to be across draws from the population. The mean-squared error is an overall measure of the accuracy of an estimator that combines notions of bias and sampling variance. 
 
-We showed in this chapter that the sample mean is unbiased for the population mean and that the sampling variance of the sample mean is the ratio of the population variance to the sample size. We also saw that **plug-in estimators** are a powerful way of constructing estimators as functions of sample means.
+We showed in this chapter that the sample mean is unbiased for the population mean and that the sampling variance of the sample mean is the ratio of the population variance to the sample size. We also saw that **plug-in estimators** replace the unknown population distribution with the empirical disrtibution of the data and are a powerful way of constructing estimators. We derived the bias of the plug-in estimator for the population variance, $\widehat{\sigma}^2$, and connected it to the usual sample variance, $S_n^2$, to better understand Bessel's correction. Finally, we walked through all five questions in the context of a longer example on the difference-in-means estimator in randomized control trials. 
 
 
-The results in this chapter hold for any fixed sample size, but to build a stronger foundation for statistical inference, we will need to look past these finit-sample results. For example, they do not tell us why $S_n/\sqrt{n}$ is a valid estimator for the standard error even though it is biased. @sec-asymptotics will provide a framework for understanding how to evaluate estimators as $n$ grows large.
+The results in this chapter hold for any fixed sample size, but to build a stronger foundation for statistical inference, we will need to look past these finite-sample results. For example, they do not tell us why $S_n/\sqrt{n}$ is a valid estimator for the standard error even though it is biased. @sec-asymptotics will provide a framework for understanding how to evaluate estimators as $n$ grows large.
 
 

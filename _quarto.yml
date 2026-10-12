@@ -10,7 +10,7 @@ book:
   author:
     - name: Matthew Blackwell
       orcid: 0000-0002-3689-9527
-      email: mblackwell@gov.harvard.edu
+      email: mblackwell@gmail.com
       url: https://www.mattblackwell.org/
     
   output-file: "users-guide"
