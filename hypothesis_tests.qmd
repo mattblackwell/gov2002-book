@@ -138,27 +138,31 @@ In the right panel, we overlay the distribution of the test statistic under one 
 #| label: fig-size-power
 #| echo: false
 #| fig-cap: "Size of a test and power against an alternative."
-par(mfrow = c(1,2), mar = c(5.1, 0, 4.1, 3.1))
+par(mfrow = c(1, 2), mar = c(5.1, 0, 4.1, 3.1))
 curve(dnorm(x), from = -4, to = 4, ylim = c(0, 0.6), bty = "n", las = 1, xlab = "T under the null hypothesis", ylab = "", xaxt = "n", yaxt = "n", col = "black", lwd = 2, main = "Size")
-axis(side = 1, at = c(-10, 0, 2.32, 10), labels = c("b", expression(theta[0]), expression(c), "d"),
-     line = 0)
-polygon(c(2.32,seq(2.32,4,0.01),4), c(0,dnorm(seq(2.32,4,0.01)), 0), col = adjustcolor("grey50", alpha = 0.5), border = NA)
+axis(
+  side = 1, at = c(-10, 0, 2.32, 10), labels = c("b", expression(theta[0]), expression(c), "d"),
+  line = 0
+)
+polygon(c(2.32, seq(2.32, 4, 0.01), 4), c(0, dnorm(seq(2.32, 4, 0.01)), 0), col = adjustcolor("grey50", alpha = 0.5), border = NA)
 ## text(x = 3, y = 0.02, "0.05", pos = 3)
 abline(v = 2.32, lty = 2, col = "grey60")
 text(x = 0, y = 0.55, "Retain")
 text(x = 2.32, y = 0.55, "Reject", pos = 4)
-text(x = -1, y = dnorm(-1), expression(P(T ~~ "|" ~~ theta[0])), pos = 2)
+text(x = -1, y = dnorm(-1), expression(P(T ~ ~"|" ~ ~ theta[0])), pos = 2)
 curve(dnorm(x), from = -4, to = 4, ylim = c(0, 0.6), bty = "n", las = 1, xlab = "T under an alternative", ylab = "", xaxt = "n", yaxt = "n", col = "grey80", lwd = 2, main = "Power")
-axis(side = 1, at = c(-10, 0, 1, 2.32, 10), labels = c("b", expression(theta[0]), expression(theta[1]), expression(c), "d"),
-     line = 0)
+axis(
+  side = 1, at = c(-10, 0, 1, 2.32, 10), labels = c("b", expression(theta[0]), expression(theta[1]), expression(c), "d"),
+  line = 0
+)
 curve(dnorm(x, mean = 1), from = -4, to = 4, col = "indianred", lwd = 2, add = TRUE)
 ## text(x = 3, y = 0.02, "0.05", pos = 3)
 abline(v = 2.32, lty = 2, col = "grey60")
 text(x = 0, y = 0.55, "Retain")
 text(x = 2.32, y = 0.55, "Reject", pos = 4)
-text(x = -1, y = dnorm(-1), expression(P(T ~~ "|" ~~ theta[0])), pos = 2)
-text(x = 1, y = dnorm(1, mean = 1), expression(P(T ~~ "|" ~~ theta[1])), pos = 3, col = "indianred")
-polygon(c(2.32,seq(2.32,4,0.01),4), c(0,dnorm(seq(2.32,4,0.01), mean = 1), 0), col = adjustcolor("indianred", alpha = 0.5), border = NA)
+text(x = -1, y = dnorm(-1), expression(P(T ~ ~"|" ~ ~ theta[0])), pos = 2)
+text(x = 1, y = dnorm(1, mean = 1), expression(P(T ~ ~"|" ~ ~ theta[1])), pos = 3, col = "indianred")
+polygon(c(2.32, seq(2.32, 4, 0.01), 4), c(0, dnorm(seq(2.32, 4, 0.01), mean = 1), 0), col = adjustcolor("indianred", alpha = 0.5), border = NA)
 ```
 
 
@@ -206,10 +210,10 @@ Again, this formula can seem dense, but remember what you are doing: finding the
 #| label: fig-two-sided
 #| echo: false
 #| fig-cap: "Rejection regions for a two-sided test."
-curve(dnorm(x), from = -4, to = 4, ylim = c(-.05, 0.5), bty = "n", las = 1, xlab = "T under the null hypothesis", ylab = expression(P(T ~~ "|" ~~ theta[0] )))
+curve(dnorm(x), from = -4, to = 4, ylim = c(-.05, 0.5), bty = "n", las = 1, xlab = "T under the null hypothesis", ylab = expression(P(T ~ ~"|" ~ ~ theta[0])))
 abline(h = 0)
-polygon(c(-4,seq(-4,-1.96,0.01),-1.96), c(0,dnorm(seq(-4,-1.96,0.01)), 0), col = "grey70", border = NA)
-polygon(c(4,seq(4,1.96,-0.01),1.96), c(0,dnorm(seq(4,1.96,-0.01)), 0), col = "grey70", border = NA)
+polygon(c(-4, seq(-4, -1.96, 0.01), -1.96), c(0, dnorm(seq(-4, -1.96, 0.01)), 0), col = "grey70", border = NA)
+polygon(c(4, seq(4, 1.96, -0.01), 1.96), c(0, dnorm(seq(4, 1.96, -0.01)), 0), col = "grey70", border = NA)
 abline(v = 1.96, lty = 2, col = "grey60")
 abline(v = -1.96, lty = 2, col = "grey60")
 text(x = 0, y = 0.45, "Retain")
@@ -230,9 +234,9 @@ H_0: \mu = 50 \quad\text{versus}\quad H_1: \mu \neq 50,
 $$
 where $\mu = \E[X_i]$. The standard test statistic for this type of test is the so-called **t-statistic**, 
 $$ 
-T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{s^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{s^2 / n}},
+T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{S_n^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{S_n^2 / n}},
 $$
-where $\mu_0$ is the null value of interest and $s^2$ is the sample variance. If the null hypothesis is true, then by the CLT, we know that the t-statistic is asymptotically normal, $T \indist \N(0, 1)$. Thus, we can approximate the null distribution with the standard normal.
+where $\mu_0$ is the null value of interest and $S_n^2$ is the sample variance. If the null hypothesis is true, then by the CLT, we know that the t-statistic is asymptotically normal, $T \indist \N(0, 1)$. Thus, we can approximate the null distribution with the standard normal.
 
 ::: {.callout-warning}
 
@@ -308,7 +312,7 @@ $$
 If we wanted a test with level $\alpha = 0.01$, we would reject the null when $|T| > 2.58$ since
 
 ```{r}
-qnorm(0.01/2, lower.tail = FALSE)
+qnorm(0.01 / 2, lower.tail = FALSE)
 ```
 
 :::

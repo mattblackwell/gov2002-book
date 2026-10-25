@@ -294,12 +294,12 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -441,14 +441,13 @@ Chapter~\ref{sec-asymptotics} introduces this type of asymptotic
 analysis. It covers the core results of asymptotic theory, such as the
 law of large numbers, the central limit theorem, and the delta method,
 but also shows why these results are important for statistical
-inference. In particular, the chapter shows how these results enable the
-creation of asymptotically valid confidence intervals.
+inference.
 
-Chapter~\ref{sec-hypothesis-tests} wraps up Part I of the book by
-introducing statistical inference with hypothesis testing. This chapter
-shows how to build hypothesis tests and provides intuition for all their
-aspects. We also cover power analyses for planning studies and the
-connection between confidence intervals and hypothesis tests.
+Chapter~\ref{sec-hypothesis-tests} introduces statistical inference with
+hypothesis testing. This chapter shows how to build hypothesis tests and
+provides intuition for all their aspects. We also cover power analyses
+for planning studies and the connection between confidence intervals and
+hypothesis tests.
 
 Part II of the book focuses on one particular estimator of great
 importance to quantitative social sciences: the least squares estimator.
@@ -936,7 +935,7 @@ Thus, the sampling distribution tells us what values of an estimator are
 more or less likely and depends on both the population distribution and
 the sampling design.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Notice that the sampling distribution of an estimator will depend on the
 sampling design. Here, we used a simple random sample. Bernoulli
@@ -999,7 +998,7 @@ calculating the expected value of the estimator, \[
 \] The two are the same, meaning the sample mean in this simple random
 sample is unbiased.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Note that the word ``bias'' sometimes also refers to research that is
 systematically incorrect in other ways. For example, we might complain
@@ -1211,7 +1210,7 @@ this in for the population variance, \[
 \widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 It is easy to get confused about the difference between the population
 variance, the variance of the sample, and the sampling variance (just as
@@ -1696,7 +1695,7 @@ the collection of random variables \(\{X_1, \ldots, X_n\}\) is a
 is iid with distribution \(F\). The \textbf{sample size} \(n\) is the
 number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1778,7 +1777,7 @@ to be a random vector (that is, a vector of random variables) and then
 \(F\) becomes the joint distribution of that random vector. Nothing
 substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1883,7 +1882,7 @@ complete distribution. To speak about estimation in general, we will let
 estimation} describes how we obtain a single ``best guess'' about
 \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
@@ -1913,7 +1912,7 @@ about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 It is widespread, though not universal, to use the ``hat'' notation to
 define an estimator and its estimand. For example,
@@ -1964,7 +1963,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -2074,7 +2073,7 @@ population mean. Note that this result does not actually depend on
 having a discrete random variable. For more detail on the statistical
 theory of plug-in estimation, see Wasserman (2004) Section 7.2.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Given the connection between the population mean and the sample mean,
 you may see the \(\E_n[\cdot]\) operator used as a shorthand for the
@@ -2280,9 +2279,9 @@ across repeated sampling. Figure~\ref{fig-likert-sampling-dist}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{R }\OtherTok{\textless{}{-}} \DecValTok{1000}
-\NormalTok{sampling\_dist }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\AttributeTok{times =}\NormalTok{ R)}
-\ControlFlowTok{for}\NormalTok{ (r }\ControlFlowTok{in} \FunctionTok{seq\_len}\NormalTok{(R)) \{}
+\NormalTok{reps }\OtherTok{\textless{}{-}} \DecValTok{1000}
+\NormalTok{sampling\_dist }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\AttributeTok{times =}\NormalTok{ reps)}
+\ControlFlowTok{for}\NormalTok{ (r }\ControlFlowTok{in} \FunctionTok{seq\_len}\NormalTok{(reps)) \{}
 \NormalTok{  sampling\_dist[r] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(}\FunctionTok{rbinom}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{prob =} \FloatTok{0.4}\NormalTok{))}
 \NormalTok{\}}
 
@@ -2363,7 +2362,7 @@ common finite mean \(\E[X_i] = \mu\).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased but only when
@@ -2592,7 +2591,7 @@ those of \(\widehat{\theta}_a\). The MSE helps capture this balancing
 between bias and variance, and, indeed, in this case,
 \(\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]\).
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Building up intuition about the \textbf{assumptions-precision tradeoff}
 is essential. Researchers can usually get more precise estimates if they
@@ -2656,7 +2655,7 @@ control groups outcomes are iid samples of fixed sizes \(n_1\) and
 or \(D_i = 0\), respectively, so we can employ the key results about
 sample means above.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 It only makes sense to derive the properties of the difference-in-means
 estimator conditional on \(\mathbf{D}\) when that treatment assignment
@@ -2734,8 +2733,8 @@ variance, \(\V[\widehat{\tau}]\), as well.
 
 Much like the standard error estimator for the mean,
 \(\widehat{\se}[\widehat{\tau}]\) will be slightly biased downward.
-Chapter~\ref{sec-asymptotics} will show us why these estimators will
-still work well in large samples.
+Chapter~\ref{sec-asymptotics} will show us why these types of estimators
+will still work well in large samples.
 
 \section{Summary}\label{summary-1}
 
@@ -2793,23 +2792,23 @@ supporters in a random sample of citizens. You would have good reason to
 be confident with this estimator, with its finite-sample properties like
 unbiasedness and a sampling variance. We call these ``finite-sample''
 properties since they hold at any sample size---they are as true for
-random samples of size for \(n = 10\) as they are for random samples of
-size \(n = 1,000,000\).
+random samples of size \(n = 10\) as they are for random samples of size
+\(n = 1,000,000\).
 
 Finite-sample results, though, are of limited value because they only
 tell us about the center and spread of the sampling distribution of
-\(\Xbar_n\). Suppose we found that \(\Xbar_n = 0.47\) or 47\% of
-respondents in a single survey supported increasing immigration. We
-might want to know how plausible it would be for the true population
-proportion -- which is distinct from the sample proportion -- to be 50\%
-or greater. Questions like this are critical for a decision maker and,
-to answer this, we need to know the (approximate) distribution of
-\(\Xbar_n\) in addition to its mean and variance. We can often derive
-the exact distribution of an estimator if we are willing to make
-certain, sometimes strong assumptions about the underlying data (for
-example, if the population is normal, then the sample means will also be
-normal). Still, this approach is brittle: if our parametric assumption
-is false, we are back to square one.
+\(\Xbar_n\). Suppose we found that a sample proportion of
+\(\Xbar_n = 0.47\) or 47\% of respondents in a single survey supported
+increasing immigration. We might want to know how plausible it would be
+for the true population proportion -- which is distinct from the sample
+proportion -- to be 50\% or greater. Questions like this are critical
+for a decision maker and, to answer this, we need to know the
+(approximate) distribution of \(\Xbar_n\) in addition to its mean and
+variance. We can often derive the exact distribution of an estimator if
+we are willing to make certain, sometimes strong assumptions about the
+underlying data (for example, if the population is normal, then the
+sample means will also be normal). Still, this approach is brittle: if
+our parametric assumption is false, we are back to square one.
 
 In this chapter, we take a different approach by asking what happens to
 the sampling distribution of estimators as the sample size gets very
@@ -2835,9 +2834,9 @@ in deterministic sequences from calculus:
 
 A sequence \(\{a_n: n = 1, 2, \ldots\}\) has the \textbf{limit} \(a\)
 written \(a_n \rightarrow a\) as \(n\rightarrow \infty\) or
-\(\lim_{n\rightarrow \infty} a_n = a\) if for all \(\epsilon > 0\) there
-is some \(n_{\epsilon} < \infty\) such that for all
-\(n \geq n_{\epsilon}\), \(|a_n - a| \leq \epsilon\).
+\(\lim_{n\rightarrow \infty} a_n = a\) if for all \(\varepsilon > 0\)
+there is some \(n_{\varepsilon} < \infty\) such that for all
+\(n \geq n_{\varepsilon}\), \(|a_n - a| \leq \varepsilon\).
 
 \end{definition}
 
@@ -2849,21 +2848,33 @@ sequence goes on.
 \begin{example}[]\protect\hypertarget{exm-limit}{}\label{exm-limit}
 
 One important sequence that arises often in statistics is \(1/n\) as
-\(n\to\infty\). It may seem clear that this sequence converges to 0, but
-showing this using the formal definition of convergence is helpful.
+\(n\to\infty\). Inspecting the sequence in Figure~\ref{fig-sequence}, it
+may seem clear that this sequence converges to 0, but showing this using
+the formal definition of convergence is helpful.
 
-Let us pick a specific value of \(\epsilon = 0.3\). Now we need to find
-an integer \(n_{\epsilon}\) so that \(|1/n - 0| = 1/n \leq \epsilon\)
-for all \(n \geq n_{\epsilon}\). Clearly, if \(\epsilon = 0.3\), then
-\(n_{\epsilon} = 4\) would satisfy this condition since
-\(1/4 \leq 0.3\).
+Let us pick a specific value of \(\varepsilon = 0.3\). Now we need to
+find an integer \(n_{\varepsilon}\) so that
+\(|1/n - 0| = 1/n \leq \varepsilon\) for all \(n \geq n_{\varepsilon}\).
+Clearly, if \(\varepsilon = 0.3\), then \(n_{\varepsilon} = 4\) would
+satisfy this condition since \(1/4 \leq 0.3\).
 
-\pandocbounded{\includegraphics[keepaspectratio]{asymptotics_files/figure-pdf/sequence-1.pdf}}
+\begin{figure}[th]
 
-More generally, for any \(\epsilon\), \(n \geq 1/\epsilon\) implies
-\(1/n \leq \epsilon\). Thus, setting \(n_{\epsilon} = 1/\epsilon\)
-ensures that the definition holds for all values of \(\epsilon\) and
-that \(\lim_{n\to\infty} 1/n = 0\).
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{asymptotics_files/figure-pdf/fig-sequence-1.pdf}}
+
+}
+
+\caption{\label{fig-sequence}Sequence 1/n from n = 1 to n = 20.}
+
+\end{figure}%
+
+More generally, for any \(\varepsilon\), \(n \geq 1/\varepsilon\)
+implies \(1/n \leq \varepsilon\). Thus, setting
+\(n_{\varepsilon} = \textsf{ceil}(1/\varepsilon)\) ensures that the
+definition holds for all values of \(\varepsilon\) and that
+\(\lim_{n\to\infty} 1/n = 0\).
 
 \end{example}
 
@@ -2884,7 +2895,7 @@ sequences with limits \(\lim_{n\to\infty} a_n = a\) and
 \item
   \(\lim_{n\to\infty} (a_n/b_n) = a/b\) if \(b \neq 0\)
 \item
-  \(\lim_{n\to\infty} a_n^{k} = a^{k}\)
+  \(\lim_{n\to\infty} a_n^{k} = a^{k}\) (for a fixed \(k\))
 \end{itemize}
 
 These rules plus the result in Example~\ref{exm-limit} allow us to prove
@@ -2899,17 +2910,17 @@ Suppose we have a sequence of \(a_n = a\) for all \(n\) (that is, a
 constant sequence). Then obviously
 \(\lim_{n\rightarrow\infty} a_n = a\). Now let's say we have a sequence
 of random variables, \(X_1, X_2, \ldots\), that are all independent with
-a standard normal distribution, \(N(0,1)\) (where \(N(\mu, \sigma^2))\)
+a standard normal distribution, \(\N(0,1)\) (where \(\N(\mu, \sigma^2)\)
 indicates a normal distribution with mean \(\mu\) and variance
 \(\sigma^2\)). From the analogy to the deterministic case, saying that
-\(X_n\) converges to \(X \sim N(0, 1)\) would be tempting, but note that
-because they are all different random variables, \(\P(X_n = X) = 0\).
-Thus, we must be careful about saying how one variable converges to
-another variable.
+\(X_n\) converges to \(X \sim \N(0, 1)\) would be tempting, but note
+that because they are all different random variables,
+\(\P(X_n = X) = 0\). Thus, we must be careful about saying how one
+variable converges to another variable.
 
 Another example highlights subtle problems with a sequence of random
 variables converging to a single value. Suppose we have a sequence of
-random variables \(X_1, X_2, \ldots\) where \(X_n \sim N(0, 1/n)\).
+random variables \(X_1, X_2, \ldots\) where \(X_n \sim \N(0, 1/n)\).
 Clearly, the distribution of \(X_n\) will concentrate around 0 for large
 values of \(n\), so saying that \(X_n\) converges to 0 is tempting. But
 notice that \(\P(X_n = 0) = 0\) because of the nature of continuous
@@ -2949,7 +2960,7 @@ and smaller as \(n\) gets big.
 
 Let's illustrate the definition of convergence in probability by
 constructing a sequence of random variables, \[
-X_n \sim N(0, 1/n).
+X_n \sim \N(0, 1/n).
 \]
 
 We can see intuitively that this sequence will be centered at zero with
@@ -2971,7 +2982,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Sometimes convergence in probability is written as
 \(\text{plim}(Z_n) = b\) when \(Z_n \inprob b\), \(\text{plim}\) stands
@@ -2986,20 +2997,20 @@ property of good estimators.
 
 \begin{definition}[]\protect\hypertarget{def-consistency}{}\label{def-consistency}
 
-An estimator is \textbf{consistent} if
-\(\widehat{\theta}_n \inprob \theta\).
+An estimator \(\widehat{\theta}_n\) is \textbf{consistent} for some
+parameter \(\theta\) if \(\widehat{\theta}_n \inprob \theta\).
 
 \end{definition}
 
 Consistency of an estimator implies that the sampling distribution of
 the estimator ``collapses'' on the true value as the sample size gets
-large. An estimator is \textbf{inconsistent} if it converges in
-probability to any other value. As the sample size gets large, the
-probability that an inconsistent estimator will be close to the truth
-will approach 0. Generally speaking, consistency is a very desirable
-property of an estimator.
+large. An estimator is \textbf{inconsistent} if, shockingly, it is not
+consistent. Inconsistency can occur because the estimator converges in
+probability to the wrong value or because it fails to converge at all
+(as with \(\widehat{\theta}_{\text{first}}\) below). Generally speaking,
+consistency is a very desirable property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Estimators can be inconsistent yet still converge in probability to an
 understandable quantity. For example, we will discuss in later chapters
@@ -3013,12 +3024,12 @@ for an interpretable quantity.
 \end{tcolorbox}
 
 We can also define convergence in probability for a sequence of random
-vectors, \(\X_1, \X_2, \ldots\), where
-\(\X_i = (X_{i1}, \ldots, X_{ik})\) is a random vector of length \(k\).
-This sequence converges in probability to a vector
+vectors, \(\mb{Z}_1, \mb{Z}_2, \ldots\), where
+\(\mb{Z}_n = (Z_{n1}, \ldots, Z_{nk})\) is a random vector of length
+\(k\). This sequence converges in probability to a vector
 \(\mb{b} = (b_1, \ldots, b_k)\) if and only if each random variable in
 the vector converges to the corresponding element in \(\mb{b}\), or that
-\(X_{nj} \inprob b_j\) for all \(j = 1, \ldots, k\).
+\(Z_{nj} \inprob b_j\) for all \(j = 1, \ldots, k\).
 
 \section{Useful inequalities}\label{useful-inequalities}
 
@@ -3062,18 +3073,18 @@ large in magnitude. Blitzstein and Hwang (2019) provide an excellent
 intuition behind this result using income as an example. Let \(X\) be
 the income of a randomly selected individual in a population and set
 \(\delta = 2\E[X]\) so that the inequality becomes
-\(\P(X > 2\E[X]) < 1/2\) (assuming that all income is nonnegative).
-Here, the inequality says that the share of the population with an
-income twice the average must be less than 0.5 since if more than half
-the population were making twice the average income, then the average
-would have to be higher.
+\(\P(X \geq 2\E[X]) \leq 1/2\) (assuming that all income is
+nonnegative). Here, the inequality says that the share of the population
+with an income twice the average cannot be greater than 0.5 since if
+more than half the population were making twice the average income, then
+the average would have to be higher.
 
 It's pretty astounding how general this result is since it holds for all
 random variables. Of course, its generality comes at the expense of not
 being very informative. If \(\E[|X|] = 5\), for instance, the inequality
 tells us that \(\P(|X| \geq 1) \leq 5\), which is not very helpful since
-we already know that probabilities are less than 1! We can get tighter
-bounds if we are willing to make some assumptions about \(X\).
+we already know that probabilities are no greater than 1! We can get
+tighter bounds if we are willing to make some assumptions about \(X\).
 
 \begin{theorem}[Chebyshev
 Inequality]\protect\hypertarget{thm-chebyshev}{}\label{thm-chebyshev}
@@ -3098,12 +3109,12 @@ result: the probability of a random variable being far from its mean
 random variable. If we let \(\delta = c\sigma\), where \(\sigma\) is the
 standard deviation of \(X\), we can use this result to bound the
 normalized deviation from the mean: \[
-\P\left(\frac{|X - \E[X]|}{\sigma} > c \right) \leq \frac{1}{c^2}.
+\P\left(\frac{|X - \E[X]|}{\sigma} \geq c \right) \leq \frac{1}{c^2}.
 \] This statement says the probability of being two standard deviations
-away from the mean must be less than 1/4 = 0.25. Notice that this bound
-can be fairly wide. If \(X\) has a normal distribution, we know that
-about 5\% of draws will be greater than 2 SDs away from the mean, much
-lower than the 25\% bound implied by Chebyshev's inequality.
+away from the mean must be less than or equal to 1/4 = 0.25. Notice that
+this bound can be fairly wide. If \(X\) has a normal distribution, we
+know that about 5\% of draws will be greater than 2 SDs away from the
+mean, much lower than the 25\% bound implied by Chebyshev's inequality.
 
 \section{The law of large numbers}\label{the-law-of-large-numbers}
 
@@ -3120,28 +3131,32 @@ The most famous consistency result has a special name.
 Numbers]\protect\hypertarget{thm-lln}{}\label{thm-lln}
 
 Let \(X_1, \ldots, X_n\) be i.i.d. draws from a distribution with mean
-\(\mu = \E[X_i]\) and variance \(\sigma^2 = \V[X_i] < \infty\). Let
+\(\mu = \E[X_i]\) where \(\E[|X_i|] < \infty\). Let
 \(\Xbar_n = \frac{1}{n} \sum_{i =1}^n X_i\). Then,
 \(\Xbar_n \inprob \mu\).
 
 \end{theorem}
 
 \begin{proof}
+We will prove the case in which the random variable has finite variance,
+\(\sigma^2 = \V[X_i] < \infty\), even though the result holds even under
+infinite variance (the proof just requires techniques outside the scope
+of this book).
+
 Recall that the sample mean is unbiased, so \(\E[\Xbar_n] = \mu\) with
 sampling variance \(\sigma^2/n\). We can then apply Chebyshev to the
 sample mean to get \[
 \P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\V[\Xbar_n]}{\delta^2} = \frac{\sigma^2}{n\delta^2}
-\] An \(n\rightarrow\infty\), the right-hand side goes to 0, which means
+\] As \(n\rightarrow\infty\), the right-hand side goes to 0, which means
 that the left-hand side also must go to 0, which is the definition of
 \(\Xbar_n\) converging in probability to \(\mu\).
 \end{proof}
 
 The weak law of large numbers (WLLN) shows that, under general
 conditions, the sample mean gets closer to the population mean as
-\(n\rightarrow\infty\). This result holds even when the variance of the
-data is infinite, though researchers will rarely face such a situation.
+\(n\rightarrow\infty\).
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), which is true.
@@ -3163,11 +3178,10 @@ the sample size allows us to appreciate the WLLN. We can see this by
 taking repeated iid samples of different sizes from an exponential
 random variable with rate parameter 0.5 so that \(\E[X_i] = 2\). In
 Figure~\ref{fig-lln-sim}, we show the distribution of the sample mean
-(across repeated samples) when the sample size is 15 (black), 30
-(violet), 100 (blue), and 1000 (green). The sample mean distribution
-``collapses'' on the true population mean, 2. The probability of being
-far away from 2 becomes progressively smaller as the sample size
-increases.
+(across repeated samples) when the sample size is 15, 30, 100, and 1000.
+The sample mean distribution ``collapses'' on the true population mean,
+2. The probability of being far away from 2 becomes progressively
+smaller as the sample size increases.
 
 \begin{figure}[th]
 
@@ -3204,7 +3218,7 @@ the following theorem.
 \begin{theorem}[]\protect\hypertarget{thm-vector-wlln}{}\label{thm-vector-wlln}
 
 If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
-\(\E[X_{ij}] < \infty\) for all \(j=1,\ldots,k\) then as
+\(\E[|X_{ij}|] < \infty\) for all \(j=1,\ldots,k\) then as
 \(n\rightarrow\infty\)
 
 \[
@@ -3216,7 +3230,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Note that many of the formal results presented so far have ``moment
 conditions'' that certain moments are finite. For the vector WLLN, we
@@ -3224,13 +3238,22 @@ saw that applied to the mean of each variable in the vector. Some books
 use a shorthand for this: \(\E\Vert \X_i\Vert < \infty\), where \[
 \Vert\X_i\Vert = \left(X_{i1}^2 + X_{i2}^2 + \ldots + X_{ik}^2\right)^{1/2}. 
 \] This expression has slightly more compact notation, but why does it
-work? One can show that this function, called the \textbf{Euclidean
-norm} or \(L_2\)-norm, is a \textbf{convex} function, so we can apply
-Jensen's inequality to show that: \[
-\E\Vert \X_i\Vert \geq \Vert \E[\X_i] \Vert = (\E[X_{i1}]^2 + \ldots + \E[X_{ik}]^2)^{1/2}.
-\] So if \(\E\Vert \X_i\Vert\) is finite, all the component means are
-finite. Otherwise, the right-hand side of the previous equation would be
-infinite.
+work?
+
+One can show that this function, called the \textbf{Euclidean norm} or
+\(L_2\)-norm bounds the absolute value of any particular entry in the
+vector, \[
+\Vert\X_i\Vert = \left(X_{i1}^2 + X_{i2}^2 + \ldots + X_{ik}^2\right)^{1/2}
+\geq \sqrt{X_{ij}^2} = |X_{ij}|,
+\] which implies \(\E[\Vert \X_i\Vert] \geq \E[|X_{ij}|]\). So if
+\(\E[\Vert \X_i\Vert]\) is finite, then all entries must also be finite.
+
+One other implicit result that theorems often rely on is the
+relationship between moments of different order. Namely, if a given
+moment exists---say, \(\E[X_i^4] < \infty\)---then all lower-order
+moments like \(\E[X_i]\) and \(\E[X_i^2]\) also must exist. So theorems
+are often stated with the lowest-order moment condition required to make
+sure the theorem is true.
 
 \end{tcolorbox}
 
@@ -3252,10 +3275,12 @@ then \(\widehat{\theta}_n\) is consistent.
 
 \end{theorem}
 
-Thus, for unbiased estimators, if we can characterize its sampling
-variance, we should be able to tell if it is consistent. This result is
-handy since working with the probability statements used for the WLLN
-can sometimes be confusing.
+Thus, for unbiased estimators, we can establish their consistency by
+showing their sampling variance tends to zero as the sample size gets
+larger (though note there are consistent estimators that have sampling
+variance that do not converge to zero). This result is handy since
+working with the probability statements used for the WLLN can sometimes
+be confusing.
 
 What about biased estimators? Consider a situation where we calculate
 average household income, \(\Xbar_n\), from a random sample with mean
@@ -3287,7 +3312,7 @@ continuous function. Then,
 \item
   \(X_nZ_n \inprob ab\)
 \item
-  \(X_n/Z_n \inprob a/b\) if \(b > 0\).
+  \(X_n/Z_n \inprob a/b\) if \(b \neq 0\).
 \end{enumerate}
 
 \end{theorem}
@@ -3297,7 +3322,7 @@ nonlinear functions are made considerably easier with convergence in
 probability in the asymptotic setting. So while we know that
 \(\log(\Xbar_n)\) is biased for \(\log(\mu)\), we know that it is
 consistent since \(\log(\Xbar_n) \inprob \log(\mu)\) because \(\log\) is
-a continuous function.
+contiunuous for \(\mu > 0\).
 
 \begin{example}[]\protect\hypertarget{exm-nonresponse}{}\label{exm-nonresponse}
 
@@ -3308,8 +3333,8 @@ the data consist of pairs of random variables,
 interest and \(R_i\) is a binary indicator for if the respondent
 answered the question (\(R_i = 1\)) or not (\(R_i = 0\)). Our goal is to
 estimate the mean of the question for responders:
-\(\E[Y_i \mid R_i = 1]\). We can use the law of iterated expectation to
-obtain \[
+\(\E[Y_i \mid R_i = 1]\). Let \(\P(R_i = 1)\) be the probability of
+responding. We can use the law of iterated expectation to obtain \[
 \begin{aligned}
 \E[Y_iR_i] &= \E[Y_i \mid R_i = 1]\P(R_i = 1) + \E[ 0 \mid R_i = 0]\P(R_i = 0) \\
 \implies \E[Y_i \mid R_i = 1] &= \frac{\E[Y_iR_i]}{\P(R_i = 1)}
@@ -3322,9 +3347,10 @@ typical sample mean because the denominator is a random variable: \[
 \widehat{\theta}_n = \frac{\sum_{i=1}^n Y_iR_i}{\sum_{i=1}^n R_i}. 
 \] Notice that this estimator is the ratio of two random variables. The
 numerator has mean \(n\E[Y_iR_i]\) and the denominator has mean
-\(n\P(R_i = 1)\). It is then tempting to say that we can take the ratio
-of these means as the mean of \(\widehat{\theta}_n\), but expectations
-are not preserved in nonlinear functions like this.
+\(n\P(R_i = 1)\). This estimator is actually unbiased (conditional on at
+least 1 responder), but this result is somewhat tricky to show because
+the nonlinear way \(\sum_{i=1}^n R_i\) enters the estimator.
+Consistency, on the other hand, is easy to establish.
 
 We can establish consistency of our estimator, though, by noting that we
 can rewrite the estimator as a ratio of sample means \[
@@ -3333,10 +3359,9 @@ can rewrite the estimator as a ratio of sample means \[
 \((1/n)\sum_{i=1}^n Y_iR_i \inprob \E[Y_iR_i]\) and the denominator
 \((1/n)\sum_{i=1}^n R_i \inprob \P(R_i = 1)\). Thus, by
 Theorem~\ref{thm-inprob-properties}, we have \[
-\widehat{\theta}_n = \frac{(1/n)\sum_{i=1}^n Y_iR_i}{(1/n)\sum_{i=1}^n R_i} \inprob \frac{\E[Y_iR_i]}{\P[R_i = 1]} = \E[Y_i \mid R_i = 1],
+\widehat{\theta}_n = \frac{(1/n)\sum_{i=1}^n Y_iR_i}{(1/n)\sum_{i=1}^n R_i} \inprob \frac{\E[Y_iR_i]}{\P(R_i = 1)} = \E[Y_i \mid R_i = 1],
 \] so long as the probability of responding is greater than zero. This
-establishes that our sample mean among responders, while biased for the
-conditional expectation among responders, is consistent for that
+establishes that our sample mean among responders is consistent for that
 quantity.
 
 \end{example}
@@ -3344,28 +3369,63 @@ quantity.
 Keeping the difference between unbiased and consistent clear in your
 mind is essential. You can easily create ridiculous unbiased estimators
 that are inconsistent. Let's return to our iid sample,
-\(X_1, \ldots, X_n\), from a population with \(E[X_i] = \mu\). There is
+\(X_1, \ldots, X_n\), from a population with \(\E[X_i] = \mu\). There is
 nothing in the rule book against defining an estimator
-\(\widehat{\theta}_{first} = X_1\) that uses the first observation as
-the estimate. This estimator is silly, but it is unbiased since
-\(\E[\widehat{\theta}_{first}] = \E[X_1] = \mu\). It is inconsistent
-since the sampling variance of this estimator is just the variance of
-the population distribution,
-\(\V[\widehat{\theta}_{first}] = \V[X_i] = \sigma^2\), which does not
-change as a function of the sample size. Generally speaking, we can
-regard ``unbiased but inconsistent'' estimators as silly and not worth
-our time (along with biased and inconsistent estimators).
+\(\widehat{\theta}_{n,\text{first}} = X_1\) that uses the first
+observation as the estimate. This estimator is silly, but it is unbiased
+since \(\E[\widehat{\theta}_{n,\text{first}}] = \E[X_1] = \mu\). It is
+inconsistent since its distribution does not change at all as a function
+of the sample size. Generally speaking, we can regard ``unbiased but
+inconsistent'' estimators as silly and not worth our time (along with
+biased and inconsistent estimators).
 
 Some estimators are biased but consistent that are often much more
-interesting. We already saw one such estimator in
-Example~\ref{exm-nonresponse}, but there are many more. Maximum
-likelihood estimators, for example, are (under some regularity
-conditions) consistent for the parameters of a parametric model but are
-often biased.
+interesting. We have already seen some of these, like \(\log(\Xbar_n)\),
+but there are many more. Maximum likelihood estimators, for example, are
+(under some regularity conditions) consistent for the parameters of a
+parametric model but are often biased.
 
-To study these estimator, we can broaden Theorem~\ref{thm-consis} to the
-class of \textbf{asymptotically unbiased} estimators that have bias that
-vanishes as the sample size grows.
+\begin{example}[Plug-in variance
+estimator]\protect\hypertarget{exm-plug-in-variance}{}\label{exm-plug-in-variance}
+
+In the last chapter, we introduced the plug-in estimator for the
+population variance, \[
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
+\] and derived its bias as \(-(1/n)\sigma^2\). Using the alternative
+formulation of the sum of squared deviation from the mean, we can
+rewrite this estimator as \[
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n X_i^2 - (\Xbar_n)^2.
+\] The first term is just a sample mean, so if \(\E[X_i^2] < \infty\),
+the WLLN will apply, so that \[
+\frac{1}{n} \sum_{i=1}^n X_i^2 \inprob \E[X_i^2].
+\] The WLLN and Theorem~\ref{thm-inprob-properties} will ensure that
+\((\Xbar_n)^2 \inprob \mu^2\). Again applying
+Theorem~\ref{thm-inprob-properties}, we can see that \[
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n X_i^2 - (\Xbar_n)^2 \inprob \E[X_i^2] - \mu^2 = \sigma^2
+\]
+
+Thus, the plug-in estimator is another biased but consistent estimator.
+
+\end{example}
+
+\begin{example}[]\protect\hypertarget{exm-ratio-estimator}{}\label{exm-ratio-estimator}
+
+One general class of estimators are called \textbf{ratio estimators} and
+are, as their name implies, ratios of estimators. Let \((Y_i, X_i)\) be
+iid draws from a population distribution with population means,
+\(\mu_y\) and \(\mu_x\), and two sample means, \(\Ybar_n\) and
+\(\Xbar_n\). The ratio of the sample means is generally biased for the
+ratio of population means, \[
+\E\left[\frac{\Ybar_n}{\Xbar_n} \right] \neq \frac{\mu_y}{\mu_x}.
+\] However, as long as \(\mu_x \neq 0\),
+Theorem~\ref{thm-inprob-properties} tells us that this is a consistent
+estimator, \(\Ybar_n/\Xbar_n \inprob \mu_y/\mu_x\).
+
+\end{example}
+
+We can broaden Theorem~\ref{thm-consis} to the class of
+\textbf{asymptotically unbiased} estimators that have bias that vanishes
+as the sample size grows.
 
 \begin{theorem}[]\protect\hypertarget{thm-consis-2}{}\label{thm-consis-2}
 
@@ -3378,30 +3438,13 @@ then \(\widehat{\theta}_n\) is consistent.
 
 \begin{proof}
 Using Markov's inequality, we have \[
-\P\left( |\widehat{\theta}_n - \theta| \geq \delta \right) = \P((\widehat{\theta}_n-\theta)^2 \geq \delta^2) \leq \frac{\E[(\widehat{\theta}_n - \theta)^2]}{\delta^2} = \frac{\textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}]}{\delta^2} \to 0.
-\] The last inequality follows from the bias-variance decomposition of
-the mean squared error in Equation~\ref{eq-mse-decomposition}.
+\P\left( |\widehat{\theta}_n - \theta| \geq \delta \right) = \P((\widehat{\theta}_n-\theta)^2 \geq \delta^2) \leq \frac{\E[(\widehat{\theta}_n - \theta)^2]}{\delta^2} = \frac{\textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]}{\delta^2} \to 0.
+\] The last equality follows from the bias-variance decomposition of the
+mean squared error in Equation~\ref{eq-mse-decomposition}.
 \end{proof}
 
 We can use this result to show consistency for a large range of
 estimators.
-
-\begin{example}[Plug-in variance
-estimator]\protect\hypertarget{exm-plug-in-variance}{}\label{exm-plug-in-variance}
-
-In the last chapter, we introduced the plug-in estimator for the
-population variance, \[
-\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
-\] and derived its bias as \(-(1/n)\sigma^2\). We can easily show that
-this estimator is biased but consistent. The bias shrinks as a function
-of the sample size, so according to Theorem~\ref{thm-consis-2}, it will
-be consistent so long as the sampling variance of \(\widehat{\sigma}^2\)
-shrinks as a function of the sample size, which it does (though we omit
-that proof here). Of course, simply multiplying this estimator by
-\(n/(n-1)\) will give an unbiased and consistent estimator that is also
-the typical sample variance estimator.
-
-\end{example}
 
 \section{Convergence in distribution and the central limit
 theorem}\label{convergence-in-distribution-and-the-central-limit-theorem}
@@ -3419,7 +3462,7 @@ established results will allow us to approximate the sampling
 distribution of a vast swath of estimators when our sample sizes are
 large.
 
-We need first to describe a weaker form of convergence to see how we
+We need first to describe a different form of convergence to see how we
 will develop these approximations.
 
 \begin{definition}[]\protect\hypertarget{def-indist}{}\label{def-indist}
@@ -3440,18 +3483,35 @@ distribution of \(X\), which we often call the \textbf{asymptotic
 distribution} of \(X_n\) (other names include the \textbf{large-sample
 distribution}). If we know that \(X_n \indist X\), then we can use the
 distribution of \(X\) as an approximation to the distribution of
-\(X_n\), and that distribution can be reasonably accurate.
+\(X_n\), and that distribution can be reasonably accurate. This
+definition also helps to resolve an earlier puzzle: a sequence of iid
+\(\N(0, 1)\) random variables trivially converges in distribution to a
+\(\N(0, 1)\) since every \(F_n = \Phi\), where \(\Phi\) is the cdf of
+the standard normal.
 
 \begin{example}[]\protect\hypertarget{exm-indist}{}\label{exm-indist}
 
 A simple example of convergence in distribution would be the sequence \[
-X_n \sim N\left(\frac{1}{n}, 1 + \frac{1}{n}\right),
+X_n \sim N\left(\frac{1}{n}, \left(1 + \frac{1}{n}\right)^2\right),
 \] which, of course, has the cdf, \[
 \Phi\left(\frac{x - 1/n}{1+1/n}\right).
 \] By inspection, this converges to \(\Phi(x)\), which is the cdf for
-the standard normal. This implies \(X_n \indist N(0, 1)\).
+the standard normal. This implies \(X_n \indist \N(0, 1)\).
+Figure~\ref{fig-indist} shows the evolution of the distributions at
+various values of \(n\).
 
-\pandocbounded{\includegraphics[keepaspectratio]{asymptotics_files/figure-pdf/indist-1.pdf}}
+\begin{figure}[th]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{asymptotics_files/figure-pdf/fig-indist-1.pdf}}
+
+}
+
+\caption{\label{fig-indist}Convergence in distribution of
+\(X_n \sim \N(1/n, (1 + 1/n)^2)\) to the standard normal.}
+
+\end{figure}%
 
 \end{example}
 
@@ -3470,7 +3530,7 @@ sample mean.
 Theorem]\protect\hypertarget{thm-clt}{}\label{thm-clt}
 
 Let \(X_1, \ldots, X_n\) be i.i.d. r.v.s from a distribution with mean
-\(\mu = \E[X_i]\) and variance \(\sigma^2 = \V[X_i]\). Then if
+\(\mu = \E[X_i]\) and variance \(\sigma^2 = \V[X_i] > 0\). Then if
 \(\E[X_i^2] < \infty\), we have \[
 \frac{\Xbar_n - \mu}{\sqrt{\V[\Xbar_n]}} = \frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{\sigma} \indist \N(0, 1).
 \]
@@ -3482,59 +3542,82 @@ finite mean and variance will be approximately normally distributed in
 large samples. Notice how we have not made any assumptions about the
 distribution of the underlying random variables, \(X_i\). They could be
 binary, event count, continuous, or anything. The CLT is incredibly
-broadly applicable.
+broadly applicable---even though we have stated it for iid data,
+versions of it (and the LLN) exist for independent-but-not-identically
+distributed data, clustered data, and weakly dependent data.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Why \(\sqrt{n}?\)}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
 mean in this way. In that case, it isn't easy to talk about convergence
 in distribution because we know from the WLLN that
 \(\Xbar_n \inprob \mu\), so in the limit, the distribution of
-\(\Xbar_n\) is concentrated at point mass around that value. Normalizing
-by centering and rescaling ensures that the variance of the resulting
-quantity will not depend on \(n\), so it makes sense to talk about its
-distribution converging. Sometimes you will see the equivalent result as
-\[
+\(\Xbar_n\) is concentrated at point mass around that value.
+Standardizing by centering around its mean \(\E[\Xbar_n] = \mu\) and
+rescaling by its standard error
+\(\sqrt{\V[\Xbar_n]} = \sigma / \sqrt{n}\) ensures that the sequence
+\(\sqrt{n}(\Xbar_n - \mu)/\sigma\) always has mean 0 and variance 1 for
+every possible \(n\). The \(1/\sqrt{n}\) scaling is the rate at which
+the standard error shrinks so \(\sqrt{n}\) is exactly the scaling we
+need to keep the standard error stable.
+
+Sometimes you will see the equivalent result as \[
 \sqrt{n}\left(\Xbar_n - \mu\right) \indist \N(0, \sigma^2).
 \]
 
 \end{tcolorbox}
 
-We can use this result to state approximations that we can use when
-discussing estimators such as \[
-\Xbar_n \overset{a}{\sim} N(\mu, \sigma^2/n),
-\] where we use \(\overset{a}{\sim}\) to be ``approximately distributed
-as in large samples.'' This approximation allows us to say things like:
-``in large samples, we should expect the sample mean to between within
-\(2\sigma/\sqrt{n}\) of the true mean in 95\% of repeated samples.''
-These statements will be essential for hypothesis tests and confidence
-intervals! Estimators so often follow the CLT that we have an expression
-for this property.
+Why do sample means converge to a normal distribution no matter the
+distribution of \(X_i\)? We can build intuition by splitting the
+question into two steps.
 
-\begin{definition}[]\protect\hypertarget{def-asymptotically-normal}{}\label{def-asymptotically-normal}
+First, the limiting distribution cannot depend on the exact distribution
+of \(X_i\). Let's write the centered and rescaled mean as a sum of \(n\)
+standardized terms, scaled down by \(1/\sqrt{n}\), \[
+Z_n = \frac{\sqrt{n}(\Xbar_n - \mu)}{\sigma} = \frac{1}{\sqrt{n}}\sum_{i=1}^n \frac{X_i - \mu}{\sigma}.
+\] Now, imagine replacing each of the terms in this sum with independent
+random variables \(Y_1, \ldots, Y_n\) that also have mean 0, variance 1.
+This swap will change the distribution of \(Z_n\) but not its mean or
+variance, since we have matched those. Instead, the swap will affect
+higher-order moments like skewness or kurtosis. If the \(X_i\) have
+skewness \(\gamma_X\), then \(Z_n\) has skewness \(\gamma_X / \sqrt{n}\)
+whereas the swapped version with \(Y_i\) would have skewness
+\(\gamma_Y / \sqrt{n}\). Either way the skewness vanishes as
+\(n\to\infty\), and differences in higher moments fade even more quickly
+(such as \(1/n\)). Essentially, as we add more terms to \(Z_n\), the
+effect of the original distribution of \(X_i\) on \(Z_n\) fades.
 
-An estimator \(\widehat{\theta}_n\) is \textbf{asymptotically normal} if
-for some \(\theta\) \[
-\sqrt{n}\left( \widehat{\theta}_n - \theta \right) \indist N\left(0,\V_{\theta}\right).
-\]
-
-\end{definition}
+Second, if every distribution leads to the same limiting distribution,
+we might as well choose an easy distribution to work with. If \(X_i\)
+are normal, then \(Z_n\) would be exactly a standard normal for all
+\(n\) since sums of independent normals are themselves normally
+distributed. Thus, the limit for normal variables must be \(\N(0,1)\),
+which also must be the common limit for sample means of \emph{any}
+distribution. In fact, the normal distribution is the only
+finite-variance distribution that is stable under addition in this way,
+which is why there are no other distributions that could be the limit.
 
 \begin{example}[]\protect\hypertarget{exm-bin-clt}{}\label{exm-bin-clt}
 
 To illustrate how the CLT works, we can simulate the sampling
-distribution of the (normalized) sample mean at different sample sizes.
-Let \(X_1, \ldots, X_n\) be iid samples from a Bernoulli with
-probability of success 0.25. We then draw repeated samples of size
-\(n=30\) and \(n=100\) and calculate \(\sqrt{n}(\Xbar_n - 0.25)/\sigma\)
-for each random sample. Figure~\ref{fig-clt} plots the density of these
-two sampling distributions along with a standard normal reference. We
-can see that even at \(n=30\), the rough shape of the density looks
-normal, with spikes and valleys due to the discrete nature of the data
-(the sample mean can only take on 31 possible values in this case). By
-\(n=100\), the sampling distribution is very close to the true standard
-normal.
+distribution of the (normalized) sample mean at different sample sizes
+and different data generating processes. We'll consider
+\(X_1, \ldots, X_n\) be iid samples from a Bernoulli with probability of
+success either \(p = 0.02\) or \(p=0.25\). We then draw repeated samples
+of size \(n \in \{30, 100, 1000\}\), and calculate
+\(\sqrt{n}(\Xbar_n - p)/\sigma\) for each random sample.
+Figure~\ref{fig-clt} plots the density of these sampling distributions.
+For \(p = 0.25\), we can see that even at \(n=30\), the rough shape of
+the density looks normal, with spikes and valleys due to the discrete
+nature of the data (the sample mean can only take on 31 possible values
+in this case). By \(n=100\), the sampling distribution is very close to
+a true standard normal and is barely noticeably different than the curve
+at \(n = 1000\). For \(p=0.02\), on the other hand, the sampling
+distribution looks very non-normal and spiky even at \(n=100\), and it
+isn't until \(n=1000\) that we really see the familiar normal shape. The
+expected number of successes is only 0.6 at \(n=30\) and 2 at \(n=100\),
+which is why this rare-success case is slower to converge.
 
 \begin{figure}[th]
 
@@ -3545,11 +3628,48 @@ normal.
 }
 
 \caption{\label{fig-clt}Sampling distributions of the normalized sample
-mean at n=30 and n=100.}
+proportions at different probabilities of success and different sample
+sizes.}
 
 \end{figure}%
 
+These differences highlight how, while the limiting result of the CLT
+applies to a wide variety of data generating processes, the nature of
+those processes can affect how quickly the limiting distribution will be
+a useful approximation. Thus, we cannot know in advance if a CLT-based
+normal distribution will provide a good approximation for the exact DGP
+and sample size we're studying.
+
 \end{example}
+
+We can use this result to state approximations that we can use when
+discussing estimators such as \[
+\Xbar_n \overset{a}{\sim} \N(\mu, \sigma^2/n),
+\] where we use \(\overset{a}{\sim}\) to be ``approximately distributed
+as in large samples.'' This approximation allows us to say things like:
+``in large samples, we should expect the sample mean to be within
+\(2\sigma/\sqrt{n}\) of the true mean in about 95\% of repeated
+samples.'' These statements will be essential for hypothesis tests and
+confidence intervals! Estimators so often follow the CLT that we have an
+expression for this property.
+
+\begin{definition}[]\protect\hypertarget{def-asymptotically-normal}{}\label{def-asymptotically-normal}
+
+An estimator \(\widehat{\theta}_n\) of a parameter \(\theta\) is
+\textbf{asymptotically normal} if \[
+\sqrt{n}\left( \widehat{\theta}_n - \theta \right) \indist N\left(0, V_{\theta}\right).
+\]
+
+\end{definition}
+
+We refer to \(V_{\theta}\) as the asymptotic variance of centered and
+\(\sqrt{n}\)-stabilized estimator,
+\(\sqrt{n}(\widehat{\theta}_n - \theta)\). An asymptotically normal
+estimator will, in large samples, have an approximately normal
+distribution, \[
+\widehat{\theta}_n \overset{a}{\sim} \N(\theta, V_{\theta}/n).
+\] We can then refer to the asymptotic standard error of
+\(\widehat{\theta}_n\) as \(\sqrt{V_{\theta}/n}\).
 
 There are several properties of convergence in distribution that are
 helpful to us.
@@ -3579,26 +3699,54 @@ some number, \(c\). Then,
 
 We refer to the last three results as \textbf{Slutsky's theorem}. These
 results are often crucial for determining an estimator's asymptotic
-distribution.
+distribution. Why focus on the case with \(X_n\) converging in
+distribution and \(Y_n\) converging in probability to a point value? In
+the limit, \(Y_n\) adds no variability so the limiting distribution is
+entirely driven by the limit of \(X_n\). If both converged in
+distribution, so \(Y_n \indist Y\), the limiting distribution would
+depend on joint distribution of \(X_n\) and \(Y_n\), which could include
+correlation that would be missed by the sum of the marginal limits,
+\(X + Y\).
 
 A critical application of Slutsky's theorem is when we replace the
 (unknown) population variance in the CLT with an estimate. Recall the
 definition of the \textbf{sample variance} as \[
 S_n^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \Xbar_n)^2,
 \] with the \textbf{sample standard deviation} defined as
-\(S_{n} = \sqrt{S_{n}^2}\). It's easy to show that these are consistent
-estimators for their respective population parameters \[ 
+\(S_{n} = \sqrt{S_{n}^2}\). In Example~\ref{exm-plug-in-variance} we
+showed that \(\widehat{\sigma}^2 \inprob \sigma^2\). If
+\(S_n^2 = (n / (n-1))\widehat{\sigma}^2\), then by the CMT, we have \[ 
 S_{n}^2 \inprob \sigma^2 = \V[X_i], \qquad S_{n} \inprob \sigma,
 \] which, by Slutsky's theorem, implies that \[
 \frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{S_n} \indist \N(0, 1)
 \] Comparing this result to the statement of CLT, we see that replacing
 the population variance with a consistent estimate of the variance (or
-standard deviation) does not affect the asymptotic distribution.
+standard deviation) does not affect the asymptotic distribution. Thus,
+\(S_n / \sqrt{n}\) is a valid standard error estimator even though we
+saw in the last chapter it was slightly biased. Of course, in small
+samples the substitution could matter---we will return to this with the
+\(t\)-distribution in Chapter~\ref{sec-confidence-intervals}.
+
+We can generalize this idea to any asymptotically normal estimator,
+\(\widehat{\theta}_n\). Suppose we have a consistent estimator for
+asymptotic variance of the stabilized estimator,
+\(\widehat{V}_{\theta} \inprob V_{\theta} >0\). Then we can obtain an
+estimator for the standard error, \(\sqrt{\widehat{V}_{\theta} / n}\)
+and apply Slutsky's theorem to show that normalizing by this estimated
+standard error will also converge to a standard normal: \[
+\frac{\widehat{\theta}_n - \theta}{\sqrt{\widehat{V}_{\theta} / n}} \indist \N(0, 1)
+\]
 
 Like with the WLLN, the CLT holds for random vectors of sample means,
 where their centered and scaled versions converge to a multivariate
 normal distribution with a covariance matrix equal to the covariance
-matrix of the underlying random vectors of data, \(\X_i\).
+matrix of the underlying random vectors of data, \(\X_i\). For a
+sequence of random vectors, \(\mb{Z}_n\) and a limit vector \(\mb{Z}\),
+we say \(\mb{Z}_n\) converges in distribution to \(\mb{Z}\) (or
+\(\mb{Z} \indist \mb{Z}\)) if the the joint distribution of \(\mb{Z}_n\)
+converges to the joint distribution of \(\mb{Z}\). Note that marginal
+convergence in distribution of each entry of \(\mb{Z}_n\) is necessary,
+but not sufficient for multivariate convergence.
 
 \begin{theorem}[]\protect\hypertarget{thm-multivariate-clt}{}\label{thm-multivariate-clt}
 
@@ -3614,21 +3762,43 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
 \(\E[X_{ij}^2] < \infty\) for all \(j = 1,\ldots, k\), or equivalently,
-that the variances of each variable in the sample means has finite
-variance.
+that the variances of each variable in the sample means are finite.
 
 \end{tcolorbox}
+
+Finally, there are multivariate version of
+Theorem~\ref{thm-indist-properties}.
+
+\begin{theorem}[Properties of convergence in
+distribution]\protect\hypertarget{thm-indist-properties-multivariate}{}\label{thm-indist-properties-multivariate}
+
+Let \(\X_n\) be a sequence of random vectors \(\X_1, \X_2,\ldots\) that
+converges in distribution to some rv \(\X\) and let \(\mb{Y}_n\) be a
+sequence of random vectors \(\mb{Y}_1, \mb{Y}_2,\ldots\) that converges
+in probability to some constant vector, \(\mb{c}\). Then,
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(g(\X_n) \indist g(\X)\) for all continuous functions \(g\).
+\item
+  \(g(\X_n, \mb{Y}_n) \indist g(\X, \mb{c})\) for all continuous
+  functions \(g\).
+\end{enumerate}
+
+\end{theorem}
 
 \section{Delta method}\label{sec-delta-method}
 
 Suppose that we know that an estimator follows the CLT, and so we have
 \[
-\sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V),
+\sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V_{\theta}),
 \] but we actually want to estimate \(h(\theta)\) so we use the plug-in
 estimator, \(h(\widehat{\theta}_n)\). It seems like we should be able to
 apply part 1 of Theorem~\ref{thm-indist-properties} to obtain the
@@ -3642,10 +3812,11 @@ need.
 
 \begin{theorem}[]\protect\hypertarget{thm-delta-method}{}\label{thm-delta-method}
 
-If \(\sqrt{n}\left(\widehat{\theta}_n - \theta\right) \indist \N(0, V)\)
+If
+\(\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right) \indist \N(0, V_{\theta})\)
 and \(h(u)\) is continuously differentiable in a neighborhood around
-\(\theta\), then as \(n\to\infty\), \[
-\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta) \right) \indist \N(0, (h'(\theta))^2 V).
+\(\theta_0\), then as \(n\to\infty\), \[
+\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta_0) \right) \indist \N(0, (h'(\theta_0))^2 V_{\theta}).
 \]
 
 \end{theorem}
@@ -3653,19 +3824,22 @@ and \(h(u)\) is continuously differentiable in a neighborhood around
 Understanding what is happening here provides intuition as to when this
 might go wrong. Why do we focus on continuously differentiable
 functions, \(h()\)? These functions can be well-approximated with a line
-in a neighborhood around a given point like \(\theta\). In
-Figure~\ref{fig-delta}, we show this at the point where the tangent line
-at \(\theta_0\), which has slope \(h'(\theta_0)\), is very similar to
-\(h(\theta)\) for values close to \(\theta_0\). Because of this, we can
-approximate the difference between \(h(\widehat{\theta}_n)\) and
-\(h(\theta_0)\) with the what this tangent line would give us: \[
-\underbrace{\left(h(\widehat{\theta_n}) - h(\theta_0)\right)}_{\text{change in } y} \approx \underbrace{h'(\theta_0)}_{\text{slope}} \underbrace{\left(\widehat{\theta}_n - \theta_0\right)}_{\text{change in } x},
+in a neighborhood around \(\theta_0\). In Figure~\ref{fig-delta}, we
+plot the tangent line at \(\theta_0\), which has slope \(h'(\theta_0)\),
+is very similar to \(h(\theta)\) for values close to \(\theta_0\).
+Because of this, we can approximate the difference between
+\(h(\widehat{\theta}_n)\) and \(h(\theta_0)\) with what this tangent
+line would give us: \[
+\underbrace{\left(h(\widehat{\theta}_n) - h(\theta_0)\right)}_{\text{change in } y} \approx \underbrace{h'(\theta_0)}_{\text{slope}} \underbrace{\left(\widehat{\theta}_n - \theta_0\right)}_{\text{change in } x},
 \] and then multiplying both sides by the \(\sqrt{n}\) gives \[
 \sqrt{n}\left(h(\widehat{\theta_n}) - h(\theta_0)\right) \approx h'(\theta_0)\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right). 
-\] The right-hand side of this approximation converges to
-\(h'(\theta_0)Z\), where \(Z\) is a random variable with \(\N(0, V)\).
-The variance of this quantity will be \[
-\V[h'(\theta_0)Z] = (h'(\theta_0))^2\V[Z] = (h'(\theta_0))^2V,
+\] For a consistent estimator, this approximation improves as \(n\)
+grows because \(\widehat\theta_n\) lands ever closer to \(\theta_0\),
+where the tangent line is accurate. The right-hand side of this
+approximation converges to \(h'(\theta_0)Z\), where \(Z\) is a random
+variable with \(\N(0, V_{\theta})\). The variance of this quantity will
+be \[
+\V[h'(\theta_0)Z] = (h'(\theta_0))^2\V[Z] = (h'(\theta_0))^2V_{\theta},
 \] by the properties of variances.
 
 \begin{figure}[th]
@@ -3695,16 +3869,36 @@ h'(\mu) = \frac{\partial \log(\mu)}{\partial \mu} = \frac{1}{\mu},
 \sqrt{n}\left(\log(\Xbar_n) - \log(\mu)\right) \indist \N\left(0,\frac{\sigma^2}{\mu^2} \right).
 \]
 
+We can build a plug-in estimator of the asymptotic variance
+\(\widehat{V} = S_n^2 / \Xbar_n^2\) which will converge in probability
+to the true variance, \(\sigma^2 / \mu ^ 2\) by the CMT. So an estimated
+standard error would be
+\(\widehat{\se}[\log(\Xbar_n)] = S_n / (\Xbar_n \sqrt{n})\).
+
 \end{example}
 
-\begin{example}[]\protect\hypertarget{exm-exp}{}\label{exm-exp}
+\begin{example}[]\protect\hypertarget{exm-squared}{}\label{exm-squared}
 
-What about estimating the \(\exp(\mu)\) with \(\exp(\Xbar_n)\)? Recall
+What about estimating the \(h(\mu) =\mu^2\) with \(\Xbar_n^2\)? Recall
 that \[
-h'(\mu) = \frac{\partial \exp(\mu)}{\partial \mu} = \exp(\mu)
-\] so applying the delta method, we have \[
-\sqrt{n}\left(\exp(\Xbar_n) - \exp(\mu)\right) \indist \N(0, \exp(2\mu)\sigma^2),
-\] since \(\exp(\mu)^2 = \exp(2\mu)\).
+h'(\mu) = \frac{\partial \mu^2}{\partial \mu} = 2\mu
+\] so applying the delta method when \(\mu \neq 0\), we have \[
+\sqrt{n}\left(\Xbar_n^2 - \mu^2\right) \indist \N(0, 4\mu^2\sigma^2).
+\]
+
+What about when \(\mu = 0\)? In this case, the delta method predicts the
+centered and scaled version of \(\Xbar_n^2\) will have the distribution
+\(\N(0, 0)\) which is just a point mass on 0 which does not help us
+learn much about the limiting distribution of \(\Xbar_n^2\). To
+understand why, notice that the tangent line for \(\mu^2\) at
+\(\mu = 0\) is a horizontal line, where small changes in \(\Xbar_n\)
+lead to practically no change in \(\Xbar_n^2\). Thus, the delta method
+approximation breaks down and we need a different way of learning about
+the large-sample distribution. More generally, the approximation will
+break down when \(h'(\theta_0) = 0\) (as in this case) or if there is a
+kink in \(h\) at \(\theta_0\) (so the derivative does not exist). Even
+\(\mu\) is very small but nonzero, the CLT and the delta might provide
+poor approximations.
 
 \end{example}
 
@@ -3718,7 +3912,7 @@ differentiable (we make the function bold since it returns an
 \(m\)-dimensional vector). It will help us to use more compact matrix
 notation if we introduce a \(m \times k\) Jacobian matrix of all partial
 derivatives \[
-\mb{H}(\mb{\theta}) = \mb{\nabla}_{\mb{\theta}}\mb{h}(\mb{\theta}) = \begin{pmatrix}
+\mb{H}(\mb{\theta}) = \partial\mb h/\partial\mb\theta' = \begin{pmatrix}
   \frac{\partial h_1(\mb{\theta})}{\partial \theta_1} & \frac{\partial h_1(\mb{\theta})}{\partial \theta_2} & \cdots & \frac{\partial h_1(\mb{\theta})}{\partial \theta_k} \\
   \frac{\partial h_2(\mb{\theta})}{\partial \theta_1} & \frac{\partial h_2(\mb{\theta})}{\partial \theta_2} & \cdots & \frac{\partial h_2(\mb{\theta})}{\partial \theta_k} \\
   \vdots & \vdots & \ddots & \vdots \\
@@ -3743,15 +3937,50 @@ a neighborhood of \(\mb{\theta}_0\), we have \[
 This result follows from the approximation above plus rules about
 variances of random vectors. Recall that for any compatible matrix of
 constants, \(\mb{A}\), we have
-\(\V[\mb{A}'\mb{Z}] = \mb{A}\V[\mb{Z}]\mb{A}'\). The matrix of constants
+\(\V[\mb{A}\mb{Z}] = \mb{A}\V[\mb{Z}]\mb{A}'\). The matrix of constants
 appears twice here, like the matrix version of the ``squaring the
 constant'' rule for variance.
 
+\begin{example}[]\protect\hypertarget{exm-ratio-delta}{}\label{exm-ratio-delta}
+
+In Example~\ref{exm-ratio-estimator}, we found that the ratio of sample
+means was consistent for the ratio of population means, \[
+\frac{\Ybar_n}{\Xbar_n} \inprob \frac{\mu_y}{\mu_x}.
+\] What about the large-sample distribution of \(\Ybar_n/\Xbar_n\)?
+Consider the population means as a vector,
+\(\mb{\theta} = (\mu_y, \mu_x)\) and consider the ratio mapping
+\(h(\mb{\theta}) = \frac{\mu_y}{\mu_x}\) with Jacobian \[
+\mb{H}(\mb{\theta}) = \begin{pmatrix}
+\frac{1}{\mu_x} & -\frac{\mu_y}{\mu_x^2}
+\end{pmatrix}
+\] Let \(\V[Y_i] = \sigma^2_y\) and \(\V[X_i] = \sigma^2_x\) be the
+variances of the data and let \(\sigma_{yx} = \cov(X_i, Y_i)\) be the
+covariance between the variables. If \(\mu_x \neq 0\), the multivariate
+CLT tells us the population covariance matrix of the (centered and
+scaled) sample means will be \[
+\mb{\Sigma} = \begin{pmatrix}
+\sigma^2_y & \sigma_{yx} \\
+\sigma_{yx} & \sigma^2_x
+\end{pmatrix}
+\] Thus, the multivariate delta method implies
+\(\sqrt{n}(\Ybar_n / \Xbar_n - \mu_y / \mu_x)\) will have asymptotic
+variance \[
+\begin{aligned}
+\mb{H}\mb{\Sigma}\mb{H}' &= \begin{pmatrix} \frac{1}{\mu_x} & -\frac{\mu_y}{\mu_x^2}\end{pmatrix} \begin{pmatrix}
+\sigma^2_y & \sigma_{yx} \\
+\sigma_{yx} & \sigma^2_x
+\end{pmatrix} \begin{pmatrix} \frac{1}{\mu_x}\\ -\frac{\mu_y}{\mu_x^2}\end{pmatrix} \\ & = \frac{\sigma^2_y}{\mu_x^2} + \frac{\sigma^2_x\mu^2_y}{\mu_x^4} - \frac{2\sigma_{yx}\mu_y}{\mu_x^3}.
+\end{aligned}
+\]
+
+\end{example}
+
 The delta method is handy for generating closed-form approximations for
-asymptotic standard errors, but the math is often quite complex for even
-simple estimators. It is usually more straightforward for applied
+asymptotic standard errors, but the math can be complex once we move
+beyond simple estimators. It can be more straightforward for applied
 researchers to use computational tools such as the bootstrap to
-approximate the needed standard errors. The bootstrap has the trade-off
+approximate the needed standard errors. The bootstrap---which we will
+discuss in Chapter~\ref{sec-confidence-intervals} ---has the trade-off
 of taking more computational time to implement compared to the delta
 method, but it is more easily adaptable across different estimators and
 domains.
@@ -3761,22 +3990,26 @@ domains.
 In this chapter, we covered asymptotic analysis, which considers how
 estimators behave as we feed them larger and larger samples. While we
 never actually have infinite data, asymptotic results provide
-approximations that work quite well in practice. A \textbf{consistent}
-estimator converges in probability to a desired quantity of interest. We
-saw several ways of establishing consistency, including the \textbf{Law
-of Large Numbers} for the sample mean, which converges in probability to
-the population mean. The \textbf{Central Limit Theorem} tells us that
-the sample mean will be approximately normally distributed when we have
-large, iid samples. We also saw how the \textbf{continuous mapping
-theorem} and \textbf{Slutsky's theorem} allow us to determine asymptotic
-results for a broad class of estimators. Finally, the \textbf{delta
-method} is a general tool for finding the asymptotic distribution of an
-estimator that is a function of another estimator with a known
-asymptotic distribution.
+approximations that work quite well in many (though not all) situations.
+A \textbf{consistent} estimator converges in probability to a desired
+quantity of interest. We saw several ways of establishing consistency,
+including the \textbf{Law of Large Numbers} for the sample mean, which
+converges in probability to the population mean. The \textbf{Central
+Limit Theorem} tells us that the sample mean will be approximately
+normally distributed when we have large, iid samples. We also saw how
+the \textbf{continuous mapping theorem} and \textbf{Slutsky's theorem}
+allow us to determine asymptotic results for a broad class of
+estimators. Finally, the \textbf{delta method} is a general tool for
+finding the asymptotic distribution of an estimator that is a function
+of another estimator with a known asymptotic distribution. Finally, we
+saw how to combine asymptotic normality plus a consistent estimator of
+the asymptotic variance to give a standard error estimator that we can
+use in the next two chapters.
 
 In the next chapter, we will leverage these asymptotic results to
 introduce another important tool for statistical inference: the
-hypothesis test.
+hypothesis test, which will let us answer questions like the one that
+opened this chapter.
 
 \chapter{Hypothesis tests}\label{sec-hypothesis-tests}
 
@@ -3839,7 +4072,7 @@ hypothesis, we might view this as evidence against that hypothesis.
 Thus, hypothesis tests help us assess evidence for particular guesses
 about the DGP.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 For the rest of this chapter, we will introduce the concepts following
 the notation in the past chapters. We will assume a random (iid) sample
@@ -4218,14 +4451,14 @@ liberals. We can write this two-sided test as \[
 H_0: \mu = 50 \quad\text{versus}\quad H_1: \mu \neq 50,
 \] where \(\mu = \E[X_i]\). The standard test statistic for this type of
 test is the so-called \textbf{t-statistic}, \[ 
-T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{s^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{s^2 / n}},
-\] where \(\mu_0\) is the null value of interest and \(s^2\) is the
+T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{S_n^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{S_n^2 / n}},
+\] where \(\mu_0\) is the null value of interest and \(S_n^2\) is the
 sample variance. If the null hypothesis is true, then by the CLT, we
 know that the t-statistic is asymptotically normal,
 \(T \indist \N(0, 1)\). Thus, we can approximate the null distribution
 with the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 The names of the various tests can be quite confusing because they are
 so similar. Earlier, we discussed one-sided versus two-sided tests,
@@ -4271,7 +4504,7 @@ is, if \(Z \sim \N(0, 1)\), then \(z_a\) satisfies
 confusing, the critical value \$z\_\{1-\alpha/2\} is the value that puts
 probability \(\alpha/2\) in the upper tail of the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 In R, you can find the \(z_{1- \alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -4339,7 +4572,7 @@ null when \(|T| > 2.58\) since
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.01}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.01} \SpecialCharTok{/} \DecValTok{2}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4438,7 +4671,7 @@ test levels like \(\alpha = 0.05\). It might be best to view p-values as
 a transformation of the test statistic onto a common scale between 0 and
 1.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics, and these criticisms sometimes hinge on
@@ -4607,7 +4840,7 @@ confidence interval for their quantity of interest. Then, if the
 confidence intervals are valid, then we should expect 5 of those
 confidence intervals to not contain their true quantity of interest.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-warning-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Let's say you calculate a 95\% confidence interval and it's
 \([0.1, 0.4]\). It's tempting to make a probability statement like
@@ -4626,7 +4859,7 @@ sample to sample.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Bayesian inference---which treats the data as fixed and the parameters
 as random---can make probabilistic statements about the true mean being
@@ -5613,7 +5846,7 @@ bivariate case: it chooses the set of coefficients that minimizes the
 expected mean-squared error, where the expectation is over the joint
 distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -5667,7 +5900,7 @@ substantively. Recall that \(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 What does the expression for the population regression coefficients
 mean? It is helpful to separate the intercept or constant term so that
@@ -6057,7 +6290,7 @@ is income and \(X_{i2}\) is the Black/non-Black voter indicator, then
 \(\beta_3\) represents the change in the slope of the wait time-income
 relationship between Black and non-Black voters.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 In many cases, the so-called marginal coefficients on the lower-order
 terms (\(\beta_1\) for \(X_{i1}\) and \(\beta_2\) for \(X_{i2}\)) are
@@ -6270,7 +6503,7 @@ from the population to make inferences about the line of best fit in the
 population and the population coefficients. To do this, we will focus on
 the OLS estimator for these population quantities.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -6348,7 +6581,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Almost all regression will contain an intercept term, usually
 represented as a constant 1 in the covariate vector. It is also possible
@@ -6773,7 +7006,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 The residual regression approach is:
 
@@ -7063,7 +7296,7 @@ needed to ensure that the best linear predictor,
 \(\bfbeta = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 The linear projection model makes the following assumptions:
 
@@ -7126,7 +7359,7 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the Central Limit
 Theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
@@ -7419,7 +7652,7 @@ we only need a one-sided rejection region of the form
 straightforward (see the above callout tip). For \(q = 2\) and a
 \(\alpha = 0.05\), the critical value is roughly 6.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -7495,7 +7728,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -7612,7 +7845,7 @@ homoskedasticity of errors is such a historically important assumption
 that statistical software implementations of OLS like \texttt{lm()} in R
 assume it by default.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -7767,7 +8000,7 @@ proceed in small samples? Historically we would have assumed
 (conditional) normality of the errors, basically proceeding with some
 knowledge that we were wrong but hopefully not too wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, breakable, rightrule=.15mm, toptitle=1mm, bottomtitle=1mm, titlerule=0mm, colframe=quarto-callout-note-color-frame, colback=white, coltitle=black, leftrule=.75mm, opacitybacktitle=0.6, opacityback=0, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, arc=.35mm, bottomrule=.15mm, toprule=.15mm, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, left=2mm, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, opacitybacktitle=0.6, rightrule=.15mm, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, coltitle=black, arc=.35mm, breakable, toprule=.15mm, bottomtitle=1mm, leftrule=.75mm, bottomrule=.15mm, toptitle=1mm, titlerule=0mm]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
@@ -7864,6 +8097,11 @@ tests that are valid for all sample sizes.
 
 \phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-BliHwa19}
+Blitzstein, Joseph K., and Jessica Hwang. 2019. \emph{Introduction to
+Probability}. 2nd ed. Chapman \& Hall/CRC Texts in Statistical Science.
+Boca Raton, FL: CRC Press.
+
 \bibitem[\citeproctext]{ref-Hansen22}
 Hansen, Bruce E. 2022. {``A {Modern Gauss}--{Markov Theorem}.''}
 \emph{Econometrica} 90 (3): 1283--94.

@@ -384,12 +384,12 @@ The sampling distribution is the distribution of these sample means across repea
 #| fig-cap: >
 #|  Sampling distribution of the sample mean in the Likert data example.
 #| fig-alt: >
-#|  Histogram showing the sampling distribution of the sample mean in the 
+#|  Histogram showing the sampling distribution of the sample mean in the
 #|  Likert data example.
 
-R <- 1000
-sampling_dist <- rep(NA, times = R)
-for (r in seq_len(R)) {
+reps <- 1000
+sampling_dist <- rep(NA, times = reps)
+for (r in seq_len(reps)) {
   sampling_dist[r] <- mean(rbinom(n = 10, size = 4, prob = 0.4))
 }
 
@@ -400,7 +400,6 @@ hist(
   border = "white"
 )
 ```
- 
 
 :::
 
@@ -609,7 +608,7 @@ This decomposition implies that, for unbiased estimators, MSE is the sampling va
 #|   Example with two sampling distributions. One (labelled theta hat a) is
 #|   centered on the true value theta but with high spread around that value.
 #|   The other (labelled theta hat b) is slightly biased but has much less
-#|   variance. 
+#|   variance.
 par(mar = c(2, 0.1, 0.1, 0.1))
 curve(
   dnorm(x, 0, 1),
@@ -726,7 +725,7 @@ $$
 $$
 Here, we have abused notation slightly by using subscripts for the treatment/control labels instead of sample size: $S^2_1$ is the sample variance in the treatment group, not sample variance with $n = 1$. Conditional on the observed treatment assignment, $\mathbf{D}$, remember that the treated and control groups are just iid samples from a distribution and so we know that the sample variances are unbiased, $\E[S^2_d \mid \mathbf{D}] = \sigma^2_d$, which implies that $\widehat{\V}[\widehat{\tau}]$ is also unbiased for $\V[\widehat{\tau} \mid \mathbf{D}]$, conditional on $\mathbf{D}$. Note that $\E[\widehat\tau\mid\mathbf D]=\tau$ does not depend on the treatment assignment, which implies that $\widehat{\V}[\widehat{\tau}]$ is unbiased for the unconditional variance, $\V[\widehat{\tau}]$, as well. 
 
-Much like the standard error estimator for the mean, $\widehat{\se}[\widehat{\tau}]$ will be slightly biased downward. @sec-asymptotics will show us why these estimators will still work well in large samples. 
+Much like the standard error estimator for the mean, $\widehat{\se}[\widehat{\tau}]$ will be slightly biased downward. @sec-asymptotics will show us why these types of estimators will still work well in large samples. 
 
 
 
