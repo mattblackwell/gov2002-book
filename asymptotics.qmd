@@ -9,10 +9,10 @@ library(tidyverse)
 
 ## Introduction
 
-Suppose we are still interested in estimating the proportion of citizens who prefer increasing legal immigration. Based on the last chapter, a good strategy would be to use the sample proportion of immigration supporters in a random sample of citizens. You would have good reason to be confident with this estimator, with its finite-sample properties like unbiasedness and a sampling variance. We call these "finite-sample" properties since they hold at any sample size---they are as true for random samples of size $n = 10$ as they are for random samples of size $n = 1,000,000$. 
+Suppose we are still interested in estimating the proportion of citizens who prefer increasing legal immigration. Based on the last chapter, a good strategy would be to use the sample proportion of immigration supporters in a random sample of citizens. You would have good reason to be confident with this estimator, with its finite-sample properties like unbiasedness and a sampling variance. We call these "finite-sample" properties since they hold at any sample size---they are as true for random samples of size $n = 10$ as they are for random samples of size $n = 1{,}000{,}000$. 
 
 
-Finite-sample results, though, are of limited value because they only tell us about the center and spread of the sampling distribution of $\Xbar_n$. Suppose we found that a sample proportion of $\Xbar_n = 0.47$ or 47% of respondents in a single survey supported increasing immigration. We might want to know how plausible it would be for the true population proportion – which is distinct from the sample proportion – to be 50% or greater. Questions like this are critical for a decision maker and, to answer this, we need to know the (approximate) distribution of $\Xbar_n$ in addition to its mean and variance. We can often derive the exact distribution of an estimator if we are willing to make certain, sometimes strong assumptions about the underlying data (for example, if the population is normal, then the sample means will also be normal). Still, this approach is brittle: if our parametric assumption is false, we are back to square one. 
+Finite-sample results, though, are of limited value because they only tell us about the center and spread of the sampling distribution of $\Xbar_n$. Suppose we found that a sample proportion of $\Xbar_n = 0.47$ or 47% of respondents in a single survey supported increasing immigration. We might want to know how plausible it would be for the true population proportion---which is distinct from the sample proportion---to be 50% or greater. Questions like this are critical for a decision maker and, to answer this, we need to know the (approximate) distribution of $\Xbar_n$ in addition to its mean and variance. We can often derive the exact distribution of an estimator if we are willing to make certain, sometimes strong assumptions about the underlying data (for example, if the population is normal, then the sample means will also be normal). Still, this approach is brittle: if our parametric assumption is false, we are back to square one. 
 
 In this chapter, we take a different approach by asking what happens to the sampling distribution of estimators as the sample size gets very large, which we refer to as **asymptotic theory**. While asymptotics will often simplify derivations, an essential point is that everything we do with asymptotics will be an approximation. No one ever has infinite data, but we hope that the approximations will be closer to the truth as our samples get larger. 
 
@@ -24,7 +24,7 @@ Asymptotic results are key to modern statistical methods because many methods of
 A helpful place to begin is by reviewing the basic idea of convergence in deterministic sequences from calculus: 
 
 ::: {#def-limit}
-A sequence $\{a_n: n = 1, 2, \ldots\}$ has the **limit** $a$ written $a_n \rightarrow a$ as $n\rightarrow \infty$ or $\lim_{n\rightarrow \infty} a_n = a$ if for all $\varepsilon > 0$ there is some $n_{\varepsilon} < \infty$ such that for all $n \geq n_{\varepsilon}$, $|a_n - a| \leq \varepsilon$. 
+A sequence $\{a_n: n = 1, 2, \ldots\}$ has the **limit** $a$ written $a_n \rightarrow a$, as $n\rightarrow \infty$ or $\lim_{n\rightarrow \infty} a_n = a$ if for all $\varepsilon > 0$ there is some $n_{\varepsilon} < \infty$ such that for all $n \geq n_{\varepsilon}$, $|a_n - a| \leq \varepsilon$. 
 :::
 
 We say that $a_n$ **converges** to $a$ if $\lim_{n\rightarrow\infty} a_n = a$. Basically, a sequence converges to a number if the sequence gets closer and closer to that number as the sequence goes on. 
@@ -90,7 +90,7 @@ $$
 as $n\rightarrow \infty$. We write this $X_n \inprob b$. 
 :::
 
-What's happening in this definition? The event $|X_n - b| > \varepsilon$ says that a draw of $X_n$ is more than $\varepsilon$ away from $b$ (above or below). So convergence in probability says that the probability of being some distance away from the limit value goes to zero as the $n$ goes to $\infty$. With deterministic sequences, we said that $a_n$ converges to $a$ as it gets closer and closer to $a$ as $n$ gets bigger. For convergence in probability, the sequence of random variables converges to $b$ if the probability that random variables are far away from $b$ gets smaller and smaller as $n$ gets big. 
+What's happening in this definition? The event $|X_n - b| > \varepsilon$ says that a draw of $X_n$ is more than $\varepsilon$ away from $b$ (above or below). So convergence in probability says that the probability of being some distance away from the limit value goes to zero as $n$ goes to $\infty$. With deterministic sequences, we said that $a_n$ converges to $a$ as it gets closer and closer to $a$ as $n$ gets bigger. For convergence in probability, the sequence of random variables converges to $b$ if the probability that random variables are far away from $b$ gets smaller and smaller as $n$ gets big. 
 
 
 ::: {#exm-inprob}
@@ -121,7 +121,7 @@ The last limit is due to $\sqrt{n}\varepsilon \to \infty$ and thus, by the prope
 
 ## Notation alert
 
-Sometimes convergence in probability is written as $\text{plim}(Z_n) = b$ when $Z_n \inprob b$, $\text{plim}$ stands for "probability limit."
+Sometimes convergence in probability is written as $\text{plim}(Z_n) = b$ when $Z_n \inprob b$; $\text{plim}$ stands for "probability limit."
 
 :::
 
@@ -132,7 +132,7 @@ Convergence in probability is crucial for evaluating estimators. While we said t
 An estimator $\widehat{\theta}_n$ is **consistent** for some parameter $\theta$ if $\widehat{\theta}_n \inprob \theta$. 
 :::
 
-Consistency of an estimator implies that the sampling distribution of the estimator "collapses" on the true value as the sample size gets large. An estimator is **inconsistent** if, shockingly, it is not consistent. Inconsistency can occur because the estimator converges in probability to the wrong value or because it fails to converge at all (as with $\widehat{\theta}_{\text{first}}$ below). Generally speaking, consistency is a very desirable property of an estimator.  
+Consistency of an estimator implies that the sampling distribution of the estimator "collapses" on the true value as the sample size gets large. An estimator is **inconsistent** if, shockingly, it is not consistent. Inconsistency can occur because the estimator converges in probability to the wrong value or because it fails to converge at all (as with $\widehat{\theta}_{n, \text{first}}$ below). Generally speaking, consistency is a very desirable property of an estimator.  
 
 ::: {.callout-note}
 
@@ -177,7 +177,7 @@ It's pretty astounding how general this result is since it holds for all random 
 
 ::: {#thm-chebyshev}
 ## Chebyshev Inequality
-Suppose that $X$ is r.v. for which $\V[X] < \infty$. Then, for every real number $\delta > 0$,
+Suppose that $X$ is an r.v. for which $\V[X] < \infty$. Then, for every real number $\delta > 0$,
 $$
 \P(|X-\E[X]| \geq \delta) \leq \frac{\V[X]}{\delta^2}.
 $$
@@ -196,7 +196,7 @@ Chebyshev's inequality is a straightforward extension of the Markov result: the 
 $$
 \P\left(\frac{|X - \E[X]|}{\sigma} \geq c \right) \leq \frac{1}{c^2}.
 $$
-This statement says the probability of being two standard deviations away from the mean must be less than or equal to 1/4 = 0.25. Notice that this bound can be fairly wide. If $X$ has a normal distribution, we know that about 5% of draws will be greater than 2 SDs away from the mean, much lower than the 25% bound implied by Chebyshev's inequality. 
+This statement says the probability of being at least two standard deviations away from the mean must be less than or equal to 1/4 = 0.25. Notice that this bound can be fairly wide. If $X$ has a normal distribution, we know that about 5% of draws will be greater than 2 SDs away from the mean, much lower than the 25% bound implied by Chebyshev's inequality. 
 
 ## The law of large numbers
 
@@ -212,7 +212,7 @@ Let $X_1, \ldots, X_n$ be i.i.d. draws from a distribution with mean $\mu = \E[X
 :::
 
 ::: {.proof}
-We will prove the case in which the random variable has finite variance, $\sigma^2 = \V[X_i] < \infty$, even though the result holds even under infinite variance (the proof just requires techniques outside the scope of this book). 
+We will prove the case in which the random variable has finite variance, $\sigma^2 = \V[X_i] < \infty$, even though the result holds under infinite variance (the proof just requires techniques outside the scope of this book). 
 
 Recall that the sample mean is unbiased, so $\E[\Xbar_n] = \mu$ with sampling variance $\sigma^2/n$. We can then apply Chebyshev to the sample mean to get
 $$
@@ -315,7 +315,7 @@ $$
 $$
 This expression has slightly more compact notation, but why does it work? 
 
-One can show that this function, called the **Euclidean norm** or $L_2$-norm bounds the absolute value of any particular entry in the vector,
+One can show that this function, called the **Euclidean norm** or $L_2$-norm, bounds the absolute value of any particular entry in the vector,
 $$
 \Vert\X_i\Vert = \left(X_{i1}^2 + X_{i2}^2 + \ldots + X_{ik}^2\right)^{1/2}
 \geq \sqrt{X_{ij}^2} = |X_{ij}|,
@@ -339,7 +339,7 @@ For any estimator $\widehat{\theta}_n$, if $\textsf{bias}[\widehat{\theta}_n] = 
 
 :::
 
-Thus, for unbiased estimators, we can establish their consistency by showing their sampling variance tends to zero as the sample size gets larger (though note there are consistent estimators that have sampling variance that do not converge to zero). This result is handy since working with the probability statements used for the WLLN can sometimes be confusing. 
+Thus, for unbiased estimators, we can establish their consistency by showing their sampling variance tends to zero as the sample size gets larger (though note there are consistent estimators that have sampling variance that does not converge to zero). This result is handy since working with the probability statements used for the WLLN can sometimes be confusing. 
 
 What about biased estimators? Consider a situation where we calculate average household income, $\Xbar_n$, from a random sample with mean $\mu$, but our actual interest is in the log of average income, $\alpha = \log(\mu)$. We can obviously use the standard plug-in estimator $\widehat{\alpha} = \log(\Xbar_n)$, but, for nonlinear functions like logarithms we have $\log\left(\E[Z]\right) \neq \E[\log(Z)]$, so $\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])$ and the plug-in estimator will be biased for $\log(\mu)$. Obtaining an expression for the bias in terms of $n$ is also difficult. Is the quest doomed? Must we give up on consistency? No, and, in fact, a few key properties of consistency make working with it much easier compared to unbiasedness. 
 
@@ -348,16 +348,16 @@ What about biased estimators? Consider a situation where we calculate average ho
 
 ## Properties of convergence in probability
 
-Let $X_n$ and $Z_n$ be two sequences of random variables such that $X_n \inprob a$ and $Z_n \inprob b$, and let $g(\cdot)$ be a continuous function. Then, 
+Let $Z_n$ and $W_n$ be two sequences of random variables such that $Z_n \inprob a$ and $W_n \inprob b$, and let $g(\cdot)$ be a continuous function (at the limit). Then, 
 
-1. $g(X_n) \inprob g(a)$ (continuous mapping theorem)
-2. $X_n + Z_n \inprob a + b$
-3. $X_nZ_n \inprob ab$
-4. $X_n/Z_n \inprob a/b$ if $b \neq 0$.
+1. $g(Z_n) \inprob g(a)$ (continuous mapping theorem)
+2. $Z_n + W_n \inprob a + b$
+3. $Z_nW_n \inprob ab$
+4. $Z_n/W_n \inprob a/b$ if $b \neq 0$.
 
 :::
 
-We can now see that many of the nasty problems with expectations and nonlinear functions are made considerably easier with convergence in probability in the asymptotic setting. So while we know that $\log(\Xbar_n)$ is biased for $\log(\mu)$, we know that it is consistent since $\log(\Xbar_n) \inprob \log(\mu)$ because $\log$ is contiunuous for $\mu > 0$. 
+We can now see that many of the nasty problems with expectations and nonlinear functions are made considerably easier with convergence in probability in the asymptotic setting. So while we know that $\log(\Xbar_n)$ is biased for $\log(\mu)$, we know that it is consistent since $\log(\Xbar_n) \inprob \log(\mu)$ because $\log$ is continuous for $\mu > 0$. 
 
 ::: {#exm-nonresponse}
 
@@ -373,9 +373,9 @@ The relevant estimator for this quantity is the mean of the outcome among those 
 $$
 \widehat{\theta}_n = \frac{\sum_{i=1}^n Y_iR_i}{\sum_{i=1}^n R_i}. 
 $$
-Notice that this estimator is the ratio of two random variables. The numerator has mean $n\E[Y_iR_i]$ and the denominator has mean $n\P(R_i = 1)$. This estimator is actually unbiased (conditional on at least 1 responder), but this result is somewhat tricky to show because the nonlinear way $\sum_{i=1}^n R_i$ enters the estimator. Consistency, on the other hand, is easy to establish. 
+Notice that this estimator is the ratio of two random variables. The numerator has mean $n\E[Y_iR_i]$ and the denominator has mean $n\P(R_i = 1)$. This estimator is actually unbiased (conditional on at least 1 responder), but this result is somewhat tricky to show because of the nonlinear way $\sum_{i=1}^n R_i$ enters the estimator. Consistency, on the other hand, is easy to establish. 
 
-We can establish consistency of our estimator, though, by noting that we can rewrite the estimator as a ratio of sample means
+We can establish consistency of our estimator by noting that we can rewrite the estimator as a ratio of sample means
 $$
 \widehat{\theta}_n = \frac{(1/n)\sum_{i=1}^n Y_iR_i}{(1/n)\sum_{i=1}^n R_i},
 $$
@@ -383,13 +383,13 @@ where by the WLLN the numerator $(1/n)\sum_{i=1}^n Y_iR_i \inprob \E[Y_iR_i]$ an
 $$
 \widehat{\theta}_n = \frac{(1/n)\sum_{i=1}^n Y_iR_i}{(1/n)\sum_{i=1}^n R_i} \inprob \frac{\E[Y_iR_i]}{\P(R_i = 1)} = \E[Y_i \mid R_i = 1],
 $$
-so long as the probability of responding is greater than zero. This establishes that our sample mean among responders is consistent for that quantity. 
+so long as the probability of responding is greater than zero. This establishes that our sample mean among responders is consistent for that quantity. Note that consistency does not solve nonresponse bias since $\E[Y_i \mid R_i = 1]$ still might differ from $\E[Y_i]$. 
 :::
 
 
 Keeping the difference between unbiased and consistent clear in your mind is essential. You can easily create ridiculous unbiased estimators that are inconsistent. Let's return to our iid sample, $X_1, \ldots, X_n$, from a population with $\E[X_i] = \mu$. There is nothing in the rule book against defining an estimator $\widehat{\theta}_{n,\text{first}} = X_1$ that uses the first observation as the estimate. This estimator is silly, but it is unbiased since $\E[\widehat{\theta}_{n,\text{first}}] = \E[X_1] = \mu$. It is inconsistent since its distribution does not change at all as a function of the sample size. Generally speaking, we can regard "unbiased but inconsistent" estimators as silly and not worth our time (along with biased and inconsistent estimators). 
 
-Some estimators are biased but consistent that are often much more interesting. We have already seen some of these, like $\log(\Xbar_n)$, but there are many more.  Maximum likelihood estimators, for example, are (under some regularity conditions) consistent for the parameters of a parametric model but are often biased. 
+Biased but consistent estimators are often much more interesting. We have already seen some of these, like $\log(\Xbar_n)$, but there are many more.  Maximum likelihood estimators, for example, are (under some regularity conditions) consistent for the parameters of a parametric model but are often biased. 
 
 ::: {#exm-plug-in-variance}
 
@@ -399,7 +399,7 @@ In the last chapter, we introduced the plug-in estimator for the population vari
 $$
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
 $$
-and derived its bias as $-(1/n)\sigma^2$. Using the alternative formulation of the sum of squared deviation from the mean, we can rewrite this estimator as
+and derived its bias as $-(1/n)\sigma^2$. Using the alternative formulation of the sum of squared deviations from the mean, we can rewrite this estimator as
 $$
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n X_i^2 - (\Xbar_n)^2.
 $$
@@ -419,7 +419,7 @@ Thus, the plug-in estimator is another biased but consistent estimator.
 
 ::: {#exm-ratio-estimator}
 
-One general class of estimators are called **ratio estimators** and are, as their name implies, ratios of estimators. Let $(Y_i, X_i)$ be iid draws from a population distribution with population means, $\mu_y$ and $\mu_x$, and two sample means, $\Ybar_n$ and $\Xbar_n$. The ratio of the sample means is generally biased for the ratio of population means, 
+One general class of estimators is called **ratio estimators** and are, as their name implies, ratios of estimators. Let $(Y_i, X_i)$ be iid draws from a population distribution with population means, $\mu_y$ and $\mu_x$, and two sample means, $\Ybar_n$ and $\Xbar_n$. The ratio of the sample means is generally biased for the ratio of population means, 
 $$
 \E\left[\frac{\Ybar_n}{\Xbar_n} \right] \neq \frac{\mu_y}{\mu_x}.
 $$
@@ -447,10 +447,6 @@ The last equality follows from the bias-variance decomposition of the mean squar
 
 :::
 
-
-We can use this result to show consistency for a large range of estimators. 
-
-
 ## Convergence in distribution and the central limit theorem
 
 Convergence in probability and the law of large numbers are beneficial for understanding how our estimators will (or will not) collapse to their estimand as the sample size increases. But what about the shape of the sampling distribution of our estimators? For statistical inference, we would like to be able to make probability statements such as $\P(a \leq \widehat{\theta}_n \leq b)$. These statements will be the basis of hypothesis testing and confidence intervals. But to make those types of statements, we need to know the entire distribution of $\widehat{\theta}_n$, not just the mean and variance. Luckily, established results will allow us to approximate the sampling distribution of a vast swath of estimators when our sample sizes are large. 
@@ -459,14 +455,14 @@ We need first to describe a different form of convergence to see how we will dev
 
 
 ::: {#def-indist}
-Let $X_1,X_2,\ldots$, be a sequence of r.v.s, and for $n = 1,2, \ldots$ let $F_n(x)$ be the c.d.f. of $X_n$. Then it is said that $X_1, X_2, \ldots$ **converges in distribution** to r.v. $X$ with c.d.f. $F(x)$ if
+Let $X_1,X_2,\ldots$ be a sequence of r.v.s, and for $n = 1,2, \ldots$ let $F_n(x)$ be the c.d.f. of $X_n$. Then it is said that $X_1, X_2, \ldots$ **converges in distribution** to r.v. $X$ with c.d.f. $F(x)$ if
 $$
 \lim_{n\rightarrow \infty} F_n(x) = F(x),
 $$
 for all values of $x$ for which $F(x)$ is continuous. We write this as $X_n \indist X$ or sometimes $X_n ⇝ X$. 
 :::
 
-Essentially, convergence in distribution means that as $n$ gets large, the distribution of $X_n$ becomes more and more similar to the distribution of $X$, which we often call the **asymptotic distribution** of $X_n$ (other names include the **large-sample distribution**). If we know that $X_n \indist X$, then we can use the distribution of $X$ as an approximation to the distribution of $X_n$, and that distribution can be reasonably accurate. This definition also helps to resolve an earlier puzzle: a sequence of iid $\N(0, 1)$ random variables trivially converges in distribution to a $\N(0, 1)$ since every $F_n = \Phi$, where $\Phi$ is the cdf of the standard normal. 
+Essentially, convergence in distribution means that as $n$ gets large, the distribution of $X_n$ becomes more and more similar to the distribution of $X$, which we often call the **asymptotic distribution** of $X_n$ (other names include the **large-sample distribution**). If we know that $X_n \indist X$, then we can use the distribution of $X$ as an approximation to the distribution of $X_n$, and that distribution can be reasonably accurate. This definition also helps to resolve an earlier puzzle: a sequence of iid $\N(0, 1)$ random variables trivially converges in distribution to a $\N(0, 1)$ since every $F_n = \Phi$ (where $\Phi$ is the cdf of the standard normal) even though the draws of any particular $X_n$ are not necessarily close to the draws of the limiting distribution. 
 
 ::: {#exm-indist}
 
@@ -530,13 +526,13 @@ $$
 $$
 :::
 
-In words: the sample mean of a random sample from a population with finite mean and variance will be approximately normally distributed in large samples. Notice how we have not made any assumptions about the distribution of the underlying random variables, $X_i$. They could be binary, event count, continuous, or anything. The CLT is incredibly broadly applicable---even though we have stated it for iid data, versions of it (and the LLN) exist for independent-but-not-identically distributed data, clustered data, and weakly dependent data. 
+In words: the sample mean of a random sample from a population with finite mean and variance will be approximately normally distributed in large samples. Notice how we have not made any assumptions about the distribution of the underlying random variables, $X_i$. They could be binary, event count, continuous, or anything. The CLT is incredibly broadly applicable---even though we have stated it for iid data, versions of it (and the LLN) exist for independent (but not identically distributed) data, clustered data, and weakly dependent data, though the variances are often quite different than the iid case. 
 
 ::: {.callout-note}
 
-## Why $\sqrt{n}?$ 
+## Why $\sqrt{n}$? 
 
-Why do we state the CLT in terms of the sample mean after centering and scaling by its standard error? Suppose we don't normalize the sample mean in this way. In that case, it isn't easy to talk about convergence in distribution because we know from the WLLN that $\Xbar_n \inprob \mu$, so in the limit, the distribution of $\Xbar_n$ is concentrated at point mass around that value. Standardizing by centering around its mean $\E[\Xbar_n] = \mu$ and rescaling by its standard error $\sqrt{\V[\Xbar_n]} = \sigma / \sqrt{n}$ ensures that the sequence $\sqrt{n}(\Xbar_n - \mu)/\sigma$ always has mean 0 and variance 1 for every possible $n$. The $1/\sqrt{n}$ scaling is the rate at which the standard error shrinks so $\sqrt{n}$ is exactly the scaling we need to keep the standard error stable. 
+Why do we state the CLT in terms of the sample mean after centering and scaling by its standard error? Suppose we don't normalize the sample mean in this way. In that case, it isn't easy to talk about convergence in distribution because we know from the WLLN that $\Xbar_n \inprob \mu$, so in the limit, the distribution of $\Xbar_n$ is concentrated as a point mass around that value. Standardizing by centering around its mean $\E[\Xbar_n] = \mu$ and rescaling by its standard error $\sqrt{\V[\Xbar_n]} = \sigma / \sqrt{n}$ ensures that the sequence $\sqrt{n}(\Xbar_n - \mu)/\sigma$ always has mean 0 and variance 1 for every possible $n$. The $1/\sqrt{n}$ scaling is the rate at which the standard error shrinks, so $\sqrt{n}$ is exactly the scaling we need to keep the standard error stable. 
 
  Sometimes you will see the equivalent result as
 $$
@@ -551,15 +547,14 @@ First, the limiting distribution cannot depend on the exact distribution of $X_i
 $$
 Z_n = \frac{\sqrt{n}(\Xbar_n - \mu)}{\sigma} = \frac{1}{\sqrt{n}}\sum_{i=1}^n \frac{X_i - \mu}{\sigma}.
 $$
-Now, imagine replacing each of the terms in this sum with independent random variables $Y_1, \ldots, Y_n$ that also have mean 0, variance 1. This swap will change the distribution of $Z_n$ but not its mean or variance, since we have matched those. Instead, the swap will affect higher-order moments like skewness or kurtosis.  If the $X_i$ have skewness $\gamma_X$, then $Z_n$ has skewness $\gamma_X / \sqrt{n}$ whereas the swapped version with $Y_i$ would have skewness $\gamma_Y / \sqrt{n}$. Either way the skewness vanishes as $n\to\infty$, and differences in higher moments fade even more quickly (such as $1/n$). Essentially, as we add more terms to $Z_n$, the effect of the original distribution of $X_i$ on $Z_n$ fades. 
+Now, imagine replacing each of the terms in this sum with independent random variables $Y_1, \ldots, Y_n$ that also have mean 0 and variance 1. This swap will change the distribution of $Z_n$ but not its mean or variance, since we have matched those. Instead, the swap will affect higher-order moments like skewness or kurtosis.  If the $X_i$ have skewness $\E[((X_i - \mu)/\sigma)^3] = \gamma_X$, then $Z_n$ has skewness $\gamma_X / \sqrt{n}$ whereas the swapped version with $Y_i$ would have skewness $\gamma_Y / \sqrt{n}$. Either way the skewness vanishes as $n\to\infty$, and differences in higher moments fade even more quickly (such as $1/n$). Essentially, as we add more terms to $Z_n$, the effect of the original distribution of $X_i$ on $Z_n$ fades. (This sketch assumes these higher moments exist, though the CLT for iid data relies only on finite variance.)
 
  Second, if every distribution leads to the same limiting distribution, we might as well choose an easy distribution to work with. If $X_i$ are normal, then $Z_n$ would be exactly a standard normal for all $n$ since sums of independent normals are themselves normally distributed. Thus, the limit for normal variables must be $\N(0,1)$, which also must be the common limit for sample means of *any* distribution. In fact, the normal distribution is the only finite-variance distribution that is stable under addition in this way, which is why there are no other distributions that could be the limit. 
 
 
 ::: {#exm-bin-clt}
 
-To illustrate how the CLT works, we can simulate the sampling distribution of the (normalized) sample mean at different sample sizes and different data generating processes. We'll consider $X_1, \ldots, X_n$ be iid samples from a Bernoulli with probability of success either $p = 0.02$ or $p=0.25$. We then draw repeated samples of size $n \in \{30, 100, 1000\}$, and calculate $\sqrt{n}(\Xbar_n - p)/\sigma$ for each random sample. @fig-clt plots the density of these sampling distributions. For $p = 0.25$, we can see that even at $n=30$, the rough shape of the density looks normal, with spikes and valleys due to the discrete nature of the data (the sample mean can only take on 31 possible values in this case). By $n=100$, the sampling distribution is very close to a true standard normal and is barely noticeably different than the curve at $n = 1000$. For $p=0.02$, on the other hand, the sampling distribution looks very non-normal and spiky even at $n=100$, and it isn't until $n=1000$ that we really see the familiar normal shape. The expected number of successes is only 0.6 at $n=30$ and 2 at $n=100$, which is why this rare-success case is slower to converge. 
-
+To illustrate how the CLT works, we can simulate the sampling distribution of the (normalized) sample mean at different sample sizes and different data generating processes. We'll consider $X_1, \ldots, X_n$ to be iid samples from a Bernoulli with probability of success either $p = 0.02$ or $p=0.25$. We then draw repeated samples of size $n \in \{30, 100, 1000\}$, and calculate $\sqrt{n}(\Xbar_n - p)/\sigma$ for each random sample. @fig-clt plots the density of these sampling distributions. For $p = 0.25$, we can see that even at $n=30$, the rough shape of the density looks normal, with spikes and valleys due to the discrete nature of the data (the sample mean can only take on 31 possible values in this case). By $n=100$, the sampling distribution is very close to a true standard normal and is barely distinguishable than the curve at $n = 1000$. For $p=0.02$, on the other hand, the sampling distribution looks very non-normal and spiky even at $n=100$, and it isn't until $n=1000$ that we really see the familiar normal shape. One reason we see the slow convergence is that the skewness of the $p=0.02$ case is larger at every $n$. From knowledge of the skewness of binomials, in the $p = 0.02$ case we have skewness of 1.25, 0.69, and 0.22 skewness at $n=30$, $n = 100$, and $n = 1000$, respectively. For the $p = 0.25$ case, those same skewness values 0.21, 0.12, and 0.04. 
 
 
 ```{r}
@@ -602,14 +597,14 @@ ggplot(sim_df, aes(x = z, group = `Sample Size`, color = `Sample Size`)) +
   theme_bw() +
   theme(legend.position = "bottom", legend.direction = "horizontal") +
   labs(
-    x = expression(sqrt(n) * (hat(theta)[n] - theta) / sigma)
+    x = expression(sqrt(n) * (bar(X)[n] - p) / (p * (1 - p)))
   ) +
   lims(
     x = c(-5, 5)
   )
 ```
 
-These differences highlight how,  while the limiting result of the CLT applies to a wide variety of data generating processes, the nature of those processes can affect how quickly the limiting distribution will be a useful approximation. Thus, we cannot know in advance if a CLT-based normal distribution will provide a good approximation for the exact DGP and sample size we're studying. 
+These differences highlight how, while the limiting result of the CLT applies to a wide variety of data generating processes, the nature of those processes can affect how quickly the limiting distribution will be a useful approximation. Thus, we cannot know in advance if a CLT-based normal distribution will provide a good approximation for the exact DGP and sample size we're studying. 
 
 
 :::
@@ -631,7 +626,7 @@ $$
 
 :::
 
-We refer to $V_{\theta}$ as the asymptotic variance of centered and $\sqrt{n}$-stabilized estimator, $\sqrt{n}(\widehat{\theta}_n - \theta)$. An asymptotically normal estimator will, in large samples, have an approximately normal distribution, 
+We refer to $V_{\theta}$ as the asymptotic variance of the centered and $\sqrt{n}$-stabilized estimator, $\sqrt{n}(\widehat{\theta}_n - \theta)$. An asymptotically normal estimator will, in large samples, have an approximately normal distribution, 
 $$
 \widehat{\theta}_n \overset{a}{\sim} \N(\theta, V_{\theta}/n).
 $$
@@ -646,22 +641,22 @@ There are several properties of convergence in distribution that are helpful to 
 
 ## Properties of convergence in distribution
 
-Let $X_n$ be a sequence of random variables $X_1, X_2,\ldots$ that converges in distribution to some rv $X$ and let $Y_n$ be a sequence of random variables $Y_1, Y_2,\ldots$ that converges in probability to some number, $c$. Then, 
+Let $Z_n$ be a sequence of random variables $Z_1, Z_2,\ldots$ that converges in distribution to some random variable $Z$ and let $W_n$ be a sequence of random variables $W_1, W_2,\ldots$ that converges in probability to some number, $c$. Then, 
 
-1. $g(X_n) \indist g(X)$ for all continuous functions $g$.
-2. $X_nY_n$ converges in distribution to $cX$
-3. $X_n + Y_n$ converges in distribution to $X + c$
-4. $X_n / Y_n$ converges in distribution to $X / c$ if $c \neq 0$
+1. $g(Z_n) \indist g(Z)$ for all functions $g$ that are continuous in the limit
+2. $Z_nW_n$ converges in distribution to $cZ$
+3. $Z_n + W_n$ converges in distribution to $Z + c$
+4. $Z_n / W_n$ converges in distribution to $Z / c$ if $c \neq 0$
 
 :::
 
-We refer to the last three results as **Slutsky's theorem**. These results are often crucial for determining an estimator's asymptotic distribution. Why focus on the case with $X_n$ converging in distribution and $Y_n$ converging in probability to a point value? In the limit, $Y_n$ adds no variability so the limiting distribution is entirely driven by the limit of $X_n$. If both converged in distribution, so $Y_n \indist Y$, the limiting distribution would depend on joint distribution of $X_n$ and $Y_n$, which could include correlation that would be missed by the sum of the marginal limits, $X + Y$. 
+We refer to the last three results as **Slutsky's theorem**. These results are often crucial for determining an estimator's asymptotic distribution. Why focus on the case with $Z_n$ converging in distribution and $@_n$ converging in probability to a point value? In the limit, $W_n$ adds no variability so the limiting distribution is entirely driven by the limit of $Z_n$. If both converged in distribution, so $W_n \indist W$, the limiting distribution would depend on the joint distribution of $Z_n$ and $@_n$, which could include correlation that would be missed by the sum of the marginal limits, $Z + W$. 
 
 A critical application of Slutsky's theorem is when we replace the (unknown) population variance in the CLT with an estimate. Recall the definition of the **sample variance** as
 $$
 S_n^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \Xbar_n)^2,
 $$
-with the **sample standard deviation** defined as $S_{n} = \sqrt{S_{n}^2}$. In @exm-plug-in-variance we showed that $\widehat{\sigma}^2 \inprob \sigma^2$. If $S_n^2 = (n / (n-1))\widehat{\sigma}^2$, then by the CMT, we have
+with the **sample standard deviation** defined as $S_{n} = \sqrt{S_{n}^2}$. In @exm-plug-in-variance we showed that $\widehat{\sigma}^2 \inprob \sigma^2$. Since $S_n^2 = (n / (n-1))\widehat{\sigma}^2$, then by the CMT, we have
 $$ 
 S_{n}^2 \inprob \sigma^2 = \V[X_i], \qquad S_{n} \inprob \sigma,
 $$
@@ -671,13 +666,13 @@ $$
 $$
 Comparing this result to the statement of CLT, we see that replacing the population variance with a consistent estimate of the variance (or standard deviation) does not affect the asymptotic distribution. Thus, $S_n / \sqrt{n}$ is a valid standard error estimator even though we saw in the last chapter it was slightly biased. Of course, in small samples the substitution could matter---we will return to this with the $t$-distribution in @sec-confidence-intervals.
 
-We can generalize this idea to any asymptotically normal estimator, $\widehat{\theta}_n$. Suppose we have a consistent estimator for asymptotic variance of the stabilized estimator, $\widehat{V}_{\theta} \inprob V_{\theta} >0$.  Then we can obtain an estimator for the standard error, $\sqrt{\widehat{V}_{\theta} / n}$ and apply Slutsky's theorem to show that normalizing by this estimated standard error will also converge to a standard normal:
+We can generalize this idea to any asymptotically normal estimator, $\widehat{\theta}_n$. Suppose we have a consistent estimator for the asymptotic variance of the stabilized estimator, $\widehat{V}_{\theta} \inprob V_{\theta} > 0$.  Then we can obtain an estimator for the standard error, $\sqrt{\widehat{V}_{\theta} / n}$ and apply Slutsky's theorem to show that normalizing by this estimated standard error will also converge to a standard normal:
 $$
 \frac{\widehat{\theta}_n - \theta}{\sqrt{\widehat{V}_{\theta} / n}} \indist \N(0, 1)
 $$
 
 
-Like with the WLLN, the CLT holds for random vectors of sample means, where their centered and scaled versions converge to a multivariate normal distribution with a covariance matrix equal to the covariance matrix of the underlying random vectors of data, $\X_i$. For a sequence of random vectors, $\mb{Z}_n$ and a limit vector $\mb{Z}$, we say $\mb{Z}_n$ converges in distribution to $\mb{Z}$ (or $\mb{Z} \indist \mb{Z}$) if the the joint distribution of $\mb{Z}_n$ converges to the joint distribution of $\mb{Z}$. Note that marginal convergence in distribution of each entry of $\mb{Z}_n$ is necessary, but not sufficient for multivariate convergence. 
+Like with the WLLN, the CLT holds for random vectors of sample means, where their centered and scaled versions converge to a multivariate normal distribution with a covariance matrix equal to the covariance matrix of the underlying random vectors of data, $\X_i$. For a sequence of random vectors, $\mb{Z}_n$, and a limit vector $\mb{Z}$, we say $\mb{Z}_n$ converges in distribution to $\mb{Z}$ (or $\mb{Z}_n \indist \mb{Z}$) if the joint distribution of $\mb{Z}_n$ converges to the joint distribution of $\mb{Z}$. Note that marginal convergence in distribution of each entry of $\mb{Z}_n$ is necessary, but not sufficient for multivariate convergence. 
 
 ::: {#thm-multivariate-clt}
 
@@ -698,16 +693,16 @@ As with the notation alert with the WLLN, we are using shorthand here, $\E\Vert 
 
 :::
 
-Finally, there are multivariate version of @thm-indist-properties. 
+Finally, there is a multivariate version of @thm-indist-properties. 
 
 ::: {#thm-indist-properties-multivariate}
 
-## Properties of convergence in distribution
+## Properties of convergence in distribution for random vectors
 
-Let $\X_n$ be a sequence of random vectors $\X_1, \X_2,\ldots$ that converges in distribution to some rv $\X$ and let $\mb{Y}_n$ be a sequence of random vectors $\mb{Y}_1, \mb{Y}_2,\ldots$ that converges in probability to some constant vector, $\mb{c}$. Then, 
+Let $\mb{Z}_n$ be a sequence of random vectors $\mb{Z}_1, \mb{Z}_2,\ldots$ that converges in distribution to some random vector $\mb{Z}$ and let $\mb{W}_n$ be a sequence of random vectors $\mb{W}_1, \mb{W}_2,\ldots$ that converges in probability to some constant vector, $\mb{c}$. Then, 
 
-1. $g(\X_n) \indist g(\X)$ for all continuous functions $g$.
-1. $g(\X_n, \mb{Y}_n) \indist g(\X, \mb{c})$ for all continuous functions $g$.
+1. $g(\mb{Z}_n) \indist g(\mb{Z})$ for all functions $g$ that are continuous in the limit.
+2. $g(\mb{Z}_n, \mb{W}_n) \indist g(\mb{Z}, \mb{c})$ for all functions $g$ that are continuous in the limit.
 
 :::
 
@@ -719,7 +714,7 @@ Suppose that we know that an estimator follows the CLT, and so we have
 $$
 \sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V_{\theta}),
 $$
-but we actually want to estimate $h(\theta)$ so we use the plug-in estimator, $h(\widehat{\theta}_n)$. It seems like we should be able to apply part 1 of @thm-indist-properties to obtain the asymptotic distribution of $h(\widehat{\theta}_n)$. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, $\sqrt{n}(\widehat{\theta}_n - \theta)$, not to the original estimator itself, and we would need the latter to investigate the asymptotic distribution of $h(\widehat{\theta}_n)$. We can use a little bit of calculus to get an approximation of the distribution we need. 
+but we actually want to estimate $h(\theta)$ so we use the plug-in estimator, $h(\widehat{\theta}_n)$. It seems like we should be able to apply part 1 of @thm-indist-properties to obtain the asymptotic distribution of $h(\widehat{\theta}_n)$. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, $\sqrt{n}(\widehat{\theta}_n - \theta)$, not of the original estimator itself, and we would need the latter to investigate the asymptotic distribution of $h(\widehat{\theta}_n)$. We can use a little bit of calculus to get an approximation of the distribution we need. 
 
 
 ::: {#thm-delta-method}
@@ -731,15 +726,15 @@ $$
 
 :::
 
-Understanding what is happening here provides intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, $h()$? These functions can be well-approximated with a line in a neighborhood around $\theta_0$. In @fig-delta, we plot the tangent line at $\theta_0$, which has slope $h'(\theta_0)$, is very similar to $h(\theta)$ for values close to $\theta_0$. Because of this, we can approximate the difference between $h(\widehat{\theta}_n)$ and $h(\theta_0)$ with what this tangent line would give us:
+Understanding what is happening here provides intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, $h()$? These functions can be well-approximated with a line in a neighborhood around $\theta_0$. In @fig-delta, we plot the tangent line at $\theta_0$, which has slope $h'(\theta_0)$ and is very similar to $h(\theta)$ for values close to $\theta_0$. Because of this, we can approximate the difference between $h(\widehat{\theta}_n)$ and $h(\theta_0)$ with what this tangent line would give us:
 $$
 \underbrace{\left(h(\widehat{\theta}_n) - h(\theta_0)\right)}_{\text{change in } y} \approx \underbrace{h'(\theta_0)}_{\text{slope}} \underbrace{\left(\widehat{\theta}_n - \theta_0\right)}_{\text{change in } x},
 $$
-and then multiplying both sides by the $\sqrt{n}$ gives
+and then multiplying both sides by $\sqrt{n}$ gives
 $$
-\sqrt{n}\left(h(\widehat{\theta_n}) - h(\theta_0)\right) \approx h'(\theta_0)\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right). 
+\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta_0)\right) \approx h'(\theta_0)\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right). 
 $$
-For a consistent estimator, this approximation improves as $n$ grows because $\widehat\theta_n$ lands ever closer to $\theta_0$, where the tangent line is accurate. The right-hand side of this approximation converges to $h'(\theta_0)Z$, where $Z$ is a random variable with $\N(0, V_{\theta})$. The variance of this quantity will be
+For a consistent estimator, this approximation improves as $n$ grows because $\widehat\theta_n$ lands ever closer to $\theta_0$, where the tangent line is accurate. The right-hand side of this approximation converges to $h'(\theta_0)Z$, where $Z \sim \N(0, V_{\theta})$. The variance of this quantity will be
 $$
 \V[h'(\theta_0)Z] = (h'(\theta_0))^2\V[Z] = (h'(\theta_0))^2V_{\theta},
 $$
@@ -752,7 +747,7 @@ by the properties of variances.
 
 curve(
   x^2,
-  from = -3, to = 3, lwd = 2, bty = "l", ylim = c(0, 10),
+  from = -3.5, to = 3.5, lwd = 2, bty = "l", ylim = c(0, 10),
   xaxt = "n", yaxt = "n", xlab = expression(theta),
   ylab = expression(h(theta))
 )
@@ -771,14 +766,15 @@ segments(
   x0 = -20, x1 = -0.5, y0 = 0.5^2, lwd = 1.5, lty = 2, col = "grey50"
 )
 segments(x0 = -20, x1 = -1, y0 = 1, lwd = 1.5, lty = 2, col = "black")
-segments(x0 = -2, x1 = -2, y0 = 1.75, y1 = 2.75)
-segments(x0 = -3, x1 = -2, y0 = 2.75, y1 = 2.75)
+segments(x0 = -2.5, x1 = -2.5, y0 = 2.25, y1 = 3.25)
+segments(x0 = -3.5, x1 = -2.5, y0 = 3.25, y1 = 3.25)
 text(
-  x = -2.5,
-  y = 2.95, expression(h * minute * (theta[0])),
+  x = -3,
+  y = 3.25, "1",
   cex = 0.88,
+  pos = 3
 )
-text(x = -1.9, y = 2.25, "1", pos = 1, cex = 0.88, offset = 0.25)
+text(x = -2.5, y = 2.75, expression(h * minute * (theta[0])), pos = 4, cex = 0.88, offset = 0.25)
 text(x = 2.75, y = 2.75^2, expression(h()), pos = 4)
 ```
 
@@ -795,13 +791,13 @@ $$
 \sqrt{n}\left(\log(\Xbar_n) - \log(\mu)\right) \indist \N\left(0,\frac{\sigma^2}{\mu^2} \right).
 $$
 
-We can build a plug-in estimator of the asymptotic variance $\widehat{V} = S_n^2 / \Xbar_n^2$ which will converge in probability to the true variance, $\sigma^2 / \mu ^ 2$ by the CMT. So an estimated standard error would be $\widehat{\se}[\log(\Xbar_n)] = S_n / (\Xbar_n \sqrt{n})$.
+We can build a plug-in estimator of the asymptotic variance $\widehat{V} = S_n^2 / \Xbar_n^2$ which will converge in probability to the asymptotic variance, $\sigma^2 / \mu ^ 2$ by the CMT. So an estimated standard error would be $\widehat{\se}[\log(\Xbar_n)] = S_n / (\Xbar_n \sqrt{n})$.
 
 :::
 
 ::: {#exm-squared}
 
-What about estimating the $h(\mu) =\mu^2$  with $\Xbar_n^2$? Recall that
+What about estimating $h(\mu) =\mu^2$  with $\Xbar_n^2$? Recall that
 $$
 h'(\mu) = \frac{\partial \mu^2}{\partial \mu} = 2\mu
 $$
@@ -810,13 +806,13 @@ $$
 \sqrt{n}\left(\Xbar_n^2 - \mu^2\right) \indist \N(0, 4\mu^2\sigma^2).
 $$
 
-What about when $\mu = 0$? In this case, the delta method predicts the centered and scaled version of $\Xbar_n^2$ will have the distribution $\N(0, 0)$ which is just a point mass on 0 which does not help us learn much about the limiting distribution of $\Xbar_n^2$. To understand why, notice that the tangent line for $\mu^2$ at $\mu = 0$ is a horizontal line, where small changes in $\Xbar_n$ lead to practically no change in $\Xbar_n^2$. Thus, the delta method approximation breaks down and we need a different way of learning about the large-sample distribution. More generally, the approximation will break down when $h'(\theta_0) = 0$ (as in this case) or if there is a kink in $h$ at $\theta_0$ (so the derivative does not exist). Even $\mu$ is very small but nonzero, the CLT and the delta might provide poor approximations. 
+What about when $\mu = 0$? In this case, the delta method predicts the centered and scaled version of $\Xbar_n^2$ will have the distribution $\N(0, 0)$, which is just a point mass on 0 which does not help us learn much about the limiting distribution of $\Xbar_n^2$. To understand why, notice that the tangent line for $\mu^2$ at $\mu = 0$ is a horizontal line, where small changes in $\Xbar_n$ lead to practically no change in $\Xbar_n^2$. Thus, the delta method approximation breaks down and we need a different way of learning about the large-sample distribution. More generally, the approximation will break down when $h'(\theta_0) = 0$ (as in this case) or if there is a kink in $h$ at $\theta_0$ (so the derivative does not exist). Even when $\mu$ is nonzero but within a few standard errors of zero, the tangent line is nearly flat, and the delta can provide a poor approximation unless the sample size is quite large. 
 
 
 :::
 
 
-Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. For example, suppose we want to combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let $\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))$ map from $\mathbb{R}^k \to \mathbb{R}^m$ and be continuously differentiable (we make the function bold since it returns an $m$-dimensional vector). It will help us to use more compact matrix notation if we introduce a $m \times k$ Jacobian matrix of all partial derivatives
+Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. For example, suppose we want to combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let $\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))$ map from $\mathbb{R}^k \to \mathbb{R}^m$ and be continuously differentiable (we make the function bold since it returns an $m$-dimensional vector). It will help us to use more compact matrix notation if we introduce an $m \times k$ Jacobian matrix of all partial derivatives
 $$
 \mb{H}(\mb{\theta}) = \partial\mb h/\partial\mb\theta' = \begin{pmatrix}
   \frac{\partial h_1(\mb{\theta})}{\partial \theta_1} & \frac{\partial h_1(\mb{\theta})}{\partial \theta_2} & \cdots & \frac{\partial h_1(\mb{\theta})}{\partial \theta_k} \\
@@ -849,20 +845,20 @@ In @exm-ratio-estimator, we found that the ratio of sample means was consistent 
 $$
 \frac{\Ybar_n}{\Xbar_n} \inprob \frac{\mu_y}{\mu_x}.
 $$
-What about the large-sample distribution of $\Ybar_n/\Xbar_n$? Consider the population means as a vector, $\mb{\theta} = (\mu_y, \mu_x)$ and consider the ratio mapping $h(\mb{\theta}) = \frac{\mu_y}{\mu_x}$ with Jacobian
+What about the large-sample distribution of $\Ybar_n/\Xbar_n$? Consider the population means as a vector, $\mb{\theta} = (\mu_y, \mu_x)$, and the ratio mapping $h(\mb{\theta}) = \frac{\mu_y}{\mu_x}$ with Jacobian
 $$
 \mb{H}(\mb{\theta}) = \begin{pmatrix}
 \frac{1}{\mu_x} & -\frac{\mu_y}{\mu_x^2}
 \end{pmatrix}
 $$
-Let $\V[Y_i] = \sigma^2_y$ and $\V[X_i] = \sigma^2_x$ be the variances of the data and let $\sigma_{yx} = \cov(X_i, Y_i)$ be the covariance between the variables. If $\mu_x \neq 0$, the multivariate CLT tells us the population covariance matrix of the (centered and scaled) sample means will be
+Let $\V[Y_i] = \sigma^2_y$ and $\V[X_i] = \sigma^2_x$ be the variances of the data and let $\sigma_{yx} = \cov(Y_i, X_i)$ be the covariance between the variables. T  he multivariate CLT tells us the asymptotic covariance matrix of the (centered and scaled) sample means will be
 $$
 \mb{\Sigma} = \begin{pmatrix}
 \sigma^2_y & \sigma_{yx} \\
 \sigma_{yx} & \sigma^2_x
 \end{pmatrix}
 $$
-Thus, the multivariate delta method implies $\sqrt{n}(\Ybar_n / \Xbar_n - \mu_y / \mu_x)$ will have asymptotic variance
+Thus, if $\mu_x \neq 0$, the multivariate delta method implies $\sqrt{n}(\Ybar_n / \Xbar_n - \mu_y / \mu_x)$ will have asymptotic variance
 $$
 \begin{aligned}
 \mb{H}\mb{\Sigma}\mb{H}' &= \begin{pmatrix} \frac{1}{\mu_x} & -\frac{\mu_y}{\mu_x^2}\end{pmatrix} \begin{pmatrix}
@@ -874,11 +870,11 @@ $$
 :::
 
 
-The delta method is handy for generating closed-form approximations for asymptotic standard errors, but the math can be complex once we move beyond simple estimators. It can be more straightforward for applied researchers to use computational tools such as the bootstrap to approximate the needed standard errors. The bootstrap---which we will discuss in @sec-confidence-intervals ---has the trade-off of taking more computational time to implement compared to the delta method, but it is more easily adaptable across different estimators and domains. 
+The delta method is handy for generating closed-form approximations for asymptotic standard errors, but the math can be complex once we move beyond simple estimators. It can be more straightforward for applied researchers to use computational tools such as the bootstrap to approximate the needed standard errors. The bootstrap, which we will discuss in @sec-confidence-intervals, has the trade-off of taking more computational time to implement compared to the delta method, but it is more easily adaptable across different estimators and domains. 
 
 
 ## Summary
 
-In this chapter, we covered asymptotic analysis, which considers how estimators behave as we feed them larger and larger samples. While we never actually have infinite data, asymptotic results provide approximations that work quite well in many (though not all) situations. A **consistent** estimator converges in probability to a desired quantity of interest. We saw several ways of establishing consistency, including the **Law of Large Numbers** for the sample mean, which converges in probability to the population mean. The **Central Limit Theorem** tells us that the sample mean will be approximately normally distributed when we have large, iid samples. We also saw how the **continuous mapping theorem** and **Slutsky’s theorem** allow us to determine asymptotic results for a broad class of estimators. Finally, the **delta method** is a general tool for finding the asymptotic distribution of an estimator that is a function of another estimator with a known asymptotic distribution. Finally, we saw how to combine asymptotic normality plus a consistent estimator of the asymptotic variance to give a standard error estimator that we can use in the next two chapters. 
+In this chapter, we covered asymptotic analysis, which considers how estimators behave as we feed them larger and larger samples. While we never actually have infinite data, asymptotic results provide approximations that work quite well in many (though not all) situations. A **consistent** estimator converges in probability to a desired quantity of interest. We saw several ways of establishing consistency, including the **Law of Large Numbers** for the sample mean, which converges in probability to the population mean. The **Central Limit Theorem** tells us that the sample mean will be approximately normally distributed when we have large, iid samples. We also saw how the **continuous mapping theorem** and **Slutsky’s theorem** allow us to determine asymptotic results for a broad class of estimators. Finally, the **delta method** is a general tool for finding the asymptotic distribution of an estimator that is a function of another estimator with a known asymptotic distribution. We also saw how to combine asymptotic normality plus a consistent estimator of the asymptotic variance to give a standard error estimator that we can use in the next two chapters. 
 
 In the next chapter, we will leverage these asymptotic results to introduce another important tool for statistical inference: the hypothesis test, which will let us answer questions like the one that opened this chapter. 
