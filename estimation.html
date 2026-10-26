@@ -699,9 +699,9 @@ Figure&nbsp;2.3: A representation of the sampling distribution
 </div>
 <p>The sampling distribution is the distribution of these sample means across repeated sampling. <a href="#fig-likert-sampling-dist" class="quarto-xref">Figure&nbsp;<span>2.4</span></a></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sampling_dist <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="at">times =</span> R)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (r <span class="cf">in</span> <span class="fu">seq_len</span>(R)) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>reps <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sampling_dist <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="at">times =</span> reps)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (r <span class="cf">in</span> <span class="fu">seq_len</span>(reps)) {</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  sampling_dist[r] <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">prob =</span> <span class="fl">0.4</span>))</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -712,10 +712,10 @@ Figure&nbsp;2.3: A representation of the sampling distribution
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">border =</span> <span class="st">"white"</span></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="fig-likert-sampling-dist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histogram showing the sampling distribution of the sample mean in the  Likert data example.">
+<div id="fig-likert-sampling-dist" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Histogram showing the sampling distribution of the sample mean in the Likert data example.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-likert-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="estimation_files/figure-html/fig-likert-sampling-dist-1.png" class="img-fluid figure-img" alt="Histogram showing the sampling distribution of the sample mean in the  Likert data example." width="672">
+<img src="estimation_files/figure-html/fig-likert-sampling-dist-1.png" class="img-fluid figure-img" alt="Histogram showing the sampling distribution of the sample mean in the Likert data example." width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-likert-sampling-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.4: Sampling distribution of the sample mean in the Likert data example.
@@ -848,10 +848,10 @@ S_n = \sqrt{S_n^2} = \sqrt{\frac{\sum_{i=1}^n (X_i - \Xbar_n)^2}{n-1}}
 <p>This decomposition implies that, for unbiased estimators, MSE is the sampling variance. It also highlights why we might accept some bias for significant reductions in variance for lower overall MSE.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-mse" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Example with two sampling distributions. One (labelled theta hat a) is centered on the true value theta but with high spread around that value. The other (labelled theta hat b) is slightly biased but has much less variance. ">
+<div id="fig-mse" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Example with two sampling distributions. One (labelled theta hat a) is centered on the true value theta but with high spread around that value. The other (labelled theta hat b) is slightly biased but has much less variance.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="estimation_files/figure-html/fig-mse-1.png" class="img-fluid figure-img" alt="Example with two sampling distributions. One (labelled theta hat a) is centered on the true value theta but with high spread around that value. The other (labelled theta hat b) is slightly biased but has much less variance. " width="672">
+<img src="estimation_files/figure-html/fig-mse-1.png" class="img-fluid figure-img" alt="Example with two sampling distributions. One (labelled theta hat a) is centered on the true value theta but with high spread around that value. The other (labelled theta hat b) is slightly biased but has much less variance." width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2.5: Two sampling distributions
@@ -936,7 +936,7 @@ Warning
 \widehat{\se}[\widehat{\tau}] &amp;= \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}
 \end{aligned}
 \]</span> Here, we have abused notation slightly by using subscripts for the treatment/control labels instead of sample size: <span class="math inline">\(S^2_1\)</span> is the sample variance in the treatment group, not sample variance with <span class="math inline">\(n = 1\)</span>. Conditional on the observed treatment assignment, <span class="math inline">\(\mathbf{D}\)</span>, remember that the treated and control groups are just iid samples from a distribution and so we know that the sample variances are unbiased, <span class="math inline">\(\E[S^2_d \mid \mathbf{D}] = \sigma^2_d\)</span>, which implies that <span class="math inline">\(\widehat{\V}[\widehat{\tau}]\)</span> is also unbiased for <span class="math inline">\(\V[\widehat{\tau} \mid \mathbf{D}]\)</span>, conditional on <span class="math inline">\(\mathbf{D}\)</span>. Note that <span class="math inline">\(\E[\widehat\tau\mid\mathbf D]=\tau\)</span> does not depend on the treatment assignment, which implies that <span class="math inline">\(\widehat{\V}[\widehat{\tau}]\)</span> is unbiased for the unconditional variance, <span class="math inline">\(\V[\widehat{\tau}]\)</span>, as well.</p>
-<p>Much like the standard error estimator for the mean, <span class="math inline">\(\widehat{\se}[\widehat{\tau}]\)</span> will be slightly biased downward. <a href="asymptotics.html" class="quarto-xref"><span>Chapter 3</span></a> will show us why these estimators will still work well in large samples.</p>
+<p>Much like the standard error estimator for the mean, <span class="math inline">\(\widehat{\se}[\widehat{\tau}]\)</span> will be slightly biased downward. <a href="asymptotics.html" class="quarto-xref"><span>Chapter 3</span></a> will show us why these types of estimators will still work well in large samples.</p>
 </section>
 <section id="summary" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">2.9</span> Summary</h2>

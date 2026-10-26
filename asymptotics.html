@@ -26,7 +26,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -335,8 +354,8 @@ window.Quarto = {
 
 <section id="introduction" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
-<p>Suppose we are still interested in estimating the proportion of citizens who prefer increasing legal immigration. Based on the last chapter, a good strategy would be to use the sample proportion of immigration supporters in a random sample of citizens. You would have good reason to be confident with this estimator, with its finite-sample properties like unbiasedness and a sampling variance. We call these “finite-sample” properties since they hold at any sample size—they are as true for random samples of size for <span class="math inline">\(n = 10\)</span> as they are for random samples of size <span class="math inline">\(n = 1,000,000\)</span>.</p>
-<p>Finite-sample results, though, are of limited value because they only tell us about the center and spread of the sampling distribution of <span class="math inline">\(\Xbar_n\)</span>. Suppose we found that <span class="math inline">\(\Xbar_n = 0.47\)</span> or 47% of respondents in a single survey supported increasing immigration. We might want to know how plausible it would be for the true population proportion – which is distinct from the sample proportion – to be 50% or greater. Questions like this are critical for a decision maker and, to answer this, we need to know the (approximate) distribution of <span class="math inline">\(\Xbar_n\)</span> in addition to its mean and variance. We can often derive the exact distribution of an estimator if we are willing to make certain, sometimes strong assumptions about the underlying data (for example, if the population is normal, then the sample means will also be normal). Still, this approach is brittle: if our parametric assumption is false, we are back to square one.</p>
+<p>Suppose we are still interested in estimating the proportion of citizens who prefer increasing legal immigration. Based on the last chapter, a good strategy would be to use the sample proportion of immigration supporters in a random sample of citizens. You would have good reason to be confident with this estimator, with its finite-sample properties like unbiasedness and a sampling variance. We call these “finite-sample” properties since they hold at any sample size—they are as true for random samples of size <span class="math inline">\(n = 10\)</span> as they are for random samples of size <span class="math inline">\(n = 1{,}000{,}000\)</span>.</p>
+<p>Finite-sample results, though, are of limited value because they only tell us about the center and spread of the sampling distribution of <span class="math inline">\(\Xbar_n\)</span>. Suppose we found that a sample proportion of <span class="math inline">\(\Xbar_n = 0.47\)</span> or 47% of respondents in a single survey supported increasing immigration. We might want to know how plausible it would be for the true population proportion—which is distinct from the sample proportion—to be 50% or greater. Questions like this are critical for a decision maker and, to answer this, we need to know the (approximate) distribution of <span class="math inline">\(\Xbar_n\)</span> in addition to its mean and variance. We can often derive the exact distribution of an estimator if we are willing to make certain, sometimes strong assumptions about the underlying data (for example, if the population is normal, then the sample means will also be normal). Still, this approach is brittle: if our parametric assumption is false, we are back to square one.</p>
 <p>In this chapter, we take a different approach by asking what happens to the sampling distribution of estimators as the sample size gets very large, which we refer to as <strong>asymptotic theory</strong>. While asymptotics will often simplify derivations, an essential point is that everything we do with asymptotics will be an approximation. No one ever has infinite data, but we hope that the approximations will be closer to the truth as our samples get larger.</p>
 <p>Asymptotic results are key to modern statistical methods because many methods of quantifying uncertainty about estimates rely on asymptotic approximations. We will rely on the asymptotic results we derive in this chapter to estimate standard errors, construct confidence intervals, and perform hypothesis tests, all without assuming a fully parametric model.</p>
 </section>
@@ -344,22 +363,27 @@ window.Quarto = {
 <h2 data-number="3.2" class="anchored" data-anchor-id="convergence-of-deterministic-sequences"><span class="header-section-number">3.2</span> Convergence of deterministic sequences</h2>
 <p>A helpful place to begin is by reviewing the basic idea of convergence in deterministic sequences from calculus:</p>
 <div id="def-limit" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3.1</strong></span> A sequence <span class="math inline">\(\{a_n: n = 1, 2, \ldots\}\)</span> has the <strong>limit</strong> <span class="math inline">\(a\)</span> written <span class="math inline">\(a_n \rightarrow a\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span> or <span class="math inline">\(\lim_{n\rightarrow \infty} a_n = a\)</span> if for all <span class="math inline">\(\epsilon &gt; 0\)</span> there is some <span class="math inline">\(n_{\epsilon} &lt; \infty\)</span> such that for all <span class="math inline">\(n \geq n_{\epsilon}\)</span>, <span class="math inline">\(|a_n - a| \leq \epsilon\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 3.1</strong></span> A sequence <span class="math inline">\(\{a_n: n = 1, 2, \ldots\}\)</span> has the <strong>limit</strong> <span class="math inline">\(a\)</span> written <span class="math inline">\(a_n \rightarrow a\)</span>, as <span class="math inline">\(n\rightarrow \infty\)</span> or <span class="math inline">\(\lim_{n\rightarrow \infty} a_n = a\)</span> if for all <span class="math inline">\(\varepsilon &gt; 0\)</span> there is some <span class="math inline">\(n_{\varepsilon} &lt; \infty\)</span> such that for all <span class="math inline">\(n \geq n_{\varepsilon}\)</span>, <span class="math inline">\(|a_n - a| \leq \varepsilon\)</span>.</p>
 </div>
 <p>We say that <span class="math inline">\(a_n\)</span> <strong>converges</strong> to <span class="math inline">\(a\)</span> if <span class="math inline">\(\lim_{n\rightarrow\infty} a_n = a\)</span>. Basically, a sequence converges to a number if the sequence gets closer and closer to that number as the sequence goes on.</p>
 <div id="exm-limit" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.1</strong></span> One important sequence that arises often in statistics is <span class="math inline">\(1/n\)</span> as <span class="math inline">\(n\to\infty\)</span>. It may seem clear that this sequence converges to 0, but showing this using the formal definition of convergence is helpful.</p>
-<p>Let us pick a specific value of <span class="math inline">\(\epsilon = 0.3\)</span>. Now we need to find an integer <span class="math inline">\(n_{\epsilon}\)</span> so that <span class="math inline">\(|1/n - 0| = 1/n \leq \epsilon\)</span> for all <span class="math inline">\(n \geq n_{\epsilon}\)</span>. Clearly, if <span class="math inline">\(\epsilon = 0.3\)</span>, then <span class="math inline">\(n_{\epsilon} = 4\)</span> would satisfy this condition since <span class="math inline">\(1/4 \leq 0.3\)</span>.</p>
+<p><span class="theorem-title"><strong>Example 3.1</strong></span> One important sequence that arises often in statistics is <span class="math inline">\(1/n\)</span> as <span class="math inline">\(n\to\infty\)</span>. Inspecting the sequence in <a href="#fig-sequence" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, it may seem clear that this sequence converges to 0, but showing this using the formal definition of convergence is helpful.</p>
+<p>Let us pick a specific value of <span class="math inline">\(\varepsilon = 0.3\)</span>. Now we need to find an integer <span class="math inline">\(n_{\varepsilon}\)</span> so that <span class="math inline">\(|1/n - 0| = 1/n \leq \varepsilon\)</span> for all <span class="math inline">\(n \geq n_{\varepsilon}\)</span>. Clearly, if <span class="math inline">\(\varepsilon = 0.3\)</span>, then <span class="math inline">\(n_{\varepsilon} = 4\)</span> would satisfy this condition since <span class="math inline">\(1/4 \leq 0.3\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="asymptotics_files/figure-html/sequence-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-sequence" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="asymptotics_files/figure-html/fig-sequence-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: Sequence 1/n from n = 1 to n = 20.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>More generally, for any <span class="math inline">\(\epsilon\)</span>, <span class="math inline">\(n \geq 1/\epsilon\)</span> implies <span class="math inline">\(1/n \leq \epsilon\)</span>. Thus, setting <span class="math inline">\(n_{\epsilon} = 1/\epsilon\)</span> ensures that the definition holds for all values of <span class="math inline">\(\epsilon\)</span> and that <span class="math inline">\(\lim_{n\to\infty} 1/n = 0\)</span>.</p>
+<p>More generally, for any <span class="math inline">\(\varepsilon\)</span>, <span class="math inline">\(n \geq 1/\varepsilon\)</span> implies <span class="math inline">\(1/n \leq \varepsilon\)</span>. Thus, setting <span class="math inline">\(n_{\varepsilon} = \textsf{ceil}(1/\varepsilon)\)</span> ensures that the definition holds for all values of <span class="math inline">\(\varepsilon\)</span> and that <span class="math inline">\(\lim_{n\to\infty} 1/n = 0\)</span>.</p>
 </div>
 <p>We will mostly not use such formal definitions to establish a limit but, rather, rely on the properties of limits. For example, convergence and limits follow basic arithmetic operations. Suppose that we have two sequences with limits <span class="math inline">\(\lim_{n\to\infty} a_n = a\)</span> and <span class="math inline">\(\lim_{n\to\infty} b_n = b\)</span>. Then the properties of limits imply:</p>
 <ul>
@@ -367,13 +391,13 @@ window.Quarto = {
 <li><span class="math inline">\(\lim_{n\to\infty} a_nb_n = ab\)</span></li>
 <li><span class="math inline">\(\lim_{n\to\infty} ca_n = c\cdot a\)</span></li>
 <li><span class="math inline">\(\lim_{n\to\infty} (a_n/b_n) = a/b\)</span> if <span class="math inline">\(b \neq 0\)</span></li>
-<li><span class="math inline">\(\lim_{n\to\infty} a_n^{k} = a^{k}\)</span></li>
+<li><span class="math inline">\(\lim_{n\to\infty} a_n^{k} = a^{k}\)</span> (for a fixed <span class="math inline">\(k\)</span>)</li>
 </ul>
 <p>These rules plus the result in <a href="#exm-limit" class="quarto-xref">Example&nbsp;<span>3.1</span></a> allow us to prove other useful facts such as <span class="math display">\[
 \lim_{n\to\infty} \frac{2}{n} = 2 \cdot 0 = 0 \qquad  \lim_{n\to\infty} \frac{1}{n^{2}} = 0.
 \]</span></p>
-<p>Can we apply a similar definition of convergence to sequences of random variables (like estimators)? Possibly. Some examples clarify why this might be difficult.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Suppose we have a sequence of <span class="math inline">\(a_n = a\)</span> for all <span class="math inline">\(n\)</span> (that is, a constant sequence). Then obviously <span class="math inline">\(\lim_{n\rightarrow\infty} a_n = a\)</span>. Now let’s say we have a sequence of random variables, <span class="math inline">\(X_1, X_2, \ldots\)</span>, that are all independent with a standard normal distribution, <span class="math inline">\(N(0,1)\)</span> (where <span class="math inline">\(N(\mu, \sigma^2))\)</span> indicates a normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>). From the analogy to the deterministic case, saying that <span class="math inline">\(X_n\)</span> converges to <span class="math inline">\(X \sim N(0, 1)\)</span> would be tempting, but note that because they are all different random variables, <span class="math inline">\(\P(X_n = X) = 0\)</span>. Thus, we must be careful about saying how one variable converges to another variable.</p>
-<p>Another example highlights subtle problems with a sequence of random variables converging to a single value. Suppose we have a sequence of random variables <span class="math inline">\(X_1, X_2, \ldots\)</span> where <span class="math inline">\(X_n \sim N(0, 1/n)\)</span>. Clearly, the distribution of <span class="math inline">\(X_n\)</span> will concentrate around 0 for large values of <span class="math inline">\(n\)</span>, so saying that <span class="math inline">\(X_n\)</span> converges to 0 is tempting. But notice that <span class="math inline">\(\P(X_n = 0) = 0\)</span> because of the nature of continuous random variables.</p>
+<p>Can we apply a similar definition of convergence to sequences of random variables (like estimators)? Possibly. Some examples clarify why this might be difficult.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Suppose we have a sequence of <span class="math inline">\(a_n = a\)</span> for all <span class="math inline">\(n\)</span> (that is, a constant sequence). Then obviously <span class="math inline">\(\lim_{n\rightarrow\infty} a_n = a\)</span>. Now let’s say we have a sequence of random variables, <span class="math inline">\(X_1, X_2, \ldots\)</span>, that are all independent with a standard normal distribution, <span class="math inline">\(\N(0,1)\)</span> (where <span class="math inline">\(\N(\mu, \sigma^2)\)</span> indicates a normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>). From the analogy to the deterministic case, saying that <span class="math inline">\(X_n\)</span> converges to <span class="math inline">\(X \sim \N(0, 1)\)</span> would be tempting, but note that because they are all different random variables, <span class="math inline">\(\P(X_n = X) = 0\)</span>. Thus, we must be careful about saying how one variable converges to another variable.</p>
+<p>Another example highlights subtle problems with a sequence of random variables converging to a single value. Suppose we have a sequence of random variables <span class="math inline">\(X_1, X_2, \ldots\)</span> where <span class="math inline">\(X_n \sim \N(0, 1/n)\)</span>. Clearly, the distribution of <span class="math inline">\(X_n\)</span> will concentrate around 0 for large values of <span class="math inline">\(n\)</span>, so saying that <span class="math inline">\(X_n\)</span> converges to 0 is tempting. But notice that <span class="math inline">\(\P(X_n = 0) = 0\)</span> because of the nature of continuous random variables.</p>
 </section>
 <section id="convergence-in-probability-and-consistency" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="convergence-in-probability-and-consistency"><span class="header-section-number">3.3</span> Convergence in probability and consistency</h2>
@@ -383,10 +407,10 @@ window.Quarto = {
 \P(|X_n - b| &gt; \varepsilon) \rightarrow 0,
 \]</span> as <span class="math inline">\(n\rightarrow \infty\)</span>. We write this <span class="math inline">\(X_n \inprob b\)</span>.</p>
 </div>
-<p>What’s happening in this definition? The event <span class="math inline">\(|X_n - b| &gt; \varepsilon\)</span> says that a draw of <span class="math inline">\(X_n\)</span> is more than <span class="math inline">\(\varepsilon\)</span> away from <span class="math inline">\(b\)</span> (above or below). So convergence in probability says that the probability of being some distance away from the limit value goes to zero as the <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>. With deterministic sequences, we said that <span class="math inline">\(a_n\)</span> converges to <span class="math inline">\(a\)</span> as it gets closer and closer to <span class="math inline">\(a\)</span> as <span class="math inline">\(n\)</span> gets bigger. For convergence in probability, the sequence of random variables converges to <span class="math inline">\(b\)</span> if the probability that random variables are far away from <span class="math inline">\(b\)</span> gets smaller and smaller as <span class="math inline">\(n\)</span> gets big.</p>
+<p>What’s happening in this definition? The event <span class="math inline">\(|X_n - b| &gt; \varepsilon\)</span> says that a draw of <span class="math inline">\(X_n\)</span> is more than <span class="math inline">\(\varepsilon\)</span> away from <span class="math inline">\(b\)</span> (above or below). So convergence in probability says that the probability of being some distance away from the limit value goes to zero as <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>. With deterministic sequences, we said that <span class="math inline">\(a_n\)</span> converges to <span class="math inline">\(a\)</span> as it gets closer and closer to <span class="math inline">\(a\)</span> as <span class="math inline">\(n\)</span> gets bigger. For convergence in probability, the sequence of random variables converges to <span class="math inline">\(b\)</span> if the probability that random variables are far away from <span class="math inline">\(b\)</span> gets smaller and smaller as <span class="math inline">\(n\)</span> gets big.</p>
 <div id="exm-inprob" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3.2</strong></span> Let’s illustrate the definition of convergence in probability by constructing a sequence of random variables, <span class="math display">\[
-X_n \sim N(0, 1/n).
+X_n \sim \N(0, 1/n).
 \]</span></p>
 <p>We can see intuitively that this sequence will be centered at zero with a shrinking variance. Below, we will see that this is enough to establish convergence in probability of <span class="math inline">\(X_n\)</span> to 0, but we can also show this in terms of its definition. To do so, we need to show that <span class="math display">\[
 \P(|X_n| &gt; \varepsilon) \to 0.
@@ -407,14 +431,14 @@ X_n \sim N(0, 1/n).
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Sometimes convergence in probability is written as <span class="math inline">\(\text{plim}(Z_n) = b\)</span> when <span class="math inline">\(Z_n \inprob b\)</span>, <span class="math inline">\(\text{plim}\)</span> stands for “probability limit.”</p>
+<p>Sometimes convergence in probability is written as <span class="math inline">\(\text{plim}(Z_n) = b\)</span> when <span class="math inline">\(Z_n \inprob b\)</span>; <span class="math inline">\(\text{plim}\)</span> stands for “probability limit.”</p>
 </div>
 </div>
 <p>Convergence in probability is crucial for evaluating estimators. While we said that unbiasedness was not the be-all and end-all of properties of estimators, the following property is an essential and fundamental property of good estimators.</p>
 <div id="def-consistency" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3.3</strong></span> An estimator is <strong>consistent</strong> if <span class="math inline">\(\widehat{\theta}_n \inprob \theta\)</span>.</p>
+<p><span class="theorem-title"><strong>Definition 3.3</strong></span> An estimator <span class="math inline">\(\widehat{\theta}_n\)</span> is <strong>consistent</strong> for some parameter <span class="math inline">\(\theta\)</span> if <span class="math inline">\(\widehat{\theta}_n \inprob \theta\)</span>.</p>
 </div>
-<p>Consistency of an estimator implies that the sampling distribution of the estimator “collapses” on the true value as the sample size gets large. An estimator is <strong>inconsistent</strong> if it converges in probability to any other value. As the sample size gets large, the probability that an inconsistent estimator will be close to the truth will approach 0. Generally speaking, consistency is a very desirable property of an estimator.</p>
+<p>Consistency of an estimator implies that the sampling distribution of the estimator “collapses” on the true value as the sample size gets large. An estimator is <strong>inconsistent</strong> if, shockingly, it is not consistent. Inconsistency can occur because the estimator converges in probability to the wrong value or because it fails to converge at all (as with <span class="math inline">\(\widehat{\theta}_{n, \text{first}}\)</span> below). Generally speaking, consistency is a very desirable property of an estimator.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -428,7 +452,7 @@ Note
 <p>Estimators can be inconsistent yet still converge in probability to an understandable quantity. For example, we will discuss in later chapters that regression coefficients estimated by ordinary least squares (OLS) are consistent for the conditional expectation if the conditional expectation is linear. If that function is non-linear, however, then OLS will be consistent for the best linear approximation to that function. While not ideal, it does mean that this estimator is at least consistent for an interpretable quantity.</p>
 </div>
 </div>
-<p>We can also define convergence in probability for a sequence of random vectors, <span class="math inline">\(\X_1, \X_2, \ldots\)</span>, where <span class="math inline">\(\X_i = (X_{i1}, \ldots, X_{ik})\)</span> is a random vector of length <span class="math inline">\(k\)</span>. This sequence converges in probability to a vector <span class="math inline">\(\mb{b} = (b_1, \ldots, b_k)\)</span> if and only if each random variable in the vector converges to the corresponding element in <span class="math inline">\(\mb{b}\)</span>, or that <span class="math inline">\(X_{nj} \inprob b_j\)</span> for all <span class="math inline">\(j = 1, \ldots, k\)</span>.</p>
+<p>We can also define convergence in probability for a sequence of random vectors, <span class="math inline">\(\mb{Z}_1, \mb{Z}_2, \ldots\)</span>, where <span class="math inline">\(\mb{Z}_n = (Z_{n1}, \ldots, Z_{nk})\)</span> is a random vector of length <span class="math inline">\(k\)</span>. This sequence converges in probability to a vector <span class="math inline">\(\mb{b} = (b_1, \ldots, b_k)\)</span> if and only if each random variable in the vector converges to the corresponding element in <span class="math inline">\(\mb{b}\)</span>, or that <span class="math inline">\(Z_{nj} \inprob b_j\)</span> for all <span class="math inline">\(j = 1, \ldots, k\)</span>.</p>
 </section>
 <section id="useful-inequalities" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="useful-inequalities"><span class="header-section-number">3.4</span> Useful inequalities</h2>
@@ -443,10 +467,10 @@ Note
 \mathbb{I}(Y \geq 1) \leq Y.
 \]</span> Why does this hold? The two possible values of the indicator function show why. If <span class="math inline">\(Y\)</span> is less than 1, then the indicator function will be 0, but recall that <span class="math inline">\(Y\)</span> is nonnegative, so we know that it must be at least as big as 0 so that inequality holds. If <span class="math inline">\(Y \geq 1\)</span>, then the indicator function will take the value one, but we just said that <span class="math inline">\(Y \geq 1\)</span>, so the inequality holds. If we take the expectation of both sides of this inequality, we obtain the result (remember, the expectation of an indicator function is the probability of the event).</p>
 </div>
-<p>In words, Markov’s inequality says that the probability of a random variable being large in magnitude cannot be high if the average is not large in magnitude. Blitzstein and Hwang (2019) provide an excellent intuition behind this result using income as an example. Let <span class="math inline">\(X\)</span> be the income of a randomly selected individual in a population and set <span class="math inline">\(\delta = 2\E[X]\)</span> so that the inequality becomes <span class="math inline">\(\P(X &gt; 2\E[X]) &lt; 1/2\)</span> (assuming that all income is nonnegative). Here, the inequality says that the share of the population with an income twice the average must be less than 0.5 since if more than half the population were making twice the average income, then the average would have to be higher.</p>
-<p>It’s pretty astounding how general this result is since it holds for all random variables. Of course, its generality comes at the expense of not being very informative. If <span class="math inline">\(\E[|X|] = 5\)</span>, for instance, the inequality tells us that <span class="math inline">\(\P(|X| \geq 1) \leq 5\)</span>, which is not very helpful since we already know that probabilities are less than 1! We can get tighter bounds if we are willing to make some assumptions about <span class="math inline">\(X\)</span>.</p>
+<p>In words, Markov’s inequality says that the probability of a random variable being large in magnitude cannot be high if the average is not large in magnitude. <span class="citation" data-cites="BliHwa19">Blitzstein and Hwang (<a href="references.html#ref-BliHwa19" role="doc-biblioref">2019</a>)</span> provide an excellent intuition behind this result using income as an example. Let <span class="math inline">\(X\)</span> be the income of a randomly selected individual in a population and set <span class="math inline">\(\delta = 2\E[X]\)</span> so that the inequality becomes <span class="math inline">\(\P(X \geq 2\E[X]) \leq 1/2\)</span> (assuming that all income is nonnegative). Here, the inequality says that the share of the population with an income twice the average cannot be greater than 0.5 since if more than half the population were making twice the average income, then the average would have to be higher.</p>
+<p>It’s pretty astounding how general this result is since it holds for all random variables. Of course, its generality comes at the expense of not being very informative. If <span class="math inline">\(\E[|X|] = 5\)</span>, for instance, the inequality tells us that <span class="math inline">\(\P(|X| \geq 1) \leq 5\)</span>, which is not very helpful since we already know that probabilities are no greater than 1! We can get tighter bounds if we are willing to make some assumptions about <span class="math inline">\(X\)</span>.</p>
 <div id="thm-chebyshev" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.2 (Chebyshev Inequality)</strong></span> Suppose that <span class="math inline">\(X\)</span> is r.v. for which <span class="math inline">\(\V[X] &lt; \infty\)</span>. Then, for every real number <span class="math inline">\(\delta &gt; 0\)</span>, <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 3.2 (Chebyshev Inequality)</strong></span> Suppose that <span class="math inline">\(X\)</span> is an r.v. for which <span class="math inline">\(\V[X] &lt; \infty\)</span>. Then, for every real number <span class="math inline">\(\delta &gt; 0\)</span>, <span class="math display">\[
 \P(|X-\E[X]| \geq \delta) \leq \frac{\V[X]}{\delta^2}.
 \]</span></p>
 </div>
@@ -456,22 +480,23 @@ Note
 \]</span> with the last equality holding by the definition of variance.</p>
 </div>
 <p>Chebyshev’s inequality is a straightforward extension of the Markov result: the probability of a random variable being far from its mean (that is, <span class="math inline">\(|X-\E[X]|\)</span> being large) is limited by the variance of the random variable. If we let <span class="math inline">\(\delta = c\sigma\)</span>, where <span class="math inline">\(\sigma\)</span> is the standard deviation of <span class="math inline">\(X\)</span>, we can use this result to bound the normalized deviation from the mean: <span class="math display">\[
-\P\left(\frac{|X - \E[X]|}{\sigma} &gt; c \right) \leq \frac{1}{c^2}.
-\]</span> This statement says the probability of being two standard deviations away from the mean must be less than 1/4 = 0.25. Notice that this bound can be fairly wide. If <span class="math inline">\(X\)</span> has a normal distribution, we know that about 5% of draws will be greater than 2 SDs away from the mean, much lower than the 25% bound implied by Chebyshev’s inequality.</p>
+\P\left(\frac{|X - \E[X]|}{\sigma} \geq c \right) \leq \frac{1}{c^2}.
+\]</span> This statement says the probability of being at least two standard deviations away from the mean must be less than or equal to 1/4 = 0.25. Notice that this bound can be fairly wide. If <span class="math inline">\(X\)</span> has a normal distribution, we know that about 5% of draws will be greater than 2 SDs away from the mean, much lower than the 25% bound implied by Chebyshev’s inequality.</p>
 </section>
 <section id="the-law-of-large-numbers" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="the-law-of-large-numbers"><span class="header-section-number">3.5</span> The law of large numbers</h2>
 <p>We can now use these inequalities to show how estimators can be consistent for their target quantities of interest without making parametric assumptions. Why are these inequalities helpful? Remember that convergence in probability was about the probability of an estimator being far away from a value going to zero. Chebyshev’s inequality shows that we can bound these exact probabilities.</p>
 <p>The most famous consistency result has a special name.</p>
 <div id="thm-lln" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.3 (Weak Law of Large Numbers)</strong></span> Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be i.i.d. draws from a distribution with mean <span class="math inline">\(\mu = \E[X_i]\)</span> and variance <span class="math inline">\(\sigma^2 = \V[X_i] &lt; \infty\)</span>. Let <span class="math inline">\(\Xbar_n = \frac{1}{n} \sum_{i =1}^n X_i\)</span>. Then, <span class="math inline">\(\Xbar_n \inprob \mu\)</span>.</p>
+<p><span class="theorem-title"><strong>Theorem 3.3 (Weak Law of Large Numbers)</strong></span> Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be i.i.d. draws from a distribution with mean <span class="math inline">\(\mu = \E[X_i]\)</span> where <span class="math inline">\(\E[|X_i|] &lt; \infty\)</span>. Let <span class="math inline">\(\Xbar_n = \frac{1}{n} \sum_{i =1}^n X_i\)</span>. Then, <span class="math inline">\(\Xbar_n \inprob \mu\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Recall that the sample mean is unbiased, so <span class="math inline">\(\E[\Xbar_n] = \mu\)</span> with sampling variance <span class="math inline">\(\sigma^2/n\)</span>. We can then apply Chebyshev to the sample mean to get <span class="math display">\[
+<p><span class="proof-title"><em>Proof</em>. </span>We will prove the case in which the random variable has finite variance, <span class="math inline">\(\sigma^2 = \V[X_i] &lt; \infty\)</span>, even though the result holds under infinite variance (the proof just requires techniques outside the scope of this book).</p>
+<p>Recall that the sample mean is unbiased, so <span class="math inline">\(\E[\Xbar_n] = \mu\)</span> with sampling variance <span class="math inline">\(\sigma^2/n\)</span>. We can then apply Chebyshev to the sample mean to get <span class="math display">\[
 \P(|\Xbar_n - \mu| \geq \delta) \leq \frac{\V[\Xbar_n]}{\delta^2} = \frac{\sigma^2}{n\delta^2}
-\]</span> An <span class="math inline">\(n\rightarrow\infty\)</span>, the right-hand side goes to 0, which means that the left-hand side also must go to 0, which is the definition of <span class="math inline">\(\Xbar_n\)</span> converging in probability to <span class="math inline">\(\mu\)</span>.</p>
+\]</span> As <span class="math inline">\(n\rightarrow\infty\)</span>, the right-hand side goes to 0, which means that the left-hand side also must go to 0, which is the definition of <span class="math inline">\(\Xbar_n\)</span> converging in probability to <span class="math inline">\(\mu\)</span>.</p>
 </div>
-<p>The weak law of large numbers (WLLN) shows that, under general conditions, the sample mean gets closer to the population mean as <span class="math inline">\(n\rightarrow\infty\)</span>. This result holds even when the variance of the data is infinite, though researchers will rarely face such a situation.</p>
+<p>The weak law of large numbers (WLLN) shows that, under general conditions, the sample mean gets closer to the population mean as <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -486,7 +511,7 @@ Note
 </div>
 </div>
 <div id="exm-lln" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.3</strong></span> Seeing how the distribution of the sample mean changes as a function of the sample size allows us to appreciate the WLLN. We can see this by taking repeated iid samples of different sizes from an exponential random variable with rate parameter 0.5 so that <span class="math inline">\(\E[X_i] = 2\)</span>. In <a href="#fig-lln-sim" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>, we show the distribution of the sample mean (across repeated samples) when the sample size is 15 (black), 30 (violet), 100 (blue), and 1000 (green). The sample mean distribution “collapses” on the true population mean, 2. The probability of being far away from 2 becomes progressively smaller as the sample size increases.</p>
+<p><span class="theorem-title"><strong>Example 3.3</strong></span> Seeing how the distribution of the sample mean changes as a function of the sample size allows us to appreciate the WLLN. We can see this by taking repeated iid samples of different sizes from an exponential random variable with rate parameter 0.5 so that <span class="math inline">\(\E[X_i] = 2\)</span>. In <a href="#fig-lln-sim" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>, we show the distribution of the sample mean (across repeated samples) when the sample size is 15, 30, 100, and 1000. The sample mean distribution “collapses” on the true population mean, 2. The probability of being far away from 2 becomes progressively smaller as the sample size increases.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-lln-sim" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -495,7 +520,7 @@ Note
 <img src="asymptotics_files/figure-html/fig-lln-sim-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lln-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: Sampling distribution of the sample mean as a function of sample size.
+Figure&nbsp;3.2: Sampling distribution of the sample mean as a function of sample size.
 </figcaption>
 </figure>
 </div>
@@ -510,7 +535,7 @@ Figure&nbsp;3.1: Sampling distribution of the sample mean as a function of sampl
 \end{pmatrix}
 \]</span> Since this is just a vector of sample means, each random variable in the random vector will converge in probability to the mean of that random variable. Fortunately, this is the exact definition of convergence in probability for random vectors. We formally write this in the following theorem.</p>
 <div id="thm-vector-wlln" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.4</strong></span> If <span class="math inline">\(\X_i \in \mathbb{R}^k\)</span> are iid draws from a distribution with <span class="math inline">\(\E[X_{ij}] &lt; \infty\)</span> for all <span class="math inline">\(j=1,\ldots,k\)</span> then as <span class="math inline">\(n\rightarrow\infty\)</span></p>
+<p><span class="theorem-title"><strong>Theorem 3.4</strong></span> If <span class="math inline">\(\X_i \in \mathbb{R}^k\)</span> are iid draws from a distribution with <span class="math inline">\(\E[|X_{ij}|] &lt; \infty\)</span> for all <span class="math inline">\(j=1,\ldots,k\)</span> then as <span class="math inline">\(n\rightarrow\infty\)</span></p>
 <p><span class="math display">\[
 \overline{\mb{X}}_n \inprob \E[\X] =
 \begin{pmatrix}
@@ -530,9 +555,12 @@ Figure&nbsp;3.1: Sampling distribution of the sample mean as a function of sampl
 <div class="callout-body-container callout-body">
 <p>Note that many of the formal results presented so far have “moment conditions” that certain moments are finite. For the vector WLLN, we saw that applied to the mean of each variable in the vector. Some books use a shorthand for this: <span class="math inline">\(\E\Vert \X_i\Vert &lt; \infty\)</span>, where <span class="math display">\[
 \Vert\X_i\Vert = \left(X_{i1}^2 + X_{i2}^2 + \ldots + X_{ik}^2\right)^{1/2}.
-\]</span> This expression has slightly more compact notation, but why does it work? One can show that this function, called the <strong>Euclidean norm</strong> or <span class="math inline">\(L_2\)</span>-norm, is a <strong>convex</strong> function, so we can apply Jensen’s inequality to show that: <span class="math display">\[
-\E\Vert \X_i\Vert \geq \Vert \E[\X_i] \Vert = (\E[X_{i1}]^2 + \ldots + \E[X_{ik}]^2)^{1/2}.
-\]</span> So if <span class="math inline">\(\E\Vert \X_i\Vert\)</span> is finite, all the component means are finite. Otherwise, the right-hand side of the previous equation would be infinite.</p>
+\]</span> This expression has slightly more compact notation, but why does it work?</p>
+<p>One can show that this function, called the <strong>Euclidean norm</strong> or <span class="math inline">\(L_2\)</span>-norm, bounds the absolute value of any particular entry in the vector, <span class="math display">\[
+\Vert\X_i\Vert = \left(X_{i1}^2 + X_{i2}^2 + \ldots + X_{ik}^2\right)^{1/2}
+\geq \sqrt{X_{ij}^2} = |X_{ij}|,
+\]</span> which implies <span class="math inline">\(\E[\Vert \X_i\Vert] \geq \E[|X_{ij}|]\)</span>. So if <span class="math inline">\(\E[\Vert \X_i\Vert]\)</span> is finite, then all entries must also be finite.</p>
+<p>One other implicit result that theorems often rely on is the relationship between moments of different order. Namely, if a given moment exists—say, <span class="math inline">\(\E[X_i^4] &lt; \infty\)</span>—then all lower-order moments like <span class="math inline">\(\E[X_i]\)</span> and <span class="math inline">\(\E[X_i^2]\)</span> also must exist. So theorems are often stated with the lowest-order moment condition required to make sure the theorem is true.</p>
 </div>
 </div>
 </section>
@@ -540,22 +568,22 @@ Figure&nbsp;3.1: Sampling distribution of the sample mean as a function of sampl
 <h2 data-number="3.6" class="anchored" data-anchor-id="consistency-of-estimators"><span class="header-section-number">3.6</span> Consistency of estimators</h2>
 <p>The WLLN shows that the sample mean of iid draws is consistent for the population mean, which is a massive result given that so many estimators are sample means of potentially complicated functions of the data. What about other estimators? The proof of the WLLN points to one way to determine that an estimator is consistent: if it is unbiased and the sampling variance shrinks as the sample size grows.</p>
 <div id="thm-consis" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.5</strong></span> For any estimator <span class="math inline">\(\widehat{\theta}_n\)</span>, if <span class="math inline">\(\text{bias}[\widehat{\theta}_n] = 0\)</span> and <span class="math inline">\(\V[\widehat{\theta}_n] \rightarrow 0\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span>, then <span class="math inline">\(\widehat{\theta}_n\)</span> is consistent.</p>
+<p><span class="theorem-title"><strong>Theorem 3.5</strong></span> For any estimator <span class="math inline">\(\widehat{\theta}_n\)</span>, if <span class="math inline">\(\textsf{bias}[\widehat{\theta}_n] = 0\)</span> and <span class="math inline">\(\V[\widehat{\theta}_n] \rightarrow 0\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span>, then <span class="math inline">\(\widehat{\theta}_n\)</span> is consistent.</p>
 </div>
-<p>Thus, for unbiased estimators, if we can characterize its sampling variance, we should be able to tell if it is consistent. This result is handy since working with the probability statements used for the WLLN can sometimes be confusing.</p>
+<p>Thus, for unbiased estimators, we can establish their consistency by showing their sampling variance tends to zero as the sample size gets larger (though note there are consistent estimators that have sampling variance that does not converge to zero). This result is handy since working with the probability statements used for the WLLN can sometimes be confusing.</p>
 <p>What about biased estimators? Consider a situation where we calculate average household income, <span class="math inline">\(\Xbar_n\)</span>, from a random sample with mean <span class="math inline">\(\mu\)</span>, but our actual interest is in the log of average income, <span class="math inline">\(\alpha = \log(\mu)\)</span>. We can obviously use the standard plug-in estimator <span class="math inline">\(\widehat{\alpha} = \log(\Xbar_n)\)</span>, but, for nonlinear functions like logarithms we have <span class="math inline">\(\log\left(\E[Z]\right) \neq \E[\log(Z)]\)</span>, so <span class="math inline">\(\E[\widehat{\alpha}] \neq \log(\E[\Xbar_n])\)</span> and the plug-in estimator will be biased for <span class="math inline">\(\log(\mu)\)</span>. Obtaining an expression for the bias in terms of <span class="math inline">\(n\)</span> is also difficult. Is the quest doomed? Must we give up on consistency? No, and, in fact, a few key properties of consistency make working with it much easier compared to unbiasedness.</p>
 <div id="thm-inprob-properties" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.6 (Properties of convergence in probability)</strong></span> Let <span class="math inline">\(X_n\)</span> and <span class="math inline">\(Z_n\)</span> be two sequences of random variables such that <span class="math inline">\(X_n \inprob a\)</span> and <span class="math inline">\(Z_n \inprob b\)</span>, and let <span class="math inline">\(g(\cdot)\)</span> be a continuous function. Then,</p>
+<p><span class="theorem-title"><strong>Theorem 3.6 (Properties of convergence in probability)</strong></span> Let <span class="math inline">\(Z_n\)</span> and <span class="math inline">\(W_n\)</span> be two sequences of random variables such that <span class="math inline">\(Z_n \inprob a\)</span> and <span class="math inline">\(W_n \inprob b\)</span>, and let <span class="math inline">\(g(\cdot)\)</span> be a continuous function (at the limit). Then,</p>
 <ol type="1">
-<li><span class="math inline">\(g(X_n) \inprob g(a)\)</span> (continuous mapping theorem)</li>
-<li><span class="math inline">\(X_n + Z_n \inprob a + b\)</span></li>
-<li><span class="math inline">\(X_nZ_n \inprob ab\)</span></li>
-<li><span class="math inline">\(X_n/Z_n \inprob a/b\)</span> if <span class="math inline">\(b &gt; 0\)</span>.</li>
+<li><span class="math inline">\(g(Z_n) \inprob g(a)\)</span> (continuous mapping theorem)</li>
+<li><span class="math inline">\(Z_n + W_n \inprob a + b\)</span></li>
+<li><span class="math inline">\(Z_nW_n \inprob ab\)</span></li>
+<li><span class="math inline">\(Z_n/W_n \inprob a/b\)</span> if <span class="math inline">\(b \neq 0\)</span>.</li>
 </ol>
 </div>
-<p>We can now see that many of the nasty problems with expectations and nonlinear functions are made considerably easier with convergence in probability in the asymptotic setting. So while we know that <span class="math inline">\(\log(\Xbar_n)\)</span> is biased for <span class="math inline">\(\log(\mu)\)</span>, we know that it is consistent since <span class="math inline">\(\log(\Xbar_n) \inprob \log(\mu)\)</span> because <span class="math inline">\(\log\)</span> is a continuous function.</p>
+<p>We can now see that many of the nasty problems with expectations and nonlinear functions are made considerably easier with convergence in probability in the asymptotic setting. So while we know that <span class="math inline">\(\log(\Xbar_n)\)</span> is biased for <span class="math inline">\(\log(\mu)\)</span>, we know that it is consistent since <span class="math inline">\(\log(\Xbar_n) \inprob \log(\mu)\)</span> because <span class="math inline">\(\log\)</span> is continuous for <span class="math inline">\(\mu &gt; 0\)</span>.</p>
 <div id="exm-nonresponse" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.4</strong></span> Suppose we implemented a survey by randomly selecting a sample from the population of size <span class="math inline">\(n\)</span>, but not everyone responds to the survey. Let the data consist of pairs of random variables, <span class="math inline">\((Y_1, R_1), \ldots, (Y_n, R_n)\)</span>, where <span class="math inline">\(Y_i\)</span> is the question of interest and <span class="math inline">\(R_i\)</span> is a binary indicator for if the respondent answered the question (<span class="math inline">\(R_i = 1\)</span>) or not (<span class="math inline">\(R_i = 0\)</span>). Our goal is to estimate the mean of the question for responders: <span class="math inline">\(\E[Y_i \mid R_i = 1]\)</span>. We can use the law of iterated expectation to obtain <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 3.4</strong></span> Suppose we implemented a survey by randomly selecting a sample from the population of size <span class="math inline">\(n\)</span>, but not everyone responds to the survey. Let the data consist of pairs of random variables, <span class="math inline">\((Y_1, R_1), \ldots, (Y_n, R_n)\)</span>, where <span class="math inline">\(Y_i\)</span> is the question of interest and <span class="math inline">\(R_i\)</span> is a binary indicator for if the respondent answered the question (<span class="math inline">\(R_i = 1\)</span>) or not (<span class="math inline">\(R_i = 0\)</span>). Our goal is to estimate the mean of the question for responders: <span class="math inline">\(\E[Y_i \mid R_i = 1]\)</span>. Let <span class="math inline">\(\P(R_i = 1)\)</span> be the probability of responding. We can use the law of iterated expectation to obtain <span class="math display">\[
 \begin{aligned}
 \E[Y_iR_i] &amp;= \E[Y_i \mid R_i = 1]\P(R_i = 1) + \E[ 0 \mid R_i = 0]\P(R_i = 0) \\
 \implies \E[Y_i \mid R_i = 1] &amp;= \frac{\E[Y_iR_i]}{\P(R_i = 1)}
@@ -563,52 +591,68 @@ Figure&nbsp;3.1: Sampling distribution of the sample mean as a function of sampl
 \]</span></p>
 <p>The relevant estimator for this quantity is the mean of the outcome among those who responded, which is slightly more complicated than a typical sample mean because the denominator is a random variable: <span class="math display">\[
 \widehat{\theta}_n = \frac{\sum_{i=1}^n Y_iR_i}{\sum_{i=1}^n R_i}.
-\]</span> Notice that this estimator is the ratio of two random variables. The numerator has mean <span class="math inline">\(n\E[Y_iR_i]\)</span> and the denominator has mean <span class="math inline">\(n\P(R_i = 1)\)</span>. It is then tempting to say that we can take the ratio of these means as the mean of <span class="math inline">\(\widehat{\theta}_n\)</span>, but expectations are not preserved in nonlinear functions like this.</p>
-<p>We can establish consistency of our estimator, though, by noting that we can rewrite the estimator as a ratio of sample means <span class="math display">\[
+\]</span> Notice that this estimator is the ratio of two random variables. The numerator has mean <span class="math inline">\(n\E[Y_iR_i]\)</span> and the denominator has mean <span class="math inline">\(n\P(R_i = 1)\)</span>. This estimator is actually unbiased (conditional on at least 1 responder), but this result is somewhat tricky to show because of the nonlinear way <span class="math inline">\(\sum_{i=1}^n R_i\)</span> enters the estimator. Consistency, on the other hand, is easy to establish.</p>
+<p>We can establish consistency of our estimator by noting that we can rewrite the estimator as a ratio of sample means <span class="math display">\[
 \widehat{\theta}_n = \frac{(1/n)\sum_{i=1}^n Y_iR_i}{(1/n)\sum_{i=1}^n R_i},
 \]</span> where by the WLLN the numerator <span class="math inline">\((1/n)\sum_{i=1}^n Y_iR_i \inprob \E[Y_iR_i]\)</span> and the denominator <span class="math inline">\((1/n)\sum_{i=1}^n R_i \inprob \P(R_i = 1)\)</span>. Thus, by <a href="#thm-inprob-properties" class="quarto-xref">Theorem&nbsp;<span>3.6</span></a>, we have <span class="math display">\[
-\widehat{\theta}_n = \frac{(1/n)\sum_{i=1}^n Y_iR_i}{(1/n)\sum_{i=1}^n R_i} \inprob \frac{\E[Y_iR_i]}{\P[R_i = 1]} = \E[Y_i \mid R_i = 1],
-\]</span> so long as the probability of responding is greater than zero. This establishes that our sample mean among responders, while biased for the conditional expectation among responders, is consistent for that quantity.</p>
+\widehat{\theta}_n = \frac{(1/n)\sum_{i=1}^n Y_iR_i}{(1/n)\sum_{i=1}^n R_i} \inprob \frac{\E[Y_iR_i]}{\P(R_i = 1)} = \E[Y_i \mid R_i = 1],
+\]</span> so long as the probability of responding is greater than zero. This establishes that our sample mean among responders is consistent for that quantity. Note that consistency does not solve nonresponse bias since <span class="math inline">\(\E[Y_i \mid R_i = 1]\)</span> still might differ from <span class="math inline">\(\E[Y_i]\)</span>.</p>
 </div>
-<p>Keeping the difference between unbiased and consistent clear in your mind is essential. You can easily create ridiculous unbiased estimators that are inconsistent. Let’s return to our iid sample, <span class="math inline">\(X_1, \ldots, X_n\)</span>, from a population with <span class="math inline">\(E[X_i] = \mu\)</span>. There is nothing in the rule book against defining an estimator <span class="math inline">\(\widehat{\theta}_{first} = X_1\)</span> that uses the first observation as the estimate. This estimator is silly, but it is unbiased since <span class="math inline">\(\E[\widehat{\theta}_{first}] = \E[X_1] = \mu\)</span>. It is inconsistent since the sampling variance of this estimator is just the variance of the population distribution, <span class="math inline">\(\V[\widehat{\theta}_{first}] = \V[X_i] = \sigma^2\)</span>, which does not change as a function of the sample size. Generally speaking, we can regard “unbiased but inconsistent” estimators as silly and not worth our time (along with biased and inconsistent estimators).</p>
-<p>Some estimators are biased but consistent that are often much more interesting. We already saw one such estimator in <a href="#exm-nonresponse" class="quarto-xref">Example&nbsp;<span>3.4</span></a>, but there are many more. Maximum likelihood estimators, for example, are (under some regularity conditions) consistent for the parameters of a parametric model but are often biased.</p>
-<p>To study these estimator, we can broaden <a href="#thm-consis" class="quarto-xref">Theorem&nbsp;<span>3.5</span></a> to the class of <strong>asymptotically unbiased</strong> estimators that have bias that vanishes as the sample size grows.</p>
-<div id="thm-consis-2" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.7</strong></span> For any estimator <span class="math inline">\(\widehat{\theta}_n\)</span>, if <span class="math inline">\(\text{bias}[\widehat{\theta}_n] \to 0\)</span> and <span class="math inline">\(\V[\widehat{\theta}_n] \rightarrow 0\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span>, then <span class="math inline">\(\widehat{\theta}_n\)</span> is consistent.</p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>Using Markov’s inequality, we have <span class="math display">\[
-\P\left( |\widehat{\theta}_n - \theta| \geq \delta \right) = \P((\widehat{\theta}_n-\theta)^2 \geq \delta^2) \leq \frac{\E[(\widehat{\theta}_n - \theta)^2]}{\delta^2} = \frac{\text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}]}{\delta^2} \to 0.
-\]</span> The last inequality follows from the bias-variance decomposition of the mean squared error in <a href="estimation.html#eq-mse-decomposition" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>.</p>
-</div>
-<p>We can use this result to show consistency for a large range of estimators.</p>
+<p>Keeping the difference between unbiased and consistent clear in your mind is essential. You can easily create ridiculous unbiased estimators that are inconsistent. Let’s return to our iid sample, <span class="math inline">\(X_1, \ldots, X_n\)</span>, from a population with <span class="math inline">\(\E[X_i] = \mu\)</span>. There is nothing in the rule book against defining an estimator <span class="math inline">\(\widehat{\theta}_{n,\text{first}} = X_1\)</span> that uses the first observation as the estimate. This estimator is silly, but it is unbiased since <span class="math inline">\(\E[\widehat{\theta}_{n,\text{first}}] = \E[X_1] = \mu\)</span>. It is inconsistent since its distribution does not change at all as a function of the sample size. Generally speaking, we can regard “unbiased but inconsistent” estimators as silly and not worth our time (along with biased and inconsistent estimators).</p>
+<p>Biased but consistent estimators are often much more interesting. We have already seen some of these, like <span class="math inline">\(\log(\Xbar_n)\)</span>, but there are many more. Maximum likelihood estimators, for example, are (under some regularity conditions) consistent for the parameters of a parametric model but are often biased.</p>
 <div id="exm-plug-in-variance" class="theorem example">
 <p><span class="theorem-title"><strong>Example 3.5 (Plug-in variance estimator)</strong></span> In the last chapter, we introduced the plug-in estimator for the population variance, <span class="math display">\[
 \widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (X_i - \Xbar_n)^2,
-\]</span> and derived its bias as <span class="math inline">\(-(1/n)\sigma^2\)</span>. We can easily show that this estimator is biased but consistent. The bias shrinks as a function of the sample size, so according to <a href="#thm-consis-2" class="quarto-xref">Theorem&nbsp;<span>3.7</span></a>, it will be consistent so long as the sampling variance of <span class="math inline">\(\widehat{\sigma}^2\)</span> shrinks as a function of the sample size, which it does (though we omit that proof here). Of course, simply multiplying this estimator by <span class="math inline">\(n/(n-1)\)</span> will give an unbiased and consistent estimator that is also the typical sample variance estimator.</p>
+\]</span> and derived its bias as <span class="math inline">\(-(1/n)\sigma^2\)</span>. Using the alternative formulation of the sum of squared deviations from the mean, we can rewrite this estimator as <span class="math display">\[
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n X_i^2 - (\Xbar_n)^2.
+\]</span> The first term is just a sample mean, so if <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>, the WLLN will apply, so that <span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n X_i^2 \inprob \E[X_i^2].
+\]</span> The WLLN and <a href="#thm-inprob-properties" class="quarto-xref">Theorem&nbsp;<span>3.6</span></a> will ensure that <span class="math inline">\((\Xbar_n)^2 \inprob \mu^2\)</span>. Again applying <a href="#thm-inprob-properties" class="quarto-xref">Theorem&nbsp;<span>3.6</span></a>, we can see that <span class="math display">\[
+\widehat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n X_i^2 - (\Xbar_n)^2 \inprob \E[X_i^2] - \mu^2 = \sigma^2
+\]</span></p>
+<p>Thus, the plug-in estimator is another biased but consistent estimator.</p>
+</div>
+<div id="exm-ratio-estimator" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.6</strong></span> One general class of estimators is called <strong>ratio estimators</strong> and are, as their name implies, ratios of estimators. Let <span class="math inline">\((Y_i, X_i)\)</span> be iid draws from a population distribution with population means, <span class="math inline">\(\mu_y\)</span> and <span class="math inline">\(\mu_x\)</span>, and two sample means, <span class="math inline">\(\Ybar_n\)</span> and <span class="math inline">\(\Xbar_n\)</span>. The ratio of the sample means is generally biased for the ratio of population means, <span class="math display">\[
+\E\left[\frac{\Ybar_n}{\Xbar_n} \right] \neq \frac{\mu_y}{\mu_x}.
+\]</span> However, as long as <span class="math inline">\(\mu_x \neq 0\)</span>, <a href="#thm-inprob-properties" class="quarto-xref">Theorem&nbsp;<span>3.6</span></a> tells us that this is a consistent estimator, <span class="math inline">\(\Ybar_n/\Xbar_n \inprob \mu_y/\mu_x\)</span>.</p>
+</div>
+<p>We can broaden <a href="#thm-consis" class="quarto-xref">Theorem&nbsp;<span>3.5</span></a> to the class of <strong>asymptotically unbiased</strong> estimators that have bias that vanishes as the sample size grows.</p>
+<div id="thm-consis-2" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3.7</strong></span> For any estimator <span class="math inline">\(\widehat{\theta}_n\)</span>, if <span class="math inline">\(\textsf{bias}[\widehat{\theta}_n] \to 0\)</span> and <span class="math inline">\(\V[\widehat{\theta}_n] \rightarrow 0\)</span> as <span class="math inline">\(n\rightarrow \infty\)</span>, then <span class="math inline">\(\widehat{\theta}_n\)</span> is consistent.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>Using Markov’s inequality, we have <span class="math display">\[
+\P\left( |\widehat{\theta}_n - \theta| \geq \delta \right) = \P((\widehat{\theta}_n-\theta)^2 \geq \delta^2) \leq \frac{\E[(\widehat{\theta}_n - \theta)^2]}{\delta^2} = \frac{\textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]}{\delta^2} \to 0.
+\]</span> The last equality follows from the bias-variance decomposition of the mean squared error in <a href="estimation.html#eq-mse-decomposition" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>.</p>
 </div>
 </section>
 <section id="convergence-in-distribution-and-the-central-limit-theorem" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="convergence-in-distribution-and-the-central-limit-theorem"><span class="header-section-number">3.7</span> Convergence in distribution and the central limit theorem</h2>
 <p>Convergence in probability and the law of large numbers are beneficial for understanding how our estimators will (or will not) collapse to their estimand as the sample size increases. But what about the shape of the sampling distribution of our estimators? For statistical inference, we would like to be able to make probability statements such as <span class="math inline">\(\P(a \leq \widehat{\theta}_n \leq b)\)</span>. These statements will be the basis of hypothesis testing and confidence intervals. But to make those types of statements, we need to know the entire distribution of <span class="math inline">\(\widehat{\theta}_n\)</span>, not just the mean and variance. Luckily, established results will allow us to approximate the sampling distribution of a vast swath of estimators when our sample sizes are large.</p>
-<p>We need first to describe a weaker form of convergence to see how we will develop these approximations.</p>
+<p>We need first to describe a different form of convergence to see how we will develop these approximations.</p>
 <div id="def-indist" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3.4</strong></span> Let <span class="math inline">\(X_1,X_2,\ldots\)</span>, be a sequence of r.v.s, and for <span class="math inline">\(n = 1,2, \ldots\)</span> let <span class="math inline">\(F_n(x)\)</span> be the c.d.f. of <span class="math inline">\(X_n\)</span>. Then it is said that <span class="math inline">\(X_1, X_2, \ldots\)</span> <strong>converges in distribution</strong> to r.v. <span class="math inline">\(X\)</span> with c.d.f. <span class="math inline">\(F(x)\)</span> if <span class="math display">\[
+<p><span class="theorem-title"><strong>Definition 3.4</strong></span> Let <span class="math inline">\(X_1,X_2,\ldots\)</span> be a sequence of r.v.s, and for <span class="math inline">\(n = 1,2, \ldots\)</span> let <span class="math inline">\(F_n(x)\)</span> be the c.d.f. of <span class="math inline">\(X_n\)</span>. Then it is said that <span class="math inline">\(X_1, X_2, \ldots\)</span> <strong>converges in distribution</strong> to r.v. <span class="math inline">\(X\)</span> with c.d.f. <span class="math inline">\(F(x)\)</span> if <span class="math display">\[
 \lim_{n\rightarrow \infty} F_n(x) = F(x),
 \]</span> for all values of <span class="math inline">\(x\)</span> for which <span class="math inline">\(F(x)\)</span> is continuous. We write this as <span class="math inline">\(X_n \indist X\)</span> or sometimes <span class="math inline">\(X_n ⇝ X\)</span>.</p>
 </div>
-<p>Essentially, convergence in distribution means that as <span class="math inline">\(n\)</span> gets large, the distribution of <span class="math inline">\(X_n\)</span> becomes more and more similar to the distribution of <span class="math inline">\(X\)</span>, which we often call the <strong>asymptotic distribution</strong> of <span class="math inline">\(X_n\)</span> (other names include the <strong>large-sample distribution</strong>). If we know that <span class="math inline">\(X_n \indist X\)</span>, then we can use the distribution of <span class="math inline">\(X\)</span> as an approximation to the distribution of <span class="math inline">\(X_n\)</span>, and that distribution can be reasonably accurate.</p>
+<p>Essentially, convergence in distribution means that as <span class="math inline">\(n\)</span> gets large, the distribution of <span class="math inline">\(X_n\)</span> becomes more and more similar to the distribution of <span class="math inline">\(X\)</span>, which we often call the <strong>asymptotic distribution</strong> of <span class="math inline">\(X_n\)</span> (other names include the <strong>large-sample distribution</strong>). If we know that <span class="math inline">\(X_n \indist X\)</span>, then we can use the distribution of <span class="math inline">\(X\)</span> as an approximation to the distribution of <span class="math inline">\(X_n\)</span>, and that distribution can be reasonably accurate. This definition also helps to resolve an earlier puzzle: a sequence of iid <span class="math inline">\(\N(0, 1)\)</span> random variables trivially converges in distribution to a <span class="math inline">\(\N(0, 1)\)</span> since every <span class="math inline">\(F_n = \Phi\)</span> (where <span class="math inline">\(\Phi\)</span> is the cdf of the standard normal) even though the draws of any particular <span class="math inline">\(X_n\)</span> are not necessarily close to the draws of the limiting distribution.</p>
 <div id="exm-indist" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.6</strong></span> A simple example of convergence in distribution would be the sequence <span class="math display">\[
-X_n \sim N\left(\frac{1}{n}, 1 + \frac{1}{n}\right),
+<p><span class="theorem-title"><strong>Example 3.7</strong></span> A simple example of convergence in distribution would be the sequence <span class="math display">\[
+X_n \sim N\left(\frac{1}{n}, \left(1 + \frac{1}{n}\right)^2\right),
 \]</span> which, of course, has the cdf, <span class="math display">\[
 \Phi\left(\frac{x - 1/n}{1+1/n}\right).
-\]</span> By inspection, this converges to <span class="math inline">\(\Phi(x)\)</span>, which is the cdf for the standard normal. This implies <span class="math inline">\(X_n \indist N(0, 1)\)</span>.</p>
+\]</span> By inspection, this converges to <span class="math inline">\(\Phi(x)\)</span>, which is the cdf for the standard normal. This implies <span class="math inline">\(X_n \indist \N(0, 1)\)</span>. <a href="#fig-indist" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> shows the evolution of the distributions at various values of <span class="math inline">\(n\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="asymptotics_files/figure-html/indist-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-indist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-indist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="asymptotics_files/figure-html/fig-indist-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-indist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: Convergence in distribution of <span class="math inline">\(X_n \sim \N(1/n, (1 + 1/n)^2)\)</span> to the standard normal.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -616,36 +660,34 @@ X_n \sim N\left(\frac{1}{n}, 1 + \frac{1}{n}\right),
 </div>
 <p>One of the most remarkable results in probability and statistics is that a large class of estimators will converge in distribution to one particular family of distributions: the normal. This result is one reason we study the normal so much and why investing in building intuition about it will pay off across many domains of applied work. We call this broad class of results the “central limit theorem” (CLT), but it would probably be more accurate to refer to them as “central limit theorems” since much of statistics is devoted to showing the result in different settings. We now present the simplest CLT for the sample mean.</p>
 <div id="thm-clt" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.8 (Central Limit Theorem)</strong></span> Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be i.i.d. r.v.s from a distribution with mean <span class="math inline">\(\mu = \E[X_i]\)</span> and variance <span class="math inline">\(\sigma^2 = \V[X_i]\)</span>. Then if <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>, we have <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 3.8 (Central Limit Theorem)</strong></span> Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be i.i.d. r.v.s from a distribution with mean <span class="math inline">\(\mu = \E[X_i]\)</span> and variance <span class="math inline">\(\sigma^2 = \V[X_i] &gt; 0\)</span>. Then if <span class="math inline">\(\E[X_i^2] &lt; \infty\)</span>, we have <span class="math display">\[
 \frac{\Xbar_n - \mu}{\sqrt{\V[\Xbar_n]}} = \frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{\sigma} \indist \N(0, 1).
 \]</span></p>
 </div>
-<p>In words: the sample mean of a random sample from a population with finite mean and variance will be approximately normally distributed in large samples. Notice how we have not made any assumptions about the distribution of the underlying random variables, <span class="math inline">\(X_i\)</span>. They could be binary, event count, continuous, or anything. The CLT is incredibly broadly applicable.</p>
+<p>In words: the sample mean of a random sample from a population with finite mean and variance will be approximately normally distributed in large samples. Notice how we have not made any assumptions about the distribution of the underlying random variables, <span class="math inline">\(X_i\)</span>. They could be binary, event count, continuous, or anything. The CLT is incredibly broadly applicable—even though we have stated it for iid data, versions of it (and the LLN) exist for independent (but not identically distributed) data, clustered data, and weakly dependent data, though the variances are often quite different than the iid case.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Notation alert
+<span class="screen-reader-only">Note</span>Why <span class="math inline">\(\sqrt{n}\)</span>?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Why do we state the CLT in terms of the sample mean after centering and scaling by its standard error? Suppose we don’t normalize the sample mean in this way. In that case, it isn’t easy to talk about convergence in distribution because we know from the WLLN that <span class="math inline">\(\Xbar_n \inprob \mu\)</span>, so in the limit, the distribution of <span class="math inline">\(\Xbar_n\)</span> is concentrated at point mass around that value. Normalizing by centering and rescaling ensures that the variance of the resulting quantity will not depend on <span class="math inline">\(n\)</span>, so it makes sense to talk about its distribution converging. Sometimes you will see the equivalent result as <span class="math display">\[
+<p>Why do we state the CLT in terms of the sample mean after centering and scaling by its standard error? Suppose we don’t normalize the sample mean in this way. In that case, it isn’t easy to talk about convergence in distribution because we know from the WLLN that <span class="math inline">\(\Xbar_n \inprob \mu\)</span>, so in the limit, the distribution of <span class="math inline">\(\Xbar_n\)</span> is concentrated as a point mass around that value. Standardizing by centering around its mean <span class="math inline">\(\E[\Xbar_n] = \mu\)</span> and rescaling by its standard error <span class="math inline">\(\sqrt{\V[\Xbar_n]} = \sigma / \sqrt{n}\)</span> ensures that the sequence <span class="math inline">\(\sqrt{n}(\Xbar_n - \mu)/\sigma\)</span> always has mean 0 and variance 1 for every possible <span class="math inline">\(n\)</span>. The <span class="math inline">\(1/\sqrt{n}\)</span> scaling is the rate at which the standard error shrinks, so <span class="math inline">\(\sqrt{n}\)</span> is exactly the scaling we need to keep the standard error stable.</p>
+<p>Sometimes you will see the equivalent result as <span class="math display">\[
 \sqrt{n}\left(\Xbar_n - \mu\right) \indist \N(0, \sigma^2).
 \]</span></p>
 </div>
 </div>
-<p>We can use this result to state approximations that we can use when discussing estimators such as <span class="math display">\[
-\Xbar_n \overset{a}{\sim} N(\mu, \sigma^2/n),
-\]</span> where we use <span class="math inline">\(\overset{a}{\sim}\)</span> to be “approximately distributed as in large samples.” This approximation allows us to say things like: “in large samples, we should expect the sample mean to between within <span class="math inline">\(2\sigma/\sqrt{n}\)</span> of the true mean in 95% of repeated samples.” These statements will be essential for hypothesis tests and confidence intervals! Estimators so often follow the CLT that we have an expression for this property.</p>
-<div id="def-asymptotically-normal" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3.5</strong></span> An estimator <span class="math inline">\(\widehat{\theta}_n\)</span> is <strong>asymptotically normal</strong> if for some <span class="math inline">\(\theta\)</span> <span class="math display">\[
-\sqrt{n}\left( \widehat{\theta}_n - \theta \right) \indist N\left(0,\V_{\theta}\right).
-\]</span></p>
-</div>
+<p>Why do sample means converge to a normal distribution no matter the distribution of <span class="math inline">\(X_i\)</span>? We can build intuition by splitting the question into two steps.</p>
+<p>First, the limiting distribution cannot depend on the exact distribution of <span class="math inline">\(X_i\)</span>. Let’s write the centered and rescaled mean as a sum of <span class="math inline">\(n\)</span> standardized terms, scaled down by <span class="math inline">\(1/\sqrt{n}\)</span>, <span class="math display">\[
+Z_n = \frac{\sqrt{n}(\Xbar_n - \mu)}{\sigma} = \frac{1}{\sqrt{n}}\sum_{i=1}^n \frac{X_i - \mu}{\sigma}.
+\]</span> Now, imagine replacing each of the terms in this sum with independent random variables <span class="math inline">\(Y_1, \ldots, Y_n\)</span> that also have mean 0 and variance 1. This swap will change the distribution of <span class="math inline">\(Z_n\)</span> but not its mean or variance, since we have matched those. Instead, the swap will affect higher-order moments like skewness or kurtosis. If the <span class="math inline">\(X_i\)</span> have skewness <span class="math inline">\(\E[((X_i - \mu)/\sigma)^3] = \gamma_X\)</span>, then <span class="math inline">\(Z_n\)</span> has skewness <span class="math inline">\(\gamma_X / \sqrt{n}\)</span> whereas the swapped version with <span class="math inline">\(Y_i\)</span> would have skewness <span class="math inline">\(\gamma_Y / \sqrt{n}\)</span>. Either way the skewness vanishes as <span class="math inline">\(n\to\infty\)</span>, and differences in higher moments fade even more quickly (such as <span class="math inline">\(1/n\)</span>). Essentially, as we add more terms to <span class="math inline">\(Z_n\)</span>, the effect of the original distribution of <span class="math inline">\(X_i\)</span> on <span class="math inline">\(Z_n\)</span> fades. (This sketch assumes these higher moments exist, though the CLT for iid data relies only on finite variance.)</p>
+<p>Second, if every distribution leads to the same limiting distribution, we might as well choose an easy distribution to work with. If <span class="math inline">\(X_i\)</span> are normal, then <span class="math inline">\(Z_n\)</span> would be exactly a standard normal for all <span class="math inline">\(n\)</span> since sums of independent normals are themselves normally distributed. Thus, the limit for normal variables must be <span class="math inline">\(\N(0,1)\)</span>, which also must be the common limit for sample means of <em>any</em> distribution. In fact, the normal distribution is the only finite-variance distribution that is stable under addition in this way, which is why there are no other distributions that could be the limit.</p>
 <div id="exm-bin-clt" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.7</strong></span> To illustrate how the CLT works, we can simulate the sampling distribution of the (normalized) sample mean at different sample sizes. Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be iid samples from a Bernoulli with probability of success 0.25. We then draw repeated samples of size <span class="math inline">\(n=30\)</span> and <span class="math inline">\(n=100\)</span> and calculate <span class="math inline">\(\sqrt{n}(\Xbar_n - 0.25)/\sigma\)</span> for each random sample. <a href="#fig-clt" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> plots the density of these two sampling distributions along with a standard normal reference. We can see that even at <span class="math inline">\(n=30\)</span>, the rough shape of the density looks normal, with spikes and valleys due to the discrete nature of the data (the sample mean can only take on 31 possible values in this case). By <span class="math inline">\(n=100\)</span>, the sampling distribution is very close to the true standard normal.</p>
+<p><span class="theorem-title"><strong>Example 3.8</strong></span> To illustrate how the CLT works, we can simulate the sampling distribution of the (normalized) sample mean at different sample sizes and different data generating processes. We’ll consider <span class="math inline">\(X_1, \ldots, X_n\)</span> to be iid samples from a Bernoulli with probability of success either <span class="math inline">\(p = 0.02\)</span> or <span class="math inline">\(p=0.25\)</span>. We then draw repeated samples of size <span class="math inline">\(n \in \{30, 100, 1000\}\)</span>, and calculate <span class="math inline">\(\sqrt{n}(\Xbar_n - p)/\sigma\)</span> for each random sample. <a href="#fig-clt" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> plots the density of these sampling distributions. For <span class="math inline">\(p = 0.25\)</span>, we can see that even at <span class="math inline">\(n=30\)</span>, the rough shape of the density looks normal, with spikes and valleys due to the discrete nature of the data (the sample mean can only take on 31 possible values in this case). By <span class="math inline">\(n=100\)</span>, the sampling distribution is very close to a true standard normal and is barely distinguishable than the curve at <span class="math inline">\(n = 1000\)</span>. For <span class="math inline">\(p=0.02\)</span>, on the other hand, the sampling distribution looks very non-normal and spiky even at <span class="math inline">\(n=100\)</span>, and it isn’t until <span class="math inline">\(n=1000\)</span> that we really see the familiar normal shape. One reason we see the slow convergence is that the skewness of the <span class="math inline">\(p=0.02\)</span> case is larger at every <span class="math inline">\(n\)</span>. From knowledge of the skewness of binomials, in the <span class="math inline">\(p = 0.02\)</span> case we have skewness of 1.25, 0.69, and 0.22 skewness at <span class="math inline">\(n=30\)</span>, <span class="math inline">\(n = 100\)</span>, and <span class="math inline">\(n = 1000\)</span>, respectively. For the <span class="math inline">\(p = 0.25\)</span> case, those same skewness values 0.21, 0.12, and 0.04.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-clt" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -654,32 +696,47 @@ X_n \sim N\left(\frac{1}{n}, 1 + \frac{1}{n}\right),
 <img src="asymptotics_files/figure-html/fig-clt-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.2: Sampling distributions of the normalized sample mean at n=30 and n=100.
+Figure&nbsp;3.4: Sampling distributions of the normalized sample proportions at different probabilities of success and different sample sizes.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>These differences highlight how, while the limiting result of the CLT applies to a wide variety of data generating processes, the nature of those processes can affect how quickly the limiting distribution will be a useful approximation. Thus, we cannot know in advance if a CLT-based normal distribution will provide a good approximation for the exact DGP and sample size we’re studying.</p>
 </div>
+<p>We can use this result to state approximations that we can use when discussing estimators such as <span class="math display">\[
+\Xbar_n \overset{a}{\sim} \N(\mu, \sigma^2/n),
+\]</span> where we use <span class="math inline">\(\overset{a}{\sim}\)</span> to be “approximately distributed as in large samples.” This approximation allows us to say things like: “in large samples, we should expect the sample mean to be within <span class="math inline">\(2\sigma/\sqrt{n}\)</span> of the true mean in about 95% of repeated samples.” These statements will be essential for hypothesis tests and confidence intervals! Estimators so often follow the CLT that we have an expression for this property.</p>
+<div id="def-asymptotically-normal" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3.5</strong></span> An estimator <span class="math inline">\(\widehat{\theta}_n\)</span> of a parameter <span class="math inline">\(\theta\)</span> is <strong>asymptotically normal</strong> if <span class="math display">\[
+\sqrt{n}\left( \widehat{\theta}_n - \theta \right) \indist N\left(0, V_{\theta}\right).
+\]</span></p>
+</div>
+<p>We refer to <span class="math inline">\(V_{\theta}\)</span> as the asymptotic variance of the centered and <span class="math inline">\(\sqrt{n}\)</span>-stabilized estimator, <span class="math inline">\(\sqrt{n}(\widehat{\theta}_n - \theta)\)</span>. An asymptotically normal estimator will, in large samples, have an approximately normal distribution, <span class="math display">\[
+\widehat{\theta}_n \overset{a}{\sim} \N(\theta, V_{\theta}/n).
+\]</span> We can then refer to the asymptotic standard error of <span class="math inline">\(\widehat{\theta}_n\)</span> as <span class="math inline">\(\sqrt{V_{\theta}/n}\)</span>.</p>
 <p>There are several properties of convergence in distribution that are helpful to us.</p>
 <div id="thm-indist-properties" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.9 (Properties of convergence in distribution)</strong></span> Let <span class="math inline">\(X_n\)</span> be a sequence of random variables <span class="math inline">\(X_1, X_2,\ldots\)</span> that converges in distribution to some rv <span class="math inline">\(X\)</span> and let <span class="math inline">\(Y_n\)</span> be a sequence of random variables <span class="math inline">\(Y_1, Y_2,\ldots\)</span> that converges in probability to some number, <span class="math inline">\(c\)</span>. Then,</p>
+<p><span class="theorem-title"><strong>Theorem 3.9 (Properties of convergence in distribution)</strong></span> Let <span class="math inline">\(Z_n\)</span> be a sequence of random variables <span class="math inline">\(Z_1, Z_2,\ldots\)</span> that converges in distribution to some random variable <span class="math inline">\(Z\)</span> and let <span class="math inline">\(W_n\)</span> be a sequence of random variables <span class="math inline">\(W_1, W_2,\ldots\)</span> that converges in probability to some number, <span class="math inline">\(c\)</span>. Then,</p>
 <ol type="1">
-<li><span class="math inline">\(g(X_n) \indist g(X)\)</span> for all continuous functions <span class="math inline">\(g\)</span>.</li>
-<li><span class="math inline">\(X_nY_n\)</span> converges in distribution to <span class="math inline">\(cX\)</span></li>
-<li><span class="math inline">\(X_n + Y_n\)</span> converges in distribution to <span class="math inline">\(X + c\)</span></li>
-<li><span class="math inline">\(X_n / Y_n\)</span> converges in distribution to <span class="math inline">\(X / c\)</span> if <span class="math inline">\(c \neq 0\)</span></li>
+<li><span class="math inline">\(g(Z_n) \indist g(Z)\)</span> for all functions <span class="math inline">\(g\)</span> that are continuous in the limit</li>
+<li><span class="math inline">\(Z_nW_n\)</span> converges in distribution to <span class="math inline">\(cZ\)</span></li>
+<li><span class="math inline">\(Z_n + W_n\)</span> converges in distribution to <span class="math inline">\(Z + c\)</span></li>
+<li><span class="math inline">\(Z_n / W_n\)</span> converges in distribution to <span class="math inline">\(Z / c\)</span> if <span class="math inline">\(c \neq 0\)</span></li>
 </ol>
 </div>
-<p>We refer to the last three results as <strong>Slutsky’s theorem</strong>. These results are often crucial for determining an estimator’s asymptotic distribution.</p>
+<p>We refer to the last three results as <strong>Slutsky’s theorem</strong>. These results are often crucial for determining an estimator’s asymptotic distribution. Why focus on the case with <span class="math inline">\(Z_n\)</span> converging in distribution and <span class="math inline">\(@_n\)</span> converging in probability to a point value? In the limit, <span class="math inline">\(W_n\)</span> adds no variability so the limiting distribution is entirely driven by the limit of <span class="math inline">\(Z_n\)</span>. If both converged in distribution, so <span class="math inline">\(W_n \indist W\)</span>, the limiting distribution would depend on the joint distribution of <span class="math inline">\(Z_n\)</span> and <span class="math inline">\(@_n\)</span>, which could include correlation that would be missed by the sum of the marginal limits, <span class="math inline">\(Z + W\)</span>.</p>
 <p>A critical application of Slutsky’s theorem is when we replace the (unknown) population variance in the CLT with an estimate. Recall the definition of the <strong>sample variance</strong> as <span class="math display">\[
 S_n^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \Xbar_n)^2,
-\]</span> with the <strong>sample standard deviation</strong> defined as <span class="math inline">\(S_{n} = \sqrt{S_{n}^2}\)</span>. It’s easy to show that these are consistent estimators for their respective population parameters <span class="math display">\[
+\]</span> with the <strong>sample standard deviation</strong> defined as <span class="math inline">\(S_{n} = \sqrt{S_{n}^2}\)</span>. In <a href="#exm-plug-in-variance" class="quarto-xref">Example&nbsp;<span>3.5</span></a> we showed that <span class="math inline">\(\widehat{\sigma}^2 \inprob \sigma^2\)</span>. Since <span class="math inline">\(S_n^2 = (n / (n-1))\widehat{\sigma}^2\)</span>, then by the CMT, we have <span class="math display">\[
 S_{n}^2 \inprob \sigma^2 = \V[X_i], \qquad S_{n} \inprob \sigma,
 \]</span> which, by Slutsky’s theorem, implies that <span class="math display">\[
 \frac{\sqrt{n}\left(\Xbar_n - \mu\right)}{S_n} \indist \N(0, 1)
-\]</span> Comparing this result to the statement of CLT, we see that replacing the population variance with a consistent estimate of the variance (or standard deviation) does not affect the asymptotic distribution.</p>
-<p>Like with the WLLN, the CLT holds for random vectors of sample means, where their centered and scaled versions converge to a multivariate normal distribution with a covariance matrix equal to the covariance matrix of the underlying random vectors of data, <span class="math inline">\(\X_i\)</span>.</p>
+\]</span> Comparing this result to the statement of CLT, we see that replacing the population variance with a consistent estimate of the variance (or standard deviation) does not affect the asymptotic distribution. Thus, <span class="math inline">\(S_n / \sqrt{n}\)</span> is a valid standard error estimator even though we saw in the last chapter it was slightly biased. Of course, in small samples the substitution could matter—we will return to this with the <span class="math inline">\(t\)</span>-distribution in <a href="confidence_intervals.html" class="quarto-xref"><span>Chapter 5</span></a>.</p>
+<p>We can generalize this idea to any asymptotically normal estimator, <span class="math inline">\(\widehat{\theta}_n\)</span>. Suppose we have a consistent estimator for the asymptotic variance of the stabilized estimator, <span class="math inline">\(\widehat{V}_{\theta} \inprob V_{\theta} &gt; 0\)</span>. Then we can obtain an estimator for the standard error, <span class="math inline">\(\sqrt{\widehat{V}_{\theta} / n}\)</span> and apply Slutsky’s theorem to show that normalizing by this estimated standard error will also converge to a standard normal: <span class="math display">\[
+\frac{\widehat{\theta}_n - \theta}{\sqrt{\widehat{V}_{\theta} / n}} \indist \N(0, 1)
+\]</span></p>
+<p>Like with the WLLN, the CLT holds for random vectors of sample means, where their centered and scaled versions converge to a multivariate normal distribution with a covariance matrix equal to the covariance matrix of the underlying random vectors of data, <span class="math inline">\(\X_i\)</span>. For a sequence of random vectors, <span class="math inline">\(\mb{Z}_n\)</span>, and a limit vector <span class="math inline">\(\mb{Z}\)</span>, we say <span class="math inline">\(\mb{Z}_n\)</span> converges in distribution to <span class="math inline">\(\mb{Z}\)</span> (or <span class="math inline">\(\mb{Z}_n \indist \mb{Z}\)</span>) if the joint distribution of <span class="math inline">\(\mb{Z}_n\)</span> converges to the joint distribution of <span class="math inline">\(\mb{Z}\)</span>. Note that marginal convergence in distribution of each entry of <span class="math inline">\(\mb{Z}_n\)</span> is necessary, but not sufficient for multivariate convergence.</p>
 <div id="thm-multivariate-clt" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 3.10</strong></span> If <span class="math inline">\(\mb{X}_i \in \mathbb{R}^k\)</span> are i.i.d. and <span class="math inline">\(\E\Vert \mb{X}_i \Vert^2 &lt; \infty\)</span>, then as <span class="math inline">\(n \to \infty\)</span>, <span class="math display">\[
 \sqrt{n}\left( \overline{\mb{X}}_n - \mb{\mu}\right) \indist \N(0, \mb{\Sigma}),
@@ -696,26 +753,34 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As with the notation alert with the WLLN, we are using shorthand here, <span class="math inline">\(\E\Vert \mb{X}_i \Vert^2 &lt; \infty\)</span>, which implies that <span class="math inline">\(\E[X_{ij}^2] &lt; \infty\)</span> for all <span class="math inline">\(j = 1,\ldots, k\)</span>, or equivalently, that the variances of each variable in the sample means has finite variance.</p>
+<p>As with the notation alert with the WLLN, we are using shorthand here, <span class="math inline">\(\E\Vert \mb{X}_i \Vert^2 &lt; \infty\)</span>, which implies that <span class="math inline">\(\E[X_{ij}^2] &lt; \infty\)</span> for all <span class="math inline">\(j = 1,\ldots, k\)</span>, or equivalently, that the variances of each variable in the sample means are finite.</p>
 </div>
+</div>
+<p>Finally, there is a multivariate version of <a href="#thm-indist-properties" class="quarto-xref">Theorem&nbsp;<span>3.9</span></a>.</p>
+<div id="thm-indist-properties-multivariate" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 3.11 (Properties of convergence in distribution for random vectors)</strong></span> Let <span class="math inline">\(\mb{Z}_n\)</span> be a sequence of random vectors <span class="math inline">\(\mb{Z}_1, \mb{Z}_2,\ldots\)</span> that converges in distribution to some random vector <span class="math inline">\(\mb{Z}\)</span> and let <span class="math inline">\(\mb{W}_n\)</span> be a sequence of random vectors <span class="math inline">\(\mb{W}_1, \mb{W}_2,\ldots\)</span> that converges in probability to some constant vector, <span class="math inline">\(\mb{c}\)</span>. Then,</p>
+<ol type="1">
+<li><span class="math inline">\(g(\mb{Z}_n) \indist g(\mb{Z})\)</span> for all functions <span class="math inline">\(g\)</span> that are continuous in the limit.</li>
+<li><span class="math inline">\(g(\mb{Z}_n, \mb{W}_n) \indist g(\mb{Z}, \mb{c})\)</span> for all functions <span class="math inline">\(g\)</span> that are continuous in the limit.</li>
+</ol>
 </div>
 </section>
 <section id="sec-delta-method" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="sec-delta-method"><span class="header-section-number">3.8</span> Delta method</h2>
 <p>Suppose that we know that an estimator follows the CLT, and so we have <span class="math display">\[
-\sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V),
-\]</span> but we actually want to estimate <span class="math inline">\(h(\theta)\)</span> so we use the plug-in estimator, <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. It seems like we should be able to apply part 1 of <a href="#thm-indist-properties" class="quarto-xref">Theorem&nbsp;<span>3.9</span></a> to obtain the asymptotic distribution of <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, <span class="math inline">\(\sqrt{n}(\widehat{\theta}_n - \theta)\)</span>, not to the original estimator itself, and we would need the latter to investigate the asymptotic distribution of <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. We can use a little bit of calculus to get an approximation of the distribution we need.</p>
+\sqrt{n}\left(\widehat{\theta}_n - \theta \right) \indist \N(0, V_{\theta}),
+\]</span> but we actually want to estimate <span class="math inline">\(h(\theta)\)</span> so we use the plug-in estimator, <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. It seems like we should be able to apply part 1 of <a href="#thm-indist-properties" class="quarto-xref">Theorem&nbsp;<span>3.9</span></a> to obtain the asymptotic distribution of <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. Still, the CLT established the large-sample distribution of the centered and scaled random sequence, <span class="math inline">\(\sqrt{n}(\widehat{\theta}_n - \theta)\)</span>, not of the original estimator itself, and we would need the latter to investigate the asymptotic distribution of <span class="math inline">\(h(\widehat{\theta}_n)\)</span>. We can use a little bit of calculus to get an approximation of the distribution we need.</p>
 <div id="thm-delta-method" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.11</strong></span> If <span class="math inline">\(\sqrt{n}\left(\widehat{\theta}_n - \theta\right) \indist \N(0, V)\)</span> and <span class="math inline">\(h(u)\)</span> is continuously differentiable in a neighborhood around <span class="math inline">\(\theta\)</span>, then as <span class="math inline">\(n\to\infty\)</span>, <span class="math display">\[
-\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta) \right) \indist \N(0, (h'(\theta))^2 V).
+<p><span class="theorem-title"><strong>Theorem 3.12</strong></span> If <span class="math inline">\(\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right) \indist \N(0, V_{\theta})\)</span> and <span class="math inline">\(h(u)\)</span> is continuously differentiable in a neighborhood around <span class="math inline">\(\theta_0\)</span>, then as <span class="math inline">\(n\to\infty\)</span>, <span class="math display">\[
+\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta_0) \right) \indist \N(0, (h'(\theta_0))^2 V_{\theta}).
 \]</span></p>
 </div>
-<p>Understanding what is happening here provides intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, <span class="math inline">\(h()\)</span>? These functions can be well-approximated with a line in a neighborhood around a given point like <span class="math inline">\(\theta\)</span>. In <a href="#fig-delta" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>, we show this at the point where the tangent line at <span class="math inline">\(\theta_0\)</span>, which has slope <span class="math inline">\(h'(\theta_0)\)</span>, is very similar to <span class="math inline">\(h(\theta)\)</span> for values close to <span class="math inline">\(\theta_0\)</span>. Because of this, we can approximate the difference between <span class="math inline">\(h(\widehat{\theta}_n)\)</span> and <span class="math inline">\(h(\theta_0)\)</span> with the what this tangent line would give us: <span class="math display">\[
-\underbrace{\left(h(\widehat{\theta_n}) - h(\theta_0)\right)}_{\text{change in } y} \approx \underbrace{h'(\theta_0)}_{\text{slope}} \underbrace{\left(\widehat{\theta}_n - \theta_0\right)}_{\text{change in } x},
-\]</span> and then multiplying both sides by the <span class="math inline">\(\sqrt{n}\)</span> gives <span class="math display">\[
-\sqrt{n}\left(h(\widehat{\theta_n}) - h(\theta_0)\right) \approx h'(\theta_0)\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right).
-\]</span> The right-hand side of this approximation converges to <span class="math inline">\(h'(\theta_0)Z\)</span>, where <span class="math inline">\(Z\)</span> is a random variable with <span class="math inline">\(\N(0, V)\)</span>. The variance of this quantity will be <span class="math display">\[
-\V[h'(\theta_0)Z] = (h'(\theta_0))^2\V[Z] = (h'(\theta_0))^2V,
+<p>Understanding what is happening here provides intuition as to when this might go wrong. Why do we focus on continuously differentiable functions, <span class="math inline">\(h()\)</span>? These functions can be well-approximated with a line in a neighborhood around <span class="math inline">\(\theta_0\)</span>. In <a href="#fig-delta" class="quarto-xref">Figure&nbsp;<span>3.5</span></a>, we plot the tangent line at <span class="math inline">\(\theta_0\)</span>, which has slope <span class="math inline">\(h'(\theta_0)\)</span> and is very similar to <span class="math inline">\(h(\theta)\)</span> for values close to <span class="math inline">\(\theta_0\)</span>. Because of this, we can approximate the difference between <span class="math inline">\(h(\widehat{\theta}_n)\)</span> and <span class="math inline">\(h(\theta_0)\)</span> with what this tangent line would give us: <span class="math display">\[
+\underbrace{\left(h(\widehat{\theta}_n) - h(\theta_0)\right)}_{\text{change in } y} \approx \underbrace{h'(\theta_0)}_{\text{slope}} \underbrace{\left(\widehat{\theta}_n - \theta_0\right)}_{\text{change in } x},
+\]</span> and then multiplying both sides by <span class="math inline">\(\sqrt{n}\)</span> gives <span class="math display">\[
+\sqrt{n}\left(h(\widehat{\theta}_n) - h(\theta_0)\right) \approx h'(\theta_0)\sqrt{n}\left(\widehat{\theta}_n - \theta_0\right).
+\]</span> For a consistent estimator, this approximation improves as <span class="math inline">\(n\)</span> grows because <span class="math inline">\(\widehat\theta_n\)</span> lands ever closer to <span class="math inline">\(\theta_0\)</span>, where the tangent line is accurate. The right-hand side of this approximation converges to <span class="math inline">\(h'(\theta_0)Z\)</span>, where <span class="math inline">\(Z \sim \N(0, V_{\theta})\)</span>. The variance of this quantity will be <span class="math display">\[
+\V[h'(\theta_0)Z] = (h'(\theta_0))^2\V[Z] = (h'(\theta_0))^2V_{\theta},
 \]</span> by the properties of variances.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -725,28 +790,30 @@ Note
 <img src="asymptotics_files/figure-html/fig-delta-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-delta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.3: Linear approximation to nonlinear functions.
+Figure&nbsp;3.5: Linear approximation to nonlinear functions.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 <div id="exm-log" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.8</strong></span> Let’s return to the iid sample <span class="math inline">\(X_1, \ldots, X_n\)</span> with mean <span class="math inline">\(\mu = \E[X_i]\)</span> and variance <span class="math inline">\(\sigma^2 = \V[X_i]\)</span>. From the CLT, we know that <span class="math inline">\(\sqrt{n}(\Xbar_n - \mu) \indist \N(0, \sigma^2)\)</span>. Suppose that we want to estimate <span class="math inline">\(\log(\mu)\)</span>, so we use the plug-in estimator <span class="math inline">\(\log(\Xbar_n)\)</span> (assuming that <span class="math inline">\(X_i &gt; 0\)</span> for all <span class="math inline">\(i\)</span> so that we can take the log). What is the asymptotic distribution of this estimator? This is a situation where <span class="math inline">\(\widehat{\theta}_n = \Xbar_n\)</span> and <span class="math inline">\(h(\mu) = \log(\mu)\)</span>. From basic calculus, we know that <span class="math display">\[
+<p><span class="theorem-title"><strong>Example 3.9</strong></span> Let’s return to the iid sample <span class="math inline">\(X_1, \ldots, X_n\)</span> with mean <span class="math inline">\(\mu = \E[X_i]\)</span> and variance <span class="math inline">\(\sigma^2 = \V[X_i]\)</span>. From the CLT, we know that <span class="math inline">\(\sqrt{n}(\Xbar_n - \mu) \indist \N(0, \sigma^2)\)</span>. Suppose that we want to estimate <span class="math inline">\(\log(\mu)\)</span>, so we use the plug-in estimator <span class="math inline">\(\log(\Xbar_n)\)</span> (assuming that <span class="math inline">\(X_i &gt; 0\)</span> for all <span class="math inline">\(i\)</span> so that we can take the log). What is the asymptotic distribution of this estimator? This is a situation where <span class="math inline">\(\widehat{\theta}_n = \Xbar_n\)</span> and <span class="math inline">\(h(\mu) = \log(\mu)\)</span>. From basic calculus, we know that <span class="math display">\[
 h'(\mu) = \frac{\partial \log(\mu)}{\partial \mu} = \frac{1}{\mu},
 \]</span> so applying the delta method, we can determine that <span class="math display">\[
 \sqrt{n}\left(\log(\Xbar_n) - \log(\mu)\right) \indist \N\left(0,\frac{\sigma^2}{\mu^2} \right).
 \]</span></p>
+<p>We can build a plug-in estimator of the asymptotic variance <span class="math inline">\(\widehat{V} = S_n^2 / \Xbar_n^2\)</span> which will converge in probability to the asymptotic variance, <span class="math inline">\(\sigma^2 / \mu ^ 2\)</span> by the CMT. So an estimated standard error would be <span class="math inline">\(\widehat{\se}[\log(\Xbar_n)] = S_n / (\Xbar_n \sqrt{n})\)</span>.</p>
 </div>
-<div id="exm-exp" class="theorem example">
-<p><span class="theorem-title"><strong>Example 3.9</strong></span> What about estimating the <span class="math inline">\(\exp(\mu)\)</span> with <span class="math inline">\(\exp(\Xbar_n)\)</span>? Recall that <span class="math display">\[
-h'(\mu) = \frac{\partial \exp(\mu)}{\partial \mu} = \exp(\mu)
-\]</span> so applying the delta method, we have <span class="math display">\[
-\sqrt{n}\left(\exp(\Xbar_n) - \exp(\mu)\right) \indist \N(0, \exp(2\mu)\sigma^2),
-\]</span> since <span class="math inline">\(\exp(\mu)^2 = \exp(2\mu)\)</span>.</p>
+<div id="exm-squared" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.10</strong></span> What about estimating <span class="math inline">\(h(\mu) =\mu^2\)</span> with <span class="math inline">\(\Xbar_n^2\)</span>? Recall that <span class="math display">\[
+h'(\mu) = \frac{\partial \mu^2}{\partial \mu} = 2\mu
+\]</span> so applying the delta method when <span class="math inline">\(\mu \neq 0\)</span>, we have <span class="math display">\[
+\sqrt{n}\left(\Xbar_n^2 - \mu^2\right) \indist \N(0, 4\mu^2\sigma^2).
+\]</span></p>
+<p>What about when <span class="math inline">\(\mu = 0\)</span>? In this case, the delta method predicts the centered and scaled version of <span class="math inline">\(\Xbar_n^2\)</span> will have the distribution <span class="math inline">\(\N(0, 0)\)</span>, which is just a point mass on 0 which does not help us learn much about the limiting distribution of <span class="math inline">\(\Xbar_n^2\)</span>. To understand why, notice that the tangent line for <span class="math inline">\(\mu^2\)</span> at <span class="math inline">\(\mu = 0\)</span> is a horizontal line, where small changes in <span class="math inline">\(\Xbar_n\)</span> lead to practically no change in <span class="math inline">\(\Xbar_n^2\)</span>. Thus, the delta method approximation breaks down and we need a different way of learning about the large-sample distribution. More generally, the approximation will break down when <span class="math inline">\(h'(\theta_0) = 0\)</span> (as in this case) or if there is a kink in <span class="math inline">\(h\)</span> at <span class="math inline">\(\theta_0\)</span> (so the derivative does not exist). Even when <span class="math inline">\(\mu\)</span> is nonzero but within a few standard errors of zero, the tangent line is nearly flat, and the delta can provide a poor approximation unless the sample size is quite large.</p>
 </div>
-<p>Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. For example, suppose we want to combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let <span class="math inline">\(\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))\)</span> map from <span class="math inline">\(\mathbb{R}^k \to \mathbb{R}^m\)</span> and be continuously differentiable (we make the function bold since it returns an <span class="math inline">\(m\)</span>-dimensional vector). It will help us to use more compact matrix notation if we introduce a <span class="math inline">\(m \times k\)</span> Jacobian matrix of all partial derivatives <span class="math display">\[
-\mb{H}(\mb{\theta}) = \mb{\nabla}_{\mb{\theta}}\mb{h}(\mb{\theta}) = \begin{pmatrix}
+<p>Like all of the results in this chapter, there is a multivariate version of the delta method that is incredibly useful in practical applications. For example, suppose we want to combine two different estimators (or two different estimated parameters) to estimate another quantity. We now let <span class="math inline">\(\mb{h}(\mb{\theta}) = (h_1(\mb{\theta}), \ldots, h_m(\mb{\theta}))\)</span> map from <span class="math inline">\(\mathbb{R}^k \to \mathbb{R}^m\)</span> and be continuously differentiable (we make the function bold since it returns an <span class="math inline">\(m\)</span>-dimensional vector). It will help us to use more compact matrix notation if we introduce an <span class="math inline">\(m \times k\)</span> Jacobian matrix of all partial derivatives <span class="math display">\[
+\mb{H}(\mb{\theta}) = \partial\mb h/\partial\mb\theta' = \begin{pmatrix}
   \frac{\partial h_1(\mb{\theta})}{\partial \theta_1} &amp; \frac{\partial h_1(\mb{\theta})}{\partial \theta_2} &amp; \cdots &amp; \frac{\partial h_1(\mb{\theta})}{\partial \theta_k} \\
   \frac{\partial h_2(\mb{\theta})}{\partial \theta_1} &amp; \frac{\partial h_2(\mb{\theta})}{\partial \theta_2} &amp; \cdots &amp; \frac{\partial h_2(\mb{\theta})}{\partial \theta_k} \\
   \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
@@ -756,24 +823,53 @@ h'(\mu) = \frac{\partial \exp(\mu)}{\partial \mu} = \exp(\mu)
 \left(\mb{h}(\widehat{\mb{\theta}}_n) - \mb{h}(\mb{\theta}_0)\right) \approx \mb{H}(\mb{\theta}_0)\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0\right).
 \]</span> We can use this fact to derive the multivariate delta method.</p>
 <div id="thm-multivariate-delta" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 3.12</strong></span> Suppose that <span class="math inline">\(\sqrt{n}\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0 \right) \indist \N(0, \mb{\Sigma})\)</span>, then for any function <span class="math inline">\(\mb{h}\)</span> that is continuously differentiable in a neighborhood of <span class="math inline">\(\mb{\theta}_0\)</span>, we have <span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 3.13</strong></span> Suppose that <span class="math inline">\(\sqrt{n}\left(\widehat{\mb{\theta}}_n - \mb{\theta}_0 \right) \indist \N(0, \mb{\Sigma})\)</span>, then for any function <span class="math inline">\(\mb{h}\)</span> that is continuously differentiable in a neighborhood of <span class="math inline">\(\mb{\theta}_0\)</span>, we have <span class="math display">\[
 \sqrt{n}\left(\mb{h}(\widehat{\mb{\theta}}_n) - \mb{h}(\mb{\theta}_0) \right) \indist \N(0, \mb{H}\mb{\Sigma}\mb{H}'),
 \]</span> where <span class="math inline">\(\mb{H} = \mb{H}(\mb{\theta}_0)\)</span>.</p>
 </div>
-<p>This result follows from the approximation above plus rules about variances of random vectors. Recall that for any compatible matrix of constants, <span class="math inline">\(\mb{A}\)</span>, we have <span class="math inline">\(\V[\mb{A}'\mb{Z}] = \mb{A}\V[\mb{Z}]\mb{A}'\)</span>. The matrix of constants appears twice here, like the matrix version of the “squaring the constant” rule for variance.</p>
-<p>The delta method is handy for generating closed-form approximations for asymptotic standard errors, but the math is often quite complex for even simple estimators. It is usually more straightforward for applied researchers to use computational tools such as the bootstrap to approximate the needed standard errors. The bootstrap has the trade-off of taking more computational time to implement compared to the delta method, but it is more easily adaptable across different estimators and domains.</p>
+<p>This result follows from the approximation above plus rules about variances of random vectors. Recall that for any compatible matrix of constants, <span class="math inline">\(\mb{A}\)</span>, we have <span class="math inline">\(\V[\mb{A}\mb{Z}] = \mb{A}\V[\mb{Z}]\mb{A}'\)</span>. The matrix of constants appears twice here, like the matrix version of the “squaring the constant” rule for variance.</p>
+<div id="exm-ratio-delta" class="theorem example">
+<p><span class="theorem-title"><strong>Example 3.11</strong></span> In <a href="#exm-ratio-estimator" class="quarto-xref">Example&nbsp;<span>3.6</span></a>, we found that the ratio of sample means was consistent for the ratio of population means, <span class="math display">\[
+\frac{\Ybar_n}{\Xbar_n} \inprob \frac{\mu_y}{\mu_x}.
+\]</span> What about the large-sample distribution of <span class="math inline">\(\Ybar_n/\Xbar_n\)</span>? Consider the population means as a vector, <span class="math inline">\(\mb{\theta} = (\mu_y, \mu_x)\)</span>, and the ratio mapping <span class="math inline">\(h(\mb{\theta}) = \frac{\mu_y}{\mu_x}\)</span> with Jacobian <span class="math display">\[
+\mb{H}(\mb{\theta}) = \begin{pmatrix}
+\frac{1}{\mu_x} &amp; -\frac{\mu_y}{\mu_x^2}
+\end{pmatrix}
+\]</span> Let <span class="math inline">\(\V[Y_i] = \sigma^2_y\)</span> and <span class="math inline">\(\V[X_i] = \sigma^2_x\)</span> be the variances of the data and let <span class="math inline">\(\sigma_{yx} = \cov(Y_i, X_i)\)</span> be the covariance between the variables. T he multivariate CLT tells us the asymptotic covariance matrix of the (centered and scaled) sample means will be <span class="math display">\[
+\mb{\Sigma} = \begin{pmatrix}
+\sigma^2_y &amp; \sigma_{yx} \\
+\sigma_{yx} &amp; \sigma^2_x
+\end{pmatrix}
+\]</span> Thus, if <span class="math inline">\(\mu_x \neq 0\)</span>, the multivariate delta method implies <span class="math inline">\(\sqrt{n}(\Ybar_n / \Xbar_n - \mu_y / \mu_x)\)</span> will have asymptotic variance <span class="math display">\[
+\begin{aligned}
+\mb{H}\mb{\Sigma}\mb{H}' &amp;= \begin{pmatrix} \frac{1}{\mu_x} &amp; -\frac{\mu_y}{\mu_x^2}\end{pmatrix} \begin{pmatrix}
+\sigma^2_y &amp; \sigma_{yx} \\
+\sigma_{yx} &amp; \sigma^2_x
+\end{pmatrix} \begin{pmatrix} \frac{1}{\mu_x}\\ -\frac{\mu_y}{\mu_x^2}\end{pmatrix} \\ &amp; = \frac{\sigma^2_y}{\mu_x^2} + \frac{\sigma^2_x\mu^2_y}{\mu_x^4} - \frac{2\sigma_{yx}\mu_y}{\mu_x^3}.
+\end{aligned}
+\]</span></p>
+</div>
+<p>The delta method is handy for generating closed-form approximations for asymptotic standard errors, but the math can be complex once we move beyond simple estimators. It can be more straightforward for applied researchers to use computational tools such as the bootstrap to approximate the needed standard errors. The bootstrap, which we will discuss in <a href="confidence_intervals.html" class="quarto-xref"><span>Chapter 5</span></a>, has the trade-off of taking more computational time to implement compared to the delta method, but it is more easily adaptable across different estimators and domains.</p>
 </section>
 <section id="summary" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.9</span> Summary</h2>
-<p>In this chapter, we covered asymptotic analysis, which considers how estimators behave as we feed them larger and larger samples. While we never actually have infinite data, asymptotic results provide approximations that work quite well in practice. A <strong>consistent</strong> estimator converges in probability to a desired quantity of interest. We saw several ways of establishing consistency, including the <strong>Law of Large Numbers</strong> for the sample mean, which converges in probability to the population mean. The <strong>Central Limit Theorem</strong> tells us that the sample mean will be approximately normally distributed when we have large, iid samples. We also saw how the <strong>continuous mapping theorem</strong> and <strong>Slutsky’s theorem</strong> allow us to determine asymptotic results for a broad class of estimators. Finally, the <strong>delta method</strong> is a general tool for finding the asymptotic distribution of an estimator that is a function of another estimator with a known asymptotic distribution.</p>
-<p>In the next chapter, we will leverage these asymptotic results to introduce another important tool for statistical inference: the hypothesis test.</p>
+<p>In this chapter, we covered asymptotic analysis, which considers how estimators behave as we feed them larger and larger samples. While we never actually have infinite data, asymptotic results provide approximations that work quite well in many (though not all) situations. A <strong>consistent</strong> estimator converges in probability to a desired quantity of interest. We saw several ways of establishing consistency, including the <strong>Law of Large Numbers</strong> for the sample mean, which converges in probability to the population mean. The <strong>Central Limit Theorem</strong> tells us that the sample mean will be approximately normally distributed when we have large, iid samples. We also saw how the <strong>continuous mapping theorem</strong> and <strong>Slutsky’s theorem</strong> allow us to determine asymptotic results for a broad class of estimators. Finally, the <strong>delta method</strong> is a general tool for finding the asymptotic distribution of an estimator that is a function of another estimator with a known asymptotic distribution. We also saw how to combine asymptotic normality plus a consistent estimator of the asymptotic variance to give a standard error estimator that we can use in the next two chapters.</p>
+<p>In the next chapter, we will leverage these asymptotic results to introduce another important tool for statistical inference: the hypothesis test, which will let us answer questions like the one that opened this chapter.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-BliHwa19" class="csl-entry" role="listitem">
+Blitzstein, Joseph K., and Jessica Hwang. 2019. <em>Introduction to Probability</em>. 2nd ed. Chapman &amp; Hall/CRC Texts in Statistical Science. CRC Press.
+</div>
+<div id="ref-Wasserman04" class="csl-entry" role="listitem">
+Wasserman, Larry. 2004. <em>All of Statistics: A Concise Course in Statistical Inference</em>. Springer Texts in Statistics. Springer. <a href="https://doi.org/10.1007/978-0-387-21736-9">https://doi.org/10.1007/978-0-387-21736-9</a>.
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Due to Wasserman (2004), Chapter 5.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Due to <span class="citation" data-cites="Wasserman04">Wasserman (<a href="references.html#ref-Wasserman04" role="doc-biblioref">2004</a>)</span>, Chapter 5.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Technically, a sequence can also converge in probability to another random variable, but the use case of converging to a single number is much more common in evaluating estimators.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

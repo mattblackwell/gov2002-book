@@ -549,8 +549,8 @@ Figure&nbsp;4.2: Rejection regions for a two-sided test.
 <p>Consider the following extended example about hypothesis testing of a sample mean, sometimes called a <strong>one-sample test</strong> since we are usually using just one sample statistic (the sample mean in this case) and comparing that to some sort of natural conceptual benchmark. Let’s say <span class="math inline">\(X_i\)</span> represents feeling thermometer scores about “liberals” as a group on a scale of 0 to 100, with values closer to 0 indicating cooler feelings about liberals and values closer to 100 indicating warmer feelings about liberals. (This is similar to many survey items on nationally representative surveys, such as the ANES in the U.S.) We want to know if the population average differs from a value of 50, which is a good benchmark that would indicate roughly neutral feelings toward liberals. We can write this two-sided test as <span class="math display">\[
 H_0: \mu = 50 \quad\text{versus}\quad H_1: \mu \neq 50,
 \]</span> where <span class="math inline">\(\mu = \E[X_i]\)</span>. The standard test statistic for this type of test is the so-called <strong>t-statistic</strong>, <span class="math display">\[
-T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{s^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{s^2 / n}},
-\]</span> where <span class="math inline">\(\mu_0\)</span> is the null value of interest and <span class="math inline">\(s^2\)</span> is the sample variance. If the null hypothesis is true, then by the CLT, we know that the t-statistic is asymptotically normal, <span class="math inline">\(T \indist \N(0, 1)\)</span>. Thus, we can approximate the null distribution with the standard normal.</p>
+T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{S_n^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{S_n^2 / n}},
+\]</span> where <span class="math inline">\(\mu_0\)</span> is the null value of interest and <span class="math inline">\(S_n^2\)</span> is the sample variance. If the null hypothesis is true, then by the CLT, we know that the t-statistic is asymptotically normal, <span class="math inline">\(T \indist \N(0, 1)\)</span>. Thus, we can approximate the null distribution with the standard normal.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -614,7 +614,7 @@ H_0: \tau = p_t - p_c = 0 \quad\text{versus}\quad H_1: \tau \neq 0,
 T = \frac{\Ybar - \Xbar}{\sqrt{\frac{\Ybar(1 -\Ybar)}{n_t} + \frac{\Xbar(1-\Xbar)}{n_c}}}.
 \]</span> If we wanted a test with level <span class="math inline">\(\alpha = 0.01\)</span>, we would reject the null when <span class="math inline">\(|T| &gt; 2.58\)</span> since</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.01</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.01</span> <span class="sc">/</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.575829</code></pre>
 </div>
