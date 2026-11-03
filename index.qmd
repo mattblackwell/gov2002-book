@@ -28,8 +28,7 @@ We start in @sec-design-based by demonstrating basic concepts of estimation and 
 
 These two chapters focus on finite sample properties of different estimation techniques, but we can say more about an estimator if we consider how it behaves on larger and larger samples. @sec-asymptotics introduces this type of asymptotic analysis. It covers the core results of asymptotic theory, such as the law of large numbers, the central limit theorem, and the delta method, but also shows why these results are important for statistical inference. 
 
-@sec-hypothesis-tests introduces statistical inference with hypothesis testing. This chapter shows how to build hypothesis tests and provides intuition for all their aspects. We also cover power analyses for planning studies and the connection between confidence intervals and hypothesis tests. 
-
+Part I of the book ends with two key tools for statistical inference. @sec-hypothesis-tests introduces statistical inference with hypothesis testing. This chapter shows how to build hypothesis tests and provides intuition for all their aspects. We also cover power analyses for planning studies. @sec-confidence-intervals covers confidence intervals and describes what they are and how to construct them using asymptotic theory and resampling techniques.
 
 Part II of the book focuses on one particular estimator of great importance to quantitative social sciences: the least squares estimator. 
 

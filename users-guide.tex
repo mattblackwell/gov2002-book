@@ -294,12 +294,12 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -443,11 +443,13 @@ law of large numbers, the central limit theorem, and the delta method,
 but also shows why these results are important for statistical
 inference.
 
+Part I of the book ends with two key tools for statistical inference.
 Chapter~\ref{sec-hypothesis-tests} introduces statistical inference with
 hypothesis testing. This chapter shows how to build hypothesis tests and
 provides intuition for all their aspects. We also cover power analyses
-for planning studies and the connection between confidence intervals and
-hypothesis tests.
+for planning studies. Chapter~\ref{sec-confidence-intervals} covers
+confidence intervals and describes what they are and how to construct
+them using asymptotic theory and resampling techniques.
 
 Part II of the book focuses on one particular estimator of great
 importance to quantitative social sciences: the least squares estimator.
@@ -935,7 +937,7 @@ Thus, the sampling distribution tells us what values of an estimator are
 more or less likely and depends on both the population distribution and
 the sampling design.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Notice that the sampling distribution of an estimator will depend on the
 sampling design. Here, we used a simple random sample. Bernoulli
@@ -998,7 +1000,7 @@ calculating the expected value of the estimator, \[
 \] The two are the same, meaning the sample mean in this simple random
 sample is unbiased.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 Note that the word ``bias'' sometimes also refers to research that is
 systematically incorrect in other ways. For example, we might complain
@@ -1210,7 +1212,7 @@ this in for the population variance, \[
 \widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 It is easy to get confused about the difference between the population
 variance, the variance of the sample, and the sampling variance (just as
@@ -1695,7 +1697,7 @@ the collection of random variables \(\{X_1, \ldots, X_n\}\) is a
 is iid with distribution \(F\). The \textbf{sample size} \(n\) is the
 number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1777,7 +1779,7 @@ to be a random vector (that is, a vector of random variables) and then
 \(F\) becomes the joint distribution of that random vector. Nothing
 substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1882,7 +1884,7 @@ complete distribution. To speak about estimation in general, we will let
 estimation} describes how we obtain a single ``best guess'' about
 \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
@@ -1912,7 +1914,7 @@ about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 It is widespread, though not universal, to use the ``hat'' notation to
 define an estimator and its estimand. For example,
@@ -1963,7 +1965,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -2073,7 +2075,7 @@ population mean. Note that this result does not actually depend on
 having a discrete random variable. For more detail on the statistical
 theory of plug-in estimation, see Wasserman (2004) Section 7.2.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Given the connection between the population mean and the sample mean,
 you may see the \(\E_n[\cdot]\) operator used as a shorthand for the
@@ -2362,7 +2364,7 @@ common finite mean \(\E[X_i] = \mu\).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased but only when
@@ -2591,7 +2593,7 @@ those of \(\widehat{\theta}_a\). The MSE helps capture this balancing
 between bias and variance, and, indeed, in this case,
 \(\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]\).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Building up intuition about the \textbf{assumptions-precision tradeoff}
 is essential. Researchers can usually get more precise estimates if they
@@ -2655,7 +2657,7 @@ control groups outcomes are iid samples of fixed sizes \(n_1\) and
 or \(D_i = 0\), respectively, so we can employ the key results about
 sample means above.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 It only makes sense to derive the properties of the difference-in-means
 estimator conditional on \(\mathbf{D}\) when that treatment assignment
@@ -2982,7 +2984,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Sometimes convergence in probability is written as
 \(\text{plim}(Z_n) = b\) when \(Z_n \inprob b\); \(\text{plim}\) stands
@@ -3010,7 +3012,7 @@ probability to the wrong value or because it fails to converge at all
 (as with \(\widehat{\theta}_{n, \text{first}}\) below). Generally
 speaking, consistency is a very desirable property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Estimators can be inconsistent yet still converge in probability to an
 understandable quantity. For example, we will discuss in later chapters
@@ -3157,7 +3159,7 @@ The weak law of large numbers (WLLN) shows that, under general
 conditions, the sample mean gets closer to the population mean as
 \(n\rightarrow\infty\).
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), which is true.
@@ -3231,7 +3233,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Note that many of the formal results presented so far have ``moment
 conditions'' that certain moments are finite. For the vector WLLN, we
@@ -3547,7 +3549,7 @@ versions of it (and the LLN) exist for independent (but not identically
 distributed) data, clustered data, and weakly dependent data, though the
 variances are often quite different than the iid case.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Why \(\sqrt{n}\)?}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Why \(\sqrt{n}\)?}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
@@ -3733,7 +3735,7 @@ standard deviation) does not affect the asymptotic distribution. Thus,
 \(S_n / \sqrt{n}\) is a valid standard error estimator even though we
 saw in the last chapter it was slightly biased. Of course, in small
 samples the substitution could matter---we will return to this with the
-\(t\)-distribution in Chapter~\ref{sec-confidence-intervals}.
+\(t\)-distribution in Section~\ref{sec-hyp-test-normal}.
 
 We can generalize this idea to any asymptotically normal estimator,
 \(\widehat{\theta}_n\). Suppose we have a consistent estimator for the
@@ -3770,7 +3772,7 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
@@ -4058,7 +4060,7 @@ type), and she proceeded to identify all of the cups correctly. At first
 glance, this seems like good evidence that she could tell the difference
 between the two types of tea, but Fisher, being a natural skeptic,
 raised the question, ``Could she have just been randomly guessing and
-got lucky?'' This led Fisher to a \textbf{statistical thought
+gotten lucky?'' This led Fisher to a \textbf{statistical thought
 experiment}: what would the probability of identifying the correct cups
 be \emph{if} she was guessing randomly?
 
@@ -4082,7 +4084,7 @@ hypothesis, we might view this as evidence against that hypothesis.
 Thus, hypothesis tests help us assess evidence for particular guesses
 about the DGP.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 For the rest of this chapter, we will introduce the concepts following
 the notation in the past chapters. We will assume a random (iid) sample
@@ -4094,7 +4096,7 @@ to \(\Theta\) as the set of possible values of \(\theta\) or the
 
 \end{tcolorbox}
 
-\section{Hypotheses}\label{hypotheses}
+\section{Hypotheses}\label{sec-hypotheses}
 
 In the context of hypothesis testing, hypotheses are simply statements
 about the population distribution. In particular, we will make
@@ -4145,7 +4147,7 @@ message with some facts about immigration and a control group that just
 received the immigration facts. The usual null hypothesis would be no
 difference in means or \(H_0: \theta = 0\), and the alternative would be
 \(H_1: \theta \neq 0\). Substantively, the null hypothesis would posit
-no average difference in the outcome -- in this case support for
+no average difference in the outcome---in this case support for
 increasing legal immigration -- between the two groups.
 
 There are two common types of tests that differ in terms of the form of
@@ -4158,33 +4160,53 @@ values of \(\theta\) above and below the null value \(\theta_0\).
 A \textbf{one-sided test} is of the form \[
 H_0: \theta \leq \theta_0 \quad\text{versus}\quad H_1: \theta > \theta_0,
 \] or \[
-H_0: \theta \geq \theta_0 \quad\text{versus}\quad H_1: \theta < \theta_0.
-\] Where the ``one-sided'' part refers to how the alternative contains
-values of \(\theta\) only above or below the null value. Two-sided tests
-are much more common in the social sciences, mostly because we usually
-want to know if there is any evidence, positive or negative, against the
-presumption of no treatment effect or no relationship between two
-variables. One-sided tests are best suited for situations with clear,
-directional hypotheses that are ideally preregistered before collection
-of the data. Preregistration of the direction of a one-sided test is
-important because researchers changing the direction of the hypothesis
-after seeing the data can inflate the strength of evidence against the
-null. For this reason, one-sided tests outside of preregistered settings
-should be used with extreme caution. That said, unfortunately, the math
-of two-sided tests is also more complicated.
+H_0: \theta \geq \theta_0 \quad\text{versus}\quad H_1: \theta < \theta_0,
+\] where the ``one-sided'' part refers to how the alternative contains
+values of \(\theta\) only above or below the null value. As a way to
+generically refer to a null hypothesis without specifying whether it is
+one- or two-sided, we often write the null as \(\theta \in \Theta_0\).
+
+\begin{example}[]\protect\hypertarget{exm-biden}{}\label{exm-biden}
+
+Suppose that \((X_1, \ldots, X_n)\) represents a sample of US citizens
+where \(X_i = 1\) indicates support for the current US president and
+\(X_i = 0\) means opposition (no support). We may want to know if there
+is evidence for the president having more than a bare majority support
+of the public. To do so, we can set the null hypothesis to be the
+opposite claim---that the president does not have the support of a
+majority of American citizens. Let \(\mu = \E[X_i] = \P(X_i = 1)\) be
+the population proportion supporting the president. Then, a one-sided
+test would compare the two hypotheses: \[ 
+H_0: \mu \leq 0.5 \quad\text{versus}\quad H_1: \mu > 0.5.
+\]
+
+\end{example}
+
+Two-sided tests are much more common in the social sciences, mostly
+because we usually want to know if there is any evidence, positive or
+negative, against the presumption of no treatment effect or no
+relationship between two variables. One-sided tests are best suited for
+situations with clear, directional hypotheses that are ideally
+preregistered before collection of the data. Preregistration of the
+direction of a one-sided test is important because researchers changing
+the direction of the hypothesis after seeing the data can inflate the
+strength of evidence against the null. For this reason, one-sided tests
+outside of preregistered settings should be used with extreme caution.
+That said, unfortunately, the math of two-sided tests is more
+complicated.
 
 \section{The procedure of hypothesis
 testing}\label{the-procedure-of-hypothesis-testing}
 
 At the most basic level, a \textbf{hypothesis test} is a rule that
 specifies values of the sample data for which we will decide to
-\textbf{reject} the null hypothesis. Let \(\mathcal{X}_n\) be the range
-of the sample---that is, all possible vectors \((x_1, \ldots, x_n)\)
-that have a positive probability of occurring. A hypothesis test then
-describes a region of this space, \(R \subset \mathcal{X}_n\), called
-the \textbf{rejection region} where when \((X_1, \ldots, X_n) \in R\) we
-will \textbf{reject} \(H_0\) and when the data is outside this region,
-\((X_1, \ldots, X_n) \notin R\) we \textbf{retain}, \textbf{accept}, or
+\textbf{reject} the null hypothesis. Let \(\mathcal{X}_n\) be the
+support of the sample---that is, the set of all possible vectors
+\((x_1, \ldots, x_n)\). A hypothesis test then describes a region of
+this space, \(R \subset \mathcal{X}_n\), called the \textbf{rejection
+region}, such that when \((X_1, \ldots, X_n) \in R\) we will
+\textbf{reject} \(H_0\) and when the data is outside this region,
+\((X_1, \ldots, X_n) \notin R\), we \textbf{retain}, \textbf{accept}, or
 \textbf{fail to reject} the null hypothesis.\footnote{Different people
   and different textbooks describe what to do when we do not reject the
   null hypothesis differently. The terminology is not so important so
@@ -4193,80 +4215,62 @@ will \textbf{reject} \(H_0\) and when the data is outside this region,
   null does not mean the null is logically true.}
 
 How do we decide what the rejection region should be? Even though we
-define the rejection region in terms of the \textbf{sample space},
-\(\mathcal{X}_n\), working with the entire vector of data can be
-unwieldy. We instead usually formulate the rejection region in terms of
-a \textbf{test statistic}, \(T = T(X_1, \ldots, X_n)\), where the
-rejection region becomes \[
+define the rejection region in terms of the support, \(\mathcal{X}_n\),
+working with the entire vector of data can be unwieldy. We instead
+usually formulate the rejection region in terms of a \textbf{test
+statistic}, \(T = T(X_1, \ldots, X_n)\), which is a function of the data
+that should get larger as the observed data becomes incompatible with
+the null hypothesis. The test statistic is a random variable and has a
+distribution, though we usually design it so that its distribution under
+the null does not depend on data-generating process.
+
+Once we have selected a test statistic, we can define the rejection
+region as \[
 R = \left\{(x_1, \ldots, x_n) : T(x_1, \ldots, x_n) > c\right\},
 \] where \(c\) is called the \textbf{critical value}. This expression
 says that the rejection region is the collection of possible data sets
-that make the test statistic sufficiently large. Thus, the test
-statistic is a function of the data that should get larger as the
-observed data becomes incompatible with the null hypothesis. The
-critical value (and thus the rejection region) demarcates when the
-divergence between the observed data and the null hypothesis is large
-enough to allow us to reject the null hypothesis. Note that the test
-statistic is a random variable and has a distribution. We will exploit
-this later to better understand the different properties of a hypothesis
-test.
+that make the test statistic sufficiently large. The critical value (and
+thus the rejection region) demarcates when the divergence between the
+observed data and the null hypothesis is large enough to allow us to
+reject the null hypothesis.
 
 Consider a simple one-sided test where you feel a bit ill and try to
-determine if you have a normal body temperature of 98.7 degrees
+determine if you have a normal body temperature of 98.6 degrees
 Fahrenheit or if you have a fever. In this case, the thermometer reading
-is the test statistic since a larger reading are less consistent with a
+is the test statistic since larger readings are less consistent with a
 normal body temperature. Thermometers, however, are imperfect and noisy
 tools, so the reading might differ from 98.7 even if one's temperature
 is normal. Thus, we can use a rejection region such as readings over
 100.5 degrees to determine when to reject the null hypothesis of a
 normal body temperature.
 
-\begin{example}[]\protect\hypertarget{exm-biden}{}\label{exm-biden}
+The structure of a rejection region will depend on whether a test is
+one- or two-sided. This is an important point of difference between the
+two test types that we will raise again below. One-sided tests will take
+the form \(T > c\), whereas two-sided tests will take the form
+\(|T| > c\) since we want to count deviations from either side of the
+null hypothesis as evidence against that null.
 
-Suppose that \((X_1, \ldots, X_n)\) represents a sample of US citizens
-where \(X_i = 1\) indicates support for the current US president and
-\(X_i = 0\) means opposition (no support). A good and reasonable null
-hypothesis is that the president does not have the support of a majority
-of American citizens. Let \(\mu = \E[X_i] = \P(X_i = 1)\). Then, a
-one-sided test would compare the two hypotheses: \[ 
-H_0: \mu \leq 0.5 \quad\text{versus}\quad H_1: \mu > 0.5.
-\] In this case, we might use the sample mean as the test statistic, so
-that \(T(X_1, \ldots, X_n) = \Xbar_n\), and we have to find some
-threshold above 0.5 such that we would reject the null, \[ 
-R = \left\{(x_1, \ldots, x_n): \Xbar_n > c\right\}.
-\] In words, we are asking how much support should we see for the
-current president before we reject the notion that he or she lacks
-majority support? Below we will select the critical value, \(c\), to
-have beneficial statistical properties.
-
-\end{example}
-
-The structure of a reject region will depend on whether a test is one-
-or two-sided. This is an important point of difference between the two
-test types that we will raise again below. One-sided tests will take the
-form \(T > c\), whereas two-sided tests will take the form \(|T| > c\)
-since we want to count deviations from either side of the null
-hypothesis as evidence against that null.
-
-\section{Testing errors}\label{testing-errors}
+\section{Testing errors}\label{sec-testing-errors}
 
 Hypothesis tests end with a decision to reject the null hypothesis or
 not, but this might be an incorrect decision. In particular, there are
 two ways to make errors and two ways to be correct in this setting, as
 shown in Table~\ref{tbl-errors}. The labels are confusing, but remember
-that \textbf{Type I errors} (said ``type one'') are labeled so because
-they are the worst of the two types of errors. Type I errors occur when
-we reject a null when the null is in fact true. For example, if we have
-a null hypothesis of no treatment effect between a treatment and control
-condition, and we reject that null hypothesis (and conclude
-substantively that there is some sort of a treatment effect), then we
-would be committing a Type I error if in fact the null was true -- that
-is, there is no real treatment effect but we concluded there was one.
-Type I errors are what we see in the replication crisis: lots of
-``significant'' effects that turn out later to be null.
+that \textbf{Type I errors} (said ``type one'') are labeled so because,
+in the conventional ranking, they are the worse of the two types of
+errors. Type I errors occur when we reject a null when the null is in
+fact true. For example, if we have a null hypothesis of no treatment
+effect between a treatment and control condition, and we reject that
+null hypothesis (and conclude substantively that there is some sort of a
+treatment effect), then we would be committing a Type I error if in fact
+the null was true--- that is, there is no real treatment effect but we
+concluded there was one. Type I errors are what we see in the
+replication crisis: lots of ``significant'' effects that turn out later
+to be null.
 
 \textbf{Type II errors} (said ``type two'') are generally considered
-less problematic. For such errors, There is a true relationship, but we
+less problematic. For such errors, there is a true relationship, but we
 cannot detect it with our test. That is, we do not reject a null that is
 false. For example, if we have a null hypothesis of no treatment effect
 between a treatment and control condition, we would be committing a Type
@@ -4293,53 +4297,53 @@ Reject \(H_0\) & Type I error & Great \\
 Ideally, we would minimize the chances of making either a Type I or Type
 II error. Unfortunately, because the test statistic is a random
 variable, we cannot remove the probability of an error altogether.
-Instead, we will derive tests with some guaranteed performance to
-minimize the probability of Type I error, usually the more objectionable
-type of error. To derive this, we can define the \textbf{power function}
-of a test, \[ 
-\pi(\theta) = \P\left( \text{Reject } H_0 \mid \theta \right) = \P\left( T \in R \mid \theta \right),
+Instead, we will derive tests that can cap the probability of Type I
+error, usually the more objectionable type of error. To derive this, we
+can define the \textbf{power function} of a test, \[ 
+\pi(\theta) = \P\left( \text{Reject } H_0 \mid \theta \right),
 \] which is the probability of rejection as a function of the parameter
-of interest, \(\theta\). The power function tells us, for example, how
-likely we are to reject the null hypothesis of no treatment effect (no
-difference) as we vary the actual size of the treatment effect (which in
-this case is \(\theta\)).
+of interest, \(\theta\). Here, \(\P(A \mid \theta)\) is the probability
+of \(A\) as if we knew the true parameter were \(\theta\). The power
+function tells us, for example, how likely we are to reject the null
+hypothesis of no treatment effect (no difference) as we vary the actual
+size of the treatment effect (which in this case is \(\theta\)).
 
 We can define the probability of Type I error from the power function.
 
 \begin{definition}[]\protect\hypertarget{def-size}{}\label{def-size}
 
 The \textbf{size} of a hypothesis test with the null hypothesis
-\(H_0: \theta = \theta_0\) is \[ 
-\pi(\theta_0) = \P\left( \text{Reject } H_0 \mid \theta_0 \right).
+\(H_0: \theta \in \Theta_0\) is \[ 
+\alpha = \sup_{\theta_0 \in \Theta_0} \pi(\theta_0) = \sup_{\theta_0 \in \Theta_0} \P\left( \text{Reject } H_0 \mid \theta_0 \right).
 \]
 
 \end{definition}
 
-You can think of the size of a test as the rate of false positives (or
-false discoveries) produced by the test. Figure~\ref{fig-size-power}
-shows an example of rejection regions, size, and power for a one-sided
-test. In the left panel, we have the distribution of the test statistic
-under the null, with \(H_0: \theta = \theta_0\), and the rejection
-region is defined by values \(T > c\). We refer to the distribution of
-the test statistic under the null hypothesis as the \textbf{null
-distribution} or the \textbf{reference distribution}. The shaded gray
-region is the probability of rejection under this null hypothesis, or
-the size of the test. Sometimes, we will get extreme samples by random
-chance, even under the null, leading to false discoveries.\footnote{Eagle-eyed
-  readers will notice that the null tested here is a point, while we
-  previously defined the null in a one-sided test as a region
-  \(H_0: \theta \leq \theta_0\). Technically, the size of the test will
-  vary based on which of these nulls we choose. In this example, notice
-  that any null to the left of \(\theta_0\) will result in a lower size.
-  And so, the null at the boundary, \(\theta_0\), will maximize the size
-  of the test, making it the most ``conservative'' null to investigate.
-  Technically, we should define the size of a test as
-  \(\alpha = \sup_{\theta \in \Theta_0} \pi(\theta)\).}
+The size of the test is the largest probability of rejecting when the
+true parameter is in the null hypothesis region, or the false positive
+rate among true nulls.
+
+Figure~\ref{fig-size-power} shows an example of rejection regions, size,
+and power for a one-sided test with null hypothesis,
+\(H_0: \theta \leq \theta_0\). In the left panel, we have the
+distribution of the test statistic under the boundary null hypothesis,
+\(\theta = \theta_0\), and the rejection region is defined by values
+\(T > c\). Why choose the boundary point for the null hypothesis here?
+The size of the test will vary based on which of these nulls we choose.
+In this example, notice that any null to the left of \(\theta_0\) will
+result in a lower size (smaller rejection region).
+
+We refer to the distribution of the test statistic under the null
+hypothesis as the \textbf{null distribution} or the \textbf{reference
+distribution}. The shaded gray region is the probability of rejection
+under this null hypothesis, or the size of the test. Sometimes, we will
+get extreme samples by random chance, even under the null, leading to
+false discoveries.
 
 In the right panel, we overlay the distribution of the test statistic
 under one particular alternative, \(\theta = \theta_1 > \theta_0\). The
 red-shaded region is the probability of rejecting the null when this
-alternative is true for the power---it is the probability of correctly
+alternative is true, or the power---it is the probability of correctly
 rejecting the null when it is false. Intuitively, we can see that
 alternatives that produce test statistics closer to the rejection region
 will have higher power. This makes sense: detecting big deviations from
@@ -4367,10 +4371,10 @@ lower-sized test. Unfortunately, it would also reduce power in the right
 panel since the probability of being in the rejection region will be
 lower under any alternative,
 \(\P(T > c' \mid \theta_1) < \P(T > c \mid \theta_1)\). This means we
-usually cannot simultaneously reduce both types of errors.
+usually cannot simultaneously reduce both types of errors, holding \(n\)
+fixed.
 
-\section{Determining the rejection
-region}\label{determining-the-rejection-region}
+\section{Determining the rejection region}\label{sec-rejection-region}
 
 If we cannot simultaneously optimize a test's size and power, how should
 we determine where the rejection region is? That is, how should we
@@ -4378,8 +4382,8 @@ decide what empirical evidence will be strong enough for us to reject
 the null? The standard approach is to control the size of a test (that
 is, control the rate of false positives) and try to maximize the power
 of the test subject to that constraint. So we say, ``I'm willing to
-accept at most X\%'' of findings will be false positives and do whatever
-we can to maximize power subject to that constraint.
+reject a true null at most X\% of the time and do whatever we can to
+maximize power subject to that constraint.''
 
 \begin{definition}[]\protect\hypertarget{def-level}{}\label{def-level}
 
@@ -4392,25 +4396,28 @@ A test with a significance level of \(\alpha = 0.05\) will have a false
 positive/Type I error rate no larger than 0.05. This level is widespread
 in the social sciences, though you also will see \(\alpha = 0.01\) or
 \(\alpha = 0.1\). Frequentists justify this by saying this means that
-with \(\alpha = 0.05\), there will only be at most 5\% of studies that
-will produce false discoveries.
+with \(\alpha = 0.05\), at most 5\% of studies in which the null is true
+will produce false positives. Note the similar sounding \textbf{false
+discovery rate} of a test is the expected proportion of discoveries
+(i.e., rejections) that are false (rather than the probability of
+rejecting the null given that it is true).
 
 Our task is to construct the rejection region so that the \textbf{null
 distribution} of the test statistic
-\(G_0(t) = \P(T \leq t \mid \theta_0)\) has less than \(\alpha\)
-probability in that region. One-sided tests like in
-Figure~\ref{fig-size-power} are the easiest to show, even though we
-warned you not to use them. We want to choose \(c\) that puts no more
-than \(\alpha\) probability in the tail, or \[ 
+\(G_0(t) = \P(T \leq t \mid \theta_0)\) has no more than \(\alpha\)
+probability in that region. One-sided tests like the one in
+Figure~\ref{fig-size-power} are the easiest to show, in spite of their
+problems discussed above. We want to choose \(c\) that puts no more than
+\(\alpha\) probability in the tail, or \[ 
 \P(T > c \mid \theta_0) = 1 - G_0(c) \leq \alpha.
-\] Remember that the smaller the value of \(c\) we can use will maximize
+\] Remember that using the smallest possible value of \(c\) maximizes
 power, which implies that the critical value for the maximum power while
 maintaining the significance level is when \(1 - G_0(c) = \alpha\). We
 can use the \textbf{quantile function} of the null distribution to find
 the exact value of \(c\) we need, \[
 c = G^{-1}_0(1 - \alpha),
-\] which substantively translates to say, ``the value at which
-\(1-\alpha\) of the null distribution is below.''
+\] which substantively translates to say, ``the value below which
+\(1-\alpha\) of the null distribution falls.''
 
 The determination of the rejection region follows the same principles
 for two-sided tests, but it is more complicated because we reject when
@@ -4439,36 +4446,35 @@ distribution in each tail.
 
 }
 
-\caption{\label{fig-two-sided}Rejection regions for a two-sided test.}
+\caption{\label{fig-two-sided}Rejection regions for a two-sided test
+along with the distribution of T under the null.}
 
 \end{figure}%
 
-\section{Hypothesis tests of the sample
-mean}\label{hypothesis-tests-of-the-sample-mean}
+\section{Hypothesis tests of the sample mean}\label{sec-hyp-test-mean}
 
 Consider the following extended example about hypothesis testing of a
 sample mean, sometimes called a \textbf{one-sample test} since we are
-usually using just one sample statistic (the sample mean in this case)
-and comparing that to some sort of natural conceptual benchmark. Let's
-say \(X_i\) represents feeling thermometer scores about ``liberals'' as
-a group on a scale of 0 to 100, with values closer to 0 indicating
-cooler feelings about liberals and values closer to 100 indicating
-warmer feelings about liberals. (This is similar to many survey items on
-nationally representative surveys, such as the ANES in the U.S.) We want
-to know if the population average differs from a value of 50, which is a
-good benchmark that would indicate roughly neutral feelings toward
-liberals. We can write this two-sided test as \[
+comparing a single sample mean to some sort of natural conceptual
+benchmark. Let's say \(X_i\) represents feeling thermometer scores about
+``liberals'' as a group on a scale of 0 to 100, with values closer to 0
+indicating cooler feelings about liberals and values closer to 100
+indicating warmer feelings about liberals. (This is similar to many
+survey items on nationally representative surveys, such as the ANES in
+the U.S.) We want to know if the population average differs from a value
+of 50, which is a good benchmark that would indicate roughly neutral
+feelings toward liberals. We can write this two-sided test as \[
 H_0: \mu = 50 \quad\text{versus}\quad H_1: \mu \neq 50,
 \] where \(\mu = \E[X_i]\). The standard test statistic for this type of
 test is the so-called \textbf{t-statistic}, \[ 
 T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{S_n^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{S_n^2 / n}},
 \] where \(\mu_0\) is the null value of interest and \(S_n^2\) is the
-sample variance. If the null hypothesis is true, then by the CLT, we
-know that the t-statistic is asymptotically normal,
-\(T \indist \N(0, 1)\). Thus, we can approximate the null distribution
-with the standard normal.
+sample variance. If the null hypothesis is true, then by the CLT and
+Slutsky's Theorem from Chapter~\ref{sec-asymptotics}, we know that the
+t-statistic is asymptotically normal, \(T \indist \N(0, 1)\). Thus, we
+can approximate the null distribution with the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 The names of the various tests can be quite confusing because they are
 so similar. Earlier, we discussed one-sided versus two-sided tests,
@@ -4477,30 +4483,34 @@ One-sample and two-sample tests, on the other hand, describe how many
 group means we are comparing. In a one-sample test, we compare one
 population mean to a fixed number. For two-sample tests (described in
 more detail below), we are usually making null hypotheses about the
-different between two population means.
+difference between two population means.
 
 \end{tcolorbox}
 
 Let's create a two-sided test with level \(\alpha = 0.05\), our
 tolerance for Type I error. Then we need to find the rejection region
 that puts \(0.05\) probability in the tails of the null distribution,
-which we just saw was \(\N(0,1)\). Let \(\Phi()\) be the CDF for the
-standard normal and let \(\Phi^{-1}()\) be the quantile function for the
-standard normal. Drawing on what we developed above, you can find the
-value \(c\) so that \(\P(|T| > c \mid \mu_0)\) is 0.05 with \[
-c = \Phi^{-1}(1 - 0.05/2) \approx 1.96,
+which we just saw was \(\N(0,1)\). Let \(\Phi(\cdot)\) be the CDF for
+the standard normal and let \(\Phi^{-1}()\) be the quantile function for
+the standard normal. Drawing on what we developed above, you can find
+the value \(c\) so that \(\P(|T| > c \mid \mu_0)\) is 0.05 with \[
+c = \Phi^{-1}(1 - 0.05/2) \approx 1.96.
 \] This means that a test where we reject when \(|T| > 1.96\) would have
 a level of 0.05 asymptotically.
 
 \section{The Wald test}\label{the-wald-test}
 
 We can generalize the hypothesis test for the sample mean to estimators
-more broadly. Let \(\widehat{\theta}_n\) be an estimator for some
-parameter \(\theta\) and let
-\(\widehat{\textsf{se}}[\widehat{\theta}_n]\) be a consistent estimate
-of the standard error of the estimator,
-\(\textsf{se}[\widehat{\theta}_n] = \sqrt{\V[\widehat{\theta}_n]}\). We
-consider the two-sided test \[
+more broadly.
+
+Suppose \(\widehat{\theta}_n\) is asymptotically normal estimator and
+the asymptotic variance of \(\sqrt{n}(\widehat{\theta}_n - \theta_0)\)
+has variance \(V_{\theta}\) and suppose we have consistent estimator for
+that asymptotic variance, \(\widehat{V}_{\theta} \inprob V_{\theta}\).
+As in Chapter~\ref{sec-asymptotics}, we can define the estimated
+standard error as
+\(\widehat{\textsf{se}}[\widehat{\theta}_n] = \sqrt{\widehat{V}_{\theta} / n}\).
+We consider the two-sided test \[
 H_0: \theta = \theta_0 \quad\text{versus}\quad H_1: \theta \neq \theta_0.
 \]
 
@@ -4511,10 +4521,10 @@ T = \frac{\widehat{\theta}_n - \theta_0}{\widehat{\textsf{se}}[\widehat{\theta}_
 where \(z_{a}\) is the \(a\)-th quantile of the standard normal. That
 is, if \(Z \sim \N(0, 1)\), then \(z_a\) satisfies
 \(\P(Z \leq z_a) = a\). While the \(1-\alpha/2\) expression is slightly
-confusing, the critical value \$z\_\{1-\alpha/2\} is the value that puts
+confusing, the critical value \(z_{1-\alpha/2}\) is the value that puts
 probability \(\alpha/2\) in the upper tail of the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 In R, you can find the \(z_{1- \alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -4533,7 +4543,9 @@ In R, you can find the \(z_{1- \alpha/2}\) values easily with the
 
 \begin{theorem}[]\protect\hypertarget{thm-wald}{}\label{thm-wald}
 
-Asymptotically, the Wald test has size \(\alpha\) such that \[ 
+Suppose \(T\) is the test statistic for the Wald test for an
+asymptotically normal estimator with a consistent variance estimator.
+Then, the Wald test has asymptotic size \(\alpha\) such that \[ 
 \P(|T| > z_{1 - \alpha/2} \mid \theta_0) \to \alpha.
 \]
 
@@ -4549,36 +4561,40 @@ proportions]\protect\hypertarget{exm-two-props}{}\label{exm-two-props}
 Get-out-the-vote (GOTV) experiments are common in political science. A
 typical GOTV design might randomly assign a group of citizens to receive
 mailers encouraging them to vote, whereas a control group receives no
-message. We will define the turnout variables in the treatment group,
-\(Y_{1}, Y_{2}, \ldots, Y_{n_t}\), as iid draws from a Bernoulli
-distribution with success \(p_t\), which represents the population
-turnout rate in the treated group treated. The outcomes in the control
-group, \(X_{1}, X_{2}, \ldots, X_{n_c}\), are iid draws from another
-Bernoulli distribution with success \(p_c\), which represents the
-population turnout rate among citizens not receiving a mailer.
+message. As in Section~\ref{sec-model-rct}, we can define the data for
+each respondent as \((Y_i, D_i)\), where \(Y_i\) is a binary turnout
+variable (\(Y_i = 1\) if the respondent voted) and \(D_i\) is a binary
+treatment indicator (\(D_i = 1\) for respondents in the treated group).
+Let \(n_1 = \sum_{i=1}^n D_i\) be the number of treated respondents and
+\(n_0\) be the number of control respondents. Conditional on being in
+the treated or control group, we assume that the \(Y_i\) are iid draws
+from a Bernoulli distribution with success probabilities, \(p_1\) and
+\(p_0\), respectively. That is, \(p_1\) is the the probability of a
+treated respondent voting.
 
 Our goal is to learn about the effect of this treatment on whether a
-citizen votes, \(\tau = p_t - p_c\), and we will use the sample
+citizen votes, \(\tau = p_1 - p_0\), and we will use the sample
 difference in means/proportions as our estimator,
-\(\widehat{\tau} = \Ybar - \Xbar\). To perform a Wald test, we need to
-either know or estimate the standard error of this estimator. Notice
-that because these are independent samples, the variance is \[ 
-\V[\widehat{\tau}_n] = \V[\Ybar - \Xbar] = \V[\Ybar] + \V[\Xbar] = \frac{p_t(1-p_t)}{n_t} + \frac{p_c(1-p_c)}{n_c},
-\] where the third equality comes from the fact that the underlying
-outcome variables \(Y_i\) and \(X_j\) are binary. Obviously, we do not
-know the true population proportions \(p_t\) and \(p_c\) (that's why
-we're doing the test!), but we can estimate the standard error by
-replacing them with their estimates \[ 
-\widehat{\textsf{se}}[\widehat{\tau}] = \sqrt{\frac{\Ybar(1 -\Ybar)}{n_t} + \frac{\Xbar(1-\Xbar)}{n_c}}.
+\(\widehat{\tau} = \Ybar_1 - \Ybar_0\). To perform a Wald test, we need
+to either know or estimate the standard error of this estimator. Recall
+from Section~\ref{sec-model-rct}, we know the \[ 
+\V[\widehat{\tau} \mid \mathbf{D}] = \frac{\V[Y_i \mid D_i = 1]}{n_1} + \frac{\V[Y_i \mid D_i = 0]}{n_0} = \frac{p_1(1-p_1)}{n_1} + \frac{p_0(1-p_0)}{n_0},
+\] where the third equality comes \(Y_i\) being conditinally Bernoulli
+so \(\V[Y_i \mid D_i = 1] = p_1(1- p_1)\). Obviously, we do not know the
+true population proportions \(p_1\) and \(p_0\) (that's why we're doing
+the test!), but we can estimate the standard error by replacing them
+with their estimates \[ 
+\widehat{\textsf{se}}[\widehat{\tau}] = \sqrt{\frac{\Ybar_1(1 -\Ybar_1)}{n_1} + \frac{\Ybar_0(1-\Ybar_0)}{n_0}}.
 \]
 
 The typical null hypothesis test in this \textbf{two-sample test} is
 ``no treatment effect'' vs.~``some treatment effect'': \[
-H_0: \tau = p_t - p_c = 0 \quad\text{versus}\quad H_1: \tau \neq 0,
+H_0: \tau = p_1 - p_0 = 0 \quad\text{versus}\quad H_1: \tau \neq 0,
 \] which gives the following test statistic for the Wald test \[
-T = \frac{\Ybar - \Xbar}{\sqrt{\frac{\Ybar(1 -\Ybar)}{n_t} + \frac{\Xbar(1-\Xbar)}{n_c}}}. 
+T = \frac{\Ybar_1 - \Ybar_0}{\sqrt{\frac{\Ybar_1(1 -\Ybar_1)}{n_1} + \frac{\Ybar_0(1-\Ybar_0)}{n_0}}}. 
 \] If we wanted a test with level \(\alpha = 0.01\), we would reject the
-null when \(|T| > 2.58\) since
+null when \(|T| > 2.58\). We can find this critical value with the
+following R snippet:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4598,15 +4614,15 @@ means]\protect\hypertarget{exm-diff-in-means}{}\label{exm-diff-in-means}
 Consider a similar example with randomly assigned treatment and control
 groups, but instead the treatment is now an appeal for financial
 donations to a political campaign and the outcomes are continuous
-measures of how much money a person has donated. The treatment data
-\(Y_1, \ldots, Y_{n_t}\) are iid draws from a population with mean
-\(\mu_t = \E[Y_i]\) and population variance \(\sigma^2_t = \V[Y_i]\).
-The control data \(X_1, \ldots, X_{n_c}\) are iid draws (independent of
-the \(Y_i\)) from a population with mean \(\mu_c = \E[X_i]\) and
-population variance \(\sigma^2_c = \V[X_i]\). The parameter of interest
-is similar to before: the population difference in means,
-\(\tau = \mu_t - \mu_c\). We will form the usual hypothesis test of \[ 
-H_0: \tau = \mu_t - \mu_c = 0 \quad\text{versus}\quad H_1: \tau \neq 0.
+measures of how much money a person has donated. The setup is the same
+as Section~\ref{sec-model-rct}. The treatment data are iid draws from a
+population with mean \(\mu_1 = \E[Y_i \mid D_i = 1]\) and population
+variance \(\sigma^2_1 = \V[Y_i \mid D_i = 1]\). The control data are iid
+draws from a population with mean \(\mu_0 = \E[Y_i \mid D_i = 0]\) and
+population variance \(\sigma^2_0 = \V[Y_i \mid D_i = 0]\). The parameter
+of interest is similar to before: the population difference in means,
+\(\tau = \mu_1 - \mu_0\). We will form the usual hypothesis test of \[ 
+H_0: \tau = \mu_1 - \mu_0 = 0 \quad\text{versus}\quad H_1: \tau \neq 0.
 \]
 
 The only difference between this setting and the
@@ -4614,12 +4630,12 @@ difference-in-proportions setting is that the standard error here is
 different because we cannot rely on binary outcomes. Instead, we'll use
 our knowledge of the sampling variance of the sample means and
 independence between the samples to derive \[
-\V[\widehat{\tau}] = \V[\Ybar] + \V[\Xbar] = \frac{\sigma^2_t}{n_t} + \frac{\sigma^2_c}{n_c},
-\] where we can come up with an estimate of the unknown population
+\V[\widehat{\tau}] = \V[\Ybar_1] + \V[\Ybar_0] = \frac{\sigma^2_1}{n_1} + \frac{\sigma^2_0}{n_0},
+\] where we can come up with estimates of the unknown population
 variance with sample variances \[
-\widehat{\se}[\widehat{\tau}] = \sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}.
+\widehat{\se}[\widehat{\tau}] = \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_1}{n_1}}.
 \] We can use this estimator to derive the Wald test statistic of \[ 
-T = \frac{\widehat{\tau} - 0}{\widehat{\se}[\widehat{\tau}]} = \frac{\Ybar - \Xbar}{\sqrt{\frac{s^2_t}{n_t} + \frac{s^2_c}{n_c}}},
+T = \frac{\widehat{\tau} - 0}{\widehat{\se}[\widehat{\tau}]} = \frac{\Ybar_1 - \Ybar_0}{\sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}},
 \] and if we want an asymptotic level of 0.05, we can reject when
 \(|T| > 1.96\).
 
@@ -4627,8 +4643,8 @@ T = \frac{\widehat{\tau} - 0}{\widehat{\se}[\widehat{\tau}]} = \frac{\Ybar - \Xb
 
 \section{p-values}\label{p-values}
 
-The hypothesis testing framework focuses on making a decision -- to
-reject the null hypothesis or not -- in the face of uncertainty. You
+The hypothesis testing framework focuses on making a decision---to
+reject the null hypothesis or not---in the face of uncertainty. You
 choose a level of wrongness you are comfortable with (rate of false
 positives, or \(\alpha\)) and then decide null vs.~alternative based
 firmly on the rejection region.
@@ -4650,8 +4666,9 @@ One alternative to reporting the reject/retain decision is to report a
 \begin{definition}[]\protect\hypertarget{def-p-value}{}\label{def-p-value}
 
 The \textbf{p-value} of a test is the probability of observing a test
-statistic at least as extreme as the observed test statistic in the
-direction of the alternative hypothesis.
+statistic at least as extreme as the observed test statistic,
+\(T_{\textsf{obs}}\), in the direction of the alternative hypothesis,
+assuming the null hypothesis is true.
 
 \end{definition}
 
@@ -4659,13 +4676,13 @@ The line ``in the direction of the alternative hypothesis'' deals with
 the unfortunate headache of one-sided versus two-sided tests. For a
 one-sided test where larger values of \(T\) correspond to more evidence
 for \(H_1\), the p-value is \[
-\P(T(X_1,\ldots,X_n) > T \mid \theta_0) = 1 - G_0(T),
+\P(T(X_1,\ldots,X_n) \geq T_{\textsf{obs}} \mid \theta_0) = 1 - G_0(T),
 \] whereas for a (symmetric) two-sided test, we have \[ 
-\P(|T(X_1, \ldots, X_n)| > |T| \mid \theta_0) = 2(1 - G_0(|T|)).
+\P(|T(X_1, \ldots, X_n)| \geq |T_{\textsf{obs}}| \mid \theta_0) = 2(1 - G_0(|T|)).
 \]
 
 In either case, the interpretation of the p-value is the same. It is the
-smallest size \(\alpha\) at which a test would reject the null
+smallest level \(\alpha\) at which a test would reject the null
 hypothesis. Presenting a p-value allows the reader to determine their
 own \(\alpha\) level and determine quickly if the evidence would warrant
 rejecting \(H_0\) in that case. Thus, the p-value is a more
@@ -4673,15 +4690,18 @@ rejecting \(H_0\) in that case. Thus, the p-value is a more
 the null hypothesis. Lower values indicate more divergence because the
 observed result is less likely under the null.
 
-Much of the controversy surrounding p-values focuses on arbitrary
-p-value cutoffs for determining statistical significance and sometimes
+Much of the controversy surrounding p-values (see Wasserstein and Lazar
+(2016) for lively discussion on this) focuses on arbitrary p-value
+cutoffs for determining statistical significance and sometimes
 publication decisions. These problems are not the fault of p-values but,
 rather, the hyperfixation on the reject/retain decision for arbitrary
 test levels like \(\alpha = 0.05\). It might be best to view p-values as
 a transformation of the test statistic onto a common scale between 0 and
-1.
+1. Finally, remember that \(p\)-values can only determine the
+statistical signficance of an estimate, not its practical or substantive
+significance.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics, and these criticisms sometimes hinge on
@@ -4699,7 +4719,7 @@ answer the question: how likely would my data be if the null were true?
 
 \end{tcolorbox}
 
-\section{Power analysis}\label{power-analysis}
+\section{Power analysis}\label{sec-power-analysis}
 
 Imagine you have spent a large amount of your research budget on a big
 experiment that tests a new and exciting theory, but the results come
@@ -4715,7 +4735,7 @@ effect size. These hypothesized effect sizes are vital to this exercise
 and often come from prior studies or substantive knowledge about the
 domain.
 
-Generally power analyses involve calculating the power function
+Generally, power analyses involve calculating the power function
 \(\pi(\theta) = \P(T(X_1, \ldots, X_n) \in R \mid \theta)\) for
 different values of \(\theta\). It might also involve sample size
 calculations for a particular alternative, \(\theta_1\), the
@@ -4726,29 +4746,168 @@ the sample size is straightforward. For more general situations or
 two-sided tests, however, we typically need numerical or
 simulation-based approaches to find the optimal sample size.
 
-With Wald tests, we can characterize the power function quite easily,
-even if the test does not allow us to back out sample size calculations
+With Wald tests, we can characterize the asymptotic power function quite
 easily.
 
 \begin{theorem}[]\protect\hypertarget{thm-power}{}\label{thm-power}
 
-For a Wald test with an asymptotically normal estimator, the power
-function for a particular alternative \(\theta_1 \neq \theta_0\) is \[ 
-\pi(\theta_1) = 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]} + z_{1-\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\widehat{\se}[\widehat{\theta}_n]}-z_{1-\alpha/2} \right).
-\]
+For a Wald test with an asymptotically normal estimator as in
+Theorem~\ref{thm-wald}, the power function for a particular alternative
+\(\theta_1 \neq \theta_0\) converges to
+\begin{equation}\phantomsection\label{eq-asymptotic-power}{ 
+\pi(\theta_1) \to 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/n}} + z_{1-\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/n}}-z_{1-\alpha/2} \right).
+}\end{equation}
 
 \end{theorem}
 
-\section{Exact tests under normal
-data}\label{exact-tests-under-normal-data}
+From this, we can see that larger sample sizes imply higher power, all
+else equal.
 
-The Wald test above relies on large-sample approximations but these may
+From this asymptotic power function, we can back out an approximate
+sample size needed to acheive a certain level of statistical power for a
+certain alternative. Let \(\beta\) be the desired statistical power and
+\(n_{\beta}\) be the sample size required to acheive it. Notice if the
+alternative is fairly far away from the null, one of the two terms
+involving \(\Phi()\) will approach a limit, leaving the other as the
+main driver of power. When \(\theta_{1}\) is very far below
+\(\theta_{0}\), the first \(\Phi()\) term approaches 1; when the
+alternative is much larger than the null, the second term will be very
+close to 0. Let's consider the former case, which allows to simply and
+rearrange Equation~\ref{eq-asymptotic-power} to obtain the required
+sample size: \begin{equation}\phantomsection\label{eq-sizing}{
+\begin{aligned}
+\beta &\approx \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/ n_{\beta}}}-z_{1-\alpha/2} \right) \\
+\Phi^{-1}(\beta) &\approx \left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/ n_{\beta}}}-z_{1-\alpha/2} \right) \\
+n_{\beta} &\approx \frac{\left(z_{\beta} + z_{1-\alpha/2}\right)^2V_{\theta}}{(\theta_0 - \theta_1)^2}.
+\end{aligned}
+}\end{equation}
+
+The opposite case (where \(\theta_{1}\) is much larger than
+\(\theta_{0}\)) actually ends up with the exact same required sample
+size, as symmetry would hopefully imply.
+
+\begin{example}[Sizing for desired
+power]\protect\hypertarget{exm-sizing}{}\label{exm-sizing}
+
+Suppose we have an asymptotically normal estimator and we want to
+determine the sample size needed to acheive 80\% power (\(\beta = 0.8\))
+on a Wald test with \(\alpha = 0.05\) and an alternative that is 0.2
+standard deviations away from the null,
+\(\theta_{0} - \theta_{1} = 0.2\sqrt{V_{\theta}}\). Plugging these
+values in Equation~\ref{eq-sizing}, we obtain \[
+n_{\beta} \approx \frac{(z_{0.8} + z_{0.975})^2 V_{\theta}}{0.2^2 V_{\theta}} \approx 196.
+\]
+
+\end{example}
+
+\section{Exact tests under
+randomization}\label{exact-tests-under-randomization}
+
+We opened the chapter with the example fo the lady tasting tea, which
+feels very distinct from the hypothesis tests of the last few sections.
+In fact, the core of the lady tasting tea example relies not on
+asymptotics but on the core idea of randomization.
+
+\begin{example}[]\protect\hypertarget{exm-lady-tasting-tea}{}\label{exm-lady-tasting-tea}
+
+Let's return to Fisher's example of the Lady Tasting Tea, where Bristol
+had to determine which 4 of the 8 cups of tea were prepared milk first
+and which 4 were prepared tea first. Under null hypothesis that Bristol
+was guessing at random, all ways to group 8 cups into 2 groups of 4 are
+equally likely. Since there are 70 ways to group the cups in this
+manner, the \(p\)-value under this null hypothesis is 1/70.
+
+\end{example}
+
+We can generalize the idea of the Lady Tasting Tea to a broad class of
+tests. A \textbf{randomization test} is a hypothesis test that leverages
+a randomization hypothesis that, under the null hypothesis, certain
+known transformations of the data have no effect on the distribution of
+the data. Then, under the null hypothesis, if we apply this
+transformation to the data, the distribution of the test statistic does
+not change. We can obtain a p-value that measures how likely the
+observed test statistic is among all possible transformations.
+
+\begin{example}[Two-sample permutation
+test]\protect\hypertarget{exm-permutation-test}{}\label{exm-permutation-test}
+
+Let's return to the RCT example with pairs of outcome and treatment
+status variabels \((Y_i, D_i)\). In Example~\ref{exm-diff-in-means} we
+condudcted a hypothesis test of whether the mean of \(Y_i\) was
+different between \(D_i = 1\) and \(D_i= 0\) groups. A stronger null
+hypothesis is that treatment has \emph{no} effect on the outcome at all.
+Under this null hypothesis and randomization of \(D_i\), the normalized
+difference in means estimator has the same distribution even if we were
+to shuffle or permute the treatment statuses across units.
+
+Enumerating all possible permutations of \((D_1, \ldots, D_n)\) is
+computationally infeasible even for moderate \(n\), so we often turn to
+the following simulation-based approach:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Calculate the observed normalized difference in means, \(T_0\).
+\item
+  For a large number of repetitions, \(r = 1,\ldots, R\):
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Draw a random reshuffling of treatment status as
+  \((D^*_1, \ldots, D^*_n)\)
+\item
+  Calculate the normalized difference in means under this permuted data,
+  \(T_r\).
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Compute the \(p\)-value what fraction of all reshuffles (and the
+  observed test statistic) are as large as the observed test statistic:
+  \[
+  p = \frac{1}{R+1} \sum_{r=0}^R \mathbb{I}(|T_r| \geq |T_0|).
+  \]
+\end{enumerate}
+
+This \(p\)-value represents a Monte Carlo approximation to the
+\emph{exact} probability of observing a test statistic as large or
+larger under the null hypothesis.
+
+\end{example}
+
+As the Lady Tasting Tea example shows, randomization tests are generally
+\textbf{exact tests} in the sense that we could, in principle, calculate
+the exact probability of the observed test statistic under the null. In
+the two-sample permutation test example, we saw that this computation
+might be infeasible but we can approximate with arbitrary accuracy via
+simulation. The exactness might be a welcome change from the sometimes
+handwavvy large-sample approximations of the earlier tests. But notices
+that the comparison isn't apples to apples. In
+Example~\ref{exm-permutation-test}, our null was the entire distribution
+of \(Y_i\) was the same in the treated and control groups. We often call
+this the \textbf{sharp null hypothesis} and it could be violated by any
+change to the distribution. In Example~\ref{exm-diff-in-means}, the
+large-sample approximation allowed us to focus a test on the null
+hypothesis of the difference in means alone. Both could be interesting
+hypotheses to test, but it is important to keep them distinct in our
+minds.
+
+\section{Exact tests under normal data}\label{sec-hyp-test-normal}
+
+The Wald test above relies on large-sample approximations, but these may
 not be valid in finite samples. Can we get \textbf{exact} inferences at
 any sample size? Yes, if we make stronger assumptions about the data. In
 particular, assume a \textbf{parametric model} for the data where
-\(X_1,\ldots,X_n\) are iid samples from \(N(\mu,\sigma^2)\). Under a
+\(X_1,\ldots,X_n\) are iid samples from \(\N(\mu,\sigma^2)\). Under a
 null hypothesis of \(H_0: \mu = \mu_0\), we can show that \[ 
-T_n = \frac{\Xbar_n - \mu_0}{s_n/\sqrt{n}} \sim t_{n-1},
+T_n = \frac{\Xbar_n - \mu_0}{S_n/\sqrt{n}} \sim t_{n-1},
 \] where \(t_{n-1}\) is the \textbf{Student's t-distribution} with
 \(n-1\) degrees of freedom. This result implies the null distribution is
 \(t\), so we use quantiles of \(t\) for critical values. For a one-sided
@@ -4756,13 +4915,18 @@ test, \(c = G^{-1}_0(1 - \alpha)\), but now \(G_0\) is \(t\) with
 \(n-1\) df and so we use \texttt{qt()} instead of \texttt{qnorm()} to
 calculate these critical values.
 
-The critical values for the \(t\) distribution are always larger than
-the normal because the t distribution has fatter tails, as shown in
-Figure~\ref{fig-shape-of-t}. As \(n\to\infty\), however, the \(t\)
-converges to the standard normal, and so it is asymptotically equivalent
-to the Wald test but slightly more conservative in finite samples. Most
+The tail quantiles of the \(t\) distribution (and thus the critical
+values) are always larger in absolute value than the normal because the
+\(t\) distribution has fatter tails, as shown in
+Figure~\ref{fig-shape-of-t}. The dashed lines show the 0.95 quantile
+that would be the critical value for a one-sided test with
+\(\alpha = 0.05\). We can see that the quantile for the
+\(t\)-distribution is slightly larger than for normal. As
+\(n\to\infty\), however, the \(t\) converges to the standard normal, and
+so it is asymptotically equivalent to the Wald test but slightly more
+conservative in finite samples. Beacause of this conservativeness, most
 software packages calculate p-values and rejection regions based on the
-\(t\) to exploit this conservativeness.
+\(t\) in spite of normality being an uncommon assumption in practice.
 
 \begin{figure}[th]
 
@@ -4772,32 +4936,30 @@ software packages calculate p-values and rejection regions based on the
 
 }
 
-\caption{\label{fig-shape-of-t}Normal versus t distribution.}
+\caption{\label{fig-shape-of-t}Normal versus t distribution. Dashed
+lines are the 0.95 quantile of each distribution.}
 
 \end{figure}%
 
 \section{Summary}\label{summary-3}
 
 In this chapter, we covered the basics of hypothesis tests, which are a
-type of statistical thought experiment. We assume that we know the true
-state of the world and determine how unlikely our observed data would be
-in that world. We described different types of tests (one-sided versus
-two-sided), introduced the properties of tests (size and power), and
-showed how to determine the rejection region of a test. We also
-described the Wald test, a general test that can be used in a wide
-variety of settings. P-values are a continuous measure of divergence
-between the observed data and the null hypothesis. Power analyses allow
-researchers to forecast how large of a sample they will need to detect
-different effect sizes with sufficient statistical power. Finally,
-confidence intervals and hypothesis tests are deeply connected since
-confidence intervals will contain all null hypotheses that cannot be
-rejected at a certain \(\alpha\).
+type of statistical thought experiment. We assume a particular state of
+the world (namely, the the null hypothesis is true) and determine how
+unlikely our observed data would be in that world. We described
+different types of tests (one-sided versus two-sided), introduced the
+properties of tests (size and power), and showed how to determine the
+rejection region of a test. We also described the Wald test, a general
+test that can be used in a wide variety of settings. P-values are a
+continuous measure of divergence between the observed data and the null
+hypothesis. Power analyses allow researchers to forecast how large a
+sample they will need to detect different effect sizes with sufficient
+statistical power.
 
-We have now covered the basic tools of statistical inference at a high
-level and have shown how to apply them to simple estimators like the
-sample mean or the sample difference in means. In Part II of this book,
-we turn to applying many of these ideas to the predominant estimator in
-the quantitative social sciences---ordinary least squares.
+Next in Chapter~\ref{sec-confidence-intervals}, we will look at another
+way to think about uncertainty in our estimates: confidence intervals.
+As we will see, there is a deep connection between confidence intervals
+and hypothesis tests.
 
 \chapter{Confidence intervals}\label{sec-confidence-intervals}
 
@@ -4850,7 +5012,7 @@ confidence interval for their quantity of interest. Then, if the
 confidence intervals are valid, then we should expect 5 of those
 confidence intervals to not contain their true quantity of interest.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-warning-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-warning-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-warning-color!10!white, breakable, colframe=quarto-callout-warning-color-frame]
 
 Let's say you calculate a 95\% confidence interval and it's
 \([0.1, 0.4]\). It's tempting to make a probability statement like
@@ -4869,7 +5031,7 @@ sample to sample.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Bayesian inference---which treats the data as fixed and the parameters
 as random---can make probabilistic statements about the true mean being
@@ -5856,7 +6018,7 @@ bivariate case: it chooses the set of coefficients that minimizes the
 expected mean-squared error, where the expectation is over the joint
 distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -5910,7 +6072,7 @@ substantively. Recall that \(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 What does the expression for the population regression coefficients
 mean? It is helpful to separate the intercept or constant term so that
@@ -6300,7 +6462,7 @@ is income and \(X_{i2}\) is the Black/non-Black voter indicator, then
 \(\beta_3\) represents the change in the slope of the wait time-income
 relationship between Black and non-Black voters.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 In many cases, the so-called marginal coefficients on the lower-order
 terms (\(\beta_1\) for \(X_{i1}\) and \(\beta_2\) for \(X_{i2}\)) are
@@ -6513,7 +6675,7 @@ from the population to make inferences about the line of best fit in the
 population and the population coefficients. To do this, we will focus on
 the OLS estimator for these population quantities.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -6591,7 +6753,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Almost all regression will contain an intercept term, usually
 represented as a constant 1 in the covariate vector. It is also possible
@@ -7016,7 +7178,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 The residual regression approach is:
 
@@ -7306,7 +7468,7 @@ needed to ensure that the best linear predictor,
 \(\bfbeta = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 The linear projection model makes the following assumptions:
 
@@ -7369,7 +7531,7 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the Central Limit
 Theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
@@ -7662,7 +7824,7 @@ we only need a one-sided rejection region of the form
 straightforward (see the above callout tip). For \(q = 2\) and a
 \(\alpha = 0.05\), the critical value is roughly 6.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -7738,7 +7900,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -7855,7 +8017,7 @@ homoskedasticity of errors is such a historically important assumption
 that statistical software implementations of OLS like \texttt{lm()} in R
 assume it by default.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -8010,7 +8172,7 @@ proceed in small samples? Historically we would have assumed
 (conditional) normality of the errors, basically proceeding with some
 knowledge that we were wrong but hopefully not too wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, left=2mm, coltitle=black, breakable, opacityback=0, colback=white, colframe=quarto-callout-note-color-frame, rightrule=.15mm, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, arc=.35mm, bottomtitle=1mm, bottomrule=.15mm, opacitybacktitle=0.6, toprule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, titlerule=0mm, leftrule=.75mm]
+\begin{tcolorbox}[enhanced jigsaw, toprule=.15mm, bottomtitle=1mm, bottomrule=.15mm, toptitle=1mm, colback=white, opacityback=0, left=2mm, coltitle=black, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, arc=.35mm, rightrule=.15mm, leftrule=.75mm, opacitybacktitle=0.6, colbacktitle=quarto-callout-note-color!10!white, breakable, colframe=quarto-callout-note-color-frame]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
@@ -8136,6 +8298,12 @@ SQUIRE, PEVERILL. 1988. {``WHY THE 1936 LITERARY DIGEST POLL FAILED.''}
 Wasserman, Larry. 2004. \emph{All of Statistics: A Concise Course in
 Statistical Inference}. Springer Texts in Statistics. New York:
 Springer. \url{https://doi.org/10.1007/978-0-387-21736-9}.
+
+\bibitem[\citeproctext]{ref-WasLaz16}
+Wasserstein, Ronald L., and Nicole A. Lazar. 2016. {``The ASA Statement
+on p-Values: Context, Process, and Purpose.''} \emph{The American
+Statistician} 70 (2): 129--33.
+\url{https://doi.org/10.1080/00031305.2016.1154108}.
 
 \end{CSLReferences}
 
