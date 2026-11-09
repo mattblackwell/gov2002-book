@@ -1,23 +1,36 @@
 # Hypothesis tests {#sec-hypothesis-tests}
 
 
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+library(tidyverse)
+```
+
+
 We have up to now discussed the properties of estimators that allow us to characterize their distributions in finite and large samples. These properties allow us to say, for example, that our estimated difference in means is equal to a true average treatment effect on average across repeated samples or that it will converge to the true value in large samples. These properties, however, are properties of repeated samples. Most researchers, on the other hand, will only have access to a single sample. **Statistical inference** is the process of using a single sample to learn about population parameters. As we will see, many common techniques of statistical inference are intuitively closely connected. One of the most ubiquitous in the social sciences is the hypothesis test, a kind of statistical thought experiment.  
 
 
-
+::: {#exm-lady-tasting-tea}
 
 ## The Lady Tasting Tea
 
-The story of the Lady Tasting Tea exemplifies the core ideas behind hypothesis testing.[^1] The story goes like this. R.A. Fisher, the early 20th-century British polymath and statistical pioneer, had prepared tea for his colleague, the algologist Muriel Bristol. Knowing that she preferred milk in her tea, he poured milk into a tea cup and then poured the hot tea into the milk and swirled it around. But Bristol rejected the cup, stating that she preferred pouring the tea first, then the milk. Fisher was skeptical of the idea that anyone could tell the difference between a cup poured milk-first versus tea-first, and so he and another colleague, William Roach, devised a test to see if Bristol could tell the difference between the two preparation methods. 
+The story of the Lady Tasting Tea exemplifies the core ideas behind hypothesis testing.[^1] The story goes like this. R.A. Fisher, the early 20th-century British polymath and statistical pioneer, poured a cup of tea for his colleague, the algologist Muriel Bristol, who rejected the cup, stating that she preferred pouring the milk into the cup first, then the tea. Fisher was skeptical of the idea that anyone could tell the difference between a cup poured milk-first versus tea-first, and so he and another colleague, William Roach, devised a test to see if Bristol could tell the difference between the two preparation methods. 
 
-Fisher and Roach prepared 8 cups of tea, four with the milk poured first and four with the tea poured first. Then they presented the cups to Bristol in a random order (though she knew there were four of each type), and she proceeded to identify all of the cups correctly. At first glance, this seems like good evidence that she could tell the difference between the two types of tea, but Fisher, being a natural skeptic, raised the question, "Could she have just been randomly guessing and gotten lucky?" This led Fisher to a **statistical thought experiment**: what would the probability of identifying the correct cups be *if* she was guessing randomly?
+Fisher and Roach prepared 8 cups of tea, four with the milk poured first and four with the tea poured first. Then they presented the cups to Bristol in a random order (though she knew there were four of each type), and she proceeded to identify all of the cups correctly. At first glance, this seems like good evidence that she could tell the difference between the two types of tea, but Fisher, being a natural skeptic, raised the question, "Could she have just been randomly guessing and gotten lucky?" This led Fisher to a **statistical thought experiment**: what would the probability of identifying the correct cups be *if* she had no ability to discern?
 
-To calculate the probability of Bristol identifying the four milk-first cups correctly, note that "randomly guessing" would mean that she was selecting a group of 4 cups to be labeled milk-first from the 8 cups available. Using basic combinatorics, there are 70 ways to choose 4 cups among 8, but only 1 of those arrangements would be correct. Thus, if randomly guessing means choosing among those 70 options with equal chance, then the probability of guessing the right set of cups is 1/70 or $\approx 0.014$. The low probability implies that the hypothesis of random guessing may be implausible. 
+To calculate the probability of Bristol identifying the four milk-first cups correctly, note that having no ability to discern would mean that the number of correct selections would be determined by Fisher and Roach's random selection of 4 cups to be prepared milk-first from the 8 cups available. Using basic combinatorics, there are 70 ways to choose 4 cups among 8, but only 1 of those arrangements would perfectly align with her selections. Thus, the probability of guessing the right set of cups is 1/70 or $\approx 0.014$. The low probability implies that the hypothesis of "no milk-first discernment" may be implausible. 
 
-The story of the Lady Tasting Tea encapsulates many of the core elements of hypothesis testing. Hypothesis testing is about taking our observed estimate (Bristol identifying all four cups correctly) and seeing how likely that observed estimate would be under some assumption, or hypothesis, about the data-generating process (Bristol was randomly guessing). When the observed estimate is unlikely under the maintained hypothesis, we might view this as evidence against that hypothesis. Thus, hypothesis tests help us assess evidence for particular guesses about the DGP. 
+The story of the Lady Tasting Tea encapsulates many of the core elements of hypothesis testing. Hypothesis testing is about taking our observed estimate (Bristol identifying all four cups correctly) and seeing how likely an estimate at least as extreme as the observed estimate would be under some assumption, or hypothesis, about the data-generating process (Bristol had no ability to discern). When the observed estimate is unlikely under the maintained hypothesis, we might view this as evidence against that hypothesis. Thus, hypothesis tests help us assess evidence for particular guesses about the DGP. 
 
 
-[^1]: The analysis here largely comes from @Senn12. 
+[^1]: The story here comes from @Box78 and @Senn12. 
+
+:::
+
+
+This chapter proceeds as follows. First, we will introduce the structure of hypothesis tests---the notation, concepts, and key design choices. Then we will work through a common specific test of the sample mean. We then explore a broadly applicable and commonly used test for asymptotically normal estimators called the Wald test. We then discuss $p$-values and power analyses before turning to two types of exact tests that do not rely on asymptotic approximations. Finally, we end the chapter with a discussion of multiple testing and ways to address it. 
 
 
 ::: {.callout-note}
@@ -28,7 +41,9 @@ For the rest of this chapter, we will introduce the concepts following the notat
 
 :::
 
-## Hypotheses {#sec-hypotheses}
+## Structure of hypothesis tests
+
+### Hypotheses {#sec-hypotheses}
 
 In the context of hypothesis testing, hypotheses are simply statements about the population distribution. In particular, we will make statements that $\theta = \theta_0$ where $\theta_0 \in \Theta$ is the hypothesized value of $\theta$, a population parameter. Hypotheses are ubiquitous in empirical work. Examples include:
 
@@ -46,7 +61,7 @@ The two hypotheses in a hypothesis test are called the **null hypothesis** and t
 
 :::
 
-These hypotheses are complementary, so if the null hypothesis is $H_0: \theta \in \Theta_0$, then the alternative hypothesis is $H_1: \theta \in \Theta_0^c$. The "null" in null hypothesis may seem odd until you realize that most null hypotheses are that there is no effect of some treatment or no difference in means. For example, suppose that $\theta$ is the difference in mean support for increasing legal immigration between a treatment group that received a pro-immigrant message with some facts about immigration and a control group that just received the immigration facts. The usual null hypothesis would be no difference in means or $H_0: \theta = 0$, and the alternative would be $H_1: \theta \neq 0$. Substantively, the null hypothesis would posit no average difference in the outcome---in this case support for increasing legal immigration – between the two groups. 
+These hypotheses are complementary, so if the null hypothesis is $H_0: \theta \in \Theta_0$, then the alternative hypothesis is $H_1: \theta \in \Theta_0^c$. The "null" in null hypothesis may seem odd until you realize that most null hypotheses are that there is no effect of some treatment or no difference in means. For example, suppose that $\theta$ is the difference in mean support for increasing legal immigration between a treatment group that received a pro-immigrant message with some facts about immigration and a control group that just received the immigration facts. The usual null hypothesis would be no difference in means or $H_0: \theta = 0$, and the alternative would be $H_1: \theta \neq 0$. Substantively, the null hypothesis would posit no average difference in the outcome---in this case support for increasing legal immigration---between the two groups. 
 
 There are two common types of tests that differ in terms of the form of their null and alternative hypotheses. A **two-sided test** is of the form
 $$
@@ -73,15 +88,15 @@ $$
 :::
 
 
-Two-sided tests are much more common in the social sciences, mostly because we usually want to know if there is any evidence, positive or negative, against the presumption of no treatment effect or no relationship between two variables. One-sided tests are best suited for situations with clear, directional hypotheses that are ideally preregistered before collection of the data. Preregistration of the direction of a one-sided test is important because researchers changing the direction of the hypothesis after seeing the data can inflate the strength of evidence against the null. For this reason, one-sided tests outside of preregistered settings should be used with extreme caution. That said, unfortunately, the math of two-sided tests is more complicated. 
+Two-sided tests are much more common in the social sciences, mostly because we usually want to know if there is any evidence, positive or negative, against the presumption of no treatment effect or no relationship between two variables. One-sided tests are best suited for situations with clear, directional hypotheses that are ideally preregistered before collection of the data. Preregistration of the direction of a one-sided test is important because researchers changing the direction of the hypothesis after seeing the data can inflate the strength of evidence against the null. For this reason, one-sided tests outside of preregistered settings should be used with extreme caution. However, the math of two-sided tests is more complicated. 
 
-## The procedure of hypothesis testing
+### The procedure of hypothesis testing
 
 At the most basic level, a **hypothesis test** is a rule that specifies values of the sample data for which we will decide to **reject** the null hypothesis. Let $\mathcal{X}_n$ be the support of the sample---that is, the set of all possible vectors $(x_1, \ldots, x_n)$. A hypothesis test then describes a region of this space, $R \subset \mathcal{X}_n$, called the **rejection region**, such that when $(X_1, \ldots, X_n) \in R$ we will **reject** $H_0$ and when the data is outside this region, $(X_1, \ldots, X_n) \notin R$, we **retain**, **accept**, or **fail to reject** the null hypothesis.[^2]
 
 [^2]: Different people and different textbooks describe what to do when we do not reject the null hypothesis differently. The terminology is not so important so long as you understand that rejecting the null does not mean the null is logically false and that "accepting" (or failing to reject) the null does not mean the null is logically true. 
 
-How do we decide what the rejection region should be? Even though we define the rejection region in terms of the support, $\mathcal{X}_n$, working with the entire vector of data can be unwieldy. We instead usually formulate the rejection region in terms of a **test statistic**, $T = T(X_1, \ldots, X_n)$, which is a function of the data that should get larger as the observed data becomes incompatible with the null hypothesis. The test statistic is a random variable and has a distribution, though we usually design it so that its distribution under the null does not depend on data-generating process. 
+How do we decide what the rejection region should be? Even though we define the rejection region in terms of the support, $\mathcal{X}_n$, working with the entire vector of data can be unwieldy. We instead usually formulate the rejection region in terms of a **test statistic**, $T = T(X_1, \ldots, X_n)$, which is a function of the data that should get larger as the observed data becomes incompatible with the null hypothesis. The test statistic is a random variable and has a distribution, though we usually design it so that, at least in large samples, its distribution under the null does not depend on unknown features of data-generating process. 
 
 
 Once we have selected a test statistic, we can define the rejection region as
@@ -92,16 +107,16 @@ where $c$ is called the **critical value**. This expression says that the reject
 
 
 
-Consider a simple one-sided test where you feel a bit ill and try to determine if you have a normal body temperature of 98.6 degrees Fahrenheit or if you have a fever. In this case, the thermometer reading is the test statistic since larger readings are less consistent with a normal body temperature. Thermometers, however, are imperfect and noisy tools, so the reading might differ from 98.7 even if one’s temperature is normal. Thus, we can use a rejection region such as readings over 100.5 degrees to determine when to reject the null hypothesis of a normal body temperature. 
+Consider a simple one-sided test where you feel a bit ill and try to determine if you have a normal body temperature of 98.6 degrees Fahrenheit or if you have a fever. In this case, the thermometer reading is the test statistic since larger readings are less consistent with a normal body temperature. Thermometers, however, are imperfect and noisy tools, so the reading might differ from 98.6 even if one's temperature is normal. Thus, we can use a rejection region such as readings over 100.5 degrees to determine when to reject the null hypothesis of a normal body temperature. 
 
 
 The structure of a rejection region will depend on whether a test is one- or two-sided. This is an important point of difference between the two test types that we will raise again below. One-sided tests will take the form $T > c$, whereas two-sided tests will take the form $|T| > c$ since we want to count deviations from either side of the null hypothesis as evidence against that null. 
 
-## Testing errors {#sec-testing-errors}
+### Testing errors {#sec-testing-errors}
 
-Hypothesis tests end with a decision to reject the null hypothesis or not, but this might be an incorrect decision. In particular, there are two ways to make errors and two ways to be correct in this setting, as shown in @tbl-errors. The labels are confusing, but remember that **Type I errors** (said "type one") are labeled so because, in the conventional ranking, they are the worse of the two types of errors. Type I errors occur when we reject a null when the null is in fact true. For example, if we have a null hypothesis of no treatment effect between a treatment and control condition, and we reject that null hypothesis (and conclude substantively that there is some sort of a treatment effect), then we would be committing a Type I error if in fact the null was true---  that is, there is no real treatment effect but we concluded there was one. Type I errors are what we see in the replication crisis: lots of "significant" effects that turn out later to be null. 
+Hypothesis tests end with a decision to reject the null hypothesis or not, but this might be an incorrect decision. In particular, there are two ways to make errors and two ways to be correct in this setting, as shown in @tbl-errors. The labels are confusing, but remember that **Type I errors** (said "type one") are false positives, which we usually consider the more problematic of the two types of errors. Type I errors occur when we reject a null when the null is in fact true. For example, if we have a true null hypothesis of no treatment effect, and we reject that null hypothesis (and conclude substantively that there is some sort of a treatment effect), then we would be committing a Type I error. Type I errors are what we see in the replication crisis: lots of "significant" effects that turn out later to be null. 
 
-**Type II errors** (said "type two") are generally considered less problematic. For such errors, there is a true relationship, but we cannot detect it with our test. That is, we do not reject a null that is false. For example, if we have a null hypothesis of no treatment effect between a treatment and control condition, we would be committing a Type II error if in fact there was a difference in the treatment and control but we concluded there wasn’t (we failed to reject the null hypothesis of no difference). 
+**Type II errors** (said "type two") are false negatives and are generally considered less problematic. For such errors, there is a true relationship, but we cannot detect it with our test. That is, we do not reject a null that is false. For example, if we have a null hypothesis of no treatment effect between a treatment and control condition, we would be committing a Type II error if in fact there was a difference in the treatment and control but we concluded there wasn't (we failed to reject the null hypothesis of no difference). 
 
 |              | $H_0$ True   | $H_0$ False   |
 |--------------|--------------|---------------|
@@ -193,7 +208,7 @@ polygon(
 
 @fig-size-power also hints at a tradeoff between size and power. Notice that we could make the size smaller (lower the false positive rate) by increasing the critical value to $c' > c$. This would make the probability of being in the rejection region smaller, $\P(T > c' \mid \theta_0) < \P(T > c \mid \theta_0)$, leading to a lower-sized test. Unfortunately, it would also reduce power in the right panel since the probability of being in the rejection region will be lower under any alternative, $\P(T > c' \mid \theta_1) < \P(T > c \mid \theta_1)$. This means we usually cannot simultaneously reduce both types of errors, holding $n$ fixed. 
 
-## Determining the rejection region {#sec-rejection-region}
+### Determining the rejection region {#sec-rejection-region}
 
 
 If we cannot simultaneously optimize a test's size and power, how should we determine where the rejection region is? That is, how should we decide what empirical evidence will be strong enough for us to reject the null? The standard approach is to control the size of a test (that is, control the rate of false positives) and try to maximize the power of the test subject to that constraint. So we say, "I'm willing to reject a true null at most X% of the time and do whatever we can to maximize power subject to that constraint." 
@@ -204,7 +219,7 @@ A test has **significance level** $\alpha$ if its size is less than or equal to 
 
 :::
 
-A test with a significance level of $\alpha = 0.05$ will have a false positive/Type I error rate no larger than 0.05. This level is widespread in the social sciences, though you also will see $\alpha = 0.01$ or $\alpha = 0.1$. Frequentists justify this by saying this means that with $\alpha = 0.05$, at most 5% of studies in which the null is true will produce false positives. Note the similar sounding **false discovery rate** of a test is the expected proportion of discoveries (i.e., rejections) that are false (rather than the probability of rejecting the null given that it is true).
+A test with a significance level of $\alpha = 0.05$ will have a false positive/Type I error rate no larger than 0.05. This level is widespread in the social sciences, though you also will see $\alpha = 0.01$ or $\alpha = 0.1$. Frequentists justify this by saying this means that with $\alpha = 0.05$, at most 5% of studies in which the null is true will produce false positives.
 
 
 
@@ -236,7 +251,9 @@ Again, this formula can seem dense, but remember what you are doing: finding the
 ```{r}
 #| label: fig-two-sided
 #| echo: false
-#| fig-cap: "Rejection regions for a two-sided test along with the distribution of T under the null."
+#| fig-cap: | 
+#|   Rejection regions for a two-sided test along with the distribution of T
+#|   under the null.
 curve(
   dnorm(x),
   from = -4, to = 4, ylim = c(-.05, 0.5), bty = "n", las = 1,
@@ -267,7 +284,9 @@ text(x = -2.2, y = 0.05, expression(G[0](-c)), pos = 2)
 
 ## Hypothesis tests of the sample mean {#sec-hyp-test-mean}
 
-Consider the following extended example about hypothesis testing of a sample mean, sometimes called a **one-sample test** since we are comparing a single sample mean to some sort of natural conceptual benchmark. Let's say $X_i$ represents feeling thermometer scores about "liberals" as a group on a scale of 0 to 100, with values closer to 0 indicating cooler feelings about liberals and values closer to 100 indicating warmer feelings about liberals. (This is similar to many survey items on nationally representative surveys, such as the ANES in the U.S.) We want to know if the population average differs from a value of 50, which is a good benchmark that would indicate roughly neutral feelings toward liberals. We can write this two-sided test as
+Consider the following extended example about hypothesis testing of a sample mean, sometimes called a **one-sample test** since we are comparing a single sample mean to some sort of natural conceptual benchmark. Let's say $X_i$ represents feeling thermometer scores about "liberals" as a group on a scale of 0 to 100, with values closer to 0 indicating cooler feelings about liberals and values closer to 100 indicating warmer feelings about liberals. (This is similar to many survey items on nationally representative surveys, such as the ANES in the U.S.) We want to know if the population average differs from a value of 50, which is a good benchmark that would indicate roughly neutral feelings toward liberals. Suppose we obtained a sample mean of $\Xbar_n = 53.1$ with a sample SD of $S_n = 24$ on sample size of $n = 900$. 
+
+We can write this two-sided test as
 $$
 H_0: \mu = 50 \quad\text{versus}\quad H_1: \mu \neq 50,
 $$
@@ -275,7 +294,13 @@ where $\mu = \E[X_i]$. The standard test statistic for this type of test is the 
 $$ 
 T = \frac{\left( \Xbar_n - \mu_0 \right)}{\sqrt{S_n^2 / n}} =\frac{\left( \Xbar_n - 50 \right)}{\sqrt{S_n^2 / n}},
 $$
-where $\mu_0$ is the null value of interest and $S_n^2$ is the sample variance. If the null hypothesis is true, then by the CLT and Slutsky's Theorem from @sec-asymptotics, we know that the t-statistic is asymptotically normal, $T \indist \N(0, 1)$. Thus, we can approximate the null distribution with the standard normal.
+where $\mu_0$ is the null value of interest and $S_n^2$ is the sample variance. With the above observed data, we have
+$$
+T = \frac{53.1 - 50}{24 / 30} = 3.875
+$$
+
+
+If the null hypothesis is true, then by the CLT and Slutsky's Theorem from @sec-asymptotics, we know that the t-statistic is asymptotically normal, $T \indist \N(0, 1)$. Thus, we can approximate the null distribution with the standard normal.
 
 ::: {.callout-warning}
 
@@ -285,21 +310,18 @@ The names of the various tests can be quite confusing because they are so simila
 
 
 
-Let's create a two-sided test with level $\alpha = 0.05$, our tolerance for Type I error. Then we need to find the rejection region that puts $0.05$ probability in the tails of the null distribution, which we just saw was $\N(0,1)$. Let $\Phi(\cdot)$ be the CDF for the standard normal and let $\Phi^{-1}()$ be the quantile function for the standard normal. Drawing on what we developed above, you can find the value $c$ so that $\P(|T| > c \mid \mu_0)$ is 0.05 with
+Let's create a two-sided test with level $\alpha = 0.05$, our tolerance for Type I error. Then we need to find the rejection region that puts $0.05$ probability in the tails of the null distribution, which we just saw was $\N(0,1)$. Let $\Phi(\cdot)$ be the CDF for the standard normal and let $\Phi^{-1}(\cdot)$ be the quantile function for the standard normal. Drawing on what we developed above, you can find the value $c$ so that $\P(|T| > c \mid \mu_0)$ is 0.05 with
 $$
 c = \Phi^{-1}(1 - 0.05/2) \approx 1.96.
 $$
-This means that a test where we reject when $|T| > 1.96$ would have a level of 0.05 asymptotically. 
+This means that a test where we reject when $|T| > 1.96$ would have a level of 0.05 asymptotically. In our example, $|T| = 3.875 > 1.96$ so we reject the null. 
 
 
-## The Wald test
+## The Wald test {#sec-wald-test}
 
 We can generalize the hypothesis test for the sample mean to estimators more broadly. 
 
-
-
-
-Suppose $\widehat{\theta}_n$ is asymptotically normal estimator and the asymptotic variance of $\sqrt{n}(\widehat{\theta}_n - \theta_0)$ has variance $V_{\theta}$ and suppose we have consistent estimator for that asymptotic variance, $\widehat{V}_{\theta} \inprob V_{\theta}$. As in @sec-asymptotics, we can define the estimated standard error as $\widehat{\textsf{se}}[\widehat{\theta}_n] = \sqrt{\widehat{V}_{\theta} / n}$. We consider the two-sided test
+Suppose $\widehat{\theta}_n$ is an asymptotically normal estimator and the asymptotic variance of $\sqrt{n}(\widehat{\theta}_n - \theta_0)$ is $V_{\theta}$ and suppose we have a consistent estimator for that asymptotic variance, $\widehat{V}_{\theta} \inprob V_{\theta}$. As in @sec-asymptotics, we can define the estimated standard error as $\widehat{\textsf{se}}[\widehat{\theta}_n] = \sqrt{\widehat{V}_{\theta} / n}$. We consider the two-sided test
 $$
 H_0: \theta = \theta_0 \quad\text{versus}\quad H_1: \theta \neq \theta_0.
 $$
@@ -333,20 +355,20 @@ This result is very general, and it means that many, many hypothesis tests based
 
 ## Difference in proportions
 
-Get-out-the-vote (GOTV) experiments are common in political science. A typical GOTV design might randomly assign a group of citizens to receive mailers encouraging them to vote, whereas a control group receives no message. As in @sec-model-rct, we can define the data for each respondent as $(Y_i, D_i)$, where $Y_i$ is a binary turnout variable ($Y_i = 1$ if the respondent voted) and $D_i$ is a binary treatment indicator ($D_i = 1$ for respondents in the treated group). Let $n_1 = \sum_{i=1}^n D_i$ be the number of treated respondents and $n_0$ be the number of control respondents.  Conditional on being in the treated or control group, we assume that the $Y_i$ are iid draws from a Bernoulli distribution with success probabilities, $p_1$ and $p_0$, respectively. That is, $p_1$ is the the probability of a treated respondent voting. 
+Get-out-the-vote (GOTV) experiments are common in political science. A typical GOTV design might randomly assign a group of citizens to receive mailers encouraging them to vote, whereas a control group receives no message. As in @sec-model-rct, we can define the data for each respondent as $(Y_i, D_i)$, where $Y_i$ is a binary turnout variable ($Y_i = 1$ if the respondent voted) and $D_i$ is a binary treatment indicator ($D_i = 1$ for respondents in the treated group). Let $n_1 = \sum_{i=1}^n D_i$ be the number of treated respondents and $n_0$ be the number of control respondents. Conditional on being in the treated or control group, we assume that the $Y_i$ are iid draws from a Bernoulli distribution with success probabilities, $\pi_1$ and $\pi_0$, respectively. That is, $\pi_1$ is the probability of a treated respondent voting. 
 
-Our goal is to learn about the effect of this treatment on whether a citizen votes, $\tau = p_1 - p_0$, and we will use the sample difference in means/proportions as our estimator, $\widehat{\tau} = \Ybar_1 - \Ybar_0$. To perform a Wald test, we need to either know or estimate the standard error of this estimator. Recall from @sec-model-rct,  we know the 
+Our goal is to learn about the effect of this treatment on whether a citizen votes, $\tau = \pi_1 - \pi_0$, and we will use the sample difference in means/proportions as our estimator, $\widehat{\tau} = \Ybar_1 - \Ybar_0$. To perform a Wald test, we need to either know or estimate the standard error of this estimator. Recall from @sec-model-rct that we know the conditional variance of our estimator is
 $$ 
-\V[\widehat{\tau} \mid \mathbf{D}] = \frac{\V[Y_i \mid D_i = 1]}{n_1} + \frac{\V[Y_i \mid D_i = 0]}{n_0} = \frac{p_1(1-p_1)}{n_1} + \frac{p_0(1-p_0)}{n_0},
+\V[\widehat{\tau} \mid \mathbf{D}] = \frac{\V[Y_i \mid D_i = 1]}{n_1} + \frac{\V[Y_i \mid D_i = 0]}{n_0} = \frac{\pi_1(1-\pi_1)}{n_1} + \frac{\pi_0(1-\pi_0)}{n_0},
 $$
-where the third equality comes $Y_i$ being conditinally Bernoulli so  $\V[Y_i \mid D_i = 1] = p_1(1- p_1)$. Obviously, we do not know the true population proportions $p_1$ and $p_0$ (that's why we're doing the test!), but we can estimate the standard error by replacing them with their estimates
+where the second equality comes $Y_i$ being conditionally Bernoulli so  $\V[Y_i \mid D_i = 1] = \pi_1(1- \pi_1)$. Obviously, we do not know the true population proportions $\pi_1$ and $\pi_0$ (that's why we're doing the test!), but we can estimate the standard error by replacing them with their estimates
 $$ 
 \widehat{\textsf{se}}[\widehat{\tau}] = \sqrt{\frac{\Ybar_1(1 -\Ybar_1)}{n_1} + \frac{\Ybar_0(1-\Ybar_0)}{n_0}}.
 $$
 
 The typical null hypothesis test in this **two-sample test** is "no treatment effect" vs. "some treatment effect":
 $$
-H_0: \tau = p_1 - p_0 = 0 \quad\text{versus}\quad H_1: \tau \neq 0,
+H_0: \tau = \pi_1 - \pi_0 = 0 \quad\text{versus}\quad H_1: \tau \neq 0,
 $$
 which gives the following test statistic for the Wald test
 $$
@@ -372,11 +394,11 @@ $$
 
 The only difference between this setting and the difference-in-proportions setting is that the standard error here is different because we cannot rely on binary outcomes. Instead, we'll use our knowledge of the sampling variance of the sample means and independence between the samples to derive 
 $$
-\V[\widehat{\tau}] = \V[\Ybar_1] + \V[\Ybar_0] = \frac{\sigma^2_1}{n_1} + \frac{\sigma^2_0}{n_0},
+\V[\widehat{\tau} \mid \mathbf{D}] = \V[\Ybar_1 \mid D_i = 1] + \V[\Ybar_0 \mid D_i = 0] = \frac{\sigma^2_1}{n_1} + \frac{\sigma^2_0}{n_0},
 $$
-where we can come up with estimates of the unknown population variance with sample variances
+where we can come up with estimates of the unknown population variances with sample variances
 $$
-\widehat{\se}[\widehat{\tau}] = \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_1}{n_1}}.
+\widehat{\se}[\widehat{\tau}] = \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}.
 $$
 We can use this estimator to derive the Wald test statistic of 
 $$ 
@@ -386,38 +408,38 @@ and if we want an asymptotic level of 0.05, we can reject when $|T| > 1.96$.
 :::
 
 
-## p-values
+## $p$-values {#sec-p-values}
 
 The hypothesis testing framework focuses on making a decision---to reject the null hypothesis or not---in the face of uncertainty. You choose a level of wrongness you are comfortable with (rate of false positives, or $\alpha$) and then decide null vs. alternative based firmly on the rejection region. 
 
-That said, note that we are discarding, somewhat artificially, information on how far the observed data is from the null hypothesis. We would "accept" the null if $T = 1.95$ in the last example but would reject it if $T = 1.97$, even though these are very similar. Simply reporting the reject/retain decision also fails to give us a sense of possible other levels at which we might have rejected the null. Again, this makes sense if we need to make a single decision: other tests don't matter because we carefully considered our $\alpha$ level test. But in the lower-stakes world of the academic social sciences, we can afford to be more informative. 
+That said, note that we are discarding, somewhat artificially, information on how far the observed data is from the null hypothesis. For $\alpha = 0.05$, we would "accept" the null if $T = 1.95$ but would reject it if $T = 1.97$, even though these are very similar. Simply reporting the reject/retain decision also fails to give us a sense of possible other levels at which we might have rejected the null. Again, this makes sense if we need to make a single decision: other tests don't matter because we carefully considered our $\alpha$ level test. But in the lower-stakes world of the academic social sciences, we can afford to be more informative. 
 
-One alternative to reporting the reject/retain decision is to report a **p-value**. 
+One alternative to reporting the reject/retain decision is to report a **$p$-value**. 
 
 ::: {#def-p-value}
 
-The **p-value** of a test is the probability of observing a test statistic at least as extreme as the observed test statistic, $T_{\textsf{obs}}$, in the direction of the alternative hypothesis, assuming the null hypothesis is true. 
+The **$p$-value** of a test is the probability of observing a test statistic at least as extreme as the observed test statistic, $T_{\textsf{obs}}$, in the direction of the alternative hypothesis, assuming the null hypothesis is true. 
 
 :::
 
-The line "in the direction of the alternative hypothesis" deals with the unfortunate headache of one-sided versus two-sided tests. For a one-sided test where larger values of $T$ correspond to more evidence for $H_1$, the p-value is
+The line "in the direction of the alternative hypothesis" deals with the unfortunate headache of one-sided versus two-sided tests. For a one-sided test where larger values of $T$ correspond to more evidence for $H_1$, the $p$-value for continuous test statistics is
 $$
-\P(T(X_1,\ldots,X_n) \geq T_{\textsf{obs}} \mid \theta_0) = 1 - G_0(T),
+\P(T(X_1,\ldots,X_n) \geq T_{\textsf{obs}} \mid \theta_0) = 1 - G_0(T_{\textsf{obs}}),
 $$
 whereas for a (symmetric) two-sided test, we have
 $$ 
-\P(|T(X_1, \ldots, X_n)| \geq |T_{\textsf{obs}}| \mid \theta_0) = 2(1 - G_0(|T|)).
+\P(|T(X_1, \ldots, X_n)| \geq |T_{\textsf{obs}}| \mid \theta_0) = 2(1 - G_0(|T_{\textsf{obs}}|)).
 $$
 
-In either case, the interpretation of the p-value is the same. It is the smallest level $\alpha$ at which a test would reject the null hypothesis. Presenting a p-value allows the reader to determine their own $\alpha$ level and determine quickly if the evidence would warrant rejecting $H_0$ in that case. Thus, the p-value is a more **continuous** measure of divergence between the observed data and the null hypothesis. Lower values indicate more divergence because the observed result is less likely under the null. 
+In either case, the interpretation of the $p$-value is the same. It is the smallest level $\alpha$ at which a test would reject the null hypothesis. Presenting a $p$-value allows the reader to determine their own $\alpha$ level and determine quickly if the evidence would warrant rejecting $H_0$ in that case. Thus, the $p$-value is a more **continuous** measure of divergence between the observed data and the null hypothesis. 
 
-Much of the controversy surrounding p-values (see @WasLaz16 for lively discussion on this) focuses on arbitrary p-value cutoffs for determining statistical significance and sometimes publication decisions. These problems are not the fault of p-values but, rather, the hyperfixation on the reject/retain decision for arbitrary test levels like $\alpha = 0.05$. It might be best to view p-values as a transformation of the test statistic onto a common scale between 0 and 1. Finally, remember that $p$-values can only determine the statistical signficance of an estimate, not its practical or substantive significance.
+Much of the controversy surrounding $p$-values (see @WasLaz16 for a lively discussion on this) focuses on arbitrary $p$-value cutoffs for determining statistical significance and sometimes publication decisions. These problems are not the fault of $p$-values but, rather, the hyperfixation on the reject/retain decision for arbitrary test levels like $\alpha = 0.05$. It might be best to view $p$-values as a transformation of the test statistic onto a common scale between 0 and 1. Finally, remember that $p$-values can only determine the statistical significance of an estimate, not its practical or substantive significance.
 
 ::: {.callout-warning}
 
 People use many statistical shibboleths to purportedly identify people who don't understand statistics, and these criticisms sometimes hinge on seemingly subtle differences in interpretation that are easy to miss. If you have intuitively mastered the core concepts, however, avoiding these common pitfalls will be much easier. 
 
-The shibboleth with p-values is that sometimes people interpret them as "the probability that the null hypothesis is true." But this doesn't make sense from our definition because the p-value *conditions* on the null hypothesis---it cannot tell us anything about the probability of the null hypothesis being true. A more useful metaphor is that hypothesis tests are statistical thought experiments and that p-values answer the question: how likely would my data be if the null were true? 
+The shibboleth with $p$-values is that sometimes people interpret them as "the probability that the null hypothesis is true." But this doesn't make sense from our definition because the $p$-value *conditions* on the null hypothesis---it cannot tell us anything about the probability of the null hypothesis being true. A more useful metaphor is that hypothesis tests are statistical thought experiments and that $p$-values answer the question: how likely a result at least as extreme as ours would  be if the null were true? 
 
 :::
 
@@ -428,26 +450,26 @@ The shibboleth with p-values is that sometimes people interpret them as "the pro
 
 Imagine you have spent a large amount of your research budget on a big experiment that tests a new and exciting theory, but the results come back, and... you fail to reject the null of no treatment effect. This can happen under two possible states of the world: (1) the null is true, and you correctly failed to reject it, or (2) the null is false but the test had insufficient power to detect the true effect (that is, to allow you to reject the null). Because this is unwanted uncertainty after the fact, it is common for researchers to conduct **power analyses** before collecting data. These analyses forecast the necessary sample size to ensure you can reject the null under a hypothesized effect size. These hypothesized effect sizes are vital to this exercise and often come from prior studies or substantive knowledge about the domain. 
 
-Generally, power analyses involve calculating the power function $\pi(\theta) = \P(T(X_1, \ldots, X_n) \in R \mid \theta)$ for different values of $\theta$. It might also involve sample size calculations for a particular alternative, $\theta_1$, the hypothesized treatment effect. In that case, we try to find the sample size $n$ to make the power $\pi(\theta_1)$ as close to a particular value (often 0.8) as possible. For simpler one-sided tests, solving for the sample size is straightforward. For more general situations or two-sided tests, however, we typically need numerical or simulation-based approaches to find the optimal sample size. 
+Generally, power analyses involve calculating the power function $\pi(\theta) = \P((X_1, \ldots, X_n) \in R \mid \theta)$ for different values of $\theta$. It might also involve sample size calculations for a particular alternative, $\theta_1$, the hypothesized treatment effect. In that case, we try to find the sample size $n$ to make the power $\pi(\theta_1)$ as close to a particular value (often 0.8) as possible. For Wald tests, solving for the sample size is straightforward. For more general situations, however, we typically need numerical or simulation-based approaches to find the optimal sample size. 
 
-With Wald tests, we can characterize the asymptotic power function quite easily. 
+With Wald tests, we can characterize the asymptotic power function quite easily. Let $\pi_n(\theta)$ be the power function for the estimator at sample size $n$. 
 
 ::: {#thm-power}
-For a Wald test with an asymptotically normal estimator as in @thm-wald, the power function for a particular alternative $\theta_1 \neq \theta_0$ converges to
+Suppose an asymptotically normal estimator such that converges to an alternative $\theta_1 \neq \theta_0$. That is, $\sqrt{n}(\widehat{\theta}_n - \theta_1) \indist \N(0, V_{\theta_1})$ and $\widehat{V}_\theta\inprob V_{\theta_1}$. A two-sided Wald test is consistent in the sense that $pi_n(\theta_1) \to 1$ as $n \to \infty$. Furthermore, in large samples, its power is approximately
 $$ 
-\pi(\theta_1) \to 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/n}} + z_{1-\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/n}}-z_{1-\alpha/2} \right).
+\pi_n(\theta_1) \approx 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta_1}/n}} + z_{1-\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta_1}/n}}-z_{1-\alpha/2} \right).
 $$ {#eq-asymptotic-power}
 
 :::
 
-From this, we can see that larger sample sizes imply higher power, all else equal. 
+From this, we can see that larger sample sizes imply higher power, holding the alternative and $V_{\theta_1}$ fixed. 
 
-From this asymptotic power function, we can back out an approximate sample size needed to acheive a certain level of statistical power for a certain alternative. Let $\beta$ be the desired statistical power and $n_{\beta}$ be the sample size required to acheive it. Notice if the alternative is fairly far away from the null, one of the two terms involving $\Phi()$ will approach a limit, leaving the other as the main driver of power. When $\theta_{1}$ is very far below $\theta_{0}$, the first $\Phi()$ term approaches 1;  when the alternative is much larger than the null, the second term will be very close to 0. Let's consider the former case, which allows to simply and rearrange @eq-asymptotic-power to obtain the required sample size: 
+From this approximate power function, we can back out an approximate sample size needed to achieve a certain level of statistical power for a certain alternative. In standard notation, $\beta$ is a test's probability of a type II error, so let $1-\beta$ be the desired statistical power and $n_{\beta}$ be the sample size required to achieve it. When the target power is well above $\alpha / 2$, one of the two terms involving $\Phi(\cdot)$ will approach a limit, leaving the other as the main driver of power. When $\theta_{1}$ is very far below $\theta_{0}$, the first $\Phi(\cdot)$ term approaches 1;  when the alternative is much larger than the null, the second term will be very close to 0. Let's consider the former case, which allows us to simply and rearrange @eq-asymptotic-power to obtain the required sample size: 
 $$
 \begin{aligned}
-\beta &\approx \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/ n_{\beta}}}-z_{1-\alpha/2} \right) \\
-\Phi^{-1}(\beta) &\approx \left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta}/ n_{\beta}}}-z_{1-\alpha/2} \right) \\
-n_{\beta} &\approx \frac{\left(z_{\beta} + z_{1-\alpha/2}\right)^2V_{\theta}}{(\theta_0 - \theta_1)^2}.
+1 - \beta &\approx \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta_1}/ n_{\beta}}}-z_{1-\alpha/2} \right) \\
+\Phi^{-1}(\beta) &\approx \left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta_1}/ n_{\beta}}}-z_{1-\alpha/2} \right) \\
+n_{\beta} &\approx \frac{\left(z_{1-\beta} + z_{1-\alpha/2}\right)^2V_{\theta_1}}{(\theta_0 - \theta_1)^2}.
 \end{aligned}
 $$ {#eq-sizing}
 
@@ -457,64 +479,79 @@ The opposite case (where $\theta_{1}$ is much larger than $\theta_{0}$) actually
 
 ## Sizing for desired power
 
-Suppose we have an asymptotically normal estimator and we want to determine the sample size needed to acheive 80% power ($\beta = 0.8$) on a Wald test with $\alpha = 0.05$ and an alternative that is 0.2 standard deviations away from the null, $\theta_{0} - \theta_{1} = 0.2\sqrt{V_{\theta}}$. Plugging these values in @eq-sizing, we obtain
+Let's return to @exm-diff-in-means and assume that we need to size our experiment. In most cases, we will have equal-sized arms, $n_1 = n_0 \equiv n$ and for the purposes of sizing we will assume that the variance of the outcome is the same across treatments, $\sigma^2_1 = \sigma^2_0 = \sigma^2$. Under these two simplifying assumption, we can write the variance of the difference in means estimator as
 $$
-n_{\beta} \approx \frac{(z_{0.8} + z_{0.975})^2 V_{\theta}}{0.2^2 V_{\theta}} \approx 196.
+\V[\widehat{\tau} \mid \mathbf{D}] = \frac{2\sigma^2}{n},
 $$
+so $V_{\theta} = 2\sigma^2$. 
+
+Now, suppose we will be conducting the usual Wald test of the null hypothesis that $\tau = 0$ with $\alpha = 0.05$. We want to determine the sample size needed to achieve 80% power ($1 - \beta = 0.8$) on an alternative that is 0.2 standard deviations of the population outcome, $\tau_{1} = 0.2\sigma$. Plugging these values into @eq-sizing, we obtain
+$$
+n_{\beta} \approx \frac{(z_{0.8} + z_{0.975})^2 2\sigma^2}{0.2^2 \sigma^2} \approx 392.4,
+$$
+so we would need $n=393$ per arm to achieve 80% power against this alternative.
+:::
+
+## Exact tests {#sec-exact-tests}
+
+An **exact test** is a statistical hypothesis test in which the distribution of the test statistic is fully known if the null hypothesis is true. Contrast this with the Wald test, which generally relies on asymptotic approximations to determine the distribution of the test statistic. We now turn to two different ways to construct exact tests: via randomization and via a parametric model like the normal. 
+
+### Randomization tests {#sec-randomization-tests}
+
+We opened the chapter with the example of the lady tasting tea, which feels very distinct from the hypothesis tests of the last few sections. In fact, the core of the lady tasting tea example relies not on asymptotics but on the core idea of randomization. 
+
+::: {#exm-lady-tasting-tea-2}
+
+Let's return to Fisher's example of the Lady Tasting Tea and make the statistical test more explicit. Let $T$ be the number of milk-first cups that Bristol labels correctly, which can take on values 0, 1, 2, 3, or 4. The null hypothesis is that Bristol cannot taste the difference between milk-first and tea-first. If this is true, her guesses would be the same no matter which cups had milk poured first. Thus, the number of correct guesses, $T$, would be entirely determined by which 4 of the 8 cups that Fisher and Roach selected to pour milk first.  Crucially, they selected the cups to pour milk first randomly, so that all $\binom{8}{4} = 70$ possible sets of milk- and tea-first cups were equally likely. 
+
+Bristol did guess all four correctly, so our observed test statistic is $T_{\textsf{obs}} = 4$. Under the null, there is only one out of the 70 possible cup arrangements that would produce a perfect set of guesses. Thus, the $p$-value in this case is $\P(T \geq 4 \mid H_0) = 1 / 70 \approx 0.014$. Notice how the null distribution of the test statistic here arises from the randomization of the cups rather than a model of how Bristol was guessing. 
 
 :::
 
-## Exact tests under randomization
 
-We opened the chapter with the example fo the lady tasting tea, which feels very distinct from the hypothesis tests of the last few sections. In fact, the core of the lady tasting tea example relies not on asymptotics but on the core idea of randomization. 
-
-::: {#exm-lady-tasting-tea}
-
-Let's return to Fisher's example of the Lady Tasting Tea, where Bristol had to determine which 4 of the 8 cups of tea were prepared milk first and which 4 were prepared tea first. Under null hypothesis that Bristol was guessing at random, all ways to group 8 cups into 2 groups of 4 are equally likely. Since there are 70 ways to group the cups in this manner, the $p$-value under this null hypothesis is 1/70. 
-
-:::
-
-
-We can generalize the idea of the Lady Tasting Tea to a broad class of tests. A **randomization test** is a hypothesis test that leverages a randomization hypothesis that, under the null hypothesis, certain known transformations of the data have no effect on the distribution of the data. Then, under the null hypothesis, if we apply this transformation to the data, the distribution of the test statistic does not change. We can obtain a p-value that measures how likely the observed test statistic is among all possible transformations. 
+We can generalize the idea of the Lady Tasting Tea to a broad class of tests. A **randomization test** is a hypothesis test that leverages a randomization hypothesis that, under the null hypothesis, certain known transformations of the data have no effect on the distribution of the data. Then, under the null hypothesis, if we apply this transformation to the data, the distribution of the test statistic does not change. We can obtain a $p$-value that measures how likely being more extreme than the observed test statistic is among all possible transformations. 
 
 ::: {#exm-permutation-test}
 
 ## Two-sample permutation test
 
-Let's return to the RCT example with pairs of outcome and treatment status variabels $(Y_i, D_i)$. In @exm-diff-in-means we condudcted a hypothesis test of whether the mean of $Y_i$ was different between $D_i = 1$ and $D_i= 0$ groups. A stronger null hypothesis is that treatment has *no* effect on the outcome at all. Under this null hypothesis and randomization of $D_i$, the normalized difference in means estimator has the same distribution even if we were to shuffle or permute the treatment statuses across units. 
+Let's return to the RCT example with pairs of outcome and treatment status variables $(Y_i, D_i)$. In @exm-diff-in-means we conducted a hypothesis test of whether the mean of $Y_i$ was different between $D_i = 1$ and $D_i= 0$ groups. A stronger null hypothesis is that treatment has *no* effect on the outcome at all. Under this null hypothesis and randomization of $D_i$, the statistic $T$ of @exm-diff-in-means has the same distribution even if we were to shuffle or permute the treatment statuses across units. 
 
 Enumerating all possible permutations of $(D_1, \ldots, D_n)$ is computationally infeasible even for moderate $n$, so we often turn to the following simulation-based approach:
 
-1. Calculate the observed normalized difference in means, $T_0$.
-2. For a large number of repetitions, $r = 1,\ldots, R$:
-  a. Draw a random reshuffling of treatment status as $(D^*_1, \ldots, D^*_n)$
-  b. Calculate the normalized difference in means under this permuted data, $T_r$.
-3. Compute the $p$-value what fraction of all reshuffles (and the observed test statistic) are as large as the observed test statistic:
+1. Calculate the observed test statistic, $T_0$.
+2. For a large number of repetitions, $b = 1,\ldots, B$:
+    a. Draw a random reshuffling of treatment status as $(D^*_1, \ldots, D^*_n)$.
+    b. Calculate the test statistic under this permuted data, $T_b$.
+3. Compute the $p$-value as the fraction of all reshuffles (and the observed test statistic) are at least as large in magnitude as the observed test statistic:
 $$
-p = \frac{1}{R+1} \sum_{r=0}^R \mathbb{I}(|T_r| \geq |T_0|).
+p = \frac{1}{B+1} \sum_{b=0}^B \mathbb{I}(|T_b| \geq |T_0|).
 $$
+4. Reject the null if $p \leq \alpha$. 
 
-This $p$-value represents a Monte Carlo approximation to the *exact* probability of observing a test statistic as large or larger under the null hypothesis. 
+Whatever $B$ we choose, this test will have level $\alpha$ since under the null, the observed test statistic is equally likely to land at any rank among the $B+1$ values. The probability it is in the top $k$ values is $k / (B+1)$, so the probability that the $p$-value is less than or equal to $k / (B+1)$ is exactly $k/(B+1)$. Thus, rejecting when $p \leq \alpha$ can never occur more than $\alpha$ of time under the null. Increasing $B$ allows us to get closer to the fully-enumeration $p$-value and gain a little power. 
 
 :::
 
 
-As the Lady Tasting Tea example shows, randomization tests are generally **exact tests** in the sense that we could, in principle, calculate the exact probability of the observed test statistic under the null. In the two-sample permutation test example, we saw that this computation might be infeasible but we can approximate with arbitrary accuracy via simulation. The exactness might be a welcome change from the sometimes handwavvy large-sample approximations of the earlier tests. But notices that the comparison isn't apples to apples. In @exm-permutation-test, our null was the entire distribution of $Y_i$ was the same in the treated and control groups. We often call this the **sharp null hypothesis** and it could be violated by any change to the distribution. In @exm-diff-in-means, the large-sample approximation allowed us to focus a test on the null hypothesis of the difference in means alone. Both could be interesting hypotheses to test, but it is important to keep them distinct in our minds. 
+As the Lady Tasting Tea example shows, randomization tests are generally **exact tests** in the sense that we could, in principle, calculate the exact probability of a test statistic at least as extreme as the observed test statistic under the null. In the two-sample permutation test example, we saw that this computation might be infeasible but we can approximate with arbitrary accuracy via simulation. The exactness might be a welcome change from the sometimes handwavvy large-sample approximations of the earlier tests. But notice that the comparison isn't apples to apples. In @exm-permutation-test, our null was that the entire distribution of $Y_i$ was the same in the treated and control groups, which could be violated by any change to the distribution. In @exm-diff-in-means, the large-sample approximation allowed us to focus a test on the null hypothesis of the difference in means alone. Both could be interesting hypotheses to test, but it is important to keep them distinct in our minds. 
 
-## Exact tests under normal data {#sec-hyp-test-normal}
+### Exact tests under normal data {#sec-hyp-test-normal}
 
-The Wald test above relies on large-sample approximations, but these may not be valid in finite samples. Can we get **exact** inferences at any sample size? Yes, if we make stronger assumptions about the data. In particular, assume a **parametric model** for the data where $X_1,\ldots,X_n$ are iid samples from $\N(\mu,\sigma^2)$. Under a null hypothesis of $H_0: \mu = \mu_0$, we can show that 
+Another way to obtain an exact test is to assume a **parametric model** for the data. A popular model is the **normal model** where $X_1,\ldots,X_n$ are iid samples from $\N(\mu,\sigma^2)$. Under a null hypothesis of $H_0: \mu = \mu_0$, we can show that 
 $$ 
 T_n = \frac{\Xbar_n - \mu_0}{S_n/\sqrt{n}} \sim t_{n-1},
 $$
-where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values. For a one-sided test, $c = G^{-1}_0(1 - \alpha)$, but now $G_0$ is $t$ with $n-1$ df and so we use `qt()` instead of `qnorm()` to calculate these critical values. 
+where $t_{n-1}$ is the **Student's t-distribution** with $n-1$ degrees of freedom. This result implies the null distribution is $t$, so we use quantiles of $t$ for critical values, at any sample size with $n > 1$. For a one-sided test, $c = G^{-1}_0(1 - \alpha)$, but now $G_0$ is $t$ with $n-1$ df and so we use `qt()` instead of `qnorm()` to calculate these critical values. 
 
-The tail quantiles of the $t$ distribution (and thus the critical values) are always larger in absolute value than the normal because the $t$ distribution has fatter tails, as shown in @fig-shape-of-t. The dashed lines show the 0.95 quantile that would be the critical value for a one-sided test with $\alpha = 0.05$. We can see that the quantile for the $t$-distribution is slightly larger than for normal. As $n\to\infty$, however, the $t$ converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Beacause of this conservativeness, most software packages calculate p-values and rejection regions based on the $t$ in spite of normality being an uncommon assumption in practice. 
+The tail quantiles of the $t$ distribution (and thus the critical values) are always larger in absolute value than the normal because the $t$ distribution has fatter tails, as shown in @fig-shape-of-t. The dashed lines show the 0.95 quantile that would be the critical value for a one-sided test with $\alpha = 0.05$. We can see that the quantile for the $t$-distribution is slightly larger than for the normal. As $n\to\infty$, however, the $t$ converges to the standard normal, and so it is asymptotically equivalent to the Wald test but slightly more conservative in finite samples. Many software packages use this $t$-test as the default procedure because it allows for exact inference in the normal model. But given its asymptotic equivalence to the Wald test, we can (and many do) view it as an ad hoc conservative adjustment to the Wald test when the normal model does not hold. 
 
 ```{r}
 #| label: fig-shape-of-t
 #| echo: false
-#| fig-cap: "Normal versus t distribution. Dashed lines are the 0.95 quantile of each distribution."
+#| fig-cap: |
+#|  Normal versus t distribution. Dashed lines are the 0.95 quantile of each
+#|  distribution.
 curve(dnorm(x), from = -5, to = 5, lwd = 2, bty = "n", ylab = "f(x)", las = 1)
 curve(dt(x, df = 5), from = -5, to = 5, add = TRUE, lwd = 2, col = "dodgerblue")
 legend(x = -4, y = 0.3, legend = c("Normal", "t (df = 5)"), lwd = 2, col = c("black", "dodgerblue"), bty = "n")
@@ -522,10 +559,155 @@ abline(v = qnorm(1 - 0.05), col = "grey30", lty = 2, lwd = 2)
 abline(v = qt(1 - 0.05, df = 5), col = "dodgerblue", lty = 2, lwd = 2)
 ```
 
+## Multiple testing {#sec-multiple-testing}
+
+The elegant theory and statistical guarantees of hypothesis rest on the presumption that such tests are done in isolation. If you conduct multiple hypothesis tests and accept any rejection of the null as a discovery, the level of the hypothesis test can be very misleading. 
+
+::: {#exm-multiple-testing}
+
+If we design a series of 20 independent randomized controlled trials, each trial would conduct the usual hypothesis test for a total of 20 tests. If each of these tests has level $\alpha$, then if we do each of these tests in isolation, then each test will have an $\alpha$ chance of a false positive under the null. 
+
+In @fig-multiple-testing, we simulate this setup, drawing 20 null effects repeatedly and calculating the percentage of times we reject the null. In isolation, the rejection rates for each of the 20 tests are very close to the nominal level of 0.05. However, if we adopt a different rule in which we claim a discovery if *any* of the tests are significant, the rejection rate skyrockets to over 60%!
+
+
+```{r}
+#| label: fig-multiple-testing
+#| echo: false
+#| fig-cap: |
+#|  Rejection rates for twenty tests in isolation vs combining the tests
+#|  to reject whenever any test is significant. Tests have level $\alpha = 0.05$
+#|  which is shown as a dashed line.
+#|
+set.seed(2140)
+reps <- 1000
+tests <- 20
+effects <- matrix(rnorm(reps * tests), nrow = reps, ncol = tests)
+reject <- abs(effects) > qnorm(0.975)
+df <- tibble(
+  `Test Type` = c(rep("Isolated Test", tests), "Any Test Significant"),
+  test = c(as.character(seq_len(tests)), "Any"),
+  rejection_rate = c(colMeans(reject), mean(rowSums(reject) > 0))
+)
+
+ggplot(df, aes(x = test, y = rejection_rate, fill = `Test Type`)) +
+  geom_col() +
+  scale_x_discrete(limits = df$test) +
+  labs(
+    y = "Rejection Rate",
+    x = "Test"
+  ) +
+  lims(y = c(0, 1)) +
+  geom_hline(yintercept = 0.05, linetype = "dashed", color = "grey20") +
+  theme_bw() +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+:::
+
+### Family-wise error rate {#sec-fwer}
+
+Formally, let $H_{0,1}, \ldots, H_{0,m}$ be a series of null hypotheses we are testing with calculated $p$-values, $p_1, \ldots, p_m$. We can describe the set of results across these tests in a $2\times 2$ contingency table with margins.
+
+|                         | $H_0$ true    | $H_0$ false           | Total   |
+|-------------------------|---------------|-----------------------|---------|
+| Reject $H_0$            | $V$           | $U$                   | $K$     |
+| Do not reject $H_0$     | $m_0 - V$     | $(m - m_0) - U$       | $m - K$ |
+| Total                   | $m_0$         | $m - m_0$             | $m$     |
+
+: Outcomes when testing $m$ null hypotheses {#tbl-multiple-testing}
+
+
+In @tbl-multiple-testing, $m_0$ is the number of these null hypotheses that are true (which is a fixed parameter), $V$ is the number of false discoveries (rejecting when the null is true), $S$ is the number of true discoveries (rejecting when the null is false), and $K = V+U$ is the total number of rejections/discoveries. The **family-wise error rate (FWER)** is the probability of making at least one false discovery, $1 - \P(V=0)$. Note that the FWER does not assume how many of the null hypotheses are true. 
+
+There are various procedures to control the FWER, but the most popular is the **Bonferroni correction**. Recall that we can implement an $\alpha$-level test by rejecting the null hypothesis when $p_i \leq \alpha$. The Bonferroni correction moves this rejection rule so that we reject any of the null hypotheses at $p_i \leq \alpha / m$, which controls the FWER since
+$$P(V\ge1)\le\sum_{i\in H_0}P(p_i\le\alpha/m)\le m_0\alpha/m\le\alpha$$
+
+For @exm-multiple-testing, we had $m=20$ and $\alpha = 0.05$, which means the Bonferroni-corrected cutoff would be $0.0025$. Bonferroni is a very conservative correction since it is loose when there are null hypotheses that are false so that $m_0 < m$ or when tests are positively correlated. This conservativeness means Bonferroni can have lower statistical power. 
+
+There are other, more powerful ways to control the FWER, including **Holm's procedure** [@Holm79]. First, we order the $p$-values and null hypotheses in terms of their $p$-value rank, $p_{(1)}, \ldots, p_{(m)}$ and $H_{(1)}, \ldots, H_{(m)}$, so that $p_{(i)}$ is the $i$th smallest $p$-value and $H_{(i)}$ is its corresponding null hypothesis. Then we follow a step-up procedure:
+
+* Reject $H_{(1)}$ if $p_{(1)} \leq \alpha / m$, otherwise, stop the procedure.
+* Reject $H_{(2)}$ if $p_{(2)} \leq \alpha / (m - 1)$, otherwise, stop the procedure. 
+* Continue comparing $p_{(k)}$ to $\alpha / (m + 1 - k)$ and rejecting as above, stopping the procedure once the $p$-value crosses the threshold. 
+
+Clearly, the Holm procedure will reject any null hypothesis that Bonferroni will and potentially more, but it is possible to show that it also controls the FWER under any form of dependence across tests. 
+
+
+### False discovery rate {#sec-fdr}
+
+Controlling the FWER is fairly stringent because you are controlling **any** false discovery in a set of tests. This approach ignores what proportion of the discoveries are false. FWER treats two false discoveries out of five discoveries the same as two false discoveries out of 100 overall discoveries. This strictness can lead to low statistical power. 
+
+The **false discovery rate** is the expected fraction of discoveries (that is, rejections) that are false, or $\text{FDR} = \E[V /K]$. To avoid division by zero, we set $V /K = 0$ if there are no discoveries ($K = 0$). One popular method for controlling the FDR at level $\alpha$ is the **Benjamini-Hochberg (BH) procedure** [@BenHoc95] which works as follows:
+
+1. Find the largest $k$ such that $p_{(k)} \leq \frac{k}{m} \alpha$. 
+2. Reject all null hypotheses, $H_{(i)}$ for that and any smaller $p$-values, $i = 1, \ldots, k$. 
+
+Under the assumption of independent tests or some forms of positive dependence, the BH procedure controls the FDR
+$$
+\text{FDR} \leq \frac{m_0}{m}\alpha \leq \alpha.
+$$
+
+There are modifications to the BH procedure, such as Benjamini-Yekutieli [@BenYek01], that can make it valid more generally. Another way to view the BH procedure is to plot the sorted $p$-values, $p_{(i)}$ against their rank, $i$, along with a line with slope $\alpha/m$. Next, find the largest $p$-value on or below that line and reject all lower $p$-values. The next example demonstrates this approach. 
+
+
+::: {#exm-bh}
+
+Returning to @exm-multiple-testing, imagine @fig-bh-procedure shows the $p$-values we received in our RCT with $m=20$ treatment arms. For $\alpha = 0.05$, the plot also shows which $p$-values would be rejected by all of the multiple testing corrections discussed above. The smallest is less than $\alpha / m = 0.0025$ and would be rejected by all the methods: Bonferroni, BH, and the standard (uncorrected) testing procedure. 
+
+The blue dashed line has slope $\alpha / m = 0.0025$ and the fifth $p$-value is the largest one below this line, meaning the first five $p$-values would be rejected by Benjamini-Hochberg (even though the second is above the BH line). Finally, the sixth and seventh $p$-values would be rejected by standard testing but not with any of the corrections. 
+
+```{r}
+#| label: fig-bh-procedure
+#| echo: false
+#| fig-cap: |
+#|  Rejection status for multiple tests with different multiple testing 
+#|  correction strategies. The solid line shows the Bonferroni cutoff of 
+#|  $\alpha / m$; the dashed line shows the BH reference line $k\alpha / m$;
+#|  and the dotted horizontal line is the usual $p$-value cutoff of $\alpha$. 
+
+set.seed(2140)
+p_vals <- c(0.001, 0.0066, 0.0067, 0.0075, 0.01, runif(tests - 5, 0.02, 0.15))
+
+k <- max(c(0, which(p_vals <= seq_len(tests) * 0.05 / tests)))
+pal <- RColorBrewer::brewer.pal(4, "Set1")
+
+df <- tibble(
+  rank = seq_len(tests),
+  p_values = sort(p_vals)
+) |>
+  mutate(
+    `Rejected by...` = case_when(
+      p_values < 0.05 / 20 ~ "Bonferroni, BH, Standard",
+      p_values >= 0.05 / 20 & rank <= k ~ "BH, Standard",
+      rank > k & p_values <= 0.05 ~ "Standard",
+      .default = "None"
+    ),
+    `Rejected by...` = fct_relevel(
+      `Rejected by...`,
+      "Bonferroni, BH, Standard",
+      "BH, Standard",
+      "Standard",
+      "None"
+    )
+  )
+
+ggplot(df, aes(x = rank, y = p_values, color = `Rejected by...`)) +
+  geom_abline(slope = 0.05 / tests, color = pal[2], linetype = "dashed") +
+  geom_hline(yintercept = 0.05, color = pal[3], linetype = "dotted") +
+  geom_hline(yintercept = 0.05 / tests, color = pal[1]) +
+  geom_point() +
+  scale_color_brewer(palette = "Set1") +
+  theme_bw() +
+  labs(x = "Rank of p-value", y = "p-value") +
+  theme(legend.position = "bottom", legend.direction = "horizontal")
+```
+
+
+:::
 
 ## Summary
 
-In this chapter, we covered the basics of hypothesis tests, which are a type of statistical thought experiment. We assume a particular state of the world (namely, the the null hypothesis is true) and determine how unlikely our observed data would be in that world. We described different types of tests (one-sided versus two-sided), introduced the properties of tests (size and power), and showed how to determine the rejection region of a test. We also described the Wald test, a general test that can be used in a wide variety of settings. P-values are a continuous measure of divergence between the observed data and the null hypothesis. Power analyses allow researchers to forecast how large a sample they will need to detect different effect sizes with sufficient statistical power. 
+In this chapter, we covered the basics of hypothesis tests, which are a type of statistical thought experiment. We assume a particular state of the world (namely, that the the null hypothesis is true) and determine how unlikely our observed data would be in that world. We described different types of tests (one-sided versus two-sided), introduced the properties of tests (size and power), and showed how to determine the rejection region of a test. We also described the Wald test, a general test that can be used in a wide variety of settings. $p$-values are a continuous measure of divergence between the observed data and the null hypothesis. Power analyses allow researchers to forecast how large a sample they will need to detect different effect sizes with sufficient statistical power. We discussed two approaches to hypothesis testing with exact level: randomization tests and the normal model. Finally, we discussed the problem of multiple testing and two corrections that help address the issue.
 
 
 Next in @sec-confidence-intervals, we will look at another way to think about uncertainty in our estimates: confidence intervals. As we will see, there is a deep connection between confidence intervals and hypothesis tests. 

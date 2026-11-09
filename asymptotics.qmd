@@ -562,7 +562,7 @@ To illustrate how the CLT works, we can simulate the sampling distribution of th
 #| echo: false
 #| message: false
 #| fig-cap: |
-#|  Sampling distributions of the normalized sample proportions 
+#|  Sampling distributions of the normalized sample proportions
 #|  at different probabilities of success and different sample sizes.
 set.seed(02140)
 n_sims <- 10000
