@@ -251,7 +251,7 @@ Again, this formula can seem dense, but remember what you are doing: finding the
 ```{r}
 #| label: fig-two-sided
 #| echo: false
-#| fig-cap: | 
+#| fig-cap: |
 #|   Rejection regions for a two-sided test along with the distribution of T
 #|   under the null.
 curve(
@@ -677,10 +677,10 @@ The blue dashed line has slope $\alpha / m = 0.0025$ and the fifth $p$-value is 
 #| label: fig-bh-procedure
 #| echo: false
 #| fig-cap: |
-#|  Rejection status for multiple tests with different multiple testing 
-#|  correction strategies. The solid line shows the Bonferroni cutoff of 
+#|  Rejection status for multiple tests with different multiple testing
+#|  correction strategies. The solid line shows the Bonferroni cutoff of
 #|  $\alpha / m$; the dashed line shows the BH reference line $k\alpha / m$;
-#|  and the dotted horizontal line is the usual $p$-value cutoff of $\alpha$. 
+#|  and the dotted horizontal line is the usual $p$-value cutoff of $\alpha$.
 
 set.seed(2140)
 p_vals <- c(0.001, 0.0066, 0.0067, 0.0075, 0.01, runif(tests - 5, 0.02, 0.15))

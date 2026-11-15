@@ -4,7 +4,12 @@ project:
 
 execute:
   freeze: auto
-  
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+
 book:
   title: "A User's Guide to Statistical Inference and Regression"
   author:

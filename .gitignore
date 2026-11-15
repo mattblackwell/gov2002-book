@@ -12,3 +12,4 @@ site_libs
 **/*.quarto_ipynb
 /.vscode/
 air.toml
+.lintr
