@@ -1,5 +1,6 @@
 <script>
 window.MathJax = {
+  loader: {load: ['[tex]/mathtools']},
   tex: {
     packages: {'[+]': ['mathtools']},
     mathtools: {
@@ -48,7 +49,7 @@ window.MathJax = {
       inprob: "\\overset{p}{\\to}",
       indist: "\\overset{d}{\\to}",
       argmax: ["\\operatorname\{arg\\,max\}"],
-      argmin: ["\\operatorname\{arg\\,min\}"]      
+      argmin: ["\\operatorname\{arg\\,min\}"]
     }
   }
 };
