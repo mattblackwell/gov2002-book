@@ -20,9 +20,9 @@ scale_fill_two <- function(...) {
 
 You have run your experiment and presented your audience with your single best guess about the treatment effect with the difference in sample means. You may have also presented the estimated standard error of this estimate to give readers a sense of how variable the estimate is. You might have even done a hypothesis test against the null of no treatment effect. But none of these approaches, on their own, answer a fairly compelling question: what range of values of the treatment effect is consistent with the data we observe and some reasonable values of chance estimation errors?
 
-A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. **Confidence intervals** make this kind of intuition more formal by estimating a range of values that will contain the true value in a fixed percentage of random samples. 
+A point estimate typically has 0 probability of being the exact true value, but intuitively we hope that the true value is close to this estimate. **Confidence intervals** make this kind of intuition more formal by estimating a range of values that will contain the true parameter at least as often as a target percentage of random samples. 
 
-This chapter will cover confidence intervals from several points of view. First we will define confidence intervals and derive them for a broad class of asymptotically normal estimators. As with hypothesis tests, we will we examine confidence intervals with exact properties for any sample size under a normal model. Next, we will investigate the deep connection between hypothesis tests and confidence intervals. Finally, we will introduce two resampling approaches to confidence interval construction---the jackknife and the bootstrap. 
+This chapter will cover confidence intervals from several points of view. First we will define confidence intervals and derive them for a broad class of asymptotically normal estimators. As with hypothesis tests, we will examine confidence intervals with exact properties for any sample size under a normal model. Next, we will investigate the deep connection between hypothesis tests and confidence intervals. Finally, we will introduce two resampling approaches to confidence interval construction---the jackknife and the bootstrap. 
 
 ## What are confidence intervals?
 
@@ -48,7 +48,7 @@ Let's say you calculate a 95% confidence interval and it's $[0.1, 0.4]$. It's te
 
 ::: {.callout-note}
 
-Bayesian inference---which treats the data as fixed and the parameters as random---can make probabilistic statements about the true mean being in the observed interval, but this approach also usually requires a parametric model and a probability distribution for the true mean before we see the data (called the prior distribution). Confusingly or thankfully (depending on how you view it), these Bayesian credible intervals (as they are called) are often very similar to the corresponding confidence intervals, especially in large samples (see the Bernstein--von Mises Theorem in, for example, @Van98 Ch. 10, for more information on this). This convergence of Bayesian and frequentist interval estimators leads to a diversity of views on how important the exact interpretation of confidence intervals actually is.  
+Bayesian inference---which treats the data as fixed and the parameters as random---can make probabilistic statements about the true mean being in the observed interval, but this approach also usually requires a parametric model and a probability distribution for the true mean before we see the data (called the prior distribution). Confusingly or thankfully (depending on how you view it), these Bayesian credible intervals (as they are called) are often very similar to the corresponding confidence intervals, especially in large samples (see the Bernstein--von Mises Theorem in, for example, @Van98 sec. 10.2, for more information on this). This convergence of Bayesian and frequentist interval estimators leads to a diversity of views on how important the exact interpretation of confidence intervals actually is.  
 
 :::
 
@@ -70,7 +70,7 @@ We already know the estimate, so if we knew the estimation error, then we could 
 $$
 \widehat{\theta}_n - \theta \overset{a}{\sim} \N(0, \se[\widehat{\theta}_n]^2).
 $$
-In the case of the proportion supporting for increasing legal immigration, we know that $\se[\widehat{\theta}_n] = \sqrt{\theta(1 - \theta)/n}$ given that the outcome is binary.  
+In the case of the proportion supporting increasing legal immigration, we know that $\se[\widehat{\theta}_n] = \sqrt{\theta(1 - \theta)/n}$ given that the outcome is binary.  
 
 From this insight, we can engage our thought experiment: what if we had an extremely large positive estimation error that was, say, larger than 97.5% of estimation errors?  Intuitively, if we have a large estimation error, then the true value of $\theta$ should be much smaller than our estimate and could provide a probabilistic lower bound for $\theta$. 
 
@@ -83,7 +83,7 @@ $$
 \theta_{L} = \widehat{\theta}_n - 1.96\, \se[\widehat{\theta}_n].
 $$
 Here, $\theta_{L}$ is a probabilistic or random lower bound because the value $\widehat{\theta}_n$ is random. Sometimes it will cover the true value ($\theta_{L} \leq \theta$) and sometimes it will not cover the true value ($\theta_{L} > \theta$). We controlled how often it covers the true value. 
-Because 2.5% of estimation errors will be larger than $1.96 \, \se[\widehat{\theta}_n]$, then $\theta_L$ will be a valid lower bound (cover the true value) in 97.5% of samples, or $\P(\theta_{L} \leq \theta) \approx 0.975$ and not cover the true value in 2.5% of samples. 
+Because 2.5% of estimation errors will be larger than $1.96 \, \se[\widehat{\theta}_n]$, $\theta_L$ will be a valid lower bound (cover the true value) in 97.5% of samples, or $\P(\theta_{L} \leq \theta) \approx 0.975$ and not cover the true value in 2.5% of samples. 
 
 One problem with $\theta_{L}$ is that it depends on the unknown standard error. Suppose we have a consistent estimator of the standard error in the sense of $\widehat{\se}[\widehat{\theta}_n] / \se[\widehat{\theta}_n] \inprob 1$. We can replace the unknown $\theta_{L}$ with $L$, where
 $$
@@ -102,13 +102,13 @@ What if a 2.5% chance of this bound being wrong is too high? We could instead co
 $$
 L = 0.56 - 2.326 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
 $$
-which is a lower lower bound. This reflects a fundamental tradeoff: we gain confidence, but our probabilistic bounds get worse (rule out a smaller region of possible values) as we base them off of more extreme chance errors. 
+which is a lower bound. This reflects a fundamental tradeoff: we gain confidence, but our probabilistic bounds get worse (rule out a smaller region of possible values) as we base them on more extreme chance errors. 
 
 A similar approach can help to derive an upper bound. We imagine a very large negative estimation error that implies a probabilistic upper bound on $\theta$. A very large negative estimation error could be
 $$
-\widehat{\theta}_n - \theta = -1.96 \, \se[\widehat{\theta}_n]
+\widehat{\theta}_n - \theta_U = -1.96 \, \se[\widehat{\theta}_n]
 $$
- which is smaller than 2.5% of estimation errors. This result would imply a probabilistic upper bound of
+ which is smaller than all but 2.5% of estimation errors. This result would imply a probabilistic upper bound of
 $$
 U = \widehat{\theta}_n + 1.96 \, \widehat{\se}[\widehat{\theta}_n],
 $$
@@ -173,13 +173,13 @@ CI_{\alpha} = [L, U] = \left[\widehat{\theta}_n - z_{1-\alpha/2}\, \widehat{\se}
 $$
 which is sometimes shortened to $\widehat{\theta}_n \pm z_{1-\alpha/2}\, \widehat{\se}[\widehat{\theta}_{n}]$. Based on the above derivation, this confidence interval will have **asymptotic coverage** of $1-\alpha$ in the sense that $\P(L \leq \theta \leq U) \to 1-\alpha$ for every fixed value of $\theta$.
 
-Taking a step back, how were we able to do all of this? We were able to determine the distribution of the chance errors $\widehat{\theta}_n - \theta$ without needing to know the exact value of $\theta$. A quantity whose distribution does not depend on the unknown parameter is called a **pivot**. In our case, we focused on an asymptotic pivot $(\widehat{\theta}_n - \theta) / \widehat{\se}$ which is asymptotically distributed $\N(0, 1)$ if $\widehat\se/\se \inprob 1$. Many confidence interval methods, including the ones covered below, are derived by finding other (approximate) pivots: exactly under normality (the $t$ distribution), by using the variance implied by each null value (in the Wilson confidence interval), or by simulation (the bootstrap). 
+Taking a step back, how were we able to do all of this? We were able to determine the distribution of the standardized chance errors $(\widehat{\theta}_n - \theta)/\widehat{\se}[\widehat{\theta}_n]$ without needing to know the exact value of $\theta$. A quantity whose distribution does not depend on the unknown parameter is called a **pivot**. In our case, we focused on an asymptotic pivot $(\widehat{\theta}_n - \theta) / \widehat{\se}$ which is asymptotically distributed $\N(0, 1)$ if $\widehat\se/\se \inprob 1$. Many confidence interval methods, including the ones covered below, are derived by finding other (approximate) pivots: exactly under normality (the $t$ distribution), by using the variance implied by each null value (in the Wilson confidence interval), or by simulation (the bootstrap). 
 
 ::: {#exm-sample-mean-ci}
 
 ## Confidence interval for the population mean 
 
-Consider the sample mean of iid random variables, $X_1, \ldots, X_n$ where $\E[X_i] = \mu$ and $\V[X_i] = \sigma^2$. Recall that the central limit theorem shows that the sample mean will roughly be normally distributed $\Xbar_n \overset{a}{\sim} \N(\mu, \sigma^2/n)$, which implies we can estimate its standard error as
+Consider the sample mean of iid random variables, $X_1, \ldots, X_n$ where $\E[X_i] = \mu$ and $\V[X_i] = \sigma^2$. Recall from @sec-asymptotics that our large-sample theorems (LLN, CLT, and Slutsky) imply that the sample mean will roughly be normally distributed $\Xbar_n \overset{a}{\sim} \N(\mu, \sigma^2/n)$, which implies we can estimate its standard error as
 $$
 \widehat{\se}[\Xbar_n] = \frac{S_n}{\sqrt{n}},
 $$
@@ -194,7 +194,7 @@ qnorm(1 - 0.1 / 2)
 
 Combining these two facts, a 90% asymptotic confidence interval for the population mean would be
 $$
-\left[\Xbar_{n} - 1.64\, \frac{S_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \,\frac{S_n}{\sqrt{n}}\right]
+\left[\Xbar_{n} - 1.645\, \frac{S_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \,\frac{S_n}{\sqrt{n}}\right]
 $$
 
 In polling, the term $\pm z_{1-\alpha/2} \, \frac{S_n}{\sqrt{n}}$ is sometimes called the **margin of error**, where $\alpha = 0.05$ is the usually unstated default. From this expression, we can see that this margin of error (equivalently, the width of a confidence interval) will generally shrink when:
@@ -217,12 +217,14 @@ Recall that we can estimate the standard error of $\widehat{\tau}$ with
 $$
 \widehat{\se}[\widehat{\tau}] = \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}.
 $$
-Thus, we can form a 95% confidence interval for this estimator as 
+Thus, we can form a 95% confidence interval for this $\tau$ as 
 $$
 \left[\Ybar_1 - \Ybar_0 - 1.96\, \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}},\; \Ybar_1 - \Ybar_0 + 1.96\, \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}\right]
 $$
 
 From this expression, we can see that the width of the difference-in-means confidence intervals is a function of the noise and number of observations in both samples. 
+
+A common, yet incorrect practice for comparing means is to calculate separate confidence intervals for $\mu_1$ and $\mu_0$ and see if those confidence intervals overlap at all. Unfortunately, this approach fails because standard error of the difference in means $\sqrt{S^2_1 / n_1 + S^2_0/n_0}$ is smaller than the sum of the standard errors, $S_1 / \sqrt{n_1} + S_0 / \sqrt{n_0}$. Thus, the two separate confidence intervals may overlap even though the confidence interval for the difference in means does not contain zero. 
 
 :::
 
@@ -231,10 +233,10 @@ From this expression, we can see that the width of the difference-in-means confi
 
 ### Interpreting confidence intervals
 
-Remember that the interpretation of a confidence interval is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in 95% of samples. Simulating repeated samples can help to clarify this interpretation. 
+Remember that the interpretation of a confidence interval is how the random interval performs over repeated samples. A valid 95% confidence interval is a random interval that will contain the true value in at least 95% of samples. Simulating repeated samples can help to clarify this interpretation. 
 
 
-Suppose that we are taking samples of size $n=500$ of random variables where $X_i$ which are normal with mean $\E[X_i] = 1$ and variance $\V[X_i] = 10$, and we want to estimate the population mean. To do so, we repeat the following steps:
+Suppose that we are taking samples of size $n=500$ of random variables $X_i$ which are normal with mean $\E[X_i] = 1$ and variance $\V[X_i] = 10$, and we want to estimate the population mean. To do so, we repeat the following steps:
 
 1. Draw a sample of $n=500$ from $\N(1, 10)$. 
 2. Calculate the 95% confidence interval of the sample mean $\Xbar_n \pm 1.96\,S_n/\sqrt{n}$. 
@@ -290,11 +292,11 @@ In the continuing abuse of notation, let $t_{\nu,\alpha}$ be the $\alpha$ quanti
 $$
 [L, U] = \left[\Xbar_{50} - 2.01 \, \frac{S_{50}}{\sqrt{50}}, \; \Xbar_{50} + 2.01 \, \frac{S_{50}}{\sqrt{50}} \right].
 $$
-Comparing the margin of error of this interval to the asymptotically normal estimator, $\pm 1.96\,S_{50}/\sqrt{50}$, we can see that the $t$-based confidence interval is slightly wider. Even if the data are not normally distributed, this extra width can help improve coverage in small samples when the asymptotically normal interval could show undercoverage. 
+Comparing the margin of error of this interval to the asymptotically normal interval, $\pm 1.96\,S_{50}/\sqrt{50}$, we can see that the $t$-based confidence interval is slightly wider. Even if the data are not normally distributed, this extra width can help improve coverage in small samples when the asymptotically normal interval could show undercoverage. 
 
 More generally, the $100(1-\alpha)\%$ confidence interval for the population mean under normal data with $n$ iid draws would be
 $$
-[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}} \right].
+[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \, \frac{S_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \, \frac{S_{n}}{\sqrt{n}} \right].
 $$
 
 
@@ -319,13 +321,18 @@ This will be true when
 $$ 
 \theta_{0} \leq \widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}] \leq \theta_{0}
 $$
-or, equivalently, that the null hypothesis is outside of the 95% confidence interval, $$\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\right].$$ 
+or, equivalently, that the null hypothesis is outside of the 95% confidence interval, 
+$$
+\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\right].
+$$ 
 Of course, our choice of the null hypothesis was arbitrary, which means that any null hypothesis that is outside the 95% confidence interval would be rejected by an $\alpha = 0.05$ level test of that null. And any null hypothesis inside the confidence interval is a null hypothesis that we would not reject. 
 
-This relationship holds more broadly. Imagine that for each candidate value $\theta_0$ we have an $\alpha$-level test of $H_0: \theta = \theta_0$, and then we collect any null hypothesis that the test does not reject. Since this is an $\alpha$-level test, the true null (that is, when $\theta_0$ is the true value of $\theta$) will be rejected at rate $\alpha$ and so this set will contain the true value with probability $1-\alpha$. Thus, this set will be a $1-\alpha$ confidence interval. As we will see in @exm-wilson below, different tests give different confidence intervals. This duality can be useful for two reasons:
+This relationship holds more broadly. Imagine that for each candidate value $\theta_0$ we have an $\alpha$-level test of $H_0: \theta = \theta_0$, and then we collect any null hypothesis that the test does not reject. Since this is an $\alpha$-level test, the true null (that is, when $\theta_0$ is the true value of $\theta$) will be rejected at rate at most $\alpha$ and so this set will contain the true value with at least probability $1-\alpha$. Thus, this set will be a $1-\alpha$ confidence interval set[^set]. As we will see in @exm-wilson below, different tests give different confidence intervals. This duality can be useful for two reasons:
+
+[^set]: Technically, inverting a set gives a confidence set rather than an interval since the results might be disjoint or even empty. To be consistent with the rest of the chapter, we maintain the interval terminology. 
 
 1. We can quickly determine if a null hypothesis is rejected at some level by inspecting if it falls in its corresponding confidence interval. 
-2. There are situations where determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine what null hypotheses would not be rejected at level $\alpha$ to formulate the $1-\alpha$ confidence interval. This process is called **inverting a test** [@Ney37]. One important application of this method is for formulating confidence intervals for treatment effects based on randomization tests [@sec-randomization-tests] in the finite population analysis of experiments (see @Rosenbaum02 for more on this approach and the sharp null hypothesis it requires). 
+2. There are situations where determining a confidence interval might be difficult, but performing a hypothesis test is straightforward. Then, we can find the rejection region for the test and determine what null hypotheses would not be rejected at level $\alpha$ to formulate the $1-\alpha$ confidence interval. This process is called **inverting a test** [@Ney37]. One important application of this method is for formulating confidence intervals for treatment effects based on randomization tests (@sec-randomization-tests) in the finite population analysis of experiments (see @Rosenbaum02 Ch. 2 for more on this approach and the sharp null hypothesis it requires). 
 
 ::: {#exm-wilson}
 
@@ -338,7 +345,7 @@ Consider a sample of binary random variables, $X_i \in \{0,1\}$ with a common pr
 #| label: fig-wilson-vs-wald-coverage
 #| echo: false
 #| fig-cap: |
-#|   Simulated coverage probability of the Wald (red) and Wilson (blue) 95%
+#|   Coverage probability of the Wald (red) and Wilson (blue) 95%
 #|   confidence intervals for binary outcomes with $n=100$. The dashed line
 #|   marks the nominal coverage of 0.95. The jagged shape of the coverage
 #|   functions is due to the discrete nature of the data.
@@ -376,17 +383,17 @@ g <- ggplot(df, aes(true_p, coverage, color = `CI Type`)) +
 g
 ```
 
-@fig-wilson-vs-wald-coverage shows the problem with the Wald interval with $n=100$: its coverage drops dramatically as the true probability goes toward 1 (or zero had we shown the lower half of the range of $p$). At $p = 0.99$, only `r 100 * round(cov_example, 2)`% of Wald 95% confidence intervals actually cover the true value. Why does this occur? That close to the $p=1$, the probability of drawing a samples of all ones, so $\widehat{p} = 1$, is high: approximately 37%! In those samples, the estimated standard error is 0 and the Wald "interval" is a single point, $\{1\}$, which misses the truth and lowers the coverage probability. Not that this does not contradict the asymptotic validity of the confidence intervals, which holds for each $p$ as $n\to\infty$. This result simply shows that for $p$ close to $0$ or $1$, we will need larger values of $n$ before the asymptotic approximations work well. 
+@fig-wilson-vs-wald-coverage shows the problem with the Wald interval with $n=100$: its coverage drops dramatically as the true probability goes toward 1 (or zero had we shown the lower half of the range of $p$). At $p = 0.99$, only `r 100 * round(cov_example, 2)`% of Wald 95% confidence intervals actually cover the true value. Why does this occur? That close to $p=1$, the probability of drawing a sample of all ones, so $\widehat{p} = 1$, is high: approximately 37%! In those samples, the estimated standard error is 0 and the Wald "interval" is a single point, $\{1\}$, which misses the truth and lowers the coverage probability. Note that this does not contradict the asymptotic validity of the confidence intervals, which holds for each $p$ as $n\to\infty$. This result simply shows that for $p$ close to $0$ or $1$, we will need larger values of $n$ before the asymptotic approximations work well. 
 
 Furthermore, the Wald approach close to these boundaries can produce confidence intervals outside the logical range of probabilities (below 0 or above 1). Thus, the Wald approach might not be right for these settings. See @BroCaiDas01 for a detailed look at the problematic coverage of the Wald interval. 
 
-Let's use hypothesis test inversion instead. The relevant test is of the null hypothesis $H_0: p = p_0$. With binary outcomes, the null hypothesis determines the standard error of the estimator so we do not have to estimate it. Furthermore, because the null-implied variance, $p_0(1 - p_0) / n$, does not depend on $\widehat{p}$, it will not collapse to zero as it does for the Wald interval. 
+Let's use a hypothesis test inversion instead. The relevant test is of the null hypothesis $H_0: p = p_0$. With binary outcomes, the null hypothesis determines the standard error of the estimator so we do not have to estimate it. Furthermore, because the null-implied variance, $p_0(1 - p_0) / n$, does not depend on $\widehat{p}$, it will not collapse to zero as it does for the Wald interval. 
 
-Under the null and in large samples, we know that $\widehat{p}$ will be approximately $\N(p_0, p_0(1-p_0)/n)$. We can then implement what is called the **Wilson score test** [@Wil27] with the following rejection region:
+Under the null and in large samples, we know that $\widehat{p}$ will be approximately $\N(p_0, p_0(1-p_0)/n)$. We can then implement what is called the **score test** with the following rejection region:
 $$
-\abs*{\frac{\sqrt{n}(\widehat{p} - p_0)}{\sqrt{p_0(1-p_0)}}} > z_{1-\alpha/2}.
+\abs*{\frac{\sqrt{n}(\widehat{p} - p_0)}{\sqrt{p_0(1-p_0)}}} \geq z_{1-\alpha/2}.
 $$
-We can obtain a $100(1-\alpha)\%$ confidence interval from inverting this test by finding values of $p_0$ for which we could not reject this test, or, 
+We can obtain a $100(1-\alpha)\%$ confidence interval first proposed by @Wil27 from inverting this test by finding values of $p_0$ for which we could not reject this test, or, 
 $$
 \left\{p \mid \abs*{\frac{\sqrt{n}(\widehat{p} - p)}{\sqrt{p(1-p)}}} \leq z_{1-\alpha/2}\right\}.
 $$
@@ -404,7 +411,7 @@ $$
 CI_{\alpha, wil} = \frac{1}{1 + z^2_{1-\alpha/2}/n}\left(\widehat{p} + \frac{z^2_{1-\alpha/2}}{2n} \pm \frac{z_{1-\alpha/2}}{2n} \sqrt{4n\widehat{p}(1-\widehat{p}) + z^2_{1-\alpha/2}}\right)
 $$
 
-@fig-wilson-vs-wald-coverage shows that the Wilson confidence intervals match the coverage of the Wald intervals away from the boundary and outperform it near the boundary. The Wilson interval achieves this because it never collapses to a single point. Even when the sample is entirely composed of ones, the 95% Wilson interval at $n = 100$ is $[0.963, 1]$, which contains $0.99$. However, the Wilson approach is still asymptotic and is not guaranteed to hit exactly 95% coverage (at $p=0.99$ its coverage is roughly 92%). Other methods, like the Clopper--Pearson interval [@CloPea34], invert an exact binomial test to get confidence intervals with at least $1-\alpha$ coverage coverage at any sample size. 
+@fig-wilson-vs-wald-coverage shows that the Wilson confidence intervals are similar to (and often slightly closer to nominal than) the Wald intervals away from the boundary. Closer to the boundary, the Wilson interval vastly outperform the Wald interval. The Wilson interval achieves this because it never collapses to a single point. Even when the sample is entirely composed of ones, the 95% Wilson interval at $n = 100$ is $[0.963, 1]$, which contains $0.99$. However, the Wilson approach is still asymptotic and is not guaranteed to hit exactly 95% coverage (at $p=0.99$ its coverage is roughly 92%). Other methods, like the Clopper--Pearson interval [@CloPea34], invert an exact binomial test to get confidence intervals with at least $1-\alpha$ coverage at any sample size. 
 
 :::
 
@@ -413,23 +420,23 @@ $$
 
 The standard approach to constructing confidence intervals depends on having an estimator for the standard error. For simple cases like the sample mean, we have simple and straightforward estimators for the standard error, such as $\widehat{\se} = S_n/\sqrt{n}$. For some more complicated quantities of interest, such as $\mu^2$ or $\log(\mu)$ with estimators $\Xbar_{n}^2$ and $\log(\Xbar_{n})$, we saw in @sec-delta-method that the delta method can provide estimators for the standard error. 
 
-What about quantities of interest and estimators that are not nice differentiable functions, such as the median? How do we obtain the standard error in those cases? We could turn to our local department of mathematics for aid, but why think harder when we can get a computer to think for us? In the 20th century, statisticians figured out that we can obtain confidence intervals using computational approaches [@Que49; @Tuk58; @Efr79].  
+What about quantities of interest and estimators that are not nice differentiable functions, such as the median? How do we obtain the standard error in those cases? We could turn to our local department of mathematics for aid, but why think harder when we can get a computer to think for us? In the 20th century, statisticians figured out that we can obtain confidence intervals using computational approaches [@Que49; @Que56; @Tuk58; @Efr79].  
 
 All of the computational approaches to confidence intervals (and hypothesis tests) rely on a common idea: resampling. Our goal with statistical inference is to learn about the entire distribution of the estimator, but we only have a single sample from the population distribution. Ideally, we could repeatedly sample from the population (as we have done in many of our simulation exercises in this book). Imagine we could get $B$ random samples from the population and obtain estimates from each:
 $$
 \left(\widehat{\theta}_{n, 1}, \widehat{\theta}_{n,2}, \ldots, \widehat{\theta}_{n,B}\right) 
 $$
-These estimates represent $B$ draws from the sampling distribution of $\widehat{\theta}$. Recall we only get one of these draws, but what if we had them all? Then we could estimate the standard error with the empirical standard deviation of these estimates:
+These estimates represent $B$ draws from the sampling distribution of $\widehat{\theta}_n$. Recall we only get one of these draws, but what if we had them all? Then we could estimate the standard error with the empirical standard deviation of these estimates:
 $$
-\sqrt{\frac{1}{B - 1} \sum_{b=1}^B \left(\widehat{\theta}_{n,b} - \overline{\theta}_{B}\right)^2},
+\sqrt{\frac{1}{B - 1} \sum_{b=1}^B \left(\widehat{\theta}_{n,b} - \overline{\theta}_{n,B}\right)^2},
 $$
-where $\overline{\theta}_{n,B} = (1/B) \sum_{b=1}^B \widehat{\theta}_{n,b}$ is the average of the $B$ samples. 
+where $\overline{\theta}_{n,B} = (1/B) \sum_{b=1}^B \widehat{\theta}_{n,b}$ is the average of the $B$ estimates. 
 
 Resampling approaches to inference generate additional samples from the single original sample (thus leading to the name *re*sampling). The key difference between different methods is how we do the resampling. 
 
 ### The jackknife
 
-The jackknife is a resampling technique that generates additional samples by removing observations. It was first proposed by @Que49 to reduce bias and proposed by @Tuk58 for estimating variance. Let $\widehat{\theta}_{(-i)}$ be the estimate when omitting the $i$th observation from the sample. For example, the leave-one-out sample mean would be
+The jackknife is a resampling technique that generates additional samples by removing observations. It was first proposed by Quenouille [-@Que49; -@Que56] to reduce bias and later adapted by @Tuk58 for estimating variance. Let $\widehat{\theta}_{(-i)}$ be the estimate when omitting the $i$th observation from the sample. For example, the leave-one-out sample mean would be
 $$
 \Xbar_{(-i)} = \frac{1}{n-1} \sum_{j \neq i} X_j.
 $$
@@ -441,8 +448,9 @@ where the $n-1$ in the numerator accounts for the reduced variability of the jac
 
 Under iid sampling and some regularity conditions (namely that the estimator is a smooth function of the data), the jackknife variance estimator will be consistent in the sense that 
 $$
-nV_{jk} / V_{\theta} \inprob 1
+\frac{nV_{jk}}{V_{\theta}} \inprob 1,
 $$
+where recall that $V_{\theta}$ is the asymptotic variance of $\sqrt{n}(\widehat{\theta}_n - \theta)$ from @sec-asymptotics. 
 
 With this variance estimator in hand, one can derive confidence intervals in the usual way, dropping in the jackknife variance estimator for the usual one,
 $$
@@ -478,17 +486,17 @@ V_{jk} &= \frac{n-1}{n} \sum_{i=1}^n (\Xbar_{(-i)} - \Xbar_{jk})^2 \\
 $$
 which is the typical estimator for the sampling variance of the sample mean. 
 
-These derivations show how the jackknife variance estimator for the sample mean is actually identical to the usual sampling variance estimator. Obviously, this fact means that the jackknife does not have a huge benefit for the sample mean itself. But the basic intuition---that the jackknife deviations are similar to a $(n-1)^{-1}$-scaled version of full-sample deviations---generalizes to other estimators that are smooth functions of the data where the jackknife could be more fruitfully applied. 
+These derivations show how the jackknife variance estimator for the sample mean is actually identical to the usual sampling variance estimator. Obviously, this fact means that the jackknife does not have a huge benefit for the sample mean itself. But the basic intuition---that the jackknife deviations are similar to an $(n-1)^{-1}$-scaled version of full-sample deviations---generalizes to other estimators that are smooth functions of the data where the jackknife could be more fruitfully applied. 
 
-The smoothness requirements of the jackknife are actually more restrictive than they appear. Smoothness here means that small changes to the data lead to proportionally small changes to the estimate. The sample median does not meet this requirement. Dropping an observation at a time either does not change the median or---if we drop the median---causes the median to jump to the next observation in rank order. Thus, the leave-one-out estimates will take on just a few values and will not be reflective of the true variance of the sample median. 
+The smoothness requirements of the jackknife are actually more restrictive than they appear. Smoothness here means that small changes to the data lead to proportionally small changes to the estimate. The sample median does not meet this requirement. For continuous data, dropping one observation at a time moves the median between one of two (if $n$ is even) or one of three (if $n$ is odd) distinct values. Thus, the leave-one-out estimates will take on just a few values and will not be reflective of the true variance of the sample median. 
 
-There are modifications of the jackknife, such as the **delete-d jackknife** [@ShaWu89] (where we drop $d$ observations at a time) that can have better properties for these types of estimators under certain conditions. But there are also alternative resampling approaches that work well in more general settings. 
+There are modifications of the jackknife, such as the **delete-$d$ jackknife** [@ShaWu89] (where we drop $d$ observations at a time) that can have better properties for these types of estimators under certain conditions. But there are also alternative resampling approaches that work well in more general settings. 
 
 ### The nonparametric bootstrap
 
-Another way to generate additional artificial samples is to randomly sample from the data itself. The **nonparametric bootstrap** [@Efr79] is a resampling technique that generates a distribution of estimates by repeatedly sampling the data with replacement. The bootstra. Recall from @sec-model-based we wrote the empirical distribution as $\widehat{F}_n$, which places $1/n$ probability on each observed data point. 
+Another way to generate additional artificial samples is to randomly sample from the data itself. The **nonparametric bootstrap** [@Efr79] is a resampling technique that generates a distribution of estimates by repeatedly sampling the data with replacement. Recall from @sec-model-based we wrote the empirical distribution as $\widehat{F}_n$, which places $1/n$ probability on each observed data point. 
 
-Let $X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n \sim \widehat{F}_n$ be an iid sample (sample with replacement) from this empirical distribution. We call this a **bootstrap sample** from the notion that we are pulling ourselves up by our own bootstraps (or our own sample data). If our estimator is $\widehat{\theta}_n = g(X_1, \ldots, X_n)$, we can then compute our estimator on this bootstrap sample, $\widehat{\theta}^* = g(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n)$. We will usually draw repeated bootstrap samples, giving a number of bootstrap replications, $\widehat{\theta}^*_{n,1}, \ldots, \widehat{\theta}^*_{n,B}$. 
+Let $X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n \sim \widehat{F}_n$ be an iid sample (sample with replacement) from this empirical distribution. We call this a **bootstrap sample** from the notion that we are pulling ourselves up by our own bootstraps (or our own sample data). If our estimator is $\widehat{\theta}_n = g(X_1, \ldots, X_n)$, we can then compute our estimator on this bootstrap sample, $\widehat{\theta}^*_n = g(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n)$. We will usually draw repeated bootstrap samples, giving a number of bootstrap replications, $\widehat{\theta}^*_{n,1}, \ldots, \widehat{\theta}^*_{n,B}$. 
 
 Intuitively, we are treating the sample data as if it were the population. With this pseudo-population, we can repeatedly sample as many bootstrap samples as our hearts desire (and our computers can handle). In each bootstrap sample, we can compute our estimator, giving us a large number of bootstrap draws of the estimator. 
 
@@ -496,7 +504,7 @@ The first quantity we can derive with the bootstrap is the **bootstrap standard 
 $$
 \widehat{\se}_{\text{boot}}[\widehat{\theta}_n] = \sqrt{\frac{1}{B-1} \sum_{b=1}^B (\widehat{\theta}^*_{n,b} - \overline{\theta}^*_{n,B})^2}.
 $$
-Since the bootstrap draws are random samples of size $n$ from the empirical distribution, then intuitively, the variation of $\widehat{\theta}^*_{n,b}$ across bootstrap draws should be similar to the variation of $\widehat{\theta}_n$ across random samples from the population distribution. Thus, we would expect $\widehat{\se}_{\text{boot}}[\widehat{\theta}_n]$ to be a good estimator of $\se[\widehat{\theta}_n]$. In fact, if $\widehat{\theta}_n$ is asymptotically normal and some technical conditions hold, the bootstrap standard error is consistent in the sense that $\tfrac{\widehat{\se}_{\text{boot}}[\widehat{\theta}_n]}{\se[\widehat{\theta}_n]} \inprob 1$. Unlike the jackknife, these conditions do not require the estimator to be a smooth function of the data. For example, unlike the jackknife, the bootstrap standard error is consistent for the sample median under very mild conditions: the data cannot have gaps or clumps at the median (as in, for instance, a Likert scale) and the data cannot have extremely fat tails (even the Cauchy satisfies this assumption, see @GhoParSin84). 
+Since the bootstrap draws are random samples of size $n$ from the empirical distribution, intuitively, the variation of $\widehat{\theta}^*_{n,b}$ across bootstrap draws should be similar to the variation of $\widehat{\theta}_n$ across random samples from the population distribution. Thus, we would expect $\widehat{\se}_{\text{boot}}[\widehat{\theta}_n]$ to be a good estimator of $\se[\widehat{\theta}_n]$. In fact, if $\widehat{\theta}_n$ is asymptotically normal and some technical conditions hold, the bootstrap standard error is consistent in the sense that $\tfrac{\widehat{\se}_{\text{boot}}[\widehat{\theta}_n]}{\se[\widehat{\theta}_n]} \inprob 1$ as both $n$ and $B$ grow. Unlike the jackknife, these conditions do not require the estimator to be a smooth function of the data. For example, unlike the jackknife, the bootstrap standard error is consistent for the sample median under very mild conditions: the population distribuiton cannot have a gap or clump at the median (as in, for instance, a Likert scale) and the data cannot have extremely fat tails [@GhoParSin84]. 
 
 Thus, for nicely behaved asymptotically normal estimators, the bootstrap standard errors can be plugged into the usual Wald confidence interval formulas for the **normal bootstrap confidence interval**,
 $$
@@ -521,25 +529,21 @@ $$ {#eq-perc-bootstrap-cis}
 
 :::
 
-Why does the percentile method work? Recall that the bootstrap estimates should vary around $\widehat{\theta}_n$ roughly the same way that $\widehat{\theta}_n$ varies around $\theta$. If that sampling distribution it symmetric, the quantiles $c_{\alpha/2}$ and $c_{1-\alpha/2}$ from the percentile method will correspond to the implied true value under large positive and negative chance errors as in @sec-deriving-cis. This approach works more generally as long as there exists *some* monotone transformation of the estimator (such as the log or the square root) that would make the sampling distribution symmetric [@EfrTib93, ch. 13]. Thankfully, we do not need to know the exact transformation---only that it exists.
+Why does the percentile method work? Recall that the bootstrap estimates should vary around $\widehat{\theta}_n$ roughly the same way that $\widehat{\theta}_n$ varies around $\theta$. If that sampling distribution is symmetric, the quantiles $c_{\alpha/2}$ and $c_{1-\alpha/2}$ from the percentile method will correspond to the implied true value under large positive and negative chance errors as in @sec-deriving-cis. This approach works more generally as long as there exists *some* monotone transformation of the estimator (such as the log or the square root) that would make the sampling distribution symmetric around zero [@EfrTib93, ch. 13]. Thankfully, we do not need to know the exact transformation---only that it exists.
 
-When there is no symmetry-inducing transformation, such as when the estimator is biased, the percentile intervals can undercover in small samples. In these cases, the bias-corrrected and accelerated percentile interval ($\text{BC}_a$) [@Efr87] corrects the quantiles to account for the bias and skewness. It is available as `boot.ci(type = "bca")` from the `boot` package in R.
+When there is no symmetry-inducing transformation, such as when the estimator is median-biased, the percentile intervals can undercover in small samples. In these cases, the bias-corrected and accelerated percentile interval ($\text{BC}_a$) [@Efr87] corrects the quantiles to account for the bias and skewness. It is available as `boot.ci(type = "bca")` from the `boot` package in R.
 
-The bootstrap has a number of subtleties and limitations. For bootstrap inferences to be valid, we must resample in a way that preserves the dependence structure in the data. Resampling individual observations implicitly assumes the data are iid, whereas we might need to resample entire blocks of observations if the data is clustered or has time-series dependence. In addition, the bootstrap breaks down for estimators driven by extreme values like the sample maxiumum. Finally, the number of resamples, $B$, only controls simulation noise. A few hundred might work for estimating the standard error, but for the percentile method we should probably have at least a thousand to obtain quantile at, say, $0.025$ and $0.975$. 
+The bootstrap has a number of subtleties and limitations. For bootstrap inferences to be valid, we must resample in a way that preserves the dependence structure in the data. Resampling individual observations implicitly assumes the data are iid, whereas we might need to resample entire blocks of observations if the data is clustered or has time-series dependence. In addition, the bootstrap breaks down for estimators driven by extreme values like the sample maximum. Finally, the number of resamples, $B$, only controls simulation noise. A few hundred might work for estimating the standard error, but for the percentile method we should probably have at least a thousand to obtain quantiles at, say, $0.025$ and $0.975$. 
 
 
 ::: {#exm-bootstrap-median}
 
 ## Sample median
 
-The sample median is an asymptotically normal estimator but its asymptotic variance $1/(4nf(m)^2)$ where $f(m)$ is the density of the data at the median. Of course, this asymptotic variance depends on the underlying distribution of the data, making it difficult to derive confidence intervals that cover all settings. The bootstrap is a very convenient alternative for this estimator. To see how it works, we take a sample of size $n=40$ from an Exponential distribution with rate 1 and calculate the normal and percentile bootstrap intervals. 
+The sample median is an asymptotically normal estimator, but its asymptotic variance is $V_{\theta} = 1/(4f(m)^2)$, where $m$ is the population median and $f(m)$ is the density of the data at the median. The asymptotic standard error is approximately $1/(2f(m)\sqrt{n})$. Of course, this asymptotic standard error depends on the underlying distribution of the data, making it difficult to derive confidence intervals that cover all settings. The bootstrap is a very convenient alternative for this estimator. To see how it works, we take a sample of size $n=40$ from an Exponential distribution with rate 1 and calculate the normal and percentile bootstrap intervals. 
 
 ```{r}
-#| echo: false
-set.seed(2140)
-```
-
-```{r}
+set.seed(2136)
 y <- rexp(40)
 B <- 5000
 sample_median <- median(y)
@@ -558,7 +562,7 @@ ci_perc <- quantile(bootstrap_draws, c(.025, .975))
 ci_perc
 ```
 
-The sample median from this sample is `r sample_median` and the bootstrap standard error is `r boot_se`, which is quite close to the true asymptotic value $1/(2f(m)\sqrt{n}) = 1/\sqrt{40}\approx 0.158$ in this case (using the properties of the Exponential(1) distribution). As expected, the normal bootstrap is symmetric around the sample median, whereas the percentile has more of its interval above the estimate than below. Both confidence intervals contain the true value of $\ln{2} \approx 0.693$ but remember that the coverage guarantees are across repeated samples. 
+The sample median from this sample is `r sample_median` and the bootstrap standard error is `r boot_se`, which is quite close to the true asymptotic value $1/(2f(m)\sqrt{n}) = 1/\sqrt{40}\approx 0.158$ in this case (using the properties of the Exponential(1) distribution). Note that the bootstrap SE can vary considerably---at this sample size, it will vary between 0.09 and 0.25 in 90% of samples. The normal bootstrap is symmetric around the sample median, whereas the percentile interval has more of its interval above the estimate than below. Both confidence intervals contain the true value of $\ln{2} \approx 0.693$, but remember that the coverage guarantees are across repeated samples. 
 
 Why does the bootstrap work with the sample median when the jackknife fails? Recall that the jackknife concentrated its resampled medians over just a few (two to three) possible values. The bootstrap changes many more observations per resample, spreading the bootstrap medians over a wider range of values to more accurately approximate the sampling distribution. 
 
@@ -566,4 +570,4 @@ Why does the bootstrap work with the sample median when the jackknife fails? Rec
 
 ## Summary
 
-This chapter covered confidence intervals, which are an essential tool on the statistical workbench. We saw how to derive confidence intervals from the distribution of chance estimation error and learned the exact interpretation of confidence intervals. Under an assumption of normal data, we saw how to use the t-distribution to obtain exact confidence intervals at any sample size. We then saw that a $1-\alpha$ confidence interval represents the set of null hypotheses that we would not reject with a matching hypothesis test of level $\alpha$. Finally, we investigated resampling methods such as the jackknife and the bootstrap as ways to obtain confidence intervals when deriving the sampling distribution of an estimator is not feasible. 
+This chapter covered confidence intervals, which are an essential tool on the statistical workbench. We saw how to derive confidence intervals from the distribution of chance estimation error and learned the exact interpretation of confidence intervals. Under an assumption of normal data, we saw how to use the t-distribution to obtain exact confidence intervals at any sample size. We then saw that a $1-\alpha$ confidence interval represents the set of null hypotheses that we would not reject with a matching hypothesis test of level $\alpha$. The Wilson interval, which inverts a score test for population proportions, helped us sidestep poor coverage from the traditional interval with a parameter near the boundary. Finally, we investigated resampling methods such as the jackknife and the bootstrap as ways to obtain confidence intervals when deriving the sampling distribution of an estimator is not feasible as long as we resample in a way that respects the data-generating process.

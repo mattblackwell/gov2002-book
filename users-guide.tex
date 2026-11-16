@@ -108,6 +108,7 @@
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -316,6 +317,10 @@
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
 \hypersetup{
   pdftitle={A User's Guide to Statistical Inference and Regression},
   pdfauthor={Matthew Blackwell},
@@ -335,7 +340,6 @@
 
 \renewcommand*\contentsname{Table of contents}
 {
-\hypersetup{linkcolor=}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
@@ -937,7 +941,7 @@ Thus, the sampling distribution tells us what values of an estimator are
 more or less likely and depends on both the population distribution and
 the sampling design.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Notice that the sampling distribution of an estimator will depend on the
 sampling design. Here, we used a simple random sample. Bernoulli
@@ -1000,7 +1004,7 @@ calculating the expected value of the estimator, \[
 \] The two are the same, meaning the sample mean in this simple random
 sample is unbiased.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Note that the word ``bias'' sometimes also refers to research that is
 systematically incorrect in other ways. For example, we might complain
@@ -1212,7 +1216,7 @@ this in for the population variance, \[
 \widehat{\V}[\Xbar_n] = \left(1 - \frac{n}{N}\right)\frac{S^2}{n}.
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Mind your variances}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 It is easy to get confused about the difference between the population
 variance, the variance of the sample, and the sampling variance (just as
@@ -1275,6 +1279,7 @@ which included 9 adventurous members -- the four hobbits plus two humans
 (Aragorn and the doomed Boromir), an elf (Legolas of the Woodland
 Elves), a dwarf (Gimli), and a wizard (Gandalf the Grey)
 
+{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}lll@{}}
 \toprule\noalign{}
 Unit (\(i\)) & Race & Height in cm (\(x_i\)) \\
@@ -1292,6 +1297,7 @@ Unit (\(i\)) & Race & Height in cm (\(x_i\)) \\
 8 (Boromir) & Human & 193 \\
 9 (Legolas) & Elf & 183 \\
 \end{longtable}
+}
 
 If we were taking a sample of size 5 from this population, we could use
 a simple random sample, but note that the sample could be lopsided. We
@@ -1321,6 +1327,7 @@ denote \(\pi_i = \P(Z_{i} = 1)\). In the Fellowship of the Ring example,
 we were sampling 2 hobbits and 3 non-hobbits, so we have the following
 inclusion probabilities:
 
+{\def\LTcaptype{none} % do not increment counter
 \begin{longtable}[]{@{}lll@{}}
 \toprule\noalign{}
 Unit (\(i\)) & Race & Inclusion probability (\(\pi_i\)) \\
@@ -1338,6 +1345,7 @@ Unit (\(i\)) & Race & Inclusion probability (\(\pi_i\)) \\
 8 (Boromir) & Man & 0.6 \\
 9 (Legolas) & Elf & 0.6 \\
 \end{longtable}
+}
 
 There are additional ways to conduct a random sample with unequal
 inclusion probabilities. For example, suppose the goal is to randomly
@@ -1549,7 +1557,7 @@ shows the duality of these two processes.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{assets/img/inference_probability.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Diagram with two circles labelled \textquotesingle data-generating process\textquotesingle{} and \textquotesingle observed data\textquotesingle{} with a line going from the first the second labelled \textquotesingle probability\textquotesingle{} and a line going from the second to the first labelled \textquotesingle inference.\textquotesingle{}}]{assets/img/inference_probability.png}}
 
 }
 
@@ -1697,7 +1705,7 @@ the collection of random variables \(\{X_1, \ldots, X_n\}\) is a
 is iid with distribution \(F\). The \textbf{sample size} \(n\) is the
 number of units in the sample.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 You might wonder why we reference the distribution of \(X_i\) with the
 cdf, \(F\). Mathematical statistics tends to do this to avoid having to
@@ -1779,7 +1787,7 @@ to be a random vector (that is, a vector of random variables) and then
 \(F\) becomes the joint distribution of that random vector. Nothing
 substantive changes about the above discussion.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Survey sampling is one of the most popular ways of obtaining samples
 from a population, but modern sampling practices rarely produce a
@@ -1884,7 +1892,7 @@ complete distribution. To speak about estimation in general, we will let
 estimation} describes how we obtain a single ``best guess'' about
 \(\theta\).
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Some refer to quantities of interest as \textbf{parameters} or
 \textbf{estimands} (that is, the target of estimation).
@@ -1914,7 +1922,7 @@ about \(\theta\).
 
 \end{definition}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 It is widespread, though not universal, to use the ``hat'' notation to
 define an estimator and its estimand. For example,
@@ -1951,7 +1959,7 @@ size \(n = 5\) from the population distribution of a binary variable.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{assets/img/samples.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Diagram showing two random samples of binary data from a population and the means from them.}]{assets/img/samples.png}}
 
 }
 
@@ -1965,7 +1973,7 @@ end up in our sample. We refer to the distribution of
 distribution}. The sampling distribution of an estimator will be the
 basis for all of the formal statistical properties of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 One important distinction of jargon is between an estimator and an
 estimate. The estimator is a function of the data, whereas the
@@ -2075,7 +2083,7 @@ population mean. Note that this result does not actually depend on
 having a discrete random variable. For more detail on the statistical
 theory of plug-in estimation, see Wasserman (2004) Section 7.2.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Given the connection between the population mean and the sample mean,
 you may see the \(\E_n[\cdot]\) operator used as a shorthand for the
@@ -2186,7 +2194,7 @@ this \(\widehat{F}_n\).
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{assets/img/sampling_distribution.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Diagram of the sampling distribution process. Many random samples from the population passed through the estimator box/function to produce many random draws from the distribution of the estimator.}]{assets/img/sampling_distribution.png}}
 
 }
 
@@ -2300,7 +2308,7 @@ across repeated sampling. Figure~\ref{fig-likert-sampling-dist}
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{estimation_files/figure-pdf/fig-likert-sampling-dist-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Histogram showing the sampling distribution of the sample mean in the Likert data example.}]{estimation_files/figure-pdf/fig-likert-sampling-dist-1.pdf}}
 
 }
 
@@ -2364,7 +2372,7 @@ common finite mean \(\E[X_i] = \mu\).
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Properties like unbiasedness might only hold for a subset of DGPs. For
 example, we just showed that the sample mean is unbiased but only when
@@ -2528,7 +2536,7 @@ than \(\widehat{\theta}_a\).
 The MSE also relates to the bias and the sampling variance (provided it
 is finite) via the following decomposition result (see
 Section~\ref{sec-design-properties} for a derivation):
-\begin{equation}\phantomsection\label{eq-mse-decomposition}{
+\begin{equation}\protect\phantomsection\label{eq-mse-decomposition}{
 \text{MSE}[\widehat{\theta}_n] = \textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]
 }\end{equation}
 
@@ -2575,7 +2583,7 @@ significant reductions in variance for lower overall MSE.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{estimation_files/figure-pdf/fig-mse-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Example with two sampling distributions. One (labelled theta hat a) is centered on the true value theta but with high spread around that value. The other (labelled theta hat b) is slightly biased but has much less variance.}]{estimation_files/figure-pdf/fig-mse-1.pdf}}
 
 }
 
@@ -2593,7 +2601,7 @@ those of \(\widehat{\theta}_a\). The MSE helps capture this balancing
 between bias and variance, and, indeed, in this case,
 \(\text{MSE}[\widehat{\theta}_b] < \text{MSE}[\widehat{\theta}_a]\).
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{No free lunch}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Building up intuition about the \textbf{assumptions-precision tradeoff}
 is essential. Researchers can usually get more precise estimates if they
@@ -2627,7 +2635,7 @@ groups in Figure~\ref{fig-rct-population-distribution}.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{assets/img/diff_in_means.png}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Example population distributions of the outcome under treatment and control with the population difference in means labelled.}]{assets/img/diff_in_means.png}}
 
 }
 
@@ -2657,7 +2665,7 @@ control groups outcomes are iid samples of fixed sizes \(n_1\) and
 or \(D_i = 0\), respectively, so we can employ the key results about
 sample means above.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 It only makes sense to derive the properties of the difference-in-means
 estimator conditional on \(\mathbf{D}\) when that treatment assignment
@@ -2984,7 +2992,7 @@ by the properties of the cdf, \(\Phi(-\sqrt{n}\varepsilon) \to 0\) and
 
 \end{example}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Sometimes convergence in probability is written as
 \(\text{plim}(Z_n) = b\) when \(Z_n \inprob b\); \(\text{plim}\) stands
@@ -3012,7 +3020,7 @@ probability to the wrong value or because it fails to converge at all
 (as with \(\widehat{\theta}_{n, \text{first}}\) below). Generally
 speaking, consistency is a very desirable property of an estimator.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Estimators can be inconsistent yet still converge in probability to an
 understandable quantity. For example, we will discuss in later chapters
@@ -3159,7 +3167,7 @@ The weak law of large numbers (WLLN) shows that, under general
 conditions, the sample mean gets closer to the population mean as
 \(n\rightarrow\infty\).
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 The naming of the ``weak'' law of large numbers seems to imply the
 existence of a ``strong'' law of large numbers (SLLN), which is true.
@@ -3233,7 +3241,7 @@ If \(\X_i \in \mathbb{R}^k\) are iid draws from a distribution with
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Note that many of the formal results presented so far have ``moment
 conditions'' that certain moments are finite. For the vector WLLN, we
@@ -3549,7 +3557,7 @@ versions of it (and the LLN) exist for independent (but not identically
 distributed) data, clustered data, and weakly dependent data, though the
 variances are often quite different than the iid case.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Why \(\sqrt{n}\)?}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Why \(\sqrt{n}\)?}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Why do we state the CLT in terms of the sample mean after centering and
 scaling by its standard error? Suppose we don't normalize the sample
@@ -3772,7 +3780,7 @@ Notice that \(\mb{\mu}\) is the vector of population means for all the
 random variables in \(\X_i\) and \(\mb{\Sigma}\) is the
 variance-covariance matrix for that vector.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 As with the notation alert with the WLLN, we are using shorthand here,
 \(\E\Vert \mb{X}_i \Vert^2 < \infty\), which implies that
@@ -4099,7 +4107,7 @@ asymptotically normal estimators called the Wald test. We then discuss
 tests that do not rely on asymptotic approximations. Finally, we end the
 chapter with a discussion of multiple testing and ways to address it.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Notation alert}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 For most of this chapter, we will introduce the concepts following the
 notation in the past chapters except where noted. We will assume a
@@ -4499,7 +4507,7 @@ from Chapter~\ref{sec-asymptotics}, we know that the t-statistic is
 asymptotically normal, \(T \indist \N(0, 1)\). Thus, we can approximate
 the null distribution with the standard normal.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 The names of the various tests can be quite confusing because they are
 so similar. Earlier, we discussed one-sided versus two-sided tests,
@@ -4552,7 +4560,7 @@ slightly confusing, the critical value \(z_{1-\alpha/2}\) is the value
 that puts probability \(\alpha/2\) in the upper tail of the standard
 normal.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 In R, you can find the \(z_{1- \alpha/2}\) values easily with the
 \texttt{qnorm()} function:
@@ -4730,7 +4738,7 @@ a common scale between 0 and 1. Finally, remember that \(p\)-values can
 only determine the statistical significance of an estimate, not its
 practical or substantive significance.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 People use many statistical shibboleths to purportedly identify people
 who don't understand statistics, and these criticisms sometimes hinge on
@@ -4788,7 +4796,7 @@ and \(\widehat{V}_\theta\inprob V_{\theta_1}\). A two-sided Wald test is
 consistent in the sense that \(\pi_n(\theta_1) \to 1\) as
 \(n \to \infty\). Furthermore, in large samples, its power is
 approximately
-\begin{equation}\phantomsection\label{eq-asymptotic-power}{ 
+\begin{equation}\protect\phantomsection\label{eq-asymptotic-power}{ 
 \pi_n(\theta_1) \approx 1 - \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta_1}/n}} + z_{1-\alpha/2} \right) + \Phi\left( \frac{\theta_0 - \theta_1}{\sqrt{V_{\theta_1}/n}}-z_{1-\alpha/2} \right).
 }\end{equation}
 
@@ -4815,7 +4823,7 @@ these two facts, we can write the asymptotic power as approximately
 \(\Phi(|a| - z_{\alpha/2})\), with the approximation getting more
 accurate as \(|a|\) grows. This fact allows us to simplify and rearrange
 Equation~\ref{eq-asymptotic-power} to obtain the required sample size:
-\begin{equation}\phantomsection\label{eq-sizing}{
+\begin{equation}\protect\phantomsection\label{eq-sizing}{
 \begin{aligned}
 1 - \beta &\approx \Phi\left( \frac{|\theta_0 - \theta_1|}{\sqrt{V_{\theta_1}/ n_{\beta}}}-z_{1-\alpha/2} \right) \\
 \Phi^{-1}(1-\beta) &\approx  \frac{|\theta_0 - \theta_1|}{\sqrt{V_{\theta_1}/ n_{\beta}}}-z_{1-\alpha/2} \\
@@ -5304,13 +5312,13 @@ chance estimation errors?
 A point estimate typically has 0 probability of being the exact true
 value, but intuitively we hope that the true value is close to this
 estimate. \textbf{Confidence intervals} make this kind of intuition more
-formal by estimating a range of values that will contain the true value
-in a fixed percentage of random samples.
+formal by estimating a range of values that will contain the true
+parameter at least as often as a target percentage of random samples.
 
 This chapter will cover confidence intervals from several points of
 view. First we will define confidence intervals and derive them for a
 broad class of asymptotically normal estimators. As with hypothesis
-tests, we will we examine confidence intervals with exact properties for
+tests, we will examine confidence intervals with exact properties for
 any sample size under a normal model. Next, we will investigate the deep
 connection between hypothesis tests and confidence intervals. Finally,
 we will introduce two resampling approaches to confidence interval
@@ -5356,7 +5364,7 @@ confidence intervals to not contain their true quantity of interest.
 results regardless of their statistical significance, which is clearly
 untrue.)
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-warning-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-warning-color!10!white, colframe=quarto-callout-warning-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Let's say you calculate a 95\% confidence interval and it's
 \([0.1, 0.4]\). It's tempting to make a probability statement like
@@ -5375,7 +5383,7 @@ sample to sample.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Bayesian inference---which treats the data as fixed and the parameters
 as random---can make probabilistic statements about the true mean being
@@ -5385,10 +5393,10 @@ we see the data (called the prior distribution). Confusingly or
 thankfully (depending on how you view it), these Bayesian credible
 intervals (as they are called) are often very similar to the
 corresponding confidence intervals, especially in large samples (see the
-Bernstein--von Mises Theorem in, for example, Vaart (1998) Ch. 10, for
-more information on this). This convergence of Bayesian and frequentist
-interval estimators leads to a diversity of views on how important the
-exact interpretation of confidence intervals actually is.
+Bernstein--von Mises Theorem in, for example, Vaart (1998) sec.~10.2,
+for more information on this). This convergence of Bayesian and
+frequentist interval estimators leads to a diversity of views on how
+important the exact interpretation of confidence intervals actually is.
 
 \end{tcolorbox}
 
@@ -5420,7 +5428,7 @@ Obviously, we don't know the estimation error, but in many cases we know
 For example, for asymptotically normal estimators, we know that, in
 large samples, \[
 \widehat{\theta}_n - \theta \overset{a}{\sim} \N(0, \se[\widehat{\theta}_n]^2).
-\] In the case of the proportion supporting for increasing legal
+\] In the case of the proportion supporting increasing legal
 immigration, we know that
 \(\se[\widehat{\theta}_n] = \sqrt{\theta(1 - \theta)/n}\) given that the
 outcome is binary.
@@ -5445,8 +5453,8 @@ the value \(\widehat{\theta}_n\) is random. Sometimes it will cover the
 true value (\(\theta_{L} \leq \theta\)) and sometimes it will not cover
 the true value (\(\theta_{L} > \theta\)). We controlled how often it
 covers the true value. Because 2.5\% of estimation errors will be larger
-than \(1.96 \, \se[\widehat{\theta}_n]\), then \(\theta_L\) will be a
-valid lower bound (cover the true value) in 97.5\% of samples, or
+than \(1.96 \, \se[\widehat{\theta}_n]\), \(\theta_L\) will be a valid
+lower bound (cover the true value) in 97.5\% of samples, or
 \(\P(\theta_{L} \leq \theta) \approx 0.975\) and not cover the true
 value in 2.5\% of samples.
 
@@ -5472,17 +5480,17 @@ that is larger than 99\% of chance errors, which would be
 \(z_{0.99}\,\se[\widehat{\theta}_n] \approx 2.326\,\se[\widehat{\theta}_n]\).
 In the immigration example, we have \[
 L = 0.56 - 2.326 \, \sqrt{0.56(1 - 0.56)/400} \approx 0.502,
-\] which is a lower lower bound. This reflects a fundamental tradeoff:
-we gain confidence, but our probabilistic bounds get worse (rule out a
-smaller region of possible values) as we base them off of more extreme
-chance errors.
+\] which is a lower bound. This reflects a fundamental tradeoff: we gain
+confidence, but our probabilistic bounds get worse (rule out a smaller
+region of possible values) as we base them on more extreme chance
+errors.
 
 A similar approach can help to derive an upper bound. We imagine a very
 large negative estimation error that implies a probabilistic upper bound
 on \(\theta\). A very large negative estimation error could be \[
-\widehat{\theta}_n - \theta = -1.96 \, \se[\widehat{\theta}_n]
-\] which is smaller than 2.5\% of estimation errors. This result would
-imply a probabilistic upper bound of \[
+\widehat{\theta}_n - \theta_U = -1.96 \, \se[\widehat{\theta}_n]
+\] which is smaller than all but 2.5\% of estimation errors. This result
+would imply a probabilistic upper bound of \[
 U = \widehat{\theta}_n + 1.96 \, \widehat{\se}[\widehat{\theta}_n],
 \] which will not cover the true value 2.5\% of the time,
 \(\P(U < \theta) \approx 0.025\).
@@ -5535,12 +5543,13 @@ Based on the above derivation, this confidence interval will have
 \(\theta\).
 
 Taking a step back, how were we able to do all of this? We were able to
-determine the distribution of the chance errors
-\(\widehat{\theta}_n - \theta\) without needing to know the exact value
-of \(\theta\). A quantity whose distribution does not depend on the
-unknown parameter is called a \textbf{pivot}. In our case, we focused on
-an asymptotic pivot \((\widehat{\theta}_n - \theta) / \widehat{\se}\)
-which is asymptotically distributed \(\N(0, 1)\) if
+determine the distribution of the standardized chance errors
+\((\widehat{\theta}_n - \theta)/\widehat{\se}[\widehat{\theta}_n]\)
+without needing to know the exact value of \(\theta\). A quantity whose
+distribution does not depend on the unknown parameter is called a
+\textbf{pivot}. In our case, we focused on an asymptotic pivot
+\((\widehat{\theta}_n - \theta) / \widehat{\se}\) which is
+asymptotically distributed \(\N(0, 1)\) if
 \(\widehat\se/\se \inprob 1\). Many confidence interval methods,
 including the ones covered below, are derived by finding other
 (approximate) pivots: exactly under normality (the \(t\) distribution),
@@ -5551,10 +5560,11 @@ confidence interval), or by simulation (the bootstrap).
 mean]\protect\hypertarget{exm-sample-mean-ci}{}\label{exm-sample-mean-ci}
 
 Consider the sample mean of iid random variables, \(X_1, \ldots, X_n\)
-where \(\E[X_i] = \mu\) and \(\V[X_i] = \sigma^2\). Recall that the
-central limit theorem shows that the sample mean will roughly be
-normally distributed \(\Xbar_n \overset{a}{\sim} \N(\mu, \sigma^2/n)\),
-which implies we can estimate its standard error as \[
+where \(\E[X_i] = \mu\) and \(\V[X_i] = \sigma^2\). Recall from
+Chapter~\ref{sec-asymptotics} that our large-sample theorems (LLN, CLT,
+and Slutsky) imply that the sample mean will roughly be normally
+distributed \(\Xbar_n \overset{a}{\sim} \N(\mu, \sigma^2/n)\), which
+implies we can estimate its standard error as \[
 \widehat{\se}[\Xbar_n] = \frac{S_n}{\sqrt{n}},
 \] where recall that \(S^2_n\) is the sample variance.
 
@@ -5572,7 +5582,7 @@ would need to first obtain the critical value, \(z_{1-\alpha/2}\), where
 
 Combining these two facts, a 90\% asymptotic confidence interval for the
 population mean would be \[
-\left[\Xbar_{n} - 1.64\, \frac{S_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \,\frac{S_n}{\sqrt{n}}\right]
+\left[\Xbar_{n} - 1.645\, \frac{S_n}{\sqrt{n}},\; \Xbar_{n} + 1.64 \,\frac{S_n}{\sqrt{n}}\right]
 \]
 
 In polling, the term \(\pm z_{1-\alpha/2} \, \frac{S_n}{\sqrt{n}}\) is
@@ -5618,13 +5628,22 @@ estimate with the usual difference in sample means estimator:
 Recall that we can estimate the standard error of \(\widehat{\tau}\)
 with \[
 \widehat{\se}[\widehat{\tau}] = \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}.
-\] Thus, we can form a 95\% confidence interval for this estimator as \[
+\] Thus, we can form a 95\% confidence interval for this \(\tau\) as \[
 \left[\Ybar_1 - \Ybar_0 - 1.96\, \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}},\; \Ybar_1 - \Ybar_0 + 1.96\, \sqrt{\frac{S^2_1}{n_1} + \frac{S^2_0}{n_0}}\right]
 \]
 
 From this expression, we can see that the width of the
 difference-in-means confidence intervals is a function of the noise and
 number of observations in both samples.
+
+A common, yet incorrect practice for comparing means is to calculate
+separate confidence intervals for \(\mu_1\) and \(\mu_0\) and see if
+those confidence intervals overlap at all. Unfortunately, this approach
+fails because standard error of the difference in means
+\(\sqrt{S^2_1 / n_1 + S^2_0/n_0}\) is smaller than the sum of the
+standard errors, \(S_1 / \sqrt{n_1} + S_0 / \sqrt{n_0}\). Thus, the two
+separate confidence intervals may overlap even though the confidence
+interval for the difference in means does not contain zero.
 
 \end{example}
 
@@ -5633,12 +5652,12 @@ intervals}\label{interpreting-confidence-intervals}
 
 Remember that the interpretation of a confidence interval is how the
 random interval performs over repeated samples. A valid 95\% confidence
-interval is a random interval that will contain the true value in 95\%
-of samples. Simulating repeated samples can help to clarify this
-interpretation.
+interval is a random interval that will contain the true value in at
+least 95\% of samples. Simulating repeated samples can help to clarify
+this interpretation.
 
 Suppose that we are taking samples of size \(n=500\) of random variables
-where \(X_i\) which are normal with mean \(\E[X_i] = 1\) and variance
+\(X_i\) which are normal with mean \(\E[X_i] = 1\) and variance
 \(\V[X_i] = 10\), and we want to estimate the population mean. To do so,
 we repeat the following steps:
 
@@ -5713,7 +5732,7 @@ shocks would be \(t_{49, 0.975} = 2.01\) on the positive side and
 and solving for the upper and lower bounds gives \[
 [L, U] = \left[\Xbar_{50} - 2.01 \, \frac{S_{50}}{\sqrt{50}}, \; \Xbar_{50} + 2.01 \, \frac{S_{50}}{\sqrt{50}} \right].
 \] Comparing the margin of error of this interval to the asymptotically
-normal estimator, \(\pm 1.96\,S_{50}/\sqrt{50}\), we can see that the
+normal interval, \(\pm 1.96\,S_{50}/\sqrt{50}\), we can see that the
 \(t\)-based confidence interval is slightly wider. Even if the data are
 not normally distributed, this extra width can help improve coverage in
 small samples when the asymptotically normal interval could show
@@ -5721,7 +5740,7 @@ undercoverage.
 
 More generally, the \(100(1-\alpha)\%\) confidence interval for the
 population mean under normal data with \(n\) iid draws would be \[
-[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \, \frac{s_{n}}{\sqrt{n}} \right].
+[L, U] = \left[\Xbar_{n} - t_{n-1,1-\alpha/2} \, \frac{S_{n}}{\sqrt{n}},\; \Xbar_{n} + t_{n-1,1-\alpha/2} \, \frac{S_{n}}{\sqrt{n}} \right].
 \]
 
 \section{Confidence intervals and hypothesis
@@ -5746,24 +5765,28 @@ reject this null when \(|T| \geq 1.96\), or when \[
 \] This will be true when \[ 
 \theta_{0} \leq \widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\quad \text{ or }\quad \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}] \leq \theta_{0}
 \] or, equivalently, that the null hypothesis is outside of the 95\%
-confidence interval,
-\[\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\right].\]
-Of course, our choice of the null hypothesis was arbitrary, which means
-that any null hypothesis that is outside the 95\% confidence interval
-would be rejected by an \(\alpha = 0.05\) level test of that null. And
-any null hypothesis inside the confidence interval is a null hypothesis
-that we would not reject.
+confidence interval, \[
+\theta_0 \notin \left[\widehat{\theta}_{n} - 1.96\,\widehat{\se}[\widehat{\theta}_{n}], \widehat{\theta}_{n} + 1.96\,\widehat{\se}[\widehat{\theta}_{n}]\right].
+\] Of course, our choice of the null hypothesis was arbitrary, which
+means that any null hypothesis that is outside the 95\% confidence
+interval would be rejected by an \(\alpha = 0.05\) level test of that
+null. And any null hypothesis inside the confidence interval is a null
+hypothesis that we would not reject.
 
 This relationship holds more broadly. Imagine that for each candidate
 value \(\theta_0\) we have an \(\alpha\)-level test of
 \(H_0: \theta = \theta_0\), and then we collect any null hypothesis that
 the test does not reject. Since this is an \(\alpha\)-level test, the
 true null (that is, when \(\theta_0\) is the true value of \(\theta\))
-will be rejected at rate \(\alpha\) and so this set will contain the
-true value with probability \(1-\alpha\). Thus, this set will be a
-\(1-\alpha\) confidence interval. As we will see in
-Example~\ref{exm-wilson} below, different tests give different
-confidence intervals. This duality can be useful for two reasons:
+will be rejected at rate at most \(\alpha\) and so this set will contain
+the true value with at least probability \(1-\alpha\). Thus, this set
+will be a \(1-\alpha\) confidence interval set\footnote{Technically,
+  inverting a set gives a confidence set rather than an interval since
+  the results might be disjoint or even empty. To be consistent with the
+  rest of the chapter, we maintain the interval terminology.}. As we
+will see in Example~\ref{exm-wilson} below, different tests give
+different confidence intervals. This duality can be useful for two
+reasons:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5781,8 +5804,8 @@ confidence intervals. This duality can be useful for two reasons:
   \textbf{inverting a test} (Neyman 1937). One important application of
   this method is for formulating confidence intervals for treatment
   effects based on randomization tests
-  Section~\ref{sec-randomization-tests} in the finite population
-  analysis of experiments (see Rosenbaum (2002) for more on this
+  (Section~\ref{sec-randomization-tests}) in the finite population
+  analysis of experiments (see Rosenbaum (2002) Ch. 2 for more on this
   approach and the sharp null hypothesis it requires).
 \end{enumerate}
 
@@ -5808,11 +5831,11 @@ close to 0 or 1.
 
 }
 
-\caption{\label{fig-wilson-vs-wald-coverage}Simulated coverage
-probability of the Wald (red) and Wilson (blue) 95\% confidence
-intervals for binary outcomes with \(n=100\). The dashed line marks the
-nominal coverage of 0.95. The jagged shape of the coverage functions is
-due to the discrete nature of the data.}
+\caption{\label{fig-wilson-vs-wald-coverage}Coverage probability of the
+Wald (red) and Wilson (blue) 95\% confidence intervals for binary
+outcomes with \(n=100\). The dashed line marks the nominal coverage of
+0.95. The jagged shape of the coverage functions is due to the discrete
+nature of the data.}
 
 \end{figure}%
 
@@ -5821,11 +5844,11 @@ interval with \(n=100\): its coverage drops dramatically as the true
 probability goes toward 1 (or zero had we shown the lower half of the
 range of \(p\)). At \(p = 0.99\), only 63\% of Wald 95\% confidence
 intervals actually cover the true value. Why does this occur? That close
-to the \(p=1\), the probability of drawing a samples of all ones, so
+to \(p=1\), the probability of drawing a sample of all ones, so
 \(\widehat{p} = 1\), is high: approximately 37\%! In those samples, the
 estimated standard error is 0 and the Wald ``interval'' is a single
 point, \(\{1\}\), which misses the truth and lowers the coverage
-probability. Not that this does not contradict the asymptotic validity
+probability. Note that this does not contradict the asymptotic validity
 of the confidence intervals, which holds for each \(p\) as
 \(n\to\infty\). This result simply shows that for \(p\) close to \(0\)
 or \(1\), we will need larger values of \(n\) before the asymptotic
@@ -5834,11 +5857,11 @@ approximations work well.
 Furthermore, the Wald approach close to these boundaries can produce
 confidence intervals outside the logical range of probabilities (below 0
 or above 1). Thus, the Wald approach might not be right for these
-settings. See Brown, Cai, and DasGupta (2001) for a detailed look at the
-problematic coverage of the Wald interval.
+settings. See Brown et al. (2001) for a detailed look at the problematic
+coverage of the Wald interval.
 
-Let's use hypothesis test inversion instead. The relevant test is of the
-null hypothesis \(H_0: p = p_0\). With binary outcomes, the null
+Let's use a hypothesis test inversion instead. The relevant test is of
+the null hypothesis \(H_0: p = p_0\). With binary outcomes, the null
 hypothesis determines the standard error of the estimator so we do not
 have to estimate it. Furthermore, because the null-implied variance,
 \(p_0(1 - p_0) / n\), does not depend on \(\widehat{p}\), it will not
@@ -5846,12 +5869,12 @@ collapse to zero as it does for the Wald interval.
 
 Under the null and in large samples, we know that \(\widehat{p}\) will
 be approximately \(\N(p_0, p_0(1-p_0)/n)\). We can then implement what
-is called the \textbf{Wilson score test} (Wilson 1927) with the
-following rejection region: \[
-\abs*{\frac{\sqrt{n}(\widehat{p} - p_0)}{\sqrt{p_0(1-p_0)}}} > z_{1-\alpha/2}.
-\] We can obtain a \(100(1-\alpha)\%\) confidence interval from
-inverting this test by finding values of \(p_0\) for which we could not
-reject this test, or, \[
+is called the \textbf{score test} with the following rejection region:
+\[
+\abs*{\frac{\sqrt{n}(\widehat{p} - p_0)}{\sqrt{p_0(1-p_0)}}} \geq z_{1-\alpha/2}.
+\] We can obtain a \(100(1-\alpha)\%\) confidence interval first
+proposed by Wilson (1927) from inverting this test by finding values of
+\(p_0\) for which we could not reject this test, or, \[
 \left\{p \mid \abs*{\frac{\sqrt{n}(\widehat{p} - p)}{\sqrt{p(1-p)}}} \leq z_{1-\alpha/2}\right\}.
 \] Squaring both sides gives \[
 \frac{n(\widehat{p}-p)^2}{p(1-p)} \leq z^2_{1-\alpha/2}, 
@@ -5865,16 +5888,18 @@ CI_{\alpha, wil} = \frac{1}{1 + z^2_{1-\alpha/2}/n}\left(\widehat{p} + \frac{z^2
 \]
 
 Figure~\ref{fig-wilson-vs-wald-coverage} shows that the Wilson
-confidence intervals match the coverage of the Wald intervals away from
-the boundary and outperform it near the boundary. The Wilson interval
-achieves this because it never collapses to a single point. Even when
-the sample is entirely composed of ones, the 95\% Wilson interval at
-\(n = 100\) is \([0.963, 1]\), which contains \(0.99\). However, the
-Wilson approach is still asymptotic and is not guaranteed to hit exactly
-95\% coverage (at \(p=0.99\) its coverage is roughly 92\%). Other
-methods, like the Clopper--Pearson interval (Clopper and Pearson 1934),
-invert an exact binomial test to get confidence intervals with at least
-\(1-\alpha\) coverage coverage at any sample size.
+confidence intervals are similar to (and often slightly closer to
+nominal than) the Wald intervals away from the boundary. Closer to the
+boundary, the Wilson interval vastly outperform the Wald interval. The
+Wilson interval achieves this because it never collapses to a single
+point. Even when the sample is entirely composed of ones, the 95\%
+Wilson interval at \(n = 100\) is \([0.963, 1]\), which contains
+\(0.99\). However, the Wilson approach is still asymptotic and is not
+guaranteed to hit exactly 95\% coverage (at \(p=0.99\) its coverage is
+roughly 92\%). Other methods, like the Clopper--Pearson interval
+(Clopper and Pearson 1934), invert an exact binomial test to get
+confidence intervals with at least \(1-\alpha\) coverage at any sample
+size.
 
 \end{example}
 
@@ -5896,7 +5921,7 @@ standard error in those cases? We could turn to our local department of
 mathematics for aid, but why think harder when we can get a computer to
 think for us? In the 20th century, statisticians figured out that we can
 obtain confidence intervals using computational approaches (Quenouille
-1949; Tukey 1958; Efron 1979).
+1949, 1956; Tukey 1958; Efron 1979).
 
 All of the computational approaches to confidence intervals (and
 hypothesis tests) rely on a common idea: resampling. Our goal with
@@ -5908,13 +5933,13 @@ Imagine we could get \(B\) random samples from the population and obtain
 estimates from each: \[
 \left(\widehat{\theta}_{n, 1}, \widehat{\theta}_{n,2}, \ldots, \widehat{\theta}_{n,B}\right) 
 \] These estimates represent \(B\) draws from the sampling distribution
-of \(\widehat{\theta}\). Recall we only get one of these draws, but what
-if we had them all? Then we could estimate the standard error with the
-empirical standard deviation of these estimates: \[
-\sqrt{\frac{1}{B - 1} \sum_{b=1}^B \left(\widehat{\theta}_{n,b} - \overline{\theta}_{B}\right)^2},
+of \(\widehat{\theta}_n\). Recall we only get one of these draws, but
+what if we had them all? Then we could estimate the standard error with
+the empirical standard deviation of these estimates: \[
+\sqrt{\frac{1}{B - 1} \sum_{b=1}^B \left(\widehat{\theta}_{n,b} - \overline{\theta}_{n,B}\right)^2},
 \] where
 \(\overline{\theta}_{n,B} = (1/B) \sum_{b=1}^B \widehat{\theta}_{n,b}\)
-is the average of the \(B\) samples.
+is the average of the \(B\) estimates.
 
 Resampling approaches to inference generate additional samples from the
 single original sample (thus leading to the name \emph{re}sampling). The
@@ -5924,10 +5949,10 @@ key difference between different methods is how we do the resampling.
 
 The jackknife is a resampling technique that generates additional
 samples by removing observations. It was first proposed by Quenouille
-(1949) to reduce bias and proposed by Tukey (1958) for estimating
-variance. Let \(\widehat{\theta}_{(-i)}\) be the estimate when omitting
-the \(i\)th observation from the sample. For example, the leave-one-out
-sample mean would be \[
+(1949, 1956) to reduce bias and later adapted by Tukey (1958) for
+estimating variance. Let \(\widehat{\theta}_{(-i)}\) be the estimate
+when omitting the \(i\)th observation from the sample. For example, the
+leave-one-out sample mean would be \[
 \Xbar_{(-i)} = \frac{1}{n-1} \sum_{j \neq i} X_j.
 \] Let
 \(\overline{\theta}_{n,jk} = (1/n) \sum_{i=1}^n \widehat{\theta}_{(-i)}\)
@@ -5944,8 +5969,10 @@ Indeed, two jackknife samples share \(n-2\) common values.
 Under iid sampling and some regularity conditions (namely that the
 estimator is a smooth function of the data), the jackknife variance
 estimator will be consistent in the sense that \[
-nV_{jk} / V_{\theta} \inprob 1
-\]
+\frac{nV_{jk}}{V_{\theta}} \inprob 1,
+\] where recall that \(V_{\theta}\) is the asymptotic variance of
+\(\sqrt{n}(\widehat{\theta}_n - \theta)\) from
+Chapter~\ref{sec-asymptotics}.
 
 With this variance estimator in hand, one can derive confidence
 intervals in the usual way, dropping in the jackknife variance estimator
@@ -5984,7 +6011,7 @@ These derivations show how the jackknife variance estimator for the
 sample mean is actually identical to the usual sampling variance
 estimator. Obviously, this fact means that the jackknife does not have a
 huge benefit for the sample mean itself. But the basic intuition---that
-the jackknife deviations are similar to a \((n-1)^{-1}\)-scaled version
+the jackknife deviations are similar to an \((n-1)^{-1}\)-scaled version
 of full-sample deviations---generalizes to other estimators that are
 smooth functions of the data where the jackknife could be more
 fruitfully applied.
@@ -5992,17 +6019,17 @@ fruitfully applied.
 The smoothness requirements of the jackknife are actually more
 restrictive than they appear. Smoothness here means that small changes
 to the data lead to proportionally small changes to the estimate. The
-sample median does not meet this requirement. Dropping an observation at
-a time either does not change the median or---if we drop the
-median---causes the median to jump to the next observation in rank
-order. Thus, the leave-one-out estimates will take on just a few values
-and will not be reflective of the true variance of the sample median.
+sample median does not meet this requirement. For continuous data,
+dropping one observation at a time moves the median between one of two
+(if \(n\) is even) or one of three (if \(n\) is odd) distinct values.
+Thus, the leave-one-out estimates will take on just a few values and
+will not be reflective of the true variance of the sample median.
 
-There are modifications of the jackknife, such as the \textbf{delete-d
-jackknife} (Shao and Wu 1989) (where we drop \(d\) observations at a
-time) that can have better properties for these types of estimators
-under certain conditions. But there are also alternative resampling
-approaches that work well in more general settings.
+There are modifications of the jackknife, such as the
+\textbf{delete-\(d\) jackknife} (Shao and Wu 1989) (where we drop \(d\)
+observations at a time) that can have better properties for these types
+of estimators under certain conditions. But there are also alternative
+resampling approaches that work well in more general settings.
 
 \subsection{The nonparametric
 bootstrap}\label{the-nonparametric-bootstrap}
@@ -6010,10 +6037,10 @@ bootstrap}\label{the-nonparametric-bootstrap}
 Another way to generate additional artificial samples is to randomly
 sample from the data itself. The \textbf{nonparametric bootstrap} (Efron
 1979) is a resampling technique that generates a distribution of
-estimates by repeatedly sampling the data with replacement. The
-bootstra. Recall from Chapter~\ref{sec-model-based} we wrote the
-empirical distribution as \(\widehat{F}_n\), which places \(1/n\)
-probability on each observed data point.
+estimates by repeatedly sampling the data with replacement. Recall from
+Chapter~\ref{sec-model-based} we wrote the empirical distribution as
+\(\widehat{F}_n\), which places \(1/n\) probability on each observed
+data point.
 
 Let \(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n \sim \widehat{F}_n\) be
 an iid sample (sample with replacement) from this empirical
@@ -6022,7 +6049,7 @@ that we are pulling ourselves up by our own bootstraps (or our own
 sample data). If our estimator is
 \(\widehat{\theta}_n = g(X_1, \ldots, X_n)\), we can then compute our
 estimator on this bootstrap sample,
-\(\widehat{\theta}^* = g(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n)\).
+\(\widehat{\theta}^*_n = g(X^{\ast}_1, X^{\ast}_2, \ldots, X^{\ast}_n)\).
 We will usually draw repeated bootstrap samples, giving a number of
 bootstrap replications,
 \(\widehat{\theta}^*_{n,1}, \ldots, \widehat{\theta}^*_{n,B}\).
@@ -6041,7 +6068,7 @@ be the average of the bootstrap replicates. The bootstrap standard error
 is simply the standard deviation of the bootstrap replicates, \[
 \widehat{\se}_{\text{boot}}[\widehat{\theta}_n] = \sqrt{\frac{1}{B-1} \sum_{b=1}^B (\widehat{\theta}^*_{n,b} - \overline{\theta}^*_{n,B})^2}.
 \] Since the bootstrap draws are random samples of size \(n\) from the
-empirical distribution, then intuitively, the variation of
+empirical distribution, intuitively, the variation of
 \(\widehat{\theta}^*_{n,b}\) across bootstrap draws should be similar to
 the variation of \(\widehat{\theta}_n\) across random samples from the
 population distribution. Thus, we would expect
@@ -6050,14 +6077,14 @@ estimator of \(\se[\widehat{\theta}_n]\). In fact, if
 \(\widehat{\theta}_n\) is asymptotically normal and some technical
 conditions hold, the bootstrap standard error is consistent in the sense
 that
-\(\tfrac{\widehat{\se}_{\text{boot}}[\widehat{\theta}_n]}{\se[\widehat{\theta}_n]} \inprob 1\).
-Unlike the jackknife, these conditions do not require the estimator to
-be a smooth function of the data. For example, unlike the jackknife, the
-bootstrap standard error is consistent for the sample median under very
-mild conditions: the data cannot have gaps or clumps at the median (as
-in, for instance, a Likert scale) and the data cannot have extremely fat
-tails (even the Cauchy satisfies this assumption, see Ghosh et al.
-(1984)).
+\(\tfrac{\widehat{\se}_{\text{boot}}[\widehat{\theta}_n]}{\se[\widehat{\theta}_n]} \inprob 1\)
+as both \(n\) and \(B\) grow. Unlike the jackknife, these conditions do
+not require the estimator to be a smooth function of the data. For
+example, unlike the jackknife, the bootstrap standard error is
+consistent for the sample median under very mild conditions: the
+population distribuiton cannot have a gap or clump at the median (as in,
+for instance, a Likert scale) and the data cannot have extremely fat
+tails (Ghosh et al. 1984).
 
 Thus, for nicely behaved asymptotically normal estimators, the bootstrap
 standard errors can be plugged into the usual Wald confidence interval
@@ -6093,7 +6120,7 @@ interval]\protect\hypertarget{def-percentile-bootstrap}{}\label{def-percentile-b
   define these as \(c_{\alpha/2}\) and \(c_{1-\alpha/2}\).
 \item
   Construct a \(100(1-\alpha)\%\) confidence interval as
-  \begin{equation}\phantomsection\label{eq-perc-bootstrap-cis}{
+  \begin{equation}\protect\phantomsection\label{eq-perc-bootstrap-cis}{
   CI_{\alpha, perc} = \left[c_{\alpha/2},\; c_{1-\alpha/2}\right]
   }\end{equation}
 \end{enumerate}
@@ -6103,21 +6130,21 @@ interval]\protect\hypertarget{def-percentile-bootstrap}{}\label{def-percentile-b
 Why does the percentile method work? Recall that the bootstrap estimates
 should vary around \(\widehat{\theta}_n\) roughly the same way that
 \(\widehat{\theta}_n\) varies around \(\theta\). If that sampling
-distribution it symmetric, the quantiles \(c_{\alpha/2}\) and
+distribution is symmetric, the quantiles \(c_{\alpha/2}\) and
 \(c_{1-\alpha/2}\) from the percentile method will correspond to the
 implied true value under large positive and negative chance errors as in
 Section~\ref{sec-deriving-cis}. This approach works more generally as
 long as there exists \emph{some} monotone transformation of the
 estimator (such as the log or the square root) that would make the
-sampling distribution symmetric (Efron and Tibshirani 1993, ch.~13).
-Thankfully, we do not need to know the exact transformation---only that
-it exists.
+sampling distribution symmetric around zero (Efron and Tibshirani 1993,
+ch.~13). Thankfully, we do not need to know the exact
+transformation---only that it exists.
 
 When there is no symmetry-inducing transformation, such as when the
-estimator is biased, the percentile intervals can undercover in small
-samples. In these cases, the bias-corrrected and accelerated percentile
-interval (\(\text{BC}_a\)) (Efron 1987) corrects the quantiles to
-account for the bias and skewness. It is available as
+estimator is median-biased, the percentile intervals can undercover in
+small samples. In these cases, the bias-corrected and accelerated
+percentile interval (\(\text{BC}_a\)) (Efron 1987) corrects the
+quantiles to account for the bias and skewness. It is available as
 \texttt{boot.ci(type\ =\ "bca")} from the \texttt{boot} package in R.
 
 The bootstrap has a number of subtleties and limitations. For bootstrap
@@ -6126,26 +6153,29 @@ dependence structure in the data. Resampling individual observations
 implicitly assumes the data are iid, whereas we might need to resample
 entire blocks of observations if the data is clustered or has
 time-series dependence. In addition, the bootstrap breaks down for
-estimators driven by extreme values like the sample maxiumum. Finally,
+estimators driven by extreme values like the sample maximum. Finally,
 the number of resamples, \(B\), only controls simulation noise. A few
 hundred might work for estimating the standard error, but for the
 percentile method we should probably have at least a thousand to obtain
-quantile at, say, \(0.025\) and \(0.975\).
+quantiles at, say, \(0.025\) and \(0.975\).
 
 \begin{example}[Sample
 median]\protect\hypertarget{exm-bootstrap-median}{}\label{exm-bootstrap-median}
 
-The sample median is an asymptotically normal estimator but its
-asymptotic variance \(1/(4nf(m)^2)\) where \(f(m)\) is the density of
-the data at the median. Of course, this asymptotic variance depends on
-the underlying distribution of the data, making it difficult to derive
-confidence intervals that cover all settings. The bootstrap is a very
-convenient alternative for this estimator. To see how it works, we take
-a sample of size \(n=40\) from an Exponential distribution with rate 1
-and calculate the normal and percentile bootstrap intervals.
+The sample median is an asymptotically normal estimator, but its
+asymptotic variance is \(V_{\theta} = 1/(4f(m)^2)\), where \(m\) is the
+population median and \(f(m)\) is the density of the data at the median.
+The asymptotic standard error is approximately \(1/(2f(m)\sqrt{n})\). Of
+course, this asymptotic standard error depends on the underlying
+distribution of the data, making it difficult to derive confidence
+intervals that cover all settings. The bootstrap is a very convenient
+alternative for this estimator. To see how it works, we take a sample of
+size \(n=40\) from an Exponential distribution with rate 1 and calculate
+the normal and percentile bootstrap intervals.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2136}\NormalTok{)}
 \NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rexp}\NormalTok{(}\DecValTok{40}\NormalTok{)}
 \NormalTok{B }\OtherTok{\textless{}{-}} \DecValTok{5000}
 \NormalTok{sample\_median }\OtherTok{\textless{}{-}} \FunctionTok{median}\NormalTok{(y)}
@@ -6154,29 +6184,31 @@ and calculate the normal and percentile bootstrap intervals.
 \DocumentationTok{\#\# bootstrap SE}
 \NormalTok{boot\_se }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(bootstrap\_draws)}
 \NormalTok{boot\_se}
-\CommentTok{\#\textgreater{} [1] 0.248}
+\CommentTok{\#\textgreater{} [1] 0.156}
 
 \DocumentationTok{\#\# normal bootstrap confidence intervals}
 \NormalTok{ci\_nb }\OtherTok{\textless{}{-}}\NormalTok{ sample\_median }\SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.975}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ boot\_se}
 \NormalTok{ci\_nb}
-\CommentTok{\#\textgreater{} [1] 0.241 1.214}
+\CommentTok{\#\textgreater{} [1] 0.401 1.013}
 
 \DocumentationTok{\#\# percentile bootstrap confidence intervals}
 \NormalTok{ci\_perc }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(bootstrap\_draws, }\FunctionTok{c}\NormalTok{(.}\DecValTok{025}\NormalTok{, .}\DecValTok{975}\NormalTok{))}
 \NormalTok{ci\_perc}
 \CommentTok{\#\textgreater{}  2.5\% 97.5\% }
-\CommentTok{\#\textgreater{}  0.43  1.30}
+\CommentTok{\#\textgreater{} 0.458 1.159}
 \end{Highlighting}
 \end{Shaded}
 
-The sample median from this sample is 0.728 and the bootstrap standard
-error is 0.248, which is quite close to the true asymptotic value
+The sample median from this sample is 0.707 and the bootstrap standard
+error is 0.156, which is quite close to the true asymptotic value
 \(1/(2f(m)\sqrt{n}) = 1/\sqrt{40}\approx 0.158\) in this case (using the
-properties of the Exponential(1) distribution). As expected, the normal
-bootstrap is symmetric around the sample median, whereas the percentile
-has more of its interval above the estimate than below. Both confidence
-intervals contain the true value of \(\ln{2} \approx 0.693\) but
-remember that the coverage guarantees are across repeated samples.
+properties of the Exponential(1) distribution). Note that the bootstrap
+SE can vary considerably---at this sample size, it will vary between
+0.09 and 0.25 in 90\% of samples. The normal bootstrap is symmetric
+around the sample median, whereas the percentile interval has more of
+its interval above the estimate than below. Both confidence intervals
+contain the true value of \(\ln{2} \approx 0.693\), but remember that
+the coverage guarantees are across repeated samples.
 
 Why does the bootstrap work with the sample median when the jackknife
 fails? Recall that the jackknife concentrated its resampled medians over
@@ -6196,10 +6228,14 @@ interpretation of confidence intervals. Under an assumption of normal
 data, we saw how to use the t-distribution to obtain exact confidence
 intervals at any sample size. We then saw that a \(1-\alpha\) confidence
 interval represents the set of null hypotheses that we would not reject
-with a matching hypothesis test of level \(\alpha\). Finally, we
-investigated resampling methods such as the jackknife and the bootstrap
-as ways to obtain confidence intervals when deriving the sampling
-distribution of an estimator is not feasible.
+with a matching hypothesis test of level \(\alpha\). The Wilson
+interval, which inverts a score test for population proportions, helped
+us sidestep poor coverage from the traditional interval with a parameter
+near the boundary. Finally, we investigated resampling methods such as
+the jackknife and the bootstrap as ways to obtain confidence intervals
+when deriving the sampling distribution of an estimator is not feasible
+as long as we resample in a way that respects the data-generating
+process.
 
 \part{Regression}
 
@@ -6472,7 +6508,7 @@ bivariate case: it chooses the set of coefficients that minimizes the
 expected mean-squared error, where the expectation is over the joint
 distribution of the data.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Best linear projection assumptions}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Without some assumptions on the joint distribution of the data, the
 following ``regularity conditions'' will ensure the existence of the
@@ -6526,7 +6562,7 @@ substantively. Recall that \(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\) is a
 \(k\times 1\) column vector, which implies that \(\bfbeta\) is also a
 \(k \times 1\) column vector.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 What does the expression for the population regression coefficients
 mean? It is helpful to separate the intercept or constant term so that
@@ -6916,7 +6952,7 @@ is income and \(X_{i2}\) is the Black/non-Black voter indicator, then
 \(\beta_3\) represents the change in the slope of the wait time-income
 relationship between Black and non-Black voters.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Centering variables to improve interpretability}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 In many cases, the so-called marginal coefficients on the lower-order
 terms (\(\beta_1\) for \(X_{i1}\) and \(\beta_2\) for \(X_{i2}\)) are
@@ -6945,7 +6981,7 @@ rather remarkable.
 With a regression of an outcome on two covariates, understanding how the
 coefficients of one variable relate to the other is helpful. Consider
 the following best linear projection:
-\begin{equation}\phantomsection\label{eq-two-var-blp}{ 
+\begin{equation}\protect\phantomsection\label{eq-two-var-blp}{ 
 (\alpha, \beta, \gamma) = \argmin_{(a,b,c) \in \mathbb{R}^{3}} \; \E[(Y_{i} - (a + bX_{i} + cZ_{i}))^{2}]
 }\end{equation} Can we understand the \(\beta\) coefficient here in
 terms of a bivariate regression? As it turns out, yes. From the above
@@ -7129,7 +7165,7 @@ from the population to make inferences about the line of best fit in the
 population and the population coefficients. To do this, we will focus on
 the OLS estimator for these population quantities.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 The variables
 \(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
@@ -7207,7 +7243,7 @@ ordinary least squares estimator is \[
 
 \end{theorem}
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Formula for the OLS slopes}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Almost all regression will contain an intercept term, usually
 represented as a constant 1 in the covariate vector. It is also possible
@@ -7632,7 +7668,7 @@ this regression using a technique called \textbf{residual regression},
 \textbf{partitioned regression}, or the \textbf{Frisch-Waugh-Lovell
 theorem}.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Residual regression approach}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 The residual regression approach is:
 
@@ -7796,7 +7832,7 @@ To assess prediction errors more cleanly, we can use
 computationally costly because it seems as though we have to fit OLS
 \(n\) times. Fortunately, there is a closed-form expression for the LOO
 coefficients and prediction errors in terms of the original regression,
-\begin{equation}\phantomsection\label{eq-loo-coefs}{ 
+\begin{equation}\protect\phantomsection\label{eq-loo-coefs}{ 
 \bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i \qquad \widetilde{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
 }\end{equation} This shows that the LOO prediction errors will differ
 from the residuals when the leverage of a unit is high. This makes
@@ -7922,7 +7958,7 @@ needed to ensure that the best linear predictor,
 \(\bfbeta = \E[\X_{i}\X_{i}']^{-1}\E[\X_{i}Y_{i}]\), is well-defined and
 unique.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Linear projection assumptions}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 The linear projection model makes the following assumptions:
 
@@ -7985,13 +8021,13 @@ Next, we would like to establish an asymptotic normality result for the
 OLS coefficients. We first review some key ideas about the Central Limit
 Theorem.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{CLT reminder}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 Suppose that we have a function of the data iid random vectors
 \(\X_1, \ldots, \X_n\), \(g(\X_{i})\) where \(\E[g(\X_{i})] = 0\) and so
 \(\V[g(\X_{i})] = \E[g(\X_{i})g(\X_{i})']\). Then if
 \(\E[\Vert g(\X_{i})\Vert^{2}] < \infty\), the CLT implies that
-\begin{equation}\phantomsection\label{eq-clt-mean-zero}{ 
+\begin{equation}\protect\phantomsection\label{eq-clt-mean-zero}{ 
 \sqrt{n}\left(\frac{1}{n} \sum_{i=1}^{n} g(\X_{i}) - \E[g(\X_{i})]\right) = \frac{1}{\sqrt{n}} \sum_{i=1}^{n} g(\X_{i}) \indist \N(0, \E[g(\X_{i})g(\X_{i}')]) 
 }\end{equation}
 
@@ -8161,7 +8197,7 @@ t = \frac{\widehat{\beta}_{j} - b_{0}}{\widehat{\se}(\widehat{\beta}_{j})},
 \] and we usually take the absolute value, \(|t|\), as our measure of
 how extreme our estimate is given the null distribution. But notice that
 we could also use the square of the \(t\) statistic, which is
-\begin{equation}\phantomsection\label{eq-squared-t}{ 
+\begin{equation}\protect\phantomsection\label{eq-squared-t}{ 
 t^{2} = \frac{\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{\V[\widehat{\beta}_{j}]} = \frac{n\left(\widehat{\beta}_{j} - b_{0}\right)^{2}}{[\mb{V}_{\bfbeta}]_{[jj]}}. 
 }\end{equation}
 
@@ -8278,7 +8314,7 @@ we only need a one-sided rejection region of the form
 straightforward (see the above callout tip). For \(q = 2\) and a
 \(\alpha = 0.05\), the critical value is roughly 6.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Chi-squared critical values}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 We can obtain critical values for the \(\chi^2_q\) distribution using
 the \texttt{qchisq()} function in R. For example, if we wanted to obtain
@@ -8354,7 +8390,7 @@ the stronger assumption that will allow us to establish stronger
 properties for OLS. As usual, however, remember that these stronger
 assumptions can be wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Linear Regression Model}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -8471,7 +8507,7 @@ homoskedasticity of errors is such a historically important assumption
 that statistical software implementations of OLS like \texttt{lm()} in R
 assume it by default.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Assumption: Homoskedasticity with a linear CEF}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 In addition to the linear CEF assumption, we further assume that \[
 \E[e_i^2 \mid \X_i] = \E[e_i^2] = \sigma^2,
@@ -8626,7 +8662,7 @@ proceed in small samples? Historically we would have assumed
 (conditional) normality of the errors, basically proceeding with some
 knowledge that we were wrong but hopefully not too wrong.
 
-\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, colback=white, arc=.35mm, bottomtitle=1mm, colframe=quarto-callout-note-color-frame, toptitle=1mm, bottomrule=.15mm, titlerule=0mm, opacityback=0, rightrule=.15mm, leftrule=.75mm, toprule=.15mm, breakable, opacitybacktitle=0.6, coltitle=black, left=2mm]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{The normal linear regression model}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
 
 In addition to the linear CEF assumption, we assume that \[
 e_i \mid \Xmat \sim \N(0, \sigma^2).
@@ -8721,8 +8757,8 @@ tests that are valid for all sample sizes.
 
 \markboth{References}{References}
 
-\phantomsection\label{refs}
-\begin{CSLReferences}{1}{0}
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
 \bibitem[\citeproctext]{ref-BenHoc95}
 Benjamini, Yoav, and Yosef Hochberg. 1995. {``Controlling the False
 Discovery Rate: A Practical and Powerful Approach to Multiple
@@ -8739,11 +8775,11 @@ of Statistics} 29 (4): 1165--88.
 \bibitem[\citeproctext]{ref-BliHwa19}
 Blitzstein, Joseph K., and Jessica Hwang. 2019. \emph{Introduction to
 Probability}. 2nd ed. Chapman \& Hall/CRC Texts in Statistical Science.
-Boca Raton, FL: CRC Press.
+CRC Press.
 
 \bibitem[\citeproctext]{ref-Box78}
 Box, Joan Fisher. 1978. \emph{R. A. Fisher: The Life of a Scientist}.
-New York: Wiley.
+Wiley.
 
 \bibitem[\citeproctext]{ref-BroCaiDas01}
 Brown, Lawrence D., T. Tony Cai, and Anirban DasGupta. 2001. {``Interval
@@ -8762,18 +8798,17 @@ Jackknife.''} \emph{The Annals of Statistics} 7 (1): 1--26.
 \url{https://doi.org/10.1214/aos/1176344552}.
 
 \bibitem[\citeproctext]{ref-Efr87}
----------. 1987. {``Better Bootstrap Confidence Intervals.''}
+Efron, Bradley. 1987. {``Better Bootstrap Confidence Intervals.''}
 \emph{Journal of the American Statistical Association} 82 (397):
 171--85. \url{https://doi.org/10.1080/01621459.1987.10478410}.
 
 \bibitem[\citeproctext]{ref-EfrTib93}
 Efron, Bradley, and Robert J. Tibshirani. 1993. \emph{An Introduction to
-the Bootstrap}. New York: Chapman \& Hall.
+the Bootstrap}. Chapman \& Hall.
 \url{https://doi.org/10.1007/978-1-4899-4541-9}.
 
 \bibitem[\citeproctext]{ref-Fis35}
-Fisher, Ronald A. 1935. \emph{The Design of Experiments}. Edinburgh:
-Oliver; Boyd.
+Fisher, Ronald A. 1935. \emph{The Design of Experiments}. Oliver; Boyd.
 
 \bibitem[\citeproctext]{ref-GhoParSin84}
 Ghosh, Malay, William C. Parr, Kesar Singh, and G. Jogesh Babu. 1984.
@@ -8794,7 +8829,7 @@ Procedure.''} \emph{Scandinavian Journal of Statistics} 6 (2): 65--70.
 \bibitem[\citeproctext]{ref-Manski88}
 Manski, Charles F. 1988. \emph{Analog Estimation Methods in
 Econometrics}. Vol. 39. Monographs on Statistics and Applied
-Probability. New York: Chapman; Hall.
+Probability. Chapman; Hall.
 
 \bibitem[\citeproctext]{ref-Ney37}
 Neyman, Jerzy. 1937. {``Outline of a Theory of Statistical Estimation
@@ -8809,9 +8844,14 @@ Time-Series.''} \emph{Journal of the Royal Statistical Society. Series B
 (Methodological)} 11 (1): 68--84.
 \url{https://doi.org/10.1111/j.2517-6161.1949.tb00023.x}.
 
+\bibitem[\citeproctext]{ref-Que56}
+Quenouille, M. H. 1956. {``Notes on Bias in Estimation.''}
+\emph{Biometrika} 43 (3--4): 353--60.
+\url{https://doi.org/10.1093/biomet/43.3-4.353}.
+
 \bibitem[\citeproctext]{ref-Rosenbaum02}
 Rosenbaum, Paul R. 2002. \emph{Observational Studies}. 2nd ed. Springer
-Series in Statistics. New York: Springer.
+Series in Statistics. Springer.
 \url{https://doi.org/10.1007/978-1-4757-3692-2}.
 
 \bibitem[\citeproctext]{ref-Senn12}
@@ -8835,14 +8875,13 @@ Tukey, John W. 1958. {``Bias and Confidence in Not-Quite Large Samples
 
 \bibitem[\citeproctext]{ref-Van98}
 Vaart, Aad W. van der. 1998. \emph{Asymptotic Statistics}. Vol. 3.
-Cambridge Series in Statistical and Probabilistic Mathematics.
-Cambridge: Cambridge University Press.
-\url{https://doi.org/10.1017/CBO9780511802256}.
+Cambridge Series in Statistical and Probabilistic Mathematics. Cambridge
+University Press. \url{https://doi.org/10.1017/CBO9780511802256}.
 
 \bibitem[\citeproctext]{ref-Wasserman04}
 Wasserman, Larry. 2004. \emph{All of Statistics: A Concise Course in
-Statistical Inference}. Springer Texts in Statistics. New York:
-Springer. \url{https://doi.org/10.1007/978-0-387-21736-9}.
+Statistical Inference}. Springer Texts in Statistics. Springer.
+\url{https://doi.org/10.1007/978-0-387-21736-9}.
 
 \bibitem[\citeproctext]{ref-WasLaz16}
 Wasserstein, Ronald L., and Nicole A. Lazar. 2016. {``The ASA Statement
