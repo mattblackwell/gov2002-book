@@ -1,0 +1,24 @@
+% Book-style callouts (used by callouts.lua for PDF output)
+\usepackage[skins,breakable]{tcolorbox}
+\usepackage{fontawesome5}
+\definecolor{callout-note}{HTML}{2F5F8A}
+\definecolor{callout-tip}{HTML}{2E7D4F}
+\definecolor{callout-important}{HTML}{9B2C2C}
+\definecolor{callout-warning}{HTML}{A8641B}
+\definecolor{callout-caution}{HTML}{A8641B}
+\newcommand{\calloutnoteicon}{\faInfoCircle}
+\newcommand{\callouttipicon}{\faLightbulb[regular]}
+\newcommand{\calloutimportanticon}{\faExclamationCircle}
+\newcommand{\calloutwarningicon}{\faExclamationTriangle}
+\newcommand{\calloutcautionicon}{\faHandPaper[regular]}
+% #1 = type (note, warning, ...), #2 = title
+\newtcolorbox{bookcallout}[2]{%
+  enhanced, breakable, blank, parbox=false,
+  borderline west={1pt}{0pt}{callout-#1},
+  left=11pt, right=0pt, top=1pt, bottom=1pt,
+  before skip=1.2\baselineskip, after skip=1.2\baselineskip,
+  before upper={%
+    {\sffamily\bfseries\small\color{callout-#1}%
+      \csname callout#1icon\endcsname\hspace{0.5em}#2\par}%
+    \vspace{-0.15\baselineskip}},
+}

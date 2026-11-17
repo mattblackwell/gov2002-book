@@ -459,7 +459,7 @@ Let $X_1,X_2,\ldots$ be a sequence of r.v.s, and for $n = 1,2, \ldots$ let $F_n(
 $$
 \lim_{n\rightarrow \infty} F_n(x) = F(x),
 $$
-for all values of $x$ for which $F(x)$ is continuous. We write this as $X_n \indist X$ or sometimes $X_n ⇝ X$. 
+for all values of $x$ for which $F(x)$ is continuous. We write this as $X_n \indist X$ or sometimes $X_n \rightsquigarrow X$. 
 :::
 
 Essentially, convergence in distribution means that as $n$ gets large, the distribution of $X_n$ becomes more and more similar to the distribution of $X$, which we often call the **asymptotic distribution** of $X_n$ (other names include the **large-sample distribution**). If we know that $X_n \indist X$, then we can use the distribution of $X$ as an approximation to the distribution of $X_n$, and that distribution can be reasonably accurate. This definition also helps to resolve an earlier puzzle: a sequence of iid $\N(0, 1)$ random variables trivially converges in distribution to a $\N(0, 1)$ since every $F_n = \Phi$ (where $\Phi$ is the cdf of the standard normal) even though the draws of any particular $X_n$ are not necessarily close to the draws of the limiting distribution. 

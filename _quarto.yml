@@ -61,8 +61,12 @@ format:
     fig-width: 10
     fig-height: 6.18
     fig-align: center
-    fontfamily: cochineal
+    pdf-engine: pdflatex
+    filters:
+      - callouts.lua
     fontsize: 13pt
     include-in-header:
+      - _fonts.tex
+      - _callouts.tex
       - _bold.tex
       - _macros_pdf.tex
