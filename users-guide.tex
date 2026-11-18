@@ -6743,15 +6743,17 @@ linear predictor.
 
 In general, we are in the business of learning about the CEF, so we are
 unlikely to know if it genuinely is linear or not. In some situations,
-however, we can show that the CEF is linear without any additional
-assumptions. These are situations where the covariates take on a finite
-number of possible values. Going back to the example from the chapter
-introduction, suppose we are interested in the CEF of wait times at
-voting precincts for Black (\(X_i = 1\)) vs.~non-Black (\(X_i = 0\))
-voters. In this case, there are two possible values of the CEF,
-\(\mu(1) = \E[Y_{i}\mid X_{i}= 1]\), the average wait time for Black
-voters, and \(\mu(0) = \E[Y_{i}\mid X_{i} = 0]\), the average wait time
-for non-Black voters. Notice that we can write the CEF as \[ 
+however, we can write the CEF as an exact linear function without any
+additional assumptions. These are situations where the regressors
+\textbf{saturate} the possible values of \(\X_i\)---that is, there is an
+indicator for each combination of covariate values. Going back to the
+example from the chapter introduction, suppose we are interested in the
+CEF of wait times at voting precincts for Black (\(X_i = 1\))
+vs.~non-Black (\(X_i = 0\)) voters. In this case, there are two possible
+values of the CEF, \(\mu(1) = \E[Y_{i}\mid X_{i}= 1]\), the average wait
+time for Black voters, and \(\mu(0) = \E[Y_{i}\mid X_{i} = 0]\), the
+average wait time for non-Black voters. Notice that we can write the CEF
+as \[ 
 \mu(x) = x \mu(1) + (1 - x) \mu(0) = \mu(0) + x\left(\mu(1) - \mu(0)\right)= \beta_0 + x\beta_1,
 \] which is clearly a linear function of \(x\). Based on this
 derivation, we obtain coefficients of this linear CEF that have clear
@@ -6820,12 +6822,12 @@ lovely linear representation, \[
 This approach easily generalizes to categorical variables with an
 arbitrary number of levels.
 
-What have we shown? The CEF is linear without additional assumptions
-when there is a categorical covariate. We can show that this continues
-to hold even when we have multiple categorical variables. We now have
-two binary covariates: \(X_{i1}=1\) indicating a Black voter, and
-\(X_{i2} = 1\) indicating a retired voter versus a working-age voter.
-These two binary variables give us four possible values of the CEF: \[ 
+What have we shown? The CEF is exactly linear in the saturated set of
+indicators. We can show that this continues to hold even when we have
+multiple categorical variables. We now have two binary covariates:
+\(X_{i1}=1\) indicating a Black voter, and \(X_{i2} = 1\) indicating a
+retired voter versus a working-age voter. These two binary variables
+give us four possible values of the CEF: \[ 
 \mu(x_1, x_2) = \begin{cases} 
  \mu_{00} & \text{if } x_1 = 0 \text{ and } x_2 = 0 \text{ (non-Black, working age)} \\
  \mu_{10} & \text{if } x_1 = 1 \text{ and } x_2 = 0 \text{ (Black, working age)} \\
@@ -6885,17 +6887,17 @@ arbitrary numbers of categorical variables by expanding each into a
 series of binary variables and then including all interactions between
 the resulting binary variables.
 
-We have established that when we have a set of categorical covariates,
+We have established that the regressors saturate the covariate levels,
 the true CEF will be linear, and we have seen the various ways to
 represent that CEF. Note that when we use, for example, ordinary least
 squares, we are free to choose how to include our variables. We could
 run a regression of \(Y_i\) on \(X_{i1}\) and \(X_{i2}\) without an
 interaction term, but this model will only be correct if \(\beta_3\) is
-equal to 0, and so the interaction term is irrelevant. We call a model
-\textbf{saturated} if there are as many coefficients as the CEF's unique
-values. A saturated model can, by its nature, always be written as a
-linear function without assumptions. The above examples show how to
-construct saturated models in various situations.
+equal to 0, and so the interaction term is irrelevant. A saturated model
+can, by its nature, always be written as a linear function without
+assumptions, and, by Theorem~\ref{thm-cef-blp}, this saturated BLP must
+recover the CEF exactly. The above examples show how to construct
+saturated models in various situations.
 
 \section{Interpretation of the regression
 coefficients}\label{interpretation-of-the-regression-coefficients}
