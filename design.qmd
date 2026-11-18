@@ -483,7 +483,9 @@ This estimator is **biased** for the population mean since there is a random qua
 ### Sampling weights
 
 The HT and Hajek estimators are both functions of what are commonly called the **sampling weights**,
-$$w_i = \frac{1}{\pi_i}$$.
+$$
+w_i = \frac{1}{\pi_i}.
+$$
 We can write the HT estimator as
 $$
 \widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^N w_iZ_ix_i,
