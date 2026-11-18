@@ -42,9 +42,9 @@ $$
 \begin{cases}
   \E[Y_{i} \mid 0 \leq X_{i} < 25,000] &\text{if } 0 \leq x < 25,000 \\
   \E[Y_{i} \mid 25,000 \leq X_{i} < 50,000] &\text{if } 25,000 \leq x < 50,000\\
-  \E[Y_{i} \mid 50,000 \leq X_{i} < 100,000] &\text{if } 50,000 \leq x < 100,000\\
+  \E[Y_{i} \mid 50,000 \leq X_{i} < 75,000] &\text{if } 50,000 \leq x < 75,000\\
   \vdots \\
-  \E[Y_{i} \mid 200,000 \leq X_{i}] &\text{if } 200,000 \leq x\\
+  \E[Y_{i} \mid 225,000 \leq X_{i}] &\text{if } 225,000 \leq x\\
 \end{cases}
 $$
 This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$, shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. Note that the blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption that wait times do not vary within the bins, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income.
@@ -58,8 +58,8 @@ k <- 10
 my.cols <- rev(RColorBrewer::brewer.pal(k, "RdYlBu"))
 dens.cols <- rev(RColorBrewer::brewer.pal(n = 4, name = "RdBu"))
 x <- exp(rnorm(10000, 1.5, 0.75))
-y <- rpois(n = 10000, exp(4-x*0.15)) 
-z <- MASS::kde2d(x, y, n=100, lims = c(-1, 22, -1, 80))
+y <- rpois(n = 10000, exp(4 - x * 0.15))
+z <- MASS::kde2d(x, y, n = 100, lims = c(-1, 22, -1, 80))
 xs <- c(2.5, 5, 7.5, 15)
 xlabs <- paste("$", xs * 10, "k", sep = "")
 contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0.5), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
@@ -67,12 +67,11 @@ axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "1
 curve(exp(4 - x * 0.15), from = -0.5, to = 22, add = TRUE, col = adjustcolor("indianred", alpha = 0.75), lwd = 3)
 text(x = -1.75, y = 65, "CEF", pos = 4, col = "indianred")
 cuts <- c(0, 2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5)
-abline(v=cuts, col = "grey70", lty = 2)
+abline(v = cuts, col = "grey70", lty = 2)
 means <- tapply(y, cut(x, breaks = cuts), mean)
 for (i in 2:length(cuts)) {
-  segments(x0 = cuts[i-1], x1 = cuts[i], y0 = means[i-1], col = "dodgerblue", lwd = 3)
+  segments(x0 = cuts[i - 1], x1 = cuts[i], y0 = means[i - 1], col = "dodgerblue", lwd = 3)
 }
-
 ```
 
 Similarly, we could **assume** that the CEF follows a simple functional form such as a line:
@@ -119,7 +118,7 @@ $$
 \end{aligned}
 $$
 
-Thus, the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. It follows from this that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$ and negative covariances will lead to negative $\beta_1$. In addition, if $Y_i$ and $X_i$ are independent, $\beta_1 = 0$. The slope scales this covariance by the variance of the covariate, so slopes will be lower for more spread-out covariates and higher for less spread-out covariates. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
+Thus, the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. It follows from this that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$ and negative covariances will lead to negative $\beta_1$. In addition, if $Y_i$ and $X_i$ are uncorrelated, $\beta_1 = 0$. The slope scales this covariance by the variance of the covariate, so slopes will be lower for more spread-out covariates and higher for less spread-out covariates. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
 $$
 \beta_1 = \rho_{YX}\sqrt{\frac{\V[Y_i]}{\V[X_i]}}.
 $$
@@ -141,7 +140,7 @@ contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.co
 axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
 curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
 text(x = -1.75, y = 70, "CEF", pos = 4, col = "indianred")
-abline(lm(y~x), col = "dodgerblue", lwd = 3)
+abline(lm(y ~ x), col = "dodgerblue", lwd = 3)
 text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
 ```
 
@@ -260,11 +259,11 @@ $$
 $$
 Note that we still have made no assumptions about these projection errors except for some mild regularity conditions on the joint distribution of the outcome and covariates. Thus, in very general settings, we can write the linear projection model $Y_i = \X_i'\bfbeta + e_i$ where $\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]$ and conclude that $\E[\X_{i}e_{i}] = 0$ by definition, not by assumption. 
 
-The projection error is uncorrelated with the covariates, so does this mean that the CEF is linear? Unfortunately, no. Recall that while independence implies this lack of correlation, the reverse does not hold. So when we look at the CEF, we have
+The projection error is uncorrelated with the covariates, so does this mean that the CEF is linear? Unfortunately, no. Recall that independence implies mean independence ($\E[e_i\mid\X_i]=\E[e_i]$) implies no correlation, but nothing holds in the reverse direction. So when we look at the CEF, we have
 $$ 
 \E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta + \E[e_{i} \mid \X_{i}],
 $$
-and the last term $\E[e_{i} \mid \X_{i}]$ would only be 0 if the errors were independent of the covariates, so $\E[e_{i} \mid \X_{i}] = \E[e_{i}] = 0$. But nowhere in the linear projection model did we assume this. So while we can (almost) always write the outcome as $Y_i = \X_i'\bfbeta + e_i$ and have those projection errors be uncorrelated with the covariates, it will require additional assumptions to ensure that the true CEF is, in fact, linear $\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta$.  
+and the last term $\E[e_{i} \mid \X_{i}]$ would only be 0 if the errors were mean independent of the covariates, so $\E[e_{i} \mid \X_{i}] = \E[e_{i}] = 0$. But nowhere in the linear projection model did we assume this. So while we can (almost) always write the outcome as $Y_i = \X_i'\bfbeta + e_i$ and have those projection errors be uncorrelated with the covariates, it will require additional assumptions to ensure that the true CEF is, in fact, linear $\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta$.  
 
 To step back for a moment, what have we shown here? In a nutshell, we showed that a population linear regression exists under very general conditions and that we can write the coefficients of that population linear regression as a function of expectations of the joint distribution of the data. We did not, however, assume that the CEF was linear nor that the projection errors were normally distributed.  
 
@@ -275,14 +274,55 @@ Why is this important? The ordinary least squares estimator, the workhorse regre
 
 What is the relationship between the best linear predictor (which we just saw generally exists) and the CEF? To draw the connection, remember that the conditional expectation is importantly the function of $\X_i$ that best predicts $Y_{i}$. The population regression was the best **linear** predictor, but the CEF is the best predictor among all nicely behaved functions of $\X_{i}$, linear or nonlinear. In particular, if we label $L_2$ to be the set of all functions of the covariates $g()$ that have finite squared expectation, $\E[g(\X_{i})^{2}] < \infty$, then we can show that the CEF has the lowest squared prediction error in this class of functions:
 $$ 
-\mu(\X) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - g(\X_{i}))^{2}\right],
+\mu(\X_i) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - g(\X_{i}))^{2}\right],
 $$
 
-So we have established that the CEF is the best predictor and the population linear regression $m(\X_{i})$ is the best linear predictor. These two facts allow us to connect the CEF to the population regression.
+To understand how the CEF and the best linear predictor relate, we can decompose the squared prediction error for any predictor $g(\cdot)$ into two terms: the CEF prediction error and the error from $g(\cdot)$ being different than the CEF. 
+
+::: {#thm-cef-blip-decomposition}
+Let $g(\cdot)$ be a function such that $\E[g(\X_{i})^{2}] < \infty$. Then, 
+$$
+\E\left[(Y_{i} - g(\X_{i}))^{2}\right] = \E\left[(Y_i - \mu(\X_i))^2\right] + \E\left[(\mu(\X_i) - g(\X_i))^2\right]
+$$
+
+:::
+
+::: {.proof}
+
+Adding and subtracting $\mu(\X_i)$ and then expanding terms, we have
+$$
+\begin{aligned}
+\E\left[(Y_{i} - g(\X_{i}))^{2}\right] &= \E\left[(Y_{i} - \mu(\X_i) + \mu(\X_i) - g(\X_{i}))^{2}\right] \\
+&= \E\left[(Y_{i} - \mu(\X_{i}))^{2}\right] + \E\left[(\mu(\X_i) - g(\X_{i}))^{2}\right] \\ &\;\;+ 2\E\left[(Y_i - \mu(\X_i))(\mu(\X_i) - g(X_i))\right].
+\end{aligned}
+$$
+
+Using the law of iterated expectations, $\E[Y_i\mu(\X_i)] = \E[\mu(\X_i)\E[Y_i \mid \X_i]] = \E[\mu(\X_i)^2]$ and, similarly, $\E[Y_ig(\X_i)] = \E[\mu(\X_i)g(\X_i)]$. Using these facts, we can show that,
+$$
+\begin{split}
+\E\left[(Y_i - \mu(\X_i))(\mu(\X_i) - g(X_i))\right] &= \E[Y_i\mu(\X_i)] - \E[Y_ig(\X_i)] \\ & \;\; - \E[\mu(\X_i)^2] + \E[\mu(\X_i)g(\X_i)] \\ &= 0,
+\end{split}
+$$
+which gives the result. 
+
+:::
+
+If we focus on linear predictors, $g(\X_i) = \X_i'\mb{b}$, the first term in the decomposition of @thm-cef-blip-decomposition does not depend on $\mb{b}$. Thus, $\bfbeta$ also minimizes the squared difference between the CEF and a linear predctor,
+$$
+\bfbeta = \argmin_{\mb{b}} \E\left[(Y_i - \X_i'\mb{b})^2\right] = \argmin_{\mb{b}} \E\left[(\mu(\X_i) - \X_i'\mb{b})^2\right].
+$$ {#eq-blp-predicts-cef}
+Thus, one important interpretation of the BLP is as the **best linear approximation to the CEF**, regardless of whether the CEF is linear or not.
+
+
+So we have established that the CEF is the best predictor and the population linear regression $m(\X_{i})$ is the best linear predictor for both the outcome and the CEF. These facts allow us to connect the CEF to the population regression.
 
 ::: {#thm-cef-blp}
 If $\mu(\X_{i})$ is a linear function of $\X_i$, then $\mu(\X_{i}) = m(\X_{i}) = \X_i'\bfbeta$. 
 
+:::
+
+::: {.proof}
+This follows immediately from @eq-blp-predicts-cef. If $m(\X_i)$ is the best linear predictor of $\mu(\X_i)$ and $\mu(\X_i)$ is linear, then $\mu(\X_i)$ must be exactly equal to $m(\X_i)$. 
 :::
 
 This theorem says that if the true CEF is linear, it must equal the population linear regression. The proof of this is straightforward: the CEF is the best predictor, so if it is linear, it must also be the best linear predictor. 
@@ -512,7 +552,7 @@ The last two results (multiple regressions from bivariate and omitted variable b
 
 ## Drawbacks of the BLP
 
-The best linear predictor is, of course, a *linear* approximation to the CEF, and this approximation could be quite poor if the true CEF is highly nonlinear. A more subtle issue with the BLP is that it is sensitive to the marginal distribution of the covariates when the CEF is nonlinear. Let's return to our example of wait times at voting precincts and income. In @fig-blp-limits, we show the true CEF and the BLP when we restrict income below \$50,000 or above \$100,000. The BLP can vary quite dramatically here. This figure is an extreme example, but the essential point still holds as the marginal distribution of $X_i$ changes.
+The best linear predictor is, of course, a *linear* approximation to the CEF, and this approximation could be quite poor if the true CEF is highly nonlinear. A more subtle issue with the BLP is that it is sensitive to the marginal distribution of the covariates when the CEF is nonlinear. The BLP is "best" on average over the distribution of the covariates, so changing the distribution of the covariates will also change what linear predictor is best. Let's return to our example of wait times at voting precincts and income. In @fig-blp-limits, we show the true CEF and the BLP when we restrict income below \$50,000 or above \$100,000. The BLP can vary quite dramatically here. This figure is an extreme example, but the essential point still holds as the marginal distribution of $X_i$ changes.
 
 
 ```{r}
@@ -523,12 +563,12 @@ contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.co
 axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
 curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
 text(x = -1.75, y = 70, "CEF", pos = 4, col = "indianred")
-abline(lm(y~x, subset = x < 5), col = "dodgerblue", lwd = 3)
-abline(lm(y~x, subset = x > 10), col = "dodgerblue", lwd = 3)
+abline(lm(y ~ x, subset = x < 5), col = "dodgerblue", lwd = 3)
+abline(lm(y ~ x, subset = x > 10), col = "dodgerblue", lwd = 3)
 text(x = -2, y = 45, "BLP\nX < 50", col = "dodgerblue", pos = 4)
 text(x = -2, y = 5, "BLP\nX > 100k", col = "dodgerblue", pos = 4)
 ```
 
 ## Summary
 
-As we discussed in this chapter, with even a moderate number of covariates, conditional expectation functions (also known as regressions) become very difficult to estimate because of the high dimensionality involved. To avoid this problem, we can focus on a different quantity, the **best linear predictor** which is the linear function of the covariates that best predicts the outcome in mean-squared error. The BLP exists under very mild conditions and has very interpretable parameters. Another strategy is to impose a linearity assumption on the **conditional expectation function** to make it more estimable, in which case, the BLP and the CEF are the same function. With a small number of discrete covariates it is possible to **saturate** a model so that linearity holds mechanically. Coefficients on population linear regressions with multiple independent variables can always be written in terms of a regression of the outcome on one variable orthogonalized relative to the rest of the independent variables. The **omitted variable bias** formula shows how leaving a variable out of the best linear affects the coefficients on other independent variables. In the next chapter, we will turn to using data to estimate the coefficients for these population linear regressions. 
+As we discussed in this chapter, with even a moderate number of covariates, conditional expectation functions (also known as regressions) become very difficult to estimate because of the high dimensionality involved. To avoid this problem, we can focus on a different quantity, the **best linear predictor** which is the linear function of the covariates that best predicts the outcome in mean-squared error. The BLP exists under very mild conditions and has a clear interpretation as the best linear summary of the CEF over the observed distribution of the covariates. Another strategy is to impose a linearity assumption on the **conditional expectation function** to make it more estimable, in which case, the BLP and the CEF are the same function. With a small number of discrete covariates it is possible to **saturate** a model so that linearity holds mechanically. Coefficients on population linear regressions with multiple independent variables can always be written in terms of a regression of the outcome on one variable orthogonalized relative to the rest of the independent variables. The **omitted variable bias** formula shows how leaving a variable out of the best linear affects the coefficients on other independent variables. In the next chapter, we will turn to using data to estimate the coefficients for these population linear regressions. 
