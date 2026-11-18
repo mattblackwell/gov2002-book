@@ -409,7 +409,7 @@ so, for example, $\text{trace}(\mb{I}_{n}) = n$. A couple of key properties of t
 :::
 
 
-## Residual regression
+## Residual regression {#sec-residual-regression}
 
 There are many situations where we can partition the covariates into two groups, and we might wonder if it is possible to express or calculate the OLS coefficients for just one set of covariates. In particular, let the columns of $\Xmat$ be partitioned into $[\Xmat_{1} \Xmat_{2}]$, so that the linear prediction we are estimating is 
 $$ 

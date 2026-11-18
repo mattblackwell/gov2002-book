@@ -326,11 +326,11 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -1430,8 +1430,9 @@ has lower sampling variance than the HT estimator.
 \subsection{Sampling weights}\label{sampling-weights}
 
 The HT and Hajek estimators are both functions of what are commonly
-called the \textbf{sampling weights}, \[w_i = \frac{1}{\pi_i}\]. We can
-write the HT estimator as \[
+called the \textbf{sampling weights}, \[
+w_i = \frac{1}{\pi_i}.
+\] We can write the HT estimator as \[
 \widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^N w_iZ_ix_i,
 \] and we can write the Hajek estimator as \[
 \widetilde{X}_{hj} = \frac{\sum_{i=1}^N w_iZ_{i}x_{i}}{\sum_{i=1}^{N} w_iZ_{i}}.
@@ -6350,7 +6351,7 @@ infinite number of means for each possible income.
 
 \caption{\label{fig-cef-binned}Hypothetical joint distribution of income
 and poll wait times (contour plot), conditional expectation function
-(red), and the conditional expectation of the binned income (blue).}
+(red), and the conditional expectation of the binned income (blue).''}
 
 \end{figure}%
 
@@ -6762,7 +6763,7 @@ substantive interpretations:
 \begin{itemize}
 \tightlist
 \item
-  \(\beta_0 = \mu(0)\): the expected wait time for a Black voter.
+  \(\beta_0 = \mu(0)\): the expected wait time for a non-Black voter.
 \item
   \(\beta_1 = \mu(1) - \mu(0)\): the difference in average wait times
   between Black and non-Black voters. How \(X_{i}\) is defined here is
@@ -6926,7 +6927,8 @@ covariates to the vector, \[
 predicted outcome corresponding to a one-unit change in the covariate
 holding all other covariates constant. Each coefficient summarizes the
 ``all else equal'' difference in the predicted outcome for each
-covariate.
+covariate. Section~\ref{sec-fwl} will make precise what we mean by
+``holding fixed'' means in the context of a population regression.
 
 \subsection{Polynomial functions of the
 covariates}\label{polynomial-functions-of-the-covariates}
@@ -6956,9 +6958,9 @@ quadratic covariate, we have \[
 \] so the marginal effect on prediction varies as a function of \(x_1\).
 From this, we see that the individual interpretations of the
 coefficients are less interesting: \(\beta_1\) is the marginal effect
-when \(X_{i1} = 0\) and \(\beta_2 / 2\) describes how a one-unit change
-in \(X_{i1}\) changes the marginal effect. As is hopefully clear, it
-will often be more straightforward to visualize the nonlinear predictor
+when \(X_{i1} = 0\) and \(2\beta_2\) describes how a one-unit change in
+\(X_{i1}\) changes the marginal effect. As is hopefully clear, it will
+often be more straightforward to visualize the nonlinear predictor
 function (perhaps using the orthogonalization techniques in
 Section~\ref{sec-fwl}).
 
@@ -7055,19 +7057,32 @@ prediction errors from a population linear regression of \(X_i\) on
 \widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
 \] Given the properties of projection errors, we know that this
 orthogonalized version of \(X_{i}\) will be uncorrelated with \(Z_{i}\)
-since \(\E[\widetilde{X}_{i}Z_{i}] = 0\). Remarkably, the coefficient on
+since \(\E[\widetilde{X}_{i}Z_{i}] = 0\). In fact, the coefficient on
 \(X_i\) from the ``long'' BLP in Equation~\ref{eq-two-var-blp} is the
 same as the regression of \(Y_i\) on this orthogonalized
-\(\widetilde{X}_i\), \[ 
-\beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
-\]
+\(\widetilde{X}_i\). To see this, let's substitute the linear projection
+of \(Y_i\) onto \((1, X_i, Z_i)\) into the covariance for that
+regression: \[
+\cov(Y_{i}, \widetilde{X}_{i}) = \cov(\alpha + \beta X_i + \gamma Z_i, \widetilde{X}_i) = \beta\cov(X_i, \widetilde{X}_i) + \cov(Z_i, \widetilde{X}_i).
+\] As described above, we know \(\cov(Z_i, \widetilde{X}_i) = 0\) by
+construction. Now, notice that this also implies that
+\(\cov(\delta_0 + \delta_1 Z_i, \widetilde{X}_i) = 0\) so we have the
+following: \[
+\begin{aligned}
+\cov(X_i, \widetilde{X}_i) &= \cov(X_i, \widetilde{X}_i) - \cov(\delta_0 + \delta_1 Z_i, \widetilde{X}_i) \\ &= \cov(\widetilde{X}_i, \widetilde{X}_i) \\&= \V[\widetilde{X}_i]
+\end{aligned}
+\] Combining these facts, we have
+\(\cov(Y_{i}, \widetilde{X}_{i}) = \beta \V[\widetilde{X}_i]\), or \[ 
+\beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}.
+\] This is the population version of the \textbf{Frisch-Waugh-Lovell
+theorem} (see Section~\ref{sec-residual-regression}).
 
 We can expand this idea to when there are several other covariates.
 Suppose now that we are interested in a regression of \(Y_i\) on
 \(\X_i\) and we are interested in the coefficient on the \(k\)th
 covariate. Let \(\X_{i,-k}\) be the vector of covariates omitting the
-\(k\)th entry and let \(m_k(\X_{i,-k})\) represent the BLP of \(X_{ik}\)
-on these other covariates. We can define
+\(k\)th entry (including the constant) and let \(m_k(\X_{i,-k})\)
+represent the BLP of \(X_{ik}\) on these other covariates. We can define
 \(\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})\) as the \(k\)th
 variable orthogonalized with respect to the rest of the variables and we
 can write the coefficient on \(X_{ik}\) as \[ 
@@ -7148,7 +7163,7 @@ changes.
 }
 
 \caption{\label{fig-blp-limits}Linear projections for when truncating
-income distribution below \$50k and above \$100k.}
+income distribution below \$50k and above \$100k.''}
 
 \end{figure}%
 
@@ -7705,7 +7720,7 @@ orthogonal decomposition of the outcome vector: \[
 \mb{Y} = \Xmat\bhat + \widehat{\mb{e}} = \mb{P}_{\Xmat}\mb{Y} + \mb{M}_{\Xmat}\mb{Y}.
 \]
 
-\section{Residual regression}\label{residual-regression}
+\section{Residual regression}\label{sec-residual-regression}
 
 There are many situations where we can partition the covariates into two
 groups, and we might wonder if it is possible to express or calculate

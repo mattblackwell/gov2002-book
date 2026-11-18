@@ -52,25 +52,43 @@ This approach assumes, perhaps incorrectly, that the average wait time does not 
 ```{r}
 #| echo: false
 #| label: fig-cef-binned
-#| fig-cap: "Hypothetical joint distribution of income and poll wait times (contour plot), conditional expectation function (red), and the conditional expectation of the binned income (blue)."
+#| fig-cap: |
+#|  Hypothetical joint distribution of income and poll wait times (contour
+#|  plot), conditional expectation function (red), and the conditional
+#|  expectation of the binned income (blue)."
 set.seed(02143)
 k <- 10
-my.cols <- rev(RColorBrewer::brewer.pal(k, "RdYlBu"))
-dens.cols <- rev(RColorBrewer::brewer.pal(n = 4, name = "RdBu"))
+my_cols <- rev(RColorBrewer::brewer.pal(k, "RdYlBu"))
 x <- exp(rnorm(10000, 1.5, 0.75))
 y <- rpois(n = 10000, exp(4 - x * 0.15))
 z <- MASS::kde2d(x, y, n = 100, lims = c(-1, 22, -1, 80))
 xs <- c(2.5, 5, 7.5, 15)
 xlabs <- paste("$", xs * 10, "k", sep = "")
-contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0.5), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
-axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
-curve(exp(4 - x * 0.15), from = -0.5, to = 22, add = TRUE, col = adjustcolor("indianred", alpha = 0.75), lwd = 3)
+contour(
+  z,
+  levels = seq(0.0005, 0.008, length.out = 10),
+  col = adjustcolor(my_cols, alpha = 0.5),
+  drawlabels = FALSE, xlab = "Income", ylab = "Wait Times",
+  las = 1, bty = "n", xaxt = "n"
+)
+axis(
+  side = 1, at = c(2.5, 5, 10, 15, 20),
+  labels = c("$25k", "$50k", "100k", "150k", "200k")
+)
+curve(
+  exp(4 - x * 0.15),
+  from = -0.5, to = 22, add = TRUE,
+  col = adjustcolor("indianred", alpha = 0.75), lwd = 3
+)
 text(x = -1.75, y = 65, "CEF", pos = 4, col = "indianred")
 cuts <- c(0, 2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5)
 abline(v = cuts, col = "grey70", lty = 2)
 means <- tapply(y, cut(x, breaks = cuts), mean)
 for (i in 2:length(cuts)) {
-  segments(x0 = cuts[i - 1], x1 = cuts[i], y0 = means[i - 1], col = "dodgerblue", lwd = 3)
+  segments(
+    x0 = cuts[i - 1], x1 = cuts[i], y0 = means[i - 1],
+    col = "dodgerblue", lwd = 3
+  )
 }
 ```
 
@@ -136,9 +154,22 @@ Be sure to remember that the BLP, $m(x)$, and the CEF, $\mu(x)$, are distinct en
 #| label: fig-cef-blp
 #| echo: false
 #| fig.cap: "Comparison of the CEF and the best linear predictor."
-contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0.25), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
-axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
-curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
+contour(
+  z,
+  levels = seq(0.0005, 0.008, length.out = 10),
+  col = adjustcolor(my_cols, alpha = 0.25),
+  drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1,
+  bty = "n", xaxt = "n"
+)
+axis(
+  side = 1, at = c(2.5, 5, 10, 15, 20),
+  labels = c("$25k", "$50k", "100k", "150k", "200k")
+)
+curve(
+  exp(4 - x * 0.15),
+  from = -4, to = 22, add = TRUE, col = "indianred",
+  lwd = 3
+)
 text(x = -1.75, y = 70, "CEF", pos = 4, col = "indianred")
 abline(lm(y ~ x), col = "dodgerblue", lwd = 3)
 text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
@@ -334,7 +365,7 @@ $$
 $$
 which is clearly a linear function of $x$. Based on this derivation, we obtain coefficients of this linear CEF that have clear substantive interpretations:
 
-- $\beta_0 = \mu(0)$: the expected wait time for a Black voter. 
+- $\beta_0 = \mu(0)$: the expected wait time for a non-Black voter. 
 - $\beta_1 = \mu(1) - \mu(0)$: the difference in average wait times between Black and non-Black voters. 
 How $X_{i}$ is defined here is important since the intercept will always be the average outcome when $X_i = 0$, and the slope will always be the difference in means between the $X_i = 1$ group and the $X_i = 0$ group. 
 
@@ -419,7 +450,7 @@ Notice that nothing changes in this interpretation when adding more covariates t
 $$
  m(x_{1} + 1, \bfx_{2}) - m(x_{1}, \bfx_{2}) = \beta_1,
 $$
-The coefficient on a particular variable is the change in the predicted outcome corresponding to a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the "all else equal" difference in the predicted outcome for each covariate. 
+The coefficient on a particular variable is the change in the predicted outcome corresponding to a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the "all else equal" difference in the predicted outcome for each covariate. @sec-fwl will make precise what we mean by "holding fixed" means in the context of a population regression. 
 
 
 ### Polynomial functions of the covariates
@@ -441,7 +472,7 @@ resulting in $\beta_1 + \beta_2(2x_{1} + 1)$. This formula might be an interesti
 $$ 
 \frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1},
 $$
-so the marginal effect on prediction varies as a function of $x_1$. From this, we see that the individual interpretations of the coefficients are less interesting: $\beta_1$ is the marginal effect when $X_{i1} = 0$ and $\beta_2 / 2$ describes how a one-unit change in $X_{i1}$ changes the marginal effect. As is hopefully clear, it will often be more straightforward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in @sec-fwl). 
+so the marginal effect on prediction varies as a function of $x_1$. From this, we see that the individual interpretations of the coefficients are less interesting: $\beta_1$ is the marginal effect when $X_{i1} = 0$ and $2\beta_2$ describes how a one-unit change in $X_{i1}$ changes the marginal effect. As is hopefully clear, it will often be more straightforward to visualize the nonlinear predictor function (perhaps using the orthogonalization techniques in @sec-fwl). 
 
 
 [^effect]: Note the choice of language here. The marginal effect is on the predicted value of $Y_i$, not on $Y_i$ itself. So these marginal effects are associational, not necessarily causal quantities. 
@@ -507,12 +538,23 @@ To write a simple formula for $\beta$ when the covariates are not orthogonal, we
 $$ 
 \widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
 $$
-Given the properties of projection errors, we know that this orthogonalized version of $X_{i}$ will be uncorrelated with $Z_{i}$ since $\E[\widetilde{X}_{i}Z_{i}] = 0$. Remarkably, the coefficient on $X_i$ from the "long" BLP in @eq-two-var-blp is the same as the regression of $Y_i$ on this orthogonalized $\widetilde{X}_i$, 
-$$ 
-\beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}
+Given the properties of projection errors, we know that this orthogonalized version of $X_{i}$ will be uncorrelated with $Z_{i}$ since $\E[\widetilde{X}_{i}Z_{i}] = 0$. In fact, the coefficient on $X_i$ from the "long" BLP in @eq-two-var-blp is the same as the regression of $Y_i$ on this orthogonalized $\widetilde{X}_i$. To see this, let's substitute the linear projection of $Y_i$ onto $(1, X_i, Z_i)$ into the covariance for that regression:
 $$
+\cov(Y_{i}, \widetilde{X}_{i}) = \cov(\alpha + \beta X_i + \gamma Z_i, \widetilde{X}_i) = \beta\cov(X_i, \widetilde{X}_i) + \cov(Z_i, \widetilde{X}_i).
+$$
+As described above, we know $\cov(Z_i, \widetilde{X}_i) = 0$ by construction. Now, notice that this also implies that $\cov(\delta_0 + \delta_1 Z_i, \widetilde{X}_i) = 0$ so we have the following:
+$$
+\begin{aligned}
+\cov(X_i, \widetilde{X}_i) &= \cov(X_i, \widetilde{X}_i) - \cov(\delta_0 + \delta_1 Z_i, \widetilde{X}_i) \\ &= \cov(\widetilde{X}_i, \widetilde{X}_i) \\&= \V[\widetilde{X}_i]
+\end{aligned}
+$$
+Combining these facts, we have $\cov(Y_{i}, \widetilde{X}_{i}) = \beta \V[\widetilde{X}_i]$, or
+$$ 
+\beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}.
+$$
+This is the population version of the **Frisch-Waugh-Lovell theorem** (see @sec-residual-regression). 
 
-We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-k}$ be the vector of covariates omitting the $k$th entry and let $m_k(\X_{i,-k})$ represent the BLP of $X_{ik}$ on these other covariates. We can define $\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})$ as the $k$th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on $X_{ik}$ as
+We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-k}$ be the vector of covariates omitting the $k$th entry (including the constant) and let $m_k(\X_{i,-k})$ represent the BLP of $X_{ik}$ on these other covariates. We can define $\widetilde{X}_{ik} = X_{ik} - m_{k}(\X_{i,-k})$ as the $k$th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on $X_{ik}$ as
 $$ 
 \beta_k = \frac{\cov(Y_i, \widetilde{X}_{ik})}{\V[\widetilde{X}_{ik}]}.
 $$ 
@@ -558,10 +600,24 @@ The best linear predictor is, of course, a *linear* approximation to the CEF, an
 ```{r}
 #| label: fig-blp-limits
 #| echo: false
-#| fig.cap: "Linear projections for when truncating income distribution below $50k and above $100k."
-contour(z, levels = seq(0.0005, 0.008, length.out = 10), col = adjustcolor(my.cols, alpha = 0), drawlabels = FALSE, xlab = "Income", ylab = "Wait Times", las = 1, bty = "n", xaxt = "n")
-axis(side = 1, at = c(2.5, 5, 10, 15, 20), labels = c("$25k", "$50k", "100k", "150k", "200k"))
-curve(exp(4 - x * 0.15), from = -4, to = 22, add = TRUE, col = "indianred", lwd = 3)
+#| fig.cap: |
+#|  Linear projections for when truncating income distribution below $50k and 
+#|  above $100k."
+contour(
+  z,
+  levels = seq(0.0005, 0.008, length.out = 10),
+  col = adjustcolor(my_cols, alpha = 0), drawlabels = FALSE, xlab = "Income",
+  ylab = "Wait Times", las = 1, bty = "n", xaxt = "n"
+)
+axis(
+  side = 1, at = c(2.5, 5, 10, 15, 20),
+  labels = c("$25k", "$50k", "100k", "150k", "200k")
+)
+curve(
+  exp(4 - x * 0.15),
+  from = -4, to = 22, add = TRUE, col = "indianred",
+  lwd = 3
+)
 text(x = -1.75, y = 70, "CEF", pos = 4, col = "indianred")
 abline(lm(y ~ x, subset = x < 5), col = "dodgerblue", lwd = 3)
 abline(lm(y ~ x, subset = x > 10), col = "dodgerblue", lwd = 3)
