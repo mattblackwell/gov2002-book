@@ -42,6 +42,11 @@ book:
 
 bibliography: references.bib
 
+# Assumptions reuse the built-in conjecture type: write ::: {#cnj-...} and @cnj-...
+crossref:
+  cnj-title: "Assumption"
+  cnj-prefix: "Assumption"
+
 format:
   html:
     theme: cosmo

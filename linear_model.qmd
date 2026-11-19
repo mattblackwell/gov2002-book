@@ -177,16 +177,6 @@ text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
 ```
 
 
-### Beyond linear approximations
-
-The linear part of the “best linear predictor” is less restrictive than it appears at first glance. We can easily modify the minimum MSE problem to find the best quadratic, cubic, or general polynomial function of $X_i$ that predicts $Y_i$. For example, the quadratic function of $X_i$ that best predicts $Y_i$ would be
-$$ 
-m(X_i, X_i^2) = \beta_0 + \beta_1X_i + \beta_2X_i^2 \quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
-$$
-While the equation is now a quadratic function of the covariates, it is still a linear function of the unknown parameters $(\beta_{0}, \beta_{1}, \beta_{2})$, so we still call this a best linear predictor. 
-
-We could include higher-order terms of $X_i$ in the same manner, and, including more polynomial terms, $X_i^p$, will allow the BLP to be a more flexible function of $X_i$. When we estimate the BLP, however, we usually pay for this flexibility with overfitting and high variance in our estimates. 
-
 
 ### Linear prediction with multiple covariates 
 
@@ -205,7 +195,7 @@ This BLP solves the same fundamental optimization problem as in the bivariate ca
 
 <!-- TODO: make this #assumption -->
 
-::: {.callout-note}
+::: {#cnj-blp-assumptions}
 ## Best linear projection assumptions
 
 Without some assumptions on the joint distribution of the data, the following "regularity conditions" will ensure the existence of the BLP:
@@ -215,7 +205,21 @@ Without some assumptions on the joint distribution of the data, the following "r
 3. $\mb{Q}_{\mb{XX}} = \E[\mb{XX}']$ is positive definite (no entry of $\X$ is a perfect linear combination of the others).  
 :::
 
-Under these assumptions, it is possible to derive a closed-form expression for the **population coefficients** $\bfbeta$ using matrix calculus. To set up the optimization problem, we find the first-order condition by taking the derivative of the expectation of the squared errors. First, take the derivative of the squared prediction errors using the chain rule:
+Under these assumptions, it is possible to derive a closed-form expression for the **population coefficients** $\bfbeta$ using matrix calculus. 
+
+
+::: {#thm-blp}
+
+## Best linear predictor
+
+Let $\mb{Q}_{\X Y} = \E[\X_iY_i]$. Under @cnj-blp-assumptions, the coefficients for the best linear predictor is
+$$
+\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}.
+$$
+:::
+
+::: {.proof}
+To set up the optimization problem, we find the first-order condition by taking the derivative of the expectation of the squared errors. First, take the derivative of the squared prediction errors using the chain rule:
 $$ 
 \begin{aligned}
   \frac{\partial}{\partial \mb{b}}\left(Y_{i} - \X_{i}'\mb{b}\right)^{2}
@@ -229,13 +233,13 @@ where the third equality comes from the fact that $(Y_{i} - \X_{i}'\bfbeta)$ is 
 $$ 
 \begin{aligned}
   0 &= -2\E[\X_{i}Y_{i} - \X_{i}\X_{i}'\bfbeta ] \\
-  \E[\X_{i}\X_{i}'] \bfbeta &= \E[\X_{i}Y_{i}],
+  \E[\X_{i}\X_{i}'] \bfbeta &= \E[\X_{i}Y_{i}].
 \end{aligned}
 $$
-which implies the population coefficients are
-$$ 
-\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
-$$
+Multiplying by the inverse of $\mb{Q}_{\mb{XX}}$ (which exists under @cnj-blp-assumptions) gives the result.
+
+:::
+
 This gives us an expression for the coefficients for the population best linear predictor in terms of the joint distribution $(Y_{i}, \X_{i})$. 
 
 A couple of facts might be useful for interpreting this expression substantively. Recall that $\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']$ is a $(k+1) \times (k+1)$ matrix and $\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]$ is a $(k+1)\times 1$ column vector, which implies that $\bfbeta$ is also a $(k+1) \times 1$ column vector. 
@@ -258,6 +262,18 @@ With an expression for the population linear regression coefficients, we can wri
 $$ 
 m(\X_{i}) = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
 $$
+
+### Beyond linear approximations
+
+The linear part of the “best linear predictor” is less restrictive than it appears at first glance. When using multivariate BLP, we can define the covariates in clever ways to allow for a particular covariate to use a quadratic, cubic, or general polynomial function of $X_i$ to predicts $Y_i$. For example, suppose we have a single continuous covariate of interest, $X_i$. We can define the random vector $\X_i = (1, X_i, X_i^2)'$ and calculate the BLP with regard to this vector:
+$$ 
+\begin{aligned}
+m(\X_i) &= \beta_0 + \beta_1X_i + \beta_2X_i^2 \\ &\quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
+\end{aligned}
+$$
+While the equation is now a quadratic function of the covariates, it is still a linear function of the unknown parameters $(\beta_{0}, \beta_{1}, \beta_{2})$, so we still call this a best linear predictor. Note that this vector does not violate @cnj-blp-assumptions since $X_i$ and $X_i^2$ are nonlinear functions of one another. 
+
+We could include higher-order terms of $X_i$ in the same manner, and, including more polynomial terms, $X_i^p$, will allow the BLP to be a more flexible function of $X_i$. When we estimate the BLP, however, we usually pay for this flexibility with overfitting and high variance in our estimates. 
 
 
 
@@ -430,7 +446,7 @@ Thus, we can write the CEF with two binary covariates as linear when the linear 
 This result also generalizes to an arbitrary number of binary covariates. If we have $p$ binary covariates, then the CEF will be linear with all two-way interactions, $x_1x_2$, all three-way interactions, $x_1x_2x_3$, up to the $p$-way interaction $x_1\times\cdots\times x_p$. Furthermore, we can generalize to arbitrary numbers of categorical variables by expanding each into a series of binary variables and then including all interactions between the resulting binary variables. 
 
 
-We have established that the regressors saturate the covariate levels, the true CEF will be linear, and we have seen the various ways to represent that CEF. Note that when we use, for example, ordinary least squares, we are free to choose how to include our variables. We could run a regression of $Y_i$ on $X_{i1}$ and $X_{i2}$ without an interaction term, but this model will only be correct if $\beta_3$ is equal to 0, and so the interaction term is irrelevant. A saturated model can, by its nature, always be written as a linear function without assumptions, and, by @thm-cef-blp, this saturated BLP must recover the CEF exactly. The above examples show how to construct saturated models in various situations.
+We have established that the regressors saturate the covariate levels, the true CEF will be linear, and we have seen the various ways to represent that CEF. Note that when we use, for example, ordinary least squares, we are free to choose how to include our variables. We could run a regression of $Y_i$ on $X_{i1}$ and $X_{i2}$ without an interaction term, but this model will only be equal to the CEF if $\beta_3$ is equal to 0, and so the interaction term is irrelevant (otherwise, it will still be a valid BL, just not the CEF). A saturated model can, by its nature, always be written as a linear function without assumptions, and, by @thm-cef-blp, this saturated BLP must recover the CEF exactly. The above examples show how to construct saturated models in various situations.
 
 ## Interpretation of the regression coefficients
 
@@ -506,11 +522,19 @@ Interactions are a standard part of social science research because they allow u
 
 ## Centering variables to improve interpretability
 
-In many cases, the so-called marginal coefficients on the lower-order terms ($\beta_1$ for $X_{i1}$ and $\beta_2$ for $X_{i2}$) are uninteresting because they represent the marginal effect of one variable when the other is 0. If $X_{i1}$ is age and $X_{i2}$ is the Black/non-Black indicator, then $\beta_2$ is the estimated difference in average voter wait times for voters who are zero years old, an obviously nonsensical parameter. We can improve the interpretability of the coefficient by recentering the age variable. Suppose we include a mean-centered version of age, 
+In many cases, the coefficients on the lower-order terms ($\beta_1$ for $X_{i1}$ and $\beta_2$ for $X_{i2}$) are uninteresting because they represent the marginal effect of one variable when the other is 0. Switching our running example, suppose $X_{i1}$ is age and $X_{i2}$ is the Black/non-Black indicator, then $\beta_2$ is the difference in average voter wait times for voters who are zero years old, an obviously nonsensical parameter. We can improve the interpretability of the coefficient by recentering the age variable. Suppose we include a mean-centered version of age, 
 $$
-\widetilde{X}_{i1} = X_{i1} - \overline{X}_1
+\widetilde{X}_{i1} = X_{i1} - \E[X_{i1}]
 $$
-in place of $X_{i1}$. That is, we regress $Y_i$ on $\widetilde{X}_{i1}$, $X_{i2}$, and $\widetilde{X}_{i1}X_{i2}$. In this case, $\beta_2$ (the coefficient on the race indicator $X_{i2}$) is the marginal effect of $X_{i2}$ when $\widetilde{X}_{i1} = 0$ or when $X_{i1} = \overline{X}_1$. Thus, this coefficient is now the estimated difference in average voter wait times for the average-aged voter, which is far more interpretable. This recentering has no effect on either $\beta_1$ or $\beta_3$, which is rather remarkable.
+in place of $X_{i1}$. That is, we regress $Y_i$ on $\widetilde{\X}_i = (1, \widetilde{X}_{i1}, X_{i2}, \widetilde{X}_{i1}X_{i2})$. These regressors are just an invertible linear transfomation of the original $\X_i$, so the two BLPs must be the same function. Thus, to see how to interpret the coefficients from this new BLP, we can substitute $X_{i1} = \widetilde{X}_{i1} + \E[X_{i1}]$ into the original BLP:
+$$
+\begin{aligned}
+m(\X_i) &= \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i1}X_{i2} \\
+&= \beta_0 + \beta_1 (\widetilde{X}_{i1} + \E[X_{i1}]) + \beta_2 X_{i2} + \beta_3 (\widetilde{X}_{i1} + \E[X_{i1}])X_{i2} \\
+&= \underbrace{(\beta_0 + \beta_1 \E[X_{i1}])}_{\widetilde{\beta}_0} + \underbrace{\beta_1}_{\widetilde{\beta}_1} \widetilde{X}_{i1} + \underbrace{(\beta_2 + \beta_3 \E[X_{i1}])}_{\widetilde{\beta}_2}X_{i2} + \underbrace{\beta_3}_{\widetilde{\beta}_3}\widetilde{X}_{i1}X_{i2}.
+\end{aligned}
+$$
+In this case, $\widetilde{\beta}_2$ (the coefficient on the race indicator $X_{i2}$ in the transformed BLP) is the marginal effect of $X_{i2}$ when $\widetilde{X}_{i1} = 0$ or when $X_{i1} = \E[X_{i1}]$. Thus, this coefficient is now the difference in average voter wait times for the average-aged voter, which is far more interpretable. The recentering changes the interpretation of the intercept as well. As the display shows, however, $\widetilde{\beta}_1 = \beta_1$ and $\widetilde{\beta}_3 = \beta_3$, so the coefficients on age and the interaction are unchanged. 
 
 
 :::
