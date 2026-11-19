@@ -9,14 +9,16 @@ In this chapter, we focus on motivating the estimator and the mechanical or alge
 #| label: fig-ajr-scatter
 #| echo: false
 #| fig.cap: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001).
-ajr <- foreign::read.dta("assets/data/ajr.dta") 
+ajr <- foreign::read.dta("assets/data/ajr.dta")
 
 mod <- lm(logpgp95 ~ avexpr, data = ajr)
 
-plot(logpgp95 ~ avexpr, data = ajr, pch = 19, col = "grey80",
-     bty = "n", las = 1,
-     xlab = "Average Protection Against Expropriation Risk",
-     ylab = "Log GDP pc, 1995")
+plot(logpgp95 ~ avexpr,
+  data = ajr, pch = 19, col = "grey80",
+  bty = "n", las = 1,
+  xlab = "Average Protection Against Expropriation Risk",
+  ylab = "Log GDP pc, 1995"
+)
 title("Political Institutions and Economic Development", adj = 0, line = 0)
 abline(mod, lwd = 3, col = "indianred")
 ```
@@ -99,7 +101,7 @@ $$
 ## Formula for the OLS slopes
 
 Almost all regression will contain an intercept term, usually represented as a constant 1 in the covariate vector. It is also possible to obtain expressions for the OLS estimates of the intercept and variable coefficients separately. We can rewrite the best linear predictor decomposition as $$ 
-Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}.
+Y_{i} = \alpha + \X_{i}'\bfbeta + e_{i}.
 $$
 Defined this way, we can write the OLS estimator for the "slopes" on $\X_i$ as the OLS estimator with all variables demeaned:
 $$ 

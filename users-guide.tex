@@ -325,14 +325,14 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
 \theoremstyle{plain}
 \newtheorem{conjecture}{Assumption}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -6543,7 +6543,7 @@ rule: \[
   &= -2\left(\X_{i}Y_{i} - \X_{i}\X_{i}'\mb{b}\right),
 \end{aligned}
 \] where the third equality comes from the fact that
-\((Y_{i} - \X_{i}'\bfbeta)\) is a scalar. We can plug this into the
+\((Y_{i} - \X_{i}'\mb{b})\) is a scalar. We can plug this into the
 expectation to get the first-order condition and solve for \(\bfbeta\),
 \[ 
 \begin{aligned}
@@ -7098,7 +7098,10 @@ To write a simple formula for \(\beta\) when the covariates are not
 orthogonal, we \textbf{orthogonalize} \(X_i\) by obtaining the
 prediction errors from a population linear regression of \(X_i\) on
 \(Z_i\): \[ 
-\widetilde{X}_{i} = X_{i} - (\delta_{0} + \delta_{1}Z_{i}) \quad\text{where}\quad (\delta_{0}, \delta_{1}) = \argmin_{(d_{0},d_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (d_{0} + d_{1}Z_{i}))^{2}]
+\begin{aligned}
+\widetilde{X}_{i} &= X_{i} - (\pi_{0} + \pi_{1}Z_{i}) \quad\text{where}\quad \\ 
+(\pi_{0}, \pi_{1}) &= \argmin_{(b_{0},b_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (b_{0} + b_{1}Z_{i}))^{2}]
+\end{aligned}
 \] Given the properties of projection errors, we know that this
 orthogonalized version of \(X_{i}\) will be uncorrelated with \(Z_{i}\)
 since \(\E[\widetilde{X}_{i}Z_{i}] = 0\). In fact, the coefficient on
@@ -7110,10 +7113,10 @@ regression: \[
 \cov(Y_{i}, \widetilde{X}_{i}) = \cov(\alpha + \beta X_i + \gamma Z_i, \widetilde{X}_i) = \beta\cov(X_i, \widetilde{X}_i) + \cov(Z_i, \widetilde{X}_i).
 \] As described above, we know \(\cov(Z_i, \widetilde{X}_i) = 0\) by
 construction. Now, notice that this also implies that
-\(\cov(\delta_0 + \delta_1 Z_i, \widetilde{X}_i) = 0\) so we have the
+\(\cov(\pi_0 + \pi_1 Z_i, \widetilde{X}_i) = 0\) so we have the
 following: \[
 \begin{aligned}
-\cov(X_i, \widetilde{X}_i) &= \cov(X_i, \widetilde{X}_i) - \cov(\delta_0 + \delta_1 Z_i, \widetilde{X}_i) \\ &= \cov(\widetilde{X}_i, \widetilde{X}_i) \\&= \V[\widetilde{X}_i]
+\cov(X_i, \widetilde{X}_i) &= \cov(X_i, \widetilde{X}_i) - \cov(\pi_0 + \pi_1 Z_i, \widetilde{X}_i) \\ &= \cov(\widetilde{X}_i, \widetilde{X}_i) \\&= \V[\widetilde{X}_i]
 \end{aligned}
 \] Combining these facts, we have
 \(\cov(Y_{i}, \widetilde{X}_{i}) = \beta \V[\widetilde{X}_i]\), or \[ 
@@ -7140,31 +7143,36 @@ the linear relationships of all other variables.
 
 \section{Omitted variable bias}\label{omitted-variable-bias}
 
-In many situations, we may need to choose whether to include a variable
-in a regression, so it can be helpful to understand how this choice
-might affect the population coefficients on the other variables in the
-regression. Suppose we have a variable \(Z_i\) that we may add to our
-regression, which currently has \(\X_i\) as the covariates. We can write
-this new projection as \[ 
-m(\X_i, Z_i) = \X_i'\bfbeta + Z_i\gamma, \qquad m(\X_{i}) = \X_i'\bs{\delta},
-\] where we often refer to \(m(\X_i, Z_i)\) as the long regression and
-\(m(\X_i)\) as the short regression.
+In many situations, we may need to reason about variables we omitted
+from a particular regression, often because we have no ability to
+measure that variable. In our voting wait times example, we might want
+to include a respondent's sense of civic duty but we may lack any good
+survey instrument for this concept. It will be useful, then, to
+understand theoretically how adding this variable would change our
+regression coefficients.
 
-From the definition of the BLP, we can write the short coefficients as
-\[ 
-\bs{\delta} = \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}Y_{i}].
+Suppose we have our usual BLP \(m(\X_{i}) = \X_i'\bfbeta\) and let
+\(Z_i\) be the variable we are considering adding to our regression. We
+can write this new projection as \[ 
+m(\X_i, Z_i) = \X_i'\bs{\delta} + Z_i\gamma, \qquad m(\X_{i}).
+\] In this context, we sometimes refer to \(m(\X_i, Z_i)\) as the long
+regression and \(m(\X_i)\) as the short regression.
+
+Recall from the definition of the BLP that we can write the short
+coefficients as \[ 
+\bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}Y_{i}].
 \] Letting \(e_i = Y_i - m(\X_{i}, Z_{i})\) be the projection errors
 from the long regression, we can write this as \[ 
 \begin{aligned}
-  \bs{\delta} &= \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}(\X_{i}'\bfbeta + Z_{i}\gamma + e_{i})] \\
-              &= \left(\E[\X_{i}\X_{i}']\right)^{-1}(\E[\X_{i}\X_{i}']\bfbeta + \E[\X_{i}Z_{i}]\gamma + \E[\X_{i}e_{i}]) \\
-              &= \bfbeta + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
+  \bfbeta &= \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}(\X_{i}'\bs{\delta} + Z_{i}\gamma + e_{i})] \\
+              &= \left(\E[\X_{i}\X_{i}']\right)^{-1}(\E[\X_{i}\X_{i}']\bs{\delta} + \E[\X_{i}Z_{i}]\gamma + \E[\X_{i}e_{i}]) \\
+              &= \bs{\delta} + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
 \end{aligned}
 \] Note that the vector in the second term is the vector of linear
 projection coefficients of a population linear regression of \(Z_i\) on
 the \(\X_i\). If we call these coefficients \(\bs{\pi}\), then the short
 coefficients are \[ 
-\bs{\delta} = \bfbeta + \bs{\pi}\gamma. 
+\bfbeta = \bs{\delta} + \bs{\pi}\gamma. 
 \]
 
 We can rewrite this to show that the difference between the coefficients
@@ -7362,7 +7370,7 @@ represented as a constant 1 in the covariate vector. It is also possible
 to obtain expressions for the OLS estimates of the intercept and
 variable coefficients separately. We can rewrite the best linear
 predictor decomposition as \[ 
-Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}.
+Y_{i} = \alpha + \X_{i}'\bfbeta + e_{i}.
 \] Defined this way, we can write the OLS estimator for the ``slopes''
 on \(\X_i\) as the OLS estimator with all variables demeaned: \[ 
 \bhat = \left(\frac{1}{n} \sum_{i=1}^{n} (\X_{i} - \overline{\X})(\X_{i} - \overline{\X})'\right) \left(\frac{1}{n} \sum_{i=1}^{n}(\X_{i} - \overline{\X})(Y_{i} - \overline{Y})\right)
