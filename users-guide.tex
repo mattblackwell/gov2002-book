@@ -327,10 +327,10 @@
 \usepackage{amsthm}
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{plain}
 \newtheorem{conjecture}{Assumption}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{remark}
@@ -6335,7 +6335,10 @@ on these binned means, giving us:\\
 \] This approach assumes, perhaps incorrectly, that the average wait
 time does not vary within the bins. Figure~\ref{fig-cef-binned} shows a
 hypothetical joint distribution between income and wait times with the
-true CEF, \(\mu(x)\), shown in red. The figure also shows the bins
+true CEF, \(\mu(x)\), shown in red.\footnote{The true DGP in this case
+  is \(X_i = 10000e^{1.5 + 0.75 Z_i}\) where \(Z_i \sim \N(0, 1)\) so
+  \(X_i\) is log-normal. The outcome \(Y_i\) is Poisson with rate
+  \(e^{4 - (0.15 / 10000) X_i}\).} The figure also shows the bins
 created by subclassification and the implied CEF if we assume
 bin-constant means in blue. Note that the blue function approximates the
 true CEF but deviates from it close to the bin edges. The trade-off is
@@ -6353,7 +6356,7 @@ infinite number of means for each possible income.
 
 \caption{\label{fig-cef-binned}Hypothetical joint distribution of income
 and poll wait times (contour plot), conditional expectation function
-(red), and the conditional expectation of the binned income (blue).''}
+(red), and the conditional expectation of the binned income (blue).}
 
 \end{figure}%
 
@@ -7165,9 +7168,9 @@ coefficients are \[
 \]
 
 We can rewrite this to show that the difference between the coefficients
-in these two projections is \(\bs{\delta} - \bfbeta= \bs{\pi}\gamma\) or
-the product of the coefficient on the ``excluded'' \(Z_i\) and the
-coefficient of the included \(\X_i\) on the excluded. Most textbooks
+in these two projections is the product of \(\gamma\), the coefficient
+on the ``excluded'' \(Z_i\), and \(\bs{\pi}\), the coefficient from the
+BLP of the excluded \(Z_i\) on the included \(\X_i\). Most textbooks
 refer to this difference as the \textbf{omitted variable bias} of
 omitting \(Z_i\) under the idea that \(\bfbeta\) is the true target of
 inference. But the result is much broader than this since it tells us
@@ -7202,8 +7205,8 @@ distribution of \(X_i\) changes.
 
 }
 
-\caption{\label{fig-blp-limits}Linear projections for when truncating
-income distribution below \$50k and above \$100k.''}
+\caption{\label{fig-blp-limits}Best linear predictors computed
+separately for incomes below \$50k and above \$100k.}
 
 \end{figure}%
 

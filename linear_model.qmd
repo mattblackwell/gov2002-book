@@ -47,7 +47,9 @@ $$
   \E[Y_{i} \mid 225,000 \leq X_{i}] &\text{if } 225,000 \leq x\\
 \end{cases}
 $$
-This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$, shown in red. The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. Note that the blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption that wait times do not vary within the bins, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income.
+This approach assumes, perhaps incorrectly, that the average wait time does not vary within the bins. @fig-cef-binned shows a hypothetical joint distribution between income and wait times with the true CEF, $\mu(x)$, shown in red.[^dgp] The figure also shows the bins created by subclassification and the implied CEF if we assume bin-constant means in blue. Note that the blue function approximates the true CEF but deviates from it close to the bin edges. The trade-off is that once we make the assumption that wait times do not vary within the bins, we only have to estimate one mean for every bin rather than an infinite number of means for each possible income.
+
+[^dgp]: The true DGP in this case is $X_i = 10000e^{1.5 + 0.75 Z_i}$ where $Z_i \sim \N(0, 1)$ so $X_i$ is log-normal. The outcome $Y_i$ is Poisson with rate $e^{4 - (0.15 / 10000) X_i}$. 
 
 ```{r}
 #| echo: false
@@ -55,15 +57,13 @@ This approach assumes, perhaps incorrectly, that the average wait time does not 
 #| fig-cap: |
 #|  Hypothetical joint distribution of income and poll wait times (contour
 #|  plot), conditional expectation function (red), and the conditional
-#|  expectation of the binned income (blue)."
+#|  expectation of the binned income (blue).
 set.seed(02143)
 k <- 10
 my_cols <- rev(RColorBrewer::brewer.pal(k, "RdYlBu"))
 x <- exp(rnorm(10000, 1.5, 0.75))
 y <- rpois(n = 10000, exp(4 - x * 0.15))
 z <- MASS::kde2d(x, y, n = 100, lims = c(-1, 22, -1, 80))
-xs <- c(2.5, 5, 7.5, 15)
-xlabs <- paste("$", xs * 10, "k", sep = "")
 contour(
   z,
   levels = seq(0.0005, 0.008, length.out = 10),
@@ -612,7 +612,7 @@ $$
 \bs{\delta} = \bfbeta + \bs{\pi}\gamma. 
 $$
 
-We can rewrite this to show that the difference between the coefficients in these two projections is $\bs{\delta} - \bfbeta= \bs{\pi}\gamma$ or the product of the coefficient on the "excluded" $Z_i$ and the coefficient of the included $\X_i$ on the excluded. Most textbooks refer to this difference as the **omitted variable bias** of omitting $Z_i$ under the idea that $\bfbeta$ is the true target of inference. But the result is much broader than this since it tells us how to relate the coefficients of two nested projections. 
+We can rewrite this to show that the difference between the coefficients in these two projections is the product of $\gamma$, the coefficient on the "excluded" $Z_i$, and  $\bs{\pi}$, the coefficient from the BLP of the excluded $Z_i$ on the included $\X_i$. Most textbooks refer to this difference as the **omitted variable bias** of omitting $Z_i$ under the idea that $\bfbeta$ is the true target of inference. But the result is much broader than this since it tells us how to relate the coefficients of two nested projections. 
 
 
 The last two results (multiple regressions from bivariate and omitted variable bias) are sometimes presented as results for the ordinary least squares estimator that we will show in the next chapter. We introduce them here as features of a particular population quantity, the linear projection or population linear regression. 
@@ -627,8 +627,8 @@ The best linear predictor is, of course, a *linear* approximation to the CEF, an
 #| label: fig-blp-limits
 #| echo: false
 #| fig.cap: |
-#|  Linear projections for when truncating income distribution below $50k and 
-#|  above $100k."
+#|  Best linear predictors computed separately for incomes below \$50k and 
+#|  above \$100k.
 contour(
   z,
   levels = seq(0.0005, 0.008, length.out = 10),
@@ -637,7 +637,7 @@ contour(
 )
 axis(
   side = 1, at = c(2.5, 5, 10, 15, 20),
-  labels = c("$25k", "$50k", "100k", "150k", "200k")
+  labels = c("$25k", "$50k", "$100k", "$150k", "$200k")
 )
 curve(
   exp(4 - x * 0.15),
