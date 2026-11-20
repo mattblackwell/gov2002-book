@@ -1,15 +1,9 @@
 
 
-# Linear regression {#sec-regression}
+# Conditional expectation and linear projection {#sec-regression}
 
 
-Regression is simply a set of tools for evaluating the relationship between an **outcome variable**, $Y_i$, and a set of **covariates**, $\X_i$. In particular, these tools show how the conditional mean of $Y_i$ varies as a function of $\X_i$. For example, we may want to know how voter wait times vary as a function of various demographic or socioeconomic features of the voter, like income, race, or class. We can accomplish this by estimating the **regression function** or **conditional expectation function** (CEF) of the outcome given the covariates, 
-$$
-\mu(\bfx) = \E[Y_i \mid \X_i = \bfx].
-$$
-Why are estimation and inference for this regression function special? Why can't we just use the approaches we have seen for the mean, variance, covariance, and so on? The fundamental problem with the CEF is that there may be many values $\bfx$ that can occur and many different conditional expectations that we will need to estimate. If any variable in $\X_i$ is continuous, we must estimate an infinite number of possible values of $\mu(\bfx)$. While there are nonparametric approaches for a single continuous variable, the problem compounds exponentially as we add more variables, which we call the **curse of dimensionality**. How can we resolve this with our measly finite data?
-
-In this chapter, we will explore two ways of "solving" the curse of dimensionality: (1) assuming it away, and (2) changing the quantity of interest to something easier to estimate. 
+Regression is simply a set of tools for evaluating the relationship between an **outcome variable**, $Y_i$, and a set of **covariates**, $\X_i$. In the next two chapters we will explore how to estimate a regression using least squares, but first we need to undestand what it is that we are estimating. To that end, this chapter will explore what regression means in the population and focus on two potential targets of inference: the conditional expectation function and the best linear predictor. Many statistics or econometric textbooks conflate these concepts, but understanding the differences between them is crucial to understanding how least squares works. 
 
 Regression is so ubiquitous across many scientific fields that it has generated a lot of acquired notational baggage. In particular, the labels of the $Y_i$ and $\X_i$ vary greatly:
 
@@ -17,7 +11,20 @@ Regression is so ubiquitous across many scientific fields that it has generated 
 - The covariates are also called: the explanatory variables, the independent variables, the predictors, the right-hand side variables, the regressors, inputs, or features.  
 
 
-## Why do we need models?
+
+## Conditional expectation functions and the need for modeling
+
+A common way to measure the relationship between $Y_i$ and $\X_i$ is to show how the conditional mean of $Y_i$ varies as a function of $\X_i$. For example, we may want to know how voter wait times vary as a function of various demographic or socioeconomic features of the voter, like income, race, or class. We can accomplish this by estimating the **conditional expectation function** (CEF) of the outcome given the covariates, 
+$$
+\mu(\bfx) = \E[Y_i \mid \X_i = \bfx].
+$$
+This function can tell us, for instance, how average voter wait times are different for members of different racial groups that all have the same income. 
+
+
+Why are estimation and inference for the CEF special? Why can't we just use the approaches we have seen for the mean, variance, covariance, and so on? The fundamental problem with the CEF is that there may be many values $\bfx$ that can occur and many different conditional expectations that we will need to estimate. If any variable in $\X_i$ is continuous, we must estimate an infinite number of possible values of $\mu(\bfx)$. While there are nonparametric approaches for a single continuous variable, the problem compounds exponentially as we add more variables, which we call the **curse of dimensionality**. How can we resolve this with our measly finite data?
+
+
+### Why do we need models?
 
 At first glance, the connection between the CEF and parametric models might be hazy. For example, imagine we are interested in estimating the average voter wait times ($Y_i$) for Black voters ($X_i = 1$) versus non-Black voters ($X_i=0$). In that case, there are two parameters to estimate, 
 $$
@@ -100,18 +107,25 @@ This assumption reduces our infinite number of unknowns (the conditional mean at
 
 We call the binning and linear assumptions on $\mu(x)$ **functional form** assumptions because they restrict the class of functions that $\mu(x)$ can take. While powerful, these types of assumptions can muddy the roles of defining the quantity of interest and estimation. If our estimator $\widehat{\mu}(x)$ performs poorly, it will be difficult to tell if this is because the estimator is flawed or our functional form assumptions are incorrect. 
 
-To clarify these issues, we will pursue a different approach: understanding what linear regression can estimate under minimal assumptions and then investigating how well this estimand approximates the true CEF. 
+To clarify these issues, we will pursue a different approach: specifying a particular linear functional form under minimal assumptions and then investigating how well this estimand approximates the true CEF. 
 
-## Population linear regression {#sec-linear-projection}
+## Population linear projection {#sec-linear-projection}
 
-### Bivariate linear regression 
+### Bivariate linear projection 
 
 
-Let's set aside the idea of the conditional expectation function and instead focus on finding the **linear** function of a single covariate $X_i$ that best predicts the outcome. Recall from your earlier mathematical training that linear functions have the form $a + bX_i$. The **best linear predictor** (BLP) or **population linear regression** of $Y_i$ on $X_i$ is defined as
+Let's set aside the idea of the conditional expectation function and instead focus on finding the **linear** function of a single covariate $X_i$ that best predicts the outcome. Recall from your earlier mathematical training that linear functions have the form $a + bX_i$. The **best linear predictor** (BLP) or **population linear projection** of $Y_i$ on $X_i$ is defined as
 $$ 
 m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}].
 $$
-The expression being minimized is the expected prediction error, or the (squared) distance between the observed outcome and the outcome as predicted with a particular slope and intercept. The best linear predictor is the line (that is, slope and intercept values) that results in the lowest expected prediction error. Note that this function is a feature of the joint distribution of the data---the DGP---and so we cannot observe it directly. It must be estimated. The BLP is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though as we discuss later they will sometimes be equal. We call $(\beta_{0}, \beta_{1})$ the **population linear regression coefficients**. Note that $m(x)$ could differ greatly from the CEF $\mu(x)$ if the latter is nonlinear. 
+The expression being minimized is the expected prediction error, or the (squared) distance between the observed outcome and the outcome as predicted with a particular slope and intercept. The best linear predictor is the line (that is, slope and intercept values) that results in the lowest expected prediction error. Note that this function is a feature of the joint distribution of the data---the DGP---and so we cannot observe it directly. It must be estimated. The BLP is an alternative to the CEF for summarizing the relationship between the outcome and the covariate, though as we discuss later they will sometimes be equal. We call $(\beta_{0}, \beta_{1})$ the **population linear projection coefficients**. Note that $m(x)$ could differ greatly from the CEF $\mu(x)$ if the latter is nonlinear. 
+
+::: {.callout-note}
+
+The BLP goes by many names, including as the **population linear regression**. We avoid that term here because practitioners use phrase "regression" loosely to refer to many different concepts including different statistical models and estimators.
+
+:::
+
 
 We can solve for the best linear predictor using standard calculus (taking the derivative with respect to each coefficient, setting those equations equal to 0, and solving the system of equations). The first-order conditions, in this case, are
 $$ 
@@ -136,13 +150,13 @@ $$
 \end{aligned}
 $$
 
-Thus, the slope on the population linear regression of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. It follows from this that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$ and negative covariances will lead to negative $\beta_1$. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
+Thus, the slope of the linear projection of $Y_i$ on $X_i$ is equal to the ratio of the covariance of the two variables divided by the variance of $X_i$. It follows from this that the covariance will determine the sign of the slope: positive covariances will lead to positive $\beta_1$ and negative covariances will lead to negative $\beta_1$. If we define the correlation between these variables as $\rho_{YX}$, then we can relate the coefficient to this quantity as 
 $$
 \beta_1 = \rho_{YX}\sqrt{\frac{\V[Y_i]}{\V[X_i]}}.
 $$
 From this, we can see that if $Y_i$ and $X_i$ are uncorrelated, $\beta_1 = 0$. Furthermore, for a given covariance, the slope will be smaller in magnitude when $X_i$ is more spread out and higher in magnitude when $Y_i$ is more spread out.
 
-Collecting these various results together, we can write the population linear regression as 
+Collecting these various results together, we can write the BLP as 
 $$
 m(x) = \beta_0 + \beta_1x = \E[Y_i] + \beta_1(x - \E[X_i]),
 $$
@@ -178,7 +192,7 @@ text(x = -2, y = 29, "Best\nLinear\nPredictor", col = "dodgerblue", pos = 4)
 
 
 
-### Linear prediction with multiple covariates 
+### Linear projection with multiple covariates 
 
 We now generalize the idea of a best linear predictor to a setting with an arbitrary number of covariates, which more flexibly captures real-life empirical research scenarios. In this setting, recall that the linear function will be
 
@@ -212,7 +226,7 @@ Under these assumptions, it is possible to derive a closed-form expression for t
 
 ## Best linear predictor
 
-Let $\mb{Q}_{\X Y} = \E[\X_iY_i]$. Under @cnj-blp-assumptions, the coefficients for the best linear predictor is
+Let $\mb{Q}_{\X Y} = \E[\X_iY_i]$. Under @cnj-blp-assumptions, the population projection coefficients for the best linear predictor are
 $$
 \bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}.
 $$
@@ -246,7 +260,7 @@ A couple of facts might be useful for interpreting this expression substantively
 
 ::: {.callout-note}
 
-What does the expression for the population regression coefficients mean? It is helpful to separate the intercept or constant term, so let $\X_{i,-0} = (X_{i1}, \ldots, X_{ik})'$ be the covariate vector without the intercept and $\bfbeta_{-0} = (\beta_1, \ldots, \beta_k)'$ be the vector of associated coefficients. Then, we can write the model as
+What does the expression for the projection coefficients mean? It is helpful to separate the intercept or constant term, so let $\X_{i,-0} = (X_{i1}, \ldots, X_{ik})'$ be the covariate vector without the intercept and $\bfbeta_{-0} = (\beta_1, \ldots, \beta_k)'$ be the vector of associated coefficients. Then, we can write the model as
 $$ 
 m(\X_i) = \beta_0 + \X_{i,-0}'\bfbeta_{-0},
 $$
@@ -255,10 +269,10 @@ $$
 \bfbeta_{-0} = \V[\X_{i,-0}]^{-1}\cov(\X_{i,-0}, Y_i), \qquad \beta_0 = \E[Y_i] - \E[\X_{i,-0}']\bfbeta_{-0}.
 $$
 
-Thus, the population coefficients take the covariance between the outcome and the covariates and "divide" it by information about variances and covariances of the covariates. The intercept recenters the regression so that projection errors are mean zero. This means that these coefficients generalize the bivariate formula to this multiple covariate context. 
+Thus, the population coefficients take the covariance between the outcome and the covariates and "divide" it by information about variances and covariances of the covariates. The intercept recenters the projection so that the prediction errors are mean zero. This means that these coefficients generalize the bivariate formula to this multiple covariate context. 
 :::
 
-With an expression for the population linear regression coefficients, we can write the linear projection as 
+With an expression for the coefficients, we can write the BLP as 
 $$ 
 m(\X_{i}) = \X_{i}'\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] = \X_{i}'\mb{Q}_{\mb{XX}}^{-1}\mb{Q}_{\mb{X}Y}
 $$
@@ -314,14 +328,14 @@ $$
 $$
 and the last term $\E[e_{i} \mid \X_{i}]$ would only be 0 if the errors were mean independent of the covariates, so $\E[e_{i} \mid \X_{i}] = \E[e_{i}] = 0$. But nowhere in the linear projection model did we assume this. So while we can (almost) always write the outcome as $Y_i = \X_i'\bfbeta + e_i$ and have those projection errors be uncorrelated with the covariates, it will require additional assumptions to ensure that the true CEF is, in fact, linear $\E[Y_{i} \mid \X_{i}] = \X_{i}'\bfbeta$.  
 
-To step back for a moment, what have we shown here? In a nutshell, we showed that a population linear regression exists under very general conditions and that we can write the coefficients of that population linear regression as a function of expectations of the joint distribution of the data. We did not, however, assume that the CEF was linear nor that the projection errors were normally distributed.  
+To step back for a moment, what have we shown here? In a nutshell, we showed that a population linear projection exists under very general conditions and that we can write the coefficients of that projection as a function of expectations of the joint distribution of the data. We did not, however, assume that the CEF was linear nor that the projection errors were normally distributed.  
 
 
 Why is this important? The ordinary least squares estimator, the workhorse regression estimator of the social sciences, targets this quantity of interest in large samples, regardless of whether the true CEF is linear or not. Thus, even when a linear CEF assumption is incorrect and the projection errors are not normally distributed, OLS still targets a perfectly valid quantity of interest: the coefficients from this population linear projection.   
 
 ## Linear CEFs without assumptions
 
-What is the relationship between the best linear predictor (which we just saw generally exists) and the CEF? To draw the connection, remember that the conditional expectation is importantly the function of $\X_i$ that best predicts $Y_{i}$. The population regression was the best **linear** predictor, but the CEF is the best predictor among all nicely behaved functions of $\X_{i}$, linear or nonlinear. In particular, if we label $L_2$ to be the set of all functions of the covariates $g()$ that have finite squared expectation, $\E[g(\X_{i})^{2}] < \infty$, then we can show that the CEF has the lowest squared prediction error in this class of functions:
+What is the relationship between the best linear predictor (which we just saw generally exists) and the CEF? To draw the connection, remember that the conditional expectation is importantly the function of $\X_i$ that best predicts $Y_{i}$. The population linear projection was the best **linear** predictor, but the CEF is the best predictor among all nicely behaved functions of $\X_{i}$, linear or nonlinear. In particular, if we label $L_2$ to be the set of all functions of the covariates $g()$ that have finite squared expectation, $\E[g(\X_{i})^{2}] < \infty$, then we can show that the CEF has the lowest squared prediction error in this class of functions:
 $$ 
 \mu(\X_i) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - g(\X_{i}))^{2}\right],
 $$
@@ -363,7 +377,7 @@ $$ {#eq-blp-predicts-cef}
 Thus, one important interpretation of the BLP is as the **best linear approximation to the CEF**, regardless of whether the CEF is linear or not.
 
 
-So we have established that the CEF is the best predictor and the population linear regression $m(\X_{i})$ is the best linear predictor for both the outcome and the CEF. These facts allow us to connect the CEF to the population regression.
+So we have established that the CEF is the best predictor and the liner projection $m(\X_{i})$ is the best linear predictor for both the outcome and the CEF. These facts allow us to connect the CEF to the linear projection.
 
 ::: {#thm-cef-blp}
 If $\mu(\X_{i})$ is a linear function of $\X_i$, then $\mu(\X_{i}) = m(\X_{i}) = \X_i'\bfbeta$. 
@@ -374,7 +388,7 @@ If $\mu(\X_{i})$ is a linear function of $\X_i$, then $\mu(\X_{i}) = m(\X_{i}) =
 This follows immediately from @eq-blp-predicts-cef. If $m(\X_i)$ is the best linear predictor of $\mu(\X_i)$ and $\mu(\X_i)$ is linear, then $\mu(\X_i)$ must be exactly equal to $m(\X_i)$. 
 :::
 
-This theorem says that if the true CEF is linear, it must equal the population linear regression. The proof of this is straightforward: the CEF is the best predictor, so if it is linear, it must also be the best linear predictor. 
+This theorem says that if the true CEF is linear, it must equal the population linear projection. The proof of this is straightforward: the CEF is the best predictor, so if it is linear, it must also be the best linear predictor. 
  
  
 In general, we are in the business of learning about the CEF, so we are unlikely to know if it genuinely is linear or not. In some situations, however, we can write the CEF as an exact linear function without any additional assumptions. These are situations where the regressors **saturate** the possible values of $\X_i$---that is, there is an indicator for each combination of covariate values. Going back to the example from the chapter introduction, suppose we are interested in the CEF of voter wait times for Black ($X_i = 1$) vs. non-Black ($X_i = 0$) voters. In this case, there are two possible values of the CEF, $\mu(1) = \E[Y_{i}\mid X_{i}= 1]$, the average wait time for Black voters, and $\mu(0) = \E[Y_{i}\mid X_{i} = 0]$, the average wait time for non-Black voters. Notice that we can write the CEF as
@@ -448,9 +462,9 @@ This result also generalizes to an arbitrary number of binary covariates. If we 
 
 We have established that the regressors saturate the covariate levels, the true CEF will be linear, and we have seen the various ways to represent that CEF. Note that when we use, for example, ordinary least squares, we are free to choose how to include our variables. We could run a regression of $Y_i$ on $X_{i1}$ and $X_{i2}$ without an interaction term, but this model will only be equal to the CEF if $\beta_3$ is equal to 0, and so the interaction term is irrelevant (otherwise, it will still be a valid BL, just not the CEF). A saturated model can, by its nature, always be written as a linear function without assumptions, and, by @thm-cef-blp, this saturated BLP must recover the CEF exactly. The above examples show how to construct saturated models in various situations.
 
-## Interpretation of the regression coefficients
+## Interpretation of the projection coefficients
 
-We have seen how to interpret population regression coefficients when the CEF is linear without assumptions. How do we interpret the population coefficients $\bfbeta$ in other settings?  
+We have seen how to interpret population projection coefficients when the CEF is linear without assumptions. How do we interpret the population coefficients $\bfbeta$ in other settings?  
 
 
 Consider the simplest case, one in which every entry in $\X_{i}$ represents a different covariate and no covariate is any function of another (we will see why this caveat is necessary below). In this simple case, the $k$th coefficient, $\beta_{j}$, represents the change in the predicted outcome for a one-unit change in the $k$th covariate $X_{ij}$, holding all other covariates fixed. We can see this from 
@@ -468,14 +482,14 @@ Notice that nothing changes in this interpretation when adding more covariates t
 $$
  m(x_{1} + 1, \bfx_{2}) - m(x_{1}, \bfx_{2}) = \beta_1,
 $$
-The coefficient on a particular variable is the change in the predicted outcome corresponding to a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the "all else equal" difference in the predicted outcome for each covariate. @sec-fwl will make precise what we mean by "holding fixed" means in the context of a population regression. 
+The coefficient on a particular variable is the change in the predicted outcome corresponding to a one-unit change in the covariate holding all other covariates constant. Each coefficient summarizes the "all else equal" difference in the predicted outcome for each covariate. @sec-fwl will make precise what we mean by "holding fixed" means in the context of a linear projection. 
 
 
 ### Polynomial functions of the covariates
 
 
 
-The interpretation of the population regression coefficients becomes more complicated when including nonlinear functions of the covariates. In that case, multiple coefficients control how a change in a covariate will change the predicted value of $Y_i$. For example, suppose we have a quadratic function of $X_{i1}$,
+The interpretation of the linear projection coefficients becomes more complicated when including nonlinear functions of the covariates. In that case, multiple coefficients control how a change in a covariate will change the predicted value of $Y_i$. For example, suppose we have a quadratic function of $X_{i1}$,
 $$ 
 m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{3}x_{2},
 $$
@@ -540,13 +554,15 @@ In this case, $\widetilde{\beta}_2$ (the coefficient on the race indicator $X_{i
 :::
 
 
-## Multiple regression from bivariate regression {#sec-fwl}
+## Multivariate coefficients from orthogonal projection {#sec-fwl}
 
-With a regression of an outcome on two covariates, understanding how the coefficients of one variable relate to the other is helpful. Consider the following best linear projection:
+We often interpret the linear projection coefficients as describing the relationship between the outcome and a covariate holding the other covariates fixed. But the formula for the coefficients does not make that interpretation obvious. Another way to represent multivariate linear projection---through **orthogongal projection**--helps to build intuition. 
+
+We can start with a linear projection of an outcome on two covariates. Consider the following BLP:
 $$ 
 (\alpha, \beta, \gamma) = \argmin_{(a,b,c) \in \mathbb{R}^{3}} \; \E[(Y_{i} - (a + bX_{i} + cZ_{i}))^{2}]
 $$ {#eq-two-var-blp}
-Can we understand the $\beta$ coefficient here in terms of a bivariate regression? As it turns out, yes. From the above results, we know that the intercept has a simple form:
+Can we understand the $\beta$ coefficient here in terms of a bivariate linear projection? As it turns out, yes. From the above results, we know that the intercept has a simple form:
 $$
 \alpha = \E[Y_i] - \beta\E[X_i] - \gamma\E[Z_i].
 $$
@@ -558,16 +574,16 @@ $$
   &= \cov(Y, X) - \beta\V[X_{i}] - \gamma \cov(X_{i}, Z_{i})
 \end{aligned}
 $$
-We can see from this that if $\cov(X_{i}, Z_{i}) = 0$, then the coefficient on $X_i$ will be the same as in the simple regression case, $\cov(Y_{i}, X_{i})/\V[X_{i}]$. When $X_i$ and $Z_i$ are uncorrelated, we sometimes call them **orthogonal**. 
+We can see from this that if $\cov(X_{i}, Z_{i}) = 0$, then the coefficient on $X_i$ will be the same as in the bivariate projection case, $\cov(Y_{i}, X_{i})/\V[X_{i}]$. When $X_i$ and $Z_i$ are uncorrelated, we call them **orthogonal**. 
 
-To write a simple formula for $\beta$ when the covariates are not orthogonal, we **orthogonalize** $X_i$ by obtaining the prediction errors from a population linear regression of $X_i$ on $Z_i$:
+To write a simple formula for $\beta$ when the covariates are not orthogonal, we **orthogonalize** $X_i$ by obtaining the prediction errors from a population linear projection of $X_i$ on $Z_i$:
 $$ 
 \begin{aligned}
 \widetilde{X}_{i} &= X_{i} - (\pi_{0} + \pi_{1}Z_{i}) \quad\text{where}\quad \\ 
 (\pi_{0}, \pi_{1}) &= \argmin_{(b_{0},b_{1}) \in \mathbb{R}^{2}} \; \E[(X_{i} - (b_{0} + b_{1}Z_{i}))^{2}]
 \end{aligned}
 $$
-Given the properties of projection errors, we know that this orthogonalized version of $X_{i}$ will be uncorrelated with $Z_{i}$ since $\E[\widetilde{X}_{i}Z_{i}] = 0$. In fact, the coefficient on $X_i$ from the "long" BLP in @eq-two-var-blp is the same as the regression of $Y_i$ on this orthogonalized $\widetilde{X}_i$. To see this, let's substitute the linear projection of $Y_i$ onto $(1, X_i, Z_i)$ into the covariance for that regression:
+Given the properties of projection errors, we know that this orthogonalized version of $X_{i}$ will be uncorrelated with $Z_{i}$ since $\E[\widetilde{X}_{i}Z_{i}] = 0$. In fact, the coefficient on $X_i$ from the "long" BLP in @eq-two-var-blp is the same as the projection of $Y_i$ on this orthogonalized $\widetilde{X}_i$. To see this, let's substitute the linear projection of $Y_i$ onto $(1, X_i, Z_i)$ into the covariance for that projection:
 $$
 \cov(Y_{i}, \widetilde{X}_{i}) = \cov(\alpha + \beta X_i + \gamma Z_i, \widetilde{X}_i) = \beta\cov(X_i, \widetilde{X}_i) + \cov(Z_i, \widetilde{X}_i).
 $$
@@ -583,28 +599,28 @@ $$
 $$
 This is the population version of the **Frisch-Waugh-Lovell theorem** (see @sec-residual-regression). 
 
-We can expand this idea to when there are several other covariates. Suppose now that we are interested in a regression of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-j}$ be the vector of covariates omitting the $j$th entry (including the constant) and let $m_k(\X_{i,-j})$ represent the BLP of $X_{ij}$ on these other covariates. We can define $\widetilde{X}_{ij} = X_{ij} - m_{j}(\X_{i,-j})$ as the $k$th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on $X_{ij}$ as
+We can expand this idea to when there are several other covariates. Suppose now that we are interested in a projection of $Y_i$ on $\X_i$ and we are interested in the coefficient on the $k$th covariate. Let $\X_{i,-j}$ be the vector of covariates omitting the $j$th entry (including the constant) and let $m_k(\X_{i,-j})$ represent the BLP of $X_{ij}$ on these other covariates. We can define $\widetilde{X}_{ij} = X_{ij} - m_{j}(\X_{i,-j})$ as the $k$th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on $X_{ij}$ as
 $$ 
 \beta_j = \frac{\cov(Y_i, \widetilde{X}_{ij})}{\V[\widetilde{X}_{ij}]}.
 $$ 
-Thus, the population regression coefficient in the BLP is the same as from a bivariate regression of the outcome on the projection error for $X_{ij}$ projected on all other covariates. One interpretation of coefficients in a population multiple regression is that they represent the relationship between the outcome and the covariate after removing the linear relationships of all other variables. 
+Thus, the linear projection coefficient in the BLP is the same as from a bivariate projection of the outcome on the projection error for $X_{ij}$ projected on all other covariates. One interpretation of coefficients in a multivariate projection is that they represent the relationship between the outcome and the covariate after removing the linear relationships of all other variables. 
 
 
 ## Omitted variable bias
 
-In many situations, we may need to reason about variables we omitted from a particular regression, often because we have no ability to measure that variable. In our voting wait times example, we might want to include a respondent's sense of civic duty but we may lack any good survey instrument for this concept. It will be useful, then, to understand theoretically how adding this variable would change our regression coefficients. 
+In many situations, we may need to reason about variables we omitted from a particular linear projection, often because we have no ability to measure that variable. In our voting wait times example, we might want to include a respondent's sense of civic duty but we may lack any good survey instrument for this concept. It will be useful, then, to understand theoretically how adding this variable would change our projection coefficients. 
 
-Suppose we have our usual BLP $m(\X_{i}) = \X_i'\bfbeta$ and let $Z_i$ be the variable we are considering adding to our regression. We can write this new projection as 
+Suppose we have our usual BLP $m(\X_{i}) = \X_i'\bfbeta$ and let $Z_i$ be the variable we are considering adding to our projection. We can write this new projection as 
 $$ 
 m(\X_i, Z_i) = \X_i'\bs{\delta} + Z_i\gamma, \qquad m(\X_{i}).
 $$
-In this context, we sometimes refer to $m(\X_i, Z_i)$ as the long regression and $m(\X_i)$ as the short regression. 
+In this context, we sometimes refer to $m(\X_i, Z_i)$ as the long projection and $m(\X_i)$ as the short projection. 
 
 Recall from the definition of the BLP that we can write the short coefficients as 
 $$ 
 \bfbeta = \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}Y_{i}].
 $$
-Letting $e_i = Y_i - m(\X_{i}, Z_{i})$ be the projection errors from the long regression, we can write this as
+Letting $e_i = Y_i - m(\X_{i}, Z_{i})$ be the projection errors from the long projection, we can write this as
 $$ 
 \begin{aligned}
   \bfbeta &= \left(\E[\X_{i}\X_{i}']\right)^{-1} \E[\X_{i}(\X_{i}'\bs{\delta} + Z_{i}\gamma + e_{i})] \\
@@ -612,7 +628,7 @@ $$
               &= \bs{\delta} + \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Z_{i}]\gamma
 \end{aligned}
 $$
-Note that the vector in the second term is the vector of linear projection coefficients of a population linear regression of $Z_i$ on the $\X_i$. If we call these coefficients $\bs{\pi}$, then the short coefficients are 
+Note that the vector in the second term is the vector of linear projection coefficients of a population linear projection of $Z_i$ on the $\X_i$. If we call these coefficients $\bs{\pi}$, then the short coefficients are 
 $$ 
 \bfbeta = \bs{\delta} + \bs{\pi}\gamma. 
 $$
@@ -620,7 +636,7 @@ $$
 We can rewrite this to show that the difference between the coefficients in these two projections is the product of $\gamma$, the coefficient on the "excluded" $Z_i$, and  $\bs{\pi}$, the coefficient from the BLP of the excluded $Z_i$ on the included $\X_i$. Most textbooks refer to this difference as the **omitted variable bias** of omitting $Z_i$ under the idea that $\bfbeta$ is the true target of inference. But the result is much broader than this since it tells us how to relate the coefficients of two nested projections. 
 
 
-The last two results (multiple regressions from bivariate and omitted variable bias) are sometimes presented as results for the ordinary least squares estimator that we will show in the next chapter. We introduce them here as features of a particular population quantity, the linear projection or population linear regression. 
+The last two results (orthogonal projection and omitted variable bias) are sometimes presented as results for the ordinary least squares estimator that we will show in the next chapter. We introduce them here as features of a particular population quantity, the linear projection. 
 
 
 ## Drawbacks of the BLP
@@ -658,4 +674,4 @@ text(x = -2, y = 5, "BLP\nX > 100k", col = "dodgerblue", pos = 4)
 
 ## Summary
 
-As we discussed in this chapter, with even a moderate number of covariates, conditional expectation functions (also known as regressions) become very difficult to estimate because of the high dimensionality involved. To avoid this problem, we can focus on a different quantity, the **best linear predictor** which is the linear function of the covariates that best predicts the outcome in mean-squared error. The BLP exists under very mild conditions and has a clear interpretation as the best linear summary of the CEF over the observed distribution of the covariates. Another strategy is to impose a linearity assumption on the **conditional expectation function** to make it more estimable, in which case, the BLP and the CEF are the same function. With a small number of discrete covariates it is possible to **saturate** a model so that linearity holds mechanically. Coefficients on population linear regressions with multiple independent variables can always be written in terms of a regression of the outcome on one variable orthogonalized relative to the rest of the independent variables. The **omitted variable bias** formula shows how leaving a variable out of the best linear affects the coefficients on other independent variables. In the next chapter, we will turn to using data to estimate the coefficients for these population linear regressions. 
+As we discussed in this chapter, with even a moderate number of covariates, conditional expectation functions become very difficult to estimate because of the high dimensionality involved. To avoid this problem, we can focus on a different quantity, the **best linear predictor** which is the linear function of the covariates that best predicts the outcome in mean-squared error. The BLP exists under very mild conditions and has a clear interpretation as the best linear summary of the CEF over the observed distribution of the covariates. Another strategy is to impose a linearity assumption on the **conditional expectation function** to make it more estimable, in which case, the BLP and the CEF are the same function. With a small number of discrete covariates it is possible to **saturate** a model so that linearity holds mechanically. Coefficients on population linear projection with multiple independent variables can always be written in terms of a projection of the outcome on one variable orthogonalized relative to the rest of the independent variables. The **omitted variable bias** formula shows how leaving a variable out of the best linear affects the coefficients on other independent variables. In the next chapter, we will turn to using data to estimate the coefficients for these population linear projection. 
