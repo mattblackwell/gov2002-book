@@ -325,12 +325,12 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
 \theoremstyle{plain}
 \newtheorem{conjecture}{Assumption}[chapter]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
@@ -6320,9 +6320,9 @@ voters.) Now we have a different conditional expectation for every
 possible dollar amount from 0 to however much the wealthiest earner
 makes. Suppose we choose one particular income, \$42,238, and that we
 are interested in the conditional expectation
-\(\mu(42,238)= \E[Y_{i}\mid X_{i} = 42,238]\). We could use the same
+\(\mu(42{,}238)= \E[Y_{i}\mid X_{i} = 42{,}238]\). We could use the same
 plug-in estimator as in the discrete case, \[
-\widehat{\mu}(42,238) = \frac{\sum_{i=1}^{n} Y_{i}\mathbb{1}(X_{i} = 42,238)}{\sum_{i=1}^{n}\mathbb{1}(X_{i} = 42,238)}.
+\widehat{\mu}(42{,}238) = \frac{\sum_{i=1}^{n} Y_{i}\mathbb{1}(X_{i} = 42{,}238)}{\sum_{i=1}^{n}\mathbb{1}(X_{i} = 42{,}238)}.
 \] This is straightforward, but there is one glaring problem with this
 estimator: in all likelihood, no units in the particular dataset have
 that exact income, meaning this estimator is undefined because we would
@@ -6363,13 +6363,13 @@ infinite number of means for each possible income.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{linear_model_files/figure-pdf/fig-cef-binned-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Contour plot of wait times (vertical axis, 0 to 80) against income (horizontal axis, 0 to about \$225k). The joint density is concentrated at low incomes and wait times of 20 to 50. A red curve showing the conditional expectation function falls steeply from about 60 at low incomes and flattens near 3 at high incomes. Dashed vertical lines mark \$25k income bins, and a horizontal blue segment in each bin shows the average wait time in that bin, forming a step function that tracks the red curve.}]{linear_model_files/figure-pdf/fig-cef-binned-1.pdf}}
 
 }
 
 \caption{\label{fig-cef-binned}Hypothetical joint distribution of income
 and poll wait times (contour plot), conditional expectation function
-(red), and the conditional expectation of the binned income (blue).}
+(red), and the conditional expectation given the binned income (blue).}
 
 \end{figure}%
 
@@ -6378,10 +6378,10 @@ functional form such as a line: \[
 \mu(x) = \E[Y_{i}\mid X_{i} = x] = \beta_{0} + \beta_{1} x.
 \] This assumption reduces our infinite number of unknowns (the
 conditional mean at every possible income) to just two unknowns: (1) the
-slope and (2) the intercept. As we will see, we can use the standard
-ordinary least squares to estimate these parameters. Note that if the
-true CEF is nonlinear, this assumption is incorrect, and any estimate
-based on this assumption might be biased or even inconsistent.
+slope and (2) the intercept. As we will see, we can use ordinary least
+squares to estimate these parameters. Note that if the true CEF is
+nonlinear, this assumption is incorrect, and any estimate based on this
+assumption might be biased or even inconsistent.
 
 We call the binning and linear assumptions on \(\mu(x)\)
 \textbf{functional form} assumptions because they restrict the class of
@@ -6407,16 +6407,18 @@ earlier mathematical training that linear functions have the form
 \(a + bX_i\). The \textbf{best linear predictor} (BLP) or
 \textbf{population linear projection} of \(Y_i\) on \(X_i\) is defined
 as \[ 
-m(x) = \beta_0 + \beta_1 x \quad\text{where, }\quad (\beta_{0}, \beta_{1}) = \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}].
-\] The expression being minimized is the expected prediction error, or
-the (squared) distance between the observed outcome and the outcome as
-predicted with a particular slope and intercept. The best linear
-predictor is the line (that is, slope and intercept values) that results
-in the lowest expected prediction error. Note that this function is a
-feature of the joint distribution of the data---the DGP---and so we
+\begin{aligned}
+m(x) &= \beta_0 + \beta_1 x \quad\text{where} \\ (\beta_{0}, \beta_{1}) &= \argmin_{(b_{0}, b_{1}) \in \mathbb{R}^{2}}\; \E[(Y_{i} - b_{0} - b_{1}X_{i} )^{2}].
+\end{aligned}
+\] The expression being minimized is the expected squared prediction
+error, or the (squared) distance between the observed outcome and the
+outcome as predicted with a particular slope and intercept. The best
+linear predictor is the line (that is, slope and intercept values) that
+results in the lowest expected prediction error. Note that this function
+is a feature of the joint distribution of the data---the DGP---and so we
 cannot observe it directly. It must be estimated. The BLP is an
 alternative to the CEF for summarizing the relationship between the
-outcome and the covariate, though as we discuss later they will
+outcome and the covariate, though, as we discuss later, they will
 sometimes be equal. We call \((\beta_{0}, \beta_{1})\) the
 \textbf{population linear projection coefficients}. Note that \(m(x)\)
 could differ greatly from the CEF \(\mu(x)\) if the latter is nonlinear.
@@ -6482,7 +6484,7 @@ will derive a formal connection between the BLP and the CEF below.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{linear_model_files/figure-pdf/fig-cef-blp-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Faded contour plot of wait times against income, with two lines. A red curve, the conditional expectation function, falls steeply at low incomes and flattens out at high incomes. A straight blue line, the best linear predictor, slopes downward more gently. It sits below the red curve at the lowest incomes, above it at middle incomes, and below it again at the highest incomes, where it drops below zero.}]{linear_model_files/figure-pdf/fig-cef-blp-1.pdf}}
 
 }
 
@@ -6503,32 +6505,33 @@ linear function will be
 \bfx'\bfbeta = \beta_0 + x_{1}\beta_{1} + x_{2}\beta_{2} + \cdots + x_{k}\beta_{k}.
 \] Define the \((k+1)\)-length random vector of covariates plus a
 constant as \(\X_i = (1, X_{i1}, X_{i2}, \ldots, X_{ik})'\). Then, we
-will define the \textbf{best linear predictor} (BLP) to be \[ 
-m(\bfx) = \bfx'\bfbeta, \quad \text{where}\quad \bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr].
+will define the \textbf{best linear predictor} (BLP) to be \[
+\begin{aligned}
+m(\bfx) &= \bfx'\bfbeta, \quad \text{where} \\ \bfbeta &= \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr].
+\end{aligned}
 \]
 
 This BLP solves the same fundamental optimization problem as in the
 bivariate case: it chooses the set of coefficients that minimizes the
-expected mean-squared error, where the expectation is over the joint
-distribution of the data.
+mean-squared error, where the expectation is over the joint distribution
+of the data. We make the following mild assumptions to ensure the BLP
+exists.
 
 \begin{conjecture}[Best linear projection
 assumptions]\protect\hypertarget{cnj-blp-assumptions}{}\label{cnj-blp-assumptions}
 
-Without some assumptions on the joint distribution of the data, the
-following ``regularity conditions'' will ensure the existence of the
-BLP:
+~
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  \(\E[Y^2] < \infty\) (outcome has finite mean/variance)
+  \(\E[Y_i^2] < \infty\) (outcome has finite mean/variance)
 \item
-  \(\E\Vert \mb{X} \Vert^2 < \infty\) (\(\mb{X}\) has finite
+  \(\E\Vert \X_i \Vert^2 < \infty\) (\(\X_i\) has finite
   means/variances/covariances)
 \item
-  \(\mb{Q}_{\mb{XX}} = \E[\mb{XX}']\) is positive definite (no entry of
+  \(\mb{Q}_{\mb{XX}} = \E[\X_i\X_i']\) is positive definite (no entry of
   \(\X\) is a perfect linear combination of the others).\\
 \end{enumerate}
 
@@ -6621,7 +6624,8 @@ covariate of interest, \(X_i\). We can define the random vector
 \(\X_i = (1, X_i, X_i^2)'\) and calculate the BLP with regard to this
 vector: \[ 
 \begin{aligned}
-m(\X_i) &= \beta_0 + \beta_1X_i + \beta_2X_i^2 \\ &\quad\text{where}\quad \argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
+m(\X_i) &= \beta_0 + \beta_1X_i + \beta_2X_i^2, \quad\text{where} \\ 
+(\beta_0,\beta_1,\beta_2)&=\argmin_{(b_0,b_1,b_2) \in \mathbb{R}^3}\;\E[(Y_{i} - b_{0} - b_{1}X_{i} - b_{2}X_{i}^{2})^{2}].
 \end{aligned}
 \] While the equation is now a quadratic function of the covariates, it
 is still a linear function of the unknown parameters
@@ -6630,7 +6634,7 @@ linear predictor. Note that this vector does not violate
 Assumption~\ref{cnj-blp-assumptions} since \(X_i\) and \(X_i^2\) are
 nonlinear functions of one another.
 
-We could include higher-order terms of \(X_i\) in the same manner, and,
+We could include higher-order terms of \(X_i\) in the same manner, and
 including more polynomial terms, \(X_i^p\), will allow the BLP to be a
 more flexible function of \(X_i\). When we estimate the BLP, however, we
 usually pay for this flexibility with overfitting and high variance in
@@ -6638,8 +6642,8 @@ our estimates.
 
 \subsection{Projection error}\label{projection-error}
 
-The \textbf{projection error} or is the difference between the actual
-value of \(Y_i\) and the projection, \[ 
+The \textbf{projection error} is the difference between the actual value
+of \(Y_i\) and the projection, \[ 
 e_{i} = Y_{i} - m(\X_{i}) = Y_i - \X_{i}'\bfbeta,
 \] where we have made no assumptions about this error yet. The
 projection error is simply the prediction error of the best linear
@@ -6660,7 +6664,7 @@ vector includes an ``intercept'' or constant term, the projection errors
 are uncorrelated with the covariates. To see this, first note that
 \(\E[\X_{i}e_{i}] = 0\) since \[ 
 \begin{aligned}
-  \E[\X_{i}e_{i}] &= \E[\X_{{i}}(Y_{i} - \X_{i}'\bfbeta)] \\
+  \E[\X_{i}e_{i}] &= \E[\X_{i}(Y_{i} - \X_{i}'\bfbeta)] \\
                   &= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\bfbeta \\
                   &= \E[\X_{i}Y_{i}] - \E[\X_{i}\X_{i}']\left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}] \\
   &= \E[\X_{i}Y_{i}] - \E[\X_{i}Y_{i}] = 0
@@ -6714,15 +6718,15 @@ assumptions}\label{linear-cefs-without-assumptions}
 
 What is the relationship between the best linear predictor (which we
 just saw generally exists) and the CEF? To draw the connection, remember
-that the conditional expectation is importantly the function of \(\X_i\)
-that best predicts \(Y_{i}\). The population linear projection was the
-best \textbf{linear} predictor, but the CEF is the best predictor among
-all nicely behaved functions of \(\X_{i}\), linear or nonlinear. In
+that the conditional expectation is the function of \(\X_i\) that best
+predicts \(Y_{i}\). The population linear projection was the best
+\textbf{linear} predictor, but the CEF is the best predictor among all
+nicely behaved functions of \(\X_{i}\), linear or nonlinear. In
 particular, if we label \(L_2\) to be the set of all functions of the
-covariates \(g()\) that have finite squared expectation,
+covariates \(g(\cdot)\) that have finite squared expectation,
 \(\E[g(\X_{i})^{2}] < \infty\), then we can show that the CEF has the
 lowest squared prediction error in this class of functions: \[ 
-\mu(\X_i) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - g(\X_{i}))^{2}\right],
+\mu(\X_i) = \E[Y_{i} \mid \X_{i}] = \argmin_{g(\X_i) \in L_2}\; \E\left[(Y_{i} - g(\X_{i}))^{2}\right].
 \]
 
 To understand how the CEF and the best linear predictor relate, we can
@@ -6815,11 +6819,13 @@ substantive interpretations:
   \(\beta_0 = \mu(0)\): the expected wait time for a non-Black voter.
 \item
   \(\beta_1 = \mu(1) - \mu(0)\): the difference in average wait times
-  between Black and non-Black voters. How \(X_{i}\) is defined here is
-  important since the intercept will always be the average outcome when
-  \(X_i = 0\), and the slope will always be the difference in means
-  between the \(X_i = 1\) group and the \(X_i = 0\) group.
+  between Black and non-Black voters.
 \end{itemize}
+
+How \(X_{i}\) is defined here is important since the intercept will
+always be the average outcome when \(X_i = 0\), and the slope will
+always be the difference in means between the \(X_i = 1\) group and the
+\(X_i = 0\) group.
 
 What about a categorical covariate with more than two levels? For
 example, we may be interested in wait times by party identification,
@@ -6827,9 +6833,9 @@ where \(X_i = 1\) indicates Democratic voters, \(X_i = 2\) indicates
 Republican voters, and \(X_i = 3\) indicates Independent voters. We
 could write the CEF of wait times as a linear function of this variable,
 but that would assume that the difference between Democrats and
-Republicans is exactly the same as for Independents and Republicans --
-which is probably false. With more than two levels, we can represent a
-categorical variable as a vector of binary variables,
+Republicans is exactly the same as for Independents and
+Republicans---which is probably false. With more than two levels, we can
+represent a categorical variable as a vector of binary variables,
 \(\X_i = (X_{i1}, X_{i2})\), where \[ 
 \begin{aligned}
   X_{{i1}} &= \begin{cases}
@@ -6837,8 +6843,8 @@ categorical variable as a vector of binary variables,
                    0 & \text{if not Republican}
               \end{cases} \\
 X_{{i2}} &= \begin{cases}
-                1&\text{if independent} \\
-                   0 & \text{if not independent}
+                1&\text{if Independent} \\
+                   0 & \text{if not Independent}
               \end{cases} \\
 \end{aligned}
 \] These two indicator variables encode the same information as the
@@ -6864,7 +6870,7 @@ lovely linear representation, \[
   baseline group.
 \item
   \(\beta_2 = \E[Y_{i} \mid X_{i1} = 0, X_{i2} = 1] - \E[Y_{i} \mid X_{i1} = 0, X_{i2} = 0]\)
-  is the difference in means between independent voters and Democratic
+  is the difference in means between Independent voters and Democratic
   voters, or the difference between the second indicator group and the
   baseline group.
 \end{itemize}
@@ -6924,8 +6930,8 @@ we can generalize the interpretation of the coefficients in the CEF as
   the second covariate when the first covariate is 0.
 \item
   \(\beta_3 = (\mu_{11} - \mu_{01}) - (\mu_{10} - \mu_{00})\): change in
-  the ``effect'' of the first (second) covariate when the second (first)
-  covariate goes from 0 to 1.
+  the difference-in-average outcomes of the first (second) covariate
+  when the second (first) covariate goes from 0 to 1.
 \end{itemize}
 
 This result also generalizes to an arbitrary number of binary
@@ -6969,10 +6975,10 @@ the predicted outcome for a one-unit change in the \(k\)th covariate
 \end{aligned} 
 \] so that the change in the predicted outcome for increasing \(X_{i1}\)
 by one unit is \[
- m(x_{1} + 1, x_{2}) - m(x_{1}, x_{2}) = \beta_1
+ m(x_{1} + 1, x_{2}) - m(x_{1}, x_{2}) = \beta_1.
 \] Notice that nothing changes in this interpretation when adding more
 covariates to the vector, \[
- m(x_{1} + 1, \bfx_{2}) - m(x_{1}, \bfx_{2}) = \beta_1,
+ m(x_{1} + 1, \bfx_{2}) - m(x_{1}, \bfx_{2}) = \beta_1.
 \] The coefficient on a particular variable is the change in the
 predicted outcome corresponding to a one-unit change in the covariate
 holding all other covariates constant. Each coefficient summarizes the
@@ -6996,20 +7002,17 @@ m(x_1, x_1^2, x_{2}) = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{1}^{2} + \beta_{
 \end{aligned} 
 \] resulting in \(\beta_1 + \beta_2(2x_{1} + 1)\). This formula might be
 an interesting quantity, but we more commonly use the derivative of
-\(m(\bfx)\) with respect to \(x_1\) as a measure of the marginal effect
-of \(X_{i1}\) on the predicted value of \(Y_i\) (holding all other
-variables constant), where ``marginal'' here means the change in
-prediction for a very small change in \(X_{i1}\).\footnote{Note the
-  choice of language here. The marginal effect is on the predicted value
-  of \(Y_i\), not on \(Y_i\) itself. So these marginal effects are
-  associational, not necessarily causal quantities.} In the case of the
-quadratic covariate, we have \[ 
+\(m(\bfx)\) with respect to \(x_1\) as a measure of the how \(X_{i1}\)
+changes the predicted value of \(Y_i\) (holding all other variables
+constant), where ``marginal'' here means the change in prediction for a
+very small change in \(X_{i1}\). In the case of the quadratic covariate,
+we have \[ 
 \frac{\partial m(x_{1}, x_{1}^{2}, x_{2})}{\partial x_{1}} = \beta_{1} + 2\beta_{2}x_{1},
-\] so the marginal effect on prediction varies as a function of \(x_1\).
+\] so the marginal change in prediction varies as a function of \(x_1\).
 From this, we see that the individual interpretations of the
-coefficients are less interesting: \(\beta_1\) is the marginal effect
-when \(X_{i1} = 0\) and \(2\beta_2\) describes how a one-unit change in
-\(X_{i1}\) changes the marginal effect. As is hopefully clear, it will
+coefficients are less interesting: \(\beta_1\) is the marginal change
+when \(X_{i1} = 0\) and \(2\beta_2\) describes how a one-unit difference
+in \(X_{i1}\) alters the marginal change. As is hopefully clear, it will
 often be more straightforward to visualize the nonlinear predictor
 function (perhaps using the orthogonalization techniques in
 Section~\ref{sec-fwl}).
@@ -7108,11 +7111,11 @@ Consider the following BLP:
 terms of a bivariate linear projection? As it turns out, yes. From the
 above results, we know that the intercept has a simple form: \[
 \alpha = \E[Y_i] - \beta\E[X_i] - \gamma\E[Z_i].
-\] Let's investigate the first order condition for \(\beta\): \[ 
+\] Let's investigate the first-order condition for \(\beta\): \[ 
 \begin{aligned}
   0 &= \E[Y_{i}X_{i}] - \alpha\E[X_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
     &= \E[Y_{i}X_{i}] - \E[Y_{i}]\E[X_{i}] + \beta\E[X_{i}]^{2} + \gamma\E[X_{i}]\E[Z_{i}] - \beta\E[X_{i}^{2}] - \gamma\E[X_{i}Z_{i}] \\
-  &= \cov(Y, X) - \beta\V[X_{i}] - \gamma \cov(X_{i}, Z_{i})
+  &= \cov(Y_i, X_i) - \beta\V[X_{i}] - \gamma \cov(X_{i}, Z_{i})
 \end{aligned}
 \] We can see from this that if \(\cov(X_{i}, Z_{i}) = 0\), then the
 coefficient on \(X_i\) will be the same as in the bivariate projection
@@ -7131,10 +7134,10 @@ prediction errors from a population linear projection of \(X_i\) on
 orthogonalized version of \(X_{i}\) will be uncorrelated with \(Z_{i}\)
 since \(\E[\widetilde{X}_{i}Z_{i}] = 0\). In fact, the coefficient on
 \(X_i\) from the ``long'' BLP in Equation~\ref{eq-two-var-blp} is the
-same as the projection of \(Y_i\) on this orthogonalized
-\(\widetilde{X}_i\). To see this, let's substitute the linear projection
-of \(Y_i\) onto \((1, X_i, Z_i)\) into the covariance for that
-projection: \[
+same as the the coefficient from the projection of \(Y_i\) on this
+orthogonalized \(\widetilde{X}_i\). To see this, let's substitute the
+linear projection of \(Y_i\) onto \((1, X_i, Z_i)\) into the covariance
+for that projection: \[
 \cov(Y_{i}, \widetilde{X}_{i}) = \cov(\alpha + \beta X_i + \gamma Z_i, \widetilde{X}_i) = \beta\cov(X_i, \widetilde{X}_i) + \cov(Z_i, \widetilde{X}_i).
 \] As described above, we know \(\cov(Z_i, \widetilde{X}_i) = 0\) by
 construction. Now, notice that this also implies that
@@ -7150,21 +7153,21 @@ following: \[
 theorem} (see Section~\ref{sec-residual-regression}).
 
 We can expand this idea to when there are several other covariates.
-Suppose now that we are interested in a projection of \(Y_i\) on
-\(\X_i\) and we are interested in the coefficient on the \(k\)th
-covariate. Let \(\X_{i,-j}\) be the vector of covariates omitting the
-\(j\)th entry (including the constant) and let \(m_k(\X_{i,-j})\)
-represent the BLP of \(X_{ij}\) on these other covariates. We can define
+Suppose now that we project \(Y_i\) on \(\X_i\) and are interested in
+the coefficient on the \(k\)th covariate. Let \(\X_{i,-j}\) be the
+vector of covariates omitting the \(j\)th entry (including the constant)
+and let \(m_k(\X_{i,-j})\) represent the BLP of \(X_{ij}\) on these
+other covariates. We can define
 \(\widetilde{X}_{ij} = X_{ij} - m_{j}(\X_{i,-j})\) as the \(k\)th
 variable orthogonalized with respect to the rest of the variables and we
 can write the coefficient on \(X_{ij}\) as \[ 
 \beta_j = \frac{\cov(Y_i, \widetilde{X}_{ij})}{\V[\widetilde{X}_{ij}]}.
-\] Thus, the linear projection coefficient in the BLP is the same as
-from a bivariate projection of the outcome on the projection error for
-\(X_{ij}\) projected on all other covariates. One interpretation of
-coefficients in a multivariate projection is that they represent the
-relationship between the outcome and the covariate after removing the
-linear relationships of all other variables.
+\] Thus, the linear projection coefficient in the BLP is the same as the
+coefficient from a bivariate projection of the outcome on the projection
+error for \(X_{ij}\) projected on all other covariates. One
+interpretation of coefficients in a multivariate projection is that they
+represent the relationship between the outcome and the covariate after
+removing the linear relationships of all other variables.
 
 \section{Omitted variable bias}\label{omitted-variable-bias}
 
@@ -7203,11 +7206,17 @@ coefficients are \[
 We can rewrite this to show that the difference between the coefficients
 in these two projections is the product of \(\gamma\), the coefficient
 on the ``excluded'' \(Z_i\), and \(\bs{\pi}\), the coefficient from the
-BLP of the excluded \(Z_i\) on the included \(\X_i\). Most textbooks
-refer to this difference as the \textbf{omitted variable bias} of
-omitting \(Z_i\) under the idea that \(\bfbeta\) is the true target of
-inference. But the result is much broader than this since it tells us
-how to relate the coefficients of two nested projections.
+BLP of the excluded \(Z_i\) on the included \(\X_i\). In a case where
+there are only two independent variables, \(X_i\) and \(Z_i\), the
+consequence of omitted \(Z_i\) on the coefficient for \(X_i\) would be
+to inflate it when the partial correlation between \(Y_i\) and \(Z_i\)
+and the correlation between \(X_i\) and \(Z_i\) are the same sign and to
+deflate it when those correlations are of opposite signs.
+
+Most textbooks refer to this difference as the \textbf{omitted variable
+bias} of omitting \(Z_i\) under the idea that \(\bfbeta\) is the true
+target of inference. But the result is much broader than this since it
+tells us how to relate the coefficients of two nested projections.
 
 The last two results (orthogonal projection and omitted variable bias)
 are sometimes presented as results for the ordinary least squares
@@ -7224,7 +7233,7 @@ nonlinear. The BLP is ``best'' on average over the distribution of the
 covariates, so changing the distribution of the covariates will also
 change what linear predictor is best. Let's return to our example of
 voter wait times and income. In Figure~\ref{fig-blp-limits}, we show the
-true CEF and the BLP when we restrict income below \$50,000 or above
+true CEF and the BLPs when we restrict income below \$50,000 or above
 \$100,000. The BLP can vary quite dramatically here. This figure is an
 extreme example, but the essential point still holds as the marginal
 distribution of \(X_i\) changes.
@@ -7233,7 +7242,7 @@ distribution of \(X_i\) changes.
 
 \centering{
 
-\pandocbounded{\includegraphics[keepaspectratio]{linear_model_files/figure-pdf/fig-blp-limits-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio,alt={Plot of wait times against income showing the red, curved conditional expectation function and two straight blue lines. The best linear predictor fit to incomes below \$50k is steep and nearly tangent to the curve at low incomes. The one fit to incomes above \$100k is almost flat and close to the curve at high incomes. The two lines have very different slopes even though they approximate the same curve.}]{linear_model_files/figure-pdf/fig-blp-limits-1.pdf}}
 
 }
 
@@ -7248,7 +7257,7 @@ As we discussed in this chapter, with even a moderate number of
 covariates, conditional expectation functions become very difficult to
 estimate because of the high dimensionality involved. To avoid this
 problem, we can focus on a different quantity, the \textbf{best linear
-predictor} which is the linear function of the covariates that best
+predictor}, which is the linear function of the covariates that best
 predicts the outcome in mean-squared error. The BLP exists under very
 mild conditions and has a clear interpretation as the best linear
 summary of the CEF over the observed distribution of the covariates.
@@ -7261,9 +7270,9 @@ linear projection with multiple independent variables can always be
 written in terms of a projection of the outcome on one variable
 orthogonalized relative to the rest of the independent variables. The
 \textbf{omitted variable bias} formula shows how leaving a variable out
-of the best linear affects the coefficients on other independent
-variables. In the next chapter, we will turn to using data to estimate
-the coefficients for these population linear projection.
+of the best linear predictor affects the coefficients on other
+independent variables. In the next chapter, we will turn to using data
+to estimate the coefficients for these population linear projection.
 
 \chapter{The mechanics of least squares}\label{sec-ols-mechanics}
 
@@ -8468,12 +8477,9 @@ our two-parameter interaction example, we could use:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{qchisq}\NormalTok{(}\AttributeTok{p =} \FloatTok{0.95}\NormalTok{, }\AttributeTok{df =} \DecValTok{2}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 5.991465}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-[1] 5.991465
-\end{verbatim}
 
 \end{bookcallout}
 
@@ -8505,12 +8511,9 @@ interaction example where \(q=2\) and we have, say, a sample size of
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{qf}\NormalTok{(}\FloatTok{0.95}\NormalTok{, }\AttributeTok{df1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{df2 =} \DecValTok{100} \SpecialCharTok{{-}} \DecValTok{4}\NormalTok{)}
+\CommentTok{\#\textgreater{} [1] 3.091191}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-[1] 3.091191
-\end{verbatim}
 
 This result implies a critical value of 6.182 on the scale of the Wald
 statistic (multiplying it by \(q = 2\)). Compared to the earlier

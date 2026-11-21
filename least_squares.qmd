@@ -8,7 +8,7 @@ In this chapter, we focus on motivating the estimator and the mechanical or alge
 ```{r}
 #| label: fig-ajr-scatter
 #| echo: false
-#| fig.cap: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001).
+#| fig-cap: Relationship between political institutions and economic development from Acemoglu, Johnson, and Robinson (2001).
 ajr <- foreign::read.dta("assets/data/ajr.dta")
 
 mod <- lm(logpgp95 ~ avexpr, data = ajr)
@@ -126,7 +126,7 @@ The residuals are *exactly* uncorrelated with the covariates (when the covariate
 ```{r}
 #| label: fig-ssr-comp
 #| echo: false
-#| fig.cap: Different possible lines and their corresponding sum of squared residuals. 
+#| fig-cap: Different possible lines and their corresponding sum of squared residuals. 
 library(RColorBrewer)
 ey2 <- var(mod$model$logpgp95)
 exy <- cov(mod$model$logpgp95, mod$model$avexpr)
@@ -177,7 +177,7 @@ $$
 ```{r}
 #| label: fig-ssr-vs-tss
 #| echo: false
-#| fig.cap: Total sum of squares vs. the sum of squared residuals.
+#| fig-cap: Total sum of squares vs. the sum of squared residuals.
 par(mfrow = c(1, 2), mar = c(4,4, 2, 0.1))
 ajr.mod <- lm(logpgp95 ~ avexpr, data = ajr)
 ajr.dat <- model.frame(ajr.mod, data =ajr)
@@ -400,7 +400,7 @@ $$
 
 ## Trace of a matrix
 
-Recall that the trace of a $k \times k$ square matrix, $\mb{A} = {a_{ij}}$, is sum the sum of the diagonal entries,
+Recall that the trace of a $k \times k$ square matrix, $\mb{A} = {a_{ij}}$, is the sum of the diagonal entries,
 $$
 \text{trace}(\mb{A}) = \sum_{i=1}^{k} a_{ii},
 $$
@@ -490,7 +490,7 @@ In the context of OLS, an **outlier** is an observation with a large prediction 
 ```{r}
 #| label: fig-outlier
 #| echo: false
-#| fig.cap: An example of an outlier.
+#| fig-cap: An example of an outlier.
 
 set.seed(02138)
 x <- rnorm(100, 0, 1)
@@ -530,7 +530,7 @@ An influential observation (also sometimes called an influential point) is a uni
 ```{r}
 #| label: fig-influence
 #| echo: false
-#| fig.cap: An example of an influence point.
+#| fig-cap: An example of an influence point.
 set.seed(02138)
 x <- rnorm(100, 0, 1)
 y <- 0.2 * x + rnorm(100, 0, 1)
