@@ -325,12 +325,12 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
-\theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
 \theoremstyle{plain}
 \newtheorem{conjecture}{Assumption}[chapter]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
 \theoremstyle{remark}
@@ -7704,10 +7704,9 @@ in the relationship between \(X_{i5}\) and the other variables, the
 reason why there will be linear dependence when including a constant.)
 Thus, we usually omit one dummy variable from each categorical variable.
 In that case, the coefficients on the remaining dummies are differences
-in means between that category and the omitted one (perhaps conditional
-on other variables included, if included). So if we omitted \(X_{i5}\)
-(Oceania), then the coefficient on \(X_{i1}\) would be the difference in
-mean outcomes between units in Asia and Oceania.
+in means between that category and the omitted one. So if we omitted
+\(X_{i5}\) (Oceania), then the coefficient on \(X_{i1}\) would be the
+difference in mean outcomes between units in Asia and Oceania.
 
 Collinearity can also occur when including both an intercept term and a
 variable that does not vary. This issue can often happen if we
@@ -7742,10 +7741,9 @@ the coefficient on the West dummy will be \[
 \] which is exactly the difference in sample means of \(Y_i\) between
 Asian units and units in Oceania.
 
-Note that these interpretations only hold when the regression consists
-solely of the binary variable or the set of categorical dummy variables.
-These exact relationships fail when other covariates are added to the
-model.
+Note that these interpretations change when additional covariates are
+added to the model. As above in Section~\ref{sec-residual-regression},
+the differences become conditional on the additional covariates.
 
 \section{Projection and geometry of least
 squares}\label{projection-and-geometry-of-least-squares}
@@ -7820,9 +7818,10 @@ function of \(\Xmat\). Intuitively, any vector that is already a linear
 combination of the columns of \(\Xmat\) (so is in
 \(\mathcal{C}(\Xmat)\)) should be unaffected by this projection: the
 closest point in \(\mathcal{C}(\Xmat)\) to a point already in
-\(\mathcal{C}(\Xmat)\) is itself. We can also see this algebraically for
-any linear combination \(\Xmat\mb{c}\), \[
-\mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{c} = \Xmat\mb{c},
+\(\mathcal{C}(\Xmat)\) is itself. Letting \(\mb{b} \in \real^{k+1}\), we
+can also see this algebraically for any linear combination
+\(\Xmat\mb{b}\) \[
+\mb{P}_{\Xmat}\Xmat\mb{b} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{b} = \Xmat\mb{b},
 \] because \((\Xmat'\Xmat)^{-1} \Xmat'\Xmat\) simplifies to the identity
 matrix. In particular, the projection of \(\Xmat\) onto itself is just
 itself: \(\mb{P}_{\Xmat}\Xmat = \Xmat\).
@@ -7832,10 +7831,10 @@ matrix}, \[
 \mb{M}_{\Xmat} = \mb{I}_{n} - \mb{P}_{\Xmat},
 \] which projects any vector into the orthogonal complement to the
 column space of \(\Xmat\), \[
-\mathcal{C}^{\perp}(\Xmat) = \{\mb{c} \in \mathbb{R}^n\;:\; \Xmat\mb{c} = 0 \}.
+\mathcal{C}^{\perp}(\Xmat) = \{\mb{c} \in \mathbb{R}^n\;:\; \Xmat'\mb{c} = 0 \}.
 \] This matrix is called the annihilator matrix because applying it to
-any linear combination of \(\Xmat\), gives us 0: \[ 
-\mb{M}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \Xmat\mb{c} = 0.
+any linear combination of the columns of \(\Xmat\), gives us 0: \[ 
+\mb{M}_{\Xmat}\Xmat\mb{b} = \Xmat\mb{b} - \mb{P}_{\Xmat}\Xmat\mb{b} = \Xmat\mb{b} - \Xmat\mb{b} = 0.
 \] Note that \(\mb{M}_{\Xmat}\Xmat = 0\). Why should we care about this
 matrix? Perhaps a more evocative name might be the \textbf{residual
 maker} since it makes residuals when applied to \(\mb{Y}\), \[ 
@@ -7872,9 +7871,10 @@ the OLS coefficients for just one set of covariates. In particular, let
 the columns of \(\Xmat\) be partitioned into \([\Xmat_{1} \Xmat_{2}]\),
 so that the linear prediction we are estimating is \[ 
 \mb{Y} = \Xmat_{1}\bfbeta_{1} + \Xmat_{2}\bfbeta_{2} + \mb{e}, 
-\] with estimated coefficients and residuals \[ 
+\] with estimated coefficients and residuals
+\begin{equation}\protect\phantomsection\label{eq-ols-long}{ 
 \mb{Y} = \Xmat_{1}\bhat_{1} + \Xmat_{2}\bhat_{2} + \widehat{\mb{e}}.
-\]
+}\end{equation}
 
 We now document another way to obtain the estimator \(\bhat_1\) from
 this regression using a technique called \textbf{residual regression},
@@ -7909,6 +7909,29 @@ The OLS coefficients from a regression of \(\widetilde{\mb{e}}_{2}\) on
 and \(\Xmat_2\).
 
 \end{theorem}
+
+\begin{proof}
+Note that \(\mb{M}_{\Xmat_2}\) is the residual maker for \(\Xmat_2\), so
+\(\widetilde{\Xmat}_1 = \mb{M}_{\Xmat_2}\Xmat_1\) and
+\(\widetilde{\mb{e}}_2 = \mb{M}_{\Xmat_2}\mb{Y}\).
+
+Premultiplying Equation~\ref{eq-ols-long} by \(\mb{M}_{\Xmat_2}\) gives
+\[
+\mb{M}_{\Xmat_2}\mb{Y} = \mb{M}_{\Xmat_2}\Xmat_{1}\bhat_{1} + \mb{M}_{\Xmat_2}\Xmat_{2}\bhat_{2} + \mb{M}_{\Xmat_2}\widehat{\mb{e}}.
+\] The properties of annihilator matrices implies
+\(\mb{M}_{\Xmat_2}\Xmat_{2} = 0\) and
+\(\mb{M}_{\Xmat_2}\widehat{\mb{e}} = \widehat{\mb{e}}\) leaving us with
+\[
+\widetilde{\mb{e}}_2 = \widetilde{\Xmat}_1\bhat_{1} + \widehat{\mb{e}}.
+\] Above, we derived that \(\Xmat'\widehat{\mb{e}} = 0\) which implies
+that \(\Xmat_1'\widehat{\mb{e}} = 0\). Thus, we have the following: \[
+\begin{aligned}
+\widetilde{\Xmat}_1'\widetilde{\mb{e}}_2 &= \widetilde{\Xmat}_1'\widetilde{\Xmat}_1\bhat_{1} + \widetilde{\Xmat}_1'\widehat{\mb{e}} \\ 
+\widetilde{\Xmat}_1'\widetilde{\mb{e}}_2 &= \widetilde{\Xmat}_1'\widetilde{\Xmat}_1\bhat_{1} \\
+\bhat_1 &= \left(\widetilde{\Xmat}_1'\widetilde{\Xmat}_1\right)^{-1}\widetilde{\Xmat}_1'\widetilde{\mb{e}}_2.
+\end{aligned}
+\]
+\end{proof}
 
 An implication of this theorem is that the regression coefficient for a
 given variable captures the relationship between the residual variation

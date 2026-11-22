@@ -321,7 +321,7 @@ What are common situations that lead to violations of no multicollinearity? We h
 $$ 
 X_{i5} = 1 - X_{i1} - X_{i2} - X_{i3} - X_{i4}.
 $$
-That is, if a unit is not in Asia, Europe, Africa, or the Americas, we know it is in Oceania. We would get a linear dependence by including all of these variables in our regression with an intercept. (Note the 1 in the relationship between $X_{i5}$ and the other variables, the reason why there will be linear dependence when including a constant.) Thus, we usually omit one dummy variable from each categorical variable. In that case, the coefficients on the remaining dummies are differences in means between that category and the omitted one (perhaps conditional on other variables included, if included). So if we omitted $X_{i5}$ (Oceania), then the coefficient on $X_{i1}$ would be the difference in mean outcomes between units in Asia and Oceania. 
+That is, if a unit is not in Asia, Europe, Africa, or the Americas, we know it is in Oceania. We would get a linear dependence by including all of these variables in our regression with an intercept. (Note the 1 in the relationship between $X_{i5}$ and the other variables, the reason why there will be linear dependence when including a constant.) Thus, we usually omit one dummy variable from each categorical variable. In that case, the coefficients on the remaining dummies are differences in means between that category and the omitted one. So if we omitted $X_{i5}$ (Oceania), then the coefficient on $X_{i1}$ would be the difference in mean outcomes between units in Asia and Oceania. 
 
 Collinearity can also occur when including both an intercept term and a variable that does not vary. This issue can often happen if we mistakenly subset our data, for example in this case if we subsetted the data to only the Asian units but still included the Asian dummy variable in the regression. 
 
@@ -341,7 +341,7 @@ $$
 $$
 which is exactly the difference in sample means of $Y_i$ between Asian units and units in Oceania. 
 
-Note that these interpretations only hold when the regression consists solely of the binary variable or the set of categorical dummy variables. These exact relationships fail when other covariates are added to the model. 
+Note that these interpretations change when additional covariates are added to the model. As above in @sec-residual-regression, the differences become conditional on the additional covariates. 
 
 
 
@@ -371,9 +371,9 @@ projects a vector into $\mathcal{C}(\Xmat)$. In particular, we can see that this
 $$ 
 \mb{P}_{\Xmat}\mb{Y} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\mb{Y} = \Xmat\bhat.
 $$
-Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is also called the **hat matrix**. With either name, multiplying a vector by $\mb{P}_{\Xmat}$ gives the best linear predictor of that vector as a function of $\Xmat$. Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ is itself. We can also see this algebraically for any linear combination $\Xmat\mb{c}$,
+Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is also called the **hat matrix**. With either name, multiplying a vector by $\mb{P}_{\Xmat}$ gives the best linear predictor of that vector as a function of $\Xmat$. Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ is itself. Letting $\mb{b} \in \real^{k+1}$, we can also see this algebraically for any linear combination $\Xmat\mb{b}$
 $$
-\mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{c} = \Xmat\mb{c},
+\mb{P}_{\Xmat}\Xmat\mb{b} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{b} = \Xmat\mb{b},
 $$
 because $(\Xmat'\Xmat)^{-1} \Xmat'\Xmat$ simplifies to the identity matrix. In particular, the projection of $\Xmat$ onto itself is just itself: $\mb{P}_{\Xmat}\Xmat = \Xmat$. 
 
@@ -383,11 +383,11 @@ $$
 $$
 which projects any vector into the orthogonal complement to the column space of $\Xmat$, 
 $$
-\mathcal{C}^{\perp}(\Xmat) = \{\mb{c} \in \mathbb{R}^n\;:\; \Xmat\mb{c} = 0 \}.
+\mathcal{C}^{\perp}(\Xmat) = \{\mb{c} \in \mathbb{R}^n\;:\; \Xmat'\mb{c} = 0 \}.
 $$
-This matrix is called the annihilator matrix because applying it to any linear combination of $\Xmat$, gives us 0:
+This matrix is called the annihilator matrix because applying it to any linear combination of the columns of $\Xmat$, gives us 0:
 $$ 
-\mb{M}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \mb{P}_{\Xmat}\Xmat\mb{c} = \Xmat\mb{c} - \Xmat\mb{c} = 0.
+\mb{M}_{\Xmat}\Xmat\mb{b} = \Xmat\mb{b} - \mb{P}_{\Xmat}\Xmat\mb{b} = \Xmat\mb{b} - \Xmat\mb{b} = 0.
 $$
 Note that $\mb{M}_{\Xmat}\Xmat = 0$. Why should we care about this matrix? Perhaps a more evocative name might be the **residual maker** since it makes residuals when applied to $\mb{Y}$,
 $$ 
@@ -435,7 +435,7 @@ $$
 with estimated coefficients and residuals
 $$ 
 \mb{Y} = \Xmat_{1}\bhat_{1} + \Xmat_{2}\bhat_{2} + \widehat{\mb{e}}.
-$$
+$$ {#eq-ols-long}
 
 We now document another way to obtain the estimator $\bhat_1$ from this regression using a technique called **residual regression**, **partitioned regression**, or the **Frisch-Waugh-Lovell theorem**.
  
@@ -456,6 +456,30 @@ The residual regression approach is:
 ## Frisch-Waugh-Lovell
 
 The OLS coefficients from a regression of $\widetilde{\mb{e}}_{2}$ on $\widetilde{\Xmat}_1$ are equivalent to the coefficients on $\Xmat_{1}$ from the regression of $\mb{Y}$ on both $\Xmat_{1}$ and $\Xmat_2$.  
+
+:::
+
+::: {.proof}
+
+Note that $\mb{M}_{\Xmat_2}$ is the residual maker for $\Xmat_2$, so $\widetilde{\Xmat}_1 = \mb{M}_{\Xmat_2}\Xmat_1$ and $\widetilde{\mb{e}}_2 = \mb{M}_{\Xmat_2}\mb{Y}$. 
+
+Premultiplying @eq-ols-long by $\mb{M}_{\Xmat_2}$ gives
+$$
+\mb{M}_{\Xmat_2}\mb{Y} = \mb{M}_{\Xmat_2}\Xmat_{1}\bhat_{1} + \mb{M}_{\Xmat_2}\Xmat_{2}\bhat_{2} + \mb{M}_{\Xmat_2}\widehat{\mb{e}}.
+$$
+The properties of annihilator matrices implies $\mb{M}_{\Xmat_2}\Xmat_{2} = 0$ and $\mb{M}_{\Xmat_2}\widehat{\mb{e}} = \widehat{\mb{e}}$ leaving us with
+$$
+\widetilde{\mb{e}}_2 = \widetilde{\Xmat}_1\bhat_{1} + \widehat{\mb{e}}.
+$$
+Above, we derived that $\Xmat'\widehat{\mb{e}} = 0$ which implies that $\Xmat_1'\widehat{\mb{e}} = 0$. Thus, we have the following:
+$$
+\begin{aligned}
+\widetilde{\Xmat}_1'\widetilde{\mb{e}}_2 &= \widetilde{\Xmat}_1'\widetilde{\Xmat}_1\bhat_{1} + \widetilde{\Xmat}_1'\widehat{\mb{e}} \\ 
+\widetilde{\Xmat}_1'\widetilde{\mb{e}}_2 &= \widetilde{\Xmat}_1'\widetilde{\Xmat}_1\bhat_{1} \\
+\bhat_1 &= \left(\widetilde{\Xmat}_1'\widetilde{\Xmat}_1\right)^{-1}\widetilde{\Xmat}_1'\widetilde{\mb{e}}_2.
+\end{aligned}
+$$
+
 
 :::
 
