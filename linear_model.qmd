@@ -225,7 +225,7 @@ m(\bfx) &= \bfx'\bfbeta, \quad \text{where} \\ \bfbeta &= \argmin_{\mb{b} \in \r
 $$ 
 
 
-This BLP solves the same fundamental optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error, where the expectation is over the joint distribution of the data.  We make the following mild assumptions to ensure the BLP exists. 
+This BLP solves the same fundamental optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error, where the expectation is over the joint distribution of the data.  We make the following mild assumptions to ensure the BLP exists. A matrix $\mb{A}$ is **positive definite** if $\mb{c}'\mb{A}\mb{c}$ for all $\mb{c} \neq 0$. 
 
 ::: {#cnj-blp-assumptions}
 ## Best linear projection assumptions
@@ -267,6 +267,16 @@ $$
 \end{aligned}
 $$
 Multiplying by the inverse of $\mb{Q}_{\mb{XX}}$ (which exists under @cnj-blp-assumptions) gives the result.
+
+:::
+
+::: {.callout-note}
+
+## The power of positive definiteness
+
+A key part of @cnj-blp-assumptions is that $\mb{Q}_{\mb{XX}}$ is positive definite, which is the matrix version of "positive." We can see that $\mb{Q}_{\mb{XX}}$ is the second derivative of the objective function, $\E\left[ \left(Y_{i} - \mb{X}_{i}'\mb{b} \right)^2\right]$, and its positive definiteness means that this function will have a bowl shape with a unique minimum (rather than a trough with a flat floor). When there are multiple values of $\mb{b}$ at the minimum, we say that the coefficients are not identified.
+
+An equivalent condition in our context that none of the entries of $\X_i$ are deterministic linear functions of any of the others. This condition is the population version of a **no multicollinearity** assumption that we will also see in @sec-ols-mechanics. 
 
 :::
 

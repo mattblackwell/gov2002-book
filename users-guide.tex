@@ -326,13 +326,13 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[chapter]
-\theoremstyle{definition}
 \newtheorem{example}{Example}[chapter]
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
-\theoremstyle{plain}
 \newtheorem{conjecture}{Assumption}[chapter]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -6514,7 +6514,8 @@ This BLP solves the same fundamental optimization problem as in the
 bivariate case: it chooses the set of coefficients that minimizes the
 mean-squared error, where the expectation is over the joint distribution
 of the data. We make the following mild assumptions to ensure the BLP
-exists.
+exists. A matrix \(\mb{A}\) is \textbf{positive definite} if
+\(\mb{c}'\mb{A}\mb{c}\) for all \(\mb{c} \neq 0\).
 
 \begin{conjecture}[Best linear projection
 assumptions]\protect\hypertarget{cnj-blp-assumptions}{}\label{cnj-blp-assumptions}
@@ -6576,6 +6577,25 @@ expectation to get the first-order condition and solve for \(\bfbeta\),
 \] Multiplying by the inverse of \(\mb{Q}_{\mb{XX}}\) (which exists
 under Assumption~\ref{cnj-blp-assumptions}) gives the result.
 \end{proof}
+
+\begin{bookcallout}{note}{The power of positive definiteness}
+
+A key part of Assumption~\ref{cnj-blp-assumptions} is that
+\(\mb{Q}_{\mb{XX}}\) is positive definite, which is the matrix version
+of ``positive.'' We can see that \(\mb{Q}_{\mb{XX}}\) is the second
+derivative of the objective function,
+\(\E\left[ \left(Y_{i} - \mb{X}_{i}'\mb{b} \right)^2\right]\), and its
+positive definiteness means that this function will have a bowl shape
+with a unique minimum (rather than a trough with a flat floor). When
+there are multiple values of \(\mb{b}\) at the minimum, we say that the
+coefficients are not identified.
+
+An equivalent condition in our context that none of the entries of
+\(\X_i\) are deterministic linear functions of any of the others. This
+condition is the population version of a \textbf{no multicollinearity}
+assumption that we will also see in Chapter~\ref{sec-ols-mechanics}.
+
+\end{bookcallout}
 
 This gives us an expression for the coefficients for the population best
 linear predictor in terms of the joint distribution \((Y_{i}, \X_{i})\).
@@ -7340,26 +7360,37 @@ from the population to make inferences about the line of best fit in the
 population and the population coefficients. To do this, we will focus on
 the OLS estimator for these population quantities.
 
-\begin{bookcallout}{note}{Assumption}
+We first make a key assumption to ensure the OLS estimator exists and
+has a unique solution.
 
-The variables
-\(\{(Y_1, \X_1), \ldots, (Y_i,\X_i), \ldots, (Y_n, \X_n)\}\) are i.i.d.
-draws from a common distribution \(F\).
+\begin{conjecture}[Positive
+definiteness]\protect\hypertarget{cnj-ols-pd}{}\label{cnj-ols-pd}
 
-\end{bookcallout}
+The matrix \(\sum_{i=1}^n \X_i\X_i'\) is positive definite.
 
-Recall the population linear coefficients (or best linear predictor
-coefficients) that we derived in the last chapter, \[ 
-\bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}]
+\end{conjecture}
+
+Intuitively, the assumption is the sample version of the third part of
+Assumption~\ref{cnj-blp-assumptions} from Chapter~\ref{sec-regression}
+(see there for a definition and discussion of positive definiteness). In
+this context, it requires we have more observations than parameters
+(\(n > k+1\)) and that there is no multicollinearity (no entries of
+\(\X_i\) are deterministic functions of the other entries). Below in
+Section~\ref{sec-rank}, we discuss equivalent conditions for this
+assumption in terms of data matrices.
+
+Recall the population linear projection coefficients (or best linear
+predictor coefficients) that we derived Theorem~\ref{thm-blp}, \[ 
+\bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}].
 \]
 
 We will consider two different ways to derive the OLS estimator for
 these coefficients, both of which are versions of the plug-in principle.
 The first approach is to use the closed-form representation of the
-coefficients and then to replace any expectations with sample means, \[ 
-\bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right),
-\] which exists if \(\sum_{i=1}^n \X_i\X_i'\) is \textbf{positive
-definite} and thus invertible. We will return to this assumption below.
+coefficients and replace any expectations with sample means, \[ 
+\bhat = \left(\frac{1}{n} \sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n \X_{i}Y_{i} \right).
+\] This will exist and be unique so long as Assumption~\ref{cnj-ols-pd}
+holds.
 
 In a simple bivariate linear projection model
 \(m(X_{i}) = \beta_0 + \beta_1X_{i}\), we saw that the population slope
@@ -7373,12 +7404,13 @@ This plug-in approach is widely applicable and tends to have excellent
 properties in large samples under iid data. But the simplicity of the
 plug-in approach also hides some features of the estimator that become
 more apparent when deriving the estimator more explicitly using
-calculus. The second approach applies the plug-in principle not to the
-closed-form expression for the coefficients but to the optimization
-problem itself. We call this the \textbf{least squares} estimator
-because it minimizes the empirical (or sample) squared prediction error,
-\[ 
-\bhat = \argmin_{\mb{b} \in \real^k}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
+calculus.
+
+The second approach applies the plug-in principle not to the closed-form
+expression for the coefficients but to the optimization problem itself.
+We call this the \textbf{least squares} estimator because it minimizes
+the empirical (or sample) squared prediction error, \[ 
+\bhat = \argmin_{\mb{b} \in \real^{k+1}}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
 \] where, \[ 
 SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
 \] is the sum of the squared residuals. To distinguish it from other,
@@ -7388,9 +7420,12 @@ more complicated least squares estimators, we call this the
 Let's solve this minimization problem. We write down the first-order
 conditions as \[ 
 0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = -2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) + 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
-\] We can rearrange this system of equations to \[ 
+\] We can rearrange this system of equations to
+\begin{equation}\protect\phantomsection\label{eq-normal-equations}{ 
 \left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat = \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right).
-\] To obtain the solution for \(\bhat\), notice that
+}\end{equation}
+
+To obtain the solution for \(\bhat\), notice that
 \(\sum_{i=1}^{n}\X_{i}\X_{i}'\) is a \((k+1) \times (k+1)\) matrix and
 \(\bhat\) and \(\sum_{i=1}^{n} \X_{i}Y_{i}\) are both \(k+1\) length
 column vectors. If \(\sum_{i=1}^{n}\X_{i}\X_{i}'\) is invertible, then
@@ -7400,19 +7435,16 @@ we can multiply both sides of this equation by that inverse to arrive at
 \] which is the same expression as the plug-in estimator (after
 canceling the \(1/n\) terms). To confirm that we have found a minimum,
 we also need to check the second-order condition, \[ 
- \frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right) > 0.
-\] What does the matrix being ``positive'' mean? In matrix algebra, this
-condition means that the matrix \(\sum_{i=1}^{n}\X_{i}\X_{i}'\) is
-\textbf{positive definite}, a condition that we discuss in
-Section~\ref{sec-rank}.
+ \frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right) > 0,
+\] which is ensured by Assumption~\ref{cnj-ols-pd}.
 
 Both the plug-in or least squares approaches yield the same estimator
 for the best linear predictor/population linear regression coefficients.
 
 \begin{theorem}[]\protect\hypertarget{thm-ols}{}\label{thm-ols}
 
-If the \(\sum_{i=1}^{n}\X_{i}\X_{i}'\) is positive definite, then the
-ordinary least squares estimator is \[
+Under Assumption~\ref{cnj-ols-pd}, the ordinary least squares estimator
+is \[
 \bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right).
 \]
 
@@ -7428,7 +7460,7 @@ predictor decomposition as \[
 Y_{i} = \alpha + \X_{i}'\bfbeta + e_{i}.
 \] Defined this way, we can write the OLS estimator for the ``slopes''
 on \(\X_i\) as the OLS estimator with all variables demeaned: \[ 
-\bhat = \left(\frac{1}{n} \sum_{i=1}^{n} (\X_{i} - \overline{\X})(\X_{i} - \overline{\X})'\right) \left(\frac{1}{n} \sum_{i=1}^{n}(\X_{i} - \overline{\X})(Y_{i} - \overline{Y})\right)
+\bhat = \left(\frac{1}{n} \sum_{i=1}^{n} (\X_{i} - \overline{\X})(\X_{i} - \overline{\X})'\right)^{-1} \left(\frac{1}{n} \sum_{i=1}^{n}(\X_{i} - \overline{\X})(Y_{i} - \overline{Y})\right)
 \] which is the inverse of the sample covariance matrix of \(\X_i\)
 times the sample covariance of \(\X_i\) and \(Y_i\). The intercept is
 \[ 
@@ -7444,12 +7476,18 @@ prediction errors \(\widehat{e}_{i} = Y_i - \X_i'\bhat\) as the
 value}. With the population linear regression, we saw that the
 projection errors, \(e_i = Y_i - \X_i'\bfbeta\), were mean zero and
 uncorrelated with the covariates \(\E[\X_{i}e_{i}] = 0\). The residuals
-have a similar property with respect to the covariates in the sample:
-\[ 
-\sum_{i=1}^n \X_i\widehat{e}_i = 0.
-\] The residuals are \emph{exactly} uncorrelated with the covariates
-(when the covariates include a constant/intercept term), which is a
-mechanical artifact of the OLS estimator.
+have a similar property with respect to the covariates in the sample.
+Rearranging Equation~\ref{eq-normal-equations}, we have \[
+\begin{aligned}
+0 &= \sum_{i=1}^n \X_iY_i -  \X_i\X_i'\bhat \\
+&= \sum_{i=1}^n \X_i(Y_i -  \X_i'\bhat) \\
+&= \sum_{i=1}^n \X_i\widehat{e}_i.
+\end{aligned}
+\] Furthermore, if \(\X_i\) includes a constant, then this also implies
+that \(\sum_{i=1} \widehat{e}_i = 0\) as well. The residuals are
+\emph{exactly} uncorrelated with the covariates (when the covariates
+include a constant/intercept term), which is a mechanical artifact of
+the OLS estimator.
 
 Figure~\ref{fig-ssr-comp} shows how OLS works in the bivariate case. It
 displays three possible regression lines as well as the sum of the
@@ -7608,15 +7646,15 @@ the residuals as \[
 \section{Rank, linear independence, and
 multicollinearity}\label{sec-rank}
 
-We noted that the OLS estimator exists when \(\sum_{i=1}^n \X_i\X_i'\)
-is positive definite or that there is ``no multicollinearity.'' This
-assumption is equivalent to saying that the matrix \(\mathbb{X}\) is
-full column rank, meaning that \(\text{rank}(\mathbb{X}) = (k+1)\),
-where \(k+1\) is the number of columns of \(\mathbb{X}\). Recall from
-matrix algebra that the column rank is the number of linearly
-independent columns in the matrix, and \textbf{linear independence}
-means that \(\mathbb{X}\mb{b} = 0\) if and only if \(\mb{b}\) is a
-column vector of 0s. In other words, we have \[ 
+We noted that the OLS estimator exists and is unique when
+\(\sum_{i=1}^n \X_i\X_i'\) is positive definite or that there is ``no
+multicollinearity.'' This assumption is equivalent to saying that the
+matrix \(\mathbb{X}\) is full column rank, meaning that
+\(\text{rank}(\mathbb{X}) = (k+1)\), where \(k+1\) is the number of
+columns of \(\mathbb{X}\). Recall from matrix algebra that the column
+rank is the number of linearly independent columns in the matrix, and
+\textbf{linear independence} means that \(\mathbb{X}\mb{b} = 0\) if and
+only if \(\mb{b}\) is a column vector of 0s. In other words, we have \[ 
 b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0 \quad\iff\quad b_{1} = b_{2} = \cdots = b_{k+1} = 0, 
 \] where \(\mathbb{X}_j\) is the \(j\)th column of \(\mathbb{X}\). Thus,
 full column rank says that all the columns are linearly independent or
@@ -7644,8 +7682,8 @@ linear independence of the columns of \(\Xmat\) ensures that the inverse
 non-singular and a matrix is invertible if and only if it is
 non-singular. This full rank condition further implies that
 \(\Xmat'\Xmat = \sum_{i=1}^{n}\X_{i}\X_{i}'\) is positive definite,
-implying that the estimator is truly finding the minimal sum of squared
-residuals.
+implying that the estimator is truly finding the unique minimal sum of
+squared residuals.
 
 What are common situations that lead to violations of no
 multicollinearity? We have seen one above, with one variable being a
@@ -7760,7 +7798,7 @@ between the \(\mb{Y}\) vector and the projection \(\Xmat\bhat\), is
 perpendicular or orthogonal to the column space of \(\Xmat\). This
 orthogonality is a consequence of the residuals being orthogonal to all
 the columns of \(\Xmat\), \[ 
-\Xmat'\mb{e} = 0,
+\Xmat'\widehat{\mb{e}} = 0,
 \] as we established above. Being orthogonal to all the columns means it
 will also be orthogonal to all linear combinations of the columns.
 
