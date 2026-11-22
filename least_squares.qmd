@@ -1,16 +1,25 @@
 # The mechanics of least squares {#sec-ols-mechanics}
 
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+library(tidyverse)
+```
+
 This chapter explores the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency. Because most people in the quantitative social sciences rely extensively on OLS for their own research, the time you spend developing deep familiarity with this approach will serve you well.
 
 In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS under the assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter. 
 
+@fig-ajr-scatter shows the relationship between log GDP per capita in 1995 against a measure of the strength of property rights for the set of former colonies studied by @AceJohRob01. The red line represents the ordinary least squares line of best fit. In this chapter, we will see how to derive this line and how to tell how well this line fits the data. We will also see how to write the OLS estimator compactly with matrices, and how individual influential countries can affect the estimate. 
 
 ```{r}
 #| label: fig-ajr-scatter
 #| echo: false
 #| fig-cap: |
-#|   Relationship between political institutions and economic 
-#|   development from Acemoglu, Johnson, and Robinson (2001).
+#|   Relationship between political institutions and economic
+#|   development from @AceJohRob01.
 ajr <- foreign::read.dta("assets/data/ajr.dta")
 
 mod <- lm(logpgp95 ~ avexpr, data = ajr)
@@ -212,7 +221,7 @@ R^2 = \frac{TSS - SSR}{TSS} = 1-\frac{SSR}{TSS}.
 $$
 The numerator, $TSS - SSR$, is the reduction in prediction error moving from $\overline{Y}$ to $\X_i'\bhat$ as the predictor. The denominator is the prediction error using $\overline{Y}$.  Thus, the $R^2$ value is the fraction of the total prediction error eliminated by using $\X_i$ to predict $Y_i$. Another way to think about this value is that it measures how much less noisy the residuals are relative to the overall variation in $Y$. One thing to note is that OLS with covariates will *always* improve in-sample fit so that $TSS \geq SSR$ even if $\X_i$ is unrelated to $Y_i$. This phantom improvement occurs because the point of OLS is to minimize the SSR, and it will do that even if it is just chasing noise. 
 
-Since regression always improves in-sample fit, $R^2$ will fall between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ and $\X_i$ are perfectly orthogonal in the data. (This is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance.) A value of 1 indicates a perfect linear fit, which occurs when all data points are perfectly predicted by the model with zero residuals. 
+Since regression always improves in-sample fit, $R^2$ will fall between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ and $\X_i$ are perfectly orthogonal in the data. (This is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance.) A value of 1 indicates a perfect linear fit, which occurs when all data points are perfectly predicted by the model with zero residuals. In @fig-ajr-scatter, the $R^2$ is `r round(summary(mod)$r.squared, 2)`. 
 
 ## Matrix form of OLS
 
@@ -485,16 +494,59 @@ $$
 
 An implication of this theorem is that the regression coefficient for a given variable captures the relationship between the residual variation in the outcome and that variable after accounting for the other covariates. In particular, this coefficient focuses on the variation orthogonal to those other covariates.  
 
-While perhaps unexpected, this result may not appear particularly useful. We can just run the long regression, right? But this trick can be very handy when $\Xmat_2$ consists of dummy variables (or "fixed effects") for a categorical variable with many categories. For example, suppose $\Xmat_2$ consists of indicators for the county of residence for a respondent. In that case, that will have over 3,000 columns, meaning that direct calculation of the $\bhat = (\bhat_{1}, \bhat_{2})$ will require inverting a matrix that is bigger than $3,000 \times 3,000$. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable are just the sample mean within each level of the variable. Thus, in this case, the residuals $\widetilde{\mb{e}}_2$ and $\Xmat_1$ can be computed by demeaning the outcome and $\Xmat_1$ within levels of the dummies in $\Xmat_2$, which can be considerably faster computationally. 
+While perhaps unexpected, this result may not appear particularly useful. We can just run the long regression, right? But this trick can be very handy when $\Xmat_2$ consists of dummy variables (or "fixed effects") for a categorical variable with many categories. For example, suppose $\Xmat_2$ consists of indicators for the county of residence for a respondent. In that case, that will have over 3,000 columns, meaning that direct calculation of the $\bhat = (\bhat_{1}, \bhat_{2})$ will require inverting a matrix that is bigger than $3,000 \times 3,000$. Computationally, this process will be very slow. But above, we saw that predictions of an outcome on a categorical variable are just the sample mean within each level of the variable. Thus, in this case, the residuals $\widetilde{\mb{e}}_2$ and $\widetilde{\Xmat}_1$ can be computed by demeaning the outcome and $\Xmat_1$ within levels of the dummies in $\Xmat_2$, which can be considerably faster computationally. 
 
-Finally, using residual regression allows researchers to visualize the conditional relationships between the outcome and a single independent variable after adjusting for other covariates. In particular, one can check the relationship using this approach with a scatterplot of $\widetilde{\mb{e}}_2$ on $\Xmat_1$ (when it is a single column). This residualized scatterplot allows researchers to check if this conditional relationship appears linear or should be modeled in another way. 
+Finally, using residual regression allows researchers to visualize the conditional relationships between the outcome and a single independent variable after adjusting for other covariates. In particular, one can check the relationship using this approach with a scatterplot of $\widetilde{\mb{e}}_2$ on $\widetilde{\Xmat}_1$ (when it is a single column). This residualized scatterplot allows researchers to check if this conditional relationship appears linear or should be modeled in another way. 
+
+```{r}
+#| label: fig-ajr-fwl
+#| echo: false
+#| fig-cap: |
+#|   Regression on residuals applied to the @AceJohRob01. Highlighted point is
+#|   Singapore. 
+
+ajr_sub <- ajr |>
+  filter(!is.na(logpgp95), !is.na(avexpr), !is.na(lat_abst))
+
+e_2 <- residuals(lm(logpgp95 ~ lat_abst, data = ajr_sub))
+res_mod <- lm(avexpr ~ lat_abst, data = ajr_sub)
+xtilde <- residuals(res_mod)
+mod_2 <- lm(e_2 ~ xtilde)
+high_pt <- which(xtilde > 3)
+pred_val <- predict(res_mod)[high_pt]
+par(mfrow = c(1, 2), mar = c(6, 5, 1, 1))
+plot(
+  x = ajr_sub$lat_abst, y = ajr_sub$avexpr,
+  pch = 19, col = "grey80", bty = "n", las = 1,
+  xlab = "", ylab = ""
+)
+title(xlab = "Absolute Value of Latitude", line = 2.5)
+title(ylab = "Average Protection Against\nExpropriation Risk", line = 2.5)
+points(x = ajr_sub$lat_abst[high_pt], y = ajr_sub$avexpr[high_pt], pch = 19, col = "dodgerblue")
+segments(x0 = ajr_sub$lat_abst[high_pt], y0 = ajr_sub$avexpr[high_pt], y1 = pred_val, col = "dodgerblue", lwd = 2)
+abline(lm(avexpr ~ lat_abst, data = ajr_sub), lwd = 3, col = "indianred")
+
+plot(
+  x = xtilde, y = e_2, pch = 19, col = "grey80",
+  bty = "n", las = 1,
+  xlab = "", ylab = ""
+)
+title(xlab = "Protection Against Expropriation\n(residualized on |Latitude|)", line = 4)
+title(ylab = "Log GDP pc, 1995\n(residualized on |Latitude|)", line = 2.5)
+abline(mod_2, lwd = 3, col = "indianred")
+points(x = xtilde[high_pt], y = e_2[high_pt], col = "dodgerblue", pch = 19)
+segments(x0 = xtilde[high_pt], y0 = e_2[high_pt], y1 = -5, col = "dodgerblue", lwd = 2, lty = 2)
+```
+
+@fig-ajr-fwl shows the FWL approach applied to the @AceJohRob01 data. Here, we are interested in expanding the bivariate regression of @fig-ajr-scatter to include a control for the absolute value of the latitude of the former colony. Suppose we wanted to visualize the relationship between strength of property rights and log GDP, conditional on absolute latitude. The left plot shows the relationship of property rights strength and latitude, with the OLS line of best fit. We highlight the point representing Singapore in blue and draw its residual. The right plot shows the conditional effect, with both log GDP and strength of property rights residualized with respect to absolute latitude. We again highlight Singapore, where its position the $x$-axis for this plot is equal to its residual in the left plot. The coefficient on strength of property rights drops from `r round(coef(mod)["avexpr"], 2)` in the bivariate relationship to `r round(coef(mod_2)["xtilde"], 2)` after conditioning on absolute latitude. 
 
 
 ## Outliers, leverage points, and influential observations
 
-Given that OLS finds the coefficients that minimize the sum of the squared residuals, asking how much impact each residual has on that solution is very helpful. Let $\bhat_{(-i)}$ be the OLS estimates if we omit unit $i$. Intuitively, **influential observations** should significantly impact the estimated coefficients so that $\bhat_{(-i)} - \bhat$ is large in absolute value. 
+Given that OLS finds the coefficients that minimize the sum of the squared residuals, asking how much impact each observation has on that solution is very helpful. Let $\bhat_{(-i)}$ be the OLS estimates if we omit unit $i$. Intuitively, **influential observations** should significantly impact the estimated coefficients so that $\bhat_{(-i)} - \bhat$ is large in absolute value. 
 
-Under what conditions do we have influential observations? OLS tries to minimize the sum of **squared** residuals, so it will move more in order to shrink larger residuals versus smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will exactly pass through the means of the outcome and the covariates: $\overline{Y} = \overline{\X}\bhat$. Thus, by definition, this means that, when an observation is close to the average of the covariates, $\overline{\X}$, it cannot have that much influence because OLS forces the regression line to go through $\overline{Y}$. Thus, influential points will have two properties:
+Under what conditions do we have influential observations? OLS tries to minimize the sum of **squared** residuals, so it will move more in order to shrink larger residuals versus smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will pass through the means of the outcome and the covariates: $\overline{Y} = \overline{\X}\bhat$. We can think of this point as a fulcrum on which any OLS line balances. A point near this fulcrum can move the line slightly but it cannot tilt it much. Points further frmo the fulcrum have more *leverage* and can tilt the line much more.   Thus, by definition, this means that, when an observation is close to the average of the covariates, $\overline{\X}$, it cannot have that much influence because OLS forces the regression line to go through $\overline{Y}$. Thus, influential points will have two properties:
+Under what conditions do we have influential observations? OLS tries to minimize the sum of **squared** residuals, so it will move more in order to shrink larger residuals versus smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will pass through the point comprised of the means of the outcome and the covariates: $(\overline{Y}, \overline{\X})$. We can think of this point as a fulcrum on which any OLS line balances. A point near this fulcrum can move the line slightly but it cannot tilt it much. Points further frmo the fulcrum have more *leverage* and can tilt the line much more. Thus, influential points will have two properties:
 
 1. Have high **leverage**, where leverage roughly measures how far $\X_i$ is from $\overline{\X}$, and
 2. Be an **outlier** in the sense of having a large residual (if left out of the regression).
@@ -521,6 +573,8 @@ Leverage values have three key properties:
 1. $0 \leq h_{ii} \leq 1$
 2. $h_{ii} \geq 1/n$ if the model contains an intercept
 2. $\sum_{i=1}^{n} h_{ii} = k + 1$
+
+The third property follows because leverages are the diagonal entries of $\mb{P}_{\Xmat}$, which always sum to the rank of the matrix, $k+1$. So the average rank is always $(k+1)/n$, which makes $2(k+1)/n$ a natural benchmark for "high" leverage. 
 
 ### Outliers and leave-one-out regression
 
@@ -593,7 +647,7 @@ One measure of influence, called DFBETA$_i$, measures how much $i$ changes the e
 $$ 
 \bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
 $$
-so there is one value for each observation-covariate pair. When divided by the standard error of the estimated coefficients, this is called DFBETA**S** (where the "S" is for standardized). These are helpful if we focus on a particular coefficient.  
+so there is one value for each observation-covariate pair. When divided by the standard error of the estimated coefficients (which we introduce in the next chapter), this is called DFBETA**S** (where the "S" is for standardized). These are helpful if we focus on a particular coefficient.  
 
 
 When we want to summarize how much an observation matters for the fit, we can use a compact measure of the influence of an observation by comparing the fitted value from the entire sample to the fitted value from the leave-one-out regression. Using the DFBETA above, we have
@@ -607,7 +661,7 @@ $$
 Different cutoffs exist for identifying “influential” observations, but they tend to be ad hoc. In any case, the more important question is "how much does this observation matter for my substantive interpretation" rather than the narrow question of a particular threshold. 
 
 
-It's all well and good to find influential observations, but what should be done about them? The first thing to check is that the data is not corrupted somehow. Influence points sometimes occur because of a coding or data entry error. We may consider removing the observation if the error appears in the data acquired from another source but exercise transparency if this appears to be the case. Another approach is to consider a transformation of the dependent or independent variables, like taking the natural logarithm, that might dampen the effects of outliers. Finally, consider using methods that are robust to outliers such as least absolute deviations or least trimmed squares.  
+It's all well and good to find influential observations, but what should be done about them? The first thing to check is that the data is not corrupted somehow. Influence points sometimes occur because of a coding or data entry error. We may consider removing the observation if the error appears in the data acquired from another source but exercise transparency if this appears to be the case. Another approach is to consider a transformation of the dependent or independent variables, like taking the natural logarithm, that might dampen the effects of outliers. Finally, consider using methods that are robust to outliers such as least absolute deviations or least trimmed squares. Keep in mind that dropping valid observations or transforming variables will change the quantity being estimated. These are modeling choices that require justifications, not simple corrections to be deployed mindlessly. 
 
 ## Summary
 

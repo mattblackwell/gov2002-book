@@ -7335,6 +7335,15 @@ expectation, but this is unnecessary if we view the inference target as
 the best linear predictor. We discuss this point more fully in the next
 chapter.
 
+Figure~\ref{fig-ajr-scatter} shows the relationship between log GDP per
+capita in 1995 against a measure of the strength of property rights for
+the set of former colonies studied by Acemoglu et al. (2001). The red
+line represents the ordinary least squares line of best fit. In this
+chapter, we will see how to derive this line and how to tell how well
+this line fits the data. We will also see how to write the OLS estimator
+compactly with matrices, and how individual influential countries can
+affect the estimate.
+
 \begin{figure}[th]
 
 \centering{
@@ -7344,8 +7353,7 @@ chapter.
 }
 
 \caption{\label{fig-ajr-scatter}Relationship between political
-institutions and economic development from Acemoglu, Johnson, and
-Robinson (2001).}
+institutions and economic development from Acemoglu et al. (2001).}
 
 \end{figure}%
 
@@ -7562,7 +7570,8 @@ and \(\X_i\) are perfectly orthogonal in the data. (This is very
 unlikely to occur because there will likely be some minimal but nonzero
 relationship by random chance.) A value of 1 indicates a perfect linear
 fit, which occurs when all data points are perfectly predicted by the
-model with zero residuals.
+model with zero residuals. In Figure~\ref{fig-ajr-scatter}, the \(R^2\)
+is 0.61.
 
 \section{Matrix form of OLS}\label{matrix-form-of-ols}
 
@@ -7951,24 +7960,52 @@ is bigger than \(3,000 \times 3,000\). Computationally, this process
 will be very slow. But above, we saw that predictions of an outcome on a
 categorical variable are just the sample mean within each level of the
 variable. Thus, in this case, the residuals \(\widetilde{\mb{e}}_2\) and
-\(\Xmat_1\) can be computed by demeaning the outcome and \(\Xmat_1\)
-within levels of the dummies in \(\Xmat_2\), which can be considerably
-faster computationally.
+\(\widetilde{\Xmat}_1\) can be computed by demeaning the outcome and
+\(\Xmat_1\) within levels of the dummies in \(\Xmat_2\), which can be
+considerably faster computationally.
 
 Finally, using residual regression allows researchers to visualize the
 conditional relationships between the outcome and a single independent
 variable after adjusting for other covariates. In particular, one can
 check the relationship using this approach with a scatterplot of
-\(\widetilde{\mb{e}}_2\) on \(\Xmat_1\) (when it is a single column).
-This residualized scatterplot allows researchers to check if this
-conditional relationship appears linear or should be modeled in another
-way.
+\(\widetilde{\mb{e}}_2\) on \(\widetilde{\Xmat}_1\) (when it is a single
+column). This residualized scatterplot allows researchers to check if
+this conditional relationship appears linear or should be modeled in
+another way.
+
+\begin{figure}[th]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{least_squares_files/figure-pdf/fig-ajr-fwl-1.pdf}}
+
+}
+
+\caption{\label{fig-ajr-fwl}Regression on residuals applied to the
+Acemoglu et al. (2001). Highlighted point is Singapore.}
+
+\end{figure}%
+
+Figure~\ref{fig-ajr-fwl} shows the FWL approach applied to the Acemoglu
+et al. (2001) data. Here, we are interested in expanding the bivariate
+regression of Figure~\ref{fig-ajr-scatter} to include a control for the
+absolute value of the latitude of the former colony. Suppose we wanted
+to visualize the relationship between strength of property rights and
+log GDP, conditional on absolute latitude. The left plot shows the
+relationship of property rights strength and latitude, with the OLS line
+of best fit. We highlight the point representing Singapore in blue and
+draw its residual. The right plot shows the conditional effect, with
+both log GDP and strength of property rights residualized with respect
+to absolute latitude. We again highlight Singapore, where its position
+the \(x\)-axis for this plot is equal to its residual in the left plot.
+The coefficient on strength of property rights drops from 0.53 in the
+bivariate relationship to 0.46 after conditioning on absolute latitude.
 
 \section{Outliers, leverage points, and influential
 observations}\label{outliers-leverage-points-and-influential-observations}
 
 Given that OLS finds the coefficients that minimize the sum of the
-squared residuals, asking how much impact each residual has on that
+squared residuals, asking how much impact each observation has on that
 solution is very helpful. Let \(\bhat_{(-i)}\) be the OLS estimates if
 we omit unit \(i\). Intuitively, \textbf{influential observations}
 should significantly impact the estimated coefficients so that
@@ -7978,11 +8015,25 @@ Under what conditions do we have influential observations? OLS tries to
 minimize the sum of \textbf{squared} residuals, so it will move more in
 order to shrink larger residuals versus smaller ones. Where are large
 residuals likely to occur? Well, notice that any OLS regression line
-with a constant will exactly pass through the means of the outcome and
-the covariates: \(\overline{Y} = \overline{\X}\bhat\). Thus, by
-definition, this means that, when an observation is close to the average
-of the covariates, \(\overline{\X}\), it cannot have that much influence
-because OLS forces the regression line to go through \(\overline{Y}\).
+with a constant will pass through the means of the outcome and the
+covariates: \(\overline{Y} = \overline{\X}\bhat\). We can think of this
+point as a fulcrum on which any OLS line balances. A point near this
+fulcrum can move the line slightly but it cannot tilt it much. Points
+further frmo the fulcrum have more \emph{leverage} and can tilt the line
+much more. Thus, by definition, this means that, when an observation is
+close to the average of the covariates, \(\overline{\X}\), it cannot
+have that much influence because OLS forces the regression line to go
+through \(\overline{Y}\). Thus, influential points will have two
+properties: Under what conditions do we have influential observations?
+OLS tries to minimize the sum of \textbf{squared} residuals, so it will
+move more in order to shrink larger residuals versus smaller ones. Where
+are large residuals likely to occur? Well, notice that any OLS
+regression line with a constant will pass through the point comprised of
+the means of the outcome and the covariates:
+\((\overline{Y}, \overline{\X})\). We can think of this point as a
+fulcrum on which any OLS line balances. A point near this fulcrum can
+move the line slightly but it cannot tilt it much. Points further frmo
+the fulcrum have more \emph{leverage} and can tilt the line much more.
 Thus, influential points will have two properties:
 
 \begin{enumerate}
@@ -8030,6 +8081,11 @@ Leverage values have three key properties:
 \item
   \(\sum_{i=1}^{n} h_{ii} = k + 1\)
 \end{enumerate}
+
+The third property follows because leverages are the diagonal entries of
+\(\mb{P}_{\Xmat}\), which always sum to the rank of the matrix, \(k+1\).
+So the average rank is always \((k+1)/n\), which makes \(2(k+1)/n\) a
+natural benchmark for ``high'' leverage.
 
 \subsection{Outliers and leave-one-out
 regression}\label{outliers-and-leave-one-out-regression}
@@ -8100,9 +8156,10 @@ One measure of influence, called DFBETA\(_i\), measures how much \(i\)
 changes the estimated coefficient vector \[ 
 \bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
 \] so there is one value for each observation-covariate pair. When
-divided by the standard error of the estimated coefficients, this is
-called DFBETA\textbf{S} (where the ``S'' is for standardized). These are
-helpful if we focus on a particular coefficient.
+divided by the standard error of the estimated coefficients (which we
+introduce in the next chapter), this is called DFBETA\textbf{S} (where
+the ``S'' is for standardized). These are helpful if we focus on a
+particular coefficient.
 
 When we want to summarize how much an observation matters for the fit,
 we can use a compact measure of the influence of an observation by
@@ -8129,7 +8186,10 @@ transparency if this appears to be the case. Another approach is to
 consider a transformation of the dependent or independent variables,
 like taking the natural logarithm, that might dampen the effects of
 outliers. Finally, consider using methods that are robust to outliers
-such as least absolute deviations or least trimmed squares.
+such as least absolute deviations or least trimmed squares. Keep in mind
+that dropping valid observations or transforming variables will change
+the quantity being estimated. These are modeling choices that require
+justifications, not simple corrections to be deployed mindlessly.
 
 \section{Summary}\label{summary-6}
 
@@ -8989,6 +9049,12 @@ tests that are valid for all sample sizes.
 
 \protect\phantomsection\label{refs}
 \begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-AceJohRob01}
+Acemoglu, Daron, Simon Johnson, and James A. Robinson. 2001. {``The
+Colonial Origins of Comparative Development: An Empirical
+Investigation.''} \emph{American Economic Review} 91 (5): 1369--401.
+\url{https://doi.org/10.1257/aer.91.5.1369}.
+
 \bibitem[\citeproctext]{ref-BenHoc95}
 Benjamini, Yoav, and Yosef Hochberg. 1995. {``Controlling the False
 Discovery Rate: A Practical and Powerful Approach to Multiple
