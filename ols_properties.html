@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4f67ab1e4efc86feb5e21e0983fc9301.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-fd437c11ef914449285a5c26e0daa494.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -316,7 +316,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conditional expectation and linear projection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -556,10 +556,8 @@ t = \frac{\widehat{\beta}_{j} - \beta_{j}}{\widehat{\se}[\widehat{\beta}_{j}]} \
 <div class="callout-body-container callout-body">
 <p>We can obtain critical values for the <span class="math inline">\(\chi^2_q\)</span> distribution using the <code>qchisq()</code> function in R. For example, if we wanted to obtain the critical value <span class="math inline">\(w\)</span> such that <span class="math inline">\(\P(W &gt; w_{\alpha}) = \alpha\)</span> for our two-parameter interaction example, we could use:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="at">p =</span> <span class="fl">0.95</span>, <span class="at">df =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.991465</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="at">p =</span> <span class="fl">0.95</span>, <span class="at">df =</span> <span class="dv">2</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 5.991465</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -567,10 +565,8 @@ t = \frac{\widehat{\beta}_{j} - \beta_{j}}{\widehat{\se}[\widehat{\beta}_{j}]} \
 F = \frac{W}{q}.
 \]</span> This also typically uses the homoskedastic variance estimator <span class="math inline">\(\mb{V}^{\texttt{lm}}_{\bfbeta}\)</span> in <span class="math inline">\(W\)</span>. The p-values reported for such tests use the <span class="math inline">\(F_{q,n-k-1}\)</span> distribution because this is the exact distribution of the <span class="math inline">\(F\)</span> statistic when the errors are (a) homoskedastic and (b) normally distributed. When these assumptions do not hold, the <span class="math inline">\(F\)</span> distribution has no justification in statistical theory, but it is slightly more conservative than the <span class="math inline">\(\chi^2_q\)</span> distribution, and the inferences from the <span class="math inline">\(F\)</span> statistic will converge to those from the <span class="math inline">\(\chi^2_q\)</span> distribution as <span class="math inline">\(n\to\infty\)</span>. So it might be justified as an <em>ad hoc</em> small-sample adjustment to the Wald test. For example, if we used the <span class="math inline">\(F_{q,n-k-1}\)</span> with the interaction example where <span class="math inline">\(q=2\)</span> and we have, say, a sample size of <span class="math inline">\(n = 100\)</span>, then in that case, the critical value for the F test with <span class="math inline">\(\alpha = 0.05\)</span> is</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.091191</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="dv">4</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.091191</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>This result implies a critical value of 6.182 on the scale of the Wald statistic (multiplying it by <span class="math inline">\(q = 2\)</span>). Compared to the earlier critical value of 5.991 based on the <span class="math inline">\(\chi^2_2\)</span> distribution, we can see that the inferences will be very similar even in moderately-sized datasets.</p>
 <p>Finally, note that the F-statistic reported by <code>lm()</code> in R is the test of all the coefficients being equal to 0 jointly except for the intercept. In modern quantitative social sciences, this test is seldom substantively interesting.</p>

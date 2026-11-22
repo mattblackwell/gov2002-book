@@ -48,7 +48,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4f67ab1e4efc86feb5e21e0983fc9301.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-fd437c11ef914449285a5c26e0daa494.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -262,7 +262,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conditional expectation and linear projection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -302,7 +302,7 @@ window.Quarto = {
   <li><a href="#ols-coefficients-for-binary-and-categorical-regressors" id="toc-ols-coefficients-for-binary-and-categorical-regressors" class="nav-link" data-scroll-target="#ols-coefficients-for-binary-and-categorical-regressors"><span class="header-section-number">7.5</span> OLS coefficients for binary and categorical regressors</a></li>
   <li><a href="#projection-and-geometry-of-least-squares" id="toc-projection-and-geometry-of-least-squares" class="nav-link" data-scroll-target="#projection-and-geometry-of-least-squares"><span class="header-section-number">7.6</span> Projection and geometry of least squares</a></li>
   <li><a href="#projection-and-annihilator-matrices" id="toc-projection-and-annihilator-matrices" class="nav-link" data-scroll-target="#projection-and-annihilator-matrices"><span class="header-section-number">7.7</span> Projection and annihilator matrices</a></li>
-  <li><a href="#residual-regression" id="toc-residual-regression" class="nav-link" data-scroll-target="#residual-regression"><span class="header-section-number">7.8</span> Residual regression</a></li>
+  <li><a href="#sec-residual-regression" id="toc-sec-residual-regression" class="nav-link" data-scroll-target="#sec-residual-regression"><span class="header-section-number">7.8</span> Residual regression</a></li>
   <li><a href="#outliers-leverage-points-and-influential-observations" id="toc-outliers-leverage-points-and-influential-observations" class="nav-link" data-scroll-target="#outliers-leverage-points-and-influential-observations"><span class="header-section-number">7.9</span> Outliers, leverage points, and influential observations</a>
   <ul class="collapse">
   <li><a href="#sec-leverage" id="toc-sec-leverage" class="nav-link" data-scroll-target="#sec-leverage"><span class="header-section-number">7.9.1</span> Leverage points</a></li>
@@ -407,7 +407,7 @@ SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
 </div>
 <div class="callout-body-container callout-body">
 <p>Almost all regression will contain an intercept term, usually represented as a constant 1 in the covariate vector. It is also possible to obtain expressions for the OLS estimates of the intercept and variable coefficients separately. We can rewrite the best linear predictor decomposition as <span class="math display">\[
-Y_{i} = \alpha + \X_{i}'\bfbeta + \e_{i}.
+Y_{i} = \alpha + \X_{i}'\bfbeta + e_{i}.
 \]</span> Defined this way, we can write the OLS estimator for the “slopes” on <span class="math inline">\(\X_i\)</span> as the OLS estimator with all variables demeaned: <span class="math display">\[
 \bhat = \left(\frac{1}{n} \sum_{i=1}^{n} (\X_{i} - \overline{\X})(\X_{i} - \overline{\X})'\right) \left(\frac{1}{n} \sum_{i=1}^{n}(\X_{i} - \overline{\X})(Y_{i} - \overline{Y})\right)
 \]</span> which is the inverse of the sample covariance matrix of <span class="math inline">\(\X_i\)</span> times the sample covariance of <span class="math inline">\(\X_i\)</span> and <span class="math inline">\(Y_i\)</span>. The intercept is <span class="math display">\[
@@ -601,8 +601,8 @@ Figure&nbsp;7.4: Projection of Y on the column space of the covariates.
 \mb{Y} = \Xmat\bhat + \widehat{\mb{e}} = \mb{P}_{\Xmat}\mb{Y} + \mb{M}_{\Xmat}\mb{Y}.
 \]</span></p>
 </section>
-<section id="residual-regression" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="residual-regression"><span class="header-section-number">7.8</span> Residual regression</h2>
+<section id="sec-residual-regression" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="sec-residual-regression"><span class="header-section-number">7.8</span> Residual regression</h2>
 <p>There are many situations where we can partition the covariates into two groups, and we might wonder if it is possible to express or calculate the OLS coefficients for just one set of covariates. In particular, let the columns of <span class="math inline">\(\Xmat\)</span> be partitioned into <span class="math inline">\([\Xmat_{1} \Xmat_{2}]\)</span>, so that the linear prediction we are estimating is <span class="math display">\[
 \mb{Y} = \Xmat_{1}\bfbeta_{1} + \Xmat_{2}\bfbeta_{2} + \mb{e},
 \]</span> with estimated coefficients and residuals <span class="math display">\[
@@ -1199,8 +1199,8 @@ D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\widetilde{e}_{i}^{2}}{\widehat{\mb{e}}'\wide
   </script>
 <nav class="page-navigation" aria-label="Page">
   <div class="nav-page nav-page-previous">
-      <a href="./linear_model.html" class="pagination-link" aria-label="Linear regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span>
+      <a href="./linear_model.html" class="pagination-link" aria-label="Conditional expectation and linear projection">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conditional expectation and linear projection</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -102,7 +102,7 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4f67ab1e4efc86feb5e21e0983fc9301.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-fd437c11ef914449285a5c26e0daa494.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -316,7 +316,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Conditional expectation and linear projection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -677,7 +677,7 @@ Warning
 \text{MSE}[\widehat{\theta}] &amp;= \E[(\widehat{\theta} - \theta)^2] \\
 &amp;= \E[(\widehat{\theta} - \E[\widehat{\theta}] + \E[\widehat{\theta}] - \theta)^2] \\
 &amp;= \E[(\widehat{\theta} - \E[\widehat{\theta}])^2] + \left(\E[\widehat{\theta}] - \theta\right) ^ 2 + 2\E[(\widehat{\theta} - \E[\widehat{\theta}])]\left(\E[\widehat{\theta}] - \theta\right) \\
-&amp;= \text{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
+&amp;= \textsf{bias}[\widehat{\theta}_n]^2 + \V[\widehat{\theta}_n]  
 \end{aligned}
 \]</span> Thus, the MSE is low when bias and variance are low.</p>
 <p>Note that connecting these concepts to notions of precision and accuracy is useful. In particular, estimators with low sampling variance are <strong>precise</strong>, whereas estimators with low MSE are <strong>accurate</strong>. An estimator can be very precise, but the same estimator can be inaccurate because it is biased.</p>
@@ -912,7 +912,9 @@ S^2 = \frac{1}{n-1} \sum_{i=1}^N Z_i(x_i - \Xbar_n)^2.
 \]</span> This estimator is <strong>biased</strong> for the population mean since there is a random quantity in the denominator. The Hajek estimator is often considered the better estimator in many situations, though, because it has lower sampling variance than the HT estimator.</p>
 <section id="sampling-weights" class="level3" data-number="1.7.1">
 <h3 data-number="1.7.1" class="anchored" data-anchor-id="sampling-weights"><span class="header-section-number">1.7.1</span> Sampling weights</h3>
-<p>The HT and Hajek estimators are both functions of what are commonly called the <strong>sampling weights</strong>, <span class="math display">\[w_i = \frac{1}{\pi_i}\]</span>. We can write the HT estimator as <span class="math display">\[
+<p>The HT and Hajek estimators are both functions of what are commonly called the <strong>sampling weights</strong>, <span class="math display">\[
+w_i = \frac{1}{\pi_i}.
+\]</span> We can write the HT estimator as <span class="math display">\[
 \widetilde{X}_{HT} = \frac{1}{N} \sum_{i=1}^N w_iZ_ix_i,
 \]</span> and we can write the Hajek estimator as <span class="math display">\[
 \widetilde{X}_{hj} = \frac{\sum_{i=1}^N w_iZ_{i}x_{i}}{\sum_{i=1}^{N} w_iZ_{i}}.
