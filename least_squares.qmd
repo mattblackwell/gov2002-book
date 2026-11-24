@@ -8,7 +8,7 @@
 library(tidyverse)
 ```
 
-This chapter explores the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation, computational simplicity, and statistical efficiency. Because most people in the quantitative social sciences rely extensively on OLS for their own research, the time you spend developing deep familiarity with this approach will serve you well.
+This chapter explores the most widely used estimator for population linear regressions: **ordinary least squares** (OLS). OLS is a plug-in estimator for the best linear projection (or population linear regression) described in the last chapter. Its popularity is partly due to its ease of interpretation and computational simplicity. Because most people in the quantitative social sciences rely extensively on OLS for their own research, the time you spend developing deep familiarity with this approach will serve you well.
 
 In this chapter, we focus on motivating the estimator and the mechanical or algebraic properties of the OLS estimator. In the next chapter, we will investigate its statistical assumptions. Textbooks often introduce OLS under the assumption of a linear model for the conditional expectation, but this is unnecessary if we view the inference target as the best linear predictor. We discuss this point more fully in the next chapter. 
 
@@ -19,7 +19,8 @@ In this chapter, we focus on motivating the estimator and the mechanical or alge
 #| echo: false
 #| fig-cap: |
 #|   Relationship between political institutions and economic
-#|   development from @AceJohRob01.
+#|   development from @AceJohRob01 for the $n = 111$ countries from 
+#|   their data with data on both variables. 
 ajr <- foreign::read.dta("assets/data/ajr.dta")
 
 mod <- lm(logpgp95 ~ avexpr, data = ajr)
@@ -54,7 +55,7 @@ Intuitively, the assumption is the sample version of the third part of @cnj-blp-
 
 Recall the population linear projection coefficients (or best linear predictor coefficients) that we derived @thm-blp,
 $$ 
-\bfbeta = \argmin_{\mb{b} \in \real^k}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}].
+\bfbeta = \argmin_{\mb{b} \in \real^{k+1}}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr] = \left(\E[\X_{i}\X_{i}']\right)^{-1}\E[\X_{i}Y_{i}].
 $$
 
 We will consider two different ways to derive the OLS estimator for these coefficients, both of which are versions of the plug-in principle. The first approach is to use the closed-form representation of the coefficients and replace any expectations with sample means,
@@ -73,17 +74,17 @@ This plug-in approach is widely applicable and tends to have excellent propertie
 
 The second approach applies the plug-in principle not to the closed-form expression for the coefficients but to the optimization problem itself. We call this the **least squares** estimator because it minimizes the empirical (or sample) squared prediction error,
 $$ 
-\bhat = \argmin_{\mb{b} \in \real^{k+1}}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^k}\; SSR(\mb{b}),
-$$
+\bhat = \argmin_{\mb{b} \in \real^{k+1}}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^{k+1}}\; n\,SSR(\mb{b}),
+$$ {#eq-ols-objective}
 where,
 $$ 
 SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
 $$
 is the sum of the squared residuals. To distinguish it from other, more complicated least squares estimators, we call this the **ordinary least squares** estimator, or OLS. 
 
-Let's solve this minimization problem. We write down the first-order conditions as
+Let's solve this minimization problem. We can use the chain rule to differentiate $(Y_i - \X_i'\mb{b})^2$ with respect to $\mb{b}$ in a similar way as the scalar case, giving $-2\X_i(Y_i - \X_i'\mb{b})$.  Thus, the first-order conditions will be 
 $$ 
-0=\frac{\partial SSR(\bhat)}{\partial \bfbeta} = -2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) + 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
+0= \left.\frac{\partial SSR(\mb{b})}{\partial \mb{b}}\right|_{\mb{b}=\bhat} = -2 \left(\sum_{i=1}^{n} \X_{i}Y_{i}\right) + 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)\bhat.
 $$
 We can rearrange this system of equations to
 $$ 
@@ -94,17 +95,17 @@ To obtain the solution for $\bhat$, notice that $\sum_{i=1}^{n}\X_{i}\X_{i}'$ is
 $$ 
 \bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right),
 $$
-which is the same expression as the plug-in estimator (after canceling the $1/n$ terms). To confirm that we have found a minimum, we also need to check the second-order condition, 
+which is the same expression as the plug-in estimator (after canceling the $1/n$ terms). To confirm that we have found a minimum, we also need to check the second-order condition that 
 $$ 
- \frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right) > 0,
+ \frac{\partial^{2} SSR(\bhat)}{\partial \bfbeta\bfbeta'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)
 $$
-which is ensured by @cnj-ols-pd. 
+is positive definite, which is ensured by @cnj-ols-pd. 
 
-Both the plug-in or least squares approaches yield the same estimator for the best linear predictor/population linear regression coefficients.
+Both the plug-in or least squares approaches yield the same estimator for the best linear predictor/population linear regression coefficients, which is the in-sample version of the population linear projection derive in @thm-blp. 
 
 ::: {#thm-ols}
 
-Under @cnj-ols-pd, the ordinary least squares estimator is
+Under @cnj-ols-pd, the unique minimizer to @eq-ols-objective is the ordinary least squares estimator
 $$
 \bhat = \left(\sum_{i=1}^n \X_i\X_i' \right)^{-1} \left(\sum_{i=1}^n \X_{i}Y_{i} \right).
 $$
@@ -142,23 +143,26 @@ $$
 Furthermore, if $\X_i$ includes a constant, then this also implies that $\sum_{i=1} \widehat{e}_i = 0$ as well. The residuals are *exactly* uncorrelated with the covariates (when the covariates include a constant/intercept term), which is a mechanical artifact of the OLS estimator.  
 
 
-@fig-ssr-comp shows how OLS works in the bivariate case. It displays three possible regression lines as well as the sum of the squared residuals for each line. OLS aims to find the line that minimizes the function on the right.  
+@fig-ssr-comp shows how OLS works in the bivariate case. It displays three possible regression lines as well as the sum of the squared residuals for each line (with the intercept chosen optimally for each slope). OLS aims to find the line that minimizes the function on the right.  
 
 ```{r}
 #| label: fig-ssr-comp
 #| echo: false
-#| fig-cap: Different possible lines and their corresponding sum of squared residuals. 
+#| fig-cap: | 
+#|   Different possible lines and their corresponding sum of squared residuals. 
 library(RColorBrewer)
 ey2 <- var(mod$model$logpgp95)
 exy <- cov(mod$model$logpgp95, mod$model$avexpr)
 ex2 <- var(mod$model$avexpr)
 ex <- mean(mod$model$avexpr)
 ey <- mean(mod$model$logpgp95)
-ssr <- function(x) ey2 - 2 * x * exy + x^2 * ex2
+n <- length(mod$model$avexpr)
+ssr <- function(x) (n - 1) * (ey2 - 2 * x * exy + x^2 * ex2)
 par(mfrow = c(1, 2))
 plot(ajr$avexpr, ajr$logpgp95,
   xlab = "Average Protection Against\nExpropriation Risk",
-  ylab = "Log GDP per capita", pch = 19, bty = "n", col = adjustcolor("grey60", alpha = 0.25), las = 1
+  ylab = "Log GDP per capita", pch = 19, bty = "n",
+  col = adjustcolor("grey60", alpha = 0.25), las = 1
 )
 slopes <- c(-0.5, coef(mod)[2], 1.5)
 cols <- brewer.pal(n = 3, "Dark2")
@@ -170,16 +174,19 @@ for (i in seq_along(slopes)) {
 }
 
 curve(ssr,
-  from = -1, to = 2, ylim = c(-0.5, 8),
+  from = -1, to = 2, ylim = c(-0.5, ssr(-1) * 1.1),
   bty = "n", lwd = 2, xlab = expression(beta[1]),
   ylab = ""
 )
-mtext(side = 2, line = 2, expression(widehat(S)(beta[1])), las = 1)
-title("Average of Squared Residuals")
+mtext(side = 2, line = 2, expression(SSR(beta[1])), las = 1)
+title("Sum of Squared Residuals")
 for (i in seq_along(slopes)) {
   b1 <- slopes[i]
   b0 <- ey - b1 * ex
-  segments(x0 = b1, y0 = -10, y1 = ssr(b1), lwd = 4, col = cols[i], lty = ltys[i])
+  segments(
+    x0 = b1, y0 = -10, y1 = ssr(b1),
+    lwd = 4, col = cols[i], lty = ltys[i]
+  )
 }
 ```
 
@@ -221,7 +228,7 @@ R^2 = \frac{TSS - SSR}{TSS} = 1-\frac{SSR}{TSS}.
 $$
 The numerator, $TSS - SSR$, is the reduction in prediction error moving from $\overline{Y}$ to $\X_i'\bhat$ as the predictor. The denominator is the prediction error using $\overline{Y}$.  Thus, the $R^2$ value is the fraction of the total prediction error eliminated by using $\X_i$ to predict $Y_i$. Another way to think about this value is that it measures how much less noisy the residuals are relative to the overall variation in $Y$. One thing to note is that OLS with covariates will *always* improve in-sample fit so that $TSS \geq SSR$ even if $\X_i$ is unrelated to $Y_i$. This phantom improvement occurs because the point of OLS is to minimize the SSR, and it will do that even if it is just chasing noise. 
 
-Since regression always improves in-sample fit, $R^2$ will fall between 0 and 1. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ and $\X_i$ are perfectly orthogonal in the data. (This is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance.) A value of 1 indicates a perfect linear fit, which occurs when all data points are perfectly predicted by the model with zero residuals. In @fig-ajr-scatter, the $R^2$ is `r round(summary(mod)$r.squared, 2)`. 
+When $\X_i$ includes a constant, regression can never worsen in-sample fit, so $R^2$ will fall between 0 and 1 in this case. A value 0 zero would indicate exactly 0 estimated coefficients on all covariates (except the intercept) so that $Y_i$ is exactly uncorrelated with each independent variable in the sample. (This is very unlikely to occur because there will likely be some minimal but nonzero relationship by random chance.) A value of 1 indicates a perfect linear fit, which occurs when all data points are perfectly predicted by the model with zero residuals. In @fig-ajr-scatter, the $R^2$ is `r round(summary(mod)$r.squared, 2)`. 
 
 ## Matrix form of OLS
 
@@ -266,10 +273,10 @@ Representing sums in matrix form is the critical link between the definition of 
 $$
 \begin{aligned}
   \sum_{i=1}^n \X_i\X_i' &= \Xmat'\Xmat \\
-  \sum_{i=1}^n \X_iY_i &= \Xmat'\mb{Y},
+  \sum_{i=1}^n \X_iY_i &= \Xmat'\mb{Y}.
 \end{aligned}
 $$
-which means we can write the OLS estimator in the more recognizable form as 
+To see how the first of these holds, note that the $(j, \ell)$ entry of $\Xmat'\Xmat$ is the inner product of columns $j$ and $\ell$, which is exactly the $(j, \ell)$ entry of $\sum_{i=1}^n \X_i\X_i'$. Thes results means we can write the OLS estimator in the more recognizable form as 
 $$ 
 \bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1} \mathbb{X}'\mb{Y}.
 $$
@@ -301,11 +308,11 @@ where the double vertical lines are the Euclidean norm of the argument, $\Vert \
 $$ 
 \bhat = \argmin_{\mb{b} \in \mathbb{R}^{(k+1)}}\; \Vert\mb{Y} - \mathbb{X}\mb{b}\Vert^{2}
 $$
-Finally, we can write the lack of correlation of the covariates and the residuals as
+Finally, the first-order conditions allow us to write
 $$ 
 \mathbb{X}'\widehat{\mb{e}} = \sum_{i=1}^{n} \X_{i}\widehat{e}_{i} = 0,
 $$
-which also implies these vectors are **orthogonal**.
+which means the residual vector is **orthogonal** to every column of $\Xmat$. If $\Xmat$ includes a constant, this also implies the residuals are uncorrelated with each covariate. 
 
 ## Rank, linear independence, and multicollinearity {#sec-rank}
 
@@ -315,14 +322,14 @@ b_{1}\mathbb{X}_{1} + b_{2}\mathbb{X}_{2} + \cdots + b_{k+1}\mathbb{X}_{k+1} = 0
 $$
 where $\mathbb{X}_j$ is the $j$th column of $\mathbb{X}$. Thus, full column rank says that all the columns are linearly independent or that there is no "multicollinearity."
 
-Could this be violated? Suppose we accidentally included a linear function of one variable so that $\mathbb{X}_2 = 2\mathbb{X}_1$. We then have
+Could this be violated? Suppose we accidentally included a linear function of one variable so that $\mathbb{X}_2 = 2\mathbb{X}_1$ to an otherwise linearly independent set of covariates. We then have
 $$ 
 \begin{aligned}
   \mathbb{X}\mb{b} &= b_{1}\mathbb{X}_{1} + b_{2}2\mathbb{X}_1+ b_{3}\mathbb{X}_{3}+ \cdots + b_{k+1}\mathbb{X}_{k+1} \\
   &= (b_{1} + 2b_{2})\mathbb{X}_{1} + b_{3}\mathbb{X}_{3} + \cdots + b_{k+1}\mathbb{X}_{k+1}
 \end{aligned}
 $$
-In this case, this expression equals 0 when $b_3 = b_4 = \cdots = b_{k+1} = 0$ and $b_1 = -2b_2$. Thus, the collection of columns is linearly dependent, so we know that the rank of $\mathbb{X}$ must be less than full column rank (that is, less than $k+1$). Hopefully it is also clear that if we removed the problematic column $\mathbb{X}_2$, the resulting matrix would have $k$ linearly independent columns, implying that $\mathbb{X}$ is rank $k$. 
+In this case, this expression equals 0 when $b_3 = b_4 = \cdots = b_{k+1} = 0$ and $b_1 = -2b_2$. Thus, the collection of columns is linearly dependent, so we know that the rank of $\mathbb{X}$ must be less than full column rank (that is, less than $k+1$). Hopefully it is also clear that if we removed the only problematic column $\mathbb{X}_2$, the resulting matrix would have $k$ linearly independent columns, implying that $\mathbb{X}$ is rank $k$. 
 
 Why does this rank condition matter for the OLS estimator? In short, linear independence of the columns of $\Xmat$ ensures that the inverse $(\Xmat'\Xmat)^{-1}$ exists and so does $\bhat$. This is because $\Xmat$ is of full column rank if and only if $\Xmat'\Xmat$ is non-singular and a matrix is invertible if and only if it is non-singular.  This full rank condition further implies that $\Xmat'\Xmat = \sum_{i=1}^{n}\X_{i}\X_{i}'$ is positive definite, implying that the estimator is truly finding the unique minimal sum of squared residuals.
 
@@ -334,15 +341,17 @@ That is, if a unit is not in Asia, Europe, Africa, or the Americas, we know it i
 
 Collinearity can also occur when including both an intercept term and a variable that does not vary. This issue can often happen if we mistakenly subset our data, for example in this case if we subsetted the data to only the Asian units but still included the Asian dummy variable in the regression. 
 
-Finally, note that most statistical software packages will "solve" the multicollinearity by arbitrarily removing as many linearly dependent covariates as is necessary to achieve full rank. R will show the estimated coefficients as `NA` in those cases.  
+Finally, note that most statistical software packages will "solve" the multicollinearity by removing as many linearly dependent covariates as is necessary to achieve full rank. For example, R will show the estimated coefficients as `NA` in those cases.  
 
 ## OLS coefficients for binary and categorical regressors
 
-Suppose that the covariates include just the intercept and a single binary variable, $\X_i = (1\; X_{i})'$, where $X_i \in \{0,1\}$. In other words, the right-hand side contains only one covariate, an indicator variable. In this case, the OLS coefficient on $X_i$, $\widehat{\beta_{1}}$, is exactly equal to the difference in sample means of $Y_i$ in the $X_i = 1$ group and the $X_i = 0$ group:
+Suppose that the covariates include just the intercept and a single binary variable, $\X_i = (1\; X_{i})'$, where $X_i \in \{0,1\}$. In other words, the right-hand side contains only one covariate, an indicator variable. In this case, the OLS coefficient on $X_i$, $\widehat{\beta}_{1}$, is exactly equal to the difference in sample means of $Y_i$ in the $X_i = 1$ group and the $X_i = 0$ group:
 $$ 
 \widehat{\beta}_{1} = \frac{\sum_{i=1}^{n} X_{i}Y_{i}}{\sum_{i=1}^{n} X_{i}} - \frac{\sum_{i=1}^{n} (1 - X_{i})Y_{i}}{\sum_{i=1}^{n} 1- X_{i}} = \overline{Y}_{X =1} - \overline{Y}_{X=0}
 $$
 This very useful result is not an approximation: it holds exactly for any sample size.
+
+Why does does OLS have this property? In a situation with a constant and a single binary variable, there are two parameters and two values to predict. So this model can produce two predicted values, one for each group, and those fitted values will be the group means because means are the least squares predictors. The slope measures the difference between these fitted values and thus the difference beteween these group means. 
 
 We can generalize this idea to discrete variables more broadly. Suppose we have our region variables from the last section and include in our covariates a constant and the dummies for Asia, Europe, Africa, and the Americas (with Oceania again being the omitted variable/category). Then the coefficient on the West dummy will be
 $$ 
@@ -358,11 +367,11 @@ Note that these interpretations change when additional covariates are added to t
 
 OLS has a very nice geometric interpretation that adds a lot of intuition for various aspects of the method. In this geometric approach, we view $\mb{Y}$ as an $n$-dimensional vector in $\mathbb{R}^n$. As we saw above, OLS in matrix form is about finding a linear combination of the covariate matrix $\Xmat$ closest to this vector in terms of the Euclidean distance, which is just the sum of squares.
 
-Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^{k+1}\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Note that the OLS fitted values, $\Xmat\bhat$, are in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional surface inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
+Let $\mathcal{C}(\Xmat) = \{\Xmat\mb{b} : \mb{b} \in \mathbb{R}^{k+1}\}$ be the **column space** of the matrix $\Xmat$. This set is all linear combinations of the columns of $\Xmat$ or the set of all possible linear predictions we could obtain from $\Xmat$. Note that the OLS fitted values, $\Xmat\bhat$, are in this column space. If, as we assume, $\Xmat$ has full column rank of $k+1$, then the column space $\mathcal{C}(\Xmat)$ will be a $k+1$-dimensional subspace inside of the larger $n$-dimensional space. If $\Xmat$ has two columns, the column space will be a plane.   
 
 Another interpretation of the OLS estimator is that it finds the linear predictor as the closest point in the column space of $\Xmat$ to the outcome vector $\mb{Y}$. This is called the **projection** of $\mb{Y}$ onto $\mathcal{C}(\Xmat)$. @fig-projection shows this projection for a case with $n=3$ and 2 columns in $\Xmat$. The shaded blue region represents the plane of the column space of $\Xmat$, and $\Xmat\bhat$ is the closest point to $\mb{Y}$ in that space. This illustrates the whole idea of the OLS estimator: find the linear combination of the columns of $\Xmat$ (a point in the column space) that minimizes the Euclidean distance between that point and the outcome vector (the sum of squared residuals).
 
-![Projection of Y on the column space of the covariates.](assets/img/projection-drawing.png){#fig-projection}
+![Projection of Y on the column space of the covariates.](assets/img/projection.png){#fig-projection}
 
 This figure shows that the residual vector, which is the difference between the $\mb{Y}$ vector and the projection $\Xmat\bhat$, is perpendicular or orthogonal to the column space of $\Xmat$. This orthogonality is a consequence of the residuals being orthogonal to all the columns of $\Xmat$,
 $$ 
@@ -380,7 +389,7 @@ projects a vector into $\mathcal{C}(\Xmat)$. In particular, we can see that this
 $$ 
 \mb{P}_{\Xmat}\mb{Y} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\mb{Y} = \Xmat\bhat.
 $$
-Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is also called the **hat matrix**. With either name, multiplying a vector by $\mb{P}_{\Xmat}$ gives the best linear predictor of that vector as a function of $\Xmat$. Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ is itself. Letting $\mb{b} \in \real^{k+1}$, we can also see this algebraically for any linear combination $\Xmat\mb{b}$
+Because we sometimes write the linear predictor as $\widehat{\mb{Y}} = \Xmat\bhat$, the projection matrix is also called the **hat matrix**. With either name, multiplying a vector by $\mb{P}_{\Xmat}$ gives the least squares fit of that vector with respect to $\Xmat$. Intuitively, any vector that is already a linear combination of the columns of $\Xmat$ (so is in $\mathcal{C}(\Xmat)$) should be unaffected by this projection: the closest point in $\mathcal{C}(\Xmat)$ to a point already in $\mathcal{C}(\Xmat)$ is itself. Letting $\mb{b} \in \real^{k+1}$, we can also see this algebraically for any linear combination $\Xmat\mb{b}$
 $$
 \mb{P}_{\Xmat}\Xmat\mb{b} = \Xmat (\Xmat'\Xmat)^{-1} \Xmat'\Xmat\mb{b} = \Xmat\mb{b},
 $$
@@ -408,9 +417,7 @@ $$
 The projection matrix has several useful properties: 
 
 - $\mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}$ are **idempotent**, which means that when applied to itself, it simply returns itself: $\mb{P}_{\Xmat}\mb{P}_{\Xmat} = \mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}\mb{M}_{\Xmat} = \mb{M}_{\Xmat}$. 
-
 - $\mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}$ are symmetric $n \times n$ matrices so that $\mb{P}_{\Xmat}' = \mb{P}_{\Xmat}$ and $\mb{M}_{\Xmat}' = \mb{M}_{\Xmat}$.
-
 - The rank of $\mb{P}_{\Xmat}$ is $k+1$ (the number of columns of $\Xmat$) and the rank of $\mb{M}_{\Xmat}$ is $n - k - 1$. 
 
 We can use the projection and annihilator matrices to arrive at an orthogonal decomposition of the outcome vector:
@@ -420,19 +427,22 @@ $$
  
 
 
-::: {.content-hidden}
+::: {.callout-note}
 
 ## Trace of a matrix
 
 Recall that the trace of a $k \times k$ square matrix, $\mb{A} = {a_{ij}}$, is the sum of the diagonal entries,
 $$
-\text{trace}(\mb{A}) = \sum_{i=1}^{k} a_{ii},
+\text{tr}(\mb{A}) = \sum_{i=1}^{k} a_{ii},
 $$
-so, for example, $\text{trace}(\mb{I}_{n}) = n$. A couple of key properties of the trace:
+so, for example, $\text{tr}(\mb{I}_{n}) = n$. A couple of key properties of the trace:
 
-- Trace is linear: $\text{trace}(k\mb{A}) = k\; \text{trace}(\mb{a})$ and $\text{trace}(\mb{A} + \mb{B}) = \text{trace}(\mb{A}) + \text{trace}(\mb{B})$
-- Trace is invariant to multiplication direction: $\text{trace}(\mb{AB}) = \text{trace}(\mb{BA})$. 
+- Trace is linear: $\text{tr}(k\mb{A}) = k\; \text{tr}(\mb{a})$ and $\text{tr}(\mb{A} + \mb{B}) = \text{tr}(\mb{A}) + \text{tr}(\mb{B})$
+- Trace is invariant to multiplication direction: $\text{tr}(\mb{AB}) = \text{tr}(\mb{BA})$. 
 :::
+
+With this definition of trace, we can derive the last property of the projection matrix: the trace of the projection matrix is $k+1$. To see this, we have
+$$\text{tr}(\mb{P}_{\Xmat}) = \text{tr}(\Xmat (\Xmat'\Xmat)^{-1} \Xmat') = \text{tr}((\Xmat'\Xmat)^{-1} \Xmat'\Xmat) \text{tr}(\mb{I}_{k+1}) = k+1.$$
 
 
 ## Residual regression {#sec-residual-regression}
@@ -502,7 +512,7 @@ Finally, using residual regression allows researchers to visualize the condition
 #| label: fig-ajr-fwl
 #| echo: false
 #| fig-cap: |
-#|   Regression on residuals applied to the @AceJohRob01. Highlighted point is
+#|   Regression on residuals applied to the @AceJohRob01. Highlighted points are
 #|   Singapore. 
 
 ajr_sub <- ajr |>
@@ -548,7 +558,7 @@ Given that OLS finds the coefficients that minimize the sum of the squared resid
 Under what conditions do we have influential observations? OLS tries to minimize the sum of **squared** residuals, so it will move more in order to shrink larger residuals versus smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will pass through the means of the outcome and the covariates: $\overline{Y} = \overline{\X}\bhat$. We can think of this point as a fulcrum on which any OLS line balances. A point near this fulcrum can move the line slightly but it cannot tilt it much. Points further frmo the fulcrum have more *leverage* and can tilt the line much more.   Thus, by definition, this means that, when an observation is close to the average of the covariates, $\overline{\X}$, it cannot have that much influence because OLS forces the regression line to go through $\overline{Y}$. Thus, influential points will have two properties:
 Under what conditions do we have influential observations? OLS tries to minimize the sum of **squared** residuals, so it will move more in order to shrink larger residuals versus smaller ones. Where are large residuals likely to occur? Well, notice that any OLS regression line with a constant will pass through the point comprised of the means of the outcome and the covariates: $(\overline{Y}, \overline{\X})$. We can think of this point as a fulcrum on which any OLS line balances. A point near this fulcrum can move the line slightly but it cannot tilt it much. Points further frmo the fulcrum have more *leverage* and can tilt the line much more. Thus, influential points will have two properties:
 
-1. Have high **leverage**, where leverage roughly measures how far $\X_i$ is from $\overline{\X}$, and
+1. Have high **leverage**, where leverage measures how far $\X_i$ is from $\overline{\X}$ compared to the distribution of the data, and
 2. Be an **outlier** in the sense of having a large residual (if left out of the regression).
 
 We'll take each of these in turn. 
@@ -559,11 +569,15 @@ We can define the **leverage** of an observation by
 $$ 
 h_{ii} = \X_{i}'\left(\Xmat'\Xmat\right)^{-1}\X_{i},
 $$
-which is the $i$th diagonal entry of the projection matrix, $\mb{P}_{\Xmat}$. Notice that 
+which is the $i$th diagonal entry of the projection matrix, $\mb{P}_{\Xmat}$. Let $h_{ij}$ be the entry of $\mb{P}_{\Xmat}$ in the $i$th row and $j$th column. Notice that 
 $$ 
 \widehat{\mb{Y}} = \mb{P}_{\Xmat}\mb{Y} \qquad \implies \qquad \widehat{Y}_i = \sum_{j=1}^n h_{ij}Y_j,
 $$
-so that $h_{ij}$ is the importance of observation $j$ for the fitted value for observation $i$. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of $\X_{i}$. Roughly speaking, these values are the weighted distance between $\X_i$ and $\overline{\X}$, where the weights normalize to the empirical variance/covariance structure of the covariates (so that the scale of each covariate is roughly the same). We can see this most clearly when we fit a simple linear regression (with one covariate and an intercept) with OLS when the leverage is
+so that $h_{ij}$ is the importance of observation $j$ for the fitted value for observation $i$. The leverage, then, is the importance of the observation for its own fitted value. We can also interpret these values in terms of the distribution of $\X_{i}$ since
+$$
+h_{ii} = \frac{1}{n} + \frac{d_i^2}{n},
+$$
+where $d_i$ is the Mahalanobis distance of $\X_i$. The Mahalanobis distance measures how far a point $\X_i$ is from the center of the distribution $\overline{\X}$ after adjusting for the empirical variance and covariance structure of the data. We can see this most clearly when we fit a simple linear regression (with one covariate and an intercept) with OLS when the leverage is
 $$ 
 h_{ii} = \frac{1}{n} + \frac{(X_i - \overline{X})^2}{\sum_{j=1}^n (X_j - \overline{X})^2}
 $$
@@ -578,7 +592,7 @@ The third property follows because leverages are the diagonal entries of $\mb{P}
 
 ### Outliers and leave-one-out regression
 
-In the context of OLS, an **outlier** is an observation with a large prediction error for a particular OLS specification. @fig-outlier shows an example of an outlier. 
+In the context of OLS, an **outlier** is an observation with a large prediction error for a particular OLS specification. @fig-outlier shows an example of an outlier. The outlier point here is at $(\overline{X}_i, 7)$ and so has leverage $h_{ii} = 1/n \approx 0.01$.
 
 ```{r}
 #| label: fig-outlier
@@ -588,15 +602,19 @@ In the context of OLS, an **outlier** is an observation with a large prediction 
 set.seed(02138)
 x <- rnorm(100, 0, 1)
 y <- 0.2 * x + rnorm(100, 0, 1)
-x <- c(x, 1)
+x <- c(x, mean(x))
 y <- c(y, 7)
 par(mar = c(2.1, 2.1, 0.1, 0.1))
 plot(x, y,
   pch = 19, col = ifelse(1:101 != 101, "grey50", "indianred"), xlab = "", ylab = "",
   cex = ifelse(1:101 != 101, 1, 1.5), bty = "n", las = 1, xlim = c(-4.5, 4.5)
 )
-abline(lm(y ~ x), col = "dodgerblue", lwd = 3)
-abline(lm(y[1:100] ~ x[1:100]), col = "indianred", lwd = 3)
+main_mod <- lm(y ~ x)
+resid <- residuals(main_mod)
+loo_err <- resid / (1 - hatvalues(main_mod))
+loo_mod <- lm(y[1:100] ~ x[1:100])
+abline(main_mod, col = "dodgerblue", lwd = 3)
+abline(loo_mod, col = "indianred", lwd = 3)
 text(3.5, -0.35, "Without outlier", col = "indianred")
 text(3.5, 1.25, "Full sample", col = "dodgerblue")
 text(1, 7, "Outlier", pos = 2, col = "indianred")
@@ -616,11 +634,11 @@ Calculating these LOO prediction errors for each unit appears to be computationa
 $$ 
 \bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i \qquad \widetilde{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
 $$ {#eq-loo-coefs}
-This shows that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage would be close to $\overline{\X}$, where the outcome values have relatively little impact on the OLS fit (because the regression line must go through $\overline{Y}$). 
+This shows that the LOO prediction errors will differ from the residuals when the leverage of a unit is high. This makes sense! We said earlier that observations with low leverage would be close to $\overline{\X}$, where the outcome values have relatively little impact on the OLS fit (because the regression line must go through $\overline{Y}$). In @fig-outlier, the outlier has residual $\widehat{e}_i$ of `r round(resid[101], 2)` and a LOO error $\widetilde{e}_i$ of `r round(loo_err[101], 2)`. The slope is essentially unchanged whether we include the point or not. 
 
 ### Influential observations
 
-An influential observation (also sometimes called an influential point) is a unit that has the power to change the coefficients and fitted values for a particular OLS specification. @fig-influence shows an example of such an influence point. 
+An influential observation (also sometimes called an influential point) is a unit that has the power to change the coefficients and fitted values for a particular OLS specification. 
 
 ```{r}
 #| label: fig-influence
@@ -636,12 +654,18 @@ plot(x, y,
   pch = 19, col = ifelse(1:101 != 101, "grey50", "indianred"),
   cex = ifelse(1:101 != 101, 1, 1.5), bty = "n", las = 1, xlim = c(-4, 8)
 )
-abline(lm(y ~ x), col = "dodgerblue", lwd = 3)
-abline(lm(y[1:100] ~ x[1:100]), col = "indianred", lwd = 3)
+infl_mod <- lm(y ~ x)
+infl_res <- residuals(infl_mod)
+infl_loo_err <- infl_res / (1 - hatvalues(infl_mod))
+infl_loo_mod <- lm(lm(y[1:100] ~ x[1:100]))
+abline(infl_mod, col = "dodgerblue", lwd = 3)
+abline(infl_loo_mod, col = "indianred", lwd = 3)
 text(4, -0.1, "Without influence point", pos = 4, col = "indianred")
 text(5, 2, "Full sample", pos = 2, col = "dodgerblue")
 text(7, 7, "Influence Point", pos = 1, col = "indianred")
 ```
+
+@fig-influence shows an example of such an influence point. Comparing this plot with @fig-outlier, we can see that both points are far from the regression line but only the influence point is far from $\overline{X}$, and only this one meaningfully moves the slope. The leverage of this point is `r round(hatvalues(infl_mod)[101], 2)` and removing it changes the slope from `r round(coef(infl_mod)[2], 2)` to `r round(coef(infl_loo_mod)[2], 2)`. 
 
 One measure of influence, called DFBETA$_i$, measures how much $i$ changes the estimated coefficient vector
 $$ 
@@ -654,7 +678,7 @@ When we want to summarize how much an observation matters for the fit, we can us
 $$ 
 \widehat{Y}_i - \X_{i}\bhat_{(-1)} = \X_{i}'(\bhat -\bhat_{(-1)}) = \X_{i}'\left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i = h_{ii}\widetilde{e}_i,
 $$
-so the influence of an observation is its leverage multiplied by how much of an outlier it is. This value is sometimes called DFFIT (difference in fit). One transformation of this quantity, **Cook's distance**, standardizes this by the sum of the squared residuals:
+so the influence of an observation is its leverage multiplied by how much of an outlier it is. This value is sometimes called DFFIT (difference in fit). One transformation of this quantity, **Cook's distance**, squares DFFIT, divides by the leverage, and scales by the average squared residual to give
 $$ 
 D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\widetilde{e}_{i}^{2}}{\widehat{\mb{e}}'\widehat{\mb{e}}}.
 $$

@@ -1,0 +1,58 @@
+% Geometry of least squares: Y projected onto the column space of X.
+% Output: assets/img/projection.png (used as @fig-projection in least_squares.qmd)
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{amsmath,amssymb,bm}
+% sans serif for text and math
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[eulergreek]{sansmath}
+\sansmath
+\usetikzlibrary{arrows.meta,calc}
+% match the R figures in the book
+\definecolor{xblue}{HTML}{1E90FF}   % dodgerblue
+\definecolor{resid}{HTML}{CD5C5C}   % indianred
+\definecolor{plane}{HTML}{D6E0EA}
+
+\begin{document}
+% Oblique 3D: x to the right, y into the page, z up.
+% The column space C(X) is the z = 0 plane; Y-hat is the foot of the
+% perpendicular from Y, so the residual is vertical and truly orthogonal.
+\begin{tikzpicture}[
+    x={(1cm,0cm)}, y={(0.55cm,0.38cm)}, z={(0cm,1cm)},
+    vec/.style={-{Stealth[length=7pt]}, very thick, xblue},
+    lab/.style={xblue, font=\large},
+  ]
+  \coordinate (O)    at (0,0,0);
+  \coordinate (X1)   at (5,0,0);
+  \coordinate (X2)   at (1.2,4,0);
+  \coordinate (Yhat) at (2.6,1.9,0);
+  \coordinate (Y)    at (2.6,1.9,3.2);
+
+  % shaded column space (parallelogram spanned by X1 and X2)
+  \fill[plane] (O) -- (X1) -- ($(X1)+(X2)$) -- (X2) -- cycle;
+  \node[xblue!70!black, anchor=north east, font=\large]
+    at ($(X1)+(X2)$) {$\mathcal{C}(\mathbb{X})$};
+
+  % fitted value (dashed: lies in the plane)
+  \draw[thick, dashed, xblue] (O) -- (Yhat);
+
+  % covariate vectors
+  \draw[vec] (O) -- (X1) node[lab, below right] {$\mathbb{X}_1$};
+  \draw[vec] (O) -- (X2) node[lab, above left]  {$\mathbb{X}_2$};
+
+  % right-angle marker at Y-hat
+  \def\s{0.28}
+  \draw[thin, black!60] ($(Yhat)+(0,0,\s)$) -- ($(Yhat)+(\s,0,\s)$) -- ($(Yhat)+(\s,0,0)$);
+
+  % residual
+  \draw[ultra thick, resid] (Yhat) -- (Y)
+    node[midway, right, font=\large] {$\widehat{\mathbf{e}} = \mathbf{Y} - \mathbb{X}\widehat{\bm{\beta}}$};
+
+  % outcome vector
+  \draw[vec] (O) -- (Y) node[lab, above left] {$\mathbf{Y}$};
+
+  % projection point
+  \fill[xblue] (Yhat) circle (2.4pt);
+  \node[lab, below right, xshift=2pt] at (Yhat)
+    {$\widehat{\mathbf{Y}} = \mathbb{X}\widehat{\bm{\beta}}$};
+\end{tikzpicture}
+\end{document}
