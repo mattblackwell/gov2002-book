@@ -336,7 +336,7 @@ window.Quarto = {
   <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions"><span class="header-section-number">6.4.2</span> Interactions</a></li>
   </ul></li>
   <li><a href="#sec-fwl" id="toc-sec-fwl" class="nav-link" data-scroll-target="#sec-fwl"><span class="header-section-number">6.5</span> Multivariate coefficients from orthogonal projection</a></li>
-  <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias"><span class="header-section-number">6.6</span> Omitted variable bias</a></li>
+  <li><a href="#sec-ovb" id="toc-sec-ovb" class="nav-link" data-scroll-target="#sec-ovb"><span class="header-section-number">6.6</span> Omitted variable bias</a></li>
   <li><a href="#drawbacks-of-the-blp" id="toc-drawbacks-of-the-blp" class="nav-link" data-scroll-target="#drawbacks-of-the-blp"><span class="header-section-number">6.7</span> Drawbacks of the BLP</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.8</span> Summary</a></li>
   </ul>
@@ -488,7 +488,7 @@ Figure&nbsp;6.2: Comparison of the CEF and the best linear predictor.
 m(\bfx) &amp;= \bfx'\bfbeta, \quad \text{where} \\ \bfbeta &amp;= \argmin_{\mb{b} \in \real^{k+1}}\; \E\bigl[ \bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2\bigr].
 \end{aligned}
 \]</span></p>
-<p>This BLP solves the same fundamental optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error, where the expectation is over the joint distribution of the data. We make the following mild assumptions to ensure the BLP exists.</p>
+<p>This BLP solves the same fundamental optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error, where the expectation is over the joint distribution of the data. We make the following mild assumptions to ensure the BLP exists. A matrix <span class="math inline">\(\mb{A}\)</span> is <strong>positive definite</strong> if <span class="math inline">\(\mb{c}'\mb{A}\mb{c} &gt;0\)</span> for all <span class="math inline">\(\mb{c} \neq 0\)</span>.</p>
 <div id="cnj-blp-assumptions" class="theorem conjecture">
 <p><span class="theorem-title"><strong>Assumption 6.1 (Best linear projection assumptions)</strong></span> &nbsp;</p>
 <ol type="1">
@@ -519,6 +519,20 @@ m(\bfx) &amp;= \bfx'\bfbeta, \quad \text{where} \\ \bfbeta &amp;= \argmin_{\mb{b
   \E[\X_{i}\X_{i}'] \bfbeta &amp;= \E[\X_{i}Y_{i}].
 \end{aligned}
 \]</span> Multiplying by the inverse of <span class="math inline">\(\mb{Q}_{\mb{XX}}\)</span> (which exists under <a href="#cnj-blp-assumptions" class="quarto-xref">Assumption&nbsp;<span>6.1</span></a>) gives the result.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The power of positive definiteness
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A key part of <a href="#cnj-blp-assumptions" class="quarto-xref">Assumption&nbsp;<span>6.1</span></a> is that <span class="math inline">\(\mb{Q}_{\mb{XX}}\)</span> is positive definite, which is the matrix version of “positive.” We can see that <span class="math inline">\(\mb{Q}_{\mb{XX}}\)</span> is the second derivative of the objective function, <span class="math inline">\(\E\left[ \left(Y_{i} - \mb{X}_{i}'\mb{b} \right)^2\right]\)</span>, and its positive definiteness means that this function will have a bowl shape with a unique minimum (rather than a trough with a flat floor). When there are multiple values of <span class="math inline">\(\mb{b}\)</span> at the minimum, we say that the coefficients are not identified.</p>
+<p>An equivalent condition in our context that none of the entries of <span class="math inline">\(\X_i\)</span> are deterministic linear functions of any of the others. This condition is the population version of a <strong>no multicollinearity</strong> assumption that we will also see in <a href="least_squares.html" class="quarto-xref"><span>Chapter 7</span></a>.</p>
+</div>
 </div>
 <p>This gives us an expression for the coefficients for the population best linear predictor in terms of the joint distribution <span class="math inline">\((Y_{i}, \X_{i})\)</span>.</p>
 <p>A couple of facts might be useful for interpreting this expression substantively. Recall that <span class="math inline">\(\mb{Q}_{\mb{XX}} = \E[\X_{i}\X_{i}']\)</span> is a <span class="math inline">\((k+1) \times (k+1)\)</span> matrix and <span class="math inline">\(\mb{Q}_{\X Y} = \E[\X_{i}Y_{i}]\)</span> is a <span class="math inline">\((k+1)\times 1\)</span> column vector, which implies that <span class="math inline">\(\bfbeta\)</span> is also a <span class="math inline">\((k+1) \times 1\)</span> column vector.</p>
@@ -770,13 +784,13 @@ m(\X_i) &amp;= \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i1}X_{i2} 
 \end{aligned}
 \]</span> Combining these facts, we have <span class="math inline">\(\cov(Y_{i}, \widetilde{X}_{i}) = \beta \V[\widetilde{X}_i]\)</span>, or <span class="math display">\[
 \beta = \frac{\cov(Y_{i}, \widetilde{X}_{i})}{\V[\widetilde{X}_{i}]}.
-\]</span> This is the population version of the <strong>Frisch-Waugh-Lovell theorem</strong> <span class="citation" data-cites="FriWau33 Lovell63">(<a href="references.html#ref-FriWau33" role="doc-biblioref">Frisch and Waugh 1933</a>; <a href="references.html#ref-Lovell63" role="doc-biblioref">Lovell 1963</a>)</span> (see <a href="least_squares.html#sec-residual-regression" class="quarto-xref"><span>Section 7.8</span></a>).</p>
+\]</span> This is the population version of the <strong>Frisch-Waugh-Lovell theorem</strong> <span class="citation" data-cites="FriWau33 Lovell63">(<a href="references.html#ref-FriWau33" role="doc-biblioref">Frisch and Waugh 1933</a>; <a href="references.html#ref-Lovell63" role="doc-biblioref">Lovell 1963</a>)</span> (see <a href="least_squares.html#sec-residual-regression" class="quarto-xref"><span>Section 7.6</span></a>).</p>
 <p>We can expand this idea to when there are several other covariates. Suppose now that we project <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(\X_i\)</span> and are interested in the coefficient on the <span class="math inline">\(j\)</span> th covariate. Let <span class="math inline">\(\X_{i,-j}\)</span> be the vector of covariates omitting the <span class="math inline">\(j\)</span>th entry but retaining the constant and let <span class="math inline">\(\widetilde{m}_j(\X_{i,-j})\)</span> represent the BLP of <span class="math inline">\(X_{ij}\)</span> on these other covariates. We can define <span class="math inline">\(\widetilde{X}_{ij} = X_{ij} - \widetilde{m}_{j}(\X_{i,-j})\)</span> as the <span class="math inline">\(j\)</span>th variable orthogonalized with respect to the rest of the variables and we can write the coefficient on <span class="math inline">\(X_{ij}\)</span> as <span class="math display">\[
 \beta_j = \frac{\cov(Y_i, \widetilde{X}_{ij})}{\V[\widetilde{X}_{ij}]}.
 \]</span> Thus, the linear projection coefficient in the BLP is the same as the coefficient from a bivariate projection of the outcome on the projection error for <span class="math inline">\(X_{ij}\)</span> projected on all other covariates. One interpretation of coefficients in a multivariate projection is that they represent the relationship between the outcome and the covariate after removing the linear relationships of all other variables.</p>
 </section>
-<section id="omitted-variable-bias" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="omitted-variable-bias"><span class="header-section-number">6.6</span> Omitted variable bias</h2>
+<section id="sec-ovb" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sec-ovb"><span class="header-section-number">6.6</span> Omitted variable bias</h2>
 <p>In many situations, we may need to reason about variables we omitted from a particular linear projection, often because we have no ability to measure that variable. In our voting wait times example, we might want to include a respondent’s sense of civic duty but we may lack any good survey instrument for this concept. It will be useful, then, to understand theoretically how adding this variable would change our projection coefficients.</p>
 <p>Suppose we have our usual BLP <span class="math inline">\(m(\X_{i}) = \X_i'\bfbeta\)</span> and let <span class="math inline">\(Z_i\)</span> be the variable we are considering adding to our projection. We can write this new projection as <span class="math display">\[
 m(\X_i, Z_i) = \X_i'\bs{\delta} + Z_i\gamma.
