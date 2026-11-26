@@ -326,13 +326,13 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{plain}
 \newtheorem{conjecture}{Assumption}[chapter]
 \theoremstyle{definition}
-\newtheorem{example}{Example}[chapter]
-\theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[chapter]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -7336,8 +7336,12 @@ average protection against expropriation risk) for the 111 countries in
 the data of Acemoglu et al. (2001). The red line represents the ordinary
 least squares line of best fit. In this chapter, we will see how to
 derive this line and how to tell how well this line fits the data. We
-will also see how to write the OLS estimator compactly with matrices,
-and how individual influential countries can affect the estimate.
+will also see how to write the OLS estimator compactly with matrices and
+learn how this framing presents a geometric interpretation of OLS. We
+will see estimated versions of orthogonal projection (called residual
+regression in this context) and omitted variable bias from the last
+chapter. Finally, we will explore how individual influential countries
+can affect the OLS estimates.
 
 \begin{figure}[th]
 
@@ -7349,7 +7353,7 @@ and how individual influential countries can affect the estimate.
 
 \caption{\label{fig-ajr-scatter}Relationship between political
 institutions and economic development from Acemoglu et al. (2001) for
-the \(n = 111\) countries from their data with data on both variables.}
+the \(n = 111\) countries in their data with data on both variables.}
 
 \end{figure}%
 
@@ -7359,9 +7363,9 @@ The last chapter on the linear projection operated purely in the
 population, not samples. We derived the population regression
 coefficients \(\bfbeta\), representing the coefficients on the line of
 best fit in the population. We now take these as our quantities of
-interest and focus on how to use a sample from the population to make
-inferences about the line of best fit in the population. To do this, we
-will focus on the OLS estimator for these population quantities.
+interest and focus on how to use a sample from the population to
+estimate the line of best fit in the population. To do this, we will
+focus on the OLS estimator for these population quantities.
 
 We first make a key assumption to ensure the OLS estimator exists and
 has a unique solution.
@@ -7377,7 +7381,7 @@ Intuitively, the assumption is the sample version of the third part of
 Assumption~\ref{cnj-blp-assumptions} from Chapter~\ref{sec-regression}
 (see there for a definition and discussion of positive definiteness). In
 this context, it requires we have more observations than parameters
-(\(n > k+1\)) and that there is no multicollinearity (no entries of
+(\(n \geq k+1\)) and that there is no multicollinearity (no entries of
 \(\X_i\) are deterministic linear combinations of the other entries).
 Below in Section~\ref{sec-rank}, we discuss equivalent conditions for
 this assumption in terms of data matrices.
@@ -7415,7 +7419,7 @@ We call this the \textbf{least squares} estimator because it minimizes
 the empirical (or sample) squared prediction error,
 \begin{equation}\protect\phantomsection\label{eq-ols-objective}{ 
 \bhat = \argmin_{\mb{b} \in \real^{k+1}}\; \frac{1}{n} \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2 = \argmin_{\mb{b} \in \real^{k+1}}\; SSR(\mb{b}),
-}\end{equation} where, \[ 
+}\end{equation} where \[ 
 SSR(\mb{b}) = \sum_{i=1}^{n}\bigl(Y_{i} - \mb{X}_{i}'\mb{b} \bigr)^2
 \] is the sum of the squared residuals. To distinguish it from other,
 more complicated least squares estimators, we call this the
@@ -7441,7 +7445,7 @@ we can multiply both sides of this equation by that inverse to arrive at
 \] which is the same expression as the plug-in estimator (after
 canceling the \(1/n\) terms). To confirm that we have found a unique
 minimum, we also need to check the second-order condition that \[ 
- \frac{\partial^{2} SSR(\mb{b})}{\partial \mb{b}\mb{b}'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)
+ \frac{\partial^{2} SSR(\mb{b})}{\partial \mb{b}\,\partial\mb{b}'} = 2\left(\sum_{i=1}^{n}\X_{i}\X_{i}'\right)
 \] is positive definite, which is ensured by
 Assumption~\ref{cnj-ols-pd}.
 
@@ -7472,7 +7476,7 @@ Y_{i} = \beta_{0} + \X_{i,-0}'\bfbeta_{-0} + e_{i},
 \(\bfbeta_{-0}\) is the coefficient vector without the intercept.
 Defined this way, we can write the OLS estimator for the ``slopes'' on
 \(\X_{i,-0}\) as the OLS estimator with all variables demeaned: \[ 
-\bhat_[-0] = \left(\frac{1}{n} \sum_{i=1}^{n} (\X_{i,-0} - \overline{\X}_{-0})(\X_{i,-0} - \overline{\X}_{-0})'\right)^{-1} \left(\frac{1}{n} \sum_{i=1}^{n}(\X_{i,-0} - \overline{\X}_{-0})(Y_{i} - \overline{Y})\right)
+\bhat_{-0} = \left(\frac{1}{n-1} \sum_{i=1}^{n} (\X_{i,-0} - \overline{\X}_{-0})(\X_{i,-0} - \overline{\X}_{-0})'\right)^{-1} \left(\frac{1}{n-1} \sum_{i=1}^{n}(\X_{i,-0} - \overline{\X}_{-0})(Y_{i} - \overline{Y})\right)
 \] which is the inverse of the sample covariance matrix of \(\X_{i,-0}\)
 times the sample covariance of \(\X_{i,-0}\) and \(Y_i\). The intercept
 is \[ 
@@ -7575,8 +7579,12 @@ exactly uncorrelated with each independent variable in the sample. (This
 is very unlikely to occur because there will likely be some minimal but
 nonzero relationship by random chance.) A value of 1 indicates a perfect
 linear fit, which occurs when all data points are perfectly predicted by
-the model with zero residuals. In Figure~\ref{fig-ajr-scatter}, the
-\(R^2\) is 0.61.
+the model with zero residuals.
+
+In Figure~\ref{fig-ajr-scatter}, we have an estimated slope of
+\(\widehat{\beta}_1\) = 0.53 which means that a one-point higher
+property rights protected score has a 0.53 higher predicted log GDP per
+capita. The \(R^2\) from this regression is 0.61.
 
 \section{Matrix form of OLS}\label{matrix-form-of-ols}
 
@@ -7627,7 +7635,7 @@ definition of OLS and matrix notation. In particular, we have \[
 \] To see how the first of these holds, note that the \((j, \ell)\)
 entry of \(\Xmat'\Xmat\) is the inner product of columns \(j\) and
 \(\ell\), which is exactly the \((j, \ell)\) entry of
-\(\sum_{i=1}^n \X_i\X_i'\). These results means we can write the OLS
+\(\sum_{i=1}^n \X_i\X_i'\). These results mean we can write the OLS
 estimator in the more recognizable form \[ 
 \bhat = \left( \mathbb{X}'\mathbb{X} \right)^{-1} \mathbb{X}'\mb{Y}.
 \]
@@ -7720,10 +7728,8 @@ all of these variables in our regression with an intercept. (Note the 1
 in the relationship between \(X_{i5}\) and the other variables, the
 reason why there will be linear dependence when including a constant.)
 Thus, we usually omit one dummy variable from each categorical variable.
-In that case, the coefficients on the remaining dummies are differences
-in means between that category and the omitted one. So if we omitted
-\(X_{i5}\) (Oceania), then the coefficient on \(X_{i1}\) would be the
-difference in mean outcomes between units in Asia and Oceania.
+The next section describes how to interpret these categorical
+regressors.
 
 Collinearity can also occur when including both an intercept term and a
 variable that does not vary. This issue can often happen if we
@@ -7766,9 +7772,9 @@ Then the coefficient on the Asia dummy will be \[
 Asian units and units in Oceania.
 
 Note that these interpretations change when additional covariates are
-added to the model. As we will see in
-Section~\ref{sec-residual-regression}, the coefficients become
-covariate-adjusted difference in means rather than raw differences.
+added to the model. As Section~\ref{sec-residual-regression} makes
+precise, the coefficients become covariate-adjusted differences in means
+rather than raw differences.
 
 \section{Projection and geometry of least
 squares}\label{projection-and-geometry-of-least-squares}
@@ -7912,7 +7918,7 @@ properties of the trace:
 With this definition of trace, we can derive a related property: the
 trace of the projection matrix is \(k+1\). To see this, we have
 \[\text{tr}(\mb{P}_{\Xmat}) = \text{tr}(\Xmat (\Xmat'\Xmat)^{-1} \Xmat') = \text{tr}((\Xmat'\Xmat)^{-1} \Xmat'\Xmat) = \text{tr}(\mb{I}_{k+1}) = k+1.\]
-More generally, ideompotent matrices like \(\mb{P}_{\Xmat}\) always have
+More generally, idempotent matrices like \(\mb{P}_{\Xmat}\) always have
 their rank equal to their trace.
 
 \section{Residual regression and the Frisch-Waugh-Lovell
@@ -7976,7 +7982,7 @@ Premultiplying Equation~\ref{eq-ols-long} by \(\mb{M}_{\Xmat_2}\) gives
 annihilator matrices imply \(\mb{M}_{\Xmat_2}\Xmat_{2} = 0\). Finally,
 \[
 \begin{aligned}
-\mb{M}_{\Xmat_2}\widehat{\mb{e}} &=  \widehat{\mb{e}} - \Xmat_2'(\Xmat_2'\Xmat_2)^{-1}\Xmat_2'\widehat{\mb{e}} \\
+\mb{M}_{\Xmat_2}\widehat{\mb{e}} &=  \widehat{\mb{e}} - \Xmat_2(\Xmat_2'\Xmat_2)^{-1}\Xmat_2'\widehat{\mb{e}} \\
 & = \widehat{\mb{e}},
 \end{aligned}
 \] since \(\Xmat_2'\widehat{\mb{e}} = 0\). With these, we can rewrite
@@ -8014,8 +8020,8 @@ effects'') for a categorical variable with many categories. For example,
 suppose \(\Xmat_2\) consists of indicators for the county of residence
 for a respondent. Since there are roughly 3,100 counties in the U.S.,
 \(\Xmat_2\) will have roughly 3,100 columns, meaning that direct
-calculation of the \(\bhat = (\bhat_{1}, \bhat_{2})\) will require
-inverting a matrix that is bigger than \(3{,}100 \times 3{,}100\).
+calculation of \(\bhat = (\bhat_{1}, \bhat_{2})\) will require inverting
+a matrix that is bigger than \(3{,}100 \times 3{,}100\).
 Computationally, this process will be very slow. But above, we saw that
 predictions of an outcome on a categorical variable are just the sample
 mean within each level of the variable. Thus, in this case, the
@@ -8090,11 +8096,16 @@ the constant). The residual term drops out because
 coefficients from the short and long regressions is mechanical---it
 holds exactly for all samples.
 
-In the AJR example, the bivariate coefficient of \(\widehat{\beta}_1\) =
+In the AJR example, the bivariate coefficient \(\widehat{\beta}_1\) =
 0.53 equals the long coefficient of \(\widehat{\delta}_1\) = 0.46 plus
-the slope of absolute latitude on property rights (\(\widehat{\gamma}\)
-= 0.078) times the coefficient on absolute latitude in the long
-regression (\(\widehat\pi_1\) = 0.87).
+the slope from regressing absolute latitude on property rights
+(\(\widehat\pi_1\) = 0.08) times the coefficient on absolute latitude in
+the long regression (\(\widehat{\gamma}\) = 0.87). Latitude is
+positively correlated with strength of property rights and income
+(conditional on property rights), so omitting it inflates the bivariate
+coefficient. As with the population version, the label of omitted
+variable ``bias'' presumes the long regression is ``correct'' but this
+may or may not be the case.
 
 \section{Outliers, leverage points, and influential
 observations}\label{outliers-leverage-points-and-influential-observations}
@@ -8113,10 +8124,9 @@ comprised of the means of the outcome and the covariates:
 fulcrum on which any OLS line balances. A point near this fulcrum can
 move the line slightly but it cannot tilt it much. Points further from
 the fulcrum have more \emph{leverage} and can tilt the line much more.
-Of course, if a point has high leverage but sits is on the regression
-line that would be estimated without that point (that is, with
-coefficients \(\bhat_{(-i)}\)), the point really does not have very much
-influence.
+Of course, if a point has high leverage but sits on the regression line
+that would be estimated without that point (that is, with coefficients
+\(\bhat_{(-i)}\)), the point really does not have very much influence.
 
 Thus, influential points will have two properties:
 
@@ -8215,16 +8225,15 @@ computationally costly because it seems as though we have to fit OLS
 \(n\) times. Fortunately, there is a closed-form expression for the LOO
 coefficients and prediction errors in terms of the original regression,
 \begin{equation}\protect\phantomsection\label{eq-loo-coefs}{ 
-\bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i \qquad \widetilde{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
+\bhat_{(-i)} = \bhat - \left( \Xmat'\Xmat\right)^{-1}\X_i\ddot{e}_i \qquad \ddot{e}_i = \frac{\widehat{e}_i}{1 - h_{ii}}.
 }\end{equation} This shows that the LOO prediction errors will differ
 from the residuals when the leverage of a unit is high. This makes
-sense! We said earlier that observations with low leverage would be
-close to \(\overline{\X}\), where the outcome values can move the fitted
-line up or down but cannot tilt it much, which leaves the slope
-relatively unchanged. In Figure~\ref{fig-outlier}, the outlier has
-residual \(\widehat{e}_i\) of 7.12 and a LOO error \(\widetilde{e}_i\)
-of 7.19. The slope is essentially unchanged whether we include the point
-or not.
+sense! We said earlier that observations with low leverage are close to
+\(\overline{\X}\), where the outcome values can move the fitted line up
+or down but cannot tilt it much, which leaves the slope relatively
+unchanged. In Figure~\ref{fig-outlier}, the outlier has residual
+\(\widehat{e}_i\) of 7.12 and a LOO error \(\ddot{e}_i\) of 7.19. The
+slope is unchanged whether we include the point or not.
 
 \subsection{Influential observations}\label{influential-observations}
 
@@ -8250,34 +8259,26 @@ that both points are far from the regression line but only the
 influential point is far from \(\overline{X}\), and only this one
 meaningfully moves the slope. The leverage of this point is 0.34 and
 removing it changes the slope from 0.41 to 0.11. For the AJR data above,
-we highlighted Singapore in Figure~\ref{fig-ajr-fwl} as it had a fairly
-large residual in the regression of property rights on latitude. Its
-leverage is 0.02, 0.01, 0.02, 0.03, 0.03, 0.03, 0.04, 0.03, 0.02, 0.01,
-0.01, 0.02, 0.03, 0.01, 0.05, 0.03, 0.01, 0.01, 0.02, 0.02, 0.03, 0.04,
-0.02, 0.03, 0.04, 0.01, 0.01, 0.03, 0.01, 0.03, 0.02, 0.05, 0.03, 0.06,
-0.04, 0.02, 0.02, 0.04, 0.02, 0.02, 0.02, 0.02, 0.02, 0.07, 0.02, 0.04,
-0.02, 0.03, 0.06, 0.06, 0.02, 0.03, 0.01, 0.01, 0.03, 0.03, 0.02, 0.01,
-0.02, 0.04, 0.01, 0.04, 0.01, 0.05, 0.01, 0.03, 0.01, 0.01, 0.06, 0.03,
-0.02, 0.02, 0.04, 0.05, 0.03, 0.01, 0.02, 0.02, 0.02, 0.02, 0.04, 0.02,
-0.01, 0.01, 0.03, 0.05, 0.01, 0.05, 0.01, 0.02, 0.03, 0.03, 0.05, 0.04,
-0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.03, 0.01, 0.04, 0.03, 0.01, 0.01,
-0.01, 0.05, 0.01, 0.01 and omitting it changes the coefficient on
-absolute latitude from 0.87 to 1.09.
+we highlighted Singapore in Figure~\ref{fig-ajr-fwl} which is a
+high-leverage observation with \(h_{ii}\) being 0.11. Its influence on
+the coefficients differs: omitting it changes the coefficient on
+strength of property rights from 0.46 to 0.44 and changes the
+coefficient on absolute latitude from 0.87 to 1.09.
 
 One measure of influence, called DFBETA\(_i\), measures how much
 observation \(i\) changes the estimated coefficient vector \[ 
-\bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i,
+\bhat - \bhat_{(-i)} = \left( \Xmat'\Xmat\right)^{-1}\X_i\ddot{e}_i,
 \] so there is one value for each observation-covariate pair. When we
 want to summarize how much an observation matters for the overall fit,
 we can use a compact measure of the influence of an observation by
 comparing the fitted value from the entire sample to the fitted value
 from the leave-one-out regression. Using the DFBETA above, we have \[ 
-\widehat{Y}_i - \X'_{i}\bhat_{(-i)} = \X_{i}'(\bhat -\bhat_{(-i)}) = \X_{i}'\left( \Xmat'\Xmat\right)^{-1}\X_i\widetilde{e}_i = h_{ii}\widetilde{e}_i,
+\widehat{Y}_i - \X'_{i}\bhat_{(-i)} = \X_{i}'(\bhat -\bhat_{(-i)}) = \X_{i}'\left( \Xmat'\Xmat\right)^{-1}\X_i\ddot{e}_i = h_{ii}\ddot{e}_i,
 \] so the influence of an observation is its leverage multiplied by how
 much of an outlier it is. This value is sometimes called DFFIT
 (difference in fit). Another transformation of this quantity is
 \textbf{Cook's distance}: \[ 
-D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\widetilde{e}_{i}^{2}}{\widehat{\mb{e}}'\widehat{\mb{e}}}.
+D_i = \frac{n-k-1}{k+1}\frac{h_{ii}\ddot{e}_{i}^{2}}{\widehat{\mb{e}}'\widehat{\mb{e}}}.
 \] Different cutoffs exist for identifying ``influential'' observations,
 but they tend to be ad hoc. In any case, the more important question is
 ``how much does this observation matter for my substantive
@@ -8286,7 +8287,7 @@ threshold.
 
 It's all well and good to find influential observations, but what should
 be done about them? The first thing to check is that the data is not
-corrupted somehow. If an influential points is due to a clear coding or
+corrupted somehow. If an influential point is due to a clear coding or
 data entry error, correct or remove it and document the reasons. Another
 common practice is to show results both with and without the influential
 observation to demonstrate the sensitivity. Another approach is to
