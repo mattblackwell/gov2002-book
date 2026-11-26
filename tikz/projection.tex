@@ -1,11 +1,12 @@
 % Geometry of least squares: Y projected onto the column space of X.
 % Output: assets/img/projection.png (used as @fig-projection in least_squares.qmd)
 \documentclass[tikz,border=2pt]{standalone}
-\usepackage{amsmath,amssymb,bm}
-% sans serif for text and math
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage[eulergreek]{sansmath}
-\sansmath
+% same text and math fonts as the book (_fonts.tex)
+\usepackage{amsmath}
+\usepackage[p,lf]{cochineal}
+\usepackage[cochineal,vvarbb]{newtxmath}
+\usepackage[cal=boondoxo]{mathalfa}
+\usepackage{bm}
 \usetikzlibrary{arrows.meta,calc}
 % match the R figures in the book
 \definecolor{xblue}{HTML}{1E90FF}   % dodgerblue
@@ -29,8 +30,8 @@
 
   % shaded column space (parallelogram spanned by X1 and X2)
   \fill[plane] (O) -- (X1) -- ($(X1)+(X2)$) -- (X2) -- cycle;
-  \node[xblue!70!black, anchor=north east, font=\large]
-    at ($(X1)+(X2)$) {$\mathcal{C}(\mathbb{X})$};
+  \node[xblue!70!black, font=\large]
+    at (5,3,0) {$\mathcal{C}(\mathbb{X})$};
 
   % fitted value (dashed: lies in the plane)
   \draw[thick, dashed, xblue] (O) -- (Yhat);
@@ -45,14 +46,14 @@
 
   % residual
   \draw[ultra thick, resid] (Yhat) -- (Y)
-    node[midway, right, font=\large] {$\widehat{\mathbf{e}} = \mathbf{Y} - \mathbb{X}\widehat{\bm{\beta}}$};
+    node[midway, right, font=\large] {$\widehat{\bm{e}} = \bm{Y} - \mathbb{X}\widehat{\bm{\beta}}$};
 
   % outcome vector
-  \draw[vec] (O) -- (Y) node[lab, above left] {$\mathbf{Y}$};
+  \draw[vec] (O) -- (Y) node[lab, above left] {$\bm{Y}$};
 
   % projection point
   \fill[xblue] (Yhat) circle (2.4pt);
   \node[lab, below right, xshift=2pt] at (Yhat)
-    {$\widehat{\mathbf{Y}} = \mathbb{X}\widehat{\bm{\beta}}$};
+    {$\widehat{\bm{Y}} = \mathbb{X}\widehat{\bm{\beta}}$};
 \end{tikzpicture}
 \end{document}

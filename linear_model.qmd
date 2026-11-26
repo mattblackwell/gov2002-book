@@ -225,7 +225,7 @@ m(\bfx) &= \bfx'\bfbeta, \quad \text{where} \\ \bfbeta &= \argmin_{\mb{b} \in \r
 $$ 
 
 
-This BLP solves the same fundamental optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error, where the expectation is over the joint distribution of the data.  We make the following mild assumptions to ensure the BLP exists. A matrix $\mb{A}$ is **positive definite** if $\mb{c}'\mb{A}\mb{c}$ for all $\mb{c} \neq 0$. 
+This BLP solves the same fundamental optimization problem as in the bivariate case: it chooses the set of coefficients that minimizes the mean-squared error, where the expectation is over the joint distribution of the data.  We make the following mild assumptions to ensure the BLP exists. A matrix $\mb{A}$ is **positive definite** if $\mb{c}'\mb{A}\mb{c} >0$ for all $\mb{c} \neq 0$. 
 
 ::: {#cnj-blp-assumptions}
 ## Best linear projection assumptions
@@ -640,7 +640,7 @@ $$
 Thus, the linear projection coefficient in the BLP is the same as the coefficient from a bivariate projection of the outcome on the projection error for $X_{ij}$ projected on all other covariates. One interpretation of coefficients in a multivariate projection is that they represent the relationship between the outcome and the covariate after removing the linear relationships of all other variables. 
 
 
-## Omitted variable bias
+## Omitted variable bias {#sec-ovb}
 
 In many situations, we may need to reason about variables we omitted from a particular linear projection, often because we have no ability to measure that variable. In our voting wait times example, we might want to include a respondent's sense of civic duty but we may lack any good survey instrument for this concept. It will be useful, then, to understand theoretically how adding this variable would change our projection coefficients. 
 
