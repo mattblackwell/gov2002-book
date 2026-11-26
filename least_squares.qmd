@@ -508,7 +508,7 @@ $$ {#eq-resids}
 From the above definitions, we have $\widetilde{\mb{Y}} = \mb{M}_{\Xmat_2}\mb{Y}$ and $\widetilde{\Xmat}_1 = \mb{M}_{\Xmat_2}\Xmat_{1}$. The properties of annihilator matrices imply $\mb{M}_{\Xmat_2}\Xmat_{2} = 0$. Finally, 
 $$
 \begin{aligned}
-\mb{M}_{\Xmat_2}\widehat{\mb{e}} &= \widehat{\mb{e}} \Xmat_2'(\Xmat_2'\Xmat_2)^{-1}\Xmat_2'\widehat{\mb{e}} \\
+\mb{M}_{\Xmat_2}\widehat{\mb{e}} &=  \widehat{\mb{e}} - \Xmat_2'(\Xmat_2'\Xmat_2)^{-1}\Xmat_2'\widehat{\mb{e}} \\
 & = \widehat{\mb{e}},
 \end{aligned}
 $$ 
@@ -568,7 +568,7 @@ xtilde <- residuals(res_mod)
 mod_2 <- lm(e_2 ~ xtilde)
 high_pt <- which(ajr_sub$shortnam != "SGP")
 pred_val <- predict(res_mod)[high_pt]
-full_lev <- residuals(full_mod) / (1 - hatvalues(full_mod))
+full_lev <- hatvalues(full_mod)
 no_sgp_mod <- lm(
   logpgp95 ~ avexpr + lat_abst,
   data = ajr_sub, shortnam != "SGP"
@@ -609,24 +609,27 @@ segments(
 )
 ```
 
-@fig-ajr-fwl shows the FWL approach applied to the @AceJohRob01 data. Here, we are interested in expanding the bivariate regression of @fig-ajr-scatter to include a control for the absolute value of the latitude of the country. Suppose we wanted to visualize the relationship between strength of property rights and log GDP, conditional on absolute latitude. The left plot shows the relationship of property rights strength and latitude, with the OLS line of best fit. We highlight the point representing Singapore in blue and draw its residual. The right plot shows the conditional effect, with both log GDP and strength of property rights residualized with respect to absolute latitude. We again highlight Singapore, where its position on the $x$-axis for this plot is equal to its residual in the left plot. The coefficient on strength of property rights drops from `r round(coef(mod)["avexpr"], 2)` in the bivariate relationship to `r round(coef(mod_2)["xtilde"], 2)` after conditioning on absolute latitude. 
+@fig-ajr-fwl shows the FWL approach applied to the @AceJohRob01 data. Here, we are interested in expanding the bivariate regression of @fig-ajr-scatter to include a control for the absolute value of the latitude of the country. Suppose we wanted to visualize the relationship between strength of property rights and log GDP, conditional on absolute latitude. The left plot shows the relationship of property rights strength and latitude, with the OLS line of best fit. We highlight the point representing Singapore in blue and draw its residual. The right plot shows the conditional relationship, with both log GDP and strength of property rights residualized with respect to absolute latitude. We again highlight Singapore, where its position on the $x$-axis for this plot is equal to its residual in the left plot. The coefficient on strength of property rights drops from `r round(coef(mod)["avexpr"], 2)` in the bivariate relationship to `r round(coef(mod_2)["xtilde"], 2)` after conditioning on absolute latitude. 
 
-## Omitted variables bias {#sec-ovb-in-sample}
+## Omitted variable bias {#sec-ovb-in-sample}
 
-The omitted variable bias results from @sec-ovb also has an in-sample analog. Using the same structure as @eq-ols-long, we imagine running a regression of $\mb{Y}$ on just the first set of covariates, $\Xmat_1$. The coefficients for this regression would be
+The omitted variable bias results from @sec-ovb also have an in-sample analog. Suppose we have our usual OLS estimate $\bhat$ from a regression of $\mb{Y}$ on $\Xmat$ and are interested in what the coefficients would be if we added a new variable, $\mb{Z} = (Z_1, \ldots, Z_n)'$. This "long" regression would be 
 $$
-\widetilde{\bfbeta}_1 = (\Xmat_1'\Xmat_1)^{-1}\Xmat_1'\mb{Y}. 
-$$
-Now, substitute the "long" regression expression in @eq-ols-long for $\mb{Y}$ to obtain 
+\mb{Y} = \Xmat\widehat{\bs{\delta}} + \mb{Z}\widehat{\gamma} + \widehat{\mb{u}},
+$$ {#eq-ovb-long}
+where $\widehat{\mb{u}}$ are the residuals from this regression. 
+
+How can we relate the estimated coefficients $\bhat$ from the "short" regression to those from the long regression $\widehat{\bs{\delta}}$? Let's substitute the long regression expression into the usual OLS solution to obtain
 $$
 \begin{aligned}
-\widetilde{\bfbeta}_1 &= (\Xmat_1'\Xmat_1)^{-1}\Xmat_1'\Xmat_1\bhat_1 + (\Xmat_1'\Xmat_1)^{-1}\Xmat_1'\Xmat_2\bhat_2 + (\Xmat_1'\Xmat_1)^{-1}\Xmat_1'\widehat{\mb{e}} \\
-&= \bhat_1 + \widehat{\bs{\pi}}\bhat_2,
+\bhat &= (\Xmat'\Xmat)^{-1}\Xmat'\mb{Y} \\
+&= (\Xmat'\Xmat)^{-1}\Xmat'\Xmat\widehat{\bs{\delta}} + (\Xmat'\Xmat)^{-1}\Xmat'\mb{Z}\widehat{\gamma} + (\Xmat'\Xmat)^{-1}\Xmat'\widehat{\mb{u}} \\
+&= \widehat{\bs{\delta}} + \widehat{\bs{\pi}}\widehat{\gamma},
 \end{aligned}
 $$
-where $\widehat{\bs{\pi}} = (\Xmat_1'\Xmat_1)^{-1}\Xmat_1'\Xmat_2$ is a matrix of OLS coefficients from regressing each column of $\Xmat_2$ on $\Xmat_1$. The residual term drops out because $\Xmat_1'\widehat{\mb{e}} = 0$. This relationship between the coefficients from the short and long regressions is mechanical---it holds exactly for all samples. 
+where $\widehat{\bs{\pi}} = (\Xmat'\Xmat)^{-1}\Xmat'\mb{Z}$ are the OLS coefficients from regressing $\mb{Z}$ on $\Xmat$ (which includes the constant). The residual term drops out because $\Xmat'\widehat{\mb{u}} = 0$. This relationship between the coefficients from the short and long regressions is mechanical---it holds exactly for all samples. 
 
-In the AJR example, the bivariate coefficient of `r round(coef(mod)["avexpr"], 2)` equals the long coefficient of `r round(coef(full_mod)["avexpr"], 2)` plus the slope of absolute latitude on property rights (`r round(ovb_pi, 3)`) times the coefficient on absolute latitude in the long regression (`r round(coef(full_mod)["lat_abst"], 2)`).
+In the AJR example, the bivariate coefficient of $\widehat{\beta}_1$ = `r round(coef(mod)["avexpr"], 2)` equals the long coefficient of $\widehat{\delta}_1$ = `r round(coef(full_mod)["avexpr"], 2)` plus the slope of absolute latitude on property rights ($\widehat{\gamma}$ = `r round(ovb_pi, 3)`) times the coefficient on absolute latitude in the long regression ($\widehat\pi_1$ = `r round(coef(full_mod)["lat_abst"], 2)`).
 
 ## Outliers, leverage points, and influential observations
 
